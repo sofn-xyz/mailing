@@ -1,4 +1,4 @@
-# Reaction Mailer [working title]
+# Gigaben [working title]
 
 A simple framework for authoring and sending great emails from your react app.
 
@@ -88,13 +88,14 @@ describe("Example API", () => {
 
 requirements
 
-- [ ] setup package with lib and cli
+- [x] setup package with lib and cli
 - [ ] generate emails directory (working on this rn)
 - [ ] email.ts API
 - [ ] basic tests for lib
 - [ ] basic tests for cli (see commander readme for testing cli)
 - [ ] email previews
 - [ ] format README, logo
+- [ ] rename (react-mailer, gigaben, mailing, omail, mailbus, must be available on npmjs.com)
 - [ ] instructions for next.js integration
 - [ ] publish to npm
 
