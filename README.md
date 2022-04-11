@@ -84,7 +84,29 @@ describe("Example API", () => {
 });
 ```
 
-## TODOs
+## Contributing
+
+### Setup
+
+1. Ensure you have nodejs 12+ setup.
+
+2. Run these to install the project
+
+```zsh
+git clone git@github.com:psugihara/gigaben.git
+cd gigaben
+npm install
+npm build # compiles the project to /lib
+npm link # symlinks the node module
+gigaben # this command is defined as bin in package.json
+```
+
+At this point you should also be able to link import.
+
+`src` has the source code
+`lib` is the build directory, no need to manually edit
+
+### TODOs
 
 requirements
 
