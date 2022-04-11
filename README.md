@@ -13,9 +13,9 @@ A simple framework for authoring and sending great emails from your react app.
 
 ## Setup
 
-1. Install reaction-mailer in your package.json with yarn or npm.
+1. Install gigaben in your package.json with yarn or npm.
 
-2. Scaffold your `emails` directory with `yarn reaction-mailer init` or `npm run reaction-mailer init`.
+2. Scaffold your `emails` directory with `gigaben init`.
 
 This will create the following directory structure:
 
@@ -34,7 +34,7 @@ emails
 
 ```tsx
 import nodemailer from "nodemailer";
-import { ReactionMailer } from "reaction-mailer";
+import { Gigaben } from "gigaben";
 
 const transport = nodemailer.createTransport({
   pool: true,
@@ -47,7 +47,7 @@ const transport = nodemailer.createTransport({
   },
 });
 
-export default new ReactionMailer({ transport });
+export default new Gigaben({ transport });
 ```
 
 4. Then send you first email like so:
