@@ -1,27 +1,32 @@
-import { readdir } from "fs/promises";
+import { cp } from "fs/promises";
+import { existsSync } from "fs";
 import prompts from "prompts";
+import { execSync } from "child_process";
+import { resolve } from "path";
 
-const LIBRARY_REGEX = /emails\.(tsx|jsx)/;
-
-const pathHasExistingEmailsDir = async (path: string) => {
-  try {
-    const contents = await readdir(path);
-    if (contents.some((i) => LIBRARY_REGEX.test(i))) {
-      return true;
-    }
-  } catch {}
-  return false;
+const pathHasExistingEmailsDir = (path: string) => {
+  // could do a better check of whether this exists
+  return existsSync(path);
 };
 
 const getExistingEmailsDir = async () => {
   const appRoot = require("app-root-path");
-  if (await pathHasExistingEmailsDir(appRoot.resolve("src/emails"))) {
+  if (pathHasExistingEmailsDir(appRoot.resolve("src/emails"))) {
     return appRoot.resolve("src/emails");
   }
-  if (await pathHasExistingEmailsDir(appRoot.resolve("emails"))) {
+  if (pathHasExistingEmailsDir(appRoot.resolve("emails"))) {
     return appRoot.resolve("emails");
   }
   return null;
+};
+
+const getPotentialEmailsDirPath = async () => {
+  const appRoot = require("app-root-path");
+  if (existsSync(appRoot.resolve("src"))) {
+    return appRoot.resolve("src/emails");
+  } else {
+    return appRoot.resolve("emails");
+  }
 };
 
 const confirm = async (question: string) => {
@@ -44,16 +49,27 @@ exports.handler = async () => {
   const existingEmailsPath = await getExistingEmailsDir();
   if (existingEmailsPath) {
     // if it does abort
-    console.log("Emails directory found at", existingEmailsPath);
+    console.log("Directory 'emails' found at", existingEmailsPath);
     return;
-  }
-
-  const shouldGenerate = await confirm(
-    `Emails directory not found. Generate emails directory at emailsPath?`
-  );
-
-  if (shouldGenerate) {
-    console.log("cool, copying");
+  } else {
+    console.log("Emails directory not found.");
+    const emailsPath = await getPotentialEmailsDirPath();
+    const response = await prompts({
+      type: "text",
+      name: "path",
+      message: `Where should we generate it?`,
+      initial: emailsPath,
+    });
+    if (response.path) {
+      // copy the init_template in!
+      cp(resolve(__dirname, "../init_template"), response.path, {
+        recursive: true,
+      });
+      console.log(`Generated your emails dir at ${response.path}`);
+    } else {
+      console.log("OK, bye!");
+      return;
+    }
   }
 
   const shouldStartPreviewMode = await confirm(
@@ -61,7 +77,8 @@ exports.handler = async () => {
   );
 
   if (shouldStartPreviewMode) {
-    console.log("TODO: starting...");
+    console.log("gb preview");
+    execSync(`gb preview`);
   } else {
     console.log("Bye!");
   }
