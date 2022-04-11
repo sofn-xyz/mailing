@@ -11,7 +11,6 @@ A simple framework for authoring and sending great emails from your react app.
 - ✅ Plays well with js frameworks like redwood.js, remix, next.js
 - ✅ Written in Typescript
 
-
 ## Setup
 
 1. Install reaction-mailer in your package.json with yarn or npm.
@@ -48,13 +47,13 @@ const transport = nodemailer.createTransport({
   },
 });
 
-export default new ReactionMailer({ transport })
+export default new ReactionMailer({ transport });
 ```
 
 4. Then send you first email like so:
 
 ```tsx
-import { sendMail, MyFirstEmail } from 'emails';
+import { sendMail, MyFirstEmail } from "emails";
 
 sendMail(<MyFirstEmail firstName="Bob" />);
 ```
@@ -83,5 +82,26 @@ describe("Example API", () => {
     expect(emails[0].html).toMatch("ready for QA");
   });
 });
-
 ```
+
+## TODOs
+
+requirements
+
+- [ ] setup package with lib and cli
+- [ ] generate emails directory (working on this rn)
+- [ ] email.ts API
+- [ ] basic tests for lib
+- [ ] basic tests for cli (see commander readme for testing cli)
+- [ ] email previews
+- [ ] format README, logo
+- [ ] instructions for next.js integration
+- [ ] publish to npm
+
+---
+
+below the line
+
+- [ ] instructions for redwood.js integration
+- [ ] instructions for remix.run integration
+- [ ] faktory integration
