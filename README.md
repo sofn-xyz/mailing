@@ -86,6 +86,8 @@ describe("Example API", () => {
 
 ## Contributing
 
+Want to help make this? Cool!
+
 ### Setup
 
 1. Ensure you have nodejs 12+ setup.
