@@ -103,8 +103,8 @@ gigaben # this command is defined as bin in package.json
 
 At this point you should also be able to link import.
 
-`src` has the source code
-`lib` is the build directory, no need to manually edit
+- `src` has the source code
+- `lib` is the build directory, no need to manually edit
 
 ### TODOs
 
