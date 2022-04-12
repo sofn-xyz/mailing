@@ -50,7 +50,6 @@ exports.handler = async () => {
   if (existingEmailsPath) {
     // if it does abort
     console.log("Directory 'emails' found at", existingEmailsPath);
-    return;
   } else {
     console.log("Emails directory not found.");
     const emailsPath = await getPotentialEmailsDirPath();
@@ -73,12 +72,13 @@ exports.handler = async () => {
   }
 
   const shouldStartPreviewMode = await confirm(
-    `OK, you're all set. Start preview mode?`
+    `Looks good. Start preview mode?`
   );
 
   if (shouldStartPreviewMode) {
     console.log("gb preview");
-    execSync(`gb preview`);
+    execSync("gb preview");
+    console.log("hmmm");
   } else {
     console.log("Bye!");
   }
