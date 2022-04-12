@@ -113,11 +113,11 @@ At this point you should also be able to link import.
 requirements
 
 - [x] setup package with lib and cli
-- [ ] generate emails directory (working on this rn)
+- [x] generate emails directory
 - [ ] email.ts API
 - [ ] basic tests for lib
-- [ ] basic tests for cli (see commander readme for testing cli)
-- [ ] email previews
+- [x] basic tests for cli (see commander readme for testing cli)
+- [ ] email previews (working on this next)
 - [ ] format README, logo
 - [ ] rename (react-mailer, gigaben, mailing, omail, mailbus, must be available on npmjs.com)
 - [ ] instructions for next.js integration
