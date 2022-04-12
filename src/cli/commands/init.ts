@@ -1,7 +1,6 @@
 import { cp } from "fs/promises";
 import { existsSync } from "fs";
 import prompts from "prompts";
-import { execSync } from "child_process";
 import { resolve } from "path";
 
 const pathHasExistingEmailsDir = (path: string) => {
@@ -40,11 +39,11 @@ const confirm = async (question: string) => {
   return response.value;
 };
 
-exports.command = ["$0", "init"];
+export const command = ["$0", "init"];
 
-exports.describe = "initialize by generating the emails directory";
+export const describe = "initialize by generating the emails directory";
 
-exports.handler = async () => {
+export const handler = async () => {
   // check if emails directory already exists
   const existingEmailsPath = await getExistingEmailsDir();
   if (existingEmailsPath) {
@@ -61,7 +60,7 @@ exports.handler = async () => {
     });
     if (response.path) {
       // copy the init_template in!
-      cp(resolve(__dirname, "../init_template"), response.path, {
+      await cp(resolve(__dirname, "../init_template"), response.path, {
         recursive: true,
       });
       console.log(`Generated your emails dir at ${response.path}`);
@@ -77,8 +76,7 @@ exports.handler = async () => {
 
   if (shouldStartPreviewMode) {
     console.log("gb preview");
-    execSync("gb preview");
-    console.log("hmmm");
+    require("./preview").handler();
   } else {
     console.log("Bye!");
   }
