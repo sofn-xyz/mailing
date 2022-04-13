@@ -125,9 +125,7 @@ At this point you should also be able to link import.
 
 ### Plan
 
-I want to put out
-
-requirements
+show hn requirements
 
 - [x] setup package with lib and cli
 - [x] generate emails directory
