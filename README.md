@@ -1,17 +1,24 @@
 # Mailing [working title]
 
-A simple framework for authoring and sending great emails from your react app.
+#### Send great emails from your react app.
 
 - ✅ Email templates with React components
 - ✅ Battle-tested components that work across clients (Outlook!)
 - ✅ Mail previews for quick development
 - ✅ Test-mode for ensuring emails send and have the correct content
-- ✅ Uses the venerable nodemailer
-- ✅ Inspired by the venerable rails ActionMailer
+- ✅ Inspired by ActionMailer
 - ✅ Plays well with js frameworks like redwood.js, remix, next.js
 - ✅ Written in Typescript
 
 # TODO: VIDEO HERE
+
+## Why?
+
+I love a good email. Usage metrics imply that a lot of people do. Bad emails suck.
+
+But every web developer I've ever met hates making them.
+
+Let's make coding them fun.
 
 ## Setup
 
