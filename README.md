@@ -3,7 +3,7 @@
 #### Send great emails from your react app.
 
 - ✅ Email templates with React components
-- ✅ Battle-tested components that work across clients (Outlook!)
+- ✅ Battle-tested MJML components that work across clients (Outlook!)
 - ✅ Mail previews for quick development
 - ✅ Test-mode for ensuring emails send and have the correct content
 - ✅ Inspired by ActionMailer
@@ -26,7 +26,11 @@ Let's make coding them fun.
 
 `npm install mailing` or `yarn add mailing`
 
-2. Scaffold your `emails` directory with `mailing init`.
+2. Install the mailing cli tool as a dev dependency
+
+`npm install --save-dev mailing/cli` or `yarn add mailing cli --dev`
+
+3. Scaffold your `email` directory with `mailing init`.
 
 This will create the following directory structure:
 
@@ -41,7 +45,7 @@ emails
     └── MyFirstEmail.tsx
 ```
 
-3. Configure your email transport in `emails/index.ts`. It defaults to nodemailer's SMTP transport, but you can read about others [here](https://nodemailer.com/transports/).
+4. Configure your email transport in `email/index.ts`. It defaults to nodemailer's SMTP transport, but you can read about others [here](https://nodemailer.com/transports/).
 
 ```tsx
 import nodemailer from "nodemailer";
@@ -61,7 +65,7 @@ const transport = nodemailer.createTransport({
 export default new Mailing({ transport });
 ```
 
-4. Then send you first email like so:
+5. Then send you first email like so:
 
 ```tsx
 import { sendMail, MyFirstEmail } from "emails";
@@ -121,13 +125,13 @@ At this point you should also be able to link import.
 
 ### Plan
 
-I want to put out 
+I want to put out
 
 requirements
 
 - [x] setup package with lib and cli
 - [x] generate emails directory
-- [ ] email.ts API
+- [~] email.ts API
 - [ ] basic tests for lib
 - [~] basic tests for cli (see commander readme for testing cli)
 - [~] email previews (working on this next)
@@ -136,6 +140,7 @@ requirements
 - [ ] instructions for next.js integration
 - [ ] publish to npm
 - [ ] add video to readme
+- [ ] split into 2 packages so that preview server is not included
 
 ---
 
