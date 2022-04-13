@@ -10,6 +10,6 @@ exports.builder = {
 
 type ArgV = { port: number };
 
-exports.handler = (argv: ArgV) => {
-  console.log("implement me!", argv.port);
+exports.handler = (argv?: ArgV) => {
+  console.log("implement me!", argv?.port);
 };
