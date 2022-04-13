@@ -26,7 +26,7 @@ Let's make coding them fun.
 
 `npm install mailing` or `yarn add mailing`
 
-2. Scaffold your `emails` directory with `gigaben init`.
+2. Scaffold your `emails` directory with `mailing init`.
 
 This will create the following directory structure:
 
@@ -45,7 +45,7 @@ emails
 
 ```tsx
 import nodemailer from "nodemailer";
-import { Mailing } from "gigaben";
+import { Mailing } from "mailing";
 
 const transport = nodemailer.createTransport({
   pool: true,
@@ -106,12 +106,12 @@ Want to help make this? Cool!
 2. Run these to install the project
 
 ```zsh
-git clone git@github.com:psugihara/gigaben.git
-cd gigaben
+git clone git@github.com:psugihara/mailing.git
+cd mailing
 npm install
 npm build # compiles the project to /lib
 npm link # symlinks the node module
-gigaben # this command is defined as bin in package.json
+mailing # this command is defined as bin in package.json
 ```
 
 At this point you should also be able to link import.
