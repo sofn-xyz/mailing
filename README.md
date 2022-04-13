@@ -1,4 +1,4 @@
-# Gigaben [working title]
+# Mailing [working title]
 
 A simple framework for authoring and sending great emails from your react app.
 
@@ -11,9 +11,13 @@ A simple framework for authoring and sending great emails from your react app.
 - ✅ Plays well with js frameworks like redwood.js, remix, next.js
 - ✅ Written in Typescript
 
+# TODO: VIDEO HERE
+
 ## Setup
 
-1. Install gigaben in your package.json with yarn or npm.
+1. Install mailing in your package.json with yarn or npm.
+
+`npm install mailing` or `yarn add mailing`
 
 2. Scaffold your `emails` directory with `gigaben init`.
 
@@ -34,7 +38,7 @@ emails
 
 ```tsx
 import nodemailer from "nodemailer";
-import { Gigaben } from "gigaben";
+import { Mailing } from "gigaben";
 
 const transport = nodemailer.createTransport({
   pool: true,
@@ -47,7 +51,7 @@ const transport = nodemailer.createTransport({
   },
 });
 
-export default new Gigaben({ transport });
+export default new Mailing({ transport });
 ```
 
 4. Then send you first email like so:
@@ -108,7 +112,9 @@ At this point you should also be able to link import.
 - `src` has the source code
 - `lib` is the build directory, no need to manually edit
 
-### TODOs
+### Plan
+
+I want to put out 
 
 requirements
 
@@ -116,12 +122,13 @@ requirements
 - [x] generate emails directory
 - [ ] email.ts API
 - [ ] basic tests for lib
-- [x] basic tests for cli (see commander readme for testing cli)
-- [ ] email previews (working on this next)
+- [~] basic tests for cli (see commander readme for testing cli)
+- [~] email previews (working on this next)
 - [ ] format README, logo
 - [ ] rename (react-mailer, gigaben, mailing, omail, mailbus, must be available on npmjs.com)
 - [ ] instructions for next.js integration
 - [ ] publish to npm
+- [ ] add video to readme
 
 ---
 
