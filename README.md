@@ -1,4 +1,4 @@
-# Mailing [working title]
+# ⍨ Mailing ⍨ [working title]
 
 #### Send great emails from your react app.
 

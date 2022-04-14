@@ -1,3 +1,5 @@
+const next = require("next");
+
 const DEFAULT_PORT = 3883;
 
 exports.command = "preview";
