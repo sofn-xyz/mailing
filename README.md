@@ -79,7 +79,7 @@ TODO
 
 ## Developing with email previews
 
-TODO
+Mailing includes a development mode for previewing your emails.
 
 ## Testing emails with jest
 
@@ -152,9 +152,11 @@ just below the line
 
 #### API
 
-sendMail(Mail)
+_`sendMail(mail: ComponentMail)`_
 
-```
+Send
+
+```ts
 type Mail
 namespace mailing {
   export type ComponentMail = {
@@ -176,8 +178,8 @@ namespace mailing {
 }
 ```
 
-The CLI gets installed in `node_modules/.bin` as `mailings` and `mm` for short.
+The CLI gets installed in `node_modules/.bin` as `mailing` and `mm` for short.
 
-`mailings` initializes a project then starts the development server
-`mailings init` initializes a project
-`mailings preview` launches the development server
+`mailing` initializes a project then starts the development server
+`mailing init` initializes a project
+`mailing preview` launches the development server

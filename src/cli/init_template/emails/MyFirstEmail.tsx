@@ -19,7 +19,7 @@ const MyFirstEmail: React.FC<{ name: string }> = ({ name }) => {
       <MjmlBody width={500}>
         <MjmlSection>
           <MjmlColumn>
-            <MjmlText fontSize={32}>Hi {name}</MjmlText>
+            <MjmlText fontSize={32}>Hi {name},</MjmlText>
             <MjmlText fontSize={16}>
               I'm very excited to contact you by email.
             </MjmlText>

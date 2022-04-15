@@ -1,5 +1,5 @@
 {
-  "name": "gigaben",
+  "name": "mailing",
   "version": "0.1.0",
   "description": "Fun email development environment",
   "main": "./lib/index.js",
@@ -8,7 +8,7 @@
     "ml": "./lib/cli/index.js"
   },
   "scripts": {
-    "build": "tsc -p tsconfig.json && cp -R src/cli/init_template lib/cli/init_template && chmod +x lib/cli/index.js",
+    "build": "echo 'Building mailing' && tsc -p tsconfig.json && cp -R src/cli/init_template lib/cli/init_template && chmod +x lib/cli/index.js",
     "test": "jest",
     "test:watch": "jest --watch",
     "clean": "rm -rf ./lib && rm -rf ./src/emails",

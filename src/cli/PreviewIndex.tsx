@@ -1,23 +1,16 @@
-// import { resolve } from "path";
+import { resolve } from "path";
 import React from "react";
 import { getPreviewsDirectory } from "./paths";
 import { readdirSync } from "fs-extra";
 import {
-  render,
   Mjml,
-  MjmlHead,
-  MjmlTitle,
-  MjmlPreview,
   MjmlBody,
   MjmlSection,
   MjmlColumn,
-  MjmlButton,
-  MjmlImage,
   MjmlText,
-  MjmlFont,
-  MjmlAttributes,
-  MjmlAll,
+  MjmlTitle,
 } from "mjml-react";
+import Head from "./init_template/emails/components/Head";
 
 const PreviewIndex: React.FC = () => {
   const previewsDir = getPreviewsDirectory();
@@ -26,25 +19,31 @@ const PreviewIndex: React.FC = () => {
     return <h1>emails/previews not found</h1>;
   }
 
-  const previews = readdirSync(previewsDir);
+  const previewCollections = readdirSync(previewsDir);
+  const previews = previewCollections.map((p) => {
+    return [p, require(resolve(previewsDir, p))];
+  });
 
   return (
     <Mjml>
-      <MjmlHead>
-        <MjmlFont
-          name="Inter"
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@300;600;900"
-        />
-        <MjmlAttributes>
-          <MjmlAll font-family="Inter" />
-        </MjmlAttributes>
-      </MjmlHead>
+      <Head>
+        <MjmlTitle>My very first email</MjmlTitle>
+      </Head>
       <MjmlBody width={500}>
         <MjmlSection>
           <MjmlColumn>
             <MjmlText fontSize={32}>Previews</MjmlText>
             {previews.map((p) => (
-              <MjmlText key={p}>{p}</MjmlText>
+              <MjmlText key={p[0]}>
+                <>
+                  <MjmlText>{p[0]}</MjmlText>
+                  {Object.keys(p[1]).map((previewFunction) => {
+                    <MjmlText key={previewFunction}>
+                      {previewFunction}
+                    </MjmlText>;
+                  })}
+                </>
+              </MjmlText>
             ))}
           </MjmlColumn>
         </MjmlSection>
