@@ -1,18 +1,27 @@
-# ⍨ Mailing ⍨ [working title]
+<br/>
+<h1 align="center"><img src="https://user-images.githubusercontent.com/609038/163602561-26f581f0-74d2-44d8-8d6a-29eef85f349a.png#gh-dark-mode-only" alt="Mailling logo" width="294" height="64"/>
+<img src="https://user-images.githubusercontent.com/609038/163602563-35840c7b-997b-4255-9810-c03b097bac14.png#gh-light-mode-only" alt="Mailling logo" width="294" height="64"/></h1>
 
-#### Send great emails from your react app.
 
-- ✅ Email templates with React components
-- ✅ Battle-tested MJML components that work across clients (Outlook!)
-- ✅ Mail previews for quick development
-- ✅ Test-mode for ensuring emails send and have the correct content
-- ✅ Inspired by ActionMailer
-- ✅ Plays well with js frameworks like redwood.js, remix, next.js
-- ✅ Written in Typescript
+<p align="center"><b>Send great emails from your react app.</b></p>
+
+<br/>
+
+- Email templates with React components
+- Battle-tested MJML components that work across clients (Outlook!)
+- Mail previews for quick development
+- Test-mode for ensuring emails send and have the correct content
+- Inspired by ActionMailer
+- Plays well with js frameworks like redwood.js, remix, next.js
+- Written in Typescript
+
+<br/>
 
 # TODO: VIDEO HERE
 
-## Why?
+<br/>
+
+## ●  Why?
 
 We love good emails. Usage metrics imply that a lot of people do. Bad emails suck.
 
@@ -20,7 +29,9 @@ But every web developer I've ever met hates making them.
 
 We're trying to make coding them fun.
 
-## Setup
+<br/>
+
+## ● Setup
 
 1. Install mailing in your package.json with yarn or npm.
 
@@ -73,15 +84,21 @@ import { sendMail, MyFirstEmail } from "emails";
 sendMail(<MyFirstEmail firstName="Bob" />);
 ```
 
-## Adding to a next.js app
+<br/>
+
+## ● Adding to a next.js app
 
 TODO
+
+<br/>
 
 ## Developing with email previews
 
 Mailing includes a development mode for previewing your emails.
 
-## Testing emails with jest
+<br/>
+
+## ● Testing emails with jest
 
 ```tsx
 import { getTestMessageQueue } from "emails";
@@ -99,7 +116,9 @@ describe("Example API", () => {
 });
 ```
 
-## Contributing
+<br/>
+
+## ● Contributing
 
 Want to help make this? Cool!
 
