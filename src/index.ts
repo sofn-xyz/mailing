@@ -1,5 +1,5 @@
 import { ReactElement, JSXElementConstructor } from "react";
-import nodemailer, { Transport } from "nodemailer";
+import { Transporter } from "nodemailer";
 import open from "open";
 import { file } from "tmp-promise";
 import fs from "fs";
@@ -17,7 +17,7 @@ namespace mailing {
     headers?: { [key: string]: string };
   };
   export type SendMailOptions = {
-    transport: nodemailer.Transporter;
+    transport: Transporter;
     defaulFrom?: string;
     forceDeliver?: boolean;
     forcePreview?: boolean;

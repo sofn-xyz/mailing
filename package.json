@@ -1,11 +1,11 @@
 {
   "name": "gigaben",
   "version": "0.1.0",
-  "description": "A simple framework for authoring and sending great emails from your react app.",
+  "description": "Fun email development environment",
   "main": "./lib/index.js",
   "bin": {
-    "gigaben": "./lib/cli/index.js",
-    "gb": "./lib/cli/index.js"
+    "mailing": "./lib/cli/index.js",
+    "ml": "./lib/cli/index.js"
   },
   "scripts": {
     "build": "tsc -p tsconfig.json && cp -R src/cli/init_template lib/cli/init_template && chmod +x lib/cli/index.js",

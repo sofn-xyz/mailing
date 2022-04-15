@@ -1,5 +1,5 @@
 import { ReactElement, JSXElementConstructor } from "react";
-import nodemailer from "nodemailer";
+import { Transporter } from "nodemailer";
 declare namespace mailing {
     type ComponentMail = {
         from: string;
@@ -14,7 +14,7 @@ declare namespace mailing {
         };
     };
     type SendMailOptions = {
-        transport: nodemailer.Transporter;
+        transport: Transporter;
         defaulFrom?: string;
         forceDeliver?: boolean;
         forcePreview?: boolean;

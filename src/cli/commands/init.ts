@@ -2,24 +2,9 @@ import { cp } from "fs/promises";
 import { existsSync } from "fs";
 import prompts from "prompts";
 import { resolve } from "path";
+import { getExistingEmailsDir } from "../paths";
 
-const pathHasExistingEmailsDir = (path: string) => {
-  // could do a better check of whether this exists
-  return existsSync(path);
-};
-
-const getExistingEmailsDir = async () => {
-  const appRoot = require("app-root-path");
-  if (pathHasExistingEmailsDir(appRoot.resolve("src/emails"))) {
-    return appRoot.resolve("src/emails");
-  }
-  if (pathHasExistingEmailsDir(appRoot.resolve("emails"))) {
-    return appRoot.resolve("emails");
-  }
-  return null;
-};
-
-const getPotentialEmailsDirPath = async () => {
+const getPotentialEmailsDirPath = () => {
   const appRoot = require("app-root-path");
   if (existsSync(appRoot.resolve("src"))) {
     return appRoot.resolve("src/emails");
@@ -45,13 +30,13 @@ export const describe = "initialize by generating the emails directory";
 
 export const handler = async () => {
   // check if emails directory already exists
-  const existingEmailsPath = await getExistingEmailsDir();
+  const existingEmailsPath = getExistingEmailsDir();
   if (existingEmailsPath) {
     // if it does abort
     console.log("Directory 'emails' found at", existingEmailsPath);
   } else {
     console.log("Emails directory not found.");
-    const emailsPath = await getPotentialEmailsDirPath();
+    const emailsPath = getPotentialEmailsDirPath();
     const response = await prompts({
       type: "text",
       name: "path",
@@ -60,7 +45,11 @@ export const handler = async () => {
     });
     if (response.path) {
       // copy the init_template in!
-      await cp(resolve(__dirname, "../init_template"), response.path, {
+      console.log(
+        `resolve(__dirname, "../init_template/")`,
+        resolve(__dirname, "../init_template/")
+      );
+      await cp(resolve(__dirname, "../init_template/emails"), response.path, {
         recursive: true,
       });
       console.log(`Generated your emails dir at ${response.path}`);

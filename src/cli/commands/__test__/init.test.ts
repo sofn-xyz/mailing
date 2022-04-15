@@ -16,7 +16,7 @@ describe("init command", () => {
     );
     expect(cp).toHaveBeenCalledTimes(1);
     expect(cp).toHaveBeenCalledWith(
-      resolve(__dirname, "../../init_template"),
+      resolve(__dirname, "../../init_template/emails"),
       "/tmp/src/emails",
       { recursive: true }
     );

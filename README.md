@@ -14,11 +14,11 @@
 
 ## Why?
 
-I love a good email. Usage metrics imply that a lot of people do. Bad emails suck.
+We love good emails. Usage metrics imply that a lot of people do. Bad emails suck.
 
 But every web developer I've ever met hates making them.
 
-Let's make coding them fun.
+We're trying to make coding them fun.
 
 ## Setup
 
@@ -131,9 +131,10 @@ show hn requirements
 - [x] generate emails directory
 - [~] email.ts API
 - [ ] basic tests for lib
-- [~] basic tests for cli (see commander readme for testing cli)
+- [~] basic tests for cli (init test)
 - [~] email previews (working on this next)
-- [ ] format README, logo
+- [ ] polished README
+- [ ] logo
 - [ ] rename (react-mailer, gigaben, mailing, omail, mailbus, must be available on npmjs.com)
 - [ ] instructions for next.js integration
 - [ ] publish to npm
@@ -142,8 +143,41 @@ show hn requirements
 
 ---
 
-below the line
+just below the line
 
 - [ ] instructions for redwood.js integration
 - [ ] instructions for remix.run integration
 - [ ] faktory integration
+- [ ] mailing.run website
+
+#### API
+
+sendMail(Mail)
+
+```
+type Mail
+namespace mailing {
+  export type ComponentMail = {
+    from: string;
+    to: string | string[];
+    cc?: string | string[];
+    bcc?: string | string[];
+    subject: string;
+    component: ReactElement<any, string | JSXElementConstructor<any>>;
+    text?: string;
+    headers?: { [key: string]: string };
+  };
+  export type SendMailOptions = {
+    transport: Transporter;
+    defaulFrom?: string;
+    forceDeliver?: boolean;
+    forcePreview?: boolean;
+  };
+}
+```
+
+The CLI gets installed in `node_modules/.bin` as `mailings` and `mm` for short.
+
+`mailings` initializes a project then starts the development server
+`mailings init` initializes a project
+`mailings preview` launches the development server
