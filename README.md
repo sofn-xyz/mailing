@@ -1,11 +1,7 @@
-<br/>
-<h1 align="center"><img src="https://user-images.githubusercontent.com/609038/163602561-26f581f0-74d2-44d8-8d6a-29eef85f349a.png#gh-dark-mode-only" alt="Mailling logo" width="294" height="64"/>
-<img src="https://user-images.githubusercontent.com/609038/163602563-35840c7b-997b-4255-9810-c03b097bac14.png#gh-light-mode-only" alt="Mailling logo" width="294" height="64"/></h1>
+<img src="https://user-images.githubusercontent.com/609038/163605455-478b8883-235c-4803-9b48-fc2d9a912b73.png#gh-dark-mode-only" alt="Mailling logo" width="295" height="128"/>
+<img src="https://user-images.githubusercontent.com/609038/163605459-12c1d04b-9891-4c73-9ed0-fbccddfaa476.png#gh-light-mode-only" alt="Mailling logo" width="295" height="128"/>
 
-
-<p align="center"><b>Send great emails from your react app.</b></p>
-
-<br/>
+<h2>●&nbsp;&nbsp;&nbsp;Send great emails from your react app.</h2>
 
 - Email templates with React components
 - Battle-tested MJML components that work across clients (Outlook!)
@@ -21,17 +17,13 @@
 
 <br/>
 
-## ●  Why?
+## ●&nbsp;&nbsp;&nbsp;Why?
 
-We love good emails. Usage metrics imply that a lot of people do. Bad emails suck.
-
-But every web developer I've ever met hates making them.
-
-We're trying to make coding them fun.
+We love good emails. Usage metrics imply that a lot of people do. But every web developer I've ever met hates making them. So, we're trying to make coding them easy.
 
 <br/>
 
-## ● Setup
+## ●&nbsp;&nbsp;&nbsp;Setup
 
 1. Install mailing in your package.json with yarn or npm.
 
@@ -86,7 +78,7 @@ sendMail(<MyFirstEmail firstName="Bob" />);
 
 <br/>
 
-## ● Adding to a next.js app
+## ●&nbsp;&nbsp;&nbsp;Adding to a next.js app
 
 TODO
 
@@ -98,7 +90,7 @@ Mailing includes a development mode for previewing your emails.
 
 <br/>
 
-## ● Testing emails with jest
+## ●&nbsp;&nbsp;&nbsp;Testing emails with jest
 
 ```tsx
 import { getTestMessageQueue } from "emails";
@@ -118,7 +110,7 @@ describe("Example API", () => {
 
 <br/>
 
-## ● Contributing
+## ●&nbsp;&nbsp;&nbsp;Contributing
 
 Want to help make this? Cool!
 
