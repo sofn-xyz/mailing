@@ -90,7 +90,7 @@ exports.handler = async (argv?: ArgV) => {
   // simple live reload implementation
   const changeWatchPath = resolve(".");
   watch(changeWatchPath, { recursive: true }, (eventType, filename) => {
-    console.log(`Detected ${eventType} on ${filename}, reloading`);
+    log(`Detected ${eventType} on ${filename}, reloading`);
     open(currentUrl, { background: true });
   });
   log(`Watching for changes to ${changeWatchPath}`);
