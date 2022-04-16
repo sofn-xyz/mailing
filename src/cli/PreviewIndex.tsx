@@ -8,11 +8,16 @@ import {
   MjmlSection,
   MjmlColumn,
   MjmlText,
+  MjmlFont,
+  MjmlHead,
+  MjmlAll,
+  MjmlAttributes,
   MjmlTitle,
+  MjmlButton,
 } from "mjml-react";
-import Head from "./init_template/emails/components/Head";
 
 const PreviewIndex: React.FC = () => {
+  console.log("PreviewIndex render1");
   const previewsDir = getPreviewsDirectory();
 
   if (!previewsDir) {
@@ -20,16 +25,26 @@ const PreviewIndex: React.FC = () => {
   }
 
   const previewCollections = readdirSync(previewsDir);
-  const previews = previewCollections.map((p) => {
+  const previews: [string, object][] = previewCollections.map((p) => {
+    console.log(p);
     return [p, require(resolve(previewsDir, p))];
   });
 
+  console.log(previews);
+
   return (
     <Mjml>
-      <Head>
-        <MjmlTitle>My very first email</MjmlTitle>
-      </Head>
-      <MjmlBody width={500}>
+      <MjmlHead>
+        <MjmlTitle>Mailing Previews</MjmlTitle>
+        <MjmlFont
+          name="Inter"
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@300;600;900"
+        />
+        <MjmlAttributes>
+          <MjmlAll font-family="Inter" />
+        </MjmlAttributes>
+      </MjmlHead>
+      <MjmlBody width={900}>
         <MjmlSection>
           <MjmlColumn>
             <MjmlText fontSize={32}>Previews</MjmlText>
@@ -37,14 +52,20 @@ const PreviewIndex: React.FC = () => {
               <MjmlText key={p[0]}>
                 <>
                   <MjmlText>{p[0]}</MjmlText>
-                  {Object.keys(p[1]).map((previewFunction) => {
+                  {Object.keys(p[1]).map((previewFunction) => (
                     <MjmlText key={previewFunction}>
-                      {previewFunction}
-                    </MjmlText>;
-                  })}
+                      <br />
+                      <a href={`/${p[0]}/${previewFunction}`}>
+                        {previewFunction}
+                      </a>
+                    </MjmlText>
+                  ))}
                 </>
               </MjmlText>
             ))}
+            <MjmlButton align="left" background-color="black" href="#">
+              Learn more
+            </MjmlButton>
           </MjmlColumn>
         </MjmlSection>
       </MjmlBody>

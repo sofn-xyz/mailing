@@ -8,7 +8,7 @@
     "ml": "./lib/cli/index.js"
   },
   "scripts": {
-    "build": "echo 'Building mailing' && tsc -p tsconfig.json && cp -R src/cli/init_template lib/cli/init_template && chmod +x lib/cli/index.js",
+    "build": "echo 'Building mailing' && tsc -p tsconfig.json && cp -R src/cli/init_template lib/cli && chmod +x lib/cli/index.js",
     "test": "jest",
     "test:watch": "jest --watch",
     "clean": "rm -rf ./lib && rm -rf ./src/emails",
@@ -43,9 +43,9 @@
     "build/**/*"
   ],
   "dependencies": {
-    "@babel/preset-typescript": "^7.16.7",
     "@types/mjml-react": "^2.0.4",
     "app-root-path": "^3.0.0",
+    "chalk": "^4.1.2",
     "fs-extra": "^10.0.1",
     "mjml-react": "^2.0.7",
     "nodemailer": "^6.7.3",
@@ -53,6 +53,7 @@
     "prompts": "^2.4.2",
     "react": "^18.0.0",
     "tmp-promise": "^3.0.3",
+    "ts-node": "^10.7.0",
     "yargs": "^17.4.1"
   }
 }

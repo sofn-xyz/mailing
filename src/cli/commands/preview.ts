@@ -4,10 +4,9 @@ import { resolve } from "path";
 import { render } from "mjml-react";
 import open from "open";
 import { watch } from "fs-extra";
-import { getExistingEmailsDir, getPreviewsDirectory } from "../paths";
+import { getPreviewsDirectory } from "../paths";
 import PreviewIndex from "../PreviewIndex";
-import { execSync, spawn } from "child_process";
-import { exit } from "process";
+import log from "../log";
 
 const DEFAULT_PORT = 3883;
 
@@ -24,15 +23,10 @@ exports.builder = {
 type ArgV = { port: number; build: boolean };
 
 exports.handler = async (argv?: ArgV) => {
-  console.log("Starting preview server 🤠");
+  log("Starting preview server 🤠");
 
-  if (process.env.MAILING_DEV && JSON.parse(process.env.MAILING_DEV)) {
-    console.log("Rebuilding before preview...");
-    execSync("npm run build && MAILING_DEV=false mailing preview", {
-      stdio: "inherit",
-    });
-    exit(0);
-  }
+  require("ts-node").register();
+
   if (process.env.NODE_ENV === "test") {
     return; // for now
   }
@@ -41,11 +35,14 @@ exports.handler = async (argv?: ArgV) => {
 
   const previewsPath = getPreviewsDirectory();
   if (!previewsPath) {
-    console.log(
+    log(
       "Could not find emails directory. Have you initialized the project with `mailing init`?"
     );
     return;
   }
+
+  const host = `http://localhost:${port}`;
+  let currentUrl = `${host}/`;
 
   http
     .createServer(function (req, res) {
@@ -54,12 +51,17 @@ exports.handler = async (argv?: ArgV) => {
         return;
       }
 
+      currentUrl = `${host}${req.url}`;
+
       let component;
       try {
-        component =
-          req.url !== "/"
-            ? require(resolve(previewsPath, req.url))
-            : React.createElement(PreviewIndex);
+        if (req.url === "/") {
+          component = React.createElement(PreviewIndex);
+        } else {
+          const [_blank, moduleName, functionName] = req.url.split("/");
+          const module = require(resolve(previewsPath, moduleName));
+          component = module[functionName]();
+        }
       } catch (e) {
         console.log("caught error", e);
         res.writeHead(500);
@@ -73,30 +75,23 @@ exports.handler = async (argv?: ArgV) => {
         });
 
         res.writeHead(200);
-        res.end(html);
-        shouldRefresh = false;
+        res.end(html || JSON.stringify(errors));
       } catch (e) {
+        log("caught error rendering mjml to html", e);
         res.writeHead(500);
         res.end(JSON.stringify(e));
       }
     })
     .listen(port);
-  await open(`http://localhost:${port}`);
+  await open(currentUrl);
 
-  console.log(`Running preview server at http://localhost:${port}`);
+  log(`Running preview at ${currentUrl}`);
 
-  const changeWatchPath = getExistingEmailsDir();
-
-  // This is a cool and hacky live reload implementation.
-  watch(
-    changeWatchPath,
-    {
-      recursive: true,
-    },
-    (eventType, filename) => {
-      console.log(`Detected ${eventType} on ${filename}, reloading`);
-      open(`http://localhost:${port}`, { background: true });
-    }
-  );
-  console.log(`Watching for changes to ${changeWatchPath}`);
+  // simple live reload implementation
+  const changeWatchPath = resolve(".");
+  watch(changeWatchPath, { recursive: true }, (eventType, filename) => {
+    console.log(`Detected ${eventType} on ${filename}, reloading`);
+    open(currentUrl, { background: true });
+  });
+  log(`Watching for changes to ${changeWatchPath}`);
 };
