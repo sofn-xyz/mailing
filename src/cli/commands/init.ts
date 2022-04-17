@@ -40,7 +40,7 @@ export const handler = async () => {
     const response = await prompts({
       type: "text",
       name: "path",
-      message: `Where should we generate it?`,
+      message: "Where should we generate it?",
       initial: emailsPath,
     });
     if (response.path) {
