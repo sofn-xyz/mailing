@@ -1,7 +1,6 @@
 import React from "react";
 import http from "http";
 import { resolve } from "path";
-import { render } from "mjml-react";
 import open from "open";
 import { watch } from "fs-extra";
 import { getPreviewsDirectory } from "../paths";
@@ -23,13 +22,15 @@ exports.builder = {
 type ArgV = { port: number; build: boolean };
 
 exports.handler = async (argv?: ArgV) => {
-  log("Starting preview server 🤠");
-
-  require("ts-node").register();
-
   if (process.env.NODE_ENV === "test") {
     return; // for now
   }
+
+  const { render } =  require("mjml-react");
+
+  log("Starting preview server 🤠");
+
+  require("ts-node").register();
 
   const port = argv?.port || DEFAULT_PORT;
 
@@ -71,6 +72,7 @@ exports.handler = async (argv?: ArgV) => {
 
       try {
         const { html, errors } = render(component, {
+          packages: [],
           minify: false,
         });
 

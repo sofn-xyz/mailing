@@ -17,7 +17,6 @@ import {
 } from "mjml-react";
 
 const PreviewIndex: React.FC = () => {
-  console.log("PreviewIndex render1");
   const previewsDir = getPreviewsDirectory();
 
   if (!previewsDir) {
