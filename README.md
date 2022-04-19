@@ -145,8 +145,8 @@ show hn requirements
 - [~] basic tests for cli (init test)
 - [~] email previews (working on this next)
 - [ ] polished README
-- [ ] logo
-- [ ] rename (react-mailer, gigaben, mailing, omail, mailbus, must be available on npmjs.com)
+- [x] logo
+- [x] rename (react-mailer, gigaben, mailing, omail, mailbus, must be available on npmjs.com)
 - [ ] instructions for next.js integration
 - [ ] publish to npm
 - [ ] add video to readme
