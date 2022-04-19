@@ -25,11 +25,8 @@ const PreviewIndex: React.FC = () => {
 
   const previewCollections = readdirSync(previewsDir);
   const previews: [string, object][] = previewCollections.map((p) => {
-    console.log(p);
     return [p, require(resolve(previewsDir, p))];
   });
-
-  console.log(previews);
 
   return (
     <Mjml>
@@ -53,7 +50,7 @@ const PreviewIndex: React.FC = () => {
                   <MjmlText>{p[0]}</MjmlText>
                   {Object.keys(p[1]).map((previewFunction) => (
                     <MjmlText key={previewFunction}>
-                      <br />
+                      <br />-{" "}
                       <a href={`/${p[0]}/${previewFunction}`}>
                         {previewFunction}
                       </a>
@@ -62,9 +59,6 @@ const PreviewIndex: React.FC = () => {
                 </>
               </MjmlText>
             ))}
-            <MjmlButton align="left" background-color="black" href="#">
-              Learn more
-            </MjmlButton>
           </MjmlColumn>
         </MjmlSection>
       </MjmlBody>

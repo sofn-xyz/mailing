@@ -3,7 +3,7 @@ import http from "http";
 import { resolve } from "path";
 import open from "open";
 import { watch } from "fs-extra";
-import { getPreviewsDirectory } from "../paths";
+import { getPreviewsDirectory, getExistingEmailsDir } from "../paths";
 import PreviewIndex from "../PreviewIndex";
 import log from "../log";
 
@@ -26,7 +26,7 @@ exports.handler = async (argv?: ArgV) => {
     return; // for now
   }
 
-  const { render } =  require("mjml-react");
+  const { render } = require("mjml-react");
 
   log("Starting preview server 🤠");
 
@@ -90,7 +90,7 @@ exports.handler = async (argv?: ArgV) => {
   log(`Running preview at ${currentUrl}`);
 
   // simple live reload implementation
-  const changeWatchPath = resolve(".");
+  const changeWatchPath = getExistingEmailsDir();
   watch(changeWatchPath, { recursive: true }, (eventType, filename) => {
     log(`Detected ${eventType} on ${filename}, reloading`);
     open(currentUrl, { background: true });
