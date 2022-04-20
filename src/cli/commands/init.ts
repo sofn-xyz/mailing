@@ -53,25 +53,22 @@ export const handler = async () => {
   } else {
     log("Emails directory not found.");
     const emailsPath = getPotentialEmailsDirPath();
-    const response = await prompts([
-      {
-        type: "text",
-        name: "path",
-        message: "Where should we generate it?",
-        initial: emailsPath,
-      },
-      {
+    const response = await prompts({
+      type: "text",
+      name: "path",
+      message: "Where should we generate it?",
+      initial: emailsPath,
+    });
+    if (response.path) {
+      const ts = await prompts({
         type: "confirm",
-        name: "typescript",
+        name: "value",
         message: "Are you using typescript?",
         initial: looksLikeTypescriptProject(),
-      },
-    ]);
-    if (response.path) {
+      });
       // copy the emails dir template in!
-      const path = `../generator_templates/${
-        looksLikeTypescriptProject() ? "ts" : "js"
-      }/emails`;
+      console.warn(ts);
+      const path = `../generator_templates/${ts.value ? "ts" : "js"}/emails`;
       await copySync(resolve(__dirname, path), response.path, {
         overwrite: false,
       });
