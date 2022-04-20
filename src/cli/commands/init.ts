@@ -67,7 +67,6 @@ export const handler = async () => {
         initial: looksLikeTypescriptProject(),
       });
       // copy the emails dir template in!
-      console.warn(ts);
       const path = `../generator_templates/${ts.value ? "ts" : "js"}/emails`;
       await copySync(resolve(__dirname, path), response.path, {
         overwrite: false,
