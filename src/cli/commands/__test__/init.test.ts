@@ -1,42 +1,53 @@
 import prompts from "prompts";
 import { resolve } from "path";
-import fs from "fs";
-import { cp } from "fs/promises";
+import fsExtra, { copySync } from "fs-extra";
 import { handler } from "../init";
+import log from "../../log";
 
-jest.mock('fs', () => {
-  const originalModule = jest.requireActual('fs');
-  return {
-    __esModule: true,
-    default: originalModule,
-    ...originalModule,
-  };
-});
-jest.mock("fs/promises");
+jest.mock("fs-extra");
+jest.mock("../../log");
 jest.mock("../preview");
 
 describe("init command", () => {
-  it("it creates the emails directory", async () => {
-    prompts.inject(["/tmp/src/emails"]);
+  it("it creates the ts emails directory", async () => {
+    prompts.inject(["/tmp/src/emails", "yes"]);
+    jest
+      .spyOn(fsExtra, "existsSync")
+      .mockImplementation((path) => /package\.json/.test(path.toString()));
     await handler();
-    expect(console.log).toHaveBeenCalledWith(
+    expect(log).toHaveBeenCalledWith(
       "Generated your emails dir at /tmp/src/emails"
     );
-    expect(cp).toHaveBeenCalledTimes(1);
-    expect(cp).toHaveBeenCalledWith(
-      resolve(__dirname, "../../init_template/emails"),
+    expect(copySync).toHaveBeenCalledTimes(1);
+    expect(copySync).toHaveBeenCalledWith(
+      resolve(__dirname, "../../generator_templates/ts/emails"),
       "/tmp/src/emails",
-      { recursive: true }
+      { overwrite: false }
+    );
+  });
+
+  it("it creates the js emails directory", async () => {
+    prompts.inject(["/tmp/src/emails", "yes"]);
+    jest.spyOn(fsExtra, "existsSync").mockImplementation(() => false);
+    await handler();
+    expect(log).toHaveBeenCalledWith(
+      "Generated your emails dir at /tmp/src/emails"
+    );
+    expect(copySync).toHaveBeenCalledTimes(1);
+    expect(copySync).toHaveBeenCalledWith(
+      resolve(__dirname, "../../generator_templates/js/emails"),
+      "/tmp/src/emails",
+      { overwrite: false }
     );
   });
 
   it("it skips the emails directory if it already exists", async () => {
     prompts.inject(["/tmp/src/emails"]);
-    jest.spyOn(fs, "existsSync").mockImplementation(() => true);
-    expect(fs.existsSync("nothing")).toBe(true);
+    jest.spyOn(fsExtra, "existsSync").mockImplementation(() => true);
+    expect(fsExtra.existsSync("nothing")).toBe(true);
     await handler();
-    expect(cp).toHaveBeenCalledTimes(0);
-    expect(console.log).not.toHaveBeenCalledWith(
+    expect(copySync).toHaveBeenCalledTimes(0);
+    expect(log).not.toHaveBeenCalledWith(
       "Generated your emails dir at /tmp/src/emails"
     );
   });

@@ -99,5 +99,5 @@
     "skipLibCheck": true                                 /* Skip type checking all .d.ts files. */
   },
   "include": ["src/**/*"],
-  "exclude" : ["src/**/__test__/*", "lib/**/*", "src/cli/init_template/**/*"]
+  "exclude" : ["src/**/__test__/*", "lib/**/*", "src/cli/generator_templates/**/*"]
 }

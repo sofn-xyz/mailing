@@ -5,10 +5,10 @@
   "main": "./lib/index.js",
   "bin": {
     "mailing": "./lib/cli/index.js",
-    "ml": "./lib/cli/index.js"
+    "mm": "./lib/cli/index.js"
   },
   "scripts": {
-    "build": "echo 'Building mailing' && tsc -p tsconfig.json && cp -R src/cli/init_template lib/cli && chmod +x lib/cli/index.js",
+    "build": "echo 'Building mailing' && tsc -p tsconfig.json && cp -R src/cli/generator_templates lib/cli && chmod +x lib/cli/index.js",
     "test": "jest",
     "test:watch": "jest --watch",
     "clean": "rm -rf ./lib && rm -rf ./src/emails",
@@ -35,15 +35,14 @@
     "build/**/*"
   ],
   "dependencies": {
-    "typescript": "^4.6.3",
     "@types/fs-extra": "^9.0.13",
     "@types/jest": "^27.4.1",
+    "@types/mjml-react": "^2.0.4",
     "@types/node": "^17.0.24",
     "@types/nodemailer": "^6.4.4",
     "@types/prompts": "^2.0.14",
     "@types/react": "^18.0.5",
     "@types/yargs": "^17.0.10",
-    "@types/mjml-react": "^2.0.4",
     "app-root-path": "^3.0.0",
     "chalk": "^4.1.2",
     "fs-extra": "^10.1.0",
@@ -55,6 +54,7 @@
     "react": "^18.0.0",
     "tmp-promise": "^3.0.3",
     "ts-node": "^10.7.0",
+    "typescript": "^4.6.3",
     "yargs": "^17.4.1"
   }
 }

@@ -13,7 +13,6 @@ import {
   MjmlAll,
   MjmlAttributes,
   MjmlTitle,
-  MjmlButton,
 } from "mjml-react";
 
 const PreviewIndex: React.FC = () => {
@@ -23,10 +22,14 @@ const PreviewIndex: React.FC = () => {
     return <h1>emails/previews not found</h1>;
   }
 
-  const previewCollections = readdirSync(previewsDir);
+  const previewCollections = readdirSync(previewsDir).filter(
+    (path) => !/^\./.test(path)
+  );
   const previews: [string, object][] = previewCollections.map((p) => {
     return [p, require(resolve(previewsDir, p))];
   });
+
+  const firstTest = previews.length === 1 && previews[0][0] === "MyFirstEmail";
 
   return (
     <Mjml>
@@ -61,6 +64,15 @@ const PreviewIndex: React.FC = () => {
             ))}
           </MjmlColumn>
         </MjmlSection>
+        {firstTest && (
+          <MjmlSection>
+            <MjmlColumn>
+              <MjmlText fontSize={32}>
+                Add a preview to emails/previews and it will apprear here.
+              </MjmlText>
+            </MjmlColumn>
+          </MjmlSection>
+        )}
       </MjmlBody>
     </Mjml>
   );

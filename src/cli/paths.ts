@@ -1,9 +1,9 @@
-import fs from "fs";
+import { existsSync } from "fs-extra";
 import { resolve } from "path";
 
 function pathHasExistingEmailsDir(path: string) {
   // could do a better check of whether this exists
-  return fs.existsSync(path);
+  return existsSync(path);
 }
 
 export function getExistingEmailsDir() {

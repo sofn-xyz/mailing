@@ -1,7 +1,7 @@
-import { cp } from "fs/promises";
-import { existsSync } from "fs";
+import { existsSync, copySync } from "fs-extra";
 import prompts from "prompts";
 import { resolve } from "path";
+import log from "../log";
 import { getExistingEmailsDir } from "../paths";
 
 const getPotentialEmailsDirPath = () => {
@@ -11,6 +11,22 @@ const getPotentialEmailsDirPath = () => {
   } else {
     return appRoot.resolve("emails");
   }
+};
+
+const looksLikeTypescriptProject = () => {
+  const appRoot = require("app-root-path");
+
+  if (existsSync(appRoot.resolve("tsconfig.json"))) {
+    return true;
+  }
+
+  const pkgPath = appRoot.resolve("package.json");
+  if (existsSync(pkgPath)) {
+    const pkg = require(pkgPath);
+    return !!(pkg.devDependencies?.typescript || pkg.dependencies?.typescript);
+  }
+
+  return false;
 };
 
 const confirm = async (question: string) => {
@@ -33,28 +49,35 @@ export const handler = async () => {
   const existingEmailsPath = getExistingEmailsDir();
   if (existingEmailsPath) {
     // if it does abort
-    console.log("Directory 'emails' found at", existingEmailsPath);
+    log("Directory 'emails' found at", existingEmailsPath);
   } else {
-    console.log("Emails directory not found.");
+    log("Emails directory not found.");
     const emailsPath = getPotentialEmailsDirPath();
-    const response = await prompts({
-      type: "text",
-      name: "path",
-      message: "Where should we generate it?",
-      initial: emailsPath,
-    });
+    const response = await prompts([
+      {
+        type: "text",
+        name: "path",
+        message: "Where should we generate it?",
+        initial: emailsPath,
+      },
+      {
+        type: "confirm",
+        name: "typescript",
+        message: "Are you using typescript?",
+        initial: looksLikeTypescriptProject(),
+      },
+    ]);
     if (response.path) {
-      // copy the init_template in!
-      console.log(
-        `resolve(__dirname, "../init_template/")`,
-        resolve(__dirname, "../init_template/")
-      );
-      await cp(resolve(__dirname, "../init_template/emails"), response.path, {
-        recursive: true,
+      // copy the emails dir template in!
+      const path = `../generator_templates/${
+        looksLikeTypescriptProject() ? "ts" : "js"
+      }/emails`;
+      await copySync(resolve(__dirname, path), response.path, {
+        overwrite: false,
       });
-      console.log(`Generated your emails dir at ${response.path}`);
+      log(`Generated your emails dir at ${response.path}`);
     } else {
-      console.log("OK, bye!");
+      log("OK, bye!");
       return;
     }
   }
@@ -64,9 +87,9 @@ export const handler = async () => {
   );
 
   if (shouldStartPreviewMode) {
-    console.log("gb preview");
+    log("mailing preview");
     require("./preview").handler();
   } else {
-    console.log("Bye!");
+    log("Bye!");
   }
 };

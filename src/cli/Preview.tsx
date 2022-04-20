@@ -26,7 +26,7 @@ const PreviewIndex: React.FC = () => {
     return <h1>emails/previews not found</h1>;
   }
 
-  const previews = readdirSync(previewsDir);
+  const previews = readdirSync(previewsDir).filter((path) => !/^\./.test(path));
 
   return (
     <Mjml>
