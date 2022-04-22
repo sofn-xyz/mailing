@@ -1,14 +1,14 @@
 <img src="https://user-images.githubusercontent.com/609038/163605455-478b8883-235c-4803-9b48-fc2d9a912b73.png#gh-dark-mode-only" alt="Mailling logo" width="295" height="128"/>
 <img src="https://user-images.githubusercontent.com/609038/163605459-12c1d04b-9891-4c73-9ed0-fbccddfaa476.png#gh-light-mode-only" alt="Mailling logo" width="295" height="128"/>
 
-<h2>●&nbsp;&nbsp;&nbsp;Send great emails from your react app.</h2>
+<h2>●&nbsp;&nbsp;&nbsp;Send great emails with react</h2>
 
 - Email templates with React components
 - Battle-tested MJML components that work across clients (Outlook!)
 - Mail previews for quick development
 - Test-mode for ensuring emails send and have the correct content
 - Inspired by ActionMailer
-- Plays well with js frameworks like redwood.js, remix, next.js
+- Built for next.js (redwood, remix, more soon!)
 - Written in Typescript
 
 <br/>
@@ -19,7 +19,7 @@
 
 ## ●&nbsp;&nbsp;&nbsp;Why?
 
-We love good emails. Usage metrics imply that a lot of people do. But every web developer I've ever met hates making them. So, we're trying to make coding them easy.
+We love good emails. Usage metrics imply that a lot of people do. But every web developer I've ever met hates making them. We're trying to make coding them easy.
 
 <br/>
 
@@ -84,12 +84,6 @@ TODO
 
 <br/>
 
-## Developing with email previews
-
-Mailing includes a development mode for previewing your emails.
-
-<br/>
-
 ## ●&nbsp;&nbsp;&nbsp;Testing emails with jest
 
 ```tsx
@@ -123,9 +117,8 @@ Want to help make this? Cool!
 ```zsh
 git clone git@github.com:psugihara/mailing.git
 cd mailing
-npm install
-npm build # compiles the project to /lib
-npm link # symlinks the node module
+yarn
+yarn link # symlinks the node module
 mailing # this command is defined as bin in package.json
 ```
 
@@ -150,7 +143,6 @@ show hn requirements
 - [ ] instructions for next.js integration
 - [ ] publish to npm
 - [ ] add video to readme
-- [ ] split into 2 packages so that preview server is not included
 
 ---
 

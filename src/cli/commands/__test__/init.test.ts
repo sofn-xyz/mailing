@@ -6,7 +6,6 @@ import log from "../../log";
 
 jest.mock("fs-extra");
 jest.mock("../../log");
-jest.mock("../preview");
 
 describe("init command", () => {
   it("it creates the ts emails directory", async () => {

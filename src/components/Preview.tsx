@@ -1,6 +1,6 @@
 // import { resolve } from "path";
 import React from "react";
-import { getPreviewsDirectory } from "./paths";
+import { getPreviewsDirectory } from "../paths";
 import { readdirSync } from "fs-extra";
 import {
   render,
