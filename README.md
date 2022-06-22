@@ -152,7 +152,7 @@ show hn requirements
 - [ ] instructions for next.js integration
 - [ ] publish to npm
 - [ ] add video to readme
-- [ ] split into 2 packages so that preview server is not included
+- [x] split into 2 packages so that preview server is not included
 
 ---
 
