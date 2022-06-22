@@ -1,0 +1,49 @@
+{
+  "name": "mailing-monorepo",
+  "version": "0.1.0",
+  "description": "Fun email development environment",
+  "private": true,
+  "scripts": {
+    "build": "preconstruct build && cp -R packages/cli/src/generator_templates packages/cli/dist",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "clean": "rm -rf ./dist && rm -rf ./src/emails",
+    "prepublish": "yarn build",
+    "watch": "preconstruct watch",
+    "dev": "preconstruct dev",
+    "release": "preconstruct build && yarn publish",
+    "postinstall": "preconstruct dev"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/psugihara/reaction-mailer.git"
+  },
+  "keywords": [],
+  "author": "psugihara",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/psugihara/reaction-mailer/issues"
+  },
+  "workspaces": [
+    "packages/*"
+  ],
+  "homepage": "https://github.com/psugihara/reaction-mailer#readme",
+  "devDependencies": {
+    "@types/jest": "^27.4.1",
+    "@types/mjml-react": "^2.0.4",
+    "@types/node": "^17.0.24",
+    "@types/node-fetch": "^2.6.1",
+    "@types/nodemailer": "^6.4.4",
+    "@types/prompts": "^2.0.14",
+    "@types/react": "^18.0.5",
+    "@types/yargs": "^17.0.10",
+    "@babel/preset-react": "^7.17.12",
+    "@babel/preset-typescript": "^7.17.12",
+    "@preconstruct/cli": "^2.1.5"
+  },
+  "preconstruct": {
+    "packages": [
+      "packages/*"
+    ]
+  }
+}
