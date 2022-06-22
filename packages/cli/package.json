@@ -19,7 +19,6 @@
     "@preconstruct/cli": "^2.1.5",
     "@types/mjml": "^4.7.0",
     "jest": "^27.5.1",
-    "nodemon": "^2.0.15",
     "prettier": "^2.7.1",
     "ts-jest": "^27.1.4"
   },

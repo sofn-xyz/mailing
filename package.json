@@ -10,7 +10,6 @@
     "clean": "rm -rf ./dist && rm -rf ./src/emails",
     "prepublish": "yarn build",
     "watch": "preconstruct watch",
-    "dev": "preconstruct dev",
     "release": "preconstruct build && yarn publish",
     "postinstall": "preconstruct dev"
   },
