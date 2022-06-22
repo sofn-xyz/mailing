@@ -28,6 +28,9 @@
   ],
   "homepage": "https://github.com/psugihara/reaction-mailer#readme",
   "devDependencies": {
+    "@babel/preset-react": "^7.17.12",
+    "@babel/preset-typescript": "^7.17.12",
+    "@preconstruct/cli": "^2.1.5",
     "@types/jest": "^27.4.1",
     "@types/mjml-react": "^2.0.4",
     "@types/node": "^17.0.24",
@@ -36,13 +39,14 @@
     "@types/prompts": "^2.0.14",
     "@types/react": "^18.0.5",
     "@types/yargs": "^17.0.10",
-    "@babel/preset-react": "^7.17.12",
-    "@babel/preset-typescript": "^7.17.12",
-    "@preconstruct/cli": "^2.1.5"
+    "prettier": "^2.7.1"
   },
   "preconstruct": {
     "packages": [
       "packages/*"
     ]
+  },
+  "dependencies": {
+    "@changesets/cli": "^2.23.0"
   }
 }
