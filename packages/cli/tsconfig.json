@@ -13,5 +13,13 @@
     "forceConsistentCasingInFileNames": true /* Ensure that casing is correct in imports. */,
     "strict": true /* Enable all strict type-checking options. */,
     "skipLibCheck": true /* Skip type checking all .d.ts files. */
-  }
+  },
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "include": ["src/**/*"],
+  "exclude": [
+    "src/**/__test__/*",
+    "src/emails/**/*",
+    "dist/**/*",
+    "src/cli/generator_templates/**/*"
+  ]
 }

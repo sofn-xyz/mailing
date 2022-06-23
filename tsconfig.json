@@ -19,7 +19,7 @@
   "exclude": [
     "packages/*/src/**/__test__/*",
     "packages/*/src/emails/**/*",
-    "packages/*/lib/**/*",
+    "packages/*/dist/**/*",
     "packages/*/src/cli/generator_templates/**/*"
   ]
 }

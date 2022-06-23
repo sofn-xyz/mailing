@@ -73,9 +73,9 @@ export const handler = async (argv: ArgumentsCamelCase<{ port?: number }>) => {
         _req: http.IncomingMessage,
         res: http.ServerResponse
       ): void {
-        shouldReload = false;
         res.writeHead(200);
         res.end(JSON.stringify({ shouldReload }));
+        shouldReload = false;
       }
 
       try {
@@ -109,7 +109,7 @@ export const handler = async (argv: ArgumentsCamelCase<{ port?: number }>) => {
     return;
   }
   watch(changeWatchPath, { recursive: true }, (eventType, filename) => {
-    debug(`Detected ${eventType} on ${filename}, reloading`);
+    log(`Detected ${eventType} on ${filename}, reloading`);
     delete require.cache[resolve(changeWatchPath, filename)];
     shouldReload = true;
   });

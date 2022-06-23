@@ -3,7 +3,7 @@ import prompts from "prompts";
 import { ArgumentsCamelCase } from "yargs";
 import { log } from "../log";
 import { getExistingEmailsDir, getPackageJSON } from "../paths";
-import { generateEmailsDirectory, getPagesDirPath } from "../generators";
+import { generateEmailsDirectory } from "../generators";
 import { handler as previewHandler } from "./preview";
 
 function looksLikeTypescriptProject() {

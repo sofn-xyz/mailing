@@ -1,17 +1,9 @@
 import { copySync, existsSync } from "fs-extra";
 import { resolve } from "path";
 import prompts from "prompts";
+import tree from "tree-node-cli";
 import { getExistingEmailsDir } from "./paths";
 import { log } from "./log";
-
-export function getPagesDirPath() {
-  if (existsSync("./pages")) {
-    return resolve("./pages");
-  } else if (existsSync("./src/pages")) {
-    return resolve("./src/pages");
-  }
-  return null;
-}
 
 function getPotentialEmailsDirPath() {
   if (existsSync("./src")) {
@@ -46,7 +38,10 @@ export async function generateEmailsDirectory({
     await copySync(resolve(__dirname, path), response.path, {
       overwrite: false,
     });
-    log(`Generated your emails dir at ${response.path}`);
+    log(
+      `Generated your emails dir at ${response.path}:\n${tree(response.path)}`
+    );
+
     return true;
   } else {
     log("OK, bye!");
