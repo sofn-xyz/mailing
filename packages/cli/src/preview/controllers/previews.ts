@@ -9,11 +9,10 @@ import { getPreviewsDirectory } from "../../paths";
 import { renderNotFound } from "./application";
 
 const LIVE_RELOAD_SNIPPET = `
-  window.onpageshow = function (event) {
-    if (event.persisted) {
-      window.location.reload();
-    }
-  }
+  window.setInterval(async function checkForReload() {
+    const shouldReload = await fetch("/should_reload.json");
+    console.log(shouldReload)
+  }, 1000);
 `;
 
 export function showPreviewIndex(req: IncomingMessage, res: ServerResponse) {

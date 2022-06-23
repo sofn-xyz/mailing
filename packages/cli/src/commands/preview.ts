@@ -51,6 +51,7 @@ export const handler = async (argv: ArgumentsCamelCase<{ port?: number }>) => {
 
   const host = `http://localhost:${port}`;
   let currentUrl = `${host}/`;
+  let shouldReload = false;
 
   http
     .createServer(function (req, res) {
@@ -68,10 +69,20 @@ export const handler = async (argv: ArgumentsCamelCase<{ port?: number }>) => {
       res.setHeader("Expires", "-1");
 
       currentUrl = `${host}${req.url}`;
+      function showShouldReload(
+        _req: http.IncomingMessage,
+        res: http.ServerResponse
+      ): void {
+        shouldReload = false;
+        res.writeHead(200);
+        res.end(JSON.stringify({ shouldReload }));
+      }
 
       try {
         if (req.url === "/") {
           return showPreviewIndex(req, res);
+        } else if (req.url === "/should_reload.json") {
+          return showShouldReload(req, res);
         } else if (req.url === "/intercepts" && req.method === "POST") {
           return createIntercept(req, res);
         } else if (/^\/intercepts\//.test(req.url)) {
@@ -100,7 +111,7 @@ export const handler = async (argv: ArgumentsCamelCase<{ port?: number }>) => {
   watch(changeWatchPath, { recursive: true }, (eventType, filename) => {
     debug(`Detected ${eventType} on ${filename}, reloading`);
     delete require.cache[resolve(changeWatchPath, filename)];
-    open(currentUrl, { background: true });
+    shouldReload = true;
   });
   log(`Watching for changes to ${changeWatchPath}`);
 };

@@ -1,3 +1,3 @@
 #!/usr/bin/env node
 
-require("./cli/dist/mailing-cli.cjs.js");
+require("./packages/cli/dist/mailing.cjs.js");

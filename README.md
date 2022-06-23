@@ -5,7 +5,7 @@
 
 - Email templates with React components
 - Battle-tested MJML components that work across clients (Outlook!)
-- Mail previews for quick development
+- Preview server for quick development
 - Test-mode for ensuring emails send and have the correct content
 - Inspired by ActionMailer
 - Plays well with js frameworks like redwood.js, remix, next.js
@@ -13,7 +13,13 @@
 
 <br/>
 
-# TODO: VIDEO HERE
+```
+> mailing init
+
+
+
+
+```
 
 <br/>
 
@@ -25,15 +31,23 @@ We love good emails. Usage metrics imply that a lot of people do. But every web 
 
 ## ●&nbsp;&nbsp;&nbsp;Setup
 
-1. Install mailing-core in your package.json with yarn or npm:
+1. Install mailing-core and the development server with yarn or npm:
 
-`npm install --save mailing-core mjml mjml-react` or `yarn add mailing-core mjml mjml-react`
+yarn:
 
-2. Install the mailing cli tool as a dev dependency:
+```
+yarn add mailing-core mjml mjml-react &&\
+yarn add mailing-core mjml mjml-react
+```
 
-`npm install --save-dev mailing` or `yarn add mailing --dev`
+npm:
 
-3. Scaffold your `email` directory with `mailing init`.
+```
+npm install --save mailing-core mjml mjml-react
+npm install --save-dev mailing
+```
+
+2. Scaffold your `email` directory with `mailing init`.
 
 This will create the following directory structure:
 
