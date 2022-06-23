@@ -14,8 +14,6 @@
   },
   "description": "Fun email development environment",
   "devDependencies": {
-    "@babel/preset-react": "^7.17.12",
-    "@babel/preset-typescript": "^7.17.12",
     "@preconstruct/cli": "^2.1.5",
     "@types/fs-extra": "^9.0.13",
     "@types/html-minifier-terser": "^6.1.0",
