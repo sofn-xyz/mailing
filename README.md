@@ -19,19 +19,19 @@
 
 ## ●&nbsp;&nbsp;&nbsp;Why?
 
-We love good emails. Usage metrics imply that a lot of people do. But every web developer I've ever met hates making them. So, we're trying to make coding them easy.
+We love good emails. Usage metrics imply that a lot of people do. But every web developer I've ever met hates making them. So, we want to make coding them easy.
 
 <br/>
 
 ## ●&nbsp;&nbsp;&nbsp;Setup
 
-1. Install mailing in your package.json with yarn or npm. [TODO]
+1. Install mailing-core in your package.json with yarn or npm:
 
-`npm install mailing mjml mjml-react` or `yarn add mailing mjml mjml-react`
+`npm install --save mailing-core mjml mjml-react` or `yarn add mailing-core mjml mjml-react`
 
-2. Install the mailing cli tool as a dev dependency [TODO]
+2. Install the mailing cli tool as a dev dependency:
 
-`npm install --save-dev mailing/cli` or `yarn add mailing cli --dev`
+`npm install --save-dev mailing` or `yarn add mailing --dev`
 
 3. Scaffold your `email` directory with `mailing init`. [WORKS]
 
@@ -71,7 +71,8 @@ export default new Mailing({ transport });
 5. Then send you first email like so:
 
 ```tsx
-import { sendMail, MyFirstEmail } from "emails";
+import { sendMail } from "emails";
+import MyFirstEmail from "emails/MyFirstEmail";
 
 sendMail(<MyFirstEmail firstName="Bob" />);
 ```
