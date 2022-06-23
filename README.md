@@ -19,7 +19,7 @@
 
 ## ●&nbsp;&nbsp;&nbsp;Why?
 
-We love good emails. Usage metrics imply that a lot of people do. But every web developer I've ever met hates making them. So, we want to make coding them easy.
+We love good emails. Usage metrics imply that a lot of people do. But every web developer hates making them. So, we want to make coding them easy.
 
 <br/>
 
@@ -33,7 +33,7 @@ We love good emails. Usage metrics imply that a lot of people do. But every web 
 
 `npm install --save-dev mailing` or `yarn add mailing --dev`
 
-3. Scaffold your `email` directory with `mailing init`. [WORKS]
+3. Scaffold your `email` directory with `mailing init`.
 
 This will create the following directory structure:
 
@@ -48,7 +48,7 @@ emails
     └── MyFirstEmail.tsx
 ```
 
-4. Configure your email transport in `email/index.ts`. It defaults to nodemailer's SMTP transport, but you can read about others [here](https://nodemailer.com/transports/). [TODO]
+4. Configure your email transport in `email/index.ts`. It defaults to nodemailer's SMTP transport, but you can read about others [here](https://nodemailer.com/transports/).
 
 ```tsx
 import nodemailer from "nodemailer";
@@ -87,7 +87,7 @@ TODO
 
 ## Developing with email previews
 
-Mailing includes a development mode for previewing your emails. Run `mailing preview` to boot the preview app and examine previews for different cases. Previews live reload when files in the emails directory change. [Needs e2e tests]
+Mailing includes a development mode for previewing your emails. Running `mailing` in dev will boot the preview app and examine previews for different cases. Previews live reload when files in the emails directory change. [Needs e2e tests]
 
 [ADD SCREENSHOT OF PREVIEW INDEX]
 

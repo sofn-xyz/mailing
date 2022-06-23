@@ -3,6 +3,12 @@
   "version": "0.2.0",
   "main": "dist/mailing-core.cjs.js",
   "license": "MIT",
+  "description": "Fun email development environment (core library only)",
+  "homepage": "https://github.com/psugihara/reaction-mailer#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/psugihara/reaction-mailer.git"
+  },
   "dependencies": {
     "app-root-path": "^3.0.0",
     "chokidar": "^3.5.3",
