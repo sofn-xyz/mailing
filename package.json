@@ -1,7 +1,6 @@
 {
   "name": "mailing-monorepo",
   "version": "0.1.0",
-  "description": "Fun email development environment",
   "private": true,
   "scripts": {
     "build": "preconstruct build && cp -R packages/cli/src/generator_templates packages/cli/dist",
@@ -12,16 +11,7 @@
     "release": "preconstruct build && yarn publish",
     "postinstall": "preconstruct dev"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/psugihara/reaction-mailer.git"
-  },
-  "keywords": [],
-  "author": "psugihara",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/psugihara/reaction-mailer/issues"
-  },
   "workspaces": [
     "packages/*"
   ],

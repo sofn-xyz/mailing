@@ -36,14 +36,14 @@ We love good emails. Usage metrics imply that a lot of people do. But every web 
 yarn:
 
 ```
-yarn add mailing-core mjml mjml-react &&\
+yarn add mailing-core mjml mjml-react nodemailer &&\
 yarn add mailing-core mjml mjml-react
 ```
 
 npm:
 
 ```
-npm install --save mailing-core mjml mjml-react
+npm install --save mailing-core mjml mjml-react nodemailer &&\
 npm install --save-dev mailing
 ```
 

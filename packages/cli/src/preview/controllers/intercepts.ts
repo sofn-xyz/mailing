@@ -1,6 +1,5 @@
-import React from "react";
 import { IncomingMessage, ServerResponse } from "http";
-import { log } from "../../../log";
+import { log } from "../../log";
 import { renderNotFound } from "./application";
 
 const cache: { [id: string]: { html: string } } = {};
@@ -16,17 +15,19 @@ export function createIntercept(req: IncomingMessage, res: ServerResponse) {
     const { html } = JSON.parse(body);
     const id = Date.now();
     cache[id] = { html };
-    res.write(201);
+    res.writeHead(201);
     res.end(JSON.stringify({ id }));
+    log(`Cached intercept preview at /previews/${id}`);
   });
 }
 
 export function showIntercept(req: IncomingMessage, res: ServerResponse) {
-  const id = req.url?.split("/")[1] || "";
+  const parts = req.url?.split("/");
+  const id = parts ? parts[parts.length - 1] : "";
   const data = cache[id];
 
   if (data) {
-    res.write(200);
+    res.writeHead(200);
     res.end(data.html);
   } else {
     renderNotFound(res);

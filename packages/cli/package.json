@@ -8,6 +8,9 @@
     "type": "git",
     "url": "git+https://github.com/psugihara/reaction-mailer.git"
   },
+  "bugs": {
+    "url": "https://github.com/psugihara/reaction-mailer/issues"
+  },
   "bin": {
     "mailing": "./bin.js",
     "mm": "./bin.js"

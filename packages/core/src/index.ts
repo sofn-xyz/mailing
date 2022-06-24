@@ -69,13 +69,19 @@ export function buildSendMail(options: mailing.SendMailOptions) {
       // open on preview server url
       // hit echo endpoint with html
       const PREVIEW_SERVER_URL = "http://localhost:3883/intercepts";
+      console.log("fetchin");
       const response = await fetch(PREVIEW_SERVER_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(htmlMail),
       });
-      const { id } = (await response.json()) as { id: string };
-      open(`${PREVIEW_SERVER_URL}/${id}`);
+      console.log("hi");
+      if (response.status === 200) {
+        const { id } = (await response.json()) as { id: string };
+        open(`${PREVIEW_SERVER_URL}/${id}`);
+      } else {
+        log(`mailing preview server not found at ${PREVIEW_SERVER_URL}`);
+      }
     }
 
     await options.transport.sendMail(htmlMail);
