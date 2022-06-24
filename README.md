@@ -13,6 +13,7 @@
 
 <br/>
 
+[TODO: add little video of dev mode working]
 ```
 > mailing init
 
