@@ -1,24 +1,17 @@
 import { ReactElement, JSXElementConstructor } from "react";
-import { Transporter } from "nodemailer";
+import nodemailer from "nodemailer";
 import open from "open";
 import fs from "fs-extra";
 import { render } from "./mjml";
-import { log } from "./log";
+import { debug, error, log } from "./log";
 import fetch from "node-fetch";
 
-namespace mailing {
-  export type ComponentMail = {
-    from: string;
-    to: string | string[];
-    cc?: string | string[];
-    bcc?: string | string[];
-    subject: string;
+export namespace mailing {
+  export type ComponentMail = nodemailer.SendMailOptions & {
     component: ReactElement<any, string | JSXElementConstructor<any>>;
-    text?: string;
-    headers?: { [key: string]: string };
   };
   export type SendMailOptions = {
-    transport: Transporter;
+    transport: nodemailer.Transporter;
     defaulFrom?: string;
     forceDeliver?: boolean;
     forcePreview?: boolean;
@@ -45,18 +38,27 @@ export async function getTestMessageQueue() {
 export function buildSendMail(options: mailing.SendMailOptions) {
   const forcePreview =
     options.forcePreview ||
-    (process.env.NODE_ENV === "development" && !options.forceDeliver);
+    (process.env.NODE_ENV !== "production" && !options.forceDeliver);
 
   const testMode = process.env.TEST || process.env.NODE_ENV === "test";
 
   return async function sendMail(mail: mailing.ComponentMail) {
-    const { html, errors } = render(mail.component);
+    log("sendMail", mail);
+    const { html, errors } = mail.html
+      ? { html: mail.html, errors: [] }
+      : render(mail.component);
+
+    if (errors?.length) {
+      error(errors);
+      throw new Error(errors.join(";"));
+    }
 
     // Create a mail for nodemailer with the component rendered to HTML.
-    const htmlMail = Object.assign(mail, {
+    const htmlMail = {
+      ...mail,
       html: html,
       component: undefined,
-    });
+    };
 
     if (testMode) {
       const testMessageQueue = await getTestMessageQueue();
@@ -69,19 +71,25 @@ export function buildSendMail(options: mailing.SendMailOptions) {
       // open on preview server url
       // hit echo endpoint with html
       const PREVIEW_SERVER_URL = "http://localhost:3883/intercepts";
-      console.log("fetchin");
-      const response = await fetch(PREVIEW_SERVER_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(htmlMail),
-      });
-      console.log("hi");
-      if (response.status === 200) {
-        const { id } = (await response.json()) as { id: string };
-        open(`${PREVIEW_SERVER_URL}/${id}`);
-      } else {
-        log(`mailing preview server not found at ${PREVIEW_SERVER_URL}`);
+      try {
+        const response = await fetch(PREVIEW_SERVER_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(htmlMail),
+        });
+        if (response.status === 201) {
+          const { id } = (await response.json()) as { id: string };
+          open(`${PREVIEW_SERVER_URL}/${id}`);
+        } else {
+          error(`Error hitting ${PREVIEW_SERVER_URL}`);
+          error(response);
+        }
+      } catch (e) {
+        error(`Caught error ${e}`);
+        error("Is the mailing preview server running?");
       }
+
+      return;
     }
 
     await options.transport.sendMail(htmlMail);

@@ -20,6 +20,6 @@
     "packages/*/src/**/__test__/*",
     "packages/*/src/emails/**/*",
     "packages/*/dist/**/*",
-    "packages/*/src/cli/generator_templates/**/*"
+    "packages/cli/src/generator_templates/**/*"
   ]
 }

@@ -1,0 +1,18 @@
+#! /bin/sh
+
+yarn build
+
+export PATH="$(yarn global bin):$PATH"
+
+cd packages/cli
+yarn unlink && yarn link
+cd -
+
+rm -rf dev-app
+cp -R packages/cli/src/generator_templates/ts/mailing-test-nextjs dev-app
+cd dev-app
+yarn
+yarn link mailing
+mailing &
+open http://localhost:3000/api/hello
+yarn dev
