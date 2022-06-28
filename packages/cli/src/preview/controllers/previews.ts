@@ -1,10 +1,9 @@
 import React from "react";
 import { resolve } from "path";
 import { IncomingMessage, ServerResponse } from "http";
-// import { renderToPipeableStream } from "react-dom/server";
 import { render } from "../../mjml";
 import PreviewIndex from "../../PreviewIndex";
-import { log } from "../../log";
+import { error, log } from "../../log";
 import { getPreviewsDirectory } from "../../paths";
 import { renderNotFound } from "./application";
 
@@ -51,18 +50,26 @@ export function showPreview(req: IncomingMessage, res: ServerResponse) {
   const module = require(modulePath);
   const component = module[functionName]();
 
-  try {
-    const { html, errors } = render(component);
-    const liveReloadHtml = html?.replace(
-      "</head>",
-      `<script>${LIVE_RELOAD_SNIPPET}</script></head>`
-    );
+  if (component?.props) {
+    try {
+      const { html, errors } = render(component);
+      const liveReloadHtml = html?.replace(
+        "</head>",
+        `<script>${LIVE_RELOAD_SNIPPET}</script></head>`
+      );
 
-    res.writeHead(200);
-    res.end(liveReloadHtml || JSON.stringify(errors));
-  } catch (e) {
-    log("caught error rendering mjml to html", e);
-    res.writeHead(500);
-    res.end(JSON.stringify(e));
+      res.writeHead(200);
+      res.end(liveReloadHtml || JSON.stringify(errors));
+    } catch (e) {
+      error("caught error rendering mjml to html", e);
+      res.writeHead(500);
+      res.end(JSON.stringify(e));
+    }
+  } else {
+    const emailsPath = resolve(previewsPath, "..");
+    const msg = `${functionName}() from ${modulePath} must return a react component defined in ${emailsPath}`;
+    error(msg);
+    res.writeHead(404);
+    res.end(msg);
   }
 }

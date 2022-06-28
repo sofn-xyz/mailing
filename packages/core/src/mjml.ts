@@ -8,10 +8,4 @@ export function render(
     validationLevel: "soft",
     minify: undefined,
   });
-
-  // return { errors: [], html: renderToMjml(component) };
-  // // {
-  // //   validationLevel: "soft",
-  // //   minify: undefined,
-  // // }
 }

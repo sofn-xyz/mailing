@@ -10,6 +10,7 @@ import {
   showIntercept,
 } from "../preview/controllers/intercepts";
 import { showPreview, showPreviewIndex } from "../preview/controllers/previews";
+import { renderNotFound } from "../preview/controllers/application";
 
 const DEFAULT_PORT = 3883;
 
@@ -81,6 +82,8 @@ export const handler = async (argv: ArgumentsCamelCase<{ port?: number }>) => {
       try {
         if (req.url === "/") {
           return showPreviewIndex(req, res);
+        } else if (req.url === "/favicon.ico") {
+          return renderNotFound(res);
         } else if (req.url === "/should_reload.json") {
           return showShouldReload(req, res);
         } else if (req.url === "/intercepts" && req.method === "POST") {

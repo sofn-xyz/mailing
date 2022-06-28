@@ -9,7 +9,8 @@
     "prepublish": "yarn build",
     "watch": "preconstruct watch",
     "release": "preconstruct build && yarn publish",
-    "postinstall": "preconstruct dev"
+    "postinstall": "preconstruct dev",
+    "init:dev": "./scripts/init_dev"
   },
   "license": "MIT",
   "workspaces": [
@@ -19,13 +20,17 @@
   "devDependencies": {
     "@babel/preset-react": "^7.17.12",
     "@babel/preset-typescript": "^7.17.12",
+    "@changesets/cli": "^2.23.0",
     "@preconstruct/cli": "^2.1.5",
-    "prettier": "^2.7.1",
-    "@changesets/cli": "^2.23.0"
+    "prettier": "^2.7.1"
   },
   "preconstruct": {
     "packages": [
       "packages/*"
     ]
+  },
+  "dependencies": {
+    "@babel/core": "^7.18.5",
+    "@babel/preset-env": "^7.18.2"
   }
 }

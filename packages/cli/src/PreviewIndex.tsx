@@ -53,6 +53,15 @@ const PreviewIndex: React.FC = () => {
             </MjmlText>
           </MjmlColumn>
         </MjmlSection>
+        {firstTest && (
+          <MjmlSection>
+            <MjmlColumn>
+              <MjmlText fontSize={16}>
+                Add a preview to emails/previews and it will appear here.
+              </MjmlText>
+            </MjmlColumn>
+          </MjmlSection>
+        )}
         {previews.map((p) => (
           <MjmlSection key={p[0]}>
             <MjmlColumn>
@@ -67,15 +76,6 @@ const PreviewIndex: React.FC = () => {
             </MjmlColumn>
           </MjmlSection>
         ))}
-        {firstTest && (
-          <MjmlSection>
-            <MjmlColumn>
-              <MjmlText fontSize={16}>
-                Tip: add a preview to emails/previews and it will appear here.
-              </MjmlText>
-            </MjmlColumn>
-          </MjmlSection>
-        )}
       </MjmlBody>
     </Mjml>
   );
