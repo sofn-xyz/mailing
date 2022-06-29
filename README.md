@@ -169,6 +169,7 @@ show hn requirements
 - [ ] instructions for next.js integration
 - [ ] publish to npm
 - [ ] add video to readme
+- [ ] pull into a project and it works (and test that)
 - [x] split into 2 packages so that preview server is not included
 
 ---
