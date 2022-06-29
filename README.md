@@ -39,7 +39,7 @@ yarn:
 
 ```
 yarn add mailing-core mjml mjml-react nodemailer &&\
-yarn add mailing-core mjml mjml-react
+yarn add mailing mjml mjml-react
 ```
 
 npm:
