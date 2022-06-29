@@ -6,10 +6,9 @@
 <h2>●&nbsp;&nbsp;&nbsp;Send great emails from your react app.</h2>
 
 - Email templates with React components
-- Battle-tested MJML components that work across clients (Outlook!)
+- MJML components that work across clients (Outlook!)
 - Preview server for quick development
 - Test-mode for ensuring emails send and have the correct content
-- Inspired by ActionMailer
 - Plays well with js frameworks like redwood.js, remix, next.js
 - Written in Typescript
 
