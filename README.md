@@ -15,6 +15,7 @@
 <br/>
 
 [TODO: add little video of dev mode working]
+
 ```
 > mailing init
 
@@ -39,14 +40,14 @@ yarn:
 
 ```
 yarn add mailing-core mjml mjml-react nodemailer &&\
-yarn add mailing mjml mjml-react
+yarn add --dev mailing @types/mjml @types/mjml-react
 ```
 
 npm:
 
 ```
 npm install --save mailing-core mjml mjml-react nodemailer &&\
-npm install --save-dev mailing
+npm install --save-dev mailing @types/mjml @types/mjml-react
 ```
 
 2. Scaffold your `email` directory with `mailing init`.
@@ -135,23 +136,17 @@ Want to help make this? Cool!
 
 ### Setup
 
-1. Ensure you have nodejs 12+ setup.
-
-2. Run these to install the project
+Run these to install the project, clone the nextjs app for development, and start servers.
 
 ```zsh
 git clone git@github.com:psugihara/mailing.git
 cd mailing
-npm install
-npm build # compiles the project to /lib
-npm link # symlinks the node module
-mailing # this command is defined as bin in package.json
+yarn
+yarn init:dev # clone next dev app, install mailing, start mailing and next
 ```
 
-At this point you should also be able to link import.
-
-- `src` has the source code
-- `lib` is the build directory, no need to manually edit
+- `packages/cli` has the development dependency
+- `packages/core` has the prod dependency
 
 ### Plan
 
