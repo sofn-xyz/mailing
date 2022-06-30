@@ -1,6 +1,6 @@
 {
   "name": "mailing",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "main": "dist/mailing.cjs.js",
   "license": "MIT",
   "homepage": "https://github.com/psugihara/reaction-mailer#readme",
