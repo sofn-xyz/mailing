@@ -8,13 +8,19 @@ cd packages/cli
 yarn unlink && yarn link
 cd -
 
+cd packages/core
+yarn unlink && yarn link
+cd -
+
 rm -rf dev-app
 cp -R packages/cli/src/generator_templates/ts/mailing-test-nextjs dev-app
 cd dev-app
 yarn
 yarn link mailing
-yarn add mailing-core mjml mjml-react nodemailer
-yarn add --dev mailing @types/mjml @types/mjml-react
+yarn link mailing-core
+yarn add mjml mjml-react nodemailer
+yarn add --dev @types/mjml @types/mjml-react
 mailing &
 open http://localhost:3000/api/hello
+pwd
 yarn dev
