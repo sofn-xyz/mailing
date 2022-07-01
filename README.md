@@ -154,15 +154,15 @@ show hn requirements
 
 - [x] setup package with lib and cli
 - [x] generate emails directory
-- [~] email.ts API
+- [x] email.ts API
 - [ ] basic tests for lib
 - [~] basic tests for cli (init test)
-- [~] email previews (working on this next)
+- [x] email previews
 - [ ] polished README
 - [x] logo
 - [x] rename (react-mailer, gigaben, mailing, omail, mailbus, must be available on npmjs.com)
 - [ ] instructions for next.js integration
-- [ ] publish to npm
+- [x] publish to npm
 - [ ] add video to readme
 - [ ] pull into a project and it works (and test that)
 - [x] split into 2 packages so that preview server is not included
