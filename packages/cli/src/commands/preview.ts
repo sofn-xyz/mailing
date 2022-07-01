@@ -10,7 +10,11 @@ import {
   showIntercept,
 } from "../preview/controllers/intercepts";
 import { showPreview, showPreviewIndex } from "../preview/controllers/previews";
-import { renderNotFound } from "../preview/controllers/application";
+import {
+  renderNotFound,
+  showStaticAsset,
+} from "../preview/controllers/application";
+import { start } from "repl";
 
 const DEFAULT_PORT = 3883;
 
@@ -56,12 +60,15 @@ export const handler = async (argv: ArgumentsCamelCase<{ port?: number }>) => {
 
   http
     .createServer(function (req, res) {
+      const startTime = Date.now();
+      let noLog = false;
+
       if (!req.url) {
         res.end(404);
         return;
       }
 
-      // Never cache anything so that we know the current url from the request.
+      // Never cache anything
       res.setHeader(
         "Cache-Control",
         "no-cache, max-age=0, must-revalidate, no-store"
@@ -79,19 +86,24 @@ export const handler = async (argv: ArgumentsCamelCase<{ port?: number }>) => {
         shouldReload = false;
       }
 
+      res.once("close", () => {
+        if (!noLog) log(`${req.url} ${Date.now() - startTime}ms`);
+      });
+
       try {
         if (req.url === "/") {
-          return showPreviewIndex(req, res);
-        } else if (req.url === "/favicon.ico") {
-          return renderNotFound(res);
+          showPreviewIndex(req, res);
         } else if (req.url === "/should_reload.json") {
-          return showShouldReload(req, res);
+          noLog = true;
+          showShouldReload(req, res);
         } else if (req.url === "/intercepts" && req.method === "POST") {
-          return createIntercept(req, res);
+          createIntercept(req, res);
         } else if (/^\/intercepts\//.test(req.url)) {
-          return showIntercept(req, res);
+          showIntercept(req, res);
+        } else if (/\.[tj]sx\//.test(req.url)) {
+          showPreview(req, res);
         } else {
-          return showPreview(req, res);
+          showStaticAsset(req, res);
         }
       } catch (e) {
         error("caught error", e);
