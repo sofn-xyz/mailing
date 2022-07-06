@@ -36,7 +36,7 @@ const PreviewIndex: React.FC = () => {
   return (
     <Mjml>
       <MjmlHead>
-        <MjmlTitle>Mailing Previews</MjmlTitle>
+        <MjmlTitle>Mailing</MjmlTitle>
         <MjmlFont
           name="Inter"
           href="https://fonts.googleapis.com/css2?family=Inter:wght@300;600;900"
@@ -70,7 +70,14 @@ const PreviewIndex: React.FC = () => {
               </MjmlText>
               {Object.keys(p[1]).map((previewFunction) => (
                 <MjmlText key={previewFunction} fontSize={16}>
-                  <a href={`/${p[0]}/${previewFunction}`}>{previewFunction}</a>
+                  <a
+                    href={`/previews/${p[0]}/${previewFunction.replace(
+                      /\.*/g,
+                      ""
+                    )}`}
+                  >
+                    {previewFunction}
+                  </a>
                 </MjmlText>
               ))}
             </MjmlColumn>

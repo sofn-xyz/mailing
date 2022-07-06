@@ -1,5 +1,5 @@
 import http from "http";
-import { resolve } from "path";
+import { relative, resolve } from "path";
 import open from "open";
 import { watch } from "fs-extra";
 import { ArgumentsCamelCase } from "yargs";
@@ -15,6 +15,7 @@ import {
   showStaticAsset,
 } from "../preview/controllers/application";
 import { start } from "repl";
+import { cwd } from "process";
 
 const DEFAULT_PORT = 3883;
 
@@ -100,7 +101,7 @@ export const handler = async (argv: ArgumentsCamelCase<{ port?: number }>) => {
           createIntercept(req, res);
         } else if (/^\/intercepts\//.test(req.url)) {
           showIntercept(req, res);
-        } else if (/\.[tj]sx\//.test(req.url)) {
+        } else if (/^\/previews\/.*/.test(req.url)) {
           showPreview(req, res);
         } else {
           showStaticAsset(req, res);
@@ -128,5 +129,5 @@ export const handler = async (argv: ArgumentsCamelCase<{ port?: number }>) => {
     delete require.cache[resolve(changeWatchPath, filename)];
     shouldReload = true;
   });
-  log(`Watching for changes to ${changeWatchPath}`);
+  log(`Watching for changes to ${relative(cwd(), changeWatchPath)}`);
 };
