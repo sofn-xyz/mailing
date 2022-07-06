@@ -44,8 +44,9 @@ export function showPreview(req: IncomingMessage, res: ServerResponse) {
   }
 
   // previews
-  const [_blank, moduleName, functionName] = req.url.split("/");
+  const [_blank, _previews, moduleName, functionName] = req.url.split("/");
   const modulePath = resolve(previewsPath, moduleName);
+
   delete require.cache[modulePath];
   const module = require(modulePath);
   const component = module[functionName]();
