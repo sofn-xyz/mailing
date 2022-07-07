@@ -22,7 +22,11 @@
     "@babel/preset-typescript": "^7.17.12",
     "@changesets/cli": "^2.23.0",
     "@preconstruct/cli": "^2.1.5",
-    "prettier": "^2.7.1"
+    "@types/react": "^18.0.15",
+    "@types/react-dom": "^18.0.6",
+    "prettier": "^2.7.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "preconstruct": {
     "packages": [

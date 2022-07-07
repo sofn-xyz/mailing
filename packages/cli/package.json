@@ -17,6 +17,7 @@
   },
   "description": "Fun email development environment",
   "devDependencies": {
+    "@next/eslint-plugin-next": "^12.2.0",
     "@preconstruct/cli": "^2.1.5",
     "@types/fs-extra": "^9.0.13",
     "@types/html-minifier-terser": "^6.1.0",
@@ -27,12 +28,16 @@
     "@types/node-fetch": "^2.6.1",
     "@types/nodemailer": "^6.4.4",
     "@types/prompts": "^2.0.14",
-    "@types/react": "^18.0.5",
-    "@types/react-dom": "^18.0.5",
+    "@types/react": "^18.0.15",
+    "@types/react-dom": "^18.0.6",
     "@types/yargs": "^17.0.10",
     "jest": "^27.5.1",
     "prettier": "^2.7.1",
     "ts-jest": "^27.1.4"
+  },
+  "peerDependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "dependencies": {
     "app-root-path": "^3.0.0",
@@ -43,12 +48,11 @@
     "mjml": "^4.12.0",
     "mjml-browser": "^4.12.0",
     "mjml-react": "^2.0.7",
+    "next": "^12.2.0",
     "node-fetch": "^2.6.7",
     "nodemailer": "^6.7.5",
     "open": "^8.4.0",
     "prompts": "^2.4.2",
-    "react": "^18.0.0",
-    "react-dom": "^18.0.0",
     "tmp-promise": "^3.0.3",
     "tree-node-cli": "^1.5.2",
     "ts-node": "^10.7.0",

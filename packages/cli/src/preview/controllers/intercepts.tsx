@@ -3,7 +3,6 @@ import React from "react";
 import { error, log } from "../../log";
 import { render } from "../../mjml";
 import Preview from "../../Preview";
-import { renderMailPreview } from "../../renderMailPreview";
 import { renderNotFound } from "./application";
 
 const cache: {

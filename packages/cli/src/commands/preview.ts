@@ -10,12 +10,10 @@ import {
   showIntercept,
 } from "../preview/controllers/intercepts";
 import { showPreview, showPreviewIndex } from "../preview/controllers/previews";
-import {
-  renderNotFound,
-  showStaticAsset,
-} from "../preview/controllers/application";
-import { start } from "repl";
+import { showStaticAsset } from "../preview/controllers/application";
 import { cwd } from "process";
+import { parse } from "url";
+import next from "next";
 
 const DEFAULT_PORT = 3883;
 
@@ -47,6 +45,14 @@ export const handler = async (argv: ArgumentsCamelCase<{ port?: number }>) => {
 
   const port = argv?.port || DEFAULT_PORT;
 
+  const dev = process.env.NODE_ENV !== "production";
+  const hostname = "localhost";
+  log("__dirname", __dirname);
+
+  const app = next({ dev, hostname, port, dir: __dirname });
+  const nextHandle = app.getRequestHandler();
+  await app.prepare();
+
   const previewsPath = getPreviewsDirectory();
   if (!previewsPath) {
     log(
@@ -55,12 +61,12 @@ export const handler = async (argv: ArgumentsCamelCase<{ port?: number }>) => {
     return;
   }
 
-  const host = `http://localhost:${port}`;
+  const host = `http://${hostname}:${port}`;
   let currentUrl = `${host}/`;
   let shouldReload = false;
 
   http
-    .createServer(function (req, res) {
+    .createServer(async function (req, res) {
       const startTime = Date.now();
       let noLog = false;
 
@@ -68,6 +74,9 @@ export const handler = async (argv: ArgumentsCamelCase<{ port?: number }>) => {
         res.end(404);
         return;
       }
+
+      const parsedUrl = parse(req.url, true);
+      const { pathname, query } = parsedUrl;
 
       // Never cache anything
       res.setHeader(
@@ -101,10 +110,9 @@ export const handler = async (argv: ArgumentsCamelCase<{ port?: number }>) => {
           createIntercept(req, res);
         } else if (/^\/intercepts\//.test(req.url)) {
           showIntercept(req, res);
-        } else if (/^\/previews\/.*/.test(req.url)) {
-          showPreview(req, res);
         } else {
-          showStaticAsset(req, res);
+          console.log("next handle");
+          await nextHandle(req, res, parsedUrl);
         }
       } catch (e) {
         error("caught error", e);
@@ -113,10 +121,10 @@ export const handler = async (argv: ArgumentsCamelCase<{ port?: number }>) => {
         return;
       }
     })
-    .listen(port);
-  await open(currentUrl);
-
-  log(`Running preview at ${currentUrl}`);
+    .listen(port, async () => {
+      log(`Running preview at ${currentUrl}`);
+      await open(currentUrl);
+    });
 
   // simple live reload implementation
   const changeWatchPath = getExistingEmailsDir();
