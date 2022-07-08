@@ -6,6 +6,7 @@ import PreviewIndex from "../../PreviewIndex";
 import { error, log } from "../../log";
 import { getPreviewsDirectory } from "../../paths";
 import { renderNotFound } from "./application";
+import { readdirSync } from "fs-extra";
 
 const LIVE_RELOAD_SNIPPET = `
   window.setInterval(async function checkForReload() {
@@ -18,17 +19,24 @@ const LIVE_RELOAD_SNIPPET = `
 `;
 
 export function showPreviewIndex(req: IncomingMessage, res: ServerResponse) {
-  const component = React.createElement(PreviewIndex);
+  // const component = React.createElement(PreviewIndex);
+  const previewsPath = getPreviewsDirectory();
+
+  if (!req.url || !previewsPath) {
+    return renderNotFound(res);
+  }
+
+  const previewCollections = readdirSync(previewsPath).filter(
+    (path) => !/^\./.test(path)
+  );
+  const previews: [string, string[]][] = previewCollections.map((p) => {
+    const previewPath = resolve(previewsPath, p);
+    return [p, Object.keys(require(previewPath))];
+  });
 
   try {
-    const { html, errors } = render(component);
-    const liveReloadHtml = html?.replace(
-      "</head>",
-      `<script>${LIVE_RELOAD_SNIPPET}</script></head>`
-    );
-
     res.writeHead(200);
-    res.end(liveReloadHtml || JSON.stringify(errors));
+    res.end(JSON.stringify(previews));
   } catch (e) {
     log("caught error rendering mjml to html", e);
     res.writeHead(500);

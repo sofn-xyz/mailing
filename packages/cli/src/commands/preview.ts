@@ -104,7 +104,7 @@ export const handler = async (argv: ArgumentsCamelCase<{ port?: number }>) => {
       });
 
       try {
-        if (req.url === "/") {
+        if (req.url === "/previews.json") {
           showPreviewIndex(req, res);
         } else if (req.url === "/should_reload.json") {
           noLog = true;
@@ -121,6 +121,7 @@ export const handler = async (argv: ArgumentsCamelCase<{ port?: number }>) => {
         } else if (/^\/previews\//.test(req.url)) {
           await app.render(req, res, `${pathname}`, query);
         } else {
+          // static assets in public directory
           await nextHandle(req, res, parsedUrl);
         }
       } catch (e) {
