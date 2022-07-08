@@ -1,7 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
 import sendEmail from "../../emails";
-import Welcome from "../../emails/Welcome";
+import MyFirstEmail from "../../emails/MyFirstEmail";
 
 type Data = {
   name: string;
@@ -13,7 +13,7 @@ export default async function handler(
 ) {
   await sendEmail({
     subject: "great subject",
-    component: <Welcome name="bob" />,
+    component: <MyFirstEmail name="bob" />,
   });
   res.status(200).json({ name: "John Doe" });
 }
