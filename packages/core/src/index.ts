@@ -43,7 +43,6 @@ export function buildSendMail(options: mailing.SendMailOptions) {
   const testMode = process.env.TEST || process.env.NODE_ENV === "test";
 
   return async function sendMail(mail: mailing.ComponentMail) {
-    log("sendMail", mail);
     const { html, errors } = mail.html
       ? { html: mail.html, errors: [] }
       : render(mail.component);
@@ -68,6 +67,7 @@ export function buildSendMail(options: mailing.SendMailOptions) {
     }
 
     if (forcePreview) {
+      log("💌 opening sendMail preview", mail);
       // open on preview server url
       // hit echo endpoint with html
       const PREVIEW_SERVER_URL = "http://localhost:3883/intercepts";

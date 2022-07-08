@@ -21,7 +21,7 @@
     ".next"
   ],
   "scripts": {
-    "prepublish": "yarn next build && cp -R .next dist/"
+    "prepublish": "rm -rf .next && yarn next build && cp -R .next dist/ && rm -rf dist/.next/cache"
   },
   "description": "Fun email development environment",
   "devDependencies": {
