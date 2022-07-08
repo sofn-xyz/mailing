@@ -11,7 +11,7 @@
     "watch": "preconstruct watch",
     "release": "preconstruct build && yarn publish",
     "postinstall": "preconstruct dev",
-    "init:dev": "./scripts/init_dev"
+    "init:e2e": "./scripts/init_e2e"
   },
   "license": "MIT",
   "workspaces": [
