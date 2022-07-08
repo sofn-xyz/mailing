@@ -3,13 +3,13 @@
   "version": "0.3.0",
   "main": "dist/mailing.cjs.js",
   "license": "MIT",
-  "homepage": "https://github.com/psugihara/reaction-mailer#readme",
+  "homepage": "https://github.com/psugihara/mailing#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/psugihara/reaction-mailer.git"
+    "url": "git+https://github.com/psugihara/mailing.git"
   },
   "bugs": {
-    "url": "https://github.com/psugihara/reaction-mailer/issues"
+    "url": "https://github.com/psugihara/mailing/issues"
   },
   "bin": {
     "mailing": "./bin.js",
@@ -56,7 +56,7 @@
     "mjml": "^4.12.0",
     "mjml-browser": "^4.12.0",
     "mjml-react": "^2.0.7",
-    "next": "^12.2.0",
+    "next": "^12.2.1",
     "node-fetch": "^2.6.7",
     "nodemailer": "^6.7.5",
     "open": "^8.4.0",
