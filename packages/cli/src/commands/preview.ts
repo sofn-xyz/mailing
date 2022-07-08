@@ -55,7 +55,7 @@ export const handler = async (argv: ArgumentsCamelCase<{ port?: number }>) => {
     dev,
     hostname,
     port,
-    dir: resolve(__dirname, ".."),
+    dir: resolve(__dirname, "../src"),
   });
   const nextHandle = app.getRequestHandler();
   await app.prepare();
@@ -117,6 +117,8 @@ export const handler = async (argv: ArgumentsCamelCase<{ port?: number }>) => {
           createIntercept(req, res);
         } else if (/^\/intercepts\//.test(req.url)) {
           showIntercept(req, res);
+        } else if (/^\/preview-html\//.test(req.url)) {
+          showPreview(req, res);
         } else if (/^\/_next/.test(req.url)) {
           noLog = true;
           await app.render(req, res, `${pathname}`, query);
