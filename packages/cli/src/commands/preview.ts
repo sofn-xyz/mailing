@@ -4,16 +4,12 @@ import open from "open";
 import { watch } from "fs-extra";
 import { ArgumentsCamelCase } from "yargs";
 import { getPreviewsDirectory, getExistingEmailsDir } from "../paths";
-import { debug, error, log } from "../log";
+import { error, log } from "../log";
 import {
   createIntercept,
   showIntercept,
 } from "../preview/controllers/intercepts";
 import { showPreview, showPreviewIndex } from "../preview/controllers/previews";
-import {
-  showStaticAsset,
-  renderNotFound,
-} from "../preview/controllers/application";
 import { cwd } from "process";
 import { parse } from "url";
 import next from "next";
@@ -122,8 +118,10 @@ export const handler = async (argv: ArgumentsCamelCase<{ port?: number }>) => {
         } else if (/^\/_next/.test(req.url)) {
           noLog = true;
           await app.render(req, res, `${pathname}`, query);
-        } else {
+        } else if (/^\/previews\//.test(req.url)) {
           await app.render(req, res, `${pathname}`, query);
+        } else {
+          await nextHandle(req, res, parsedUrl);
         }
       } catch (e) {
         error("caught error", e);
