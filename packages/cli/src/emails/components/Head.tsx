@@ -1,7 +1,8 @@
-import React, { ReactElement } from "react";
+// import { resolve } from "path";
+import React, { ReactChild } from "react";
 import { MjmlHead, MjmlFont, MjmlAttributes, MjmlAll } from "mjml-react";
 
-type HeadProps = { children: ReactElement };
+type HeadProps = { children: ReactChild };
 
 const Head: React.FC<HeadProps> = ({ children }) => {
   return (

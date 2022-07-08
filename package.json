@@ -3,14 +3,15 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "build": "preconstruct build && cp -R packages/cli/src/generator_templates packages/cli/dist && cp -R packages/cli/src/preview/static packages/cli/dist",
+    "dev": "yarn watch & MM_DEV=1 packages/cli/bin.js",
+    "build": "preconstruct build && cp -R packages/cli/src/generator_templates packages/cli/dist",
     "test": "jest",
     "test:watch": "jest --watch",
     "prepublish": "yarn build",
     "watch": "preconstruct watch",
     "release": "preconstruct build && yarn publish",
     "postinstall": "preconstruct dev",
-    "init:dev": "./scripts/init_dev"
+    "init:e2e": "./scripts/init_e2e"
   },
   "license": "MIT",
   "workspaces": [
@@ -22,7 +23,11 @@
     "@babel/preset-typescript": "^7.17.12",
     "@changesets/cli": "^2.23.0",
     "@preconstruct/cli": "^2.1.5",
-    "prettier": "^2.7.1"
+    "@types/react": "^18.0.15",
+    "@types/react-dom": "^18.0.6",
+    "prettier": "^2.7.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "preconstruct": {
     "packages": [
@@ -31,6 +36,7 @@
   },
   "dependencies": {
     "@babel/core": "^7.18.5",
-    "@babel/preset-env": "^7.18.2"
+    "@babel/preset-env": "^7.18.2",
+    "yalc": "^1.0.0-pre.53"
   }
 }
