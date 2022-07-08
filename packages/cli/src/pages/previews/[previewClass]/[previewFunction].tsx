@@ -3,6 +3,8 @@ import { useRouter } from "next/router";
 
 const Preview = () => {
   const router = useRouter();
+  const [isMobile, setIsMobile] = useState(false);
+
   const { previewClass, previewFunction } = router.query;
 
   if (!(previewClass && previewFunction)) {
@@ -10,8 +12,6 @@ const Preview = () => {
   }
 
   const htmlURL = `/preview-html/${previewClass}/${previewFunction}`;
-
-  const [isMobile, setIsMobile] = useState(false);
 
   return (
     <div>
