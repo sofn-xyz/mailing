@@ -1,5 +1,11 @@
 import React, { ReactElement } from "react";
-import { MjmlHead, MjmlFont, MjmlAttributes, MjmlAll } from "mjml-react";
+import {
+  MjmlHead,
+  MjmlFont,
+  MjmlAttributes,
+  MjmlAll,
+  MjmlStyle,
+} from "mjml-react";
 
 type HeadProps = { children: ReactElement };
 
@@ -8,10 +14,31 @@ const Head: React.FC<HeadProps> = ({ children }) => {
     <MjmlHead>
       <MjmlFont
         name="Inter"
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;600;900"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;900"
       />
+      <MjmlStyle>
+        {`
+      .smooth {
+        -webkit-font-smoothing: antialiased;
+      }
+      .li {
+        text-indent: -18px;
+        margin-left: 24px;
+        display: inline-block;
+      }
+      .footer a {
+        text-decoration: none !important;
+        color: #777 !important;
+      }
+      @media (min-width:480px) {
+        td.hero {
+          padding-left: 24px !important;
+          padding-right: 24px !important;
+        }
+      }`}
+      </MjmlStyle>
       <MjmlAttributes>
-        <MjmlAll font-family="Inter" />
+        <MjmlAll font-family="Inter" font-weight="400" />
       </MjmlAttributes>
       {children}
     </MjmlHead>
