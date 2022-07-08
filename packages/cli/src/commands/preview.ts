@@ -4,18 +4,15 @@ import open from "open";
 import { watch } from "fs-extra";
 import { ArgumentsCamelCase } from "yargs";
 import { getPreviewsDirectory, getExistingEmailsDir } from "../paths";
-import { debug, error, log } from "../log";
+import { error, log } from "../log";
 import {
   createIntercept,
   showIntercept,
 } from "../preview/controllers/intercepts";
 import { showPreview, showPreviewIndex } from "../preview/controllers/previews";
-import {
-  renderNotFound,
-  showStaticAsset,
-} from "../preview/controllers/application";
-import { start } from "repl";
 import { cwd } from "process";
+import { parse } from "url";
+import next from "next";
 
 const DEFAULT_PORT = 3883;
 
@@ -47,20 +44,33 @@ export const handler = async (argv: ArgumentsCamelCase<{ port?: number }>) => {
 
   const port = argv?.port || DEFAULT_PORT;
 
+  const dev = !!process.env.MM_DEV;
+  const hostname = "localhost";
+
+  console.log("dirname", dev ? resolve(__dirname, "../src") : __dirname);
+  const app = next({
+    dev,
+    hostname,
+    port,
+    dir: dev ? resolve(__dirname, "../src") : __dirname,
+  });
+  const nextHandle = app.getRequestHandler();
+  await app.prepare();
+
   const previewsPath = getPreviewsDirectory();
   if (!previewsPath) {
-    log(
+    error(
       "Could not find emails directory. Have you initialized the project with `mailing init`?"
     );
     return;
   }
 
-  const host = `http://localhost:${port}`;
+  const host = `http://${hostname}:${port}`;
   let currentUrl = `${host}/`;
   let shouldReload = false;
 
   http
-    .createServer(function (req, res) {
+    .createServer(async function (req, res) {
       const startTime = Date.now();
       let noLog = false;
 
@@ -68,6 +78,9 @@ export const handler = async (argv: ArgumentsCamelCase<{ port?: number }>) => {
         res.end(404);
         return;
       }
+
+      const parsedUrl = parse(req.url, true);
+      const { pathname, query } = parsedUrl;
 
       // Never cache anything
       res.setHeader(
@@ -88,11 +101,12 @@ export const handler = async (argv: ArgumentsCamelCase<{ port?: number }>) => {
       }
 
       res.once("close", () => {
-        if (!noLog) log(`${req.url} ${Date.now() - startTime}ms`);
+        if (!noLog || process.env.MM_VERBOSE)
+          log(`${req.url} ${Date.now() - startTime}ms`);
       });
 
       try {
-        if (req.url === "/") {
+        if (req.url === "/previews.json") {
           showPreviewIndex(req, res);
         } else if (req.url === "/should_reload.json") {
           noLog = true;
@@ -101,10 +115,14 @@ export const handler = async (argv: ArgumentsCamelCase<{ port?: number }>) => {
           createIntercept(req, res);
         } else if (/^\/intercepts\//.test(req.url)) {
           showIntercept(req, res);
-        } else if (/^\/previews\/.*/.test(req.url)) {
+        } else if (/^\/preview-html\//.test(req.url)) {
           showPreview(req, res);
+        } else if (/^\/_next/.test(req.url)) {
+          noLog = true;
+          await app.render(req, res, `${pathname}`, query);
         } else {
-          showStaticAsset(req, res);
+          // static assets in public directory
+          await nextHandle(req, res, parsedUrl);
         }
       } catch (e) {
         error("caught error", e);
@@ -113,10 +131,10 @@ export const handler = async (argv: ArgumentsCamelCase<{ port?: number }>) => {
         return;
       }
     })
-    .listen(port);
-  await open(currentUrl);
-
-  log(`Running preview at ${currentUrl}`);
+    .listen(port, async () => {
+      log(`Running preview at ${currentUrl}`);
+      await open(currentUrl);
+    });
 
   // simple live reload implementation
   const changeWatchPath = getExistingEmailsDir();
