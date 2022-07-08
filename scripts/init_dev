@@ -5,19 +5,19 @@ yarn build
 export PATH="$(yarn global bin):$PATH"
 
 cd packages/core
-yarn unlink && yarn link
+yalc publish
 cd -
 
 cd packages/cli
-yarn unlink && yarn link
+yalc publish
 cd -
 
 rm -rf dev-app
 cp -R packages/cli/src/generator_templates/ts/mailing-test-nextjs dev-app
 cd dev-app
 yarn
-yarn link mailing-core
-yarn link mailing
+yalc add mailing-core
+yalc add mailing
 mailing &
 open http://localhost:3000/api/hello
-yarn dev
+yarn dev # start the nextjs demo app

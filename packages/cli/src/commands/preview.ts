@@ -51,14 +51,14 @@ export const handler = async (argv: ArgumentsCamelCase<{ port?: number }>) => {
     dev,
     hostname,
     port,
-    dir: resolve(__dirname, "../src"),
+    dir: dev ? resolve(__dirname, "../src") : __dirname,
   });
   const nextHandle = app.getRequestHandler();
   await app.prepare();
 
   const previewsPath = getPreviewsDirectory();
   if (!previewsPath) {
-    log(
+    error(
       "Could not find emails directory. Have you initialized the project with `mailing init`?"
     );
     return;
