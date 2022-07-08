@@ -1,11 +1,20 @@
 import { GetServerSideProps } from "next";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
-type HomeProps = {
-  previews: [string, string[]][];
-};
+const Home = () => {
+  const [previews, setPreviews] = useState<[string, string[]][] | null>(null);
+  const fetchData = async () => {
+    const res = await fetch("/previews.json");
+    setPreviews(await res.json());
+  };
+  useEffect(() => {
+    fetchData();
+  }, []);
 
-const Home: React.FC<HomeProps> = ({ previews }) => {
+  if (!previews) {
+    return <></>;
+  }
   const showNullState =
     previews.length === 0 ||
     (previews.length === 1 && previews[0][0] === "MyFirstEmail.tsx");
@@ -49,11 +58,6 @@ const Home: React.FC<HomeProps> = ({ previews }) => {
       `}</style>
     </div>
   );
-};
-
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const previews = await fetch("http://localhost:3883/previews.json");
-  return { props: { previews: await previews.json() } };
 };
 
 export default Home;

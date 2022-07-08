@@ -2,7 +2,6 @@ import React from "react";
 import { resolve } from "path";
 import { IncomingMessage, ServerResponse } from "http";
 import { render } from "../../mjml";
-import PreviewIndex from "../../PreviewIndex";
 import { error, log } from "../../log";
 import { getPreviewsDirectory } from "../../paths";
 import { renderNotFound } from "./application";
@@ -19,7 +18,6 @@ const LIVE_RELOAD_SNIPPET = `
 `;
 
 export function showPreviewIndex(req: IncomingMessage, res: ServerResponse) {
-  // const component = React.createElement(PreviewIndex);
   const previewsPath = getPreviewsDirectory();
 
   if (!req.url || !previewsPath) {

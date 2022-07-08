@@ -18,6 +18,6 @@ cd dev-app
 yarn
 yalc add mailing-core
 yalc add mailing
-mailing &
+MM_VERBOSE=1 mailing &
 open http://localhost:3000/api/hello
 yarn dev # start the nextjs demo app

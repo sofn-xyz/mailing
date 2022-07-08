@@ -47,6 +47,7 @@ export const handler = async (argv: ArgumentsCamelCase<{ port?: number }>) => {
   const dev = !!process.env.MM_DEV;
   const hostname = "localhost";
 
+  console.log("dirname", dev ? resolve(__dirname, "../src") : __dirname);
   const app = next({
     dev,
     hostname,
@@ -100,7 +101,8 @@ export const handler = async (argv: ArgumentsCamelCase<{ port?: number }>) => {
       }
 
       res.once("close", () => {
-        if (!noLog) log(`${req.url} ${Date.now() - startTime}ms`);
+        if (!noLog || process.env.MM_VERBOSE)
+          log(`${req.url} ${Date.now() - startTime}ms`);
       });
 
       try {
@@ -117,8 +119,6 @@ export const handler = async (argv: ArgumentsCamelCase<{ port?: number }>) => {
           showPreview(req, res);
         } else if (/^\/_next/.test(req.url)) {
           noLog = true;
-          await app.render(req, res, `${pathname}`, query);
-        } else if (/^\/previews\//.test(req.url)) {
           await app.render(req, res, `${pathname}`, query);
         } else {
           // static assets in public directory
