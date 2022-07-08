@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "dev": "cd packages/cli && MM_DEV=1 ./bin.js",
     "build": "preconstruct build && cp -R packages/cli/src/generator_templates packages/cli/dist && cp -R packages/cli/src/preview/static packages/cli/dist",
     "test": "jest",
     "test:watch": "jest --watch",
@@ -35,6 +36,7 @@
   },
   "dependencies": {
     "@babel/core": "^7.18.5",
-    "@babel/preset-env": "^7.18.2"
+    "@babel/preset-env": "^7.18.2",
+    "yalc": "^1.0.0-pre.53"
   }
 }

@@ -10,7 +10,10 @@ import {
   showIntercept,
 } from "../preview/controllers/intercepts";
 import { showPreview, showPreviewIndex } from "../preview/controllers/previews";
-import { showStaticAsset } from "../preview/controllers/application";
+import {
+  showStaticAsset,
+  renderNotFound,
+} from "../preview/controllers/application";
 import { cwd } from "process";
 import { parse } from "url";
 import next from "next";
@@ -45,11 +48,15 @@ export const handler = async (argv: ArgumentsCamelCase<{ port?: number }>) => {
 
   const port = argv?.port || DEFAULT_PORT;
 
-  const dev = process.env.NODE_ENV !== "production";
+  const dev = !!process.env.MM_DEV;
   const hostname = "localhost";
-  log("__dirname", __dirname);
 
-  const app = next({ dev, hostname, port, dir: __dirname });
+  const app = next({
+    dev,
+    hostname,
+    port,
+    dir: resolve(__dirname, ".."),
+  });
   const nextHandle = app.getRequestHandler();
   await app.prepare();
 
@@ -110,9 +117,11 @@ export const handler = async (argv: ArgumentsCamelCase<{ port?: number }>) => {
           createIntercept(req, res);
         } else if (/^\/intercepts\//.test(req.url)) {
           showIntercept(req, res);
+        } else if (/^\/_next/.test(req.url)) {
+          noLog = true;
+          await app.render(req, res, `${pathname}`, query);
         } else {
-          console.log("next handle");
-          await nextHandle(req, res, parsedUrl);
+          await app.render(req, res, `${pathname}`, query);
         }
       } catch (e) {
         error("caught error", e);

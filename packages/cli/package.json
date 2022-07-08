@@ -15,6 +15,14 @@
     "mailing": "./bin.js",
     "mm": "./bin.js"
   },
+  "files": [
+    "dist",
+    "bin.js",
+    ".next"
+  ],
+  "scripts": {
+    "prepublish": "yarn next build && cp -R .next dist/"
+  },
   "description": "Fun email development environment",
   "devDependencies": {
     "@next/eslint-plugin-next": "^12.2.0",
