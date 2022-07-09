@@ -12,17 +12,23 @@ const Home = () => {
   }, []);
 
   if (!previews) {
-    return <></>;
+    return <></>; // loading, should be quick bc everything is local
   }
+
   const showNullState =
     previews.length === 0 ||
     (previews.length === 1 && previews[0][0] === "MyFirstEmail.tsx");
 
   return (
-    <div >
+    <div>
       <div className="container">
         {showNullState && (
-          <img className="eyebrow" src="https://s3.amazonaws.com/lab.campsh.com/mailing-lil%402x.png" width="76" height="16" />
+          <img
+            className="eyebrow"
+            src="https://s3.amazonaws.com/lab.campsh.com/mailing-lil%402x.png"
+            width="76"
+            height="16"
+          />
         )}
         <h1>Previews</h1>
         {showNullState && (
@@ -34,10 +40,15 @@ const Home = () => {
         <hr />
         {previews.map((preview) => (
           <div className="email-group" key={preview[0]}>
-            <h2><span className="circle">●</span> {preview[0]}</h2>
+            <h2>
+              <span className="circle">●</span> {preview[0]}
+            </h2>
             {preview[1].map((previewFunction) => (
-              <div key={previewFunction}>
-                <Link href={`/previews/${preview[0]}/${previewFunction}`}>
+              <div className="email-container">
+                <Link
+                  key={previewFunction}
+                  href={`/previews/${preview[0]}/${previewFunction}`}
+                >
                   <a className="email">{previewFunction}</a>
                 </Link>
               </div>
@@ -48,9 +59,14 @@ const Home = () => {
       {!showNullState && (
         <Link href="https://github.com/psugihara/mailing">
           <a className="footer">
-            <img src="https://s3.amazonaws.com/lab.campsh.com/mailing-lil%402x.png" width="76" height="16" />
+            <img
+              src="https://s3.amazonaws.com/lab.campsh.com/mailing-lil%402x.png"
+              width="76"
+              height="16"
+            />
           </a>
-        </Link>)}
+        </Link>
+      )}
       <style jsx>{`
         .container {
           max-width: 472px;
@@ -102,12 +118,14 @@ const Home = () => {
           position: relative;
           top: 2px;
         }
-        a.email {
+        .email-container {
           margin-bottom: 8px;
-          transition: background-color 420ms ease-out;
         }
-        a.email:hover {
-          background: #FAFA98;
+        .email {
+          transition: background-color 100ms ease-out;
+        }
+        .email:hover {
+          background: #fafa98;
         }
         .footer {
           display: block;
