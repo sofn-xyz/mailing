@@ -6,6 +6,7 @@ const ShowIntercept = () => {
     to: "Jacob <william@oek.com",
     from: "HelloFrank Support <support@hellofrank.cre",
     cc: ["systemwin@hellofrank.cre", "jerome@powel.com"],
+    subject: "A test email",
   };
 
   return <Intercept data={data} />;
