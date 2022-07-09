@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useRouter } from "next/router";
+import Header from "../../../components/Header";
 
 const Preview = () => {
   const router = useRouter();
@@ -15,16 +16,9 @@ const Preview = () => {
 
   return (
     <div>
-      <div>
-        <button onClick={() => setIsMobile(!isMobile)}>
-          {isMobile ? "mobile" : "desktop"}
-        </button>
-      </div>
+      <Header title={`${previewClass} - ${previewFunction}`} isMobile={isMobile} setIsMobile={setIsMobile} helpContent={<></>} />
       <iframe title="email-preview-frame" src={htmlURL} />
       <style jsx>{`
-        button {
-          background: pink;
-        }
         iframe {
           margin-top: 8px;
           height: calc(100vh - 50px);
