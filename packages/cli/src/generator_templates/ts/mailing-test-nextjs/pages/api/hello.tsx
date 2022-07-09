@@ -13,6 +13,9 @@ export default async function handler(
 ) {
   await sendEmail({
     subject: "great subject",
+    to: "jerry@gmail.com",
+    from: "mailing@example.com",
+    cc: ["jeff@counter.com", "fia@ope.dd"],
     component: <MyFirstEmail name="bob" />,
   });
   res.status(200).json({ name: "John Doe" });

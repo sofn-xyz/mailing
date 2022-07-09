@@ -44,7 +44,7 @@ const Home = () => {
               <span className="circle">●</span> {preview[0]}
             </h2>
             {preview[1].map((previewFunction) => (
-              <div className="email-container">
+              <div className="email-container" key={previewFunction}>
                 <Link
                   key={previewFunction}
                   href={`/previews/${preview[0]}/${previewFunction}`}
