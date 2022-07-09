@@ -1,12 +1,9 @@
 import { IncomingMessage, ServerResponse } from "http";
-import React from "react";
-import { error, log } from "../../log";
-import { render } from "../../mjml";
-import Preview from "../../Preview";
+import { log } from "../../log";
 import { renderNotFound } from "./application";
 
 const cache: {
-  [id: string]: { html: string; to?: string; from?: string; subject?: string };
+  [id: string]: Intercept;
 } = {};
 
 export function createIntercept(req: IncomingMessage, res: ServerResponse) {
@@ -27,21 +24,14 @@ export function createIntercept(req: IncomingMessage, res: ServerResponse) {
 
 export function showIntercept(req: IncomingMessage, res: ServerResponse) {
   const parts = req.url?.split("/");
-  const id = parts ? parts[parts.length - 1] : "";
+  const id = parts ? parts[parts.length - 1].split(".")[0] : "";
   const data = cache[id];
 
   if (data) {
-    const preview = <Preview {...data} />;
-    const { html, errors } = render(preview);
-
-    if (errors?.length) {
-      error(errors);
-      res.writeHead(500);
-      res.end(errors);
-    } else {
-      res.writeHead(200);
-      res.end(html);
-    }
+    res.setHeader("Content-Type", "application/json");
+    res.writeHead(200);
+    console.log("data", JSON.stringify(data));
+    res.end(JSON.stringify(data));
   } else {
     renderNotFound(res);
   }

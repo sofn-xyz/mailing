@@ -113,7 +113,7 @@ export const handler = async (argv: ArgumentsCamelCase<{ port?: number }>) => {
           showShouldReload(req, res);
         } else if (req.url === "/intercepts" && req.method === "POST") {
           createIntercept(req, res);
-        } else if (/^\/intercepts\//.test(req.url)) {
+        } else if (/^\/intercepts\/[a-zA-Z0-9]+\.json/.test(req.url)) {
           showIntercept(req, res);
         } else if (/^\/preview-html\//.test(req.url)) {
           showPreview(req, res);
