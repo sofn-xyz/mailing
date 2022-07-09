@@ -135,6 +135,12 @@ const Home = () => {
           margin-top: -40px;
           margin-bottom: 64px;
         }
+        @media (max-width: 600px) {
+          .container {
+            border: none;
+            padding: 32px;
+          }
+        }
       `}</style>
     </div>
   );

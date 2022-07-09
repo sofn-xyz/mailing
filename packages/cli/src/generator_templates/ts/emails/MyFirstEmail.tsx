@@ -43,7 +43,7 @@ const MyFirstEmail: React.FC<{ name: string }> = ({ name }) => {
         </MjmlSection>
         <MjmlSection padding="0 24px 0" cssClass="smooth">
           <MjmlColumn>
-            <MjmlText padding="0" fontSize={30}>
+            <MjmlText padding="0" fontSize={30} lineHeight="120%">
               Welcome to Mailing
             </MjmlText>
             <MjmlText padding="24px 0 16px" fontSize={16} lineHeight="160%">
