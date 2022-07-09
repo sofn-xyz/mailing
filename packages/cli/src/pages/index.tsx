@@ -1,16 +1,8 @@
+import { GetServerSideProps } from "next";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
-const Home = () => {
-  const [previews, setPreviews] = useState<[string, string[]][] | null>(null);
-  const fetchData = async () => {
-    const res = await fetch("/previews.json");
-    setPreviews(await res.json());
-  };
-  useEffect(() => {
-    fetchData();
-  }, []);
-
+const Home = ({ previews }: { previews: [string, string[]][] }) => {
   if (!previews) {
     return <></>; // loading, should be quick bc everything is local
   }
@@ -144,6 +136,13 @@ const Home = () => {
       `}</style>
     </div>
   );
+};
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const res = await fetch("http://localhost:3883/previews.json");
+  return {
+    props: { previews: await res.json() },
+  };
 };
 
 export default Home;
