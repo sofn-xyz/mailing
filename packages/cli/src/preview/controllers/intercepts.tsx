@@ -30,7 +30,6 @@ export function showIntercept(req: IncomingMessage, res: ServerResponse) {
   if (data) {
     res.setHeader("Content-Type", "application/json");
     res.writeHead(200);
-    console.log("data", JSON.stringify(data));
     res.end(JSON.stringify(data));
   } else {
     renderNotFound(res);

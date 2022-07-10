@@ -47,7 +47,6 @@ export const handler = async (argv: ArgumentsCamelCase<{ port?: number }>) => {
   const dev = !!process.env.MM_DEV;
   const hostname = "localhost";
 
-  console.log("dirname", dev ? resolve(__dirname, "../src") : __dirname);
   const app = next({
     dev,
     hostname,
