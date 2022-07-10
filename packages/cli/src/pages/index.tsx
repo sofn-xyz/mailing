@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 const Home = () => {
   const [previews, setPreviews] = useState<[string, string[]][] | null>(null);
   const fetchData = async () => {
+    console.log("fetch")
     const res = await fetch("/previews.json");
     setPreviews(await res.json());
   };
