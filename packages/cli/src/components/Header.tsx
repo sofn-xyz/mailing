@@ -130,6 +130,9 @@ const Header: React.FC<HeaderProps> = ({
           #help {
             display: none;
           }
+          #email-container {
+            flex: 6;
+          }
         }
       `}</style>
     </div>
