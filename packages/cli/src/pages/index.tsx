@@ -122,7 +122,7 @@ const Home = () => {
           margin-bottom: 8px;
         }
         .email {
-          transition: background-color 100ms ease-out;
+          transition: background-color 200ms ease-out;
         }
         .email:hover {
           background: #fafa98;
