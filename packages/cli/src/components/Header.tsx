@@ -72,6 +72,7 @@ const Header: React.FC<HeaderProps> = ({
           border: solid 1px #ccc;
           padding: 12px;
           transition: background-color, box-shadow 200ms ease-out;
+          line-height: 1;
         }
         a {
           transition: background-color, transform 200ms ease-out;
