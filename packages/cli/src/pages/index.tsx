@@ -121,11 +121,15 @@ const Home = () => {
         .email-container {
           margin-bottom: 8px;
         }
-        .email {
-          transition: background-color 200ms ease-out;
+        a.email {
+          transition: background-color, transform 200ms ease-out;
+          display: inline-block;
         }
-        .email:hover {
+        a.email:hover {
           background: #fafa98;
+        }
+        a.email:active {
+          transform: translateY(2px);
         }
         .footer {
           display: block;
