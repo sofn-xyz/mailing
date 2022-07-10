@@ -57,6 +57,9 @@ const Tooltip: React.FC<TooltipProps> = ({ content, trigger }) => {
           left: 0;
           bottom: 0;
           opacity: 0;
+          background: #333;
+          opacity: 0.1;
+          z-index: 9999;
         }
       `}</style>
     </>

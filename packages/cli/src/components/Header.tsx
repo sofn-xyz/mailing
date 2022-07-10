@@ -2,6 +2,7 @@ import { ReactElement } from "react";
 import Link from "next/link";
 
 import Tooltip from "./Tooltip";
+import PreviewSender from "./PreviewSender";
 
 type HeaderProps = {
   title: string;
@@ -45,12 +46,22 @@ const Header: React.FC<HeaderProps> = ({
           )}
           content={helpContent}
         />
-        <button id="send">
-          <img
-            src="https://s3.amazonaws.com/lab.campsh.com/Group+141%402x.png"
-            height="12"
-          />
-        </button>
+        <Tooltip
+          trigger={(show, setShow) => (
+            <button id="send" onClick={() => setShow(true)}>
+              {show ? (
+                "x"
+              ) : (
+                <img
+                  src="https://s3.amazonaws.com/lab.campsh.com/Group+141%402x.png"
+                  height="12"
+                  width="12"
+                />
+              )}
+            </button>
+          )}
+          content={<PreviewSender />}
+        />
       </div>
       <style jsx>{`
         #header {
@@ -115,12 +126,12 @@ const Header: React.FC<HeaderProps> = ({
           border-bottom-right-radius: 2px;
         }
         #help {
-          width: 40px;
           margin-right: 6px;
           margin-left: 8px;
         }
         #help,
         #send {
+          width: 40px;
           border-radius: 100%;
         }
         #send {
