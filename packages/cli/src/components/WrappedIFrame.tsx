@@ -3,7 +3,7 @@ import Link from "next/link";
 
 import Tooltip from "./Tooltip";
 
-type HeaderProps = {
+type WrappedIFrameProps = {
   title: string;
   isMobile: boolean;
   setIsMobile: (isMobile: boolean) => void;
@@ -12,14 +12,7 @@ type HeaderProps = {
   helpContent: ReactElement;
 };
 
-const Header: React.FC<HeaderProps> = ({
-  title,
-  isMobile,
-  setIsMobile,
-  previous,
-  next,
-  helpContent,
-}) => {
+const WrappedIFrame: React.FC<WrappedIFrameProps> = ({ isMobile }) => {
   return (
     <div id="header">
       <Link href="/">
@@ -145,4 +138,4 @@ const Header: React.FC<HeaderProps> = ({
   );
 };
 
-export default Header;
+export default WrappedIFrame;

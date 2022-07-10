@@ -2,7 +2,7 @@ import React, { ReactElement, useCallback, useEffect, useState } from "react";
 import { ArrowContainer, Popover } from "react-tiny-popover";
 
 type TooltipProps = {
-  trigger: (setShow: (show: boolean) => void) => ReactElement;
+  trigger: (show: boolean, setShow: (show: boolean) => void) => ReactElement;
   content: ReactElement;
 };
 
@@ -41,7 +41,7 @@ const Tooltip: React.FC<TooltipProps> = ({ content, trigger }) => {
         )}
         padding={4}
       >
-        {trigger(setShow)}
+        {trigger(show, setShow)}
       </Popover>
       <style jsx>{`
         .popover {
