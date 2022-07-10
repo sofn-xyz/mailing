@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ReactElement, useState } from "react";
+import Tooltip from "./Tooltip";
 
 type HeaderProps = {
   title: string;
@@ -18,8 +19,6 @@ const Header: React.FC<HeaderProps> = ({
   next,
   helpContent,
 }) => {
-  const [showHelpContent, setShowHelpContent] = useState(false);
-
   return (
     <div id="header">
       <Link href="/">
@@ -37,9 +36,14 @@ const Header: React.FC<HeaderProps> = ({
         <button id="mobile" onClick={() => setIsMobile(true)}>
           Mobile
         </button>
-        <button id="help" onClick={() => setShowHelpContent(true)}>
-          ?
-        </button>
+        <Tooltip
+          trigger={(setShow) => (
+            <button id="help" onClick={() => setShow(true)}>
+              ?
+            </button>
+          )}
+          content={helpContent}
+        />
         <button id="send">
           <img
             src="https://s3.amazonaws.com/lab.campsh.com/Group+141%402x.png"

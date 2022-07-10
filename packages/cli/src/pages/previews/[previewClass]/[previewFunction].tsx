@@ -16,7 +16,12 @@ const Preview = () => {
 
   return (
     <div>
-      <Header title={`${previewClass} - ${previewFunction}`} isMobile={isMobile} setIsMobile={setIsMobile} helpContent={<></>} />
+      <Header
+        title={`${previewClass} - ${previewFunction}`}
+        isMobile={isMobile}
+        setIsMobile={setIsMobile}
+        helpContent={<>Hello there, little guy</>}
+      />
       <iframe title="email-preview-frame" src={htmlURL} />
       <style jsx>{`
         iframe {
