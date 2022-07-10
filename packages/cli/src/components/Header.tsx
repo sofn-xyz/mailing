@@ -1,6 +1,8 @@
-import Link from "next/link";
 import { ReactElement } from "react";
+import Link from "next/link";
+import { useRouter } from "next/router";
 import { useHotkeys } from "react-hotkeys-hook";
+
 import Tooltip from "./Tooltip";
 
 type HeaderProps = {
@@ -20,10 +22,12 @@ const Header: React.FC<HeaderProps> = ({
   next,
   helpContent,
 }) => {
+  const router = useRouter();
   useHotkeys("m", () => setIsMobile(true));
   useHotkeys("d", () => setIsMobile(false));
-  useHotkeys("/", () => setIsMobile(false));
-  // useHotkeys(, () => setIsMobile(false));
+  useHotkeys("/", () => {
+    router.push("/");
+  });
 
   return (
     <div id="header">
