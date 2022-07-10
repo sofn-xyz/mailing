@@ -16,13 +16,31 @@ const HotIFrame: React.FC<HotIFrameProps> = ({
 }) => {
   const { iframeRef } = usePreviewHotkeys({ setIsMobile });
 
-  console.log(isMobile);
   return (
     <>
-      <iframe src={src} srcDoc={srcDoc} ref={iframeRef} />
+      <div className={`frame ${isMobile ? " mobile" : ""}`}>
+        <iframe src={src} srcDoc={srcDoc} ref={iframeRef} />
+      </div>
       <style jsx>{`
+        .frame {
+          margin: auto;
+          display: block;
+        }
+        .mobile.frame {
+          padding: 64px 16px 74px;
+          max-width: 320px;
+          border-radius: 32px;
+          margin-top: 32px;
+        }
+        .mobile iframe {
+          height: 568px;
+        }
         iframe {
-          width: ${isMobile ? "320px" : "100%"};
+          width: 100%;
+        }
+        .mobile,
+        .mobile iframe {
+          border: 2px solid #ccc;
         }
       `}</style>
     </>
