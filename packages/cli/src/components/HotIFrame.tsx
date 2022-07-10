@@ -38,6 +38,7 @@ const HotIFrame: React.FC<HotIFrameProps> = ({
         }
         iframe {
           width: 100%;
+          border: none;
         }
         .mobile,
         .mobile iframe {
