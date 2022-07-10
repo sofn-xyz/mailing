@@ -1,13 +1,11 @@
 import React, { useCallback, useState } from "react";
 import { useRouter } from "next/router";
 import Header from "../../../components/Header";
-import usePreviewHotkeys from "../../../components/hooks/usePreviewHotkeys";
+import HotIFrame from "../../../components/HotIFrame";
 
 const Preview = () => {
   const router = useRouter();
   const [isMobile, setIsMobile] = useState(false);
-
-  const { iframeRef } = usePreviewHotkeys({ setIsMobile });
 
   const { previewClass, previewFunction } = router.query;
 
@@ -29,7 +27,7 @@ const Preview = () => {
           </>
         }
       />
-      <iframe ref={iframeRef} title="email-preview-frame" src={htmlURL} />
+      <HotIFrame src={htmlURL} isMobile={isMobile} setIsMobile={setIsMobile} />
       <style jsx>{`
         iframe {
           margin-top: 8px;
