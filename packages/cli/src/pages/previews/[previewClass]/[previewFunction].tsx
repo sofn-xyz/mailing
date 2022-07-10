@@ -20,7 +20,11 @@ const Preview = () => {
         title={`${previewClass} - ${previewFunction}`}
         isMobile={isMobile}
         setIsMobile={setIsMobile}
-        helpContent={<>Hello there, little guy</>}
+        helpContent={
+          <>
+            <span className="title">Hotkeys</span>
+          </>
+        }
       />
       <iframe title="email-preview-frame" src={htmlURL} />
       <style jsx>{`
@@ -30,6 +34,9 @@ const Preview = () => {
           width: 100%;
           max-width: ${isMobile ? "320px" : "100%"};
           border: 0;
+        }
+        .title {
+          text-transform: uppercase;
         }
       `}</style>
     </div>

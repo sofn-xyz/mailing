@@ -1,15 +1,15 @@
-import { ReactElement, useCallback, useEffect, useState } from "react";
+import React, { ReactElement, useCallback, useEffect, useState } from "react";
 import { ArrowContainer, Popover } from "react-tiny-popover";
 
 type TooltipProps = {
-  trigger: (setShow: (boolean) => void) => ReactElement;
+  trigger: (setShow: (show: boolean) => void) => ReactElement;
   content: ReactElement;
 };
 
 const Tooltip: React.FC<TooltipProps> = ({ content, trigger }) => {
   const [show, setShow] = useState(false);
 
-  const handleEsc = useCallback((event) => {
+  const handleEsc = useCallback((event: KeyboardEvent) => {
     if (event.key === "Escape") setShow(false);
   }, []);
 
@@ -32,14 +32,14 @@ const Tooltip: React.FC<TooltipProps> = ({ content, trigger }) => {
             childRect={childRect}
             popoverRect={popoverRect}
             arrowColor="#333"
-            arrowSize={6}
+            arrowSize={4}
             className="popover-arrow-container"
             arrowClassName="popover-arrow"
           >
             <div className="popover">{content}</div>
           </ArrowContainer>
         )}
-        padding={10}
+        padding={4}
       >
         {trigger(setShow)}
       </Popover>

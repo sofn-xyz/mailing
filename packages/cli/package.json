@@ -21,7 +21,7 @@
     ".next"
   ],
   "scripts": {
-    "prepublish": "rm -rf .next && yarn next build && cp -R .next dist/ && rm -rf dist/.next/cache"
+    "build": "rm -rf .next && yarn next build && cp -R .next dist/ && rm -rf dist/.next/cache"
   },
   "description": "Fun email development environment",
   "devDependencies": {
@@ -61,6 +61,7 @@
     "nodemailer": "^6.7.5",
     "open": "^8.4.0",
     "prompts": "^2.4.2",
+    "react-hotkeys-hook": "^3.4.6",
     "react-tiny-popover": "^7.1.0",
     "tmp-promise": "^3.0.3",
     "tree-node-cli": "^1.5.2",

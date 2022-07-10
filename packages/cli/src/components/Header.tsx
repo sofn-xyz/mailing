@@ -1,11 +1,12 @@
 import Link from "next/link";
-import { ReactElement, useState } from "react";
+import { ReactElement } from "react";
+import { useHotkeys } from "react-hotkeys-hook";
 import Tooltip from "./Tooltip";
 
 type HeaderProps = {
   title: string;
   isMobile: boolean;
-  setIsMobile: (boolean) => void;
+  setIsMobile: (isMobile: boolean) => void;
   previous?: string;
   next?: string;
   helpContent: ReactElement;
@@ -19,6 +20,11 @@ const Header: React.FC<HeaderProps> = ({
   next,
   helpContent,
 }) => {
+  useHotkeys("m", () => setIsMobile(true));
+  useHotkeys("d", () => setIsMobile(false));
+  useHotkeys("/", () => setIsMobile(false));
+  // useHotkeys(, () => setIsMobile(false));
+
   return (
     <div id="header">
       <Link href="/">
