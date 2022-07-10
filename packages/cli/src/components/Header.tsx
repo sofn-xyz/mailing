@@ -60,10 +60,12 @@ const Header: React.FC<HeaderProps> = ({
         #index {
           font-size: 14px;
         }
-        #email-container,
         #utilities,
         #index {
           flex: 1;
+        }
+        #email-container {
+          flex: 6;
         }
         button {
           background: #fff;
