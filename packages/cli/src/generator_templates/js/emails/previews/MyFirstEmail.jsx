@@ -1,10 +1,10 @@
 import React from "react";
 import MyFirstEmail from "../MyFirstEmail";
 
-export function toBob() {
-  return <MyFirstEmail name="Bob" />;
+export function toAmelita() {
+  return <MyFirstEmail name="Amelita" />;
 }
 
-export function toSally() {
-  return <MyFirstEmail name="Sally" />;
+export function toManny() {
+  return <MyFirstEmail name="Manny" />;
 }

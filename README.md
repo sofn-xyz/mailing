@@ -91,7 +91,7 @@ export default new Mailing({ transport });
 import { sendMail } from "emails";
 import MyFirstEmail from "emails/MyFirstEmail";
 
-sendMail(<MyFirstEmail firstName="Bob" />);
+sendMail(<MyFirstEmail firstName="Amelita" />);
 ```
 
 <br/>
