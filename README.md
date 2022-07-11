@@ -10,7 +10,7 @@
 - Preview server for quick development
 - Test-mode for ensuring emails send and have the correct content
 - Plays well with js frameworks like redwood.js, remix, next.js
-- Written in Typescript
+- Written in Typescript, inspired by ActionMailer from Ruby on Rails
 
 <br/>
 
