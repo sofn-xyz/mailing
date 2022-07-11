@@ -6,3 +6,15 @@ type Intercept = {
   cc?: string | string[];
   bcc?: string | string[];
 };
+
+type SendPreviewRequestBody = {
+  to: string;
+  html?: string;
+  previewFunction?: string;
+  previewClass?: string;
+  subject: string;
+};
+
+type SendPreviewResponseBody = {
+  error?: string;
+};

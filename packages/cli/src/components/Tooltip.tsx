@@ -22,7 +22,6 @@ const Tooltip: React.FC<TooltipProps> = ({ content, trigger }) => {
 
   return (
     <>
-      {show && <div className="overlay" onClick={() => setShow(false)} />}
       <Popover
         isOpen={show}
         positions={["bottom", "left"]}
@@ -43,6 +42,7 @@ const Tooltip: React.FC<TooltipProps> = ({ content, trigger }) => {
       >
         {trigger(show, setShow)}
       </Popover>
+      {show && <div className="overlay" onClick={() => setShow(false)} />}
       <style jsx>{`
         .popover {
           background: #333;
@@ -59,7 +59,6 @@ const Tooltip: React.FC<TooltipProps> = ({ content, trigger }) => {
           opacity: 0;
           background: #333;
           opacity: 0.1;
-          z-index: 9999;
         }
       `}</style>
     </>

@@ -6,6 +6,8 @@ import PreviewSender from "./PreviewSender";
 
 type HeaderProps = {
   title: string;
+  previewFunction?: string;
+  previewClass?: string;
   isMobile: boolean;
   setIsMobile: (isMobile: boolean) => void;
   previous?: string;
@@ -15,6 +17,8 @@ type HeaderProps = {
 
 const Header: React.FC<HeaderProps> = ({
   title,
+  previewFunction,
+  previewClass,
   isMobile,
   setIsMobile,
   previous,
@@ -60,7 +64,12 @@ const Header: React.FC<HeaderProps> = ({
               )}
             </button>
           )}
-          content={<PreviewSender />}
+          content={
+            <PreviewSender
+              previewFunction={previewFunction}
+              previewClass={previewClass}
+            />
+          }
         />
       </div>
       <style jsx>{`

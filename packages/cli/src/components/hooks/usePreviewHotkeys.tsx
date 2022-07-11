@@ -13,7 +13,6 @@ export default function usePreviewHotkeys({ setIsMobile }: Options) {
   const router = useRouter();
   const handleKey = useCallback(
     (e: KeyboardEvent) => {
-      console.log("HOT", e.key);
       if (e.key === "/") {
         router.push("/");
       } else if (e.key === "m") {

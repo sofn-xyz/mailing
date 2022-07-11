@@ -26,16 +26,23 @@ const PreviewSender: React.FC<PreviewSenderProps> = ({
     async (e) => {
       e.preventDefault();
 
-      if (!email) {
-      }
+      if (!email) return;
+
       window.localStorage.setItem("previewSenderEmail", email);
       try {
+        const payload: SendPreviewRequestBody = {
+          to: email,
+          html,
+          previewFunction,
+          previewClass,
+          subject: `${previewClass} - ${previewFunction}`,
+        };
         const response = await fetch("/previews/send.json", {
           method: "POST",
-          body: JSON.stringify({ html, previewFunction, previewClass }),
+          body: JSON.stringify(payload),
         });
-        const data = await response.json();
-        console.log("hello");
+        const data: SendPreviewResponseBody = await response.json();
+
         if (data.error) {
           setError(data.error);
         } else {
@@ -70,7 +77,7 @@ const PreviewSender: React.FC<PreviewSenderProps> = ({
           value={email || ""}
           onChange={onInputChange}
         />
-        <input type="submit" value="Send" />
+        <input type="submit" value="Send" disabled={!email?.length} />
       </form>
       {showSuccess && <div>Success! Check your email.</div>}
       {error && <div className="error">{error}</div>}

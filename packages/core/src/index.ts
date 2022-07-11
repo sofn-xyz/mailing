@@ -9,12 +9,12 @@ import fetch from "node-fetch";
 export namespace mailing {
   export type ComponentMail = nodemailer.SendMailOptions & {
     component: ReactElement<any, string | JSXElementConstructor<any>>;
+    forceDeliver?: boolean;
+    forcePreview?: boolean;
   };
   export type SendMailOptions = {
     transport: nodemailer.Transporter;
-    defaulFrom?: string;
-    forceDeliver?: boolean;
-    forcePreview?: boolean;
+    defaultFrom: string;
   };
 }
 
@@ -36,13 +36,13 @@ export async function getTestMessageQueue() {
 }
 
 export function buildSendMail(options: mailing.SendMailOptions) {
-  const forcePreview =
-    options.forcePreview ||
-    (process.env.NODE_ENV !== "production" && !options.forceDeliver);
-
   const testMode = process.env.TEST || process.env.NODE_ENV === "test";
 
   return async function sendMail(mail: mailing.ComponentMail) {
+    const forcePreview =
+      mail.forcePreview ||
+      (process.env.NODE_ENV !== "production" && !mail.forceDeliver);
+
     const { html, errors } = mail.html
       ? { html: mail.html, errors: [] }
       : render(mail.component);
@@ -54,10 +54,17 @@ export function buildSendMail(options: mailing.SendMailOptions) {
 
     // Create a mail for nodemailer with the component rendered to HTML.
     const htmlMail = {
+      text: "Hello",
+      from: options.defaultFrom,
       ...mail,
       html: html,
       component: undefined,
+      forceDeliver: undefined,
+      forcePreview: undefined,
     };
+    delete htmlMail.component;
+    delete htmlMail.forceDeliver;
+    delete htmlMail.forcePreview;
 
     if (testMode) {
       const testMessageQueue = await getTestMessageQueue();
@@ -92,7 +99,10 @@ export function buildSendMail(options: mailing.SendMailOptions) {
       return;
     }
 
-    await options.transport.sendMail(htmlMail);
+    log("sendMail options", htmlMail);
+    const response = await options.transport.sendMail(htmlMail);
+    log("sendMail response", response);
+    return response;
   };
 }
 
