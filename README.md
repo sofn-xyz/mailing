@@ -64,7 +64,7 @@ emails
     └── MyFirstEmail.tsx
 ```
 
-4. Configure your email transport and defaultFrom in `email/index.ts`. It defaults to nodemailer's SMTP transport, but you can read about others [here](https://nodemailer.com/transports/).
+4. Configure your email transport and `defaultFrom` in `email/index.ts`. It defaults to nodemailer's SMTP transport, but you can read about others [here](https://nodemailer.com/transports/).
 
 Example SendGrid transport:
 ```tsx
@@ -149,7 +149,7 @@ show hn requirements
 - [x] generate emails directory
 - [x] email.ts API
 - [ ] basic tests for lib
-- [~] basic tests for cli (init test)
+- [x] basic tests for cli (init test)
 - [x] email previews
 - [ ] polished README
 - [x] logo
