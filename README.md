@@ -52,14 +52,14 @@ npm install --save-dev mailing @types/mjml @types/mjml-react
 
 2. Scaffold your `email` directory with `mailing init`.
 
-This will create the following directory structure:
+This will create the following directory for all of your emails:
 
 ```
 emails
+├── index.ts // this exports sendMail and is where your SMTP config goes
 ├── MyFirstEmail.tsx // an example email
 ├── components // shared components go in here
 │   └── Header.tsx
-├── index.ts
 └── previews // 
     └── MyFirstEmail.tsx
 ```
