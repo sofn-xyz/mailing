@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "yarn watch & MM_DEV=1 packages/cli/bin.js",
+    "dev": "cp -R packages/cli/src/generator_templates/ts/emails . && yarn watch & MM_DEV=1 packages/cli/bin.js",
     "build": "preconstruct build && cp -R packages/cli/src/generator_templates packages/cli/dist",
     "test": "jest",
     "test:watch": "jest --watch",
