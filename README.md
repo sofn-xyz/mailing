@@ -60,7 +60,7 @@ emails
 ├── MyFirstEmail.tsx // an example email
 ├── components // shared components go in here
 │   └── Header.tsx
-└── previews // 
+└── previews // use previews to develop and examine your templates with different props
     └── MyFirstEmail.tsx
 ```
 
