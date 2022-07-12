@@ -52,7 +52,7 @@ const Header: React.FC<HeaderProps> = ({
         />
         <Tooltip
           trigger={(show, setShow) => (
-            <button id="send" onClick={() => setShow(true)}>
+            <button id="send" onClick={() => setShow((current) => !current)}>
               {show ? (
                 "x"
               ) : (
