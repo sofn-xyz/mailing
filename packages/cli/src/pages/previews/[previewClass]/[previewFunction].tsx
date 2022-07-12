@@ -25,7 +25,15 @@ const Preview = () => {
         setIsMobile={setIsMobile}
         helpContent={
           <>
-            <span className="title">Hotkeys</span>
+            <div className="title">Hotkeys</div>
+            <div className="hotkey">
+              <span className="character">/</span>
+              <span className="description">Jump to Index</span>
+            </div>
+            <div className="hotkey">
+              <span className="character">.</span>
+              <span className="description">Toggle desktop/mobile view</span>
+            </div>
           </>
         }
       />
@@ -39,7 +47,32 @@ const Preview = () => {
           border: 0;
         }
         .title {
+          padding-bottom: 4px;
+        }
+        .title,
+        .character {
           text-transform: uppercase;
+          font-size: 10px;
+          line-height: 100%;
+        }
+        .hotkey {
+          font-size: 12px;
+          margin: 12px 8px 0 0;
+        }
+        .character {
+          color: #bbb;
+          width: 18px;
+          height: 18px;
+          border: solid 1px #999;
+          border-radius: 2px;
+          text-align: center;
+          margin-right: 8px;
+          display: inline-block;
+          line-height: 170%;
+        }
+        .description {
+          position: relative;
+          top: 1.25px;
         }
       `}</style>
     </div>

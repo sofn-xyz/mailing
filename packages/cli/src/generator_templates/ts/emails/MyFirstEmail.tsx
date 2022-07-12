@@ -44,11 +44,11 @@ const MyFirstEmail: React.FC<{ name: string }> = ({ name }) => {
         <MjmlSection padding="0 24px 0" cssClass="smooth">
           <MjmlColumn>
             <MjmlText padding="0" fontSize={30} lineHeight="120%">
-              Welcome to Mailing
+              Welcome, {name}!
             </MjmlText>
             <MjmlText padding="24px 0 16px" fontSize={16} lineHeight="160%">
-              Hello, {name}. Mailing makes it easy to send great emails from
-              your React app. Here’s a bit about Mailing in a nutshell:
+              Mailing makes it easy to send great emails from your React app.
+              Here’s a bit about Mailing in a nutshell:
             </MjmlText>
             <MjmlText
               padding="1px 0 0"

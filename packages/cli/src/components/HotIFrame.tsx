@@ -28,13 +28,13 @@ const HotIFrame: React.FC<HotIFrameProps> = ({
         }
         .mobile.frame {
           padding: 64px 16px 74px;
-          max-width: 320px;
+          max-width: 324px;
           border-radius: 32px;
-          margin-top: 32px;
-          margin-bottom: 16px;
+          margin: 64px auto;
         }
         .mobile iframe {
           height: 568px;
+          max-width: 320px;
         }
         iframe {
           width: 100%;

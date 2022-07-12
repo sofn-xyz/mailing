@@ -2,7 +2,10 @@ import React, { ReactElement, useCallback, useEffect, useState } from "react";
 import { ArrowContainer, Popover } from "react-tiny-popover";
 
 type TooltipProps = {
-  trigger: (show: boolean, setShow: (show: boolean) => void) => ReactElement;
+  trigger: (
+    show: boolean,
+    setShow: React.Dispatch<React.SetStateAction<boolean>>
+  ) => ReactElement;
   content: ReactElement;
 };
 
@@ -23,6 +26,7 @@ const Tooltip: React.FC<TooltipProps> = ({ content, trigger }) => {
   return (
     <>
       <Popover
+        onClickOutside={() => setShow(false)}
         isOpen={show}
         positions={["bottom", "left"]}
         content={({ position, childRect, popoverRect }) => (
@@ -31,7 +35,7 @@ const Tooltip: React.FC<TooltipProps> = ({ content, trigger }) => {
             childRect={childRect}
             popoverRect={popoverRect}
             arrowColor="#333"
-            arrowSize={4}
+            arrowSize={6}
             className="popover-arrow-container"
             arrowClassName="popover-arrow"
           >
@@ -49,10 +53,11 @@ const Tooltip: React.FC<TooltipProps> = ({ content, trigger }) => {
           color: white;
           border-radius: 2px;
           padding: 16px;
+          margin-right: 24px;
         }
         .overlay {
           position: absolute;
-          top: 0;
+          top: 65px;
           right: 0;
           left: 0;
           bottom: 0;

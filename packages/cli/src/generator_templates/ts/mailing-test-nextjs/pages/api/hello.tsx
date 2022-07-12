@@ -16,7 +16,7 @@ export default async function handler(
     to: "jerry@gmail.com",
     from: "mailing@example.com",
     cc: ["jeff@counter.com", "fia@ope.dd"],
-    component: <MyFirstEmail name="bob" />,
+    component: <MyFirstEmail name="Amelita" />,
   });
   res.status(200).json({ name: "John Doe" });
 }

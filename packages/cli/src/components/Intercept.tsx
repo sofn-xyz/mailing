@@ -1,5 +1,6 @@
 import { useState } from "react";
 import HotIFrame from "./HotIFrame";
+import Header from "./Header";
 
 type InterceptProps = {
   data?: Intercept;
@@ -13,11 +14,31 @@ const Intercept: React.FC<InterceptProps> = ({ data }) => {
 
   return (
     <>
-      <div>subject: "{data.subject}"</div>
-      <div>from: {data.from}</div>
-      <div> to: {data.to}</div>
-      <div> cc: {data.cc}</div>
-      <div> bcc: {data.bcc}</div>
+      <Header
+        title={data.subject}
+        isMobile={isMobile}
+        setIsMobile={setIsMobile}
+        helpContent={
+          <>
+            <div className="title">Hotkeys</div>
+            <div className="hotkey">
+              <span className="character">/</span>
+              <span className="description">Jump to Index</span>
+            </div>
+            <div className="hotkey">
+              <span className="character">.</span>
+              <span className="description">Toggle desktop/mobile view</span>
+            </div>
+          </>
+        }
+      />
+      <div className="container">
+        <div>Subject: "{data.subject}"</div>
+        <div>To: {data.to}</div>
+        <div>From: {data.from}</div>
+        <div>CC: {data.cc}</div>
+        <div>BCC: {data.bcc}</div>
+      </div>
       {data.html && (
         <HotIFrame
           isMobile={isMobile}
@@ -25,6 +46,18 @@ const Intercept: React.FC<InterceptProps> = ({ data }) => {
           srcDoc={data.html}
         />
       )}
+      <style jsx>{`
+        .container {
+          border-bottom: solid 1px #ccc;
+          padding: 16px 24px;
+          margin: auto;
+          font-size: 12px;
+          line-height: 120%;
+        }
+        .container > * {
+          margin: 4px 0;
+        }
+      `}</style>
     </>
   );
 };

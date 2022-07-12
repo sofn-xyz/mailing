@@ -44,8 +44,8 @@ const Header: React.FC<HeaderProps> = ({
         </button>
         <Tooltip
           trigger={(show, setShow) => (
-            <button id="help" onClick={() => setShow(true)}>
-              {show ? "x" : "?"}
+            <button id="help" onClick={() => setShow((current) => !current)}>
+              {show ? <span id="close">×</span> : "?"}
             </button>
           )}
           content={helpContent}
@@ -98,6 +98,7 @@ const Header: React.FC<HeaderProps> = ({
           padding: 12px;
           transition: background-color, box-shadow 200ms ease-out;
           line-height: 1;
+          text-align: center;
         }
         a {
           transition: background-color, transform 200ms ease-out;
@@ -149,6 +150,12 @@ const Header: React.FC<HeaderProps> = ({
         #send img {
           position: relative;
           top: 1px;
+        }
+        #close {
+          font-size: 16px;
+          line-height: 10px;
+          position: relative;
+          left: 1px;
         }
         @media (max-width: 768px) {
           #desktop,
