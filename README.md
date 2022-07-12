@@ -64,24 +64,18 @@ emails
     └── MyFirstEmail.tsx
 ```
 
-4. Configure your email transport in `email/index.ts`. It defaults to nodemailer's SMTP transport, but you can read about others [here](https://nodemailer.com/transports/).
+4. Configure your email transport and defaultFrom in `email/index.ts`. It defaults to nodemailer's SMTP transport, but you can read about others [here](https://nodemailer.com/transports/).
 
+Example SendGrid transport:
 ```tsx
-import nodemailer from "nodemailer";
-import { Mailing } from "mailing";
-
 const transport = nodemailer.createTransport({
-  pool: true,
-  host: "smtp.example.com",
-  port: 465,
-  secure: true, // use TLS
+  host: "smtp.sendgrid.net",
+  port: 587,
   auth: {
-    user: "username",
-    pass: "password",
+    user: "apikey",
+    pass: process.env.SEND_GRID_KEY,
   },
 });
-
-export default new Mailing({ transport });
 ```
 
 5. Then send you first email like so:
