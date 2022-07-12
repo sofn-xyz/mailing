@@ -56,12 +56,11 @@ This will create the following directory structure:
 
 ```
 emails
-├── MyFirstEmail.tsx
-├── components
-│   ├── Body.tsx
+├── MyFirstEmail.tsx // an example email
+├── components // shared components go in here
 │   └── Header.tsx
 ├── index.ts
-└── previews
+└── previews // 
     └── MyFirstEmail.tsx
 ```
 
