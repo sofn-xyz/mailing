@@ -19,6 +19,8 @@ const Preview = () => {
     <div>
       <Header
         title={`${previewClass} - ${previewFunction}`}
+        previewClass={previewClass as string}
+        previewFunction={previewFunction as string}
         isMobile={isMobile}
         setIsMobile={setIsMobile}
         helpContent={

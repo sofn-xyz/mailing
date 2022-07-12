@@ -9,7 +9,11 @@ import {
   createIntercept,
   showIntercept,
 } from "../preview/controllers/intercepts";
-import { showPreview, showPreviewIndex } from "../preview/controllers/previews";
+import {
+  sendPreview,
+  showPreview,
+  showPreviewIndex,
+} from "../preview/controllers/previews";
 import { cwd } from "process";
 import { parse } from "url";
 import next from "next";
@@ -101,7 +105,7 @@ export const handler = async (argv: ArgumentsCamelCase<{ port?: number }>) => {
 
       res.once("close", () => {
         if (!noLog || process.env.MM_VERBOSE)
-          log(`${req.url} ${Date.now() - startTime}ms`);
+          log(`${res.statusCode} ${req.url} ${Date.now() - startTime}ms`);
       });
 
       try {
@@ -112,6 +116,8 @@ export const handler = async (argv: ArgumentsCamelCase<{ port?: number }>) => {
           showShouldReload(req, res);
         } else if (req.url === "/intercepts" && req.method === "POST") {
           createIntercept(req, res);
+        } else if (req.url === "/previews/send.json" && req.method === "POST") {
+          await sendPreview(req, res);
         } else if (/^\/intercepts\/[a-zA-Z0-9]+\.json/.test(req.url)) {
           showIntercept(req, res);
         } else if (/^\/preview-html\//.test(req.url)) {
