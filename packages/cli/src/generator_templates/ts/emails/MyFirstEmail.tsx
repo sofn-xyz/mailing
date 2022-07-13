@@ -1,5 +1,7 @@
 import React from "react";
 import Head from "./components/Head";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
 import {
   Mjml,
   MjmlBody,
@@ -18,17 +20,7 @@ const MyFirstEmail: React.FC<{ name: string }> = ({ name }) => {
         <MjmlTitle>Welcome to Mailing</MjmlTitle>
       </Head>
       <MjmlBody width={600}>
-        <MjmlSection padding="48px 0 40px">
-          <MjmlColumn>
-            <MjmlImage
-              padding="0 24px 0"
-              width="146"
-              height="32"
-              align="left"
-              src="https://s3.amazonaws.com/lab.campsh.com/mailing-logo%402x.png"
-            />
-          </MjmlColumn>
-        </MjmlSection>
+        <Header />
         <MjmlSection padding="0">
           <MjmlColumn>
             <MjmlImage
@@ -124,21 +116,7 @@ const MyFirstEmail: React.FC<{ name: string }> = ({ name }) => {
             </MjmlText>
           </MjmlColumn>
         </MjmlSection>
-        <MjmlSection cssClass="smooth">
-          <MjmlColumn>
-            <MjmlText
-              cssClass="footer"
-              padding="0 24px 48px"
-              fontSize={14}
-              color="#777"
-            >
-              © 2022 Mailing&nbsp;&nbsp;·&nbsp;&nbsp;
-              <a href="#" target="_blank">
-                Unsubscribe
-              </a>
-            </MjmlText>
-          </MjmlColumn>
-        </MjmlSection>
+        <Footer />
       </MjmlBody>
     </Mjml>
   );
