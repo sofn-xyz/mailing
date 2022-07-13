@@ -149,7 +149,7 @@ show hn requirements
 - [x] setup package with lib and cli
 - [x] generate emails directory
 - [x] email.ts API
-- [ ] basic tests for lib
+- [x] basic tests for lib
 - [x] basic tests for cli (init test)
 - [x] email previews
 - [ ] polished README
