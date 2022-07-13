@@ -38,6 +38,13 @@ export async function getTestMessageQueue() {
 export function buildSendMail(options: mailing.SendMailOptions) {
   const testMode = process.env.TEST || process.env.NODE_ENV === "test";
 
+  if (!options?.transport) {
+    throw new Error("buildSendMail options are missing transport");
+  }
+  if (!options?.defaultFrom) {
+    throw new Error("buildSendMail options are missing defaultFrom");
+  }
+
   return async function sendMail(mail: mailing.ComponentMail) {
     const forcePreview =
       mail.forcePreview ||
