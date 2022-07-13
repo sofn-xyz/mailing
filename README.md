@@ -64,24 +64,19 @@ emails
     └── MyFirstEmail.tsx
 ```
 
-4. Configure your email transport in `email/index.ts`. It defaults to nodemailer's SMTP transport, but you can read about others [here](https://nodemailer.com/transports/).
+4. Configure your email transport and `defaultFrom` in `email/index.ts`. It defaults to nodemailer's SMTP transport, but you can read about others [here](https://nodemailer.com/transports/).
+
+Example SendGrid transport:
 
 ```tsx
-import nodemailer from "nodemailer";
-import { Mailing } from "mailing";
-
 const transport = nodemailer.createTransport({
-  pool: true,
-  host: "smtp.example.com",
-  port: 465,
-  secure: true, // use TLS
+  host: "smtp.sendgrid.net",
+  port: 587,
   auth: {
-    user: "username",
-    pass: "password",
+    user: "apikey",
+    pass: process.env.SEND_GRID_KEY,
   },
 });
-
-export default new Mailing({ transport });
 ```
 
 5. Then send you first email like so:
@@ -112,13 +107,13 @@ Mailing includes a development mode for previewing your emails. Running `mailing
 ## ●&nbsp;&nbsp;&nbsp;Testing emails with jest
 
 ```tsx
-import { getTestMessageQueue } from "emails";
+import { getTestMailQueue } from "emails";
 
 describe("Example API", () => {
   it("sends an email when an issue is ready for review", () => {
     // DO SOMETHING THAT SHOULD SEND AN EMAIL
 
-    const emails = await getTestMessageQueue();
+    const emails = await getTestMailQueue();
     expect(emails.length).toBe(1);
     expect(emails[0].subject).toMatch("Re: An issue title");
     expect(emails[0].html).toMatch("READY FOR REVIEW");
@@ -155,7 +150,7 @@ show hn requirements
 - [x] generate emails directory
 - [x] email.ts API
 - [ ] basic tests for lib
-- [~] basic tests for cli (init test)
+- [x] basic tests for cli (init test)
 - [x] email previews
 - [ ] polished README
 - [x] logo
