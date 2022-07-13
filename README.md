@@ -90,12 +90,6 @@ sendMail(<MyFirstEmail firstName="Amelita" />);
 
 <br/>
 
-## ●&nbsp;&nbsp;&nbsp;Adding to a next.js app
-
-TODO
-
-<br/>
-
 ## Developing with email previews
 
 Mailing includes a development mode for previewing your emails. Running `mailing` in dev will boot the preview app and examine previews for different cases. Previews live reload when files in the emails directory change. [Needs e2e tests]
@@ -155,10 +149,9 @@ show hn requirements
 - [ ] polished README
 - [x] logo
 - [x] rename (react-mailer, gigaben, mailing, omail, mailbus, must be available on npmjs.com)
-- [ ] instructions for next.js integration
 - [x] publish to npm
 - [ ] add video to readme
-- [ ] pull into a project and it works (and test that)
+- [ ] pull into a next.js project and it works (and test that)
 - [x] split into 2 packages so that preview server is not included
 
 ---
