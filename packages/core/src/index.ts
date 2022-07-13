@@ -20,11 +20,11 @@ export namespace mailing {
 
 // In test, we write the email queue to this file so that it can be read
 // by the test process.
-const TMP_TEST_FILE = "tmp-testMessageQueue.json";
+const TMP_TEST_FILE = "tmp-testMailQueue.json";
 
-export async function getTestMessageQueue() {
-  if (!process.env.TEST || process.env.NODE_ENV === "test") {
-    throw new Error("tried to get test message queue not in test mode");
+export async function getTestMailQueue() {
+  if (!(process.env.TEST || process.env.NODE_ENV === "test")) {
+    throw new Error("tried to get test mail queue not in test mode");
   }
 
   try {
@@ -32,6 +32,19 @@ export async function getTestMessageQueue() {
     return JSON.parse(queue.toString());
   } catch (e) {
     return [];
+  }
+}
+
+export async function clearTestMailQueue() {
+  if (!(process.env.TEST || process.env.NODE_ENV === "test")) {
+    throw new Error("tried to clear test mail queue not in test mode");
+  }
+
+  try {
+    await fs.unlinkSync(TMP_TEST_FILE);
+  } catch (e: any) {
+    if (e.code === "ENOENT") return; // file does not exist
+    throw e;
   }
 }
 
@@ -74,7 +87,7 @@ export function buildSendMail(options: mailing.SendMailOptions) {
     delete htmlMail.forcePreview;
 
     if (testMode) {
-      const testMessageQueue = await getTestMessageQueue();
+      const testMessageQueue = await getTestMailQueue();
       testMessageQueue.push(htmlMail);
       fs.writeFileSync(TMP_TEST_FILE, JSON.stringify(testMessageQueue));
       return;

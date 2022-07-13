@@ -67,6 +67,7 @@ emails
 4. Configure your email transport and `defaultFrom` in `email/index.ts`. It defaults to nodemailer's SMTP transport, but you can read about others [here](https://nodemailer.com/transports/).
 
 Example SendGrid transport:
+
 ```tsx
 const transport = nodemailer.createTransport({
   host: "smtp.sendgrid.net",
@@ -106,13 +107,13 @@ Mailing includes a development mode for previewing your emails. Running `mailing
 ## ●&nbsp;&nbsp;&nbsp;Testing emails with jest
 
 ```tsx
-import { getTestMessageQueue } from "emails";
+import { getTestMailQueue } from "emails";
 
 describe("Example API", () => {
   it("sends an email when an issue is ready for review", () => {
     // DO SOMETHING THAT SHOULD SEND AN EMAIL
 
-    const emails = await getTestMessageQueue();
+    const emails = await getTestMailQueue();
     expect(emails.length).toBe(1);
     expect(emails[0].subject).toMatch("Re: An issue title");
     expect(emails[0].html).toMatch("READY FOR REVIEW");
