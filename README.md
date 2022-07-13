@@ -28,7 +28,7 @@
 
 ## ●&nbsp;&nbsp;&nbsp;Why?
 
-We love good emails. Usage metrics imply that a lot of people do. But every web developer hates making them. So, we want to make coding them easy.
+We’re longtime users of Action Mailer and wanted something similar for our typescript/react apps. We didn’t find anything, so we decided to build Mailing. We added some small features that we would’ve liked in Action Mailer, including a mobile preview toggle (with hotkeys), and the ability to send a test email right from the browser while developing. Finally, we went all in on MJML so that we never have to think about nested tables or email clients :)
 
 <br/>
 
