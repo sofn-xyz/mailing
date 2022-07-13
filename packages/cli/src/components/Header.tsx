@@ -45,7 +45,7 @@ const Header: React.FC<HeaderProps> = ({
         <Tooltip
           trigger={(show, setShow) => (
             <button id="help" onClick={() => setShow((current) => !current)}>
-              {show ? <span id="close">×</span> : "?"}
+              {show ? <span className="close">×</span> : "?"}
             </button>
           )}
           content={helpContent}
@@ -54,7 +54,7 @@ const Header: React.FC<HeaderProps> = ({
           trigger={(show, setShow) => (
             <button id="send" onClick={() => setShow((current) => !current)}>
               {show ? (
-                "x"
+                <span className="close">×</span>
               ) : (
                 <img
                   src="https://s3.amazonaws.com/lab.campsh.com/Group+141%402x.png"
@@ -106,10 +106,10 @@ const Header: React.FC<HeaderProps> = ({
         a:hover span,
         button:hover {
           cursor: pointer;
-          background: #ffff75;
+          background: #fafa98;
         }
         button:active {
-          box-shadow: inset 0 0 12px #9e9e00;
+          box-shadow: inset 0 0 12px rgba(0, 0, 0, 0.5);
         }
         a:active {
           transform: translateY(2px);
@@ -143,6 +143,7 @@ const Header: React.FC<HeaderProps> = ({
         #send {
           width: 40px;
           border-radius: 100%;
+          line-height: 10px;
         }
         #send {
           margin: 0;
@@ -151,7 +152,7 @@ const Header: React.FC<HeaderProps> = ({
           position: relative;
           top: 1px;
         }
-        #close {
+        .close {
           font-size: 16px;
           line-height: 10px;
           position: relative;

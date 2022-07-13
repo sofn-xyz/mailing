@@ -81,8 +81,8 @@ const PreviewSender: React.FC<PreviewSenderProps> = ({
       <h3>Send a test email</h3>
       {!lastSendAt && (
         <div className="subtitle">
-          To start sending emails, you must configure a transport in
-          email/index.tsx.{" "}
+          To start sending emails, you must configure a transport in{" "}
+          <span className="mono">email/index.tsx</span>.{" "}
           <a href="https://github.com/psugihara/mailing">Learn more</a>
         </div>
       )}
@@ -90,36 +90,111 @@ const PreviewSender: React.FC<PreviewSenderProps> = ({
         <input
           aria-label="email"
           type="email"
+          placeholder="name@example.com"
           value={email || ""}
           onChange={onInputChange}
         />
         <input type="submit" value="Send" disabled={!email?.length} />
       </form>
-      {error && <div className="error">{error}</div>}
+      {error && <div className="error">⚠ {error}</div>}
       {sending && <div className="sending">Sending...</div>}
       {!sending && lastSendAt && (
         <div className="last-send">
-          Sent at {lastSendAt?.toLocaleTimeString()}
+          ✓ Sent at {lastSendAt?.toLocaleTimeString()}
         </div>
       )}
       <style jsx>{`
         .container {
           max-width: 320px;
+          padding-bottom: 8px;
           color: #fff;
         }
-        a {
+        .container > * {
+          -webkit-font-smoothing: antialiased;
+        }
+        form {
+          margin-bottom: 8px;
+        }
+        input {
+          font-size: 14px;
+          background: #333;
           color: #fff;
+          line-height: 120%;
+          padding: 8px;
+          border: solid 1px #666;
+          border-top-left-radius: 2px;
+          border-bottom-left-radius: 2px;
+        }
+        input[type="email"] {
+          border-right: none;
+        }
+        input[type="email"]:hover {
+          outline: none;
+          border: 1px solid #bbb;
+          border-right: none;
+        }
+        input[type="email"]:focus {
+          outline: none;
+          border: 1px solid #bbb;
+          border-right: none;
+        }
+        ::placeholder {
+          color: #aaa;
+        }
+        input[type="submit"] {
+          background-color: #fff;
+          color: #000;
+          font-size: 12px;
+          border: none;
+          padding: 10px 12px 11px;
+          position: relative;
+          top: -2px;
+          border-image-width: 0;
+          border-top-left-radius: 0px;
+          border-bottom-left-radius: 0px;
+          border-top-right-radius: 2px;
+          border-bottom-right-radius: 2px;
+          transition: box-shadow 200ms ease-out;
+        }
+        input[type="submit"]:hover {
+          cursor: pointer;
+          background: #fafa98;
+        }
+        input[type="submit"]:active {
+          box-shadow: inset 0 0 12px rgba(0, 0, 0, 0.75);
+        }
+        a {
+          transition: background-color, transform 200ms ease-out;
+          display: inline-block;
+          color: #fff;
+        }
+        a:hover {
+          background: #fadf98;
+          color: #333;
+        }
+        a:active {
+          transform: translateY(2px);
         }
         h3 {
           font-weight: 700;
           font-size: 16px;
+          margin: 4px 0 12px;
         }
         .subtitle {
           font-size: 12px;
-          margin-bottom: 12px;
+          margin-top: -4px;
+          margin-bottom: 16px;
+          line-height: 130%;
+          max-width: 288px;
         }
         .mono {
-          font-face: menlo, monospace, sans-serif;
+          font-family: Menlo, Monaco, Lucida Console, Liberation Mono,
+            DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
+        }
+        .error,
+        .sending,
+        .last-send {
+          font-size: 12px;
         }
         .sending,
         .last-send {
