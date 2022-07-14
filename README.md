@@ -15,16 +15,6 @@
 
 <br/>
 
-[TODO: add little video of dev mode working]
-
-```
-> mailing init
-
-
-```
-
-<br/>
-
 ## ●&nbsp;&nbsp;Why?
 
 We’re longtime users of Action Mailer and wanted something similar for our typescript/react apps. We didn’t find anything, so we decided to build Mailing. We added some features that we would’ve liked in Action Mailer, like a mobile toggle (with hotkeys), and the ability to send a test email from the browser while developing. We went all in on MJML so that we never have to think about email clients or nested tables :)
