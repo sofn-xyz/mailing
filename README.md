@@ -90,11 +90,27 @@ sendMail(<MyFirstEmail firstName="Amelita" />);
 
 <br/>
 
-## Developing with email previews
+## ●&nbsp;&nbsp;&nbsp;Developing with email previews
 
-Mailing includes a development mode for previewing your emails. Running `mailing` in dev will boot the preview app and examine previews for different cases. Previews live reload when files in the emails directory change. [Needs e2e tests]
+Mailing includes a development mode for working on your emails. Running `mailing` in dev will boot the preview app on localhost and show you all previews in `emails/previews`. The previews live reload when files in the emails directory change. Previews are just functions that return one of your emails loaded up with props. We reccomend grouping all previews for the same email template in a file at `emails/previews/TemplateName.tsx`.
 
-[ADD SCREENSHOT OF PREVIEW INDEX]
+For example, here's `emails/previews/MyFirstEmail.tsx`:
+
+```tsx
+import React from "react";
+import MyFirstEmail from "../MyFirstEmail";
+
+export function toAmelita() {
+  return <MyFirstEmail name="Amelita" />;
+}
+```
+
+It will show up in the index:
+<img width="1280" alt="Screen Shot 2022-07-13 at 5 10 49 PM" src="https://user-images.githubusercontent.com/282016/178857872-3f57413e-cb15-45f4-a3ec-85fbb1e686cd.png">
+
+And clicking through shows you the email with a mobile/desktop toggle and a button for delivering the email (for final testing in your client or [Litmus]([url](https://www.litmus.com))).
+<img width="1280" alt="Screen Shot 2022-07-13 at 5 11 03 PM" src="https://user-images.githubusercontent.com/282016/178857893-71ace435-1771-4041-abea-f67a7c3aa508.png">
+
 
 <br/>
 
