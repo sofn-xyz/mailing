@@ -1,5 +1,11 @@
 # mailing
 
+## 0.4.0
+
+### Minor Changes
+
+- 7ecee1e: ensure .next directory is included
+
 ## 0.3.1
 
 ### Patch Changes
