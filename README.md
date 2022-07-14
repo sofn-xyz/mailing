@@ -170,7 +170,7 @@ show hn requirements
 - [x] basic tests for lib
 - [x] basic tests for cli (init test)
 - [x] email previews
-- [ ] polished README
+- [x] polished README
 - [x] logo
 - [x] rename (react-mailer, gigaben, mailing, omail, mailbus, must be available on npmjs.com)
 - [x] publish to npm
