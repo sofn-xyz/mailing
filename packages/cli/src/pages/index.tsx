@@ -40,9 +40,7 @@ const Home = () => {
         <hr />
         {previews.map((preview) => (
           <div className="email-group" key={preview[0]}>
-            <h2>
-              <span className="circle">●</span> {preview[0]}
-            </h2>
+            <h2>● {preview[0]}</h2>
             {preview[1].map((previewFunction) => (
               <div className="email-container" key={previewFunction}>
                 <Link
@@ -111,12 +109,6 @@ const Home = () => {
         }
         .email-group {
           margin-bottom: 32px;
-        }
-        .circle {
-          font-size: 30px;
-          line-height: 24px;
-          position: relative;
-          top: 2px;
         }
         .email-container {
           margin-bottom: 8px;
