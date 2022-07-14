@@ -49,9 +49,7 @@ npm install --save mailing-core mjml mjml-react nodemailer &&\
 npm install --save-dev mailing @types/mjml @types/mjml-react
 ```
 
-2. Scaffold your `email` directory with `mailing init`.
-
-This will create the following directory for all of your emails:
+2. Scaffold your `email` directory with `mailing init`. This will create the following directory for all of your emails:
 
 ```
 emails
