@@ -3,7 +3,7 @@
 <img src="https://user-images.githubusercontent.com/609038/163605455-478b8883-235c-4803-9b48-fc2d9a912b73.png#gh-dark-mode-only" alt="Mailling logo" width="295" height="128"/>
 <img src="https://user-images.githubusercontent.com/609038/163605459-12c1d04b-9891-4c73-9ed0-fbccddfaa476.png#gh-light-mode-only" alt="Mailling logo" width="295" height="128"/>
 
-<h2>●&nbsp;&nbsp;&nbsp;Send great emails from your react app.</h2>
+<h2>●&nbsp;&nbsp;Send great emails from your react app.</h2>
 
 - Email templates with React components
 - MJML components that work across clients (Outlook!)
@@ -25,13 +25,13 @@
 
 <br/>
 
-## ●&nbsp;&nbsp;&nbsp;Why?
+## ●&nbsp;&nbsp;Why?
 
 We’re longtime users of Action Mailer and wanted something similar for our typescript/react apps. We didn’t find anything, so we decided to build Mailing. We added some features that we would’ve liked in Action Mailer, like a mobile toggle (with hotkeys), and the ability to send a test email from the browser while developing. We went all in on MJML so that we never have to think about email clients or nested tables :)
 
 <br/>
 
-## ●&nbsp;&nbsp;&nbsp;Setup
+## ●&nbsp;&nbsp;Setup
 
 1. Install mailing-core and the development server with yarn or npm:
 
@@ -87,7 +87,7 @@ sendMail(<MyFirstEmail firstName="Amelita" />);
 
 <br/>
 
-## ●&nbsp;&nbsp;&nbsp;Developing with email previews
+## ●&nbsp;&nbsp;Developing with email previews
 
 Mailing includes a development mode for working on your emails. Running `mailing` in dev will boot the preview app on localhost and show you all previews in `emails/previews`. The previews live reload when files in the emails directory change. Previews are just functions that return one of your emails loaded up with props. We reccomend grouping all previews for the same email template in a file at `emails/previews/TemplateName.tsx`.
 
@@ -102,15 +102,15 @@ export function toAmelita() {
 }
 ```
 
-● It will show up in the index:
+●&nbsp;&nbsp;It will show up in the index:
 
-<img width="600" alt="Mailing index" src="https://user-images.githubusercontent.com/609038/178886620-96319e8c-774b-4519-9368-e0011cd62aca.jpg">
+<img width="600" alt="Mailing index" src="https://user-images.githubusercontent.com/609038/178890200-2ba96ca5-c2d5-462e-b7a8-14981eb4e2c3.jpg">
 
-● Clicking through shows you the email with a mobile/desktop toggle and live reload as you edit:
+●&nbsp;&nbsp;Clicking through shows you the email with a mobile/desktop toggle and live reload as you edit:
 
 <img width="600" alt="Mailing desktop preview" src="https://user-images.githubusercontent.com/609038/178886460-8ccb31c3-1f33-47b3-b5b8-721cdd32dcc9.jpg">
 
-● When it's nice, send it to yourself or a [Litmus]([url](https://www.litmus.com)) account for final testing:
+●&nbsp;&nbsp;When it's nice, send it to yourself or a [Litmus]([url](https://www.litmus.com)) account for final testing:
 
 <img width="600" alt="Mailing mobile preview" src="https://user-images.githubusercontent.com/609038/178887244-15eb960d-79a1-42f0-ac32-face27211d7b.jpg">
 
@@ -118,7 +118,7 @@ export function toAmelita() {
 
 <br/>
 
-## ●&nbsp;&nbsp;&nbsp;Testing emails with jest
+## ●&nbsp;&nbsp;Testing emails with jest
 
 ```tsx
 import { getTestMailQueue } from "emails";
@@ -140,8 +140,6 @@ describe("Example API", () => {
 
 ## ●&nbsp;&nbsp;&nbsp;Contributing
 
-Want to help make this? Cool!
-
 ### Setup
 
 ```zsh
@@ -153,6 +151,14 @@ yarn dev
 
 - `packages/cli` has the development dependency
 - `packages/core` has the prod dependency
+
+The CLI gets installed in `node_modules/.bin` as `mailing` and `mm` for short.
+
+`mm` alias for `mailing init`
+
+`mailing init` initializes a project then starts the development server
+
+`mailing preview` launches the development server
 
 ### Plan
 
@@ -182,8 +188,3 @@ just below the line
 - [ ] faktory integration
 - [ ] mailing.run website
 
-The CLI gets installed in `node_modules/.bin` as `mailing` and `mm` for short.
-
-`mm` alias for `mailing init`
-`mailing init` initializes a project then starts the development server
-`mailing preview` launches the development server
