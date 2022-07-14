@@ -129,11 +129,13 @@ describe("Example API", () => {
 
 ## ●&nbsp;&nbsp;&nbsp;CLI
 
-`mm` alias for `mailing init`
-
 `mailing init` initializes a project then starts the development server
 
 `mailing preview` launches the development server
+
+`mailing` runs init then preview
+
+`mm` is a cute alias for `mailing`
 
 [source entrypoint](https://github.com/psugihara/mailing/blob/main/packages/cli/src/index.ts)
 
