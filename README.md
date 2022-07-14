@@ -3,36 +3,25 @@
 <img src="https://user-images.githubusercontent.com/609038/163605455-478b8883-235c-4803-9b48-fc2d9a912b73.png#gh-dark-mode-only" alt="Mailling logo" width="295" height="128"/>
 <img src="https://user-images.githubusercontent.com/609038/163605459-12c1d04b-9891-4c73-9ed0-fbccddfaa476.png#gh-light-mode-only" alt="Mailling logo" width="295" height="128"/>
 
-<h2>●&nbsp;&nbsp;&nbsp;Send great emails from your react app.</h2>
+<h2>●&nbsp;&nbsp;Send great emails from your react app.</h2>
 
 - Email templates with React components
 - MJML components that work across clients (Outlook!)
 - Preview server for quick development
-- Test-mode for ensuring emails send and have the correct content
+- Dev mode opens emails in your browser instead of sending 
+- Test mode for ensuring emails send and have the correct content
 - Plays well with js frameworks like redwood.js, remix, next.js
-- Written in Typescript, inspired by ActionMailer from Ruby on Rails
+- Written in Typescript, inspired by Action Mailer from Ruby on Rails
 
 <br/>
 
-[TODO: add little video of dev mode working]
+## ●&nbsp;&nbsp;Why?
 
-```
-> mailing init
-
-
-
-
-```
+We’re longtime users of Action Mailer and wanted something similar for our typescript/react apps. We didn’t find anything, so we decided to build Mailing. We added some features that we would’ve liked in Action Mailer, like a mobile toggle (with hotkeys), and the ability to send a test email from the browser while developing. We went all in on MJML so that we never have to think about email clients or nested tables :)
 
 <br/>
 
-## ●&nbsp;&nbsp;&nbsp;Why?
-
-We love good emails. Usage metrics imply that a lot of people do. But every web developer hates making them. So, we want to make coding them easy.
-
-<br/>
-
-## ●&nbsp;&nbsp;&nbsp;Setup
+## ●&nbsp;&nbsp;Setup
 
 1. Install mailing-core and the development server with yarn or npm:
 
@@ -50,9 +39,7 @@ npm install --save mailing-core mjml mjml-react nodemailer &&\
 npm install --save-dev mailing @types/mjml @types/mjml-react
 ```
 
-2. Scaffold your `email` directory with `mailing init`.
-
-This will create the following directory for all of your emails:
+2. Scaffold your `email` directory with `mailing init`. This will create the following directory for all of your emails:
 
 ```
 emails
@@ -64,7 +51,7 @@ emails
     └── MyFirstEmail.tsx
 ```
 
-4. Configure your email transport and `defaultFrom` in `email/index.ts`. It defaults to nodemailer's SMTP transport, but you can read about others [here](https://nodemailer.com/transports/).
+3. Configure your email transport and `defaultFrom` in `email/index.ts`. It defaults to nodemailer's SMTP transport, but you can read about others [here](https://nodemailer.com/transports/).
 
 Example SendGrid transport:
 
@@ -79,7 +66,7 @@ const transport = nodemailer.createTransport({
 });
 ```
 
-5. Then send you first email like so:
+4. Then send you first email like so:
 
 ```tsx
 import { sendMail } from "emails";
@@ -90,15 +77,36 @@ sendMail(<MyFirstEmail firstName="Amelita" />);
 
 <br/>
 
-## Developing with email previews
+## ●&nbsp;&nbsp;Developing with email previews
 
-Mailing includes a development mode for previewing your emails. Running `mailing` in dev will boot the preview app and examine previews for different cases. Previews live reload when files in the emails directory change. [Needs e2e tests]
+Mailing includes a development mode for working on your emails. Running `mailing` in dev will boot the preview app on localhost and show you all previews in `emails/previews`. The previews live reload when files in the emails directory change. Previews are just functions that return one of your emails loaded up with props. We reccomend grouping all previews for the same email template in a file at `emails/previews/TemplateName.tsx`.
 
-[ADD SCREENSHOT OF PREVIEW INDEX]
+For example, here's `emails/previews/MyFirstEmail.tsx`:
+
+```tsx
+import React from "react";
+import MyFirstEmail from "../MyFirstEmail";
+
+export function toAmelita() {
+  return <MyFirstEmail name="Amelita" />;
+}
+```
+
+It will show up in the index:
+
+<img width="600" alt="Mailing index" src="https://user-images.githubusercontent.com/609038/178890200-2ba96ca5-c2d5-462e-b7a8-14981eb4e2c3.jpg">
+
+Clicking through shows you the email with a mobile/desktop toggle and live reload as you edit:
+
+<img width="600" alt="Mailing desktop preview" src="https://user-images.githubusercontent.com/609038/178886460-8ccb31c3-1f33-47b3-b5b8-721cdd32dcc9.jpg">
+
+When it's nice, send it to yourself or a [Litmus]([url](https://www.litmus.com)) account for final testing:
+
+<img width="600" alt="Mailing mobile preview" src="https://user-images.githubusercontent.com/609038/178887244-15eb960d-79a1-42f0-ac32-face27211d7b.jpg">
 
 <br/>
 
-## ●&nbsp;&nbsp;&nbsp;Testing emails with jest
+## ●&nbsp;&nbsp;Testing emails with jest
 
 ```tsx
 import { getTestMailQueue } from "emails";
@@ -114,27 +122,38 @@ describe("Example API", () => {
     expect(emails[0].html).toMatch("ready for QA");
   });
 });
+
 ```
+
+<br/>
+
+## ●&nbsp;&nbsp;&nbsp;CLI
+
+`mailing init` initializes a project then starts the development server
+
+`mailing preview` launches the development server
+
+`mailing` runs init then preview
+
+`mm` is a cute alias for `mailing`
+
+[source entrypoint](https://github.com/psugihara/mailing/blob/main/packages/cli/src/index.ts)
 
 <br/>
 
 ## ●&nbsp;&nbsp;&nbsp;Contributing
 
-Want to help make this? Cool!
-
 ### Setup
-
-Run these to install the project, clone the nextjs app for development, and start servers.
 
 ```zsh
 git clone git@github.com:psugihara/mailing.git
 cd mailing
 yarn
-yarn init:dev # clone next dev app, install mailing, start mailing and next
+yarn dev
 ```
 
-- `packages/cli` has the development dependency
-- `packages/core` has the prod dependency
+`yarn dev` starts the cli in dev mode
+
 
 ### Plan
 
@@ -146,13 +165,14 @@ show hn requirements
 - [x] basic tests for lib
 - [x] basic tests for cli (init test)
 - [x] email previews
-- [ ] polished README
+- [x] polished README
 - [x] logo
 - [x] rename (react-mailer, gigaben, mailing, omail, mailbus, must be available on npmjs.com)
 - [x] publish to npm
 - [ ] add video to readme
 - [ ] pull into a next.js project and it works (and test that)
 - [x] split into 2 packages so that preview server is not included
+- [x] write show hn post
 
 ---
 
@@ -163,36 +183,3 @@ just below the line
 - [ ] faktory integration
 - [ ] mailing.run website
 
-#### API
-
-_`sendMail(mail: ComponentMail)`_
-
-Send
-
-```ts
-type Mail
-namespace mailing {
-  export type ComponentMail = {
-    from: string;
-    to: string | string[];
-    cc?: string | string[];
-    bcc?: string | string[];
-    subject: string;
-    component: ReactElement<any, string | JSXElementConstructor<any>>;
-    text?: string;
-    headers?: { [key: string]: string };
-  };
-  export type SendMailOptions = {
-    transport: Transporter;
-    defaulFrom?: string;
-    forceDeliver?: boolean;
-    forcePreview?: boolean;
-  };
-}
-```
-
-The CLI gets installed in `node_modules/.bin` as `mailing` and `mm` for short.
-
-`mm` alias for `mailing init`
-`mailing init` initializes a project then starts the development server
-`mailing preview` launches the development server

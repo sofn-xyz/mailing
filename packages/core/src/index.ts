@@ -6,17 +6,15 @@ import { render } from "./mjml";
 import { debug, error, log } from "./log";
 import fetch from "node-fetch";
 
-export namespace mailing {
-  export type ComponentMail = nodemailer.SendMailOptions & {
-    component: ReactElement<any, string | JSXElementConstructor<any>>;
-    forceDeliver?: boolean;
-    forcePreview?: boolean;
-  };
-  export type SendMailOptions = {
-    transport: nodemailer.Transporter;
-    defaultFrom: string;
-  };
-}
+export type ComponentMail = nodemailer.SendMailOptions & {
+  component: ReactElement<any, string | JSXElementConstructor<any>>;
+  forceDeliver?: boolean;
+  forcePreview?: boolean;
+};
+export type BuildSendMailOptions = {
+  transport: nodemailer.Transporter;
+  defaultFrom: string;
+};
 
 // In test, we write the email queue to this file so that it can be read
 // by the test process.
@@ -48,7 +46,7 @@ export async function clearTestMailQueue() {
   }
 }
 
-export function buildSendMail(options: mailing.SendMailOptions) {
+export function buildSendMail(options: BuildSendMailOptions) {
   const testMode = process.env.TEST || process.env.NODE_ENV === "test";
 
   if (!options?.transport) {
@@ -58,7 +56,7 @@ export function buildSendMail(options: mailing.SendMailOptions) {
     throw new Error("buildSendMail options are missing defaultFrom");
   }
 
-  return async function sendMail(mail: mailing.ComponentMail) {
+  return async function sendMail(mail: ComponentMail) {
     const forcePreview =
       mail.forcePreview ||
       (process.env.NODE_ENV !== "production" && !mail.forceDeliver);

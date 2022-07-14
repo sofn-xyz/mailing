@@ -3,9 +3,10 @@ import nodemailer from "nodemailer";
 
 import {
   buildSendMail,
-  mailing,
   getTestMailQueue,
   clearTestMailQueue,
+  ComponentMail,
+  BuildSendMailOptions,
 } from "..";
 import { Mjml, MjmlBody, MjmlRaw, MjmlText } from "mjml-react";
 
@@ -33,13 +34,13 @@ describe("index", () => {
 
     it("throws a helpful runtime error without a transport and default email", () => {
       expect(() => {
-        buildSendMail({} as mailing.SendMailOptions);
+        buildSendMail({} as BuildSendMailOptions);
       }).toThrow();
     });
   });
 
   describe("getTestMailQueue", () => {
-    let sendMail: (mail: mailing.ComponentMail) => Promise<any>;
+    let sendMail: (mail: ComponentMail) => Promise<any>;
     beforeEach(async () => {
       await clearTestMailQueue();
       const transport = nodemailer.createTransport({
