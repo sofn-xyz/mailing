@@ -107,10 +107,13 @@ export function toAmelita() {
 ```
 
 It will show up in the index:
-<img width="1280" alt="Screen Shot 2022-07-13 at 5 10 49 PM" src="https://user-images.githubusercontent.com/282016/178857872-3f57413e-cb15-45f4-a3ec-85fbb1e686cd.png">
+<img width="600" alt="Screen Shot 2022-07-13 at 5 10 49 PM" src="https://user-images.githubusercontent.com/282016/178857872-3f57413e-cb15-45f4-a3ec-85fbb1e686cd.png">
 
-And clicking through shows you the email with a mobile/desktop toggle and a button for delivering the email (for final testing in your client or [Litmus]([url](https://www.litmus.com))).
-<img width="1280" alt="Screen Shot 2022-07-13 at 5 11 03 PM" src="https://user-images.githubusercontent.com/282016/178857893-71ace435-1771-4041-abea-f67a7c3aa508.png">
+Clicking through shows you the email with a mobile/desktop toggle and live reload as you edit:
+<img width="600" alt="Screen Shot 2022-07-13 at 5 11 03 PM" src="https://user-images.githubusercontent.com/282016/178857893-71ace435-1771-4041-abea-f67a7c3aa508.png">
+
+When it's nice, send it to yourself or a [Litmus]([url](https://www.litmus.com)) account for final testing:
+
 
 
 <br/>
