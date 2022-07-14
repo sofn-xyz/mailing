@@ -15,7 +15,7 @@ const Intercept: React.FC<InterceptProps> = ({ data }) => {
   return (
     <>
       <Header
-        title={data.subject}
+        title={data.subject || ""}
         isMobile={isMobile}
         setIsMobile={setIsMobile}
         helpContent={
