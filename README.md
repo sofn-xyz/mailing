@@ -21,8 +21,6 @@
 > mailing init
 
 
-
-
 ```
 
 <br/>
@@ -65,7 +63,7 @@ emails
     └── MyFirstEmail.tsx
 ```
 
-4. Configure your email transport and `defaultFrom` in `email/index.ts`. It defaults to nodemailer's SMTP transport, but you can read about others [here](https://nodemailer.com/transports/).
+3. Configure your email transport and `defaultFrom` in `email/index.ts`. It defaults to nodemailer's SMTP transport, but you can read about others [here](https://nodemailer.com/transports/).
 
 Example SendGrid transport:
 
@@ -80,7 +78,7 @@ const transport = nodemailer.createTransport({
 });
 ```
 
-5. Then send you first email like so:
+4. Then send you first email like so:
 
 ```tsx
 import { sendMail } from "emails";
@@ -106,13 +104,17 @@ export function toAmelita() {
 }
 ```
 
-It will show up in the index:
-<img width="600" alt="Screen Shot 2022-07-13 at 5 10 49 PM" src="https://user-images.githubusercontent.com/282016/178857872-3f57413e-cb15-45f4-a3ec-85fbb1e686cd.png">
+● It will show up in the index:
 
-Clicking through shows you the email with a mobile/desktop toggle and live reload as you edit:
-<img width="600" alt="Screen Shot 2022-07-13 at 5 11 03 PM" src="https://user-images.githubusercontent.com/282016/178857893-71ace435-1771-4041-abea-f67a7c3aa508.png">
+<img width="600" alt="Mailing index" src="https://user-images.githubusercontent.com/609038/178886620-96319e8c-774b-4519-9368-e0011cd62aca.jpg">
 
-When it's nice, send it to yourself or a [Litmus]([url](https://www.litmus.com)) account for final testing:
+● Clicking through shows you the email with a mobile/desktop toggle and live reload as you edit:
+
+<img width="600" alt="Mailing desktop preview" src="https://user-images.githubusercontent.com/609038/178886460-8ccb31c3-1f33-47b3-b5b8-721cdd32dcc9.jpg">
+
+● When it's nice, send it to yourself or a [Litmus]([url](https://www.litmus.com)) account for final testing:
+
+<img width="600" alt="Mailing mobile preview" src="https://user-images.githubusercontent.com/609038/178887244-15eb960d-79a1-42f0-ac32-face27211d7b.jpg">
 
 
 
