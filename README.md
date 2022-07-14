@@ -124,13 +124,11 @@ Want to help make this? Cool!
 
 ### Setup
 
-Run these to install the project, clone the nextjs app for development, and start servers.
-
 ```zsh
 git clone git@github.com:psugihara/mailing.git
 cd mailing
 yarn
-yarn init:dev # clone next dev app, install mailing, start mailing and next
+yarn dev
 ```
 
 - `packages/cli` has the development dependency
@@ -153,6 +151,7 @@ show hn requirements
 - [ ] add video to readme
 - [ ] pull into a next.js project and it works (and test that)
 - [x] split into 2 packages so that preview server is not included
+- [x] write show hn post
 
 ---
 
@@ -162,34 +161,6 @@ just below the line
 - [ ] instructions for remix.run integration
 - [ ] faktory integration
 - [ ] mailing.run website
-
-#### API
-
-_`sendMail(mail: ComponentMail)`_
-
-Send
-
-```ts
-type Mail
-namespace mailing {
-  export type ComponentMail = {
-    from: string;
-    to: string | string[];
-    cc?: string | string[];
-    bcc?: string | string[];
-    subject: string;
-    component: ReactElement<any, string | JSXElementConstructor<any>>;
-    text?: string;
-    headers?: { [key: string]: string };
-  };
-  export type SendMailOptions = {
-    transport: Transporter;
-    defaulFrom?: string;
-    forceDeliver?: boolean;
-    forcePreview?: boolean;
-  };
-}
-```
 
 The CLI gets installed in `node_modules/.bin` as `mailing` and `mm` for short.
 
