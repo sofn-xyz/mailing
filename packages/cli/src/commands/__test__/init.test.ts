@@ -29,7 +29,9 @@ describe("init command", () => {
 emails
 ├── MyFirstEmail.tsx
 ├── components
-│   └── Head.tsx
+│   ├── Footer.tsx
+│   ├── Head.tsx
+│   └── Header.tsx
 ├── index.ts
 └── previews
     └── MyFirstEmail.tsx`
