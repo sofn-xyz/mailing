@@ -104,8 +104,6 @@ When it's nice, send it to yourself or a [Litmus]([url](https://www.litmus.com))
 
 <img width="600" alt="Mailing mobile preview" src="https://user-images.githubusercontent.com/609038/178887244-15eb960d-79a1-42f0-ac32-face27211d7b.jpg">
 
-
-
 <br/>
 
 ## ●&nbsp;&nbsp;Testing emails with jest
@@ -124,7 +122,20 @@ describe("Example API", () => {
     expect(emails[0].html).toMatch("ready for QA");
   });
 });
+
 ```
+
+<br/>
+
+## ●&nbsp;&nbsp;&nbsp;CLI
+
+`mm` alias for `mailing init`
+
+`mailing init` initializes a project then starts the development server
+
+`mailing preview` launches the development server
+
+[source entrypoint](https://github.com/psugihara/mailing/blob/main/packages/cli/src/index.ts)
 
 <br/>
 
@@ -139,16 +150,8 @@ yarn
 yarn dev
 ```
 
-- `packages/cli` has the development dependency
-- `packages/core` has the prod dependency
+`yarn dev` starts the cli in dev mode
 
-The CLI gets installed in `node_modules/.bin` as `mailing` and `mm` for short.
-
-`mm` alias for `mailing init`
-
-`mailing init` initializes a project then starts the development server
-
-`mailing preview` launches the development server
 
 ### Plan
 
