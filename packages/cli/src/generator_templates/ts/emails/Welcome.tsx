@@ -8,26 +8,22 @@ import {
   MjmlSection,
   MjmlColumn,
   MjmlText,
-  MjmlTitle,
   MjmlImage,
   MjmlButton,
 } from "mjml-react";
+import BulletedList from "./components/BulletedList";
 
 const MyFirstEmail: React.FC<{ name: string }> = ({ name }) => {
   return (
     <Mjml>
-      <Head>
-        <MjmlTitle>Welcome to Mailing</MjmlTitle>
-      </Head>
+      <Head />
       <MjmlBody width={600}>
-        <Header />
+        <Header big />
         <MjmlSection padding="0">
           <MjmlColumn>
             <MjmlImage
               cssClass="hero"
               padding="0 0 40px"
-              width="600"
-              height="338"
               align="left"
               src="https://s3.amazonaws.com/lab.campsh.com/welcome%402x.jpg"
             />
@@ -42,56 +38,17 @@ const MyFirstEmail: React.FC<{ name: string }> = ({ name }) => {
               Mailing makes it easy to send great emails from your React app.
               Here’s a bit about Mailing in a nutshell:
             </MjmlText>
-            <MjmlText
-              padding="1px 0 0"
-              fontSize={16}
-              lineHeight="160%"
-              cssClass="li"
-            >
-              •&nbsp;&nbsp;Email templates with React components
-            </MjmlText>
-            <MjmlText
-              padding="1px 0 0"
-              fontSize={16}
-              lineHeight="160%"
-              cssClass="li"
-            >
-              •&nbsp;&nbsp;MJML components that work across clients (Outlook!)
-            </MjmlText>
-            <MjmlText
-              padding="1px 0 0"
-              fontSize={16}
-              lineHeight="160%"
-              cssClass="li"
-            >
-              •&nbsp;&nbsp;Preview server for quick development
-            </MjmlText>
-            <MjmlText
-              padding="1px 0 0"
-              fontSize={16}
-              lineHeight="160%"
-              cssClass="li"
-            >
-              •&nbsp;&nbsp;Test mode for ensuring emails send and have the
-              correct content
-            </MjmlText>
-            <MjmlText
-              padding="1px 0 0"
-              fontSize={16}
-              lineHeight="160%"
-              cssClass="li"
-            >
-              •&nbsp;&nbsp;Plays well with js frameworks like redwood.js, remix,
-              next.js
-            </MjmlText>
-            <MjmlText
-              padding="1px 0 0"
-              fontSize={16}
-              lineHeight="160%"
-              cssClass="li"
-            >
-              •&nbsp;&nbsp;Written in Typescript
-            </MjmlText>
+            <BulletedList
+              items={[
+                "Email templates with React components",
+                "MJML components that work across clients (Outlook!)",
+                "Preview server for quick development",
+                "Dev mode opens emails in your browser instead of sending",
+                "Test mode for ensuring emails send and have the correct content",
+                "Plays well with js frameworks like redwood.js, remix, next.js",
+                "Written in Typescript, inspired by Action Mailer from Ruby on Rails",
+              ]}
+            />
             <MjmlButton
               lineHeight="120%"
               fontSize={16}
@@ -109,7 +66,7 @@ const MyFirstEmail: React.FC<{ name: string }> = ({ name }) => {
               Thank you for checking out our project. We’d love to hear your
               ideas on how we can make sending great emails more fun and simple.
             </MjmlText>
-            <MjmlText padding="16px 0 96px" fontSize={16} lineHeight="160%">
+            <MjmlText padding="16px 0 0" fontSize={16} lineHeight="160%">
               ♥,
               <br />
               Mailing

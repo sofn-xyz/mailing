@@ -7,7 +7,7 @@ export default function Footer() {
       <MjmlColumn>
         <MjmlText
           cssClass="footer"
-          padding="0 24px 48px"
+          padding="24px 24px 48px"
           fontSize={14}
           color="#777"
         >
