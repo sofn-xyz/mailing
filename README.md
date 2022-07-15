@@ -108,12 +108,33 @@ When it's nice, send it to yourself or a [Litmus]([url](https://www.litmus.com))
 
 ## ●&nbsp;&nbsp;Testing emails with jest
 
+When `NODE_ENV === "test"`, calling `sendMail` pushes messages into a queue for later examination. The `mail-core` package exports a couple of functions for testing that emails send with the correct content.
+
+`function getTestMailQueue(): Promise<Mail[]>`
+
+Retrieve the test message queue.
+
+`function clearTestMailQueue(): Promise<void>`
+
+Clear the test message queue. You probably want to call this before tests that use the queue.
+
+
+Example:
 ```tsx
-import { getTestMailQueue } from "emails";
+import { sendMail } from "emails";
+import { getTestMailQueue, clearTestMailQueue } from "mailing/core";
+import IssueNotification from "emails/IssueNotification";
 
 describe("Example API", () => {
   it("sends an email when an issue is ready for review", () => {
-    // DO SOMETHING THAT SHOULD SEND AN EMAIL
+    await clearTestEmailQueue();
+  
+    // SOMETHING THAT WILL SEND AN EMAIL e.g.
+    // sendMail({
+    //   to: "someone@something.com",
+    //   subject: "test",
+    //   component: <IssueNotification />
+    // });
 
     const emails = await getTestMailQueue();
     expect(emails.length).toBe(1);
@@ -142,6 +163,8 @@ describe("Example API", () => {
 <br/>
 
 ## ●&nbsp;&nbsp;&nbsp;Contributing
+
+Want to improve Mailing? Incredible. Try it out, file an issue or open a PR!
 
 ### Setup
 
