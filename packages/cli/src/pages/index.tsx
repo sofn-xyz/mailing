@@ -35,8 +35,7 @@ const Home = () => {
         <h1>Previews</h1>
         {showNullState && (
           <div className="null-sub">
-            Build emails in <span className="code">emails/previews</span> and
-            they’ll appear below.
+            Build new email templates in <span className="code">emails</span>. Add previews to <span className="code">emails/previews</span> and they'll appear below.
           </div>
         )}
         <hr />
@@ -87,7 +86,7 @@ const Home = () => {
         }
         .null-sub {
           font-size: 20px;
-          max-width: 330px;
+          max-width: 380px;
           line-height: 120%;
           padding: 0 0 16px;
           line-height: 140%;
