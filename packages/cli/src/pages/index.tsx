@@ -56,7 +56,7 @@ const Home = () => {
       </div>
       {!showNullState && (
         <Link href="https://github.com/psugihara/mailing">
-          <a className="footer">
+          <a className="footer" target="_blank">
             <img
               src="https://s3.amazonaws.com/lab.campsh.com/mailing-lil%402x.png"
               width="76"
