@@ -170,7 +170,10 @@ show hn requirements
 - [x] rename (react-mailer, gigaben, mailing, omail, mailbus, must be available on npmjs.com)
 - [x] publish to npm
 - [ ] add video to readme
-- [ ] pull into a next.js project and it works (and test that)
+- [x] pull into a next.js project and it works
+- [ ] pull into redwood.js project and it works
+- [ ] pull into remix project and it works
+- [ ] share with friends
 - [x] split into 2 packages so that preview server is not included
 - [x] write show hn post
 
@@ -178,8 +181,8 @@ show hn requirements
 
 just below the line
 
-- [ ] instructions for redwood.js integration
-- [ ] instructions for remix.run integration
+- [ ] automated tests of pulling into X project and it working
 - [ ] faktory integration
 - [ ] mailing.run website
+- [ ] generator for new email template
 
