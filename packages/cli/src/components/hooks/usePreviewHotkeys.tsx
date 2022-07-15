@@ -31,14 +31,13 @@ export default function usePreviewHotkeys({ setIsMobile }: Options) {
   );
   useHotkeys("m,d,.,left,right,/", handleKey);
 
-  // setTimeout hack, should probably listen for content somehow
   const iframeRef = useCallback(
     (node: HTMLIFrameElement) => {
       if (null === node) return;
-      setTimeout(() => {
+      node.onload = function onLoad() {
         const doc = node?.contentWindow?.document;
         doc?.addEventListener("keydown", handleKey);
-      }, 1000);
+      };
     },
     [handleKey]
   );
