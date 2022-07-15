@@ -601,11 +601,7 @@ function render(component) {
   return mjmlReact.render(component, {
     validationLevel: "soft",
     minify: undefined
-  }); // return { errors: [], html: renderToMjml(component) };
-  // // {
-  // //   validationLevel: "soft",
-  // //   minify: undefined,
-  // // }
+  });
 }
 
 var LIVE_RELOAD_SNIPPET = "\n  window.setInterval(async function checkForReload() {\n    const shouldReload = await fetch(\"/should_reload.json\");\n    const json = await shouldReload.json()\n    if (json['shouldReload']) {\n      window.location.reload();\n    }\n  }, 1200);\n";
@@ -660,6 +656,10 @@ function showPreview(req, res) {
       var _render = render(component),
           html = _render.html,
           errors = _render.errors;
+
+      if (errors.length) {
+        error(errors);
+      }
 
       var liveReloadHtml = html === null || html === void 0 ? void 0 : html.replace("</head>", "<script>".concat(LIVE_RELOAD_SNIPPET, "</script></head>"));
       res.writeHead(200);
