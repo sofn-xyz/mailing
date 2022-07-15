@@ -5,7 +5,6 @@ import BulletedList from "../components/BulletedList";
 export function resetPassword() {
   return (
     <TextEmail
-      title="Your password reset link is here"
       name="Amelita"
       body={
         <>
@@ -23,7 +22,6 @@ export function resetPassword() {
 export function accountDeleted() {
   return (
     <TextEmail
-      title="Your account has been deleted"
       name="Amelita"
       body={
         <>
@@ -39,7 +37,6 @@ export function accountDeleted() {
 export function newSignIn() {
   return (
     <TextEmail
-      title="Security alert"
       headline="New sign-in detected"
       name="Amelita"
       body={
