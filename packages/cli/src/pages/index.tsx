@@ -17,7 +17,9 @@ const Home = () => {
 
   const showNullState =
     previews.length === 0 ||
-    (previews.length === 1 && previews[0][0] === "MyFirstEmail.tsx");
+    (previews.length === 2 &&
+      previews[0][0] === "TextEmail.tsx" &&
+      previews[1][0] === "Welcome.tsx");
 
   return (
     <div>
