@@ -27,14 +27,17 @@ describe("init command", () => {
     expect(log).toHaveBeenCalledWith(
       `Generated your emails dir at /tmp/src/emails:
 emails
-├── MyFirstEmail.tsx
+├── TextEmail.tsx
+├── Welcome.tsx
 ├── components
+│   ├── BulletedList.tsx
 │   ├── Footer.tsx
 │   ├── Head.tsx
 │   └── Header.tsx
 ├── index.ts
 └── previews
-    └── MyFirstEmail.tsx`
+    ├── TextEmail.tsx
+    └── Welcome.tsx`
     );
   });
 
