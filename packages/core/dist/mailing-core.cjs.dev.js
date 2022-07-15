@@ -677,16 +677,15 @@ function buildSendMail(options) {
               return _context.abrupt("return");
 
             case 40:
-              log("sendMail options", htmlMail);
-              _context.next = 43;
+              _context.next = 42;
               return options.transport.sendMail(htmlMail);
 
-            case 43:
+            case 42:
               response = _context.sent;
               log("sendMail response", response);
               return _context.abrupt("return", response);
 
-            case 46:
+            case 45:
             case "end":
               return _context.stop();
           }
