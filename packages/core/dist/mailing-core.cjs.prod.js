@@ -596,7 +596,6 @@ function buildSendMail(options) {
             case 5:
               // Create a mail for nodemailer with the component rendered to HTML.
               htmlMail = _objectSpread2(_objectSpread2({
-                text: "Hello",
                 from: options.defaultFrom
               }, mail), {}, {
                 html: html,

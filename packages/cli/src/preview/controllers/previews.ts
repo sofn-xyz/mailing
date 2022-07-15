@@ -61,6 +61,10 @@ export function showPreview(req: IncomingMessage, res: ServerResponse) {
   if (component?.props) {
     try {
       const { html, errors } = render(component);
+      if (errors.length) {
+        error(errors);
+      }
+
       const liveReloadHtml = html?.replace(
         "</head>",
         `<script>${LIVE_RELOAD_SNIPPET}</script></head>`

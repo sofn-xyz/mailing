@@ -72,7 +72,6 @@ export function buildSendMail(options: BuildSendMailOptions) {
 
     // Create a mail for nodemailer with the component rendered to HTML.
     const htmlMail = {
-      text: "Hello",
       from: options.defaultFrom,
       ...mail,
       html: html,

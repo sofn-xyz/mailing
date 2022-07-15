@@ -17,7 +17,7 @@
 
 ## ●&nbsp;&nbsp;Why?
 
-We’re longtime users of Action Mailer and wanted something similar for our typescript/react apps. We didn’t find anything, so we decided to build Mailing. We added some features that we would’ve liked in Action Mailer, like a mobile toggle (with hotkeys), and the ability to send a test email from the browser while developing. We went all in on MJML so that we never have to think about email clients or nested tables :)
+We’re longtime users of Action Mailer and wanted something similar for our typescript/react apps. We didn’t find anything, so we decided to build Mailing. We added some features that we would’ve liked in Action Mailer, like a mobile toggle (with hotkeys), and the ability to send a test email from the browser while developing. We went all in on MJML so that we (almost) never have to think about email clients or nested tables :)
 
 <br/>
 
@@ -108,12 +108,33 @@ When it's nice, send it to yourself or a [Litmus]([url](https://www.litmus.com))
 
 ## ●&nbsp;&nbsp;Testing emails with jest
 
+When `NODE_ENV === "test"`, calling `sendMail` pushes messages into a queue for later examination. The `mail-core` package exports a couple of functions for testing that emails send with the correct content.
+
+`function getTestMailQueue(): Promise<Mail[]>`
+
+Retrieve the test message queue.
+
+`function clearTestMailQueue(): Promise<void>`
+
+Clear the test message queue. You probably want to call this before tests that use the queue.
+
+
+Example:
 ```tsx
-import { getTestMailQueue } from "emails";
+import { sendMail } from "emails";
+import { getTestMailQueue, clearTestMailQueue } from "mailing/core";
+import IssueNotification from "emails/IssueNotification";
 
 describe("Example API", () => {
   it("sends an email when an issue is ready for review", () => {
-    // DO SOMETHING THAT SHOULD SEND AN EMAIL
+    await clearTestEmailQueue();
+  
+    // SOMETHING THAT WILL SEND AN EMAIL e.g.
+    // sendMail({
+    //   to: "someone@something.com",
+    //   subject: "test",
+    //   component: <IssueNotification />
+    // });
 
     const emails = await getTestMailQueue();
     expect(emails.length).toBe(1);
@@ -143,6 +164,8 @@ describe("Example API", () => {
 
 ## ●&nbsp;&nbsp;&nbsp;Contributing
 
+Want to improve Mailing? Incredible. Try it out, file an issue or open a PR!
+
 ### Setup
 
 ```zsh
@@ -170,7 +193,10 @@ show hn requirements
 - [x] rename (react-mailer, gigaben, mailing, omail, mailbus, must be available on npmjs.com)
 - [x] publish to npm
 - [ ] add video to readme
-- [ ] pull into a next.js project and it works (and test that)
+- [x] pull into a next.js project and it works
+- [ ] pull into redwood.js project and it works
+- [ ] pull into remix project and it works
+- [ ] share with friends
 - [x] split into 2 packages so that preview server is not included
 - [x] write show hn post
 
@@ -178,8 +204,8 @@ show hn requirements
 
 just below the line
 
-- [ ] instructions for redwood.js integration
-- [ ] instructions for remix.run integration
+- [ ] automated tests of pulling into X project and it working
 - [ ] faktory integration
 - [ ] mailing.run website
+- [ ] generator for new email template
 
