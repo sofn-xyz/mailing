@@ -40,7 +40,10 @@ const Head: React.FC<HeadProps> = ({ children }) => {
         }
       `}</MjmlStyle>
       <MjmlAttributes>
-        <MjmlAll font-family="Inter" font-weight="400" />
+        <MjmlAll
+          font-family='Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
+          font-weight="400"
+        />
       </MjmlAttributes>
       {children}
     </MjmlHead>

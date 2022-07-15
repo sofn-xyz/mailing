@@ -116,9 +116,9 @@ export function buildSendMail(options: BuildSendMailOptions) {
       return;
     }
 
-    log("sendMail options", htmlMail);
     const response = await options.transport.sendMail(htmlMail);
     log("sendMail response", response);
+
     return response;
   };
 }
