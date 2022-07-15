@@ -94,15 +94,15 @@ export function toAmelita() {
 
 It will show up in the index:
 
-<img width="600" alt="Mailing index" src="https://user-images.githubusercontent.com/609038/178890200-2ba96ca5-c2d5-462e-b7a8-14981eb4e2c3.jpg">
+<img width="600" alt="Mailing index" src="https://user-images.githubusercontent.com/609038/179312196-d95683f8-4451-4b94-8f7a-f8c96f2e2895.jpg">
 
 Clicking through shows you the email with a mobile/desktop toggle and live reload as you edit:
 
-<img width="600" alt="Mailing desktop preview" src="https://user-images.githubusercontent.com/609038/178886460-8ccb31c3-1f33-47b3-b5b8-721cdd32dcc9.jpg">
+<img width="600" alt="Mailing desktop preview" src="https://user-images.githubusercontent.com/609038/179312262-e8d746ff-b820-4109-bae1-7e49bb3f2cca.jpg">
 
 When it's nice, send it to yourself or a [Litmus]([url](https://www.litmus.com)) account for final testing:
 
-<img width="600" alt="Mailing mobile preview" src="https://user-images.githubusercontent.com/609038/178887244-15eb960d-79a1-42f0-ac32-face27211d7b.jpg">
+<img width="600" alt="Mailing mobile preview" src="https://user-images.githubusercontent.com/609038/179312306-096e7787-4321-4c3e-9e72-6abb820d73f0.jpg">
 
 <br/>
 
