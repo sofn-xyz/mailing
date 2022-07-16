@@ -1,5 +1,11 @@
 # mailing-core
 
+## 0.4.2
+
+### Patch Changes
+
+- null state text
+
 ## 0.4.1
 
 ### Patch Changes
