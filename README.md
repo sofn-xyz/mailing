@@ -106,6 +106,15 @@ When it's nice, send it to yourself or a [Litmus]([url](https://www.litmus.com))
 
 <br/>
 
+## ●&nbsp;&nbsp;Templates
+**Welcome Template**
+
+<img width="600" alt="Mailing Welcome email template" src="https://user-images.githubusercontent.com/609038/179326104-37a01d2a-9ea0-4cda-b6fe-4fc86ec2dfe9.jpg">
+
+**Transactional Template**
+
+<img width="600" alt="Mailing text email template" src="https://user-images.githubusercontent.com/609038/179326123-8f7a252b-2541-42b9-b14d-e62a2835ce9e.jpg">
+
 ## ●&nbsp;&nbsp;Testing emails with jest
 
 When `NODE_ENV === "test"`, calling `sendMail` pushes messages into a queue for later examination. The `mail-core` package exports a couple of functions for testing that emails send with the correct content.
