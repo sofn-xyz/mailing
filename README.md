@@ -8,7 +8,7 @@
 - Email templates with React components
 - MJML components that work across clients (Outlook!)
 - Preview server for quick development
-- Dev mode opens emails in your browser instead of sending 
+- Dev mode opens emails in your browser instead of sending
 - Test mode for ensuring emails send and have the correct content
 - Plays well with js frameworks like redwood.js, remix, next.js
 - Written in Typescript, inspired by Action Mailer from Ruby on Rails
@@ -43,12 +43,17 @@ npm install --save-dev mailing @types/mjml @types/mjml-react
 
 ```
 emails
-├── index.ts // this exports sendMail and is where your SMTP config goes
-├── MyFirstEmail.tsx // an example email
+├── TextEmail.tsx // a simple example email template
+├── Welcome.tsx // a complicated example email template
 ├── components // shared components go in here
-│   └── Header.tsx
-└── previews // use previews to develop and examine your templates with different props
-    └── MyFirstEmail.tsx
+│   ├── BulletedList.tsx
+│   ├── Footer.tsx
+│   ├── Head.tsx
+│   └── Header.tsx
+├── index.ts // this exports sendMail and is where your SMTP config goes
+└── previews // use previews to develop and check templates
+    ├── TextEmail.tsx
+    └── Welcome.tsx
 ```
 
 3. Configure your email transport and `defaultFrom` in `email/index.ts`. It defaults to nodemailer's SMTP transport, but you can read about others [here](https://nodemailer.com/transports/).
@@ -100,13 +105,14 @@ Clicking through shows you the email with a mobile/desktop toggle and live reloa
 
 <img width="600" alt="Mailing desktop preview" src="https://user-images.githubusercontent.com/609038/179312262-e8d746ff-b820-4109-bae1-7e49bb3f2cca.jpg">
 
-When it's nice, send it to yourself or a [Litmus]([url](https://www.litmus.com)) account for final testing:
+When it's nice, send it to yourself or a [Litmus](<[url](https://www.litmus.com)>) account for final testing:
 
 <img width="600" alt="Mailing mobile preview" src="https://user-images.githubusercontent.com/609038/179312306-096e7787-4321-4c3e-9e72-6abb820d73f0.jpg">
 
 <br/>
 
 ## ●&nbsp;&nbsp;Templates
+
 **Welcome Template**
 
 <img width="600" alt="Mailing Welcome email template" src="https://user-images.githubusercontent.com/609038/179326104-37a01d2a-9ea0-4cda-b6fe-4fc86ec2dfe9.jpg">
@@ -127,8 +133,8 @@ Retrieve the test message queue.
 
 Clear the test message queue. You probably want to call this before tests that use the queue.
 
-
 Example:
+
 ```tsx
 import { sendMail } from "emails";
 import { getTestMailQueue, clearTestMailQueue } from "mailing/core";
@@ -137,7 +143,7 @@ import IssueNotification from "emails/IssueNotification";
 describe("Example API", () => {
   it("sends an email when an issue is ready for review", () => {
     await clearTestEmailQueue();
-  
+
     // SOMETHING THAT WILL SEND AN EMAIL e.g.
     // sendMail({
     //   to: "someone@something.com",
@@ -152,7 +158,6 @@ describe("Example API", () => {
     expect(emails[0].html).toMatch("ready for QA");
   });
 });
-
 ```
 
 <br/>
@@ -186,7 +191,6 @@ yarn dev
 
 `yarn dev` starts the cli in dev mode
 
-
 ### Plan
 
 show hn requirements
@@ -217,4 +221,3 @@ just below the line
 - [ ] faktory integration
 - [ ] mailing.run website
 - [ ] generator for new email template
-
