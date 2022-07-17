@@ -113,11 +113,17 @@ When it's nice, send it to yourself or a [Litmus](<[url](https://www.litmus.com)
 
 ## ●&nbsp;&nbsp;Templates
 
+We ship with 2 templates to help you get started. We reccomend using these as starting points and modifying them to fit your use-case.
+
 **Welcome Template**
+
+This template is kind of a showcase of MJML and mailing features, including a responsive hero image, bulleted list, and custom google font with fallbacks.
 
 <img width="600" alt="Mailing Welcome email template" src="https://user-images.githubusercontent.com/609038/179326104-37a01d2a-9ea0-4cda-b6fe-4fc86ec2dfe9.jpg">
 
 **Transactional Template**
+
+This is a simpler template for text-based transactional emails.
 
 <img width="600" alt="Mailing text email template" src="https://user-images.githubusercontent.com/609038/179326123-8f7a252b-2541-42b9-b14d-e62a2835ce9e.jpg">
 
@@ -191,6 +197,7 @@ yarn dev
 
 `yarn dev` starts the cli in dev mode
 
+
 ### Plan
 
 show hn requirements
@@ -221,3 +228,9 @@ just below the line
 - [ ] faktory integration
 - [ ] mailing.run website
 - [ ] generator for new email template
+
+
+### Roadmap
+
+- [ ] JS support (only TS works at the moment)
+- [ ] easily deploy previews to web for design QA/demo purposes (e.g. `mailing build` -> static site)
