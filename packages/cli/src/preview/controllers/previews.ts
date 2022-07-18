@@ -1,12 +1,10 @@
 import { resolve } from "path";
 import { IncomingMessage, ServerResponse } from "http";
-import { readdirSync } from "fs-extra";
-import decache from "decache";
-
 import { render } from "../../mjml";
 import { error, log } from "../../log";
 import { getPreviewsDirectory } from "../../paths";
 import { renderNotFound } from "./application";
+import { readdirSync } from "fs-extra";
 
 const LIVE_RELOAD_SNIPPET = `
   if (window.location.hostname === "localhost") {
@@ -56,7 +54,7 @@ export function showPreview(req: IncomingMessage, res: ServerResponse) {
   const [_blank, _previews, moduleName, functionName] = req.url.split("/");
   const modulePath = resolve(previewsPath, moduleName);
 
-  decache(modulePath);
+  delete require.cache[modulePath];
   const module = require(modulePath);
   const component = module[functionName]();
 
@@ -107,7 +105,7 @@ export async function sendPreview(req: IncomingMessage, res: ServerResponse) {
   let component;
   if (!html && body.previewClass && body.previewFunction) {
     const modulePath = resolve(previewsPath, body.previewClass);
-    decache(modulePath);
+    delete require.cache[modulePath]; // clean require
     const module = require(modulePath);
     component = module[body.previewFunction]();
   }

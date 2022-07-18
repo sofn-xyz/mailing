@@ -5,12 +5,11 @@ var http = require('http');
 var path = require('path');
 var open = require('open');
 var fsExtra = require('fs-extra');
+var chalk = require('chalk');
+var mjmlReact = require('mjml-react');
 var process$1 = require('process');
 var url = require('url');
 var next = require('next');
-var decache = require('decache');
-var chalk = require('chalk');
-var mjmlReact = require('mjml-react');
 var prompts = require('prompts');
 var tree = require('tree-node-cli');
 
@@ -19,9 +18,8 @@ function _interopDefault (e) { return e && e.__esModule ? e : { 'default': e }; 
 var yargs__default = /*#__PURE__*/_interopDefault(yargs);
 var http__default = /*#__PURE__*/_interopDefault(http);
 var open__default = /*#__PURE__*/_interopDefault(open);
-var next__default = /*#__PURE__*/_interopDefault(next);
-var decache__default = /*#__PURE__*/_interopDefault(decache);
 var chalk__default = /*#__PURE__*/_interopDefault(chalk);
+var next__default = /*#__PURE__*/_interopDefault(next);
 var prompts__default = /*#__PURE__*/_interopDefault(prompts);
 var tree__default = /*#__PURE__*/_interopDefault(tree);
 
@@ -642,7 +640,7 @@ function showPreview(req, res) {
       functionName = _req$url$split2[3];
 
   var modulePath = path.resolve(previewsPath, moduleName);
-  decache__default["default"](modulePath);
+  delete require.cache[modulePath];
 
   var module = require(modulePath);
 
@@ -767,7 +765,8 @@ function _sendPreview() {
 
             if (!html && body.previewClass && body.previewFunction) {
               modulePath = path.resolve(previewsPath, body.previewClass);
-              decache__default["default"](modulePath);
+              delete require.cache[modulePath]; // clean require
+
               module = require(modulePath);
               component = module[body.previewFunction]();
             }
@@ -1050,7 +1049,7 @@ var handler$1 = /*#__PURE__*/function () {
               recursive: true
             }, function (eventType, filename) {
               log("Detected ".concat(eventType, " on ").concat(filename, ", reloading"));
-              decache__default["default"](path.resolve(changeWatchPath, filename));
+              delete require.cache[path.resolve(changeWatchPath, filename)];
               shouldReload = true;
             });
             log("Watching for changes to ".concat(path.relative(process$1.cwd(), changeWatchPath)));
