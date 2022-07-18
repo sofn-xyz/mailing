@@ -40,7 +40,7 @@ npm install --save mailing-core mjml mjml-react nodemailer &&\
 npm install --save-dev mailing @types/mjml @types/mjml-react @types/nodemailer
 ```
 
-2. Scaffold your `emails` directory with `npx mailing`. This will create the following directory for all of your emails:
+2. Run `npx mailing` to start the preview server and scaffold your `emails` directory. This will create the following directory for all of your emails:
 
 ```
 emails
@@ -56,8 +56,6 @@ emails
     ├── TextEmail.tsx
     └── Welcome.tsx
 ```
-
-This will also start the preview server on port 3883.
 
 3. Configure your email transport and `defaultFrom` in `emails/index.ts`. It defaults to nodemailer's SMTP transport, but you can read about others [here](https://nodemailer.com/transports/).
 
@@ -87,7 +85,7 @@ sendMail(<MyFirstEmail firstName="Amelita" />);
 
 ## ●&nbsp;&nbsp;Developing with email previews
 
-Mailing includes a development mode for working on your emails. Running `mailing` in dev will boot the preview app on localhost and show you all previews in `emails/previews`. The previews live reload when files in the emails directory change. Previews are just functions that return one of your emails loaded up with props. We recommend grouping all previews for the same email template in a file at `emails/previews/TemplateName.tsx`.
+Mailing includes a development mode for working on your emails. Running `mailing` in dev will boot the preview server on localhost:3883 and show you all previews in `emails/previews`. The previews live reload when files in the emails directory change. Previews are just functions that return one of your emails loaded up with props. We recommend grouping all previews for the same email template in a file at `emails/previews/TemplateName.tsx`.
 
 For example, here's `emails/previews/MyFirstEmail.tsx`:
 
