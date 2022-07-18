@@ -18,3 +18,13 @@ type SendPreviewRequestBody = {
 type SendPreviewResponseBody = {
   error?: string;
 };
+
+type ShowPreviewResponseBody = {
+  errors: {
+    line: number;
+    message: string;
+    tagName: string;
+    formattedMessage: string;
+  }[];
+  html: string;
+};
