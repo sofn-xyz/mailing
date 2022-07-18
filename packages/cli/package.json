@@ -1,6 +1,6 @@
 {
   "name": "mailing",
-  "version": "0.4.2",
+  "version": "0.4.3",
   "main": "dist/mailing.cjs.js",
   "license": "MIT",
   "homepage": "https://github.com/psugihara/mailing#readme",

@@ -1,5 +1,11 @@
 # mailing
 
+## 0.4.3
+
+### Patch Changes
+
+- remove js support
+
 ## 0.4.2
 
 ### Patch Changes
