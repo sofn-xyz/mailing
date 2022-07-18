@@ -2,6 +2,7 @@ import React, { ReactElement } from "react";
 import Head from "./components/Head";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import ButtonPrimary from "./components/ButtonPrimary";
 
 import {
   Mjml,
@@ -9,7 +10,7 @@ import {
   MjmlSection,
   MjmlColumn,
   MjmlText,
-  MjmlButton,
+  MjmlSpacer,
 } from "mjml-react";
 
 type TextEmailProps = {
@@ -44,7 +45,7 @@ const TextEmail: React.FC<TextEmailProps> = ({
             </MjmlText>
             <MjmlText
               cssClass="paragraph"
-              padding="0 0 16px"
+              padding="0"
               fontSize={16}
               lineHeight="160%"
             >
@@ -52,26 +53,18 @@ const TextEmail: React.FC<TextEmailProps> = ({
             </MjmlText>
             {bulletedList && (
               <>
+                <MjmlSpacer height="16px" />
                 {bulletedList}
-                <MjmlText padding="0 0 8px"></MjmlText>
               </>
             )}
             {ctaText && (
-              <MjmlButton
-                lineHeight="120%"
-                fontSize={16}
-                width={196}
-                height={52}
-                padding="8px 0 16px"
-                align="left"
-                href="#"
-                backgroundColor="#000"
-                borderRadius={2}
-              >
-                {ctaText}
-              </MjmlButton>
+              <>
+                <MjmlSpacer height="24px" />
+                <ButtonPrimary link={"#"} uiText={ctaText} />
+                <MjmlSpacer height="8px" />
+              </>
             )}
-            <MjmlText padding="8px 0 0" fontSize={16} lineHeight="160%">
+            <MjmlText padding="16px 0" fontSize={16} lineHeight="160%">
               ♥,
               <br />
               Mailing
