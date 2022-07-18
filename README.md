@@ -112,7 +112,7 @@ Clicking through shows you the email with a mobile/desktop toggle and live reloa
 
 <img width="600" alt="Mailing desktop preview" src="https://user-images.githubusercontent.com/609038/179312262-e8d746ff-b820-4109-bae1-7e49bb3f2cca.jpg">
 
-When it's nice, send it to yourself or a [Litmus](<[url](https://www.litmus.com)>) account for final testing:
+When it's nice, send it to yourself or your QA tool of choice for final testing (we like [Litmus](<[url](https://www.litmus.com)>)):
 
 <img width="600" alt="Mailing mobile preview" src="https://user-images.githubusercontent.com/609038/179312306-096e7787-4321-4c3e-9e72-6abb820d73f0.jpg">
 
@@ -204,38 +204,9 @@ yarn dev
 
 `yarn dev` starts the cli in dev mode
 
-### Plan
-
-show hn requirements
-
-- [x] setup package with lib and cli
-- [x] generate emails directory
-- [x] email.ts API
-- [x] basic tests for lib
-- [x] basic tests for cli (init test)
-- [x] email previews
-- [x] polished README
-- [x] logo
-- [x] rename (react-mailer, gigaben, mailing, omail, mailbus, must be available on npmjs.com)
-- [x] publish to npm
-- [ ] add video to readme
-- [x] pull into a next.js project and it works
-- [ ] pull into redwood.js project and it works
-- [ ] pull into remix project and it works
-- [ ] share with friends
-- [x] split into 2 packages so that preview server is not included
-- [x] write show hn post
-
----
-
-just below the line
-
-- [ ] automated tests of pulling into X project and it working
-- [ ] faktory integration
-- [ ] mailing.run website
-- [ ] generator for new email template
 
 ### Roadmap
 
 - [ ] JS support (only TS works at the moment)
 - [ ] easily deploy previews to web for design QA/demo purposes (e.g. `mailing build` -> static site)
+- [ ] generator for new email template
