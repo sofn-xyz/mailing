@@ -76,14 +76,14 @@ const transport = nodemailer.createTransport({
 
 ```tsx
 import { sendMail } from "emails";
-import MyFirstEmail from "emails/MyFirstEmail";
+import Welcome from "emails/Welcome";
 
 sendMail({
   subject: "My First Email",
   to: "tester@example.com",
   cc: "tester+cc@example.com",
   bcc: ["tester+bcc@example.com", "tester+bcc2@example.com"],
-  component: <MyFirstEmail firstName="Amelita" />
+  component: <Welcome firstName="Amelita" />
 });
 ```
 
@@ -93,14 +93,14 @@ sendMail({
 
 Mailing includes a development mode for working on your emails. Running `mailing` in dev will boot the preview server on localhost:3883 and show you all previews in `emails/previews`. The previews live reload when files in the emails directory change. Previews are just functions that return one of your emails loaded up with props. We recommend grouping all previews for the same email template in a file at `emails/previews/TemplateName.tsx`.
 
-For example, here's `emails/previews/MyFirstEmail.tsx`:
+For example, here's `emails/previews/Welcome.tsx`:
 
 ```tsx
 import React from "react";
-import MyFirstEmail from "../MyFirstEmail";
+import Welcome from "../Welcome";
 
 export function toAmelita() {
-  return <MyFirstEmail name="Amelita" />;
+  return <Welcome name="Amelita" />;
 }
 ```
 
