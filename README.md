@@ -78,7 +78,13 @@ const transport = nodemailer.createTransport({
 import { sendMail } from "emails";
 import MyFirstEmail from "emails/MyFirstEmail";
 
-sendMail(<MyFirstEmail firstName="Amelita" />);
+sendMail({
+  subject: "My First Email",
+  to: "tester@example.com",
+  cc: "tester+cc@example.com",
+  bcc: ["tester+bcc@example.com", "tester+bcc2@example.com"],
+  component: <MyFirstEmail firstName="Amelita" />
+});
 ```
 
 <br/>
