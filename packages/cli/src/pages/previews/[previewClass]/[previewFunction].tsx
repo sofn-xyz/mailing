@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Header from "../../../components/Header";
 import HotIFrame from "../../../components/HotIFrame";
+import MjmlErrors from "../../../components/MjmlErrors";
 import { string } from "yargs";
 
 const Preview = () => {
@@ -57,14 +58,15 @@ const Preview = () => {
           </>
         }
       />
-      {data?.html && !data?.errors && (
+      {data?.errors.length && <MjmlErrors errors={data.errors} />}
+      {data?.html && !data?.errors.length && (
         <HotIFrame
           srcDoc={data.html}
           isMobile={isMobile}
           setIsMobile={setIsMobile}
         />
       )}
-      {data?.errors && JSON.stringify(data.errors)}
+
       <style jsx>{`
         iframe {
           margin-top: 8px;
