@@ -3,11 +3,6 @@ import { relative, resolve } from "path";
 import open from "open";
 import { watch } from "fs-extra";
 import { ArgumentsCamelCase } from "yargs";
-import { cwd } from "process";
-import { parse } from "url";
-import next from "next";
-import decache from "decache";
-
 import { getPreviewsDirectory, getExistingEmailsDir } from "../paths";
 import { error, log } from "../log";
 import {
@@ -19,6 +14,9 @@ import {
   showPreview,
   showPreviewIndex,
 } from "../preview/controllers/previews";
+import { cwd } from "process";
+import { parse } from "url";
+import next from "next";
 
 const DEFAULT_PORT = 3883;
 
@@ -151,7 +149,7 @@ export const handler = async (argv: ArgumentsCamelCase<{ port?: number }>) => {
   }
   watch(changeWatchPath, { recursive: true }, (eventType, filename) => {
     log(`Detected ${eventType} on ${filename}, reloading`);
-    decache(resolve(changeWatchPath, filename));
+    delete require.cache[resolve(changeWatchPath, filename)];
     shouldReload = true;
   });
   log(`Watching for changes to ${relative(cwd(), changeWatchPath)}`);
