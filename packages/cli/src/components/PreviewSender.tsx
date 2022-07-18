@@ -82,7 +82,7 @@ const PreviewSender: React.FC<PreviewSenderProps> = ({
       {!lastSendAt && (
         <div className="subtitle">
           To start sending emails, you must configure a transport in{" "}
-          <span className="mono">email/index.tsx</span>.{" "}
+          <span className="mono">emails/index.tsx</span>.{" "}
           <a href="https://github.com/psugihara/mailing">Learn more</a>
         </div>
       )}

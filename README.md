@@ -58,7 +58,7 @@ emails
 
 This will also start the preview server on port 3883.
 
-3. Configure your email transport and `defaultFrom` in `email/index.ts`. It defaults to nodemailer's SMTP transport, but you can read about others [here](https://nodemailer.com/transports/).
+3. Configure your email transport and `defaultFrom` in `emails/index.ts`. It defaults to nodemailer's SMTP transport, but you can read about others [here](https://nodemailer.com/transports/).
 
 Example SendGrid transport:
 
