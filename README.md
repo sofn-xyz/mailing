@@ -29,16 +29,14 @@ yarn:
 
 ```
 yarn add mailing-core mjml mjml-react nodemailer &&\
-yarn add --dev mailing @types/mjml @types/mjml-react &&\
-yarn add --dev @types/nodemailer
+yarn add --dev mailing @types/mjml @types/mjml-react @types/nodemailer
 ```
 
 npm:
 
 ```
 npm install --save mailing-core mjml mjml-react nodemailer &&\
-npm install --save-dev mailing @types/mjml @types/mjml-react &&\
-npm install --save-dev @types/nodemailer
+npm install --save-dev mailing @types/mjml @types/mjml-react @types/nodemailer
 ```
 
 2. Scaffold your `emails` directory with `npx mailing`. This will create the following directory for all of your emails:
