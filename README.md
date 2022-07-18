@@ -87,7 +87,7 @@ sendMail(<MyFirstEmail firstName="Amelita" />);
 
 ## ●&nbsp;&nbsp;Developing with email previews
 
-Mailing includes a development mode for working on your emails. Running `mailing` in dev will boot the preview app on localhost and show you all previews in `emails/previews`. The previews live reload when files in the emails directory change. Previews are just functions that return one of your emails loaded up with props. We reccomend grouping all previews for the same email template in a file at `emails/previews/TemplateName.tsx`.
+Mailing includes a development mode for working on your emails. Running `mailing` in dev will boot the preview app on localhost and show you all previews in `emails/previews`. The previews live reload when files in the emails directory change. Previews are just functions that return one of your emails loaded up with props. We recommend grouping all previews for the same email template in a file at `emails/previews/TemplateName.tsx`.
 
 For example, here's `emails/previews/MyFirstEmail.tsx`:
 
@@ -116,7 +116,7 @@ When it's nice, send it to yourself or a [Litmus](<[url](https://www.litmus.com)
 
 ## ●&nbsp;&nbsp;Templates
 
-We ship with 2 templates to help you get started. We reccomend using these as starting points and modifying them to fit your use-case.
+We ship with 2 templates to help you get started. We recommend using these as starting points and modifying them to fit your use-case.
 
 **Welcome Template**
 
