@@ -11,7 +11,8 @@
 - Dev mode opens emails in your browser instead of sending
 - Test mode for ensuring emails send and have the correct content
 - Plays well with js frameworks like redwood.js, remix, next.js
-- Written in Typescript, inspired by Action Mailer from Ruby on Rails
+- Written in TypeScript, inspired by Action Mailer from Ruby on Rails
+- TypeScript only (for now)
 
 <br/>
 
@@ -199,7 +200,6 @@ yarn dev
 
 `yarn dev` starts the cli in dev mode
 
-
 ### Plan
 
 show hn requirements
@@ -230,7 +230,6 @@ just below the line
 - [ ] faktory integration
 - [ ] mailing.run website
 - [ ] generator for new email template
-
 
 ### Roadmap
 

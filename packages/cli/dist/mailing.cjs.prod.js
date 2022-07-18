@@ -427,9 +427,6 @@ function getPreviewsDirectory() {
   var existingEmailsDir = getExistingEmailsDir();
   return existingEmailsDir ? path.resolve(existingEmailsDir, "previews") : null;
 }
-function getPackageJSON() {
-  return JSON.parse(fsExtra.readFileSync("./package.json").toString());
-}
 
 process.env.DEBUG;
 function log(message) {
@@ -604,7 +601,7 @@ function render(component) {
   });
 }
 
-var LIVE_RELOAD_SNIPPET = "\n  window.setInterval(async function checkForReload() {\n    const shouldReload = await fetch(\"/should_reload.json\");\n    const json = await shouldReload.json()\n    if (json['shouldReload']) {\n      window.location.reload();\n    }\n  }, 1200);\n";
+var LIVE_RELOAD_SNIPPET = "\n  if (window.location.hostname === \"localhost\") {\n    window.setInterval(async function checkForReload() {\n      const shouldReload = await fetch(\"/should_reload.json\");\n      const json = await shouldReload.json()\n      if (json['shouldReload']) {\n        window.location.reload();\n      }\n    }, 1200);\n  }\n";
 function showPreviewIndex(req, res) {
   var previewsPath = getPreviewsDirectory();
 
@@ -1153,22 +1150,11 @@ function _generateEmailsDirectory() {
   return _generateEmailsDirectory.apply(this, arguments);
 }
 
-function looksLikeTypescriptProject() {
-  var _pkg$devDependencies, _pkg$dependencies;
-
-  if (fsExtra.existsSync("./tsconfig.json")) {
-    return true;
-  }
-
-  var pkg = getPackageJSON();
-  return !!((_pkg$devDependencies = pkg.devDependencies) !== null && _pkg$devDependencies !== void 0 && _pkg$devDependencies.typescript || (_pkg$dependencies = pkg.dependencies) !== null && _pkg$dependencies !== void 0 && _pkg$dependencies.typescript);
-}
-
 var command = ["$0", "init"];
 var describe = "initialize mailing in your app";
 var handler = /*#__PURE__*/function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(args) {
-    var ts, options;
+    var options;
     return _regeneratorRuntime().wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
@@ -1183,30 +1169,20 @@ var handler = /*#__PURE__*/function () {
 
           case 3:
             if (getExistingEmailsDir()) {
-              _context.next = 10;
+              _context.next = 7;
               break;
             }
 
-            _context.next = 6;
-            return prompts__default["default"]({
-              type: "confirm",
-              name: "value",
-              message: "Are you using typescript?",
-              initial: looksLikeTypescriptProject()
-            });
-
-          case 6:
-            ts = _context.sent;
             options = {
-              isTypescript: ts.value
+              isTypescript: true
             };
-            _context.next = 10;
+            _context.next = 7;
             return generateEmailsDirectory(options);
 
-          case 10:
+          case 7:
             handler$1(args);
 
-          case 11:
+          case 8:
           case "end":
             return _context.stop();
         }
