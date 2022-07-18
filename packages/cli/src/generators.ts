@@ -1,5 +1,5 @@
 import { copySync, existsSync } from "fs-extra";
-import { resolve } from "path";
+import { relative, resolve } from "path";
 import prompts from "prompts";
 import tree from "tree-node-cli";
 import { getExistingEmailsDir } from "./paths";
@@ -30,7 +30,7 @@ export async function generateEmailsDirectory({
     type: "text",
     name: "path",
     message: "Where should we put your emails?",
-    initial: emailsPath,
+    initial: "./" + relative(process.cwd(), emailsPath) + "/",
   });
   if (response.path) {
     // copy the emails dir template in!
