@@ -1114,7 +1114,7 @@ function _generateEmailsDirectory() {
               type: "text",
               name: "path",
               message: "Where should we put your emails?",
-              initial: emailsPath
+              initial: "./" + path.relative(process.cwd(), emailsPath) + "/"
             });
 
           case 8:
