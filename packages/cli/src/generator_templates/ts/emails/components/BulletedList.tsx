@@ -14,6 +14,7 @@ const BulletedList: React.FC<BulletedListProps> = ({ items }) => {
           fontSize={16}
           lineHeight="160%"
           cssClass="li"
+          key={item}
         >
           •&nbsp;&nbsp;{item}
         </MjmlText>
