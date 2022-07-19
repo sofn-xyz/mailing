@@ -30,6 +30,7 @@ emails
 ├── Welcome.tsx
 ├── components
 │   ├── BulletedList.tsx
+│   ├── ButtonPrimary.tsx
 │   ├── Footer.tsx
 │   ├── Head.tsx
 │   └── Header.tsx
