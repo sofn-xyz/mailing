@@ -58,7 +58,7 @@ const Preview = () => {
           </>
         }
       />
-      {data?.errors.length && <MjmlErrors errors={data.errors} />}
+      {!!data?.errors.length && <MjmlErrors errors={data.errors} />}
       {data?.html && !data?.errors.length && (
         <HotIFrame
           srcDoc={data.html}

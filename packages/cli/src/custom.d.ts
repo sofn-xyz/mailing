@@ -20,11 +20,13 @@ type SendPreviewResponseBody = {
 };
 
 type ShowPreviewResponseBody = {
-  errors: {
-    line: number;
-    message: string;
-    tagName: string;
-    formattedMessage: string;
-  }[];
+  errors: MjmlError[];
   html: string;
+};
+
+type MjmlError = {
+  line: number;
+  message: string;
+  tagName: string;
+  formattedMessage: string;
 };

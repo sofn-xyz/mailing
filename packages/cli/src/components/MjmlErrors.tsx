@@ -1,7 +1,7 @@
 import React from "react";
 
 type MjmlErrorsProps = {
-  errors: Array<String>;
+  errors: Array<MjmlError>;
 };
 
 const MjmlErrors: React.FC<MjmlErrorsProps> = ({ errors }) => {
