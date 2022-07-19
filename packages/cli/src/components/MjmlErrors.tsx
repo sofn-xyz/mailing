@@ -30,7 +30,7 @@ const MjmlErrors: React.FC<MjmlErrorsProps> = ({ errors }) => {
           padding: 38px 32px 32px;
           max-width: 720px;
           margin: auto;
-          border-radius: 4px;
+          border-radius: 2px;
           box-shadow: 2px 4px 16px 2px rgba(0, 0, 0, 0.1);
           border-top: solid 8px #f59c9c;
         }
