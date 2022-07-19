@@ -109,6 +109,7 @@ export const handler = async (argv: ArgumentsCamelCase<{ port?: number }>) => {
       });
 
       try {
+        log("url", req.url);
         if (req.url === "/previews.json") {
           showPreviewIndex(req, res);
         } else if (req.url === "/should_reload.json") {
@@ -120,7 +121,7 @@ export const handler = async (argv: ArgumentsCamelCase<{ port?: number }>) => {
           await sendPreview(req, res);
         } else if (/^\/intercepts\/[a-zA-Z0-9]+\.json/.test(req.url)) {
           showIntercept(req, res);
-        } else if (/^\/preview-html\//.test(req.url)) {
+        } else if (/^\/previews\/.*\.json/.test(req.url)) {
           showPreview(req, res);
         } else if (/^\/_next/.test(req.url)) {
           noLog = true;

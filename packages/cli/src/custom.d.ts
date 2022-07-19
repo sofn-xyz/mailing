@@ -18,3 +18,15 @@ type SendPreviewRequestBody = {
 type SendPreviewResponseBody = {
   error?: string;
 };
+
+type ShowPreviewResponseBody = {
+  errors: MjmlError[];
+  html: string;
+};
+
+type MjmlError = {
+  line: number;
+  message: string;
+  tagName: string;
+  formattedMessage: string;
+};

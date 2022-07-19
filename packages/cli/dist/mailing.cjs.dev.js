@@ -26,7 +26,6 @@ var tree__default = /*#__PURE__*/_interopDefault(tree);
 function _regeneratorRuntime() {
   /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */
 
-  /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */
   _regeneratorRuntime = function () {
     return exports;
   };
@@ -599,7 +598,6 @@ function render(component) {
   });
 }
 
-var LIVE_RELOAD_SNIPPET = "\n  if (window.location.hostname === \"localhost\") {\n    window.setInterval(async function checkForReload() {\n      const shouldReload = await fetch(\"/should_reload.json\");\n      const json = await shouldReload.json()\n      if (json['shouldReload']) {\n        window.location.reload();\n      }\n    }, 1200);\n  }\n";
 function showPreviewIndex(req, res) {
   var previewsPath = getPreviewsDirectory();
 
@@ -637,9 +635,10 @@ function showPreview(req, res) {
       _req$url$split2[0];
       _req$url$split2[1];
       var moduleName = _req$url$split2[2],
-      functionName = _req$url$split2[3];
+      functionNameJSON = _req$url$split2[3];
 
   var modulePath = path.resolve(previewsPath, moduleName);
+  var functionName = functionNameJSON.replace(".json", "");
   delete require.cache[modulePath];
 
   var module = require(modulePath);
@@ -656,9 +655,12 @@ function showPreview(req, res) {
         error(errors);
       }
 
-      var liveReloadHtml = html === null || html === void 0 ? void 0 : html.replace("</head>", "<script>".concat(LIVE_RELOAD_SNIPPET, "</script></head>"));
+      res.setHeader("Content-Type", "application/json");
       res.writeHead(200);
-      res.end(liveReloadHtml || JSON.stringify(errors));
+      res.end(JSON.stringify({
+        html: html,
+        errors: errors
+      }));
     } catch (e) {
       error("caught error rendering mjml to html", e);
       res.writeHead(500);
@@ -914,106 +916,107 @@ var handler$1 = /*#__PURE__*/function () {
                           if (!noLog || process.env.MM_VERBOSE) log("".concat(res.statusCode, " ").concat(req.url, " ").concat(Date.now() - startTime, "ms"));
                         });
                         _context.prev = 13;
+                        log("url", req.url);
 
                         if (!(req.url === "/previews.json")) {
-                          _context.next = 18;
+                          _context.next = 19;
                           break;
                         }
 
                         showPreviewIndex(req, res);
-                        _context.next = 48;
+                        _context.next = 49;
                         break;
 
-                      case 18:
+                      case 19:
                         if (!(req.url === "/should_reload.json")) {
-                          _context.next = 23;
+                          _context.next = 24;
                           break;
                         }
 
                         noLog = true;
                         showShouldReload(req, res);
-                        _context.next = 48;
+                        _context.next = 49;
                         break;
 
-                      case 23:
+                      case 24:
                         if (!(req.url === "/intercepts" && req.method === "POST")) {
-                          _context.next = 27;
+                          _context.next = 28;
                           break;
                         }
 
                         createIntercept(req, res);
-                        _context.next = 48;
+                        _context.next = 49;
                         break;
 
-                      case 27:
+                      case 28:
                         if (!(req.url === "/previews/send.json" && req.method === "POST")) {
-                          _context.next = 32;
+                          _context.next = 33;
                           break;
                         }
 
-                        _context.next = 30;
+                        _context.next = 31;
                         return sendPreview(req, res);
 
-                      case 30:
-                        _context.next = 48;
+                      case 31:
+                        _context.next = 49;
                         break;
 
-                      case 32:
+                      case 33:
                         if (!/^\/intercepts\/[a-zA-Z0-9]+\.json/.test(req.url)) {
-                          _context.next = 36;
+                          _context.next = 37;
                           break;
                         }
 
                         showIntercept(req, res);
-                        _context.next = 48;
+                        _context.next = 49;
                         break;
 
-                      case 36:
-                        if (!/^\/preview-html\//.test(req.url)) {
-                          _context.next = 40;
+                      case 37:
+                        if (!/^\/previews\/.*\.json/.test(req.url)) {
+                          _context.next = 41;
                           break;
                         }
 
                         showPreview(req, res);
-                        _context.next = 48;
+                        _context.next = 49;
                         break;
 
-                      case 40:
+                      case 41:
                         if (!/^\/_next/.test(req.url)) {
-                          _context.next = 46;
+                          _context.next = 47;
                           break;
                         }
 
                         noLog = true;
-                        _context.next = 44;
+                        _context.next = 45;
                         return app.render(req, res, "".concat(pathname), query);
 
-                      case 44:
-                        _context.next = 48;
+                      case 45:
+                        _context.next = 49;
                         break;
 
-                      case 46:
-                        _context.next = 48;
+                      case 47:
+                        _context.next = 49;
                         return nextHandle(req, res, parsedUrl);
 
-                      case 48:
-                        _context.next = 56;
+                      case 49:
+                        _context.next = 57;
                         break;
 
-                      case 50:
-                        _context.prev = 50;
+                      case 51:
+                        _context.prev = 51;
                         _context.t0 = _context["catch"](13);
                         error("caught error", _context.t0);
                         res.writeHead(500);
                         res.end(JSON.stringify(_context.t0));
                         return _context.abrupt("return");
 
-                      case 56:
+                      case 57:
                       case "end":
                         return _context.stop();
                     }
                   }
-                }, _callee, null, [[13, 50]]);
+                }, _callee, null, [[13, 51]]);
               }));
 
               return function (_x2, _x3) {

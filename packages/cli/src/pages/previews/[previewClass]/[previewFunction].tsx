@@ -1,19 +1,40 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Header from "../../../components/Header";
 import HotIFrame from "../../../components/HotIFrame";
+import MjmlErrors from "../../../components/MjmlErrors";
+import { string } from "yargs";
 
 const Preview = () => {
   const router = useRouter();
   const [isMobile, setIsMobile] = useState(false);
+  const [data, setData] = useState<ShowPreviewResponseBody | null>(null);
+
+  useEffect(() => {
+    const interval = window.setInterval(async function checkForReload() {
+      const shouldReload = await fetch("/should_reload.json");
+      const json = await shouldReload.json();
+      if (json["shouldReload"]) {
+        window.location.reload();
+      }
+    }, 1200);
+
+    const fetchPreview = async () => {
+      const response = await fetch(`${document.location.pathname}.json`);
+      setData(await response.json());
+    };
+    fetchPreview();
+
+    return () => {
+      window.clearInterval(interval);
+    };
+  }, []);
 
   const { previewClass, previewFunction } = router.query;
 
   if (!(previewClass && previewFunction)) {
     return <div>loading</div>;
   }
-
-  const htmlURL = `/preview-html/${previewClass}/${previewFunction}`;
 
   return (
     <div>
@@ -37,7 +58,15 @@ const Preview = () => {
           </>
         }
       />
-      <HotIFrame src={htmlURL} isMobile={isMobile} setIsMobile={setIsMobile} />
+      {!!data?.errors.length && <MjmlErrors errors={data.errors} />}
+      {data?.html && !data?.errors.length && (
+        <HotIFrame
+          srcDoc={data.html}
+          isMobile={isMobile}
+          setIsMobile={setIsMobile}
+        />
+      )}
+
       <style jsx>{`
         iframe {
           margin-top: 8px;

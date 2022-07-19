@@ -51,8 +51,9 @@ export function showPreview(req: IncomingMessage, res: ServerResponse) {
   }
 
   // previews
-  const [_blank, _previews, moduleName, functionName] = req.url.split("/");
+  const [_blank, _previews, moduleName, functionNameJSON] = req.url.split("/");
   const modulePath = resolve(previewsPath, moduleName);
+  const functionName = functionNameJSON.replace(".json", "");
 
   delete require.cache[modulePath];
   const module = require(modulePath);
@@ -65,13 +66,9 @@ export function showPreview(req: IncomingMessage, res: ServerResponse) {
         error(errors);
       }
 
-      const liveReloadHtml = html?.replace(
-        "</head>",
-        `<script>${LIVE_RELOAD_SNIPPET}</script></head>`
-      );
-
+      res.setHeader("Content-Type", "application/json");
       res.writeHead(200);
-      res.end(liveReloadHtml || JSON.stringify(errors));
+      res.end(JSON.stringify({ html, errors }));
     } catch (e) {
       error("caught error rendering mjml to html", e);
       res.writeHead(500);
