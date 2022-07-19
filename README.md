@@ -7,7 +7,7 @@
 
 - Email templates with React components
 - MJML components that work across clients (Outlook!)
-- Preview server for quick development
+- Preview server with live reload for quick development
 - Dev mode opens emails in your browser instead of sending
 - Test mode for ensuring emails send and have the correct content
 - Plays well with js frameworks like redwood.js, remix, next.js
