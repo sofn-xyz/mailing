@@ -33,7 +33,8 @@ emails
 │   ├── ButtonPrimary.tsx
 │   ├── Footer.tsx
 │   ├── Head.tsx
-│   └── Header.tsx
+│   ├── Header.tsx
+│   └── theme.ts
 ├── index.ts
 └── previews
     ├── TextEmail.tsx
