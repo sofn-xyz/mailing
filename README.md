@@ -50,7 +50,7 @@ emails
 │   ├── BulletedList.tsx
 │   ├── Footer.tsx
 │   ├── Head.tsx
-│   └── Header.tsx
+│   ├── Header.tsx
 │   └── theme.ts
 ├── index.ts // this exports sendMail and is where your SMTP config goes
 └── previews // use previews to develop and check templates
