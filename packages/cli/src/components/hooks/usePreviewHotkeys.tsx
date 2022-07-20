@@ -22,9 +22,7 @@ export default function usePreviewHotkeys({ setIsMobile }: Options) {
       } else if (e.key === ".") {
         setIsMobile((current) => !current);
       } else if (e.key === "ArrowRight" || e.key === "right") {
-        console.log("arrow right iframe");
       } else if (e.key === "ArrowLeft" || e.key === "left") {
-        console.log("arrow left ifram");
       }
     },
     [router]

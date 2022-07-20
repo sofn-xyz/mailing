@@ -915,107 +915,106 @@ var handler$1 = /*#__PURE__*/function () {
                           if (!noLog || process.env.MM_VERBOSE) log("".concat(res.statusCode, " ").concat(req.url, " ").concat(Date.now() - startTime, "ms"));
                         });
                         _context.prev = 13;
-                        log("url", req.url);
 
                         if (!(req.url === "/previews.json")) {
-                          _context.next = 19;
+                          _context.next = 18;
                           break;
                         }
 
                         showPreviewIndex(req, res);
-                        _context.next = 49;
+                        _context.next = 48;
                         break;
 
-                      case 19:
+                      case 18:
                         if (!(req.url === "/should_reload.json")) {
-                          _context.next = 24;
+                          _context.next = 23;
                           break;
                         }
 
                         noLog = true;
                         showShouldReload(req, res);
-                        _context.next = 49;
+                        _context.next = 48;
                         break;
 
-                      case 24:
+                      case 23:
                         if (!(req.url === "/intercepts" && req.method === "POST")) {
-                          _context.next = 28;
+                          _context.next = 27;
                           break;
                         }
 
                         createIntercept(req, res);
-                        _context.next = 49;
+                        _context.next = 48;
                         break;
 
-                      case 28:
+                      case 27:
                         if (!(req.url === "/previews/send.json" && req.method === "POST")) {
-                          _context.next = 33;
+                          _context.next = 32;
                           break;
                         }
 
-                        _context.next = 31;
+                        _context.next = 30;
                         return sendPreview(req, res);
 
-                      case 31:
-                        _context.next = 49;
+                      case 30:
+                        _context.next = 48;
                         break;
 
-                      case 33:
+                      case 32:
                         if (!/^\/intercepts\/[a-zA-Z0-9]+\.json/.test(req.url)) {
-                          _context.next = 37;
+                          _context.next = 36;
                           break;
                         }
 
                         showIntercept(req, res);
-                        _context.next = 49;
+                        _context.next = 48;
                         break;
 
-                      case 37:
+                      case 36:
                         if (!/^\/previews\/.*\.json/.test(req.url)) {
-                          _context.next = 41;
+                          _context.next = 40;
                           break;
                         }
 
                         showPreview(req, res);
-                        _context.next = 49;
+                        _context.next = 48;
                         break;
 
-                      case 41:
+                      case 40:
                         if (!/^\/_next/.test(req.url)) {
-                          _context.next = 47;
+                          _context.next = 46;
                           break;
                         }
 
                         noLog = true;
-                        _context.next = 45;
+                        _context.next = 44;
                         return app.render(req, res, "".concat(pathname), query);
 
-                      case 45:
-                        _context.next = 49;
+                      case 44:
+                        _context.next = 48;
                         break;
 
-                      case 47:
-                        _context.next = 49;
+                      case 46:
+                        _context.next = 48;
                         return nextHandle(req, res, parsedUrl);
 
-                      case 49:
-                        _context.next = 57;
+                      case 48:
+                        _context.next = 56;
                         break;
 
-                      case 51:
-                        _context.prev = 51;
+                      case 50:
+                        _context.prev = 50;
                         _context.t0 = _context["catch"](13);
                         error("caught error", _context.t0);
                         res.writeHead(500);
                         res.end(JSON.stringify(_context.t0));
                         return _context.abrupt("return");
 
-                      case 57:
+                      case 56:
                       case "end":
                         return _context.stop();
                     }
                   }
-                }, _callee, null, [[13, 51]]);
+                }, _callee, null, [[13, 50]]);
               }));
 
               return function (_x2, _x3) {

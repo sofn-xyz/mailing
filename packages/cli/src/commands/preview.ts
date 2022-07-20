@@ -109,7 +109,6 @@ export const handler = async (argv: ArgumentsCamelCase<{ port?: number }>) => {
       });
 
       try {
-        log("url", req.url);
         if (req.url === "/previews.json") {
           showPreviewIndex(req, res);
         } else if (req.url === "/should_reload.json") {
