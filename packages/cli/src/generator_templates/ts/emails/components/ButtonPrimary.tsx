@@ -1,5 +1,7 @@
 import React from "react";
 import { MjmlButton } from "mjml-react";
+import { black } from "./theme";
+import { leadingTight, textBase, borderBase } from "./theme";
 
 type ButtonPrimaryProps = {
   link: string;
@@ -9,14 +11,14 @@ type ButtonPrimaryProps = {
 const ButtonPrimary: React.FC<ButtonPrimaryProps> = ({ link, uiText }) => {
   return (
     <MjmlButton
-      lineHeight="120%"
-      fontSize={16}
+      lineHeight={leadingTight}
+      fontSize={textBase}
       height={52}
       padding="0"
       align="left"
       href={link}
-      backgroundColor="#000"
-      borderRadius={2}
+      backgroundColor={black}
+      borderRadius={borderBase}
     >
       {uiText}
     </MjmlButton>

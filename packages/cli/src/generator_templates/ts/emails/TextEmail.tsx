@@ -3,6 +3,12 @@ import Head from "./components/Head";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import ButtonPrimary from "./components/ButtonPrimary";
+import {
+  leadingTight,
+  leadingRelaxed,
+  textBase,
+  textLg,
+} from "./components/theme";
 
 import {
   Mjml,
@@ -36,18 +42,26 @@ const TextEmail: React.FC<TextEmailProps> = ({
         <MjmlSection padding="0 24px 0" cssClass="smooth">
           <MjmlColumn>
             {headline && (
-              <MjmlText padding="24px 0 8px" fontSize={24} lineHeight="120%">
+              <MjmlText
+                padding="24px 0 8px"
+                fontSize={textLg}
+                lineHeight={leadingTight}
+              >
                 {headline}
               </MjmlText>
             )}
-            <MjmlText padding="16px 0 16px" fontSize={16} lineHeight="160%">
+            <MjmlText
+              padding="16px 0 16px"
+              fontSize={textBase}
+              lineHeight={leadingRelaxed}
+            >
               Hello {name},
             </MjmlText>
             <MjmlText
               cssClass="paragraph"
               padding="0"
-              fontSize={16}
-              lineHeight="160%"
+              fontSize={textBase}
+              lineHeight={leadingRelaxed}
             >
               {body}
             </MjmlText>
@@ -64,7 +78,11 @@ const TextEmail: React.FC<TextEmailProps> = ({
                 <MjmlSpacer height="8px" />
               </>
             )}
-            <MjmlText padding="16px 0" fontSize={16} lineHeight="160%">
+            <MjmlText
+              padding="16px 0"
+              fontSize={textBase}
+              lineHeight={leadingRelaxed}
+            >
               ♥,
               <br />
               Mailing
