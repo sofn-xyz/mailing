@@ -1,5 +1,11 @@
 # mailing
 
+## 0.4.6
+
+### Patch Changes
+
+- skip hard reload on file change
+
 ## 0.4.5
 
 ### Patch Changes
