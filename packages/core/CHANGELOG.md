@@ -1,5 +1,11 @@
 # mailing-core
 
+## 0.4.4
+
+### Patch Changes
+
+- show errors in preview, add theme.ts
+
 ## 0.4.3
 
 ### Patch Changes
