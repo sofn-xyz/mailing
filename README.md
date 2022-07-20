@@ -121,11 +121,11 @@ When it's nice, send it to yourself or your QA tool of choice for final testing 
 
 ## ●&nbsp;&nbsp;Templates
 
-We ship with 2 templates to help you get started. We recommend using these as starting points and modifying them to fit your use case.
+We ship with two templates to help you get started. We recommend using these as starting points and modifying them to fit your use case.
 
 **Welcome Template**
 
-This template showcases a handful of MJML and mailing features, including a responsive hero image, bulleted list, and custom google font with fallbacks.
+This template showcases a handful of MJML and Mailing features, including a responsive hero image, bulleted list, and custom Google font with fallbacks.
 
 <img width="600" alt="Mailing Welcome email template" src="https://user-images.githubusercontent.com/609038/179326104-37a01d2a-9ea0-4cda-b6fe-4fc86ec2dfe9.jpg">
 
