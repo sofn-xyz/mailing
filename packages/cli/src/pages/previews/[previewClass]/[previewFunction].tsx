@@ -11,18 +11,19 @@ const Preview = () => {
   const [data, setData] = useState<ShowPreviewResponseBody | null>(null);
 
   useEffect(() => {
-    const interval = window.setInterval(async function checkForReload() {
-      const shouldReload = await fetch("/should_reload.json");
-      const json = await shouldReload.json();
-      if (json["shouldReload"]) {
-        window.location.reload();
-      }
-    }, 1200);
-
     const fetchPreview = async () => {
       const response = await fetch(`${document.location.pathname}.json`);
       setData(await response.json());
     };
+
+    const interval = window.setInterval(async function checkForReload() {
+      const shouldReload = await fetch("/should_reload.json");
+      const json = await shouldReload.json();
+      if (json["shouldReload"]) {
+        fetchPreview();
+      }
+    }, 1200);
+
     fetchPreview();
 
     return () => {
