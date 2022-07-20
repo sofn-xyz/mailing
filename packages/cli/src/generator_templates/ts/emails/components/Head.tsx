@@ -6,6 +6,7 @@ import {
   MjmlAll,
   MjmlStyle,
 } from "mjml-react";
+import { black, grayDark } from "./theme";
 
 type HeadProps = { children?: ReactElement };
 
@@ -21,7 +22,7 @@ const Head: React.FC<HeadProps> = ({ children }) => {
           -webkit-font-smoothing: antialiased;
         }
         .paragraph a {
-          color: #000 !important;
+          color: ${black} !important;
         }
         .li {
           text-indent: -18px;
@@ -30,7 +31,7 @@ const Head: React.FC<HeadProps> = ({ children }) => {
         }
         .footer a {
           text-decoration: none !important;
-          color: #777 !important;
+          color: ${grayDark} !important;
         }
         @media (min-width:480px) {
           td.hero {

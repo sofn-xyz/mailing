@@ -13,6 +13,12 @@ import {
 } from "mjml-react";
 import BulletedList from "./components/BulletedList";
 import ButtonPrimary from "./components/ButtonPrimary";
+import {
+  leadingTight,
+  leadingRelaxed,
+  textBase,
+  textXl,
+} from "./components/theme";
 
 const MyFirstEmail: React.FC<{ name: string }> = ({ name }) => (
   <Mjml>
@@ -31,10 +37,14 @@ const MyFirstEmail: React.FC<{ name: string }> = ({ name }) => (
       </MjmlSection>
       <MjmlSection padding="0 24px 0" cssClass="smooth">
         <MjmlColumn>
-          <MjmlText padding="0" fontSize={30} lineHeight="120%">
+          <MjmlText padding="0" fontSize={textXl} lineHeight={leadingTight}>
             Welcome, {name}!
           </MjmlText>
-          <MjmlText padding="24px 0 16px" fontSize={16} lineHeight="160%">
+          <MjmlText
+            padding="24px 0 16px"
+            fontSize={textBase}
+            lineHeight={leadingRelaxed}
+          >
             Mailing makes it easy to send great emails from your React app.
             Here’s a bit about Mailing in a nutshell:
           </MjmlText>
@@ -55,11 +65,15 @@ const MyFirstEmail: React.FC<{ name: string }> = ({ name }) => (
             uiText={"View Github Repo"}
           />
           <MjmlSpacer height="24px" />
-          <MjmlText padding="0" fontSize={16} lineHeight="160%">
+          <MjmlText padding="0" fontSize={textBase} lineHeight={leadingRelaxed}>
             Thank you for checking out our project. We’d love to hear your ideas
             on how we can make sending great emails more fun and simple.
           </MjmlText>
-          <MjmlText padding="16px 0 0" fontSize={16} lineHeight="160%">
+          <MjmlText
+            padding="16px 0 0"
+            fontSize={textBase}
+            lineHeight={leadingRelaxed}
+          >
             ♥,
             <br />
             Mailing

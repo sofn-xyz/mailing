@@ -1,5 +1,6 @@
 import React from "react";
 import { MjmlText } from "mjml-react";
+import { leadingRelaxed, textBase } from "./theme";
 
 type BulletedListProps = {
   items: string[];
@@ -11,8 +12,8 @@ const BulletedList: React.FC<BulletedListProps> = ({ items }) => {
       {items.map((item) => (
         <MjmlText
           padding="1px 0 0"
-          fontSize={16}
-          lineHeight="160%"
+          fontSize={textBase}
+          lineHeight={leadingRelaxed}
           cssClass="li"
           key={item}
         >

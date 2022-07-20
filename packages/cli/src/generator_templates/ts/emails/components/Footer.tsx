@@ -1,5 +1,6 @@
 import React from "react";
 import { MjmlSection, MjmlColumn, MjmlText } from "mjml-react";
+import { grayDark, textSm } from "./theme";
 
 export default function Footer() {
   return (
@@ -8,8 +9,8 @@ export default function Footer() {
         <MjmlText
           cssClass="footer"
           padding="24px 24px 48px"
-          fontSize={14}
-          color="#777"
+          fontSize={textSm}
+          color={grayDark}
         >
           © 2022 Mailing&nbsp;&nbsp;·&nbsp;&nbsp;
           <a href="#" target="_blank">
