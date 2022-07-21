@@ -51,6 +51,7 @@ const PreviewSender: React.FC<PreviewSenderProps> = ({
         if (data.error || response.status >= 300) {
           setError(<>{data.error || "Unknown error, check your console"}</>);
         } else {
+          setError(null);
           const lastSent = new Date();
           setLastSentAt(lastSent);
           window.localStorage.setItem(
