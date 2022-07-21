@@ -64,7 +64,7 @@ emails
     └── Welcome.tsx
 ```
 
-3. [Configure your email transport](configure-transport) and `defaultFrom` in `emails/index.ts`. It defaults to nodemailer's SMTP transport, but you can read about others [here](https://nodemailer.com/transports/).
+3. <a id="configure-transport"></a>Configure your email transport and `defaultFrom` in `emails/index.ts`. It defaults to nodemailer's SMTP transport, but you can read about others [here](https://nodemailer.com/transports/).
 
 Example SendGrid transport:
 
