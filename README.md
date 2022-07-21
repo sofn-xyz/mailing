@@ -24,7 +24,7 @@ We’re longtime users of Action Mailer and wanted something similar for our typ
 
 ## ●&nbsp;&nbsp;Demo
 
-<a href="https://www.youtube.com/watch?v=GsdRGxXnAgg"><img width="600" alt="Mailing demo video" src="https://user-images.githubusercontent.com/609038/180274871-38dfc9d4-7ce9-4ef9-9108-303d2effb0a6.jpg"></a>
+<a href="https://www.youtube.com/watch?v=GsdRGxXnAgg"><img width="600" alt="Mailing demo video" src="https://user-images.githubusercontent.com/609038/180310097-dac98b4d-126b-4dfa-91e0-41628d8c083e.jpg"></a>
 
 <br/>
 
