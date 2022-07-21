@@ -49,6 +49,7 @@ const PreviewSender: React.FC<PreviewSenderProps> = ({
         const data: SendPreviewResponseBody = await response.json();
 
         if (data.error || response.status >= 300) {
+          setLastSentAt(null);
           setError(<>{data.error || "Unknown error, check your console"}</>);
         } else {
           setError(null);
