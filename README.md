@@ -64,7 +64,7 @@ emails
     └── Welcome.tsx
 ```
 
-3. Configure your email transport and `defaultFrom` in `emails/index.ts`. It defaults to nodemailer's SMTP transport, but you can read about others [here](https://nodemailer.com/transports/).
+3. [Configure your email transport](#configure-transport) and `defaultFrom` in `emails/index.ts`. It defaults to nodemailer's SMTP transport, but you can read about others [here](https://nodemailer.com/transports/).
 
 Example SendGrid transport:
 
@@ -79,7 +79,7 @@ const transport = nodemailer.createTransport({
 });
 ```
 
-4. Then send you first email like so:
+4. Finally, send your first email like so:
 
 ```tsx
 import { sendMail } from "emails";
@@ -90,7 +90,7 @@ sendMail({
   to: "tester@example.com",
   cc: "tester+cc@example.com",
   bcc: ["tester+bcc@example.com", "tester+bcc2@example.com"],
-  component: <Welcome firstName="Amelita" />
+  component: <Welcome firstName="Amelita" />,
 });
 ```
 
@@ -210,7 +210,6 @@ yarn dev
 ```
 
 `yarn dev` starts the cli in dev mode
-
 
 ### Roadmap
 
