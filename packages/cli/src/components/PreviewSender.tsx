@@ -83,7 +83,9 @@ const PreviewSender: React.FC<PreviewSenderProps> = ({
         <div className="subtitle">
           To start sending emails, you must configure a transport in{" "}
           <span className="mono">emails/index.tsx</span>.{" "}
-          <a href="https://github.com/psugihara/mailing">Learn more</a>
+          <a href="https://github.com/psugihara/mailing#configure-transport">
+            Learn more
+          </a>
         </div>
       )}
       <form onSubmit={send}>
