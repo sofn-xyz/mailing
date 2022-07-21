@@ -1,5 +1,11 @@
 # mailing-core
 
+## 0.4.7
+
+### Patch Changes
+
+- better link for transport configuration; update dependencies
+
 ## 0.4.6
 
 ### Patch Changes
