@@ -22,6 +22,12 @@ We’re longtime users of Action Mailer and wanted something similar for our typ
 
 <br/>
 
+## ●&nbsp;&nbsp;Demo
+
+<a href="https://www.youtube.com/watch?v=GsdRGxXnAgg"><img width="600" alt="Mailing demo video" src="https://user-images.githubusercontent.com/609038/180274871-38dfc9d4-7ce9-4ef9-9108-303d2effb0a6.jpg"></a>
+
+<br/>
+
 ## ●&nbsp;&nbsp;Setup
 
 1. Install mailing-core and the development server with yarn or npm:
