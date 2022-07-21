@@ -44,7 +44,6 @@
     "react-dom": "^18.2.0"
   },
   "dependencies": {
-    "app-root-path": "^3.0.0",
     "chalk": "^4.1.2",
     "fs-extra": "^10.1.0",
     "mjml": "^4.12.0",
