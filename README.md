@@ -1,5 +1,5 @@
 <a href="https://www.npmjs.com/package/mailing"><img src="https://img.shields.io/npm/v/mailing.svg?sanitize=true" alt="Version"></a>
-[![Featured on Openbase](https://badges.openbase.com/js/featured/mailing.svg?token=A6xfdFmUU161m5Jns1Aqf4SwwIMSQBipWCm7HCdl1wc=)](https://openbase.com/js/mailing?utm_source=embedded&amp;utm_medium=badge&amp;utm_campaign=rate-badge)
+[![Featured on Openbase](https://badges.openbase.com/js/featured/mailing.svg?token=A6xfdFmUU161m5Jns1Aqf4SwwIMSQBipWCm7HCdl1wc=)](https://openbase.com/js/mailing?utm_source=embedded&utm_medium=badge&utm_campaign=rate-badge)
 
 <img src="https://user-images.githubusercontent.com/609038/163605455-478b8883-235c-4803-9b48-fc2d9a912b73.png#gh-dark-mode-only" alt="Mailling logo" width="295" height="128"/>
 <img src="https://user-images.githubusercontent.com/609038/163605459-12c1d04b-9891-4c73-9ed0-fbccddfaa476.png#gh-light-mode-only" alt="Mailling logo" width="295" height="128"/>
@@ -193,7 +193,7 @@ describe("Example API", () => {
 
 `mm` is a cute alias for `mailing`
 
-[source entrypoint](https://github.com/psugihara/mailing/blob/main/packages/cli/src/index.ts)
+[source entrypoint](https://github.com/successor-software/mailing/blob/main/packages/cli/src/index.ts)
 
 <br/>
 
@@ -204,7 +204,7 @@ Want to improve Mailing? Incredible. Try it out, file an issue or open a PR!
 ### Setup
 
 ```zsh
-git clone git@github.com:psugihara/mailing.git
+git clone git@github.com:successor-software/mailing.git
 cd mailing
 yarn
 yarn dev

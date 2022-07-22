@@ -35,7 +35,9 @@ const Home = () => {
         <h1>Previews</h1>
         {showNullState && (
           <div className="null-sub">
-            Build new email templates in <span className="code">emails</span>. Add previews to <span className="code">emails/previews</span> and they'll appear below.
+            Build new email templates in <span className="code">emails</span>.
+            Add previews to <span className="code">emails/previews</span> and
+            they'll appear below.
           </div>
         )}
         <hr />
@@ -56,7 +58,7 @@ const Home = () => {
         ))}
       </div>
       {!showNullState && (
-        <Link href="https://github.com/psugihara/mailing">
+        <Link href="https://github.com/successor-software/mailing">
           <a className="footer" target="_blank">
             <img
               src="https://s3.amazonaws.com/lab.campsh.com/mailing-lil%402x.png"

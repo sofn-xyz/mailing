@@ -1,13 +1,13 @@
 {
   "name": "mailing-core",
-  "version": "0.4.7",
+  "version": "0.4.8",
   "main": "dist/mailing-core.cjs.js",
   "license": "MIT",
   "description": "Fun email development environment (core library only)",
-  "homepage": "https://github.com/psugihara/reaction-mailer#readme",
+  "homepage": "https://github.com/successor-software/mailing#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/psugihara/reaction-mailer.git"
+    "url": "git+https://github.com/successor-software/mailing.git"
   },
   "dependencies": {
     "chalk": "^4.1.2",

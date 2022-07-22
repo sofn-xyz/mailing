@@ -61,7 +61,7 @@ const MyFirstEmail: React.FC<{ name: string }> = ({ name }) => (
           />
           <MjmlSpacer height="24px" />
           <ButtonPrimary
-            link={"https://github.com/psugihara/mailing"}
+            link={"https://github.com/successor-software/mailing"}
             uiText={"View Github Repo"}
           />
           <MjmlSpacer height="24px" />

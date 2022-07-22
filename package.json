@@ -19,7 +19,7 @@
   "workspaces": [
     "packages/*"
   ],
-  "homepage": "https://github.com/psugihara/reaction-mailer#readme",
+  "homepage": "https://github.com/successor-software/mailing#readme",
   "devDependencies": {
     "@babel/preset-react": "^7.17.12",
     "@babel/preset-typescript": "^7.17.12",

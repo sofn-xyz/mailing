@@ -1,5 +1,11 @@
 # mailing-core
 
+## 0.4.8
+
+### Patch Changes
+
+- update repo links
+
 ## 0.4.7
 
 ### Patch Changes
