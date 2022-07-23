@@ -1,5 +1,11 @@
 # mailing
 
+## 0.4.9
+
+### Patch Changes
+
+- add readme
+
 ## 0.4.8
 
 ### Patch Changes
