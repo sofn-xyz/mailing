@@ -1,5 +1,11 @@
 # mailing
 
+## 0.4.10
+
+### Patch Changes
+
+- add README.md to cli package
+
 ## 0.4.9
 
 ### Patch Changes
