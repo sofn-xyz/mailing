@@ -1,0 +1,12 @@
+{
+  "/_app": "pages/_app.js",
+  "/_error": "pages/_error.js",
+  "/_document": "pages/_document.js",
+  "/api/clear-preview-mode-cookies": "pages/api/clear-preview-mode-cookies.js",
+  "/api/set-preview-mode-cookies": "pages/api/set-preview-mode-cookies.js",
+  "/intercepts/mock": "pages/intercepts/mock.html",
+  "/intercepts/[interceptId]": "pages/intercepts/[interceptId].html",
+  "/": "pages/index.js",
+  "/previews/[previewClass]/[previewFunction]": "pages/previews/[previewClass]/[previewFunction].js",
+  "/404": "pages/404.html"
+}
