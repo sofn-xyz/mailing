@@ -13,9 +13,10 @@ export const handler = async (args: ArgumentsCamelCase<{}>) => {
   // previewHandler({ ...args, quiet: true });
   execSync(
     "cd ./node_modules/mailing &&\
-     NEXT_PUBLIC_STATIC=1 ./node_modules/.bin/next build &&\
+     NEXT_PUBLIC_STATIC=1 npx next build &&\
+     NEXT_PUBLIC_STATIC=1 npx next export &&\
      mkdir ../../mailing-nextjs-freeze &&\
-     mv .next ../../mailing-nextjs-freeze"
+     mv out/* ../../mailing-nextjs-freeze"
   );
   log("ok!");
 };
