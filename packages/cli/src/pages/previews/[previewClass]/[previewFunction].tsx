@@ -1,16 +1,57 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Header from "../../../components/Header";
 import HotIFrame from "../../../components/HotIFrame";
 import MjmlErrors from "../../../components/MjmlErrors";
-import { string } from "yargs";
+import { GetStaticProps } from "next";
 
-const Preview = () => {
+type Params = { previewClass: string; previewFunction: string };
+
+export const getStaticPaths = async () => {
+  const res = await fetch("http://localhost:3883/previews.json");
+  const previews: [string, string[]][] = await res.json();
+
+  let paths: {
+    params: Params;
+  }[] = [];
+  previews.forEach((previewClass) => {
+    paths = paths.concat(
+      previewClass[1].map((previewFunction) => ({
+        params: {
+          previewClass: previewClass[0],
+          previewFunction,
+        },
+      }))
+    );
+  });
+
+  return {
+    paths,
+    fallback: false,
+  };
+};
+
+export const getStaticProps: GetStaticProps = async (context) => {
+  const { previewFunction, previewClass } = context.params as Params;
+  const res = await fetch(
+    `http://localhost:3883/previews/${previewClass}/${previewFunction}.json`
+  );
+  const initialData = await res.json();
+
+  return {
+    props: { initialData },
+    revalidate: 1,
+  };
+};
+
+const Preview = ({ initialData }: { initialData: ShowPreviewResponseBody }) => {
   const router = useRouter();
   const [isMobile, setIsMobile] = useState(false);
-  const [data, setData] = useState<ShowPreviewResponseBody | null>(null);
+  const [data, setData] = useState<ShowPreviewResponseBody>(initialData);
 
   useEffect(() => {
+    // TODO: exit if not in dev
+
     const fetchPreview = async () => {
       const response = await fetch(`${document.location.pathname}.json`);
       setData(await response.json());
