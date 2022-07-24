@@ -1,5 +1,6 @@
 import { GetStaticProps } from "next";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 export const getStaticProps: GetStaticProps = async (context) => {
   const res = await fetch("http://localhost:3883/previews.json");
@@ -10,7 +11,26 @@ export const getStaticProps: GetStaticProps = async (context) => {
   };
 };
 
-const Home = ({ previews }: { previews: [string, string[]][] }) => {
+const Home = ({
+  previews: initialPreviews,
+}: {
+  previews: [string, string[]][];
+}) => {
+  const [previews, setPreviews] = useState<[string, string[]][] | null>(
+    process.env.NEXT_PUBLIC_STATIC ? initialPreviews : null
+  );
+  const fetchData = async () => {
+    const res = await fetch("/previews.json");
+    setPreviews(await res.json());
+  };
+  useEffect(() => {
+    if (!process.env.NEXT_PUBLIC_STATIC || !initialPreviews) fetchData();
+  }, []);
+
+  if (!previews) {
+    return <></>; // loading, should be quick bc everything is local
+  }
+
   const showNullState =
     previews.length === 0 ||
     (previews.length === 2 &&

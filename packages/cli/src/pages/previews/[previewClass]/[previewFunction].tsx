@@ -14,20 +14,23 @@ export const getStaticPaths = async () => {
   let paths: {
     params: Params;
   }[] = [];
-  previews.forEach((previewClass) => {
-    paths = paths.concat(
-      previewClass[1].map((previewFunction) => ({
-        params: {
-          previewClass: previewClass[0],
-          previewFunction,
-        },
-      }))
-    );
-  });
+
+  if (process.env.NEXT_PUBLIC_STATIC) {
+    previews.forEach((previewClass) => {
+      paths = paths.concat(
+        previewClass[1].map((previewFunction) => ({
+          params: {
+            previewClass: previewClass[0],
+            previewFunction,
+          },
+        }))
+      );
+    });
+  }
 
   return {
     paths,
-    fallback: false,
+    fallback: true,
   };
 };
 
@@ -47,7 +50,9 @@ export const getStaticProps: GetStaticProps = async (context) => {
 const Preview = ({ initialData }: { initialData: ShowPreviewResponseBody }) => {
   const router = useRouter();
   const [isMobile, setIsMobile] = useState(false);
-  const [data, setData] = useState<ShowPreviewResponseBody>(initialData);
+  const [data, setData] = useState<ShowPreviewResponseBody | null>(
+    process.env.NEXT_PUBLIC_STATIC ? initialData : null
+  );
 
   useEffect(() => {
     // TODO: exit if not in dev
