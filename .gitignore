@@ -83,6 +83,7 @@ typings/
 .swc
 !dist/.next
 !mailing-nextjs-freeze/.next
+mailing-nextjs-freeze/.next/cache
 
 # Nuxt.js build / generate output
 .nuxt
