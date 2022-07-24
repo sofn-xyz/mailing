@@ -1212,20 +1212,21 @@ var init = /*#__PURE__*/Object.freeze({
 });
 
 var command = ["freeze"];
-var describe = "export a static version of mailing prev";
+var describe = "export a static version of mailing prev (experimental)";
 var handler = /*#__PURE__*/function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(args) {
     return _regeneratorRuntime().wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
-            log("starting build"); // previewHandler({ ...args, quiet: true });
-
+            log("Freeze drying static version to mailing-nextjs-freeze...");
             child_process.execSync("cd ./node_modules/mailing &&\
-     NEXT_PUBLIC_STATIC=1 ./node_modules/.bin/next build &&\
+     NEXT_PUBLIC_STATIC=1 npx next build &&\
+     NEXT_PUBLIC_STATIC=1 npx next export &&\
+     rm -rf ../../mailing-nextjs-freeze &&\
      mkdir ../../mailing-nextjs-freeze &&\
-     mv .next ../../mailing-nextjs-freeze");
-            log("ok!");
+     mv out/* ../../mailing-nextjs-freeze");
+            log("Success ✅");
 
           case 3:
           case "end":

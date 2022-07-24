@@ -13,6 +13,7 @@ export const handler = async (args: ArgumentsCamelCase<{}>) => {
     "cd ./node_modules/mailing &&\
      NEXT_PUBLIC_STATIC=1 npx next build &&\
      NEXT_PUBLIC_STATIC=1 npx next export &&\
+     rm -rf ../../mailing-nextjs-freeze &&\
      mkdir ../../mailing-nextjs-freeze &&\
      mv out/* ../../mailing-nextjs-freeze"
   );
