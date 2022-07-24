@@ -8,14 +8,14 @@ import { GetStaticProps } from "next";
 type Params = { previewClass: string; previewFunction: string };
 
 export const getStaticPaths = async () => {
-  const res = await fetch("http://localhost:3883/previews.json");
-  const previews: [string, string[]][] = await res.json();
-
   let paths: {
     params: Params;
   }[] = [];
 
   if (process.env.NEXT_PUBLIC_STATIC) {
+    const res = await fetch("http://localhost:3883/previews.json");
+    const previews: [string, string[]][] = await res.json();
+
     previews.forEach((previewClass) => {
       paths = paths.concat(
         previewClass[1].map((previewFunction) => ({

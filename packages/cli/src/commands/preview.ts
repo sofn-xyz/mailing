@@ -30,7 +30,9 @@ export const builder = {
   },
 };
 
-export const handler = async (argv: ArgumentsCamelCase<{ port?: number }>) => {
+export const handler = async (
+  argv: ArgumentsCamelCase<{ port?: number; quiet?: boolean }>
+) => {
   if (process.env.NODE_ENV === "test") {
     return; // for now
   }
@@ -73,7 +75,7 @@ export const handler = async (argv: ArgumentsCamelCase<{ port?: number }>) => {
   let shouldReload = false;
 
   http
-    .createServer(async function (req, res) {
+    .createServer(async function(req, res) {
       const startTime = Date.now();
       let noLog = false;
 
@@ -138,7 +140,7 @@ export const handler = async (argv: ArgumentsCamelCase<{ port?: number }>) => {
     })
     .listen(port, async () => {
       log(`Running preview at ${currentUrl}`);
-      await open(currentUrl);
+      if (!argv.quiet) await open(currentUrl);
     });
 
   // simple live reload implementation

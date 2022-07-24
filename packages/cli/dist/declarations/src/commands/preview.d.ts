@@ -8,4 +8,5 @@ export declare const builder: {
 };
 export declare const handler: (argv: ArgumentsCamelCase<{
     port?: number;
+    quiet?: boolean;
 }>) => Promise<void>;

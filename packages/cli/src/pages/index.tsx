@@ -3,8 +3,12 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 
 export const getStaticProps: GetStaticProps = async (context) => {
-  const res = await fetch("http://localhost:3883/previews.json");
-  const previews = await res.json();
+  let previews = [];
+
+  if (process.env.NEXT_PUBLIC_STATIC) {
+    const res = await fetch("http://localhost:3883/previews.json");
+    previews = await res.json();
+  }
 
   return {
     props: { previews },
