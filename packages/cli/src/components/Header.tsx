@@ -50,27 +50,29 @@ const Header: React.FC<HeaderProps> = ({
           )}
           content={helpContent}
         />
-        <Tooltip
-          trigger={(show, setShow) => (
-            <button id="send" onClick={() => setShow((current) => !current)}>
-              {show ? (
-                <span className="close">×</span>
-              ) : (
-                <img
-                  src="https://s3.amazonaws.com/lab.campsh.com/Group+141%402x.png"
-                  height="12"
-                  width="12"
-                />
-              )}
-            </button>
-          )}
-          content={
-            <PreviewSender
-              previewFunction={previewFunction}
-              previewClass={previewClass}
-            />
-          }
-        />
+        {!process.env.NEXT_PUBLIC_STATIC && previewFunction && previewClass && (
+          <Tooltip
+            trigger={(show, setShow) => (
+              <button id="send" onClick={() => setShow((current) => !current)}>
+                {show ? (
+                  <span className="close">×</span>
+                ) : (
+                  <img
+                    src="https://s3.amazonaws.com/lab.campsh.com/Group+141%402x.png"
+                    height="12"
+                    width="12"
+                  />
+                )}
+              </button>
+            )}
+            content={
+              <PreviewSender
+                previewFunction={previewFunction}
+                previewClass={previewClass}
+              />
+            }
+          />
+        )}
       </div>
       <style jsx>{`
         #header {
