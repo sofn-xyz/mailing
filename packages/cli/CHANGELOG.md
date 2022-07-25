@@ -2,6 +2,12 @@
 
 ## 0.5.0-next.2
 
+### Patch Changes
+
+- js support
+
+## 0.5.0-next.2
+
 ### Minor Changes
 
 - js support
