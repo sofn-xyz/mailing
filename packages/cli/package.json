@@ -20,9 +20,6 @@
     "bin.js",
     ".next"
   ],
-  "scripts": {
-    "build": "rm -rf .next && yarn next build && cp -R .next dist/ && rm -rf dist/.next/cache"
-  },
   "description": "Fun email development environment",
   "devDependencies": {
     "@next/eslint-plugin-next": "^12.2.0",
