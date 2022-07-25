@@ -212,7 +212,7 @@ yarn dev
 
 `yarn dev` starts the cli in dev mode
 
-### Setup with a demo next app
+### Develop using a demo next app
 
 For development, you may want to have a demo next app that pulls in your changes. We've had success using yalc[https://github.com/wclr/yalc] and the following flow:
 
@@ -221,7 +221,7 @@ For development, you may want to have a demo next app that pulls in your changes
 - In the next app, run `yalc add mailing`, this creates `node_modules/mailing` and `node_modules/.bin/mailing`. (Note: `yarn link` does not add the bin file, which is why `yalc` is prefered)
 - Make your changes in `mailing`
 - Run `yarn build` in the `mailing` root directory to create new `dist` files
-- Run `yalc push` in the `mailing` root directory to both publish your changes to yalc (`yalc publish`) and pull them in to your next app (`yalc update`)
+- Run `yalc push` in the `mailing` root directory to both publish your changes (`yalc publish`) and pull them in to your next app (`yalc update`)
 
 ### Roadmap
 
