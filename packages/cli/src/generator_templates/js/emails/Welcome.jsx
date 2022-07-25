@@ -20,7 +20,7 @@ import {
   textXl,
 } from "./components/theme";
 
-const MyFirstEmail: React.FC<{ name: string }> = ({ name }) => (
+const MyFirstEmail = ({ name }) => (
   <Mjml>
     <Head />
     <MjmlBody width={600}>

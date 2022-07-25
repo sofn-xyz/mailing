@@ -614,7 +614,6 @@ function showPreviewIndex(req, res) {
   });
   var previews = previewCollections.map(function (p) {
     var previewPath = path.resolve(previewsPath, p);
-    console.log("BEFORE");
     return [p, Object.keys(require(previewPath))];
   });
 

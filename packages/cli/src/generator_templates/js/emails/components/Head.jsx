@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import React from "react";
 import {
   MjmlHead,
   MjmlFont,
@@ -8,9 +8,7 @@ import {
 } from "mjml-react";
 import { black, grayDark } from "./theme";
 
-type HeadProps = { children?: ReactElement };
-
-const Head: React.FC<HeadProps> = ({ children }) => {
+const Head = ({ children }) => {
   return (
     <MjmlHead>
       <MjmlFont

@@ -3,12 +3,7 @@ import { MjmlButton } from "mjml-react";
 import { black } from "./theme";
 import { leadingTight, textBase, borderBase } from "./theme";
 
-type ButtonPrimaryProps = {
-  link: string;
-  uiText: string;
-};
-
-const ButtonPrimary: React.FC<ButtonPrimaryProps> = ({ link, uiText }) => {
+const ButtonPrimary = ({ link, uiText }) => {
   return (
     <MjmlButton
       lineHeight={leadingTight}

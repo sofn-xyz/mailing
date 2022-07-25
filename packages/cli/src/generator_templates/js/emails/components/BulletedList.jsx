@@ -2,11 +2,7 @@ import React from "react";
 import { MjmlText } from "mjml-react";
 import { leadingRelaxed, textBase } from "./theme";
 
-type BulletedListProps = {
-  items: string[];
-};
-
-const BulletedList: React.FC<BulletedListProps> = ({ items }) => {
+const BulletedList = ({ items }) => {
   return (
     <>
       {items.map((item) => (
