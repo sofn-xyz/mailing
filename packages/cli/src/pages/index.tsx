@@ -39,7 +39,8 @@ const Home = ({
     previews.length === 0 ||
     (previews.length === 2 &&
       previews[0][0] === "TextEmail.tsx" &&
-      previews[1][0] === "Welcome.tsx");
+      previews[1][0] === "Welcome.tsx" &&
+      !process.env.NEXT_PUBLIC_STATIC);
 
   return (
     <div>
