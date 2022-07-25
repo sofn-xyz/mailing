@@ -46,9 +46,7 @@ export const handler = async (argv: ArgumentsCamelCase<{ port?: number }>) => {
     },
   });
 
-  require("@babel/register")({
-    presets: ["@babel/preset-react"],
-  });
+  require("@swc/register");
 
   const port = argv?.port || DEFAULT_PORT;
 

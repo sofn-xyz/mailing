@@ -45,9 +45,8 @@
     "react-dom": "^18.2.0"
   },
   "dependencies": {
-    "@babel/core": "^7.18.9",
-    "@babel/preset-react": "^7.17.12",
-    "@babel/register": "^7.18.9",
+    "@swc/core": "^1.2.218",
+    "@swc/register": "^0.1.10",
     "chalk": "^4.1.2",
     "fs-extra": "^10.1.0",
     "mjml": "^4.12.0",

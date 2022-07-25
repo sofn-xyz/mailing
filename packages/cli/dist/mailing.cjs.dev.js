@@ -854,9 +854,7 @@ var handler$1 = /*#__PURE__*/function () {
               }
             });
 
-            require("@babel/register")({
-              presets: ["@babel/preset-react"]
-            });
+            require("@swc/register");
 
             port = (argv === null || argv === void 0 ? void 0 : argv.port) || DEFAULT_PORT;
             dev = !!process.env.MM_DEV;
