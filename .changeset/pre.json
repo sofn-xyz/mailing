@@ -1,0 +1,11 @@
+{
+  "mode": "pre",
+  "tag": "next",
+  "initialVersions": {
+    "mailing": "0.4.10",
+    "mailing-core": "0.4.10"
+  },
+  "changesets": [
+    "many-dodos-smell"
+  ]
+}

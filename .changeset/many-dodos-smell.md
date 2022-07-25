@@ -1,0 +1,5 @@
+---
+"mailing": patch
+---
+
+js support

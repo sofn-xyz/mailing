@@ -1,5 +1,11 @@
 # mailing
 
+## 0.4.11-next.0
+
+### Patch Changes
+
+- js support
+
 ## 0.4.10
 
 ### Patch Changes

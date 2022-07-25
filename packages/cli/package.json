@@ -1,6 +1,6 @@
 {
   "name": "mailing",
-  "version": "0.4.10",
+  "version": "0.4.11-next.0",
   "main": "dist/mailing.cjs.js",
   "license": "MIT",
   "homepage": "https://github.com/successor-software/mailing#readme",
