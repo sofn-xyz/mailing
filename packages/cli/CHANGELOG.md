@@ -1,5 +1,11 @@
 # mailing
 
+## 0.5.0-next.2
+
+### Minor Changes
+
+- js support
+
 ## 0.4.11-next.0
 
 ### Patch Changes

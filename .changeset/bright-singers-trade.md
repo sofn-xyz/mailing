@@ -1,0 +1,5 @@
+---
+"mailing": minor
+---
+
+js support

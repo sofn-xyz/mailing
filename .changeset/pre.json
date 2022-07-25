@@ -6,6 +6,7 @@
     "mailing-core": "0.4.10"
   },
   "changesets": [
+    "bright-singers-trade",
     "many-dodos-smell"
   ]
 }
