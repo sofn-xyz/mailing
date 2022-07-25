@@ -1,5 +1,11 @@
 # mailing
 
+## 0.4.11-next.1
+
+### Patch Changes
+
+- try swc
+
 ## 0.4.11-next.0
 
 ### Patch Changes

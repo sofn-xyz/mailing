@@ -6,6 +6,7 @@
     "mailing-core": "0.4.10"
   },
   "changesets": [
-    "many-dodos-smell"
+    "many-dodos-smell",
+    "thick-kings-appear"
   ]
 }
