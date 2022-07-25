@@ -614,6 +614,7 @@ function showPreviewIndex(req, res) {
   });
   var previews = previewCollections.map(function (p) {
     var previewPath = path.resolve(previewsPath, p);
+    console.log("BEFORE");
     return [p, Object.keys(require(previewPath))];
   });
 
@@ -852,6 +853,8 @@ var handler$1 = /*#__PURE__*/function () {
               }
             });
 
+            require("@babel/register");
+
             port = (argv === null || argv === void 0 ? void 0 : argv.port) || DEFAULT_PORT;
             dev = !!process.env.MM_DEV;
             hostname = "localhost";
@@ -862,21 +865,21 @@ var handler$1 = /*#__PURE__*/function () {
               dir: dev ? path.resolve(__dirname, "../src") : __dirname
             });
             nextHandle = app.getRequestHandler();
-            _context3.next = 11;
+            _context3.next = 12;
             return app.prepare();
 
-          case 11:
+          case 12:
             previewsPath = getPreviewsDirectory();
 
             if (previewsPath) {
-              _context3.next = 15;
+              _context3.next = 16;
               break;
             }
 
             error("Could not find emails directory. Have you initialized the project with `mailing init`?");
             return _context3.abrupt("return");
 
-          case 15:
+          case 16:
             host = "http://".concat(hostname, ":").concat(port);
             currentUrl = "".concat(host, "/");
             shouldReload = false;
@@ -1043,14 +1046,14 @@ var handler$1 = /*#__PURE__*/function () {
             changeWatchPath = getExistingEmailsDir();
 
             if (changeWatchPath) {
-              _context3.next = 23;
+              _context3.next = 24;
               break;
             }
 
             log("Error finding emails dir in . or ./src");
             return _context3.abrupt("return");
 
-          case 23:
+          case 24:
             fsExtra.watch(changeWatchPath, {
               recursive: true
             }, function (eventType, filename) {
@@ -1060,7 +1063,7 @@ var handler$1 = /*#__PURE__*/function () {
             });
             log("Watching for changes to ".concat(path.relative(process$1.cwd(), changeWatchPath)));
 
-          case 25:
+          case 26:
           case "end":
             return _context3.stop();
         }

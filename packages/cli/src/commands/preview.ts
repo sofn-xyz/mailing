@@ -46,6 +46,8 @@ export const handler = async (argv: ArgumentsCamelCase<{ port?: number }>) => {
     },
   });
 
+  require("@babel/register");
+
   const port = argv?.port || DEFAULT_PORT;
 
   const dev = !!process.env.MM_DEV;
@@ -73,7 +75,7 @@ export const handler = async (argv: ArgumentsCamelCase<{ port?: number }>) => {
   let shouldReload = false;
 
   http
-    .createServer(async function (req, res) {
+    .createServer(async function(req, res) {
       const startTime = Date.now();
       let noLog = false;
 
