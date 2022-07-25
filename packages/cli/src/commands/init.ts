@@ -27,7 +27,14 @@ export const handler = async (args: ArgumentsCamelCase<{ port?: number }>) => {
   }
 
   if (!getExistingEmailsDir()) {
-    const options = { isTypescript: true };
+    const ts = await prompts({
+      type: "confirm",
+      name: "value",
+      message: "Are you using typescript?",
+      initial: looksLikeTypescriptProject(),
+    });
+
+    const options = { isTypescript: ts.value };
     await generateEmailsDirectory(options);
   }
 

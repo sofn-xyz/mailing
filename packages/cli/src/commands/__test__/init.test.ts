@@ -4,6 +4,7 @@ import fsExtra, { removeSync, existsSync } from "fs-extra";
 import { handler } from "../init";
 import { log } from "../../log";
 import { ArgumentsCamelCase } from "yargs";
+import tree from "tree-node-cli";
 
 jest.mock("../../log");
 jest.mock("../preview", () => ({ handler: jest.fn() }));
@@ -18,7 +19,7 @@ describe("init command", () => {
     removeSync("/tmp/src/emails");
   });
   it("creates the ts emails directory", async () => {
-    prompts.inject(["/tmp/src/emails"]);
+    prompts.inject([true, "/tmp/src/emails"]);
     jest
       .spyOn(fsExtra, "existsSync")
       .mockImplementation((path) => /package\.json/.test(path.toString()));
@@ -39,6 +40,24 @@ emails
 └── previews
     ├── TextEmail.tsx
     └── Welcome.tsx`
+    );
+  });
+
+  it("creates the js emails directory", async () => {
+    prompts.inject([false, "/tmp/src/emails"]);
+    jest
+      .spyOn(fsExtra, "existsSync")
+      .mockImplementation((path) => /package\.json/.test(path.toString()));
+    await handler({} as ArgumentsCamelCase<unknown>);
+    expect(log).toHaveBeenCalledWith(
+      `Generated your emails dir at /tmp/src/emails:
+emails
+├── MyFirstEmail.jsx
+├── components
+│   └── Head.jsx
+├── index.js
+└── previews
+    └── MyFirstEmail.jsx`
     );
   });
 

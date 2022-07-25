@@ -425,6 +425,9 @@ function getPreviewsDirectory() {
   var existingEmailsDir = getExistingEmailsDir();
   return existingEmailsDir ? path.resolve(existingEmailsDir, "previews") : null;
 }
+function getPackageJSON() {
+  return JSON.parse(fsExtra.readFileSync("./package.json").toString());
+}
 
 process.env.DEBUG;
 function log(message) {
@@ -1154,11 +1157,22 @@ function _generateEmailsDirectory() {
   return _generateEmailsDirectory.apply(this, arguments);
 }
 
+function looksLikeTypescriptProject() {
+  var _pkg$devDependencies, _pkg$dependencies;
+
+  if (fsExtra.existsSync("./tsconfig.json")) {
+    return true;
+  }
+
+  var pkg = getPackageJSON();
+  return !!((_pkg$devDependencies = pkg.devDependencies) !== null && _pkg$devDependencies !== void 0 && _pkg$devDependencies.typescript || (_pkg$dependencies = pkg.dependencies) !== null && _pkg$dependencies !== void 0 && _pkg$dependencies.typescript);
+}
+
 var command = ["$0", "init"];
 var describe = "initialize mailing in your app";
 var handler = /*#__PURE__*/function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(args) {
-    var options;
+    var ts, options;
     return _regeneratorRuntime().wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
@@ -1173,20 +1187,30 @@ var handler = /*#__PURE__*/function () {
 
           case 3:
             if (getExistingEmailsDir()) {
-              _context.next = 7;
+              _context.next = 10;
               break;
             }
 
+            _context.next = 6;
+            return prompts__default["default"]({
+              type: "confirm",
+              name: "value",
+              message: "Are you using typescript?",
+              initial: looksLikeTypescriptProject()
+            });
+
+          case 6:
+            ts = _context.sent;
             options = {
-              isTypescript: true
+              isTypescript: ts.value
             };
-            _context.next = 7;
+            _context.next = 10;
             return generateEmailsDirectory(options);
 
-          case 7:
+          case 10:
             handler$1(args);
 
-          case 8:
+          case 11:
           case "end":
             return _context.stop();
         }
