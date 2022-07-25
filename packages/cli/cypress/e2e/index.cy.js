@@ -13,8 +13,8 @@ describe("cypress tests", () => {
   it("clicking a link should load the preview", () => {
     cy.get(".email-group:first .email-container:first .email").click();
     cy.location("pathname").should(
-      "eq",
-      "/previews/TextEmail.tsx/resetPassword"
+      "match",
+      /previews\/TextEmail\.[jt]sx\/accountDeleted/
     );
   });
 });
