@@ -22,7 +22,7 @@ import {
 type TextEmailProps = {
   name: string;
   headline?: string;
-  body: ReactElement;
+  body: any; // n.b. ReactElement/ReactNode break on react 17
   bulletedList?: ReactElement;
   ctaText?: string;
 };
