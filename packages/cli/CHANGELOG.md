@@ -1,5 +1,11 @@
 # mailing
 
+## 0.5.0-next.4
+
+### Patch Changes
+
+- display block font-display
+
 ## 0.5.0-next.3
 
 ### Patch Changes

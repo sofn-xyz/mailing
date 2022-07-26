@@ -1,5 +1,11 @@
 # web
 
+## 0.1.2-next.1
+
+### Patch Changes
+
+- display block font-display
+
 ## 0.1.2-next.0
 
 ### Patch Changes
