@@ -5,7 +5,7 @@ export default function Document() {
     <Html>
       <Head>
         <link
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700"
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=optional"
           rel="stylesheet"
         />
         {/* Special characters in the text field... */}

@@ -18,6 +18,12 @@
 
 - js support
 
+## 0.4.11
+
+### Patch Changes
+
+- react 17 support
+
 ## 0.4.10
 
 ### Patch Changes

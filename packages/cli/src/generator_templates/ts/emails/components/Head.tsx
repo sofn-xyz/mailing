@@ -13,11 +13,12 @@ type HeadProps = { children?: ReactElement };
 const Head: React.FC<HeadProps> = ({ children }) => {
   return (
     <MjmlHead>
-      <MjmlFont
-        name="Inter"
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;900"
-      />
-      <MjmlStyle>{`
+      <>
+        <MjmlFont
+          name="Inter"
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;900"
+        />
+        <MjmlStyle>{`
         .smooth {
           -webkit-font-smoothing: antialiased;
         }
@@ -40,13 +41,14 @@ const Head: React.FC<HeadProps> = ({ children }) => {
           }
         }
       `}</MjmlStyle>
-      <MjmlAttributes>
-        <MjmlAll
-          font-family='Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
-          font-weight="400"
-        />
-      </MjmlAttributes>
-      {children}
+        <MjmlAttributes>
+          <MjmlAll
+            font-family='Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
+            font-weight="400"
+          />
+        </MjmlAttributes>
+        {children}
+      </>
     </MjmlHead>
   );
 };
