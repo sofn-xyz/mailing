@@ -36,7 +36,8 @@
   },
   "preconstruct": {
     "packages": [
-      "packages/*"
+      "packages/cli",
+      "packages/core"
     ]
   },
   "dependencies": {
