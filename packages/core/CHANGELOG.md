@@ -1,5 +1,11 @@
 # mailing-core
 
+## 0.4.12-next.0
+
+### Patch Changes
+
+- merge main with react17 support
+
 ## 0.4.11
 
 ### Patch Changes

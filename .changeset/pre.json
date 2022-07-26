@@ -3,11 +3,13 @@
   "tag": "next",
   "initialVersions": {
     "mailing": "0.4.10",
-    "mailing-core": "0.4.10"
+    "mailing-core": "0.4.10",
+    "web": "0.1.1"
   },
   "changesets": [
     "bright-singers-trade",
     "brown-ladybugs-fly",
-    "many-dodos-smell"
+    "many-dodos-smell",
+    "tall-adults-refuse"
   ]
 }

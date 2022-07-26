@@ -1,5 +1,11 @@
 # mailing
 
+## 0.5.0-next.3
+
+### Patch Changes
+
+- merge main with react17 support
+
 ## 0.5.0-next.2
 
 ### Patch Changes
