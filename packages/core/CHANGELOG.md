@@ -1,5 +1,11 @@
 # mailing-core
 
+## 0.4.12-next.2
+
+### Patch Changes
+
+- font-display block
+
 ## 0.4.12-next.1
 
 ### Patch Changes
