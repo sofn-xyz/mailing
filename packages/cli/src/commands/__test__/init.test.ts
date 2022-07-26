@@ -52,12 +52,19 @@ emails
     expect(log).toHaveBeenCalledWith(
       `Generated your emails dir at /tmp/src/emails:
 emails
-├── MyFirstEmail.jsx
+├── TextEmail.jsx
+├── Welcome.jsx
 ├── components
-│   └── Head.jsx
+│   ├── BulletedList.jsx
+│   ├── ButtonPrimary.jsx
+│   ├── Footer.jsx
+│   ├── Head.jsx
+│   ├── Header.jsx
+│   └── theme.js
 ├── index.js
 └── previews
-    └── MyFirstEmail.jsx`
+    ├── TextEmail.jsx
+    └── Welcome.jsx`
     );
   });
 
