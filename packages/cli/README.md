@@ -222,8 +222,3 @@ For development, you may want to have a demo next app that pulls in your changes
 - Run `yarn build` in the `mailing` root directory to create new `dist` files
 - Run `yalc push` in the `mailing` root directory to both publish your changes (`yalc publish`) and pull them in to your next app (`yalc update`)
 
-### Roadmap
-
-- [ ] JS support (only TS works at the moment)
-- [ ] easily deploy previews to web for design QA/demo purposes (e.g. `mailing build` -> static site)
-- [ ] generator for new email template
