@@ -13,7 +13,6 @@
 - Test mode for ensuring emails send and have the correct content
 - Plays well with js frameworks like redwood.js, remix, next.js
 - Written in TypeScript, inspired by Action Mailer from Ruby on Rails
-- TypeScript only (for now)
 
 <br/>
 

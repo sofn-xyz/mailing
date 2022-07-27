@@ -1,6 +1,6 @@
 {
   "name": "mailing-core",
-  "version": "0.4.11",
+  "version": "0.5.0",
   "main": "dist/mailing-core.cjs.js",
   "license": "MIT",
   "description": "Fun email development environment (core library only)",

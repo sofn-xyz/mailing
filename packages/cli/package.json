@@ -1,6 +1,6 @@
 {
   "name": "mailing",
-  "version": "0.4.11",
+  "version": "0.5.0",
   "main": "dist/mailing.cjs.js",
   "license": "MIT",
   "homepage": "https://github.com/successor-software/mailing#readme",
@@ -43,6 +43,10 @@
     "react-dom": "^17.0.0 || ^18.0.0"
   },
   "dependencies": {
+    "@babel/core": "^7.18.9",
+    "@babel/preset-env": "^7.18.6",
+    "@babel/preset-react": "^7.18.6",
+    "@babel/register": "^7.18.9",
     "chalk": "^4.1.2",
     "fs-extra": "^10.1.0",
     "mjml": "^4.12.0",

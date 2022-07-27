@@ -1,5 +1,55 @@
 # mailing
 
+## 0.5.0
+
+### Minor Changes
+
+- 3fcf28c: js support
+
+### Patch Changes
+
+- 213e254: js support
+- 6b969f7: font-display block
+- afefbc2: js support
+- b940924: display block font-display
+- 44c6177: merge main with react17 support
+
+## 0.5.0-next.5
+
+### Patch Changes
+
+- font-display block
+
+## 0.5.0-next.4
+
+### Patch Changes
+
+- display block font-display
+
+## 0.5.0-next.3
+
+### Patch Changes
+
+- merge main with react17 support
+
+## 0.5.0-next.2
+
+### Patch Changes
+
+- js support
+
+## 0.5.0-next.2
+
+### Minor Changes
+
+- js support
+
+## 0.4.11-next.0
+
+### Patch Changes
+
+- js support
+
 ## 0.4.11
 
 ### Patch Changes
