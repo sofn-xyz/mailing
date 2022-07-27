@@ -1,5 +1,19 @@
 # mailing
 
+## 0.5.0
+
+### Minor Changes
+
+- 3fcf28c: js support
+
+### Patch Changes
+
+- 213e254: js support
+- 6b969f7: font-display block
+- afefbc2: js support
+- b940924: display block font-display
+- 44c6177: merge main with react17 support
+
 ## 0.5.0-next.5
 
 ### Patch Changes

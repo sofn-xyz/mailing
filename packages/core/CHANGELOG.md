@@ -1,5 +1,19 @@
 # mailing-core
 
+## 0.5.0
+
+### Minor Changes
+
+- bump mailing-core version
+
+## 0.4.12
+
+### Patch Changes
+
+- 6b969f7: font-display block
+- b940924: display block font-display
+- 44c6177: merge main with react17 support
+
 ## 0.4.12-next.2
 
 ### Patch Changes
