@@ -1,9 +1,7 @@
 .container {
-  background: url(/index-bg@2x.jpg) no-repeat;
-  background-size: cover;
-  text-align: left;
-  width: 100vw;
-  height: 100vh;
+  background: url(/index-bg@2x.jpg);
+  background-position: top right;
+  
 }
 
 @media (max-width: 600px) {
