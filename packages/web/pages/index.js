@@ -35,7 +35,7 @@ export default function Home() {
           </div>
           <nav>
             <a
-              className="underline hover:bg-yellow text-xl leading-none"
+              className="underline hover:bg-yellow text-base sm:text-xl leading-none"
               href="demo.mailing.run"
             >
               Examples
@@ -50,7 +50,7 @@ export default function Home() {
             Polished, lightweight emails in your app & design system
           </p>
           <a
-            className="bg-black text-white sm:text-4xl text-2xl leading-none px-12 py-6 inline-block rounded-sm hover:underline"
+            className="bg-black text-white sm:text-3xl text-2xl leading-none px-12 py-6 inline-block rounded-sm hover:underline"
             href="https://github.com/successor-software/mailing"
           >
             View on GitHub
