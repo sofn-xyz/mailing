@@ -8,3 +8,4 @@ publish = ".next"
 [build.environment]
   YARN_VERSION = "1.22.18"
   NODE_ENV = "production"
+  NETLIFY_USE_YARN = "true"
