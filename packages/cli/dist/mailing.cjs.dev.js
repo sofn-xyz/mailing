@@ -12,7 +12,6 @@ var url = require('url');
 var next = require('next');
 var prompts = require('prompts');
 var tree = require('tree-node-cli');
-var child_process = require('child_process');
 
 function _interopDefault (e) { return e && e.__esModule ? e : { 'default': e }; }
 
@@ -822,14 +821,14 @@ function _sendPreview() {
 }
 
 var DEFAULT_PORT = 3883;
-var command$2 = "preview";
-var describe$2 = "start the email preview server";
+var command$1 = "preview";
+var describe$1 = "start the email preview server";
 var builder = {
   port: {
     "default": DEFAULT_PORT
   }
 };
-var handler$2 = /*#__PURE__*/function () {
+var handler$1 = /*#__PURE__*/function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3(argv) {
     var port, dev, hostname, app, nextHandle, previewsPath, host, currentUrl, shouldReload, changeWatchPath;
     return _regeneratorRuntime().wrap(function _callee3$(_context3) {
@@ -1088,10 +1087,10 @@ var handler$2 = /*#__PURE__*/function () {
 
 var preview = /*#__PURE__*/Object.freeze({
   __proto__: null,
-  command: command$2,
-  describe: describe$2,
+  command: command$1,
+  describe: describe$1,
   builder: builder,
-  handler: handler$2
+  handler: handler$1
 });
 
 function getPotentialEmailsDirPath() {
@@ -1179,9 +1178,9 @@ function looksLikeTypescriptProject() {
   return !!((_pkg$devDependencies = pkg.devDependencies) !== null && _pkg$devDependencies !== void 0 && _pkg$devDependencies.typescript || (_pkg$dependencies = pkg.dependencies) !== null && _pkg$dependencies !== void 0 && _pkg$dependencies.typescript);
 }
 
-var command$1 = ["$0", "init"];
-var describe$1 = "initialize mailing in your app";
-var handler$1 = /*#__PURE__*/function () {
+var command = ["$0", "init"];
+var describe = "initialize mailing in your app";
+var handler = /*#__PURE__*/function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(args) {
     var ts, options;
     return _regeneratorRuntime().wrap(function _callee$(_context) {
@@ -1219,7 +1218,7 @@ var handler$1 = /*#__PURE__*/function () {
             return generateEmailsDirectory(options);
 
           case 10:
-            handler$2(args);
+            handler$1(args);
 
           case 11:
           case "end":
@@ -1236,46 +1235,9 @@ var handler$1 = /*#__PURE__*/function () {
 
 var init = /*#__PURE__*/Object.freeze({
   __proto__: null,
-  command: command$1,
-  describe: describe$1,
-  handler: handler$1
-});
-
-var command = ["freeze"];
-var describe = "export a static version of mailing prev (experimental)";
-var handler = /*#__PURE__*/function () {
-  var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(args) {
-    return _regeneratorRuntime().wrap(function _callee$(_context) {
-      while (1) {
-        switch (_context.prev = _context.next) {
-          case 0:
-            log("Freeze drying static version to mailing-nextjs-freeze...");
-            child_process.execSync("cd ./node_modules/mailing &&\
-     NEXT_PUBLIC_STATIC=1 npx next build &&\
-     NEXT_PUBLIC_STATIC=1 npx next export &&\
-     rm -rf ../../mailing-nextjs-freeze &&\
-     mkdir ../../mailing-nextjs-freeze &&\
-     mv out/* ../../mailing-nextjs-freeze");
-            log("Success ✅");
-
-          case 3:
-          case "end":
-            return _context.stop();
-        }
-      }
-    }, _callee);
-  }));
-
-  return function handler(_x) {
-    return _ref.apply(this, arguments);
-  };
-}();
-
-var freeze = /*#__PURE__*/Object.freeze({
-  __proto__: null,
   command: command,
   describe: describe,
   handler: handler
 });
 
-yargs__default["default"](process.argv.slice(2)).command(preview).command(init).command(freeze).help().argv;
+yargs__default["default"](process.argv.slice(2)).command(preview).command(init).help().argv;

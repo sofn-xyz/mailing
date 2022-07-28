@@ -1,0 +1,5 @@
+#! /bin/sh
+
+cd packages/cli
+NEXT_PUBLIC_STATIC=1 npx next build
+NEXT_PUBLIC_STATIC=1 npx next export
