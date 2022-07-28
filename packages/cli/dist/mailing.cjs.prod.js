@@ -828,8 +828,7 @@ var builder = {
     "default": DEFAULT_PORT
   }
 };
-
-var bootServer = /*#__PURE__*/function () {
+var handler$1 = /*#__PURE__*/function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3(argv) {
     var port, dev, hostname, app, nextHandle, previewsPath, host, currentUrl, shouldReload, changeWatchPath;
     return _regeneratorRuntime().wrap(function _callee3$(_context3) {
@@ -846,7 +845,6 @@ var bootServer = /*#__PURE__*/function () {
             port = (argv === null || argv === void 0 ? void 0 : argv.port) || DEFAULT_PORT;
             dev = !!process.env.MM_DEV;
             hostname = "localhost";
-            log("hi");
             app = next__default["default"]({
               dev: dev,
               hostname: hostname,
@@ -854,203 +852,202 @@ var bootServer = /*#__PURE__*/function () {
               dir: dev ? path.resolve(__dirname, "..") : __dirname
             });
             nextHandle = app.getRequestHandler();
-            _context3.next = 11;
+            _context3.next = 10;
             return app.prepare();
 
-          case 11:
-            log("hello");
+          case 10:
             previewsPath = getPreviewsDirectory();
 
             if (previewsPath) {
-              _context3.next = 16;
+              _context3.next = 14;
               break;
             }
 
             error("Could not find emails directory. Have you initialized the project with `mailing init`?");
             return _context3.abrupt("return");
 
-          case 16:
+          case 14:
             host = "http://".concat(hostname, ":").concat(port);
             currentUrl = "".concat(host, "/");
             shouldReload = false;
-
-            try {
-              http__default["default"].createServer( /*#__PURE__*/function () {
-                var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(req, res) {
-                  var startTime, noLog, parsedUrl, pathname, query, showShouldReload;
-                  return _regeneratorRuntime().wrap(function _callee$(_context) {
-                    while (1) {
-                      switch (_context.prev = _context.next) {
-                        case 0:
-                          showShouldReload = function _showShouldReload(_req, res) {
-                            res.writeHead(200);
-                            res.end(JSON.stringify({
-                              shouldReload: shouldReload
-                            }));
-                            shouldReload = false;
-                          };
-
-                          startTime = Date.now();
-                          noLog = false;
-
-                          if (req.url) {
-                            _context.next = 6;
-                            break;
-                          }
-
-                          res.end(404);
-                          return _context.abrupt("return");
-
-                        case 6:
-                          parsedUrl = url.parse(req.url, true);
-                          pathname = parsedUrl.pathname, query = parsedUrl.query; // Never cache anything
-
-                          res.setHeader("Cache-Control", "no-cache, max-age=0, must-revalidate, no-store");
-                          res.setHeader("Pragma", "no-cache");
-                          res.setHeader("Expires", "-1");
-                          currentUrl = "".concat(host).concat(req.url);
-                          res.once("close", function () {
-                            if (!noLog || process.env.MM_VERBOSE) log("".concat(res.statusCode, " ").concat(req.url, " ").concat(Date.now() - startTime, "ms"));
-                          });
-                          _context.prev = 13;
-
-                          if (!(req.url === "/previews.json")) {
-                            _context.next = 18;
-                            break;
-                          }
-
-                          showPreviewIndex(req, res);
-                          _context.next = 48;
-                          break;
-
-                        case 18:
-                          if (!(req.url === "/should_reload.json")) {
-                            _context.next = 23;
-                            break;
-                          }
-
-                          noLog = true;
-                          showShouldReload(req, res);
-                          _context.next = 48;
-                          break;
-
-                        case 23:
-                          if (!(req.url === "/intercepts" && req.method === "POST")) {
-                            _context.next = 27;
-                            break;
-                          }
-
-                          createIntercept(req, res);
-                          _context.next = 48;
-                          break;
-
-                        case 27:
-                          if (!(req.url === "/previews/send.json" && req.method === "POST")) {
-                            _context.next = 32;
-                            break;
-                          }
-
-                          _context.next = 30;
-                          return sendPreview(req, res);
-
-                        case 30:
-                          _context.next = 48;
-                          break;
-
-                        case 32:
-                          if (!/^\/intercepts\/[a-zA-Z0-9]+\.json/.test(req.url)) {
-                            _context.next = 36;
-                            break;
-                          }
-
-                          showIntercept(req, res);
-                          _context.next = 48;
-                          break;
-
-                        case 36:
-                          if (!/^\/previews\/.*\.json/.test(req.url)) {
-                            _context.next = 40;
-                            break;
-                          }
-
-                          showPreview(req, res);
-                          _context.next = 48;
-                          break;
-
-                        case 40:
-                          if (!/^\/_next/.test(req.url)) {
-                            _context.next = 46;
-                            break;
-                          }
-
-                          noLog = true;
-                          _context.next = 44;
-                          return app.render(req, res, "".concat(pathname), query);
-
-                        case 44:
-                          _context.next = 48;
-                          break;
-
-                        case 46:
-                          _context.next = 48;
-                          return nextHandle(req, res, parsedUrl);
-
-                        case 48:
-                          _context.next = 56;
-                          break;
-
-                        case 50:
-                          _context.prev = 50;
-                          _context.t0 = _context["catch"](13);
-                          error("caught error", _context.t0);
-                          res.writeHead(500);
-                          res.end(JSON.stringify(_context.t0));
-                          return _context.abrupt("return");
-
-                        case 56:
-                        case "end":
-                          return _context.stop();
-                      }
-                    }
-                  }, _callee, null, [[13, 50]]);
-                }));
-
-                return function (_x2, _x3) {
-                  return _ref2.apply(this, arguments);
-                };
-              }()).listen(port, /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
-                return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+            http__default["default"].createServer( /*#__PURE__*/function () {
+              var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(req, res) {
+                var startTime, noLog, parsedUrl, pathname, query, showShouldReload;
+                return _regeneratorRuntime().wrap(function _callee$(_context) {
                   while (1) {
-                    switch (_context2.prev = _context2.next) {
+                    switch (_context.prev = _context.next) {
                       case 0:
-                        log("Running preview at ".concat(currentUrl));
-                        _context2.next = 3;
-                        return open__default["default"](currentUrl);
+                        showShouldReload = function _showShouldReload(_req, res) {
+                          res.writeHead(200);
+                          res.end(JSON.stringify({
+                            shouldReload: shouldReload
+                          }));
+                          shouldReload = false;
+                        };
 
-                      case 3:
+                        startTime = Date.now();
+                        noLog = false;
+
+                        if (req.url) {
+                          _context.next = 6;
+                          break;
+                        }
+
+                        res.end(404);
+                        return _context.abrupt("return");
+
+                      case 6:
+                        parsedUrl = url.parse(req.url, true);
+                        pathname = parsedUrl.pathname, query = parsedUrl.query; // Never cache anything
+
+                        res.setHeader("Cache-Control", "no-cache, max-age=0, must-revalidate, no-store");
+                        res.setHeader("Pragma", "no-cache");
+                        res.setHeader("Expires", "-1");
+                        currentUrl = "".concat(host).concat(req.url);
+                        res.once("close", function () {
+                          if (!noLog || process.env.MM_VERBOSE) log("".concat(res.statusCode, " ").concat(req.url, " ").concat(Date.now() - startTime, "ms"));
+                        });
+                        _context.prev = 13;
+
+                        if (!(req.url === "/previews.json")) {
+                          _context.next = 18;
+                          break;
+                        }
+
+                        showPreviewIndex(req, res);
+                        _context.next = 48;
+                        break;
+
+                      case 18:
+                        if (!(req.url === "/should_reload.json")) {
+                          _context.next = 23;
+                          break;
+                        }
+
+                        noLog = true;
+                        showShouldReload(req, res);
+                        _context.next = 48;
+                        break;
+
+                      case 23:
+                        if (!(req.url === "/intercepts" && req.method === "POST")) {
+                          _context.next = 27;
+                          break;
+                        }
+
+                        createIntercept(req, res);
+                        _context.next = 48;
+                        break;
+
+                      case 27:
+                        if (!(req.url === "/previews/send.json" && req.method === "POST")) {
+                          _context.next = 32;
+                          break;
+                        }
+
+                        _context.next = 30;
+                        return sendPreview(req, res);
+
+                      case 30:
+                        _context.next = 48;
+                        break;
+
+                      case 32:
+                        if (!/^\/intercepts\/[a-zA-Z0-9]+\.json/.test(req.url)) {
+                          _context.next = 36;
+                          break;
+                        }
+
+                        showIntercept(req, res);
+                        _context.next = 48;
+                        break;
+
+                      case 36:
+                        if (!/^\/previews\/.*\.json/.test(req.url)) {
+                          _context.next = 40;
+                          break;
+                        }
+
+                        showPreview(req, res);
+                        _context.next = 48;
+                        break;
+
+                      case 40:
+                        if (!/^\/_next/.test(req.url)) {
+                          _context.next = 46;
+                          break;
+                        }
+
+                        noLog = true;
+                        _context.next = 44;
+                        return app.render(req, res, "".concat(pathname), query);
+
+                      case 44:
+                        _context.next = 48;
+                        break;
+
+                      case 46:
+                        _context.next = 48;
+                        return nextHandle(req, res, parsedUrl);
+
+                      case 48:
+                        _context.next = 56;
+                        break;
+
+                      case 50:
+                        _context.prev = 50;
+                        _context.t0 = _context["catch"](13);
+                        error("caught error", _context.t0);
+                        res.writeHead(500);
+                        res.end(JSON.stringify(_context.t0));
+                        return _context.abrupt("return");
+
+                      case 56:
                       case "end":
-                        return _context2.stop();
+                        return _context.stop();
                     }
                   }
-                }, _callee2);
-              })));
-            } catch (e) {
-              log(JSON.stringify(e));
-              error("OH HI");
-            } // simple live reload implementation
+                }, _callee, null, [[13, 50]]);
+              }));
 
+              return function (_x2, _x3) {
+                return _ref2.apply(this, arguments);
+              };
+            }()).listen(port, /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
+              return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+                while (1) {
+                  switch (_context2.prev = _context2.next) {
+                    case 0:
+                      log("Running preview at ".concat(currentUrl));
+                      _context2.next = 3;
+                      return open__default["default"](currentUrl);
+
+                    case 3:
+                    case "end":
+                      return _context2.stop();
+                  }
+                }
+              }, _callee2);
+            }))).on("error", function onServerError(e) {
+              if (e.code === "EADDRINUSE") {
+                error("Something is already running at ".concat(port, ", is mailing running in a different terminal?"));
+                process.exit(1);
+              } else {
+                error("Preview server error:", JSON.stringify(e));
+              }
+            }); // simple live reload implementation
 
             changeWatchPath = getExistingEmailsDir();
 
             if (changeWatchPath) {
-              _context3.next = 24;
+              _context3.next = 22;
               break;
             }
 
             log("Error finding emails dir in . or ./src");
             return _context3.abrupt("return");
 
-          case 24:
+          case 22:
             fsExtra.watch(changeWatchPath, {
               recursive: true
             }, function (eventType, filename) {
@@ -1060,7 +1057,7 @@ var bootServer = /*#__PURE__*/function () {
             });
             log("Watching for changes to ".concat(path.relative(process$1.cwd(), changeWatchPath)));
 
-          case 26:
+          case 24:
           case "end":
             return _context3.stop();
         }
@@ -1068,40 +1065,8 @@ var bootServer = /*#__PURE__*/function () {
     }, _callee3);
   }));
 
-  return function bootServer(_x) {
+  return function handler(_x) {
     return _ref.apply(this, arguments);
-  };
-}();
-
-var handler$1 = /*#__PURE__*/function () {
-  var _ref4 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4(argv) {
-    return _regeneratorRuntime().wrap(function _callee4$(_context4) {
-      while (1) {
-        switch (_context4.prev = _context4.next) {
-          case 0:
-            _context4.prev = 0;
-            _context4.next = 3;
-            return bootServer(argv);
-
-          case 3:
-            _context4.next = 8;
-            break;
-
-          case 5:
-            _context4.prev = 5;
-            _context4.t0 = _context4["catch"](0);
-            error(_context4.t0);
-
-          case 8:
-          case "end":
-            return _context4.stop();
-        }
-      }
-    }, _callee4, null, [[0, 5]]);
-  }));
-
-  return function handler(_x4) {
-    return _ref4.apply(this, arguments);
   };
 }();
 
