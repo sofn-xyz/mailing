@@ -59,8 +59,8 @@ export default function Home() {
         <div
           className={`${styles.bodyContainer} flex justify-start sm:justify-center items-left sm:items-center py-10`}
         >
-          <div className="py-10 px-6 sm:mx-8 max-w-5xl w-full">
-            <header className="flex justify-between items-top pt-20 sm:pt-0 pb-20">
+          <div className="sm:py-10 px-6 sm:mx-8 max-w-5xl w-full">
+            <header className="flex justify-between items-top pt-16 sm:pt-0 pb-20">
               <div className="brand">
                 <span className="hidden sm:block">
                   <Image
@@ -101,7 +101,7 @@ export default function Home() {
                 in your app & design system
               </p>
               <a
-                className="bg-black text-white text-xl sm:text-3xl 2xl:text-4xl leading-none px-12 pt-5 pb-6 block rounded-sm hover:underline absolute sm:static w-100 sm:w-fit right-[24px] bottom-[48px] left-[24px] text-center"
+                className="bg-black text-white text-xl sm:text-3xl 2xl:text-4xl leading-none px-12 pt-5 pb-6 block rounded-sm hover:underline absolute sm:static w-100 sm:w-fit right-[24px] bottom-[32px] left-[24px] text-center"
                 href="https://github.com/successor-software/mailing"
               >
                 View on GitHub
