@@ -28,3 +28,16 @@
 .bodyContainer {
   min-height: calc(100vh - 32px); 
 }
+
+@media (min-width: 640px) { 
+  #sub {
+    line-height: 150% !important;
+  }
+}
+
+@media (min-width: 1280px) { 
+  #sub {
+    line-height: 140% !important;
+  }
+}
+

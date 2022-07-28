@@ -82,7 +82,7 @@ export default function Home() {
               <nav>
                 <a
                   className="underline hover:bg-yellow text-base leading-none inline-block"
-                  href="demo.mailing.run"
+                  href="https://demo.mailing.run"
                 >
                   Default Templates
                 </a>
@@ -92,7 +92,10 @@ export default function Home() {
               <h1 className="text-4xl sm:text-7xl 2xl:text-8xl m-0 max-w-xs sm:max-w-3xl ">
                 Build + test + send emails with React
               </h1>
-              <p className="text-2xl leading-normal sm:text-4xl 2xl:text-5xl sm:leading-relaxed m-0 pt-5 pb-10 2xl:pt-7 2xl:pb-16">
+              <p
+                className="text-2xl leading-normal sm:text-4xl 2xl:text-5xl  m-0 pt-5 pb-10 2xl:pt-7 2xl:pb-16"
+                id={styles.sub}
+              >
                 Polished, lightweight emails
                 <br />
                 in your app & design system
