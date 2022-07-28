@@ -28,9 +28,3 @@
 .bodyContainer {
   min-height: calc(100vh - 32px); 
 }
-
-@media (max-width: 480px) { 
-  .bodyContainer {
-    min-height: calc(100vh - 128px); 
-  }
-}

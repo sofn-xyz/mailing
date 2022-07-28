@@ -15,10 +15,6 @@ body {
   color: #000;
 }
 
-body, a {
-  cursor: url('/cursor@2x.png') 32 32, pointer;
-}
-
 h1 {
   line-height: 110% !important;
 }
