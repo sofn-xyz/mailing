@@ -59,7 +59,7 @@ export default function Home() {
         <div
           className={`${styles.bodyContainer} flex justify-start sm:justify-center items-left sm:items-center py-10`}
         >
-          <div className="px-6 sm:mx-8 max-w-5xl w-full">
+          <div className="py-10 px-6 sm:mx-8 max-w-5xl w-full">
             <header className="flex justify-between items-top pt-20 sm:pt-0 pb-20">
               <div className="brand">
                 <span className="hidden sm:block">
