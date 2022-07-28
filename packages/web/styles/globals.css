@@ -13,7 +13,14 @@ body {
     font-weight: 400;
   font-style: normal;
   color: #000;
-  -webkit-font-smoothing: antialiased;
+}
+
+body, a {
+  cursor: url('/cursor@2x.png') 32 32, pointer;
+}
+
+h1 {
+  line-height: 110% !important;
 }
 
 a {
