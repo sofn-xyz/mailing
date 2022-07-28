@@ -1,6 +1,6 @@
 .tickerWrap {
   padding: 3px 0 5px;
-  background-color: rgba(255,255,255,0.5);
+  background-color: rgba(255, 255, 255, 0.5);
 }
 
 @keyframes ticker {
@@ -25,19 +25,14 @@
   background-position: center right;
 }
 
-.bodyContainer {
-  min-height: calc(100vh - 32px); 
-}
-
-@media (min-width: 640px) { 
+@media (min-width: 640px) {
   #sub {
     line-height: 150% !important;
   }
 }
 
-@media (min-width: 1280px) { 
+@media (min-width: 1280px) {
   #sub {
     line-height: 140% !important;
   }
 }
-
