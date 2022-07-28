@@ -25,6 +25,10 @@
   background-position: center right;
 }
 
+.bodyContainer {
+  min-height: calc(100% - 32px);
+}
+
 @media (min-width: 640px) {
   #sub {
     line-height: 150% !important;

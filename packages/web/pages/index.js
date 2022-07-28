@@ -56,7 +56,9 @@ export default function Home() {
             </div>
           </div>
         </div>
-        <div className="flex justify-start sm:justify-center items-left sm:items-center py-10">
+        <div
+          className={`${styles.bodyContainer} flex justify-start sm:justify-center items-left sm:items-center py-10`}
+        >
           <div className="sm:py-10 px-6 sm:mx-8 max-w-5xl w-full">
             <header className="flex justify-between items-top pt-16 sm:pt-0 pb-20">
               <div className="brand">
