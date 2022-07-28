@@ -135,9 +135,7 @@ export const handler = async (argv: PreviewArgs) => {
     })
     .on("error", function onServerError(e: NodeJS.ErrnoException) {
       if (e.code === "EADDRINUSE") {
-        error(
-          `Something is already running at ${port}, is mailing running in a different terminal?`
-        );
+        error(`Port ${port} is taken, is mailing already running?`);
         process.exit(1);
       } else {
         error("Preview server error:", JSON.stringify(e));

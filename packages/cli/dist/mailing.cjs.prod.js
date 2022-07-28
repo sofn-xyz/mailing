@@ -1030,7 +1030,7 @@ var handler$1 = /*#__PURE__*/function () {
               }, _callee2);
             }))).on("error", function onServerError(e) {
               if (e.code === "EADDRINUSE") {
-                error("Something is already running at ".concat(port, ", is mailing running in a different terminal?"));
+                error("Port ".concat(port, " is taken, is mailing already running?"));
                 process.exit(1);
               } else {
                 error("Preview server error:", JSON.stringify(e));
