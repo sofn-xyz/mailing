@@ -1,8 +1,8 @@
-<a href="https://www.npmjs.com/package/mailing"><img src="https://img.shields.io/npm/v/mailing.svg?sanitize=true" alt="Version"></a>
-[![Featured on Openbase](https://badges.openbase.com/js/featured/mailing.svg?token=A6xfdFmUU161m5Jns1Aqf4SwwIMSQBipWCm7HCdl1wc=)](https://openbase.com/js/mailing?utm_source=embedded&utm_medium=badge&utm_campaign=rate-badge)
-
 <img src="https://user-images.githubusercontent.com/609038/163605455-478b8883-235c-4803-9b48-fc2d9a912b73.png#gh-dark-mode-only" alt="Mailling logo" width="295" height="128"/>
 <img src="https://user-images.githubusercontent.com/609038/163605459-12c1d04b-9891-4c73-9ed0-fbccddfaa476.png#gh-light-mode-only" alt="Mailling logo" width="295" height="128"/>
+
+<a href="https://www.npmjs.com/package/mailing"><img src="https://img.shields.io/npm/v/mailing.svg?sanitize=true" alt="Version"></a>
+[![Featured on Openbase](https://badges.openbase.com/js/featured/mailing.svg?token=A6xfdFmUU161m5Jns1Aqf4SwwIMSQBipWCm7HCdl1wc=)](https://openbase.com/js/mailing?utm_source=embedded&utm_medium=badge&utm_campaign=rate-badge)
 
 <h2>●&nbsp;&nbsp;Build, test, send emails with TypeScript and React</h2>
 
@@ -13,7 +13,6 @@
 - Test mode for ensuring emails send and have the correct content
 - Plays well with js frameworks like redwood.js, remix, next.js
 - Written in TypeScript, inspired by Action Mailer from Ruby on Rails
-- TypeScript only (for now)
 
 <br/>
 
@@ -212,8 +211,14 @@ yarn dev
 
 `yarn dev` starts the cli in dev mode
 
-### Roadmap
+### Develop using a demo next app
 
-- [ ] JS support (only TS works at the moment)
-- [ ] easily deploy previews to web for design QA/demo purposes (e.g. `mailing build` -> static site)
-- [ ] generator for new email template
+For development, you may want to have a demo next app that pulls in your changes. We've had success using yalc[https://github.com/wclr/yalc] and the following flow:
+
+- Register `mailing` as a local package with `yalc`: in the `packages/cli` directory, run `yalc add`.
+- Create a new next app in your projects directory by running `yarn create next-app --typescript` for a typescript app OR `yarn create next-app` for a js app
+- In the next app, run `yalc add mailing`, this creates `node_modules/mailing` and `node_modules/.bin/mailing`. (Note: `yarn link` does not add the bin file, which is why `yalc` is prefered)
+- Make your changes in `mailing`
+- Run `yarn build` in the `mailing` root directory to create new `dist` files
+- Run `yalc push` in the `mailing` root directory to both publish your changes (`yalc publish`) and pull them in to your next app (`yalc update`)
+

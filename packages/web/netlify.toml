@@ -1,0 +1,9 @@
+[[plugins]]
+package = "@netlify/plugin-nextjs"
+
+[build]
+command = "yarn build"
+publish = ".next"
+
+[build.environment]
+  NETLIFY_USE_YARN = "true"

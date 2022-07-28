@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import React from "react";
 import Head from "./components/Head";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -19,15 +19,7 @@ import {
   MjmlSpacer,
 } from "mjml-react";
 
-type TextEmailProps = {
-  name: string;
-  headline?: string;
-  body: any; // n.b. ReactElement/ReactNode break on react 17
-  bulletedList?: ReactElement;
-  ctaText?: string;
-};
-
-const TextEmail: React.FC<TextEmailProps> = ({
+const TextEmail = ({
   name,
   headline,
   body,

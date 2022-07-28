@@ -58,7 +58,7 @@ const Home = ({
           <div className="null-sub">
             Build new email templates in <span className="code">emails</span>.
             Add previews to <span className="code">emails/previews</span> and
-            they'll appear below.
+            they’ll appear below.
           </div>
         )}
         <hr />

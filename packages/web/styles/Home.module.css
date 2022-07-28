@@ -1,0 +1,38 @@
+.tickerWrap {
+  padding: 3px 0 5px;
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+@keyframes ticker {
+  100% {
+    transform: translate3d(-55%, 0, 0);
+  }
+}
+
+.tickerMove {
+  white-space: nowrap;
+  animation-timing-function: linear;
+  animation: ticker 108s infinite;
+  animation-direction: alternate;
+}
+
+.tickerItem {
+  letter-spacing: 3px;
+}
+
+.pageContainer {
+  background: url(/index-bg@2x.jpg);
+  background-position: center right;
+}
+
+@media (min-width: 640px) {
+  #sub {
+    line-height: 150% !important;
+  }
+}
+
+@media (min-width: 1280px) {
+  #sub {
+    line-height: 140% !important;
+  }
+}

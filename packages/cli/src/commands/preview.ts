@@ -48,6 +48,10 @@ export const handler = async (
     },
   });
 
+  require("@babel/register")({
+    presets: ["@babel/react", "@babel/preset-env"],
+  });
+
   const port = argv?.port || DEFAULT_PORT;
 
   const dev = !!process.env.MM_DEV;

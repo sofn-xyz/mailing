@@ -1,0 +1,46 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import url("https://use.typekit.net/fih5ejy.css");
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: neue-haas-unica, -apple-system, BlinkMacSystemFont, Segoe UI,
+    Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
+    sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  color: #000;
+  height: 100%;
+  background-color: white;
+}
+
+#__next {
+  height: 100%;
+}
+
+h1 {
+  line-height: 110% !important;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: background-color, transform 300ms;
+}
+
+a:active {
+  transform: translateY(3px);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+@media (prefers-color-scheme: dark) {
+  html {
+    color-scheme: dark;
+  }
+}

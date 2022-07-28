@@ -33,7 +33,7 @@ const Intercept: React.FC<InterceptProps> = ({ data }) => {
         }
       />
       <div className="container">
-        <div>Subject: "{data.subject}"</div>
+        <div>Subject: {`"${data.subject}"`}</div>
         <div>To: {data.to}</div>
         <div>From: {data.from}</div>
         <div>CC: {data.cc}</div>
