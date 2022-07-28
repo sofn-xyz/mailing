@@ -14,11 +14,11 @@ import {
   showPreview,
   showPreviewIndex,
 } from "../preview/controllers/previews";
-import { cwd } from "process";
+import { cwd, exit } from "process";
 import { parse } from "url";
 import next from "next";
 
-type Args = ArgumentsCamelCase<{ port?: number }>;
+export type PreviewArgs = ArgumentsCamelCase<{ port?: number }>;
 
 const DEFAULT_PORT = 3883;
 
@@ -32,7 +32,7 @@ export const builder = {
   },
 };
 
-const bootServer = async (argv: Args) => {
+export const handler = async (argv: PreviewArgs) => {
   if (process.env.NODE_ENV === "test") {
     return; // for now
   }
@@ -43,7 +43,6 @@ const bootServer = async (argv: Args) => {
 
   const dev = !!process.env.MM_DEV;
   const hostname = "localhost";
-  log("hi");
 
   const app = next({
     dev,
@@ -54,7 +53,6 @@ const bootServer = async (argv: Args) => {
   const nextHandle = app.getRequestHandler();
   await app.prepare();
 
-  log("hello");
   const previewsPath = getPreviewsDirectory();
   if (!previewsPath) {
     error(
@@ -67,82 +65,84 @@ const bootServer = async (argv: Args) => {
   let currentUrl = `${host}/`;
   let shouldReload = false;
 
-  try {
-    http
-      .createServer(async function (req, res) {
-        const startTime = Date.now();
-        let noLog = false;
+  http
+    .createServer(async function (req, res) {
+      const startTime = Date.now();
+      let noLog = false;
 
-        if (!req.url) {
-          res.end(404);
-          return;
-        }
+      if (!req.url) {
+        res.end(404);
+        return;
+      }
 
-        const parsedUrl = parse(req.url, true);
-        const { pathname, query } = parsedUrl;
+      const parsedUrl = parse(req.url, true);
+      const { pathname, query } = parsedUrl;
 
-        // Never cache anything
-        res.setHeader(
-          "Cache-Control",
-          "no-cache, max-age=0, must-revalidate, no-store"
-        );
-        res.setHeader("Pragma", "no-cache");
-        res.setHeader("Expires", "-1");
+      // Never cache anything
+      res.setHeader(
+        "Cache-Control",
+        "no-cache, max-age=0, must-revalidate, no-store"
+      );
+      res.setHeader("Pragma", "no-cache");
+      res.setHeader("Expires", "-1");
 
-        currentUrl = `${host}${req.url}`;
-        function showShouldReload(
-          _req: http.IncomingMessage,
-          res: http.ServerResponse
-        ): void {
-          res.writeHead(200);
-          res.end(JSON.stringify({ shouldReload }));
-          shouldReload = false;
-        }
+      currentUrl = `${host}${req.url}`;
+      function showShouldReload(
+        _req: http.IncomingMessage,
+        res: http.ServerResponse
+      ): void {
+        res.writeHead(200);
+        res.end(JSON.stringify({ shouldReload }));
+        shouldReload = false;
+      }
 
-        res.once("close", () => {
-          if (!noLog || process.env.MM_VERBOSE)
-            log(`${res.statusCode} ${req.url} ${Date.now() - startTime}ms`);
-        });
-
-        try {
-          if (req.url === "/previews.json") {
-            showPreviewIndex(req, res);
-          } else if (req.url === "/should_reload.json") {
-            noLog = true;
-            showShouldReload(req, res);
-          } else if (req.url === "/intercepts" && req.method === "POST") {
-            createIntercept(req, res);
-          } else if (
-            req.url === "/previews/send.json" &&
-            req.method === "POST"
-          ) {
-            await sendPreview(req, res);
-          } else if (/^\/intercepts\/[a-zA-Z0-9]+\.json/.test(req.url)) {
-            showIntercept(req, res);
-          } else if (/^\/previews\/.*\.json/.test(req.url)) {
-            showPreview(req, res);
-          } else if (/^\/_next/.test(req.url)) {
-            noLog = true;
-            await app.render(req, res, `${pathname}`, query);
-          } else {
-            // static assets in public directory
-            await nextHandle(req, res, parsedUrl);
-          }
-        } catch (e) {
-          error("caught error", e);
-          res.writeHead(500);
-          res.end(JSON.stringify(e));
-          return;
-        }
-      })
-      .listen(port, async () => {
-        log(`Running preview at ${currentUrl}`);
-        await open(currentUrl);
+      res.once("close", () => {
+        if (!noLog || process.env.MM_VERBOSE)
+          log(`${res.statusCode} ${req.url} ${Date.now() - startTime}ms`);
       });
-  } catch (e) {
-    log(JSON.stringify(e));
-    error("OH HI");
-  }
+
+      try {
+        if (req.url === "/previews.json") {
+          showPreviewIndex(req, res);
+        } else if (req.url === "/should_reload.json") {
+          noLog = true;
+          showShouldReload(req, res);
+        } else if (req.url === "/intercepts" && req.method === "POST") {
+          createIntercept(req, res);
+        } else if (req.url === "/previews/send.json" && req.method === "POST") {
+          await sendPreview(req, res);
+        } else if (/^\/intercepts\/[a-zA-Z0-9]+\.json/.test(req.url)) {
+          showIntercept(req, res);
+        } else if (/^\/previews\/.*\.json/.test(req.url)) {
+          showPreview(req, res);
+        } else if (/^\/_next/.test(req.url)) {
+          noLog = true;
+          await app.render(req, res, `${pathname}`, query);
+        } else {
+          // static assets in public directory
+          await nextHandle(req, res, parsedUrl);
+        }
+      } catch (e) {
+        error("caught error", e);
+        res.writeHead(500);
+        res.end(JSON.stringify(e));
+        return;
+      }
+    })
+    .listen(port, async () => {
+      log(`Running preview at ${currentUrl}`);
+      await open(currentUrl);
+    })
+    .on("error", function onServerError(e: NodeJS.ErrnoException) {
+      if (e.code === "EADDRINUSE") {
+        error(
+          `Something is already running at ${port}, is mailing running in a different terminal?`
+        );
+        process.exit(1);
+      } else {
+        error("Preview server error:", JSON.stringify(e));
+      }
+    });
 
   // simple live reload implementation
   const changeWatchPath = getExistingEmailsDir();
@@ -156,12 +156,4 @@ const bootServer = async (argv: Args) => {
     shouldReload = true;
   });
   log(`Watching for changes to ${relative(cwd(), changeWatchPath)}`);
-};
-
-export const handler = async (argv: Args) => {
-  try {
-    await bootServer(argv);
-  } catch (e) {
-    error(e);
-  }
 };
