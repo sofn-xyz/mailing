@@ -5,12 +5,22 @@ import styles from "../styles/Home.module.css";
 export default function Home() {
   return (
     <>
-      <div className={`${styles.pageContainer} w-full h-full bg-cover`}>
+      <div className={`${styles.pageContainer} w-full h-full`}>
         <Head>
           <title>Mailing – Build + test + send emails with React</title>
+          <meta property="og:title" content="Mailing" />
           <meta
             name="description"
             content="Build + test + send emails with React"
+          />
+          <meta
+            name="keywords"
+            content="email, email templates, transactional emails, react, javascript, typescript"
+          />
+          <meta property="og:url" content="https://mailing.run" />
+          <meta
+            property="og:image"
+            content="https://mailing.run/og-image.jpg"
           />
           <link rel="icon" href="/favicon.ico" />
         </Head>
