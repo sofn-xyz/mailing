@@ -14,9 +14,11 @@ import {
   showPreview,
   showPreviewIndex,
 } from "../preview/controllers/previews";
-import { cwd } from "process";
+import { cwd, exit } from "process";
 import { parse } from "url";
 import next from "next";
+
+export type PreviewArgs = ArgumentsCamelCase<{ port?: number }>;
 
 const DEFAULT_PORT = 3883;
 
@@ -30,25 +32,12 @@ export const builder = {
   },
 };
 
-export const handler = async (argv: ArgumentsCamelCase<{ port?: number }>) => {
+export const handler = async (argv: PreviewArgs) => {
   if (process.env.NODE_ENV === "test") {
     return; // for now
   }
 
-  log("Starting preview server 🤠");
-
-  require("ts-node").register({
-    compilerOptions: {
-      module: "commonjs",
-      jsx: "react",
-      moduleResolution: "node",
-      skipLibCheck: true,
-    },
-  });
-
-  require("@babel/register")({
-    presets: ["@babel/react", "@babel/preset-env"],
-  });
+  if (!process.env.MM_DEV) require("../registerRequireHooks").module();
 
   const port = argv?.port || DEFAULT_PORT;
 
@@ -59,7 +48,7 @@ export const handler = async (argv: ArgumentsCamelCase<{ port?: number }>) => {
     dev,
     hostname,
     port,
-    dir: dev ? resolve(__dirname, "../src") : __dirname,
+    dir: dev ? resolve(__dirname, "..") : __dirname,
   });
   const nextHandle = app.getRequestHandler();
   await app.prepare();
@@ -77,7 +66,7 @@ export const handler = async (argv: ArgumentsCamelCase<{ port?: number }>) => {
   let shouldReload = false;
 
   http
-    .createServer(async function(req, res) {
+    .createServer(async function (req, res) {
       const startTime = Date.now();
       let noLog = false;
 
@@ -143,6 +132,14 @@ export const handler = async (argv: ArgumentsCamelCase<{ port?: number }>) => {
     .listen(port, async () => {
       log(`Running preview at ${currentUrl}`);
       await open(currentUrl);
+    })
+    .on("error", function onServerError(e: NodeJS.ErrnoException) {
+      if (e.code === "EADDRINUSE") {
+        error(`Port ${port} is taken, is mailing already running?`);
+        process.exit(1);
+      } else {
+        error("Preview server error:", JSON.stringify(e));
+      }
     });
 
   // simple live reload implementation

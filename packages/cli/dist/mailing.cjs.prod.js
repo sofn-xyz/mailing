@@ -841,21 +841,7 @@ var handler$1 = /*#__PURE__*/function () {
             }
 
           case 2:
-            log("Starting preview server 🤠");
-
-            require("ts-node").register({
-              compilerOptions: {
-                module: "commonjs",
-                jsx: "react",
-                moduleResolution: "node",
-                skipLibCheck: true
-              }
-            });
-
-            require("@babel/register")({
-              presets: ["@babel/react", "@babel/preset-env"]
-            });
-
+            if (!process.env.MM_DEV) require("../registerRequireHooks").module();
             port = (argv === null || argv === void 0 ? void 0 : argv.port) || DEFAULT_PORT;
             dev = !!process.env.MM_DEV;
             hostname = "localhost";
@@ -863,24 +849,24 @@ var handler$1 = /*#__PURE__*/function () {
               dev: dev,
               hostname: hostname,
               port: port,
-              dir: dev ? path.resolve(__dirname, "../src") : __dirname
+              dir: dev ? path.resolve(__dirname, "..") : __dirname
             });
             nextHandle = app.getRequestHandler();
-            _context3.next = 12;
+            _context3.next = 10;
             return app.prepare();
 
-          case 12:
+          case 10:
             previewsPath = getPreviewsDirectory();
 
             if (previewsPath) {
-              _context3.next = 16;
+              _context3.next = 14;
               break;
             }
 
             error("Could not find emails directory. Have you initialized the project with `mailing init`?");
             return _context3.abrupt("return");
 
-          case 16:
+          case 14:
             host = "http://".concat(hostname, ":").concat(port);
             currentUrl = "".concat(host, "/");
             shouldReload = false;
@@ -1042,19 +1028,26 @@ var handler$1 = /*#__PURE__*/function () {
                   }
                 }
               }, _callee2);
-            }))); // simple live reload implementation
+            }))).on("error", function onServerError(e) {
+              if (e.code === "EADDRINUSE") {
+                error("Port ".concat(port, " is taken, is mailing already running?"));
+                process.exit(1);
+              } else {
+                error("Preview server error:", JSON.stringify(e));
+              }
+            }); // simple live reload implementation
 
             changeWatchPath = getExistingEmailsDir();
 
             if (changeWatchPath) {
-              _context3.next = 24;
+              _context3.next = 22;
               break;
             }
 
             log("Error finding emails dir in . or ./src");
             return _context3.abrupt("return");
 
-          case 24:
+          case 22:
             fsExtra.watch(changeWatchPath, {
               recursive: true
             }, function (eventType, filename) {
@@ -1064,7 +1057,7 @@ var handler$1 = /*#__PURE__*/function () {
             });
             log("Watching for changes to ".concat(path.relative(process$1.cwd(), changeWatchPath)));
 
-          case 26:
+          case 24:
           case "end":
             return _context3.stop();
         }

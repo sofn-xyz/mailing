@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "cp -nR packages/cli/src/generator_templates/ts/emails . && yarn watch & MM_DEV=1 packages/cli/bin.js",
-    "devjs": "cp -nR packages/cli/src/generator_templates/js/emails . && yarn watch & MM_DEV=1 packages/cli/bin.js",
+    "dev": "cp -nR packages/cli/src/generator_templates/ts/emails .; packages/cli/src/dev.js",
+    "devjs": "cp -nR packages/cli/src/generator_templates/js/emails .; packages/cli/src/dev.js",
     "build": "preconstruct build && yarn build:next && yarn copy:files",
     "build:next": "cd packages/cli && yarn build",
     "copy:files": "cp -R packages/cli/src/generator_templates packages/cli/dist && cp -R packages/cli/.next packages/cli/dist && rm -rf packages/cli/dist/.next/cache",

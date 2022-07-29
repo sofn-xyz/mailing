@@ -1,4 +1,7 @@
 import { ArgumentsCamelCase } from "yargs";
+export declare type PreviewArgs = ArgumentsCamelCase<{
+    port?: number;
+}>;
 export declare const command = "preview";
 export declare const describe = "start the email preview server";
 export declare const builder: {
@@ -6,6 +9,4 @@ export declare const builder: {
         default: number;
     };
 };
-export declare const handler: (argv: ArgumentsCamelCase<{
-    port?: number;
-}>) => Promise<void>;
+export declare const handler: (argv: PreviewArgs) => Promise<void>;
