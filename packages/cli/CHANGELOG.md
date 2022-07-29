@@ -1,5 +1,11 @@
 # mailing
 
+## 0.5.1
+
+### Patch Changes
+
+- d108bfa: improve error logging in case mailing port is taken
+
 ## 0.5.0
 
 ### Minor Changes
