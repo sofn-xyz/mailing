@@ -1,5 +1,7 @@
 #! /bin/sh
 
+rm -rf emails
+cp -nR packages/cli/src/generator_templates/ts/emails .
 cd packages/cli
 NEXT_PUBLIC_STATIC=1 npx next build
 NEXT_PUBLIC_STATIC=1 npx next export
