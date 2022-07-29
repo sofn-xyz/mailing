@@ -23,6 +23,7 @@
 .pageContainer {
   background: url(/index-bg@2x.jpg);
   background-position: center right;
+  background-size: cover;
 }
 
 .bodyContainer {
