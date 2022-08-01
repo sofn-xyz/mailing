@@ -37,7 +37,20 @@ export const handler = async (argv: PreviewArgs) => {
     return; // for now
   }
 
-  if (!process.env.MM_DEV) require("../registerRequireHooks").module();
+  if (!process.env.MM_DEV) {
+    require("ts-node").register({
+      compilerOptions: {
+        module: "commonjs",
+        jsx: "react",
+        moduleResolution: "node",
+        skipLibCheck: true,
+      },
+    });
+
+    require("@babel/register")({
+      presets: ["@babel/react"],
+    });
+  }
 
   const port = argv?.port || DEFAULT_PORT;
 

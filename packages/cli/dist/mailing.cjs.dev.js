@@ -843,7 +843,21 @@ var handler$1 = /*#__PURE__*/function () {
             return _context3.abrupt("return");
 
           case 2:
-            if (!process.env.MM_DEV) require("../registerRequireHooks").module();
+            if (!process.env.MM_DEV) {
+              require("ts-node").register({
+                compilerOptions: {
+                  module: "commonjs",
+                  jsx: "react",
+                  moduleResolution: "node",
+                  skipLibCheck: true
+                }
+              });
+
+              require("@babel/register")({
+                presets: ["@babel/react"]
+              });
+            }
+
             port = (argv === null || argv === void 0 ? void 0 : argv.port) || DEFAULT_PORT;
             dev = !!process.env.MM_DEV;
             hostname = "localhost";

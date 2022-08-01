@@ -1,6 +1,6 @@
 {
   "name": "mailing",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "main": "dist/mailing.cjs.js",
   "license": "MIT",
   "homepage": "https://github.com/successor-software/mailing#readme",
@@ -63,5 +63,13 @@
     "typescript": "^4.6.3",
     "uglify-js": "^3.15.4",
     "yargs": "^17.5.1"
-  }
+  },
+  "keywords": [
+    "email",
+    "react",
+    "javascript",
+    "typescript",
+    "email templates",
+    "transactional emails"
+  ]
 }

@@ -5,12 +5,22 @@ import styles from "../styles/Home.module.css";
 export default function Home() {
   return (
     <>
-      <div className={`${styles.pageContainer} w-full h-full bg-cover`}>
+      <div className={`${styles.pageContainer} w-full h-full`}>
         <Head>
           <title>Mailing – Build + test + send emails with React</title>
+          <meta property="og:title" content="Mailing" />
           <meta
             name="description"
             content="Build + test + send emails with React"
+          />
+          <meta
+            name="keywords"
+            content="email, email templates, transactional emails, react, javascript, typescript"
+          />
+          <meta property="og:url" content="https://mailing.run" />
+          <meta
+            property="og:image"
+            content="https://mailing.run/og-image.jpg"
           />
           <link rel="icon" href="/favicon.ico" />
         </Head>
@@ -56,7 +66,9 @@ export default function Home() {
             </div>
           </div>
         </div>
-        <div className="flex justify-start sm:justify-center items-left sm:items-center py-10">
+        <div
+          className={`${styles.bodyContainer} flex justify-start sm:justify-center items-left sm:items-center py-10`}
+        >
           <div className="sm:py-10 px-6 sm:mx-8 max-w-5xl w-full">
             <header className="flex justify-between items-top pt-16 sm:pt-0 pb-20">
               <div className="brand">
