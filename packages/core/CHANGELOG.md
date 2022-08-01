@@ -1,5 +1,11 @@
 # mailing-core
 
+## 0.5.1
+
+### Patch Changes
+
+- fix generated files in build
+
 ## 0.5.0
 
 ### Minor Changes

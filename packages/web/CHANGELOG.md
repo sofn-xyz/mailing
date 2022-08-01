@@ -1,5 +1,11 @@
 # web
 
+## 0.1.3
+
+### Patch Changes
+
+- fix generated files in build
+
 ## 0.1.2
 
 ### Patch Changes
