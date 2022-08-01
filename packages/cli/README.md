@@ -4,7 +4,7 @@
 <a href="https://www.npmjs.com/package/mailing"><img src="https://img.shields.io/npm/v/mailing.svg?sanitize=true" alt="Version"></a>
 [![Featured on Openbase](https://badges.openbase.com/js/featured/mailing.svg?token=A6xfdFmUU161m5Jns1Aqf4SwwIMSQBipWCm7HCdl1wc=)](https://openbase.com/js/mailing?utm_source=embedded&utm_medium=badge&utm_campaign=rate-badge)
 
-<h2>●&nbsp;&nbsp;Build, test, send emails with TypeScript and React</h2>
+<h2>●&nbsp;&nbsp;Build, test, send emails with React</h2>
 
 - Email templates with React components
 - MJML components that work across clients (Outlook!)
