@@ -1,5 +1,11 @@
 # mailing
 
+## 0.6.0
+
+### Minor Changes
+
+- fix build
+
 ## 0.5.2
 
 ### Patch Changes
