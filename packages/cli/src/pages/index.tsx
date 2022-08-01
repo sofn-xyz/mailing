@@ -58,7 +58,7 @@ const Home = () => {
         ))}
       </div>
       {!showNullState && (
-        <Link href="https://github.com/successor-software/mailing">
+        <Link href="https://mailing.run">
           <a className="footer" target="_blank">
             <img
               src="https://s3.amazonaws.com/lab.campsh.com/mailing-lil%402x.png"
