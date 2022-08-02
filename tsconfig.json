@@ -21,5 +21,8 @@
     "packages/*/src/emails/**/*",
     "packages/*/dist/**/*",
     "packages/cli/src/generator_templates/**/*"
-  ]
+  ],
+  "ts-node": {
+    "files": true
+  }
 }

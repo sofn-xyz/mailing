@@ -23,6 +23,11 @@
 .pageContainer {
   background: url(/index-bg@2x.jpg);
   background-position: center right;
+  background-size: cover;
+}
+
+.bodyContainer {
+  min-height: calc(100% - 32px);
 }
 
 @media (min-width: 640px) {

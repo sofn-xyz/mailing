@@ -4,7 +4,7 @@
 <a href="https://www.npmjs.com/package/mailing"><img src="https://img.shields.io/npm/v/mailing.svg?sanitize=true" alt="Version"></a>
 [![Featured on Openbase](https://badges.openbase.com/js/featured/mailing.svg?token=A6xfdFmUU161m5Jns1Aqf4SwwIMSQBipWCm7HCdl1wc=)](https://openbase.com/js/mailing?utm_source=embedded&utm_medium=badge&utm_campaign=rate-badge)
 
-<h2>●&nbsp;&nbsp;Build, test, send emails with TypeScript and React</h2>
+<h2>●&nbsp;&nbsp;Build, test, send emails with React</h2>
 
 - Email templates with React components
 - MJML components that work across clients (Outlook!)
@@ -24,7 +24,7 @@ We’re longtime users of Action Mailer and wanted something similar for our typ
 
 ## ●&nbsp;&nbsp;Demo
 
-<a href="https://www.youtube.com/watch?v=FUCoXg2sAg0" target="_blank"><img width="600" alt="Mailing demo video" src="https://user-images.githubusercontent.com/609038/180310097-dac98b4d-126b-4dfa-91e0-41628d8c083e.jpg"></a>
+<a href="https://www.youtube.com/watch?v=FUCoXg2sAg0" target="_blank"><img width="600" alt="Mailing demo video" src="https://user-images.githubusercontent.com/609038/181652683-b641dbd7-a27f-4349-9349-6841221c9a1c.jpg"></a>
 
 <br/>
 
@@ -113,15 +113,16 @@ export function toAmelita() {
 
 It will show up in the index:
 
-<img width="600" alt="Mailing index" src="https://user-images.githubusercontent.com/609038/179312196-d95683f8-4451-4b94-8f7a-f8c96f2e2895.jpg">
+<img width="600" alt="Mailing index" src="https://user-images.githubusercontent.com/609038/181653058-266ed86b-3a39-4a9d-b2df-afa2273bf040.jpg">
+
 
 Clicking through shows you the email with a mobile/desktop toggle and live reload as you edit:
 
-<img width="600" alt="Mailing desktop preview" src="https://user-images.githubusercontent.com/609038/179312262-e8d746ff-b820-4109-bae1-7e49bb3f2cca.jpg">
+<img width="600" alt="Mailing desktop preview" src="https://user-images.githubusercontent.com/609038/181653055-b71fea47-d6e8-4181-ae39-127ca70513a5.jpg">
 
 When it's nice, send it to yourself or your QA tool of choice for final testing (we like [Litmus](<[url](https://www.litmus.com)>)):
 
-<img width="600" alt="Mailing mobile preview" src="https://user-images.githubusercontent.com/609038/179312306-096e7787-4321-4c3e-9e72-6abb820d73f0.jpg">
+<img width="600" alt="Mailing mobile preview" src="https://user-images.githubusercontent.com/609038/181653051-7143a68e-d749-414a-af6a-febdbeae00f4.jpg">
 
 <br/>
 
@@ -129,17 +130,21 @@ When it's nice, send it to yourself or your QA tool of choice for final testing 
 
 We ship with two templates to help you get started. We recommend using these as starting points and modifying them to fit your use case.
 
-**Welcome Template**
+<br/>
+
+**Welcome Template** [(link)](https://demo.mailing.run/previews/Welcome.tsx/toAmelita)
 
 This template showcases a handful of MJML and Mailing features, including a responsive hero image, bulleted list, and custom Google font with fallbacks.
 
-<img width="600" alt="Mailing Welcome email template" src="https://user-images.githubusercontent.com/609038/179326104-37a01d2a-9ea0-4cda-b6fe-4fc86ec2dfe9.jpg">
+<img width="600" alt="Mailing Welcome email template" src="https://user-images.githubusercontent.com/609038/181653471-b3ee13e2-a95d-4d20-ba8f-856b39ec2409.jpg">
 
-**Transactional Template**
+<br/>
+
+**Transactional Template** [(link)](https://demo.mailing.run/previews/TextEmail.tsx/newSignIn)
 
 This is a simpler template for text-based transactional emails.
 
-<img width="600" alt="Mailing text email template" src="https://user-images.githubusercontent.com/609038/179326123-8f7a252b-2541-42b9-b14d-e62a2835ce9e.jpg">
+<img width="600" alt="Mailing text email template" src="https://user-images.githubusercontent.com/609038/181653469-d7b3913e-6e9e-458a-8faa-f112cdad90a0.jpg">
 
 ## ●&nbsp;&nbsp;Testing emails with jest
 
