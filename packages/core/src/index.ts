@@ -3,7 +3,7 @@ import nodemailer from "nodemailer";
 import open from "open";
 import fs from "fs-extra";
 import { render } from "./mjml";
-import { debug, error, log } from "./log";
+import { error, log } from "./log";
 import fetch from "node-fetch";
 
 export type ComponentMail = nodemailer.SendMailOptions & {
@@ -123,4 +123,4 @@ export function buildSendMail(options: BuildSendMailOptions) {
   };
 }
 
-export default { buildSendMail };
+export { buildSendMail as default, render };
