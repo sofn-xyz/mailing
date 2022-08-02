@@ -2,9 +2,7 @@ import { NextPage, NextPageContext } from "next";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
-const Home: NextPage<{
-  previews: [string, string[]][];
-}> = ({ previews }) => {
+const Home: NextPage<{ previews: [string, string[]][] }> = ({ previews }) => {
   if (!previews) {
     return <></>; // loading, should be quick bc everything is local
   }

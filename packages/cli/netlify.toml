@@ -1,0 +1,2 @@
+[build.environment]
+  NETLIFY_USE_YARN = "true"
