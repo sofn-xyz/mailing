@@ -18,7 +18,10 @@ import { cwd, exit } from "process";
 import { parse } from "url";
 import next from "next";
 
-export type PreviewArgs = ArgumentsCamelCase<{ port?: number }>;
+export type PreviewArgs = ArgumentsCamelCase<{
+  port?: number;
+  quiet?: boolean;
+}>;
 
 const DEFAULT_PORT = 3883;
 
@@ -48,7 +51,7 @@ export const handler = async (argv: PreviewArgs) => {
     });
 
     require("@babel/register")({
-      presets: ["@babel/react"],
+      presets: ["@babel/react", "@babel/preset-env"],
     });
   }
 
@@ -144,6 +147,7 @@ export const handler = async (argv: PreviewArgs) => {
     })
     .listen(port, async () => {
       log(`Running preview at ${currentUrl}`);
+      if (!argv.quiet) await open(currentUrl);
       await open(currentUrl);
     })
     .on("error", function onServerError(e: NodeJS.ErrnoException) {

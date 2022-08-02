@@ -2681,10 +2681,10 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
-"@preconstruct/cli@^2.1.5":
-  version "2.1.5"
-  resolved "https://registry.yarnpkg.com/@preconstruct/cli/-/cli-2.1.5.tgz#f7f6d06809f382521589af15f67b87009b240c58"
-  integrity sha512-bMnGTkaotxq+xoOkXoUOfTFvxBX/ZUxukcacf3mx3G7Iz5m/T4ZGzSOU12pxl64e+rVWGTKlUsgaDSgyFkup0A==
+"@preconstruct/cli@^2.2.1":
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/@preconstruct/cli/-/cli-2.2.1.tgz#fafff5b5124f895ae933445ca8e2d674006f614f"
+  integrity sha512-G+sUV9o8l6Ds/82qJZYTXkCsVqPXLuD+bv+nVQeo3OL+eqzO/uAiBBFVp0DMcBJiyQYeU9nb+V8q22/PPaepDw==
   dependencies:
     "@babel/code-frame" "^7.5.5"
     "@babel/core" "^7.7.7"
@@ -2694,7 +2694,7 @@
     "@rollup/plugin-alias" "^3.1.1"
     "@rollup/plugin-commonjs" "^15.0.0"
     "@rollup/plugin-json" "^4.1.0"
-    "@rollup/plugin-node-resolve" "^9.0.0"
+    "@rollup/plugin-node-resolve" "^11.2.1"
     "@rollup/plugin-replace" "^2.4.1"
     builtin-modules "^3.1.0"
     chalk "^4.1.0"
@@ -2761,17 +2761,17 @@
   dependencies:
     "@rollup/pluginutils" "^3.0.8"
 
-"@rollup/plugin-node-resolve@^9.0.0":
-  version "9.0.0"
-  resolved "https://registry.yarnpkg.com/@rollup/plugin-node-resolve/-/plugin-node-resolve-9.0.0.tgz#39bd0034ce9126b39c1699695f440b4b7d2b62e6"
-  integrity sha512-gPz+utFHLRrd41WMP13Jq5mqqzHL3OXrfj3/MkSyB6UBIcuNt9j60GCbarzMzdf1VHFpOxfQh/ez7wyadLMqkg==
+"@rollup/plugin-node-resolve@^11.2.1":
+  version "11.2.1"
+  resolved "https://registry.yarnpkg.com/@rollup/plugin-node-resolve/-/plugin-node-resolve-11.2.1.tgz#82aa59397a29cd4e13248b106e6a4a1880362a60"
+  integrity sha512-yc2n43jcqVyGE2sqV5/YCmocy9ArjVAP/BeXyTtADTBBX6V0e5UMqwO8CdQ0kzjb6zu5P1qMzsScCMRvE9OlVg==
   dependencies:
     "@rollup/pluginutils" "^3.1.0"
     "@types/resolve" "1.17.1"
     builtin-modules "^3.1.0"
     deepmerge "^4.2.2"
     is-module "^1.0.0"
-    resolve "^1.17.0"
+    resolve "^1.19.0"
 
 "@rollup/plugin-replace@^2.4.1":
   version "2.4.2"
@@ -8542,7 +8542,7 @@ resolve.exports@^1.1.0:
   resolved "https://registry.yarnpkg.com/resolve.exports/-/resolve.exports-1.1.0.tgz#5ce842b94b05146c0e03076985d1d0e7e48c90c9"
   integrity sha512-J1l+Zxxp4XK3LUDZ9m60LRJF/mAe4z6a4xyabPHk7pvK5t35dACV32iIjJDFeWZFfZlO29w6SZ67knR0tHzJtQ==
 
-resolve@^1.1.7, resolve@^1.10.0, resolve@^1.14.2, resolve@^1.17.0, resolve@^1.20.0, resolve@^1.22.0, resolve@^1.22.1:
+resolve@^1.1.7, resolve@^1.10.0, resolve@^1.14.2, resolve@^1.17.0, resolve@^1.19.0, resolve@^1.20.0, resolve@^1.22.0, resolve@^1.22.1:
   version "1.22.1"
   resolved "https://registry.yarnpkg.com/resolve/-/resolve-1.22.1.tgz#27cb2ebb53f91abb49470a928bba7558066ac177"
   integrity sha512-nBpuuYuY5jFsli/JIs1oldw6fOQCBioohqWZg/2hiaOybXOft4lonv85uDOKXdf8rhyK159cxU5cDcK/NKk8zw==

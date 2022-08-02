@@ -852,7 +852,7 @@ var handler$1 = /*#__PURE__*/function () {
               });
 
               require("@babel/register")({
-                presets: ["@babel/react"]
+                presets: ["@babel/react", "@babel/preset-env"]
               });
             }
 
@@ -1033,10 +1033,20 @@ var handler$1 = /*#__PURE__*/function () {
                   switch (_context2.prev = _context2.next) {
                     case 0:
                       log("Running preview at ".concat(currentUrl));
-                      _context2.next = 3;
+
+                      if (argv.quiet) {
+                        _context2.next = 4;
+                        break;
+                      }
+
+                      _context2.next = 4;
                       return open__default["default"](currentUrl);
 
-                    case 3:
+                    case 4:
+                      _context2.next = 6;
+                      return open__default["default"](currentUrl);
+
+                    case 6:
                     case "end":
                       return _context2.stop();
                   }

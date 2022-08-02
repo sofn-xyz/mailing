@@ -1,14 +1,28 @@
-import Link from "next/link";
 import { useEffect, useState } from "react";
+import { GetStaticProps, NextPage } from "next";
+import Link from "next/link";
 
-const Home = () => {
-  const [previews, setPreviews] = useState<[string, string[]][] | null>(null);
+type HomeProps = { previews: [string, string[]][] };
+
+export const getStaticProps: GetStaticProps<HomeProps> = async () => {
+  let previews: [string, string[]][] = [];
+  if (process.env.NEXT_PUBLIC_STATIC) {
+    const res = await fetch("http://localhost:3883/previews.json");
+    previews = await res.json();
+  }
+  return { props: { previews } };
+};
+
+const Home: NextPage<HomeProps> = ({ previews: initialPreviews }) => {
+  const [previews, setPreviews] = useState<[string, string[]][] | null>(
+    initialPreviews.length ? initialPreviews : null
+  );
   const fetchData = async () => {
     const res = await fetch("/previews.json");
     setPreviews(await res.json());
   };
   useEffect(() => {
-    fetchData();
+    if (!previews?.length) fetchData();
   }, []);
 
   if (!previews) {
@@ -19,7 +33,8 @@ const Home = () => {
     previews.length === 0 ||
     (previews.length === 2 &&
       previews[0][0] === "TextEmail.tsx" &&
-      previews[1][0] === "Welcome.tsx");
+      previews[1][0] === "Welcome.tsx" &&
+      !process.env.NEXT_PUBLIC_STATIC);
 
   return (
     <div>
@@ -58,7 +73,7 @@ const Home = () => {
         ))}
       </div>
       {!showNullState && (
-        <Link href="https://github.com/successor-software/mailing">
+        <Link href="https://mailing.run">
           <a className="footer" target="_blank">
             <img
               src="https://s3.amazonaws.com/lab.campsh.com/mailing-lil%402x.png"

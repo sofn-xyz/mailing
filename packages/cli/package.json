@@ -1,6 +1,6 @@
 {
   "name": "mailing",
-  "version": "0.6.0",
+  "version": "0.6.2",
   "main": "dist/mailing.cjs.js",
   "license": "MIT",
   "homepage": "https://github.com/successor-software/mailing#readme",
@@ -26,7 +26,6 @@
   "description": "Fun email development environment",
   "devDependencies": {
     "@next/eslint-plugin-next": "^12.2.0",
-    "@preconstruct/cli": "^2.1.5",
     "@types/fs-extra": "^9.0.13",
     "@types/html-minifier-terser": "^6.1.0",
     "@types/mjml": "^4.7.0",

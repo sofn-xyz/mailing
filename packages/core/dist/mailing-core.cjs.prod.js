@@ -700,11 +700,9 @@ function buildSendMail(options) {
     return sendMail;
   }();
 }
-var index = {
-  buildSendMail: buildSendMail
-};
 
 exports.buildSendMail = buildSendMail;
 exports.clearTestMailQueue = clearTestMailQueue;
-exports["default"] = index;
+exports["default"] = buildSendMail;
 exports.getTestMailQueue = getTestMailQueue;
+exports.render = render;

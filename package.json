@@ -12,7 +12,7 @@
     "test:watch": "jest --watch",
     "prepublish": "yarn build",
     "watch": "preconstruct watch",
-    "release": "preconstruct build && yarn changeset publish",
+    "release": "yarn build && yarn changeset publish",
     "postinstall": "preconstruct dev",
     "init:e2e": "./scripts/init_e2e"
   },
@@ -25,7 +25,7 @@
     "@babel/preset-react": "^7.17.12",
     "@babel/preset-typescript": "^7.17.12",
     "@changesets/cli": "^2.23.0",
-    "@preconstruct/cli": "^2.1.5",
+    "@preconstruct/cli": "^2.2.1",
     "@types/react": "^18.0.15",
     "@types/react-dom": "^18.0.6",
     "prettier": "^2.7.1",
