@@ -82,7 +82,6 @@ typings/
 .next
 .swc
 !dist/.next
-packages/cli/out
 
 # Nuxt.js build / generate output
 .nuxt

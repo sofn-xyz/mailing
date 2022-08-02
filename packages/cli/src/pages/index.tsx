@@ -141,10 +141,10 @@ const Home: NextPage<{ previews: [string, string[]][] }> = ({ previews }) => {
 Home.getInitialProps = async (context: NextPageContext) => {
   let previews: [string, string[]][] = [];
 
-  try {
+  if (context.req) {
     const res = await fetch("http://localhost:3883/previews.json");
     previews = await res.json();
-  } catch (e) {}
+  }
 
   return { previews };
 };
