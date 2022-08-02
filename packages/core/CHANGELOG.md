@@ -1,5 +1,11 @@
 # mailing-core
 
+## 0.6.2
+
+### Patch Changes
+
+- export render from mailing-core
+
 ## 0.6.1
 
 ### Patch Changes

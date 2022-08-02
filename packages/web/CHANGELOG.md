@@ -1,5 +1,11 @@
 # web
 
+## 0.2.2
+
+### Patch Changes
+
+- export render from mailing-core
+
 ## 0.2.1
 
 ### Patch Changes
