@@ -1,5 +1,6 @@
 #! /bin/sh
 
+yarn dev &
 rm -rf emails
 cp -nR packages/cli/src/generator_templates/ts/emails .
 cd packages/cli
