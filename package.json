@@ -12,7 +12,7 @@
     "test:watch": "jest --watch",
     "prepublish": "yarn build",
     "watch": "preconstruct watch",
-    "release": "preconstruct build && yarn changeset publish",
+    "release": "yarn build && yarn changeset publish",
     "postinstall": "preconstruct dev",
     "init:e2e": "./scripts/init_e2e"
   },

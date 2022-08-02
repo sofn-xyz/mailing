@@ -854,7 +854,7 @@ var handler$1 = /*#__PURE__*/function () {
               });
 
               require("@babel/register")({
-                presets: ["@babel/react"]
+                presets: ["@babel/react", "@babel/preset-env"]
               });
             }
 
