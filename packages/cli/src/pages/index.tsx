@@ -1,8 +1,17 @@
 import { useEffect, useState } from "react";
-import { NextPage } from "next";
+import { GetStaticProps, NextPage } from "next";
 import Link from "next/link";
 
 type HomeProps = { previews: [string, string[]][] };
+
+export const getStaticProps: GetStaticProps<HomeProps> = async () => {
+  let previews: [string, string[]][] = [];
+  if (process.env.NEXT_PUBLIC_STATIC) {
+    const res = await fetch("http://localhost:3883/previews.json");
+    previews = await res.json();
+  }
+  return { props: { previews } };
+};
 
 const Home: NextPage<HomeProps> = ({ previews: initialPreviews }) => {
   const [previews, setPreviews] = useState<[string, string[]][] | null>(
@@ -13,7 +22,7 @@ const Home: NextPage<HomeProps> = ({ previews: initialPreviews }) => {
     setPreviews(await res.json());
   };
   useEffect(() => {
-    if (!initialPreviews.length) fetchData();
+    if (!previews?.length) fetchData();
   }, []);
 
   if (!previews) {
@@ -149,15 +158,6 @@ const Home: NextPage<HomeProps> = ({ previews: initialPreviews }) => {
       `}</style>
     </div>
   );
-};
-
-Home.getInitialProps = async (context) => {
-  let previews: [string, string[]][] = [];
-  if (context.req) {
-    const res = await fetch("http://localhost:3883/previews.json");
-    previews = await res.json();
-  }
-  return { previews };
 };
 
 export default Home;
