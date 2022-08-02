@@ -48,7 +48,7 @@ export const handler = async (argv: PreviewArgs) => {
     });
 
     require("@babel/register")({
-      presets: ["@babel/react"],
+      presets: ["@babel/react", "@babel/preset-env"],
     });
   }
 

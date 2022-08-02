@@ -13,6 +13,6 @@ require("ts-node").register({
 });
 
 require("@babel/register")({
-  presets: ["@babel/react"],
+  presets: ["@babel/react", "@babel/preset-env"],
 });
 require("./index.ts");
