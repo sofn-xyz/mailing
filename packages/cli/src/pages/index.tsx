@@ -1,8 +1,21 @@
-import { NextPage, NextPageContext } from "next";
-import Link from "next/link";
 import { useEffect, useState } from "react";
+import { NextPage } from "next";
+import Link from "next/link";
 
-const Home: NextPage<{ previews: [string, string[]][] }> = ({ previews }) => {
+type HomeProps = { previews: [string, string[]][] };
+
+const Home: NextPage<HomeProps> = ({ previews: initialPreviews }) => {
+  const [previews, setPreviews] = useState<[string, string[]][] | null>(
+    initialPreviews.length ? initialPreviews : null
+  );
+  const fetchData = async () => {
+    const res = await fetch("/previews.json");
+    setPreviews(await res.json());
+  };
+  useEffect(() => {
+    if (!initialPreviews.length) fetchData();
+  }, []);
+
   if (!previews) {
     return <></>; // loading, should be quick bc everything is local
   }
@@ -138,14 +151,12 @@ const Home: NextPage<{ previews: [string, string[]][] }> = ({ previews }) => {
   );
 };
 
-Home.getInitialProps = async (context: NextPageContext) => {
+Home.getInitialProps = async (context) => {
   let previews: [string, string[]][] = [];
-
   if (context.req) {
     const res = await fetch("http://localhost:3883/previews.json");
     previews = await res.json();
   }
-
   return { previews };
 };
 
