@@ -1,36 +1,10 @@
-import { GetStaticProps } from "next";
+import { NextPage, NextPageContext } from "next";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
-export const getStaticProps: GetStaticProps = async (context) => {
-  let previews = [];
-
-  if (process.env.NEXT_PUBLIC_STATIC) {
-    const res = await fetch("http://localhost:3883/previews.json");
-    previews = await res.json();
-  }
-
-  return {
-    props: { previews },
-  };
-};
-
-const Home = ({
-  previews: initialPreviews,
-}: {
+const Home: NextPage<{
   previews: [string, string[]][];
-}) => {
-  const [previews, setPreviews] = useState<[string, string[]][] | null>(
-    process.env.NEXT_PUBLIC_STATIC ? initialPreviews : null
-  );
-  const fetchData = async () => {
-    const res = await fetch("/previews.json");
-    setPreviews(await res.json());
-  };
-  useEffect(() => {
-    if (!process.env.NEXT_PUBLIC_STATIC || !initialPreviews) fetchData();
-  }, []);
-
+}> = ({ previews }) => {
   if (!previews) {
     return <></>; // loading, should be quick bc everything is local
   }
@@ -164,6 +138,15 @@ const Home = ({
       `}</style>
     </div>
   );
+};
+
+Home.getInitialProps = async (context: NextPageContext) => {
+  let previews: [string, string[]][] = [];
+
+  const res = await fetch("http://localhost:3883/previews.json");
+  previews = await res.json();
+
+  return { previews };
 };
 
 export default Home;
