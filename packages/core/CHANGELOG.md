@@ -1,5 +1,11 @@
 # mailing-core
 
+## 0.6.1
+
+### Patch Changes
+
+- bugfix js support
+
 ## 0.6.0
 
 ### Minor Changes
