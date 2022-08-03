@@ -1,4 +1,3 @@
-import React from "react";
 import { MjmlSection, MjmlColumn, MjmlText } from "mjml-react";
 import { grayDark, textSm } from "./theme";
 

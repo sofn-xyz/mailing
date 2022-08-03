@@ -1,4 +1,3 @@
-import React from "react";
 import Head from "./components/Head";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -19,13 +18,7 @@ import {
   MjmlSpacer,
 } from "mjml-react";
 
-const TextEmail = ({
-  name,
-  headline,
-  body,
-  bulletedList,
-  ctaText,
-}) => {
+const TextEmail = ({ name, headline, body, bulletedList, ctaText }) => {
   return (
     <Mjml>
       <Head />

@@ -847,14 +847,17 @@ var handler$1 = /*#__PURE__*/function () {
               require("ts-node").register({
                 compilerOptions: {
                   module: "commonjs",
-                  jsx: "react",
+                  jsx: "react-jsx",
                   moduleResolution: "node",
                   skipLibCheck: true
                 }
               });
 
               require("@babel/register")({
-                presets: ["@babel/react", "@babel/preset-env"]
+                presets: [["@babel/react", {
+                  runtime: "automatic"
+                }], "@babel/preset-env"],
+                compact: false
               });
             }
 
@@ -989,7 +992,7 @@ var handler$1 = /*#__PURE__*/function () {
                         break;
 
                       case 40:
-                        if (!/^\/_next/.test(req.url)) {
+                        if (!/^\/_+next/.test(req.url)) {
                           _context.next = 46;
                           break;
                         }
