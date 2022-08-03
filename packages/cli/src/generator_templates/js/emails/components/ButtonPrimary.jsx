@@ -1,4 +1,3 @@
-import React from "react";
 import { MjmlButton } from "mjml-react";
 import { black } from "./theme";
 import { leadingTight, textBase, borderBase } from "./theme";

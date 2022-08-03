@@ -1,4 +1,3 @@
-import React from "react";
 import nodemailer from "nodemailer";
 
 import {

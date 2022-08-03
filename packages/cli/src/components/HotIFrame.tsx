@@ -1,4 +1,3 @@
-import React from "react";
 import usePreviewHotkeys from "./hooks/usePreviewHotkeys";
 
 type HotIFrameProps = {

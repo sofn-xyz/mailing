@@ -1,4 +1,3 @@
-import React from "react";
 import TextEmail from "../TextEmail";
 import BulletedList from "../components/BulletedList";
 

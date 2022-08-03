@@ -1,4 +1,3 @@
-import React from "react";
 import { MjmlSection, MjmlColumn, MjmlImage } from "mjml-react";
 
 const Header = ({ big }) => {

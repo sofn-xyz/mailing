@@ -1,4 +1,3 @@
-import React from "react";
 import { render } from "../index";
 import { Mjml, MjmlBody, MjmlRaw } from "mjml-react";
 

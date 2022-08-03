@@ -6,13 +6,22 @@ process.env.MM_DEV = 1;
 require("ts-node").register({
   compilerOptions: {
     module: "commonjs",
-    jsx: "react",
+    jsx: "react-jsx",
     moduleResolution: "node",
     skipLibCheck: true,
   },
 });
 
 require("@babel/register")({
-  presets: ["@babel/react", "@babel/preset-env"],
+  presets: [
+    [
+      "@babel/react",
+      {
+        runtime: "automatic",
+      },
+    ],
+    "@babel/preset-env",
+  ],
+  compact: false,
 });
 require("./index.ts");
