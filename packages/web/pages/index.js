@@ -22,6 +22,16 @@ export default function Home() {
             property="og:image"
             content="https://mailing.run/og-image.jpg"
           />
+          <meta name="twitter:card" content="summary_large_image" />
+          <meta name="twitter:title" content="Mailing" />
+          <meta
+            name="twitter:image"
+            content="https://mailing.run/og-twitter.jpg"
+          />
+          <meta
+            name="twitter:description"
+            content="Build + test + send emails with React"
+          />
           <link rel="icon" href="/favicon.ico" />
         </Head>
         <div className="w-full overflow-hidden absolute">
