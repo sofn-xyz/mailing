@@ -26,7 +26,6 @@ export const command = ["$0", "init"];
 export const describe = "initialize mailing in your app";
 
 export const handler = async (args: CliArguments) => {
-  console.log(args);
   // check if emails directory already exists
   if (!existsSync("./package.json")) {
     log("No package.json found. Please run from the project root.");
