@@ -55,10 +55,15 @@ export function showPreview(req: IncomingMessage, res: ServerResponse) {
   const modulePath = resolve(previewsPath, moduleName);
   const functionName = functionNameJSON.replace(".json", "");
 
-  delete require.cache[modulePath];
-  console.log(modulePath, require.cache)
-  const templateModule = require(modulePath);
-  const component = templateModule[functionName]();
+  const emailsPath = resolve(previewsPath, "..");
+  for (const path in require.cache) {
+    if (path.startsWith(emailsPath)) {
+      delete require.cache[path];
+    }
+  }
+
+  const previewModule = require(modulePath);
+  const component = previewModule[functionName]();
 
   if (component?.props) {
     try {
@@ -76,7 +81,6 @@ export function showPreview(req: IncomingMessage, res: ServerResponse) {
       res.end(JSON.stringify(e));
     }
   } else {
-    const emailsPath = resolve(previewsPath, "..");
     const msg = `${functionName}() from ${modulePath} must return a react component defined in ${emailsPath}`;
     error(msg);
     res.writeHead(404);
