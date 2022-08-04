@@ -11,7 +11,7 @@ const HotIFrame: React.FC<HotIFrameProps> = ({
   setViewMode,
   srcDoc,
 }) => {
-  const { iframeRef } = usePreviewHotkeys({ setViewMode });
+  const { iframeRef, textareaRef } = usePreviewHotkeys({ setViewMode });
 
   return (
     <>
@@ -20,6 +20,7 @@ const HotIFrame: React.FC<HotIFrameProps> = ({
           className="code-container mono"
           readOnly
           value={srcDoc}
+          ref={textareaRef}
         ></textarea>
       ) : (
         <div className={`frame ${viewMode === "mobile" ? " mobile" : ""}`}>
@@ -55,15 +56,15 @@ const HotIFrame: React.FC<HotIFrameProps> = ({
           white-space: pre-wrap;
           padding: 16px;
           outline: none;
+          height: calc(100vh - 65px);
+          width: 100%;
+          resize: none;
         }
         @media (prefers-color-scheme: dark) {
           .code-container {
             white-space: pre-wrap;
             color: white;
             background: black;
-            resize: none;
-            height: calc(100vh - 65px);
-            width: 100%;
           }
         }
       `}</style>

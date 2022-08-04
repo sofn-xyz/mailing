@@ -35,7 +35,7 @@ export default function usePreviewHotkeys({ setViewMode }: Options) {
     },
     [router, setViewMode]
   );
-  useHotkeys("m,d,.,left,right,/", handleKey);
+  useHotkeys("m,d,h,.,left,right,/", handleKey);
 
   const iframeRef = useCallback(
     (node: HTMLIFrameElement) => {
@@ -48,5 +48,13 @@ export default function usePreviewHotkeys({ setViewMode }: Options) {
     [handleKey]
   );
 
-  return { iframeRef };
+  const textareaRef = useCallback(
+    (node: HTMLTextAreaElement) => {
+      if (null === node) return;
+      node.onkeydown = handleKey;
+    },
+    [handleKey]
+  );
+
+  return { iframeRef, textareaRef };
 }
