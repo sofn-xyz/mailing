@@ -56,8 +56,9 @@ export function showPreview(req: IncomingMessage, res: ServerResponse) {
   const functionName = functionNameJSON.replace(".json", "");
 
   delete require.cache[modulePath];
-  const module = require(modulePath);
-  const component = module[functionName]();
+  console.log(modulePath, require.cache)
+  const templateModule = require(modulePath);
+  const component = templateModule[functionName]();
 
   if (component?.props) {
     try {
