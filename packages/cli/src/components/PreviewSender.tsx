@@ -24,7 +24,7 @@ const PreviewSender: React.FC<PreviewSenderProps> = ({
         setLastSentAt(new Date(lastSent));
       }
     }
-  }, []);
+  }, [email]);
 
   const send: React.FormEventHandler<HTMLFormElement> = useCallback(
     async (e) => {
@@ -68,7 +68,7 @@ const PreviewSender: React.FC<PreviewSenderProps> = ({
         setSending(false);
       }
     },
-    [email]
+    [html, previewClass, previewFunction, email]
   );
 
   const onInputChange: React.ChangeEventHandler<HTMLInputElement> = useCallback(

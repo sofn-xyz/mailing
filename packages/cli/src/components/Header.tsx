@@ -8,8 +8,8 @@ type HeaderProps = {
   title: string;
   previewFunction?: string;
   previewClass?: string;
-  isMobile: boolean;
-  setIsMobile: (isMobile: boolean) => void;
+  viewMode: ViewMode;
+  setViewMode: (viewMode: ViewMode) => void;
   previous?: string;
   next?: string;
   helpContent: ReactElement;
@@ -19,10 +19,7 @@ const Header: React.FC<HeaderProps> = ({
   title,
   previewFunction,
   previewClass,
-  isMobile,
-  setIsMobile,
-  previous,
-  next,
+  setViewMode,
   helpContent,
 }) => {
   return (
@@ -36,11 +33,14 @@ const Header: React.FC<HeaderProps> = ({
         <div id="current">{title}</div>
       </div>
       <div id="utilities">
-        <button id="desktop" onClick={() => setIsMobile(false)}>
+        <button id="desktop" onClick={() => setViewMode("desktop")}>
           <span>Desktop</span>
         </button>
-        <button id="mobile" onClick={() => setIsMobile(true)}>
+        <button id="mobile" onClick={() => setViewMode("mobile")}>
           Mobile
+        </button>
+        <button id="html" onClick={() => setViewMode("html")}>
+          <span>HTML</span>
         </button>
         <Tooltip
           trigger={(show, setShow) => (
@@ -61,6 +61,7 @@ const Header: React.FC<HeaderProps> = ({
                     src="https://s3.amazonaws.com/lab.campsh.com/Group+141%402x.png"
                     height="12"
                     width="12"
+                    alt="send preview"
                   />
                 )}
               </button>
@@ -163,6 +164,7 @@ const Header: React.FC<HeaderProps> = ({
         @media (max-width: 768px) {
           #desktop,
           #mobile,
+          #html,
           #help {
             display: none;
           }

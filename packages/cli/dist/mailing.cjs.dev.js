@@ -643,11 +643,17 @@ function showPreview(req, res) {
 
   var modulePath = path.resolve(previewsPath, moduleName);
   var functionName = functionNameJSON.replace(".json", "");
-  delete require.cache[modulePath];
+  var emailsPath = path.resolve(previewsPath, "..");
 
-  var module = require(modulePath);
+  for (var path$1 in require.cache) {
+    if (path$1.startsWith(emailsPath)) {
+      delete require.cache[path$1];
+    }
+  }
 
-  var component = module[functionName]();
+  var previewModule = require(modulePath);
+
+  var component = previewModule[functionName]();
 
   if (component !== null && component !== void 0 && component.props) {
     try {
@@ -671,7 +677,6 @@ function showPreview(req, res) {
       res.end(JSON.stringify(e));
     }
   } else {
-    var emailsPath = path.resolve(previewsPath, "..");
     var msg = "".concat(functionName, "() from ").concat(modulePath, " must return a react component defined in ").concat(emailsPath);
     error(msg);
     res.writeHead(404);

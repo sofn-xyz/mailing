@@ -7,7 +7,7 @@ type InterceptProps = {
 };
 
 const Intercept: React.FC<InterceptProps> = ({ data }) => {
-  const [isMobile, setIsMobile] = useState(false);
+  const [viewMode, setViewMode] = useState<ViewMode>("desktop");
   if (!data) {
     return <></>; // loading, should be quick bc everything is local
   }
@@ -16,8 +16,8 @@ const Intercept: React.FC<InterceptProps> = ({ data }) => {
     <>
       <Header
         title={data.subject || ""}
-        isMobile={isMobile}
-        setIsMobile={setIsMobile}
+        setViewMode={setViewMode}
+        viewMode={viewMode}
         helpContent={
           <>
             <div className="title">Hotkeys</div>
@@ -41,8 +41,8 @@ const Intercept: React.FC<InterceptProps> = ({ data }) => {
       </div>
       {data.html && (
         <HotIFrame
-          isMobile={isMobile}
-          setIsMobile={setIsMobile}
+          viewMode={viewMode}
+          setViewMode={setViewMode}
           srcDoc={data.html}
         />
       )}

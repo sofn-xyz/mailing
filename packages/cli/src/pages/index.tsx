@@ -23,7 +23,7 @@ const Home: NextPage<HomeProps> = ({ previews: initialPreviews }) => {
   };
   useEffect(() => {
     if (!previews?.length) fetchData();
-  }, []);
+  }, [previews?.length]);
 
   if (!previews) {
     return <></>; // loading, should be quick bc everything is local
@@ -45,6 +45,7 @@ const Home: NextPage<HomeProps> = ({ previews: initialPreviews }) => {
             src="https://s3.amazonaws.com/lab.campsh.com/mailing-lil%402x.png"
             width="76"
             height="16"
+            alt="mailing logo"
           />
         )}
         <h1>Previews</h1>
@@ -79,6 +80,7 @@ const Home: NextPage<HomeProps> = ({ previews: initialPreviews }) => {
               src="https://s3.amazonaws.com/lab.campsh.com/mailing-lil%402x.png"
               width="76"
               height="16"
+              alt="mailing logo"
             />
           </a>
         </Link>

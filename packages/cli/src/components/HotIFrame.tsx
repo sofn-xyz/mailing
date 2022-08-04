@@ -1,25 +1,29 @@
 import usePreviewHotkeys from "./hooks/usePreviewHotkeys";
 
 type HotIFrameProps = {
-  isMobile: boolean;
-  setIsMobile: React.Dispatch<React.SetStateAction<boolean>>;
+  viewMode: ViewMode;
+  setViewMode: React.Dispatch<React.SetStateAction<ViewMode>>;
   src?: string;
   srcDoc?: string;
 };
 
 const HotIFrame: React.FC<HotIFrameProps> = ({
-  isMobile,
-  setIsMobile,
+  viewMode,
+  setViewMode,
   src,
   srcDoc,
 }) => {
-  const { iframeRef } = usePreviewHotkeys({ setIsMobile });
+  const { iframeRef } = usePreviewHotkeys({ setViewMode });
 
   return (
     <>
-      <div className={`frame ${isMobile ? " mobile" : ""}`}>
-        <iframe src={src} srcDoc={srcDoc} ref={iframeRef} />
-      </div>
+      {viewMode === "html" ? (
+        srcDoc
+      ) : (
+        <div className={`frame ${viewMode === "mobile" ? " mobile" : ""}`}>
+          <iframe src={src} srcDoc={srcDoc} ref={iframeRef} />
+        </div>
+      )}
       <style jsx>{`
         .frame {
           margin: auto;

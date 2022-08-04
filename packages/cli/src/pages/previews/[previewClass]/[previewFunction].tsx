@@ -49,7 +49,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
 const Preview = ({ initialData }: { initialData: ShowPreviewResponseBody }) => {
   const router = useRouter();
-  const [isMobile, setIsMobile] = useState(false);
+  const [viewMode, setViewMode] = useState<ViewMode>("desktop");
   const [data, setData] = useState<ShowPreviewResponseBody | null>(
     process.env.NEXT_PUBLIC_STATIC ? initialData : null
   );
@@ -89,8 +89,8 @@ const Preview = ({ initialData }: { initialData: ShowPreviewResponseBody }) => {
         title={`${previewClass} - ${previewFunction}`}
         previewClass={previewClass as string}
         previewFunction={previewFunction as string}
-        isMobile={isMobile}
-        setIsMobile={setIsMobile}
+        viewMode={viewMode}
+        setViewMode={setViewMode}
         helpContent={
           <>
             <div className="title">Hotkeys</div>
@@ -109,8 +109,8 @@ const Preview = ({ initialData }: { initialData: ShowPreviewResponseBody }) => {
       {data?.html && !data?.errors.length && (
         <HotIFrame
           srcDoc={data.html}
-          isMobile={isMobile}
-          setIsMobile={setIsMobile}
+          viewMode={viewMode}
+          setViewMode={setViewMode}
         />
       )}
 
@@ -119,7 +119,7 @@ const Preview = ({ initialData }: { initialData: ShowPreviewResponseBody }) => {
           margin-top: 8px;
           height: calc(100vh - 50px);
           width: 100%;
-          max-width: ${isMobile ? "320px" : "100%"};
+          max-width: ${viewMode === "mobile" ? "320px" : "100%"};
           border: 0;
         }
         .title {
