@@ -191,10 +191,6 @@ const PreviewSender: React.FC<PreviewSenderProps> = ({
           line-height: 130%;
           max-width: 288px;
         }
-        .mono {
-          font-family: Menlo, Monaco, Lucida Console, Liberation Mono,
-            DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
-        }
         .error,
         .sending,
         .last-send {

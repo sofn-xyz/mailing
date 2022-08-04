@@ -2,7 +2,10 @@ body {
   font-family: Inter, serif;
   font-weight: 400;
 }
-
 a {
   color: black;
+}
+.mono {
+  font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
+    Bitstream Vera Sans Mono, Courier New, monospace;
 }

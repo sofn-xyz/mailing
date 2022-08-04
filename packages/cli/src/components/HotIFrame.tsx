@@ -16,13 +16,11 @@ const HotIFrame: React.FC<HotIFrameProps> = ({
   return (
     <>
       {viewMode === "html" ? (
-        <div
-          className="code-container"
-          contentEditable
-          suppressContentEditableWarning
-        >
-          <code>{srcDoc}</code>
-        </div>
+        <textarea
+          className="code-container mono"
+          readOnly
+          value={srcDoc}
+        ></textarea>
       ) : (
         <div className={`frame ${viewMode === "mobile" ? " mobile" : ""}`}>
           <iframe srcDoc={srcDoc} ref={iframeRef} />
@@ -52,21 +50,20 @@ const HotIFrame: React.FC<HotIFrameProps> = ({
         .mobile iframe {
           border: 2px solid #ccc;
         }
-        code {
+        .code-container {
           font-size: 10px;
           white-space: pre-wrap;
-        }
-        .code-container {
           padding: 16px;
           outline: none;
         }
         @media (prefers-color-scheme: dark) {
-          code {
-            white-space: pre-wrap;
-          }
           .code-container {
+            white-space: pre-wrap;
             color: white;
             background: black;
+            resize: none;
+            height: calc(100vh - 65px);
+            width: 100%;
           }
         }
       `}</style>
