@@ -1,0 +1,6 @@
+{
+  "compilerOptions": {
+    "rootDir": "./src" /* Specify the root folder within your source files. */
+  },
+  "$schema": "https://json.schemastore.org/tsconfig"
+}
