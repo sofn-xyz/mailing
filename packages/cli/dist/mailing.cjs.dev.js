@@ -1122,12 +1122,12 @@ function generateEmailsDirectory(_x) {
 
 function _generateEmailsDirectory() {
   _generateEmailsDirectory = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(_ref) {
-    var isTypescript, existingEmailsPath, emailsPath, response, path$1;
+    var isTypescript, emailsDir, existingEmailsPath, targetEmailsDir, emailsPath, response, path$1;
     return _regeneratorRuntime().wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
-            isTypescript = _ref.isTypescript;
+            isTypescript = _ref.isTypescript, emailsDir = _ref.emailsDir;
             existingEmailsPath = getExistingEmailsDir();
 
             if (!existingEmailsPath) {
@@ -1140,8 +1140,18 @@ function _generateEmailsDirectory() {
             return _context.abrupt("return", false);
 
           case 5:
+            if (!emailsDir) {
+              _context.next = 9;
+              break;
+            }
+
+            targetEmailsDir = emailsDir;
+            _context.next = 14;
+            break;
+
+          case 9:
             emailsPath = getPotentialEmailsDirPath();
-            _context.next = 8;
+            _context.next = 12;
             return prompts__default["default"]({
               type: "text",
               name: "path",
@@ -1149,30 +1159,32 @@ function _generateEmailsDirectory() {
               initial: "./" + path.relative(process.cwd(), emailsPath) + "/"
             });
 
-          case 8:
+          case 12:
             response = _context.sent;
+            targetEmailsDir = response.path;
 
-            if (!response.path) {
-              _context.next = 17;
+          case 14:
+            if (!targetEmailsDir) {
+              _context.next = 22;
               break;
             }
 
             // copy the emails dir template in!
             path$1 = "generator_templates/".concat(isTypescript ? "ts" : "js", "/emails");
-            _context.next = 13;
-            return fsExtra.copySync(path.resolve(__dirname, path$1), response.path, {
+            _context.next = 18;
+            return fsExtra.copySync(path.resolve(__dirname, path$1), targetEmailsDir, {
               overwrite: false
             });
 
-          case 13:
-            log("Generated your emails dir at ".concat(response.path, ":\n").concat(tree__default["default"](response.path)));
+          case 18:
+            log("Generated your emails dir at ".concat(targetEmailsDir, ":\n").concat(tree__default["default"](targetEmailsDir)));
             return _context.abrupt("return", true);
 
-          case 17:
+          case 22:
             log("OK, bye!");
             return _context.abrupt("return", false);
 
-          case 19:
+          case 24:
           case "end":
             return _context.stop();
         }
@@ -1252,7 +1264,8 @@ var handler = /*#__PURE__*/function () {
 
           case 17:
             options = {
-              isTypescript: isTypescript
+              isTypescript: isTypescript,
+              emailsDir: args.emails_dir
             };
             _context.next = 20;
             return generateEmailsDirectory(options);

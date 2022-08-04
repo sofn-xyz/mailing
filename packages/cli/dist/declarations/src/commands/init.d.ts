@@ -2,6 +2,7 @@ import { ArgumentsCamelCase } from "yargs";
 export declare type CliArguments = ArgumentsCamelCase<{
     port?: number;
     typescript?: "true" | "false" | boolean;
+    emails_dir?: "./emails" | "./src/emails";
 }>;
 export declare const command: string[];
 export declare const describe = "initialize mailing in your app";
