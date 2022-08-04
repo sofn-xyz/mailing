@@ -643,11 +643,17 @@ function showPreview(req, res) {
 
   var modulePath = path.resolve(previewsPath, moduleName);
   var functionName = functionNameJSON.replace(".json", "");
-  delete require.cache[modulePath];
+  var emailsPath = path.resolve(previewsPath, "..");
 
-  var module = require(modulePath);
+  for (var path$1 in require.cache) {
+    if (path$1.startsWith(emailsPath)) {
+      delete require.cache[path$1];
+    }
+  }
 
-  var component = module[functionName]();
+  var previewModule = require(modulePath);
+
+  var component = previewModule[functionName]();
 
   if (component !== null && component !== void 0 && component.props) {
     try {
@@ -671,7 +677,6 @@ function showPreview(req, res) {
       res.end(JSON.stringify(e));
     }
   } else {
-    var emailsPath = path.resolve(previewsPath, "..");
     var msg = "".concat(functionName, "() from ").concat(modulePath, " must return a react component defined in ").concat(emailsPath);
     error(msg);
     res.writeHead(404);
@@ -1046,10 +1051,6 @@ var handler$1 = /*#__PURE__*/function () {
                       return open__default["default"](currentUrl);
 
                     case 4:
-                      _context2.next = 6;
-                      return open__default["default"](currentUrl);
-
-                    case 6:
                     case "end":
                       return _context2.stop();
                   }
@@ -1194,26 +1195,48 @@ var command = ["$0", "init"];
 var describe = "initialize mailing in your app";
 var handler = /*#__PURE__*/function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(args) {
-    var ts, options;
+    var isTypescript, ts, options;
     return _regeneratorRuntime().wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
+            console.log(args); // check if emails directory already exists
+
             if (fsExtra.existsSync("./package.json")) {
-              _context.next = 3;
+              _context.next = 4;
               break;
             }
 
             log("No package.json found. Please run from the project root.");
             return _context.abrupt("return");
 
-          case 3:
+          case 4:
             if (getExistingEmailsDir()) {
-              _context.next = 10;
+              _context.next = 20;
               break;
             }
 
-            _context.next = 6;
+            if (!("false" === args.typescript)) {
+              _context.next = 9;
+              break;
+            }
+
+            isTypescript = false;
+            _context.next = 17;
+            break;
+
+          case 9:
+            if (!args.typescript) {
+              _context.next = 13;
+              break;
+            }
+
+            isTypescript = true;
+            _context.next = 17;
+            break;
+
+          case 13:
+            _context.next = 15;
             return prompts__default["default"]({
               type: "confirm",
               name: "value",
@@ -1221,18 +1244,21 @@ var handler = /*#__PURE__*/function () {
               initial: looksLikeTypescriptProject()
             });
 
-          case 6:
+          case 15:
             ts = _context.sent;
+            isTypescript = ts.value;
+
+          case 17:
             options = {
-              isTypescript: ts.value
+              isTypescript: isTypescript
             };
-            _context.next = 10;
+            _context.next = 20;
             return generateEmailsDirectory(options);
 
-          case 10:
+          case 20:
             handler$1(args);
 
-          case 11:
+          case 21:
           case "end":
             return _context.stop();
         }
