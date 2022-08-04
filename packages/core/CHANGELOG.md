@@ -1,5 +1,11 @@
 # mailing-core
 
+## 0.6.3
+
+### Patch Changes
+
+- 4edfafa: remove react imports, use new jsx runtime
+
 ## 0.6.2
 
 ### Patch Changes

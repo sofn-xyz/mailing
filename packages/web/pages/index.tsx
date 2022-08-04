@@ -1,8 +1,9 @@
+import type { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
 
-export default function Home() {
+const Home: NextPage = () => {
   return (
     <>
       <div className={`${styles.pageContainer} w-full h-full`}>
@@ -21,6 +22,16 @@ export default function Home() {
           <meta
             property="og:image"
             content="https://mailing.run/og-image.jpg"
+          />
+          <meta name="twitter:card" content="summary_large_image" />
+          <meta name="twitter:title" content="Mailing" />
+          <meta
+            name="twitter:image"
+            content="https://mailing.run/og-twitter.jpg"
+          />
+          <meta
+            name="twitter:description"
+            content="Build + test + send emails with React"
           />
           <link rel="icon" href="/favicon.ico" />
         </Head>
@@ -123,3 +134,5 @@ export default function Home() {
     </>
   );
 }
+
+export default Home;

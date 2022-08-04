@@ -1,6 +1,6 @@
 {
   "presets": [
-    "@babel/react",
+    ["@babel/react", { "runtime": "automatic" }],
     ["@babel/preset-typescript", { "isTSX": true, "allExtensions": true }],
     "@babel/preset-env"
   ]

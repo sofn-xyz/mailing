@@ -1,5 +1,11 @@
 # web
 
+## 0.2.3
+
+### Patch Changes
+
+- 4edfafa: remove react imports, use new jsx runtime
+
 ## 0.2.2
 
 ### Patch Changes

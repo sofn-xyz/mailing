@@ -44,14 +44,23 @@ export const handler = async (argv: PreviewArgs) => {
     require("ts-node").register({
       compilerOptions: {
         module: "commonjs",
-        jsx: "react",
+        jsx: "react-jsx",
         moduleResolution: "node",
         skipLibCheck: true,
       },
     });
 
     require("@babel/register")({
-      presets: ["@babel/react", "@babel/preset-env"],
+      presets: [
+        [
+          "@babel/react",
+          {
+            runtime: "automatic",
+          },
+        ],
+        "@babel/preset-env",
+      ],
+      compact: false,
     });
   }
 
@@ -131,7 +140,7 @@ export const handler = async (argv: PreviewArgs) => {
           showIntercept(req, res);
         } else if (/^\/previews\/.*\.json/.test(req.url)) {
           showPreview(req, res);
-        } else if (/^\/_next/.test(req.url)) {
+        } else if (/^\/_+next/.test(req.url)) {
           noLog = true;
           await app.render(req, res, `${pathname}`, query);
         } else {

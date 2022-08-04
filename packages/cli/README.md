@@ -103,7 +103,6 @@ Mailing includes a development mode for working on your emails. Running `mailing
 For example, here's `emails/previews/Welcome.tsx`:
 
 ```tsx
-import React from "react";
 import Welcome from "../Welcome";
 
 export function toAmelita() {
@@ -114,7 +113,6 @@ export function toAmelita() {
 It will show up in the index:
 
 <img width="600" alt="Mailing index" src="https://user-images.githubusercontent.com/609038/181653058-266ed86b-3a39-4a9d-b2df-afa2273bf040.jpg">
-
 
 Clicking through shows you the email with a mobile/desktop toggle and live reload as you edit:
 
@@ -226,4 +224,3 @@ For development, you may want to have a demo next app that pulls in your changes
 - Make your changes in `mailing`
 - Run `yarn build` in the `mailing` root directory to create new `dist` files
 - Run `yalc push` in the `mailing` root directory to both publish your changes (`yalc publish`) and pull them in to your next app (`yalc update`)
-
