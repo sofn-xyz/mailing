@@ -22,7 +22,7 @@ import {
 type TextEmailProps = {
   name: string;
   headline?: string;
-  body: any; // n.b. ReactElement/ReactNode break on react 17
+  body: ReactElement;
   bulletedList?: ReactElement;
   ctaText?: string;
 };
@@ -46,6 +46,7 @@ const TextEmail: React.FC<TextEmailProps> = ({
                 padding="24px 0 8px"
                 fontSize={textLg}
                 lineHeight={leadingTight}
+                cssClass="paragraph"
               >
                 {headline}
               </MjmlText>
@@ -54,6 +55,7 @@ const TextEmail: React.FC<TextEmailProps> = ({
               padding="16px 0 16px"
               fontSize={textBase}
               lineHeight={leadingRelaxed}
+              cssClass="paragraph"
             >
               Hello {name},
             </MjmlText>
@@ -82,6 +84,7 @@ const TextEmail: React.FC<TextEmailProps> = ({
               padding="16px 0"
               fontSize={textBase}
               lineHeight={leadingRelaxed}
+              cssClass="paragraph"
             >
               ♥,
               <br />

@@ -31,6 +31,7 @@ const TextEmail = ({ name, headline, body, bulletedList, ctaText }) => {
                 padding="24px 0 8px"
                 fontSize={textLg}
                 lineHeight={leadingTight}
+                cssClass="paragraph"
               >
                 {headline}
               </MjmlText>
@@ -39,6 +40,7 @@ const TextEmail = ({ name, headline, body, bulletedList, ctaText }) => {
               padding="16px 0 16px"
               fontSize={textBase}
               lineHeight={leadingRelaxed}
+              cssClass="paragraph"
             >
               Hello {name},
             </MjmlText>
@@ -67,6 +69,7 @@ const TextEmail = ({ name, headline, body, bulletedList, ctaText }) => {
               padding="16px 0"
               fontSize={textBase}
               lineHeight={leadingRelaxed}
+              cssClass="paragraph"
             >
               ♥,
               <br />

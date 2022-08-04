@@ -1,6 +1,7 @@
 // Colors
 export const black = "#000";
 export const grayDark = "#777";
+export const grayLight = "#f5f5f5";
 
 // Typography
 export const textSm = 14;
