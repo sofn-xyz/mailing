@@ -3,14 +3,12 @@ import usePreviewHotkeys from "./hooks/usePreviewHotkeys";
 type HotIFrameProps = {
   viewMode: ViewMode;
   setViewMode: React.Dispatch<React.SetStateAction<ViewMode>>;
-  src?: string;
-  srcDoc?: string;
+  srcDoc: string;
 };
 
 const HotIFrame: React.FC<HotIFrameProps> = ({
   viewMode,
   setViewMode,
-  src,
   srcDoc,
 }) => {
   const { iframeRef } = usePreviewHotkeys({ setViewMode });
@@ -21,7 +19,7 @@ const HotIFrame: React.FC<HotIFrameProps> = ({
         srcDoc
       ) : (
         <div className={`frame ${viewMode === "mobile" ? " mobile" : ""}`}>
-          <iframe src={src} srcDoc={srcDoc} ref={iframeRef} />
+          <iframe srcDoc={srcDoc} ref={iframeRef} />
         </div>
       )}
       <style jsx>{`
