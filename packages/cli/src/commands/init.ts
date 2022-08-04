@@ -9,9 +9,10 @@ import { handler as previewHandler } from "./preview";
 export type CliArguments = ArgumentsCamelCase<{
   port?: number;
   typescript?: "true" | "false" | boolean;
+  emails_dir?: "./emails" | "./src/emails";
 }>;
 
-function looksLikeTypescriptProject() {
+function looksLikeTypescriptProject(): boolean {
   if (existsSync("./tsconfig.json")) {
     return true;
   }
@@ -33,8 +34,8 @@ export const handler = async (args: CliArguments) => {
   }
 
   if (!getExistingEmailsDir()) {
+    // options: assign isTypescript
     let isTypescript;
-
     if ("false" === args.typescript) {
       isTypescript = false;
     } else if (args.typescript) {
@@ -49,7 +50,7 @@ export const handler = async (args: CliArguments) => {
       isTypescript = ts.value;
     }
 
-    const options = { isTypescript: isTypescript };
+    const options = { isTypescript: isTypescript, emailsDir: args.emails_dir };
     await generateEmailsDirectory(options);
   }
 
