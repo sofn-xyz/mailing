@@ -16,7 +16,7 @@ const HotIFrame: React.FC<HotIFrameProps> = ({
   return (
     <>
       {viewMode === "html" ? (
-        srcDoc
+        <code>{srcDoc}</code>
       ) : (
         <div className={`frame ${viewMode === "mobile" ? " mobile" : ""}`}>
           <iframe srcDoc={srcDoc} ref={iframeRef} />
@@ -45,6 +45,9 @@ const HotIFrame: React.FC<HotIFrameProps> = ({
         .mobile,
         .mobile iframe {
           border: 2px solid #ccc;
+        }
+        code {
+          white-space: pre-wrap;
         }
       `}</style>
     </>

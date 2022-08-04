@@ -80,7 +80,7 @@ const Preview = ({ initialData }: { initialData: ShowPreviewResponseBody }) => {
   const { previewClass, previewFunction } = router.query;
 
   if (!(previewClass && previewFunction)) {
-    return <div>loading</div>;
+    return <></>;
   }
 
   return (
