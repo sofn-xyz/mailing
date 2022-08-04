@@ -1,5 +1,6 @@
 dev-app
 tmp-testMailQueue.json
+scripts/e2e_test/runs
 
 # Logs
 logs
