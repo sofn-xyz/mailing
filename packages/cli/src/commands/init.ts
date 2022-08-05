@@ -9,7 +9,7 @@ import { handler as previewHandler } from "./preview";
 export type CliArguments = ArgumentsCamelCase<{
   port?: number;
   typescript?: "true" | "false" | boolean;
-  emails_dir?: "./emails" | "./src/emails";
+  "emails-dir"?: "./emails" | "./src/emails";
 }>;
 
 function looksLikeTypescriptProject(): boolean {
@@ -49,7 +49,10 @@ export const handler = async (args: CliArguments) => {
       isTypescript = ts.value;
     }
 
-    const options = { isTypescript: isTypescript, emailsDir: args.emails_dir };
+    const options = {
+      isTypescript: isTypescript,
+      emailsDir: args["emails-dir"],
+    };
     await generateEmailsDirectory(options);
   }
 

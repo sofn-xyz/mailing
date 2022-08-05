@@ -1212,43 +1212,41 @@ var handler = /*#__PURE__*/function () {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
-            console.log(args); // check if emails directory already exists
-
             if (fsExtra.existsSync("./package.json")) {
-              _context.next = 4;
+              _context.next = 3;
               break;
             }
 
             log("No package.json found. Please run from the project root.");
             return _context.abrupt("return");
 
-          case 4:
+          case 3:
             if (getExistingEmailsDir()) {
-              _context.next = 20;
+              _context.next = 19;
               break;
             }
 
             if (!("false" === args.typescript)) {
-              _context.next = 9;
+              _context.next = 8;
               break;
             }
 
             isTypescript = false;
-            _context.next = 17;
+            _context.next = 16;
             break;
 
-          case 9:
+          case 8:
             if (!args.typescript) {
-              _context.next = 13;
+              _context.next = 12;
               break;
             }
 
             isTypescript = true;
-            _context.next = 17;
+            _context.next = 16;
             break;
 
-          case 13:
-            _context.next = 15;
+          case 12:
+            _context.next = 14;
             return prompts__default["default"]({
               type: "confirm",
               name: "value",
@@ -1256,22 +1254,22 @@ var handler = /*#__PURE__*/function () {
               initial: looksLikeTypescriptProject()
             });
 
-          case 15:
+          case 14:
             ts = _context.sent;
             isTypescript = ts.value;
 
-          case 17:
+          case 16:
             options = {
               isTypescript: isTypescript,
-              emailsDir: args.emails_dir
+              emailsDir: args["emails-dir"]
             };
-            _context.next = 20;
+            _context.next = 19;
             return generateEmailsDirectory(options);
 
-          case 20:
+          case 19:
             handler$1(args);
 
-          case 21:
+          case 20:
           case "end":
             return _context.stop();
         }
