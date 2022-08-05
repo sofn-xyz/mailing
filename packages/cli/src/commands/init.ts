@@ -25,6 +25,16 @@ export const command = ["$0", "init"];
 
 export const describe = "initialize mailing in your app";
 
+export const builder = {
+  typescript: {
+    description: "use Typescript",
+  },
+  "emails-dir": {
+    description:
+      "where to put your emails - ./emails or ./src/emails are currently the only valid options",
+  },
+};
+
 export const handler = async (args: CliArguments) => {
   // check if emails directory already exists
   if (!existsSync("./package.json")) {

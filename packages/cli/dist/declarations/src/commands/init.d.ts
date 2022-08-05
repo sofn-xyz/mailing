@@ -6,4 +6,12 @@ export declare type CliArguments = ArgumentsCamelCase<{
 }>;
 export declare const command: string[];
 export declare const describe = "initialize mailing in your app";
+export declare const builder: {
+    typescript: {
+        description: string;
+    };
+    "emails-dir": {
+        description: string;
+    };
+};
 export declare const handler: (args: CliArguments) => Promise<void>;

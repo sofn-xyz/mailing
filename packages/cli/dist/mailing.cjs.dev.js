@@ -828,7 +828,7 @@ function _sendPreview() {
 var DEFAULT_PORT = 3883;
 var command$1 = "preview";
 var describe$1 = "start the email preview server";
-var builder = {
+var builder$1 = {
   port: {
     "default": DEFAULT_PORT
   }
@@ -1104,7 +1104,7 @@ var preview = /*#__PURE__*/Object.freeze({
   __proto__: null,
   command: command$1,
   describe: describe$1,
-  builder: builder,
+  builder: builder$1,
   handler: handler$1
 });
 
@@ -1207,6 +1207,14 @@ function looksLikeTypescriptProject() {
 
 var command = ["$0", "init"];
 var describe = "initialize mailing in your app";
+var builder = {
+  typescript: {
+    description: "use Typescript"
+  },
+  "emails-dir": {
+    description: "where to put your emails - ./emails or ./src/emails are currently the only valid options"
+  }
+};
 var handler = /*#__PURE__*/function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(args) {
     var isTypescript, ts, options;
@@ -1288,6 +1296,7 @@ var init = /*#__PURE__*/Object.freeze({
   __proto__: null,
   command: command,
   describe: describe,
+  builder: builder,
   handler: handler
 });
 
