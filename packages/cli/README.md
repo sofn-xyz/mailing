@@ -224,3 +224,24 @@ For development, you may want to have a demo next app that pulls in your changes
 - Make your changes in `mailing`
 - Run `yarn build` in the `mailing` root directory to create new `dist` files
 - Run `yalc push` in the `mailing` root directory to both publish your changes (`yalc publish`) and pull them in to your next app (`yalc update`)
+
+### Run cypress tests for the preview server
+
+- Start a mailing preview server on localhost:3883
+- cd into packages/cli and run `yarn cypress run`
+
+### Cypress smoke tests
+
+The directory `scripts/e2e_test` contains smoke tests targeting supported frameworks that should be run before every public npm release. Each test uses the `yarn create` command to create new projects from their `create-*` starter kits and then runs the cypress cli tests contained in `packages/cli/cypress`. The frameworks currently covered by the tests are:
+
+- Next.js (typescript)
+- Next.js (javascript)
+
+**Initial test setup**
+
+- In the project root, run `asdf install` to install ruby 3.1.2
+- In the directory `scripts/e2e_test`, run `bundle install` to install the required ruby gems
+
+**Run the smoke tests**
+
+- In the directory `scripts/e2e_test`, run `bundle exec ruby e2e_test.rb`

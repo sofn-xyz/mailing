@@ -1,22 +1,30 @@
 # frozen_string_literal: true
 
 require 'tmpdir'
+require 'json'
 
 class TestRunner
   BASE_DIR = "./runs"
-  NUM_RUNS_TO_KEEP = 5
-  CYPRESS_DIR = File.expand_path(__dir__ + '/../../packages/cli/cypress')
+  NUM_RUNS_TO_KEEP = 12
+  PROJECT_ROOT = File.expand_path(__dir__ + '/../..') 
+  CYPRESS_DIR = File.join(PROJECT_ROOT, 'packages/cli/cypress')
 
   E2E_CONFIG = [
-    {name: 'next_ts',
-      commands: [
-        "yarn create next-app . --typescript",
-        "yalc add mailing",
-      ]},
-    # {name: 'next_js'},
+    {
+      name: 'next_ts',
+      command: "yarn create next-app . --typescript",
+    },
+    {
+      name: 'next_js',
+      command: "yarn create next-app ."
+    }
   ];
 
   def initialize
+    fail "Check that PROJECT_ROOT exists: #{PROJECT_ROOT}" unless Dir.exists?(PROJECT_ROOT)
+    
+    package_json_file = File.join(PROJECT_ROOT, 'package.json')
+    fail "Check that PROJECT_ROOT is the project root: #{PROJECT_ROOT}" unless File.exists?(package_json_file) && 'mailing-monorepo' == JSON::parse(File.read(package_json_file))['name']
     fail "Check that CYPRESS_DIR exists: #{CYPRESS_DIR}" unless Dir.exists?(CYPRESS_DIR)
   end
 
@@ -34,14 +42,15 @@ class TestRunner
         puts "⚙️  " * 10
         puts "Attempting #{config[:name]} in #{tmp_dir_name}"
         puts "⚙️  " * 10
-        
+
         Dir.mkdir(tmp_dir_name)
 
         Dir.chdir(tmp_dir_name) do
-          config[:commands].each do |cmd|
-            puts "running #{cmd}"
-            system(cmd)
-          end
+          # run the bootstrap command
+          system(config[:command])
+
+          ## add mailing to the project
+          system("yalc add mailing")
 
           # open the subprocess
           @io = IO.popen("npx mailing --quiet --typescript --emails-dir=\"./emails\"")
