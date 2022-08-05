@@ -11,7 +11,7 @@
 - Preview server with live reload for quick development
 - Dev mode opens emails in your browser instead of sending
 - Test mode for ensuring emails send and have the correct content
-- Plays well with js frameworks like redwood.js, remix, next.js
+- Plays well with js frameworks like next.js, redwood.js, remix
 - Written in TypeScript, inspired by Action Mailer from Ruby on Rails
 
 <br/>

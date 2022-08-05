@@ -37,7 +37,7 @@ class TestRunner
 
     E2E_CONFIG.each do |config|
       begin
-        tmp_dir_name = BASE_DIR + "/" + [config[:name], Time.now.strftime("%Y%m%d%H%M%S")].join('-')
+        tmp_dir_name = File.join(RUNS_DIR, [config[:name], Time.now.strftime("%Y%m%d%H%M%S")].join('-'))
 
         puts "⚙️  " * 10
         puts "Attempting #{config[:name]} in #{tmp_dir_name}"
