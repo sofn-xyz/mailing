@@ -11,7 +11,6 @@ class TestRunner
       commands: [
         "yarn create next-app . --typescript",
         "yalc add mailing",
-        "npx mailing --quiet"
       ]},
     # {name: 'next_js'},
   ];
@@ -38,6 +37,18 @@ class TestRunner
               puts "running #{cmd}"
               system(cmd)
             end
+
+            # open the subprocess
+            f = IO.popen("npx mailing --typescript --emails-dir=\"./emails\"")
+
+            # run cypress tests
+            # implement me
+
+            # kill the subprocess
+            Process.kill "INT", f.pid
+
+            # close the io
+            f.close
           end
         ensure
           cleanup_runs_directory
