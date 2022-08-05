@@ -44,12 +44,10 @@ class TestRunner
           end
 
           # open the subprocess
-          @io = IO.popen("npx mailing --typescript --emails-dir=\"./emails\"")
-          # should probably wait for something here
-          
+          @io = IO.popen("npx mailing --quiet --typescript --emails-dir=\"./emails\"")
+          # TODO: wait for the preview server to start
         end
 
-        # run cypress tests
         run_cypress_tests
       ensure
         cleanup_io_and_subprocess
