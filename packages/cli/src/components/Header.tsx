@@ -1,5 +1,6 @@
 import { ReactElement } from "react";
 import Link from "next/link";
+import Image from "next/image";
 
 import Tooltip from "./Tooltip";
 import PreviewSender from "./PreviewSender";
@@ -19,33 +20,84 @@ const Header: React.FC<HeaderProps> = ({
   title,
   previewFunction,
   previewClass,
+  viewMode,
   setViewMode,
   helpContent,
 }) => {
   return (
-    <div id="header">
-      <Link href="/">
-        <a id="index">
-          <span>Index</span>
-        </a>
-      </Link>
-      <div id="email-container">
-        <div id="current">{title}</div>
+    <div className="header">
+      <div className="path">
+        <Link href="/">
+          <a className="index">
+            <span>Index</span>
+          </a>
+        </Link>
+        <span> / {title}</span>
       </div>
-      <div id="utilities">
-        <button id="desktop" onClick={() => setViewMode("desktop")}>
-          <span>Desktop</span>
-        </button>
-        <button id="mobile" onClick={() => setViewMode("mobile")}>
-          Mobile
-        </button>
-        <button id="html" onClick={() => setViewMode("html")}>
-          <span>HTML</span>
-        </button>
+      <div className="segmented-control-container">
+        <div className="segmented-control">
+          <button
+            className={`desktop${viewMode === "desktop" ? " active" : ""}`}
+            onClick={() => setViewMode("desktop")}
+          >
+            <Image
+              src="/icon-desktop.svg"
+              width="24"
+              height="20"
+              alt="Desktop icon"
+              title="Toggle desktop view"
+            />
+          </button>
+          <button
+            className={`mobile${viewMode === "mobile" ? " active" : ""}`}
+            onClick={() => setViewMode("mobile")}
+          >
+            <Image
+              src="/icon-mobile.svg"
+              width="12.43"
+              height="22"
+              alt="Mobile icon"
+              title="Toggle mobile view"
+            />
+          </button>
+          <button
+            className={`html${viewMode === "html" ? " active" : ""}`}
+            onClick={() => setViewMode("html")}
+          >
+            <Image
+              src="/icon-code.svg"
+              width="21"
+              height="14.5"
+              alt="HTML icon"
+              title="Toggle HTML view"
+            />
+          </button>
+        </div>
+      </div>
+      <div className="buttons-container">
         <Tooltip
           trigger={(show, setShow) => (
-            <button id="help" onClick={() => setShow((current) => !current)}>
-              {show ? <span className="close">×</span> : "?"}
+            <button
+              className="help"
+              onClick={() => setShow((current) => !current)}
+            >
+              {show ? (
+                <Image
+                  src="/icon-close.svg"
+                  width="10"
+                  height="10"
+                  alt="Close icon"
+                  title="Close"
+                />
+              ) : (
+                <Image
+                  src="/icon-question.svg"
+                  width="8"
+                  height="12"
+                  alt="Close icon"
+                  title="Close"
+                />
+              )}
             </button>
           )}
           content={helpContent}
@@ -53,15 +105,25 @@ const Header: React.FC<HeaderProps> = ({
         {!process.env.NEXT_PUBLIC_STATIC && previewFunction && previewClass && (
           <Tooltip
             trigger={(show, setShow) => (
-              <button id="send" onClick={() => setShow((current) => !current)}>
+              <button
+                className="send"
+                onClick={() => setShow((current) => !current)}
+              >
                 {show ? (
-                  <span className="close">×</span>
+                  <Image
+                    src="/icon-close.svg"
+                    width="10"
+                    height="10"
+                    alt="Close icon"
+                    title="Close"
+                  />
                 ) : (
-                  <img
-                    src="https://s3.amazonaws.com/lab.campsh.com/Group+141%402x.png"
-                    height="12"
-                    width="12"
-                    alt="send preview"
+                  <Image
+                    src="/icon-send.svg"
+                    width="14.43"
+                    height="14"
+                    alt="Send icon"
+                    title="Send a preview"
                   />
                 )}
               </button>
@@ -76,31 +138,42 @@ const Header: React.FC<HeaderProps> = ({
         )}
       </div>
       <style jsx>{`
-        #header {
+        .header {
           height: 64px;
-          border-bottom: solid 1px #ccc;
+          border: 1px dotted #333;
           display: flex;
           justify-content: space-between;
           align-items: center;
-          padding: 0 22px 0 24px;
+          padding: 0 24px;
           -webkit-font-smoothing: antialiased;
-        }
-        #index {
           font-size: 14px;
         }
-        #email-container,
-        #utilities,
-        #index {
+        .buttons-container {
+          display: flex;
+          align-items: center;
+          flex-direction: row;
+          justify-content: right;
+        }
+        .buttons-container,
+        .segmented-control-container,
+        .path {
           flex: 1;
+        }
+        .index {
+          display: inline-block;
+        }
+        .segmented-control-container {
+          text-align: center;
+        }
+        .segmented-control {
+          display: inline-flex;
+          align-items: center;
         }
         button {
           background: #fff;
           height: 40px;
-          font-size: 12px;
-          border: solid 1px #ccc;
-          padding: 12px;
+          border: 1px dotted #333;
           transition: background-color, box-shadow 200ms ease-out;
-          line-height: 1;
           text-align: center;
         }
         a {
@@ -109,7 +182,7 @@ const Header: React.FC<HeaderProps> = ({
         a:hover span,
         button:hover {
           cursor: pointer;
-          background: #fafa98;
+          background: #e4ebfa;
         }
         button:active {
           box-shadow: inset 0 0 12px rgba(0, 0, 0, 0.5);
@@ -117,59 +190,48 @@ const Header: React.FC<HeaderProps> = ({
         a:active {
           transform: translateY(2px);
         }
-        #email-container {
-          text-align: center;
-        }
-        #current {
-          font-size: 14px;
-        }
-        #utilities {
+        .buttons-container {
           text-align: end;
         }
-        #desktop {
-          margin-right: 0;
+        .desktop,
+        .mobile,
+        .html {
+          height: 40px;
+          width: 60px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        .desktop {
           border-right: none;
-          border-top-left-radius: 2px;
-          border-bottom-left-radius: 2px;
+          border-top-left-radius: 16px;
+          border-bottom-left-radius: 16px;
         }
-        #mobile {
-          margin-right: 0;
-          margin-left: 0;
-          border-top-right-radius: 2px;
-          border-bottom-right-radius: 2px;
+        .html {
+          border-left: none;
+          border-top-right-radius: 16px;
+          border-bottom-right-radius: 16px;
         }
-        #help {
-          margin-right: 6px;
-          margin-left: 8px;
+        .active {
+          background: #e4ebfa;
         }
-        #help,
-        #send {
+        .help,
+        .send {
           width: 40px;
-          border-radius: 100%;
-          line-height: 10px;
+          height: 40px;
+          border-radius: 16px;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          padding: 0;
         }
-        #send {
-          margin: 0;
-        }
-        #send img {
-          position: relative;
-          top: 1px;
-        }
-        .close {
-          font-size: 16px;
-          line-height: 10px;
-          position: relative;
-          left: 1px;
+        .help {
+          margin: 0 8px 0 0;
         }
         @media (max-width: 768px) {
-          #desktop,
-          #mobile,
-          #html,
-          #help {
+          .segmented-control-container,
+          .help {
             display: none;
-          }
-          #email-container {
-            flex: 6;
           }
         }
       `}</style>

@@ -96,11 +96,23 @@ const Preview = ({ initialData }: { initialData: ShowPreviewResponseBody }) => {
             <div className="title">Hotkeys</div>
             <div className="hotkey">
               <span className="character">/</span>
-              <span className="description">Jump to Index</span>
+              <span className="description">Jump to previews</span>
             </div>
             <div className="hotkey">
               <span className="character">.</span>
-              <span className="description">Toggle desktop/mobile view</span>
+              <span className="description">Toggle view mode</span>
+            </div>
+            <div className="hotkey">
+              <span className="character">D</span>
+              <span className="description">Desktop view</span>
+            </div>
+            <div className="hotkey">
+              <span className="character">M</span>
+              <span className="description">Mobile view</span>
+            </div>
+            <div className="hotkey">
+              <span className="character">H</span>
+              <span className="description">HTML view</span>
             </div>
           </>
         }

@@ -23,11 +23,23 @@ const Intercept: React.FC<InterceptProps> = ({ data }) => {
             <div className="title">Hotkeys</div>
             <div className="hotkey">
               <span className="character">/</span>
-              <span className="description">Jump to Index</span>
+              <span className="description">Jump to previews</span>
             </div>
             <div className="hotkey">
               <span className="character">.</span>
-              <span className="description">Toggle desktop/mobile view</span>
+              <span className="description">Toggle view mode</span>
+            </div>
+            <div className="hotkey">
+              <span className="character">D</span>
+              <span className="description">Desktop view</span>
+            </div>
+            <div className="hotkey">
+              <span className="character">M</span>
+              <span className="description">Mobile view</span>
+            </div>
+            <div className="hotkey">
+              <span className="character">H</span>
+              <span className="description">HTML view</span>
             </div>
           </>
         }
@@ -48,7 +60,7 @@ const Intercept: React.FC<InterceptProps> = ({ data }) => {
       )}
       <style jsx>{`
         .container {
-          border-bottom: solid 1px #ccc;
+          border-bottom: dotted 1px #333;
           padding: 16px 24px;
           margin: auto;
           font-size: 12px;

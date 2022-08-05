@@ -150,7 +150,7 @@ const PreviewSender: React.FC<PreviewSenderProps> = ({
           color: #000;
           font-size: 12px;
           border: none;
-          padding: 10px 12px 11px;
+          padding: 11px 12px 14px;
           position: relative;
           top: -2px;
           border-image-width: 0;
@@ -162,7 +162,7 @@ const PreviewSender: React.FC<PreviewSenderProps> = ({
         }
         input[type="submit"]:hover {
           cursor: pointer;
-          background: #fafa98;
+          background: #e4ebfa;
         }
         input[type="submit"]:active {
           box-shadow: inset 0 0 12px rgba(0, 0, 0, 0.75);

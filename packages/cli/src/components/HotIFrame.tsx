@@ -49,7 +49,7 @@ const HotIFrame: React.FC<HotIFrameProps> = ({
         }
         .mobile,
         .mobile iframe {
-          border: 2px solid #ccc;
+          border: 1px dotted #333;
         }
         .code-container {
           font-size: 10px;
@@ -64,7 +64,7 @@ const HotIFrame: React.FC<HotIFrameProps> = ({
           .code-container {
             white-space: pre-wrap;
             color: white;
-            background: black;
+            background: #212121;
           }
         }
       `}</style>

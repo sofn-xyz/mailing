@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { GetStaticProps, NextPage } from "next";
 import Link from "next/link";
+import Image from "next/image";
 
 type HomeProps = { previews: [string, string[]][] };
 
@@ -40,15 +41,16 @@ const Home: NextPage<HomeProps> = ({ previews: initialPreviews }) => {
     <div>
       <div className="container">
         {showNullState && (
-          <img
-            className="eyebrow"
-            src="https://s3.amazonaws.com/lab.campsh.com/mailing-lil%402x.png"
-            width="76"
-            height="16"
-            alt="mailing logo"
-          />
+          <div className="eyebrow">
+            <Image
+              src="/mailing-lil@2x.png"
+              width="76"
+              height="16"
+              alt="Mailing logo"
+            />
+          </div>
         )}
-        <h1>Previews</h1>
+        <h1>previews</h1>
         {showNullState && (
           <div className="null-sub">
             Build new email templates in <span className="code">emails</span>.
@@ -76,11 +78,11 @@ const Home: NextPage<HomeProps> = ({ previews: initialPreviews }) => {
       {!showNullState && (
         <Link href="https://mailing.run">
           <a className="footer" target="_blank">
-            <img
-              src="https://s3.amazonaws.com/lab.campsh.com/mailing-lil%402x.png"
+            <Image
+              src="/mailing-lil@2x.png"
               width="76"
               height="16"
-              alt="mailing logo"
+              alt="Mailing logo"
             />
           </a>
         </Link>
@@ -138,7 +140,7 @@ const Home: NextPage<HomeProps> = ({ previews: initialPreviews }) => {
           display: inline-block;
         }
         a.email:hover {
-          background: #fafa98;
+          background: #e4ebfa;
         }
         a.email:active {
           transform: translateY(2px);
