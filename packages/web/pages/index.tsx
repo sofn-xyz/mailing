@@ -123,7 +123,7 @@ const Home: NextPage = () => {
               </p>
               <a
                 className="bg-black text-white text-xl sm:text-3xl 2xl:text-4xl leading-none px-12 pt-5 pb-6 block rounded-sm hover:underline absolute sm:static w-100 sm:w-fit right-[24px] bottom-[32px] left-[24px] text-center"
-                href="https://github.com/successor-software/mailing"
+                href="https://github.com/sofn-xyz/mailing"
               >
                 View on GitHub
               </a>

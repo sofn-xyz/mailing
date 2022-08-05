@@ -195,7 +195,7 @@ describe("Example API", () => {
 
 `mm` is a cute alias for `mailing`
 
-[source entrypoint](https://github.com/successor-software/mailing/blob/main/packages/cli/src/index.ts)
+[source entrypoint](https://github.com/sofn-xyz/mailing/blob/main/packages/cli/src/index.ts)
 
 <br/>
 
@@ -206,7 +206,7 @@ Want to improve Mailing? Incredible. Try it out, file an issue or open a PR!
 ### Setup
 
 ```zsh
-git clone git@github.com:successor-software/mailing.git
+git clone git@github.com:sofn-xyz/mailing.git
 cd mailing
 yarn
 yarn dev

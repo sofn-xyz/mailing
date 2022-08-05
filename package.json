@@ -20,7 +20,7 @@
   "workspaces": [
     "packages/*"
   ],
-  "homepage": "https://github.com/successor-software/mailing#readme",
+  "homepage": "https://github.com/sofn-xyz/mailing#readme",
   "devDependencies": {
     "@babel/preset-react": "^7.17.12",
     "@babel/preset-typescript": "^7.17.12",

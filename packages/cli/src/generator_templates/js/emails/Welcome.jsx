@@ -36,7 +36,12 @@ const MyFirstEmail = ({ name }) => (
       </MjmlSection>
       <MjmlSection padding="0 24px 0" cssClass="smooth">
         <MjmlColumn>
-          <MjmlText cssClass="paragraph" padding="0" fontSize={textXl} lineHeight={leadingTight}>
+          <MjmlText
+            cssClass="paragraph"
+            padding="0"
+            fontSize={textXl}
+            lineHeight={leadingTight}
+          >
             Welcome, {name}!
           </MjmlText>
           <MjmlText
@@ -61,11 +66,16 @@ const MyFirstEmail = ({ name }) => (
           />
           <MjmlSpacer height="24px" />
           <ButtonPrimary
-            link={"https://github.com/successor-software/mailing"}
+            link={"https://github.com/sofn-xyz/mailing"}
             uiText={"View Github Repo"}
           />
           <MjmlSpacer height="24px" />
-          <MjmlText cssClass="paragraph" padding="0" fontSize={textBase} lineHeight={leadingRelaxed}>
+          <MjmlText
+            cssClass="paragraph"
+            padding="0"
+            fontSize={textBase}
+            lineHeight={leadingRelaxed}
+          >
             Thank you for checking out our project. We’d love to hear your ideas
             on how we can make sending great emails more fun and simple.
           </MjmlText>

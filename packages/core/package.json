@@ -4,10 +4,10 @@
   "main": "dist/mailing-core.cjs.js",
   "license": "MIT",
   "description": "Fun email development environment (core library only)",
-  "homepage": "https://github.com/successor-software/mailing#readme",
+  "homepage": "https://github.com/sofn-xyz/mailing#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/successor-software/mailing.git"
+    "url": "git+https://github.com/sofn-xyz/mailing.git"
   },
   "dependencies": {
     "chalk": "^4.1.2",
