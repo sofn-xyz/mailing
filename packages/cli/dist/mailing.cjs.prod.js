@@ -643,11 +643,17 @@ function showPreview(req, res) {
 
   var modulePath = path.resolve(previewsPath, moduleName);
   var functionName = functionNameJSON.replace(".json", "");
-  delete require.cache[modulePath];
+  var emailsPath = path.resolve(previewsPath, "..");
 
-  var module = require(modulePath);
+  for (var path$1 in require.cache) {
+    if (path$1.startsWith(emailsPath)) {
+      delete require.cache[path$1];
+    }
+  }
 
-  var component = module[functionName]();
+  var previewModule = require(modulePath);
+
+  var component = previewModule[functionName]();
 
   if (component !== null && component !== void 0 && component.props) {
     try {
@@ -671,7 +677,6 @@ function showPreview(req, res) {
       res.end(JSON.stringify(e));
     }
   } else {
-    var emailsPath = path.resolve(previewsPath, "..");
     var msg = "".concat(functionName, "() from ").concat(modulePath, " must return a react component defined in ").concat(emailsPath);
     error(msg);
     res.writeHead(404);
@@ -823,7 +828,7 @@ function _sendPreview() {
 var DEFAULT_PORT = 3883;
 var command$1 = "preview";
 var describe$1 = "start the email preview server";
-var builder = {
+var builder$1 = {
   port: {
     "default": DEFAULT_PORT
   }
@@ -1046,10 +1051,6 @@ var handler$1 = /*#__PURE__*/function () {
                       return open__default["default"](currentUrl);
 
                     case 4:
-                      _context2.next = 6;
-                      return open__default["default"](currentUrl);
-
-                    case 6:
                     case "end":
                       return _context2.stop();
                   }
@@ -1101,7 +1102,7 @@ var preview = /*#__PURE__*/Object.freeze({
   __proto__: null,
   command: command$1,
   describe: describe$1,
-  builder: builder,
+  builder: builder$1,
   handler: handler$1
 });
 
@@ -1119,12 +1120,12 @@ function generateEmailsDirectory(_x) {
 
 function _generateEmailsDirectory() {
   _generateEmailsDirectory = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(_ref) {
-    var isTypescript, existingEmailsPath, emailsPath, response, path$1;
+    var isTypescript, emailsDir, existingEmailsPath, targetEmailsDir, emailsPath, response, path$1;
     return _regeneratorRuntime().wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
-            isTypescript = _ref.isTypescript;
+            isTypescript = _ref.isTypescript, emailsDir = _ref.emailsDir;
             existingEmailsPath = getExistingEmailsDir();
 
             if (!existingEmailsPath) {
@@ -1137,8 +1138,18 @@ function _generateEmailsDirectory() {
             return _context.abrupt("return", false);
 
           case 5:
+            if (!emailsDir) {
+              _context.next = 9;
+              break;
+            }
+
+            targetEmailsDir = emailsDir;
+            _context.next = 14;
+            break;
+
+          case 9:
             emailsPath = getPotentialEmailsDirPath();
-            _context.next = 8;
+            _context.next = 12;
             return prompts__default["default"]({
               type: "text",
               name: "path",
@@ -1146,30 +1157,32 @@ function _generateEmailsDirectory() {
               initial: "./" + path.relative(process.cwd(), emailsPath) + "/"
             });
 
-          case 8:
+          case 12:
             response = _context.sent;
+            targetEmailsDir = response.path;
 
-            if (!response.path) {
-              _context.next = 17;
+          case 14:
+            if (!targetEmailsDir) {
+              _context.next = 22;
               break;
             }
 
             // copy the emails dir template in!
             path$1 = "generator_templates/".concat(isTypescript ? "ts" : "js", "/emails");
-            _context.next = 13;
-            return fsExtra.copySync(path.resolve(__dirname, path$1), response.path, {
+            _context.next = 18;
+            return fsExtra.copySync(path.resolve(__dirname, path$1), targetEmailsDir, {
               overwrite: false
             });
 
-          case 13:
-            log("Generated your emails dir at ".concat(response.path, ":\n").concat(tree__default["default"](response.path)));
+          case 18:
+            log("Generated your emails dir at ".concat(targetEmailsDir, ":\n").concat(tree__default["default"](targetEmailsDir)));
             return _context.abrupt("return", true);
 
-          case 17:
+          case 22:
             log("OK, bye!");
             return _context.abrupt("return", false);
 
-          case 19:
+          case 24:
           case "end":
             return _context.stop();
         }
@@ -1192,9 +1205,17 @@ function looksLikeTypescriptProject() {
 
 var command = ["$0", "init"];
 var describe = "initialize mailing in your app";
+var builder = {
+  typescript: {
+    description: "use Typescript"
+  },
+  "emails-dir": {
+    description: "where to put your emails - ./emails or ./src/emails are currently the only valid options"
+  }
+};
 var handler = /*#__PURE__*/function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(args) {
-    var ts, options;
+    var isTypescript, ts, options;
     return _regeneratorRuntime().wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
@@ -1209,11 +1230,31 @@ var handler = /*#__PURE__*/function () {
 
           case 3:
             if (getExistingEmailsDir()) {
-              _context.next = 10;
+              _context.next = 19;
               break;
             }
 
-            _context.next = 6;
+            if (!("false" === args.typescript)) {
+              _context.next = 8;
+              break;
+            }
+
+            isTypescript = false;
+            _context.next = 16;
+            break;
+
+          case 8:
+            if (!args.typescript) {
+              _context.next = 12;
+              break;
+            }
+
+            isTypescript = true;
+            _context.next = 16;
+            break;
+
+          case 12:
+            _context.next = 14;
             return prompts__default["default"]({
               type: "confirm",
               name: "value",
@@ -1221,18 +1262,22 @@ var handler = /*#__PURE__*/function () {
               initial: looksLikeTypescriptProject()
             });
 
-          case 6:
+          case 14:
             ts = _context.sent;
+            isTypescript = ts.value;
+
+          case 16:
             options = {
-              isTypescript: ts.value
+              isTypescript: isTypescript,
+              emailsDir: args["emails-dir"]
             };
-            _context.next = 10;
+            _context.next = 19;
             return generateEmailsDirectory(options);
 
-          case 10:
+          case 19:
             handler$1(args);
 
-          case 11:
+          case 20:
           case "end":
             return _context.stop();
         }
@@ -1249,6 +1294,7 @@ var init = /*#__PURE__*/Object.freeze({
   __proto__: null,
   command: command,
   describe: describe,
+  builder: builder,
   handler: handler
 });
 

@@ -157,7 +157,6 @@ export const handler = async (argv: PreviewArgs) => {
     .listen(port, async () => {
       log(`Running preview at ${currentUrl}`);
       if (!argv.quiet) await open(currentUrl);
-      await open(currentUrl);
     })
     .on("error", function onServerError(e: NodeJS.ErrnoException) {
       if (e.code === "EADDRINUSE") {
