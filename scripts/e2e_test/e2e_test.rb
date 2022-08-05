@@ -4,9 +4,9 @@ require 'tmpdir'
 require 'json'
 
 class TestRunner
-  BASE_DIR = "./runs"
   NUM_RUNS_TO_KEEP = 12
   PROJECT_ROOT = File.expand_path(__dir__ + '/../..') 
+  RUNS_DIR = File.expand_path(__dir__ + '/runs')
   CYPRESS_DIR = File.join(PROJECT_ROOT, 'packages/cli/cypress')
 
   E2E_CONFIG = [
@@ -29,7 +29,7 @@ class TestRunner
   end
 
   def run
-    Dir.chdir("../..") do
+    Dir.chdir(PROJECT_ROOT) do
       system("yalc add")
       system("yarn build")
       system("yalc push")
@@ -83,7 +83,7 @@ class TestRunner
   end
 
   def cleanup_runs_directory
-    Dir.glob("#{BASE_DIR}/*")[NUM_RUNS_TO_KEEP..-1]&.sort{|a,b| b <=> a}&.each do |dir|
+    Dir.glob("#{RUNS_DIR}/*")[NUM_RUNS_TO_KEEP..-1]&.sort{|a,b| b <=> a}&.each do |dir|
       puts "Cleaning up #{dir}"
       FileUtils.rm_rf(dir)
     end
