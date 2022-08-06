@@ -1,5 +1,6 @@
 'use strict';
 
+require('dotenv/config');
 var yargs = require('yargs/yargs');
 var http = require('http');
 var path = require('path');
