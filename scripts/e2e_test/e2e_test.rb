@@ -20,11 +20,11 @@ class TestRunner
     },
     {
       name: 'redwood_ts',
-      command: "yarn create redwood-app . --typescript; touch yarn.lock; yarn",
+      command: "yarn create redwood-app . --typescript > /dev/null; touch yarn.lock; yarn > /dev/null",
     },
     {
       name: 'redwood_js',
-      command: "yarn create redwood-app .; touch yarn.lock; yarn"
+      command: "yarn create redwood-app . > /dev/null; touch yarn.lock; yarn"
     },
   ];
 
@@ -38,6 +38,7 @@ class TestRunner
 
   def build_mailing
     Dir.chdir(PROJECT_ROOT) do
+      system("yalc remove")
       system("yalc add")
       system("yarn build")
       system("yalc push")
