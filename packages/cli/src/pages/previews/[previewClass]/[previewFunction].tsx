@@ -49,7 +49,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
 const Preview = ({ initialData }: { initialData: ShowPreviewResponseBody }) => {
   const router = useRouter();
-  const [isMobile, setIsMobile] = useState(false);
+  const [viewMode, setViewMode] = useState<ViewMode>("desktop");
   const [data, setData] = useState<ShowPreviewResponseBody | null>(
     process.env.NEXT_PUBLIC_STATIC ? initialData : null
   );
@@ -80,7 +80,7 @@ const Preview = ({ initialData }: { initialData: ShowPreviewResponseBody }) => {
   const { previewClass, previewFunction } = router.query;
 
   if (!(previewClass && previewFunction)) {
-    return <div>loading</div>;
+    return <></>;
   }
 
   return (
@@ -89,18 +89,30 @@ const Preview = ({ initialData }: { initialData: ShowPreviewResponseBody }) => {
         title={`${previewClass} - ${previewFunction}`}
         previewClass={previewClass as string}
         previewFunction={previewFunction as string}
-        isMobile={isMobile}
-        setIsMobile={setIsMobile}
+        viewMode={viewMode}
+        setViewMode={setViewMode}
         helpContent={
           <>
             <div className="title">Hotkeys</div>
             <div className="hotkey">
               <span className="character">/</span>
-              <span className="description">Jump to Index</span>
+              <span className="description">Jump to previews</span>
             </div>
             <div className="hotkey">
               <span className="character">.</span>
-              <span className="description">Toggle desktop/mobile view</span>
+              <span className="description">Toggle view mode</span>
+            </div>
+            <div className="hotkey">
+              <span className="character">D</span>
+              <span className="description">Desktop view</span>
+            </div>
+            <div className="hotkey">
+              <span className="character">M</span>
+              <span className="description">Mobile view</span>
+            </div>
+            <div className="hotkey">
+              <span className="character">H</span>
+              <span className="description">HTML view</span>
             </div>
           </>
         }
@@ -109,8 +121,8 @@ const Preview = ({ initialData }: { initialData: ShowPreviewResponseBody }) => {
       {data?.html && !data?.errors.length && (
         <HotIFrame
           srcDoc={data.html}
-          isMobile={isMobile}
-          setIsMobile={setIsMobile}
+          viewMode={viewMode}
+          setViewMode={setViewMode}
         />
       )}
 
@@ -119,7 +131,7 @@ const Preview = ({ initialData }: { initialData: ShowPreviewResponseBody }) => {
           margin-top: 8px;
           height: calc(100vh - 50px);
           width: 100%;
-          max-width: ${isMobile ? "320px" : "100%"};
+          max-width: ${viewMode === "mobile" ? "320px" : "100%"};
           border: 0;
         }
         .title {
@@ -133,7 +145,7 @@ const Preview = ({ initialData }: { initialData: ShowPreviewResponseBody }) => {
         }
         .hotkey {
           font-size: 12px;
-          margin: 12px 8px 0 0;
+          margin: 12px 24px 0 0;
         }
         .character {
           color: #bbb;

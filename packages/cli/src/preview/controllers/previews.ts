@@ -30,7 +30,7 @@ export function showPreviewIndex(req: IncomingMessage, res: ServerResponse) {
   );
   const previews: [string, string[]][] = previewCollections.map((p) => {
     const previewPath = resolve(previewsPath, p);
-    return [p, Object.keys(require(previewPath))];
+    return [p, Object.keys(require(previewPath)).sort()];
   });
 
   try {

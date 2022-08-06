@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { GetStaticProps, NextPage } from "next";
 import Link from "next/link";
+import Image from "next/image";
 
 type HomeProps = { previews: [string, string[]][] };
 
@@ -23,7 +24,7 @@ const Home: NextPage<HomeProps> = ({ previews: initialPreviews }) => {
   };
   useEffect(() => {
     if (!previews?.length) fetchData();
-  }, []);
+  }, [previews?.length]);
 
   if (!previews) {
     return <></>; // loading, should be quick bc everything is local
@@ -36,18 +37,15 @@ const Home: NextPage<HomeProps> = ({ previews: initialPreviews }) => {
       previews[1][0] === "Welcome.tsx" &&
       !process.env.NEXT_PUBLIC_STATIC);
 
+  const logo = (
+    <Image src="/logo-small@2x.png" width="76" height="16" alt="Mailing logo" />
+  );
+
   return (
     <div>
       <div className="container">
-        {showNullState && (
-          <img
-            className="eyebrow"
-            src="https://s3.amazonaws.com/lab.campsh.com/mailing-lil%402x.png"
-            width="76"
-            height="16"
-          />
-        )}
-        <h1>Previews</h1>
+        {showNullState && <div className="eyebrow">{logo}</div>}
+        <h1>previews</h1>
         {showNullState && (
           <div className="null-sub">
             Build new email templates in <span className="code">emails</span>.
@@ -75,11 +73,7 @@ const Home: NextPage<HomeProps> = ({ previews: initialPreviews }) => {
       {!showNullState && (
         <Link href="https://mailing.run">
           <a className="footer" target="_blank">
-            <img
-              src="https://s3.amazonaws.com/lab.campsh.com/mailing-lil%402x.png"
-              width="76"
-              height="16"
-            />
+            {logo}
           </a>
         </Link>
       )}
@@ -136,7 +130,7 @@ const Home: NextPage<HomeProps> = ({ previews: initialPreviews }) => {
           display: inline-block;
         }
         a.email:hover {
-          background: #fafa98;
+          background: #e4ebfa;
         }
         a.email:active {
           transform: translateY(2px);
@@ -144,8 +138,6 @@ const Home: NextPage<HomeProps> = ({ previews: initialPreviews }) => {
         .footer {
           display: block;
           text-align: center;
-        }
-        .footer img {
           margin-top: -40px;
           margin-bottom: 64px;
         }
