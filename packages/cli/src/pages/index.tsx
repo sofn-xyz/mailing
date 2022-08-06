@@ -37,19 +37,14 @@ const Home: NextPage<HomeProps> = ({ previews: initialPreviews }) => {
       previews[1][0] === "Welcome.tsx" &&
       !process.env.NEXT_PUBLIC_STATIC);
 
+  const logo = (
+    <Image src="/logo-small@2x.png" width="76" height="16" alt="Mailing logo" />
+  );
+
   return (
     <div>
       <div className="container">
-        {showNullState && (
-          <div className="eyebrow">
-            <Image
-              src="/mailing-lil@2x.png"
-              width="76"
-              height="16"
-              alt="Mailing logo"
-            />
-          </div>
-        )}
+        {showNullState && <div className="eyebrow">{logo}</div>}
         <h1>previews</h1>
         {showNullState && (
           <div className="null-sub">
@@ -78,12 +73,7 @@ const Home: NextPage<HomeProps> = ({ previews: initialPreviews }) => {
       {!showNullState && (
         <Link href="https://mailing.run">
           <a className="footer" target="_blank">
-            <Image
-              src="/mailing-lil@2x.png"
-              width="76"
-              height="16"
-              alt="Mailing logo"
-            />
+            {logo}
           </a>
         </Link>
       )}
