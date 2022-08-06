@@ -66,5 +66,27 @@ export const handler = async (args: CliArguments) => {
     await generateEmailsDirectory(options);
   }
 
-  previewHandler(args);
+  const emailResponse = await prompts({
+    type: "text",
+    name: "email",
+    message:
+      "Enter your email for occasional updates about mailing (optional):",
+  });
+  log(emailResponse);
+  const { email } = emailResponse;
+  if (email?.length > 0) {
+    log("Great, thanks!");
+    const PORT = args.port || 3883;
+    const BASE_URL = process.env.MM_DEV
+      ? `http://localhost:${PORT}`
+      : "https://www.mailing.run";
+    await fetch(`${BASE_URL}/api/users`, {
+      method: "POST",
+      body: JSON.stringify({ email }),
+    });
+  } else {
+    log("No problem!");
+  }
+
+  await previewHandler(args);
 };
