@@ -11,6 +11,14 @@ class TestRunner
 
   E2E_CONFIG = [
     {
+      name: 'next_ts',
+      command: "yarn create next-app . --typescript",
+    },
+    {
+      name: 'next_js',
+      command: "yarn create next-app ."
+    },
+    {
       name: 'redwood_ts',
       command: "yarn create redwood-app . --typescript; touch yarn.lock; yarn",
     },
@@ -18,14 +26,6 @@ class TestRunner
       name: 'redwood_js',
       command: "yarn create redwood-app .; touch yarn.lock; yarn"
     },
-    {
-      name: 'next_ts',
-      command: "yarn create next-app . --typescript",
-    },
-    {
-      name: 'next_js',
-      command: "yarn create next-app ."
-    }
   ];
 
   def initialize
