@@ -12,15 +12,15 @@ class TestRunner
   E2E_CONFIG = [
     {
       name: 'next_ts',
-      command: "yarn create next-app . --typescript > /dev/null",
+      command: "yarn create next-app . --typescript",
     },
     {
       name: 'next_js',
-      command: "yarn create next-app . > /dev/null"
+      command: "yarn create next-app ."
     },
     {
       name: 'redwood_ts',
-      command: "yarn create redwood-app . --typescript > /dev/null; touch yarn.lock; yarn > /dev/null",
+      command: "yarn create redwood-app . --typescript > /dev/null; touch yarn.lock; yarn",
     },
     {
       name: 'redwood_js',
@@ -36,13 +36,24 @@ class TestRunner
     fail "Check that CYPRESS_DIR exists: #{CYPRESS_DIR}" unless Dir.exists?(CYPRESS_DIR)
   end
 
+  def system_quiet(cmd)
+    system("#{cmd} > /dev/null")
+  end
+
   def build_mailing
+    announce "Building mailing...", "🔨"
+
     Dir.chdir(PROJECT_ROOT) do
-      system("yalc remove")
-      system("yalc add")
-      system("yarn build > /dev/null")
-      system("yalc push")
+      system_quiet("npx yalc remove")
+      system_quiet("npx yalc add")
+      system_quiet("yarn build")
+      system_quiet("npx yalc push")
     end
+  end
+
+  def announce(text, emoji)
+    puts "\n" * 10
+    puts "#{emoji}  " * 10 + "\n" + text + "\n" + "#{emoji}  " * 10
   end
 
   def run
@@ -53,18 +64,18 @@ class TestRunner
 
     # TODO: add a `framework=` option to specify an individual framework to run
     E2E_CONFIG.each do |config|
+      @config = config
+
       begin
         tmp_dir_name = File.join(RUNS_DIR, @timestamp_dir, config[:name])
 
-        puts "⚙️  " * 10
-        puts "Attempting #{config[:name]} in #{tmp_dir_name}"
-        puts "⚙️  " * 10
+        announce "Creating next #{config[:name]} app in #{tmp_dir_name}", "⚙️"
 
         FileUtils.mkdir_p(tmp_dir_name)
 
         Dir.chdir(tmp_dir_name) do
           # run the bootstrap command
-          system(config[:command])
+          system_quiet(config[:command])
 
           ## add mailing to the project
           system("npx yalc add mailing")
@@ -77,12 +88,14 @@ class TestRunner
         run_cypress_tests
       ensure
         cleanup_io_and_subprocess
-        cleanup_runs_directory
       end
     end
+
+    cleanup_runs_directory
   end
 
   def run_cypress_tests
+    announce "Running cypress tests for #{@config[:name]}", "🏃"
     Dir.chdir(CYPRESS_DIR) do
       system("yarn cypress run")
     end
