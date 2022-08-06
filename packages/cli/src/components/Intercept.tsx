@@ -69,6 +69,34 @@ const Intercept: React.FC<InterceptProps> = ({ data }) => {
         .container > * {
           margin: 4px 0;
         }
+        .title {
+          padding-bottom: 4px;
+        }
+        .title,
+        .character {
+          text-transform: uppercase;
+          font-size: 10px;
+          line-height: 100%;
+        }
+        .hotkey {
+          font-size: 12px;
+          margin: 12px 24px 0 0;
+        }
+        .character {
+          color: #bbb;
+          width: 18px;
+          height: 18px;
+          border: solid 1px #999;
+          border-radius: 2px;
+          text-align: center;
+          margin-right: 8px;
+          display: inline-block;
+          line-height: 170%;
+        }
+        .description {
+          position: relative;
+          top: 1.25px;
+        }
       `}</style>
     </>
   );

@@ -145,7 +145,7 @@ const Preview = ({ initialData }: { initialData: ShowPreviewResponseBody }) => {
         }
         .hotkey {
           font-size: 12px;
-          margin: 12px 8px 0 0;
+          margin: 12px 24px 0 0;
         }
         .character {
           color: #bbb;
