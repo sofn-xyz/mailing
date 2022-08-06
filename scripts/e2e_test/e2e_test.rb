@@ -46,10 +46,11 @@ class TestRunner
 
   def run
     @timestamp_dir = Time.now.strftime("%Y%m%d%H%M%S")
-    
+
     # TODO: add a 'skip-build' option to CLI for faster test runs
     build_mailing
 
+    # TODO: add a `framework=` option to specify an individual framework to run
     E2E_CONFIG.each do |config|
       begin
         tmp_dir_name = File.join(RUNS_DIR, @timestamp_dir, config[:name])
