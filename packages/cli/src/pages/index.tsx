@@ -138,8 +138,6 @@ const Home: NextPage<HomeProps> = ({ previews: initialPreviews }) => {
         .footer {
           display: block;
           text-align: center;
-        }
-        .footer img {
           margin-top: -40px;
           margin-bottom: 64px;
         }
