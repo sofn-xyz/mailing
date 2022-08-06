@@ -60,14 +60,22 @@ class TestRunner
     @timestamp_dir = Time.now.strftime("%Y%m%d%H%M%S")
 
     # TODO: add a 'skip-build' option to CLI for faster test runs
-    build_mailing
+    # build_mailing
 
-    # TODO: add a `framework=` option to specify an individual framework to run
+    # create runs_dir
+    runs_dir_name = File.join(RUNS_DIR, @timestamp_dir)
+    FileUtils.mkdir_p(runs_dir_name)
+
+    # create latest symlink
+    latest_dir = File.join(RUNS_DIR, 'latest')
+    system("rm #{latest_dir}; ln -s #{runs_dir_name} #{latest_dir}")
+      
+     # TODO: add a `framework=` option to specify an individual framework to run
     E2E_CONFIG.each do |config|
       @config = config
-
+      
       begin
-        tmp_dir_name = File.join(RUNS_DIR, @timestamp_dir, config[:name])
+        tmp_dir_name = File.join(runs_dir_name, config[:name])
 
         announce "Creating next #{config[:name]} app in #{tmp_dir_name}", "⚙️"
 
@@ -113,7 +121,8 @@ class TestRunner
   end
 
   def cleanup_runs_directory
-    Dir.glob("#{RUNS_DIR}/*")[NUM_RUNS_TO_KEEP..-1]&.sort{|a,b| b <=> a}&.each do |dir|
+    dirs_to_cleanup = Array(Dir.glob("#{RUNS_DIR}/*")).sort{|a,b| b <=> a}.delete_if{|f| f =~ /latest/}[NUM_RUNS_TO_KEEP..-1]
+    dirs_to_cleanup.each do |dir|
       puts "Cleaning up #{dir}"
       FileUtils.rm_rf(dir)
     end
