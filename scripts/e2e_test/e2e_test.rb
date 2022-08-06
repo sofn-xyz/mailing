@@ -4,12 +4,20 @@ require 'tmpdir'
 require 'json'
 
 class TestRunner
-  NUM_RUNS_TO_KEEP = 12
+  NUM_RUNS_TO_KEEP = 5
   PROJECT_ROOT = File.expand_path(__dir__ + '/../..') 
   RUNS_DIR = File.expand_path(__dir__ + '/runs')
   CYPRESS_DIR = File.join(PROJECT_ROOT, 'packages/cli/cypress')
 
   E2E_CONFIG = [
+    {
+      name: 'redwood_ts',
+      command: "yarn create redwood-app . --typescript; touch yarn.lock; yarn",
+    },
+    {
+      name: 'redwood_js',
+      command: "yarn create redwood-app .; touch yarn.lock; yarn"
+    },
     {
       name: 'next_ts',
       command: "yarn create next-app . --typescript",
@@ -28,29 +36,36 @@ class TestRunner
     fail "Check that CYPRESS_DIR exists: #{CYPRESS_DIR}" unless Dir.exists?(CYPRESS_DIR)
   end
 
-  def run
+  def build_mailing
     Dir.chdir(PROJECT_ROOT) do
       system("yalc add")
       system("yarn build")
       system("yalc push")
     end
+  end
+
+  def run
+    @timestamp_dir = Time.now.strftime("%Y%m%d%H%M%S")
+    
+    # TODO: add a 'skip-build' option to CLI for faster test runs
+    build_mailing
 
     E2E_CONFIG.each do |config|
       begin
-        tmp_dir_name = File.join(RUNS_DIR, [config[:name], Time.now.strftime("%Y%m%d%H%M%S")].join('-'))
+        tmp_dir_name = File.join(RUNS_DIR, @timestamp_dir, config[:name])
 
         puts "⚙️  " * 10
         puts "Attempting #{config[:name]} in #{tmp_dir_name}"
         puts "⚙️  " * 10
 
-        Dir.mkdir(tmp_dir_name)
+        FileUtils.mkdir_p(tmp_dir_name)
 
         Dir.chdir(tmp_dir_name) do
           # run the bootstrap command
           system(config[:command])
 
           ## add mailing to the project
-          system("yalc add mailing")
+          system("npx yalc add mailing")
 
           # open the subprocess
           @io = IO.popen("npx mailing --quiet --typescript --emails-dir=\"./emails\"")
