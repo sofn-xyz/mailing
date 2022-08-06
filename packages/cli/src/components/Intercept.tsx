@@ -7,7 +7,7 @@ type InterceptProps = {
 };
 
 const Intercept: React.FC<InterceptProps> = ({ data }) => {
-  const [isMobile, setIsMobile] = useState(false);
+  const [viewMode, setViewMode] = useState<ViewMode>("desktop");
   if (!data) {
     return <></>; // loading, should be quick bc everything is local
   }
@@ -16,18 +16,30 @@ const Intercept: React.FC<InterceptProps> = ({ data }) => {
     <>
       <Header
         title={data.subject || ""}
-        isMobile={isMobile}
-        setIsMobile={setIsMobile}
+        setViewMode={setViewMode}
+        viewMode={viewMode}
         helpContent={
           <>
             <div className="title">Hotkeys</div>
             <div className="hotkey">
               <span className="character">/</span>
-              <span className="description">Jump to Index</span>
+              <span className="description">Jump to previews</span>
             </div>
             <div className="hotkey">
               <span className="character">.</span>
-              <span className="description">Toggle desktop/mobile view</span>
+              <span className="description">Toggle view mode</span>
+            </div>
+            <div className="hotkey">
+              <span className="character">D</span>
+              <span className="description">Desktop view</span>
+            </div>
+            <div className="hotkey">
+              <span className="character">M</span>
+              <span className="description">Mobile view</span>
+            </div>
+            <div className="hotkey">
+              <span className="character">H</span>
+              <span className="description">HTML view</span>
             </div>
           </>
         }
@@ -41,14 +53,14 @@ const Intercept: React.FC<InterceptProps> = ({ data }) => {
       </div>
       {data.html && (
         <HotIFrame
-          isMobile={isMobile}
-          setIsMobile={setIsMobile}
+          viewMode={viewMode}
+          setViewMode={setViewMode}
           srcDoc={data.html}
         />
       )}
       <style jsx>{`
         .container {
-          border-bottom: solid 1px #ccc;
+          border-bottom: dotted 1px #333;
           padding: 16px 24px;
           margin: auto;
           font-size: 12px;
@@ -56,6 +68,34 @@ const Intercept: React.FC<InterceptProps> = ({ data }) => {
         }
         .container > * {
           margin: 4px 0;
+        }
+        .title {
+          padding-bottom: 4px;
+        }
+        .title,
+        .character {
+          text-transform: uppercase;
+          font-size: 10px;
+          line-height: 100%;
+        }
+        .hotkey {
+          font-size: 12px;
+          margin: 12px 24px 0 0;
+        }
+        .character {
+          color: #bbb;
+          width: 18px;
+          height: 18px;
+          border: solid 1px #999;
+          border-radius: 2px;
+          text-align: center;
+          margin-right: 8px;
+          display: inline-block;
+          line-height: 170%;
+        }
+        .description {
+          position: relative;
+          top: 1.25px;
         }
       `}</style>
     </>

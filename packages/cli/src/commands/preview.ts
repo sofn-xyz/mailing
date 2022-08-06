@@ -73,7 +73,7 @@ export const handler = async (argv: PreviewArgs) => {
     dev,
     hostname,
     port,
-    dir: dev ? resolve(__dirname, "..") : __dirname,
+    dir: dev ? resolve(__dirname, "../..") : __dirname,
   });
   const nextHandle = app.getRequestHandler();
   await app.prepare();

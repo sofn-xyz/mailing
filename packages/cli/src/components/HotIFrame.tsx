@@ -1,25 +1,32 @@
 import usePreviewHotkeys from "./hooks/usePreviewHotkeys";
 
 type HotIFrameProps = {
-  isMobile: boolean;
-  setIsMobile: React.Dispatch<React.SetStateAction<boolean>>;
-  src?: string;
-  srcDoc?: string;
+  viewMode: ViewMode;
+  setViewMode: React.Dispatch<React.SetStateAction<ViewMode>>;
+  srcDoc: string;
 };
 
 const HotIFrame: React.FC<HotIFrameProps> = ({
-  isMobile,
-  setIsMobile,
-  src,
+  viewMode,
+  setViewMode,
   srcDoc,
 }) => {
-  const { iframeRef } = usePreviewHotkeys({ setIsMobile });
+  const { iframeRef, textareaRef } = usePreviewHotkeys({ setViewMode });
 
   return (
     <>
-      <div className={`frame ${isMobile ? " mobile" : ""}`}>
-        <iframe src={src} srcDoc={srcDoc} ref={iframeRef} />
-      </div>
+      {viewMode === "html" ? (
+        <textarea
+          className="code-container mono"
+          readOnly
+          value={srcDoc}
+          ref={textareaRef}
+        ></textarea>
+      ) : (
+        <div className={`frame ${viewMode === "mobile" ? " mobile" : ""}`}>
+          <iframe srcDoc={srcDoc} ref={iframeRef} />
+        </div>
+      )}
       <style jsx>{`
         .frame {
           margin: auto;
@@ -42,7 +49,23 @@ const HotIFrame: React.FC<HotIFrameProps> = ({
         }
         .mobile,
         .mobile iframe {
-          border: 2px solid #ccc;
+          border: 1px dotted #333;
+        }
+        .code-container {
+          font-size: 10px;
+          white-space: pre-wrap;
+          padding: 16px;
+          outline: none;
+          height: calc(100vh - 65px);
+          width: 100%;
+          resize: none;
+        }
+        @media (prefers-color-scheme: dark) {
+          .code-container {
+            white-space: pre-wrap;
+            color: white;
+            background: #212121;
+          }
         }
       `}</style>
     </>

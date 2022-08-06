@@ -30,7 +30,7 @@ const MyFirstEmail: React.FC<{ name: string }> = ({ name }) => (
             cssClass="hero"
             padding="0 0 40px"
             align="left"
-            src="https://s3.amazonaws.com/lab.campsh.com/welcome%402x.jpg"
+            src="https://s3.amazonaws.com/lab.campsh.com/real%402x.jpg"
           />
         </MjmlColumn>
       </MjmlSection>
