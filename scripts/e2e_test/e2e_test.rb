@@ -12,11 +12,11 @@ class TestRunner
   E2E_CONFIG = [
     {
       name: 'next_ts',
-      command: "yarn create next-app . --typescript",
+      command: "yarn create next-app . --typescript > /dev/null",
     },
     {
       name: 'next_js',
-      command: "yarn create next-app ."
+      command: "yarn create next-app . > /dev/null"
     },
     {
       name: 'redwood_ts',
@@ -40,7 +40,7 @@ class TestRunner
     Dir.chdir(PROJECT_ROOT) do
       system("yalc remove")
       system("yalc add")
-      system("yarn build")
+      system("yarn build > /dev/null")
       system("yalc push")
     end
   end
