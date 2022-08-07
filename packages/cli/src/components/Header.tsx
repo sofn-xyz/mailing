@@ -29,7 +29,7 @@ const Header: React.FC<HeaderProps> = ({
       <div className="path">
         <Link href="/">
           <a className="index">
-            <span>Index</span>
+            <span>previews</span>
           </a>
         </Link>
         <span> / {title}</span>
