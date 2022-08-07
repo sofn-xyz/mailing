@@ -7,7 +7,7 @@
     "devjs": "rm -rf emails; ln -s packages/cli/src/generator_templates/js/emails emails; packages/cli/src/dev.js",
     "build": "preconstruct build && yarn build:next && yarn copy:files",
     "build:next": "cd packages/cli && yarn build",
-    "copy:files": "cp -nR packages/cli/src/generator_templates packages/cli/dist; cp -nR packages/cli/.next packages/cli/dist; rm -rf packages/cli/dist/.next/cache",
+    "copy:files": "cp -nR packages/cli/src/generator_templates packages/cli/dist; cp -nR packages/cli/.next packages/cli/dist; cp -nR packages/cli/public packages/cli/dist; rm -rf packages/cli/dist/.next/cache",
     "test": "jest",
     "test:watch": "jest --watch",
     "prepublish": "yarn build",
