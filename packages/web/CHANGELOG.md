@@ -1,5 +1,11 @@
 # web
 
+## 0.2.5
+
+### Patch Changes
+
+- header design consistency
+
 ## 0.2.4
 
 ### Patch Changes

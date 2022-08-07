@@ -1,5 +1,12 @@
 # mailing
 
+## 0.6.5
+
+### Patch Changes
+
+- 7abe072: fix broken images
+- header design consistency
+
 ## 0.6.4
 
 ### Patch Changes
