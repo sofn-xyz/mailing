@@ -429,6 +429,13 @@ function getPreviewsDirectory() {
 function getPackageJSON() {
   return JSON.parse(fsExtra.readFileSync("./package.json").toString());
 }
+function getMailingAPIBaseURL(port) {
+  if (process.env.MM_DEV) {
+    return "http://localhost:".concat(port);
+  } else {
+    return "https://www.mailing.run";
+  }
+}
 
 process.env.DEBUG;
 function log(message) {
@@ -615,7 +622,7 @@ function showPreviewIndex(req, res) {
   });
   var previews = previewCollections.map(function (p) {
     var previewPath = path.resolve(previewsPath, p);
-    return [p, Object.keys(require(previewPath))];
+    return [p, Object.keys(require(previewPath)).sort()];
   });
 
   try {
@@ -874,7 +881,7 @@ var handler$1 = /*#__PURE__*/function () {
               dev: dev,
               hostname: hostname,
               port: port,
-              dir: dev ? path.resolve(__dirname, "..") : __dirname
+              dir: dev ? path.resolve(__dirname, "../..") : __dirname
             });
             nextHandle = app.getRequestHandler();
             _context3.next = 10;
@@ -1218,7 +1225,7 @@ var builder = {
 };
 var handler = /*#__PURE__*/function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(args) {
-    var isTypescript, ts, options;
+    var isTypescript, ts, options, emailResponse, email, PORT;
     return _regeneratorRuntime().wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
@@ -1233,7 +1240,7 @@ var handler = /*#__PURE__*/function () {
 
           case 3:
             if (getExistingEmailsDir()) {
-              _context.next = 19;
+              _context.next = 31;
               break;
             }
 
@@ -1278,9 +1285,44 @@ var handler = /*#__PURE__*/function () {
             return generateEmailsDirectory(options);
 
           case 19:
-            handler$1(args);
+            _context.next = 21;
+            return prompts__default["default"]({
+              type: "text",
+              name: "email",
+              message: "Enter your email for occasional updates about mailing (optional)"
+            });
 
-          case 20:
+          case 21:
+            emailResponse = _context.sent;
+            email = emailResponse.email;
+
+            if (!((email === null || email === void 0 ? void 0 : email.length) > 0)) {
+              _context.next = 30;
+              break;
+            }
+
+            log("Great, thanks.");
+            PORT = args.port || 3883;
+            _context.next = 28;
+            return fetch("".concat(getMailingAPIBaseURL(PORT), "/api/users"), {
+              method: "POST",
+              body: JSON.stringify({
+                email: email
+              })
+            });
+
+          case 28:
+            _context.next = 31;
+            break;
+
+          case 30:
+            log("No problem!");
+
+          case 31:
+            _context.next = 33;
+            return handler$1(args);
+
+          case 33:
           case "end":
             return _context.stop();
         }

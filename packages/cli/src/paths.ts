@@ -24,3 +24,11 @@ export function getPreviewsDirectory() {
 export function getPackageJSON() {
   return JSON.parse(readFileSync("./package.json").toString());
 }
+
+export function getMailingAPIBaseURL(port: number) {
+  if (process.env.MM_DEV) {
+    return `http://localhost:${port}`;
+  } else {
+    return "https://www.mailing.run";
+  }
+}
