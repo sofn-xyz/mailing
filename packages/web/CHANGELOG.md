@@ -1,5 +1,11 @@
 # web
 
+## 0.2.4
+
+### Patch Changes
+
+- html view mode; new CLI args; importless react support
+
 ## 0.2.3
 
 ### Patch Changes
