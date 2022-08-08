@@ -30,3 +30,5 @@ type MjmlError = {
   tagName: string;
   formattedMessage: string;
 };
+
+type ViewMode = "desktop" | "mobile" | "html";

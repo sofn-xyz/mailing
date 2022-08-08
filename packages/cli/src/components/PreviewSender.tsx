@@ -24,7 +24,7 @@ const PreviewSender: React.FC<PreviewSenderProps> = ({
         setLastSentAt(new Date(lastSent));
       }
     }
-  }, []);
+  }, [email]);
 
   const send: React.FormEventHandler<HTMLFormElement> = useCallback(
     async (e) => {
@@ -68,7 +68,7 @@ const PreviewSender: React.FC<PreviewSenderProps> = ({
         setSending(false);
       }
     },
-    [email]
+    [html, previewClass, previewFunction, email]
   );
 
   const onInputChange: React.ChangeEventHandler<HTMLInputElement> = useCallback(
@@ -131,6 +131,7 @@ const PreviewSender: React.FC<PreviewSenderProps> = ({
         }
         input[type="email"] {
           border-right: none;
+          min-width: 216px;
         }
         input[type="email"]:hover {
           outline: none;
@@ -150,7 +151,7 @@ const PreviewSender: React.FC<PreviewSenderProps> = ({
           color: #000;
           font-size: 12px;
           border: none;
-          padding: 10px 12px 11px;
+          padding: 11px 12px 14px;
           position: relative;
           top: -2px;
           border-image-width: 0;
@@ -162,7 +163,7 @@ const PreviewSender: React.FC<PreviewSenderProps> = ({
         }
         input[type="submit"]:hover {
           cursor: pointer;
-          background: #fafa98;
+          background: #e4ebfa;
         }
         input[type="submit"]:active {
           box-shadow: inset 0 0 12px rgba(0, 0, 0, 0.75);
@@ -190,10 +191,6 @@ const PreviewSender: React.FC<PreviewSenderProps> = ({
           margin-bottom: 16px;
           line-height: 130%;
           max-width: 288px;
-        }
-        .mono {
-          font-family: Menlo, Monaco, Lucida Console, Liberation Mono,
-            DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
         }
         .error,
         .sending,

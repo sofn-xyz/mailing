@@ -24,7 +24,8 @@ We’re longtime users of Action Mailer and wanted something similar for our typ
 
 ## ●&nbsp;&nbsp;Demo
 
-<a href="https://www.youtube.com/watch?v=FUCoXg2sAg0" target="_blank"><img width="600" alt="Mailing demo video" src="https://user-images.githubusercontent.com/609038/181652683-b641dbd7-a27f-4349-9349-6841221c9a1c.jpg"></a>
+<a href="https://www.youtube.com/watch?v=FUCoXg2sAg0" target="_blank"><img width="600" alt="Mailing demo video" src="https://user-images.githubusercontent.com/609038/183299543-fbe8b7de-daab-4a79-8644-1d4b3af1bf63.jpg"></a>
+
 
 <br/>
 
@@ -112,15 +113,15 @@ export function toAmelita() {
 
 It will show up in the index:
 
-<img width="600" alt="Mailing index" src="https://user-images.githubusercontent.com/609038/181653058-266ed86b-3a39-4a9d-b2df-afa2273bf040.jpg">
+<img width="600" alt="Mailing index" src="https://user-images.githubusercontent.com/609038/183299565-184b3919-6448-40e9-b585-c39a150f370d.jpg">
 
 Clicking through shows you the email with a mobile/desktop toggle and live reload as you edit:
 
-<img width="600" alt="Mailing desktop preview" src="https://user-images.githubusercontent.com/609038/181653055-b71fea47-d6e8-4181-ae39-127ca70513a5.jpg">
+<img width="600" alt="Mailing desktop preview" src="https://user-images.githubusercontent.com/609038/183301497-4f0cd257-bb49-44c0-8106-2e717c430cb7.jpg">
 
 When it's nice, send it to yourself or your QA tool of choice for final testing (we like [Litmus](<[url](https://www.litmus.com)>)):
 
-<img width="600" alt="Mailing mobile preview" src="https://user-images.githubusercontent.com/609038/181653051-7143a68e-d749-414a-af6a-febdbeae00f4.jpg">
+<img width="600" alt="Mailing mobile preview" src="https://user-images.githubusercontent.com/609038/183301531-0b111b5b-10d7-4dc3-b02d-814cd35fd2d5.jpg">
 
 <br/>
 
@@ -134,7 +135,7 @@ We ship with two templates to help you get started. We recommend using these as 
 
 This template showcases a handful of MJML and Mailing features, including a responsive hero image, bulleted list, and custom Google font with fallbacks.
 
-<img width="600" alt="Mailing Welcome email template" src="https://user-images.githubusercontent.com/609038/181653471-b3ee13e2-a95d-4d20-ba8f-856b39ec2409.jpg">
+<img width="600" alt="Mailing Welcome email template" src="https://user-images.githubusercontent.com/609038/183301545-9aa2caba-0a5c-4d06-b5e3-bd515adc0110.jpg">
 
 <br/>
 
@@ -142,7 +143,7 @@ This template showcases a handful of MJML and Mailing features, including a resp
 
 This is a simpler template for text-based transactional emails.
 
-<img width="600" alt="Mailing text email template" src="https://user-images.githubusercontent.com/609038/181653469-d7b3913e-6e9e-458a-8faa-f112cdad90a0.jpg">
+<img width="600" alt="Mailing text email template" src="https://user-images.githubusercontent.com/609038/183301563-893a99f9-2ac3-4da0-af7d-ef5003c73383.jpg">
 
 ## ●&nbsp;&nbsp;Testing emails with jest
 

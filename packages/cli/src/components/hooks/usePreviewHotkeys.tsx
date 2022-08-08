@@ -3,31 +3,39 @@ import { useRouter } from "next/router";
 import { useHotkeys } from "react-hotkeys-hook";
 
 type Options = {
-  setIsMobile: React.Dispatch<React.SetStateAction<boolean>>;
+  setViewMode: React.Dispatch<React.SetStateAction<ViewMode>>;
 };
 
 // Hotkeys for pages showing previews / intercepts
 // Listen for hotkeys on the document and the iframe's
 // document, so that they still work if iframe has focus.
-export default function usePreviewHotkeys({ setIsMobile }: Options) {
+export default function usePreviewHotkeys({ setViewMode }: Options) {
   const router = useRouter();
   const handleKey = useCallback(
     (e: KeyboardEvent) => {
       if (e.key === "/") {
         router.push("/");
       } else if (e.key === "m") {
-        setIsMobile(true);
+        setViewMode("mobile");
+      } else if (e.key === "h") {
+        setViewMode("html");
       } else if (e.key === "d") {
-        setIsMobile(false);
+        setViewMode("desktop");
       } else if (e.key === ".") {
-        setIsMobile((current) => !current);
+        setViewMode((current) =>
+          current === "desktop"
+            ? "mobile"
+            : current === "mobile"
+            ? "html"
+            : "desktop"
+        );
       } else if (e.key === "ArrowRight" || e.key === "right") {
       } else if (e.key === "ArrowLeft" || e.key === "left") {
       }
     },
-    [router]
+    [router, setViewMode]
   );
-  useHotkeys("m,d,.,left,right,/", handleKey);
+  useHotkeys("m,d,h,.,left,right,/", handleKey);
 
   const iframeRef = useCallback(
     (node: HTMLIFrameElement) => {
@@ -40,5 +48,13 @@ export default function usePreviewHotkeys({ setIsMobile }: Options) {
     [handleKey]
   );
 
-  return { iframeRef };
+  const textareaRef = useCallback(
+    (node: HTMLTextAreaElement) => {
+      if (null === node) return;
+      node.onkeydown = handleKey;
+    },
+    [handleKey]
+  );
+
+  return { iframeRef, textareaRef };
 }

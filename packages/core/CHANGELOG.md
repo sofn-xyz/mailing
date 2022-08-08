@@ -1,5 +1,17 @@
 # mailing-core
 
+## 0.6.5
+
+### Patch Changes
+
+- header design consistency
+
+## 0.6.4
+
+### Patch Changes
+
+- html view mode; new CLI args; importless react support
+
 ## 0.6.3
 
 ### Patch Changes

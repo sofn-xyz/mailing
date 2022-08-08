@@ -21,7 +21,7 @@ const Tooltip: React.FC<TooltipProps> = ({ content, trigger }) => {
     return function cleanup() {
       document.removeEventListener("keydown", handleEsc, false);
     };
-  }, []);
+  }, [handleEsc]);
 
   return (
     <>

@@ -6,7 +6,7 @@ describe("cypress tests", () => {
   });
 
   it("should show the preview server index page", () => {
-    cy.get("h1").should("contain", "Previews");
+    cy.get("h1").should("contain", "previews");
     cy.get(".email-group").should("have.length", 2);
 
     // TextEmail group should have 3 previews

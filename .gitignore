@@ -1,6 +1,6 @@
 dev-app
 tmp-testMailQueue.json
-scripts/e2e_test/runs
+dist
 
 # Logs
 logs
@@ -82,7 +82,6 @@ typings/
 # Next.js build output
 .next
 .swc
-!dist/.next
 
 # Nuxt.js build / generate output
 .nuxt
