@@ -28,9 +28,25 @@ class TestRunner
     },
   ];
 
+  def assign_opts!
+    @opts = {}
+    ARGV.each do |str|
+      k, v = str.split('=')
+      k.delete_prefix!('--')
+      v = true if v.nil?
+      @opts[k] = v
+    end
+  end
+
+  def opt?(key)
+    @opts[key]
+  end
+
   def initialize
+    assign_opts!
+
     fail "Check that PROJECT_ROOT exists: #{PROJECT_ROOT}" unless Dir.exists?(PROJECT_ROOT)
-    
+
     package_json_file = File.join(PROJECT_ROOT, 'package.json')
     fail "Check that PROJECT_ROOT is the project root: #{PROJECT_ROOT}" unless File.exists?(package_json_file) && 'mailing-monorepo' == JSON::parse(File.read(package_json_file))['name']
     fail "Check that CYPRESS_DIR exists: #{CYPRESS_DIR}" unless Dir.exists?(CYPRESS_DIR)
@@ -59,8 +75,7 @@ class TestRunner
   def run
     @timestamp_dir = Time.now.strftime("%Y%m%d%H%M%S")
 
-    # TODO: add a 'skip-build' option to CLI for faster test runs
-    # build_mailing
+    build_mailing unless opt?('skip-build')
 
     # create runs_dir
     runs_dir_name = File.join(RUNS_DIR, @timestamp_dir)
