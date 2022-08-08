@@ -8,7 +8,7 @@ type Data = {
 export default async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   if (req.method !== "POST") return res.status(404).end();
 
-  const { email } = req.query;
+  const { email } = JSON.parse(req.body);
 
   if (typeof email !== "string") {
     return res.status(403).json({ error: "email not provided" });
@@ -20,7 +20,11 @@ export default async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   }
 
   await prisma.user.create({
-    data: { email, ip: req.headers["x-forwarded-for"].toString() },
+    data: {
+      email,
+      ip:
+        req.headers["x-forwarded-for"]?.toString() || req.socket.remoteAddress,
+    },
   });
   res.status(201).end();
 };

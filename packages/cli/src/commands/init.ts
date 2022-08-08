@@ -1,7 +1,7 @@
 import { existsSync } from "fs-extra";
 import prompts from "prompts";
 import { ArgumentsCamelCase } from "yargs";
-import { log } from "../log";
+import { error, log } from "../log";
 import {
   getExistingEmailsDir,
   getPackageJSON,
@@ -77,14 +77,21 @@ export const handler = async (args: CliArguments) => {
     });
     const { email } = emailResponse;
     if (email?.length > 0) {
-      log("Great, thanks.");
-      const PORT = args.port || 3883;
-      await fetch(`${getMailingAPIBaseURL(PORT)}/api/users`, {
-        method: "POST",
-        body: JSON.stringify({ email }),
-      });
+      log("Great, talk soon.");
+      try {
+        log(`${getMailingAPIBaseURL()}/api/users`, {
+          method: "POST",
+          body: JSON.stringify({ email }),
+        });
+        await fetch(`${getMailingAPIBaseURL()}/api/users`, {
+          method: "POST",
+          body: JSON.stringify({ email }),
+        });
+      } catch (e) {
+        error(e);
+      }
     } else {
-      log("No problem!");
+      log("OK, no problem!");
     }
   }
 
