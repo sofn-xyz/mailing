@@ -131,7 +131,7 @@ const PreviewSender: React.FC<PreviewSenderProps> = ({
         }
         input[type="email"] {
           border-right: none;
-          width: 74%;
+          min-width: 216px;
         }
         input[type="email"]:hover {
           outline: none;
@@ -148,7 +148,6 @@ const PreviewSender: React.FC<PreviewSenderProps> = ({
         }
         input[type="submit"] {
           background-color: #fff;
-          width: 20%;
           color: #000;
           font-size: 12px;
           border: none;
