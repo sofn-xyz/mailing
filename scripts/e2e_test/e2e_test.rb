@@ -28,63 +28,6 @@ class TestRunner
     },
   ];
 
-  def assign_opts!
-    @opts = {}
-    ARGV.each do |str|
-      k, v = str.split('=')
-      k.delete_prefix!('--')
-      v = true if v.nil?
-      @opts[k] = v
-    end
-  end
-
-  def opt?(key)
-    !!@opts[key]
-  end
-
-  def opt(key)
-    @opts[key]
-  end
-
-  def initialize
-    assign_opts!
-
-    fail "Check that PROJECT_ROOT exists: #{PROJECT_ROOT}" unless Dir.exists?(PROJECT_ROOT)
-
-    package_json_file = File.join(PROJECT_ROOT, 'package.json')
-    fail "Check that PROJECT_ROOT is the project root: #{PROJECT_ROOT}" unless File.exists?(package_json_file) && 'mailing-monorepo' == JSON::parse(File.read(package_json_file))['name']
-    fail "Check that CYPRESS_DIR exists: #{CYPRESS_DIR}" unless Dir.exists?(CYPRESS_DIR)
-  end
-
-  def system_quiet(cmd)
-    system("#{cmd} > /dev/null")
-  end
-
-  def build_mailing
-    announce "Building mailing...", "🔨"
-
-    Dir.chdir(PROJECT_ROOT) do
-      system_quiet("npx yalc remove")
-      system_quiet("npx yalc add")
-      system_quiet("yarn build")
-      system_quiet("npx yalc push")
-    end
-  end
-
-  def announce(text, emoji)
-    puts "\n" * 10
-    puts "#{emoji}  " * 10 + "\n" + text + "\n" + "#{emoji}  " * 10
-  end
-
-  # @return Array containing the configs to run
-  def configs_to_run
-    if config_name = opt('only')
-      E2E_CONFIG.select{|x| x[:name] == config_name}
-    else
-      E2E_CONFIG
-    end
-  end
-
   def run
     @timestamp_dir = Time.now.strftime("%Y%m%d%H%M%S")
 
@@ -105,7 +48,7 @@ class TestRunner
       begin
         tmp_dir_name = File.join(runs_dir_name, config[:name])
 
-        announce "Creating next #{config[:name]} app in #{tmp_dir_name}", "⚙️"
+        announce! "Creating next #{config[:name]} app in #{tmp_dir_name}", "⚙️"
 
         FileUtils.mkdir_p(tmp_dir_name)
 
@@ -121,6 +64,7 @@ class TestRunner
 
           # wait for the preview server to start
           wait_for_preview_server!
+          wait_for_previews_json!
         end
 
         run_cypress_tests
@@ -132,18 +76,95 @@ class TestRunner
     cleanup_runs_directory
   end
 
+private
+
+  def initialize
+    assign_opts!
+
+    fail "Check that PROJECT_ROOT exists: #{PROJECT_ROOT}" unless Dir.exists?(PROJECT_ROOT)
+
+    package_json_file = File.join(PROJECT_ROOT, 'package.json')
+    fail "Check that PROJECT_ROOT is the project root: #{PROJECT_ROOT}" unless File.exists?(package_json_file) && 'mailing-monorepo' == JSON::parse(File.read(package_json_file))['name']
+    fail "Check that CYPRESS_DIR exists: #{CYPRESS_DIR}" unless Dir.exists?(CYPRESS_DIR)
+  end
+
+  ## Mailing and projects
+  #
+  def build_mailing
+    announce! "Building mailing...", "🔨"
+
+    Dir.chdir(PROJECT_ROOT) do
+      system_quiet("npx yalc remove")
+      system_quiet("npx yalc add")
+      system_quiet("yarn build")
+      system_quiet("npx yalc push")
+    end
+  end
+
+  def configs_to_run
+    if config_name = opt('only')
+      E2E_CONFIG.select{|x| x[:name] == config_name}
+    else
+      E2E_CONFIG
+    end
+  end
+
+  def run_cypress_tests
+    announce! "Running cypress tests for #{@config[:name]}", "🏃"
+    Dir.chdir(CYPRESS_DIR) do
+      system("yarn cypress run")
+    end
+  end
+
   def wait_for_preview_server!
     @io.select do |line|
       break if line =~ %r{Running preview at http://localhost:3883/}
     end
   end
 
-  def run_cypress_tests
-    announce "Running cypress tests for #{@config[:name]}", "🏃"
-    Dir.chdir(CYPRESS_DIR) do
-      system("yarn cypress run")
+  def wait_for_previews_json!
+    # N.B. currently takes about 4 seconds for to load previews.json the first time in a Next.js js (non-ts) app,
+    # which causes the cypress tests to falsely fail (blank page while previews.json is loading).
+    # If we can speed up the uncached previews.json load then this wait can likely be removed
+    # see: https://github.com/sofn-xyz/mailing/issues/102
+
+    system_quiet("curl http://localhost:3883/previews.json")
+  end
+
+  ## Option parsing
+  #
+  def assign_opts!
+    @opts = {}
+    ARGV.each do |str|
+      k, v = str.split('=')
+      k.delete_prefix!('--')
+      v = true if v.nil?
+      @opts[k] = v
     end
   end
+
+  def opt?(key)
+    !!@opts[key]
+  end
+
+  def opt(key)
+    @opts[key]
+  end
+
+  ## Utility stuff
+  #
+
+  def system_quiet(cmd)
+    system("#{cmd} > /dev/null")
+  end
+
+  def announce!(text, emoji)
+    puts "\n" * 10
+    puts "#{emoji}  " * 10 + "\n" + text + "\n" + "#{emoji}  " * 10
+  end
+
+  ## Cleanup
+  #
 
   def cleanup_io_and_subprocess
     return unless @io
