@@ -1,14 +1,16 @@
 # frozen_string_literal: true
 
+$LOAD_PATH.unshift(File.expand_path(File.dirname(__FILE__))) unless $LOAD_PATH.include?(File.expand_path(File.dirname(__FILE__)))
+
 require 'tmpdir'
 require 'json'
 
-require_relative 'helpers/test_runner_utils'
-require_relative 'app_configs/app'
-require_relative 'app_configs/next_ts_app'
-require_relative 'app_configs/next_js_app'
-require_relative 'app_configs/redwood_ts_app'
-require_relative 'app_configs/redwood_js_app'
+require 'helpers/test_runner_utils'
+require 'app_configs/app'
+require 'app_configs/next_ts_app'
+require 'app_configs/next_js_app'
+require 'app_configs/redwood_ts_app'
+require 'app_configs/redwood_js_app'
 
 class TestRunner
   include TestRunnerUtils
@@ -63,7 +65,7 @@ class TestRunner
       end
     end
 
-    cleanup_runs_directory
+    cleanup_runs_directory!
   end
 
 private
@@ -131,8 +133,8 @@ private
     @io = nil
   end
 
-  def cleanup_runs_directory
-    dirs_to_cleanup = Array(Dir.glob("#{RUNS_DIR}/*")).sort{|a,b| b <=> a}.delete_if{|f| f =~ /latest/}[NUM_RUNS_TO_KEEP..-1]
+  def cleanup_runs_directory!
+    dirs_to_cleanup = Array(Dir.glob("#{RUNS_DIR}/*")).sort{|a,b| b <=> a}.reject{|f| f =~ /latest/}[NUM_RUNS_TO_KEEP..-1]
     dirs_to_cleanup.each do |dir|
       puts "Cleaning up #{dir}"
       FileUtils.rm_rf(dir)

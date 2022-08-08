@@ -615,7 +615,7 @@ function showPreviewIndex(req, res) {
   });
   var previews = previewCollections.map(function (p) {
     var previewPath = path.resolve(previewsPath, p);
-    return [p, Object.keys(require(previewPath))];
+    return [p, Object.keys(require(previewPath)).sort()];
   });
 
   try {
@@ -874,7 +874,7 @@ var handler$1 = /*#__PURE__*/function () {
               dev: dev,
               hostname: hostname,
               port: port,
-              dir: dev ? path.resolve(__dirname, "..") : __dirname
+              dir: dev ? path.resolve(__dirname, "../..") : __dirname
             });
             nextHandle = app.getRequestHandler();
             _context3.next = 10;
