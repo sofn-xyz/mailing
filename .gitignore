@@ -110,5 +110,7 @@ emails
 !packages/cli/src/generator_templates/ts/emails/
 !packages/cli/src/generator_templates/js/emails/
 
+scripts/e2e_test/runs/*
+
 # Mac
 *.DS_Store
