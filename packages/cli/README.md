@@ -26,7 +26,6 @@ We’re longtime users of Action Mailer and wanted something similar for our typ
 
 <a href="https://www.youtube.com/watch?v=FUCoXg2sAg0" target="_blank"><img width="600" alt="Mailing demo video" src="https://user-images.githubusercontent.com/609038/183299543-fbe8b7de-daab-4a79-8644-1d4b3af1bf63.jpg"></a>
 
-
 <br/>
 
 ## ●&nbsp;&nbsp;Setup
@@ -246,3 +245,8 @@ The directory `scripts/e2e_test` contains smoke tests targeting supported framew
 **Run the smoke tests**
 
 - In the directory `scripts/e2e_test`, run `bundle exec ruby e2e_test.rb`
+
+The script supports some basic options for running today
+
+- `--only=redwood_ts` to run the tests only on the specified framework
+- `--skip-build` to skip the yarn build part of the script, useful when debugging something unrelated to the build
