@@ -117,11 +117,11 @@ It will show up in the index:
 
 Clicking through shows you the email with a mobile/desktop toggle and live reload as you edit:
 
-<img width="600" alt="Mailing desktop preview" src="https://user-images.githubusercontent.com/609038/183299590-723c2bf8-65d0-4c3b-8a4f-8643edab0235.jpg">
+<img width="600" alt="Mailing desktop preview" src="https://user-images.githubusercontent.com/609038/183301497-4f0cd257-bb49-44c0-8106-2e717c430cb7.jpg">
 
 When it's nice, send it to yourself or your QA tool of choice for final testing (we like [Litmus](<[url](https://www.litmus.com)>)):
 
-<img width="600" alt="Mailing mobile preview" src="https://user-images.githubusercontent.com/609038/183299611-9c29fbe3-51d6-48e9-b2ea-d77cf608489b.jpg">
+<img width="600" alt="Mailing mobile preview" src="https://user-images.githubusercontent.com/609038/183301531-0b111b5b-10d7-4dc3-b02d-814cd35fd2d5.jpg">
 
 <br/>
 
@@ -135,7 +135,7 @@ We ship with two templates to help you get started. We recommend using these as 
 
 This template showcases a handful of MJML and Mailing features, including a responsive hero image, bulleted list, and custom Google font with fallbacks.
 
-<img width="600" alt="Mailing Welcome email template" src="https://user-images.githubusercontent.com/609038/183299797-2c34107a-483d-4d1d-9474-7c2fccc3f0ae.jpg">
+<img width="600" alt="Mailing Welcome email template" src="https://user-images.githubusercontent.com/609038/183301545-9aa2caba-0a5c-4d06-b5e3-bd515adc0110.jpg">
 
 <br/>
 
@@ -143,7 +143,7 @@ This template showcases a handful of MJML and Mailing features, including a resp
 
 This is a simpler template for text-based transactional emails.
 
-<img width="600" alt="Mailing text email template" src="https://user-images.githubusercontent.com/609038/183299905-ebe1aa9a-219a-4540-85c3-06f399d03c2e.jpg">
+<img width="600" alt="Mailing text email template" src="https://user-images.githubusercontent.com/609038/183301563-893a99f9-2ac3-4da0-af7d-ef5003c73383.jpg">
 
 ## ●&nbsp;&nbsp;Testing emails with jest
 
