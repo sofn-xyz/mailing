@@ -39,6 +39,10 @@ class TestRunner
   end
 
   def opt?(key)
+    !!@opts[key]
+  end
+
+  def opt(key)
     @opts[key]
   end
 
@@ -72,6 +76,15 @@ class TestRunner
     puts "#{emoji}  " * 10 + "\n" + text + "\n" + "#{emoji}  " * 10
   end
 
+  # @return Array containing the configs to run
+  def configs_to_run
+    if config_name = opt('only')
+      E2E_CONFIG.select{|x| x[:name] == config_name}
+    else
+      E2E_CONFIG
+    end
+  end
+
   def run
     @timestamp_dir = Time.now.strftime("%Y%m%d%H%M%S")
 
@@ -86,7 +99,7 @@ class TestRunner
     system("rm #{latest_dir}; ln -s #{runs_dir_name} #{latest_dir}")
       
      # TODO: add a `framework=` option to specify an individual framework to run
-    E2E_CONFIG.each do |config|
+    configs_to_run.each do |config|
       @config = config
       
       begin
@@ -105,7 +118,9 @@ class TestRunner
 
           # open the subprocess
           @io = IO.popen("npx mailing --quiet --typescript --emails-dir=\"./emails\"")
-          # TODO: wait for the preview server to start
+
+          # wait for the preview server to start
+          wait_for_preview_server!
         end
 
         run_cypress_tests
@@ -115,6 +130,12 @@ class TestRunner
     end
 
     cleanup_runs_directory
+  end
+
+  def wait_for_preview_server!
+    @io.select do |line|
+      break if line =~ %r{Running preview at http://localhost:3883/}
+    end
   end
 
   def run_cypress_tests
