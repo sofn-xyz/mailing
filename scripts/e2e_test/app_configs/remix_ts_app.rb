@@ -1,16 +1,16 @@
 require_relative '../helpers/test_runner_utils'
 
-class NextTsApp < App
+class RemixTsApp < App
   include TestRunnerUtils
 
   def initialize(root_dir, *args)
-    super('next_ts', root_dir, *args)
+    super('remix_ts', root_dir, *args)
   end
 
 private
   def yarn_create!
     Dir.chdir(@root_dir) do
-      system_quiet("yarn create next-app . --typescript")
+      system_quiet("yarn create remix . --template=remix --typescript --install")
     end
   end
 end

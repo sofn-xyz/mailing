@@ -1,14 +1,24 @@
+require 'net/http'
+
 class App
-  def initialize(name, root_dir)
+  CACHE_DIR = File.expand_path(__dir__ + '/../cache')
+
+  attr_reader :io
+
+  def initialize(name, root_dir, opts)
     @name = name
     @root_dir = root_dir
+    @save_cache = opts[:save_cache]
   end
 
   def setup!
-    announce! "Creating next #{@name} app in #{@root_dir}", "⚙️"
+    announce! "Creating new #{@name} app in #{@root_dir}", "⚙️"
     FileUtils.mkdir_p(@root_dir)
 
-    yarn_create!
+    use_cache do
+      yarn_create!
+    end
+
     verify!
 
     yalc_add_mailing!
@@ -16,6 +26,21 @@ class App
   end
 
 private
+  def use_cache(&block)
+    framework_cache_dir = File.join(CACHE_DIR, @name)
+    if Dir.exist?(framework_cache_dir)
+      puts "Using cache..."
+      FileUtils.cp_r(framework_cache_dir + '/.', @root_dir)
+    else
+      block.call
+
+      if @save_cache
+        verify!
+        FileUtils.cp_r(@root_dir, CACHE_DIR)
+      end
+    end
+  end
+
   def verify!
     fail "missing package.json in #{@root_dir}" unless File.exist?(File.join(@root_dir, "package.json"))
   end
@@ -51,7 +76,8 @@ private
     # If we can speed up the uncached previews.json load then this wait can likely be removed
     # see: https://github.com/sofn-xyz/mailing/issues/102
 
-    curl_exit_code = system_quiet("curl http://localhost:3883/previews.json")
-    fail "curl http://localhost:3883/previews.json did not succeed" unless curl_exit_code
+    uri = URI('http://localhost:3883/previews.json')
+    res = Net::HTTP.get_response(uri)
+    fail "HTTP Get #{uri} did not succeed" unless '200' == res.code
   end
 end
