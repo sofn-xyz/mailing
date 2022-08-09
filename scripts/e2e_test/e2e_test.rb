@@ -1,16 +1,14 @@
 # frozen_string_literal: true
 
-$LOAD_PATH.unshift(File.expand_path(File.dirname(__FILE__))) unless $LOAD_PATH.include?(File.expand_path(File.dirname(__FILE__)))
-
 require 'tmpdir'
 require 'json'
 
-require 'helpers/test_runner_utils'
-require 'app_configs/app'
-require 'app_configs/next_ts_app'
-require 'app_configs/next_js_app'
-require 'app_configs/redwood_ts_app'
-require 'app_configs/redwood_js_app'
+require_relative 'helpers/test_runner_utils'
+require_relative 'app_configs/app'
+require_relative 'app_configs/next_ts_app'
+require_relative 'app_configs/next_js_app'
+require_relative 'app_configs/redwood_ts_app'
+require_relative 'app_configs/redwood_js_app'
 
 class TestRunner
   include TestRunnerUtils
