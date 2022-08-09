@@ -8,8 +8,7 @@ type Data = {
 export default async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   if (req.method !== "POST") return res.status(404).end();
 
-  const { email } = JSON.parse(req.body);
-
+  const email = req.body?.email;
   if (typeof email !== "string") {
     return res.status(403).json({ error: "email not provided" });
   }
@@ -23,8 +22,11 @@ export default async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     data: {
       email,
       ip:
-        req.headers["x-forwarded-for"]?.toString() || req.socket.remoteAddress,
+        req.headers["x-forwarded-for"]?.toString() ||
+        req.socket?.remoteAddress ||
+        "",
     },
   });
+
   res.status(201).end();
 };
