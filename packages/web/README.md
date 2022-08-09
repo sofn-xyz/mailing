@@ -10,16 +10,16 @@ yarn dev
 
 ### DB
 
-For DB features, web attaches to [planetscale via prisma](https://planetscale.com/docs/tutorials/prisma-quickstart). To develop locally, first add the DATABASE_URL to `packages/web/.env`:
+For DB features, web attaches to postgres via prisma. To develop locally, first add the DATABASE_URL to `packages/web/.env`. On mac it will look something like this:
 
 ```bash
-DATABASE_URL="mysql://root@127.0.0.1:3309/mailing"
+DATABASE_URL="postgresql://petersugihara:petersugihara@localhost:5432/mailing"
 ```
 
-Then use the pscale CLI to open a connection to a shared cloud development DB:
+Then run migrate to create the DB and initialize the schema.
 
 ```bash
-pscale connect mailing develop --port 3309
+npx prisma migrate dev
 ```
 
-If it's your first time using pscale, you'll need to log in.
+In prod, we set DATABASE_URL to a postgres db on neon.tech.
