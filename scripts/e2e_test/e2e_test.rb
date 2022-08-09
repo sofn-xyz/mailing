@@ -59,7 +59,10 @@ class TestRunner
       begin
         tmp_dir_name = File.join(runs_dir_name, config_name.to_s)
 
-        klass.new(tmp_dir_name, save_cache: opt?('save-cache')).setup!
+        app = klass.new(tmp_dir_name, save_cache: opt?('save-cache'))
+        app.setup!
+
+        @io = app.io
 
         run_cypress_tests
       ensure
@@ -125,7 +128,7 @@ private
   #
 
   def cleanup_io_and_subprocess
-    return unless @io
+    fail "No subprocess found to cleanup" unless @io
 
     # kill the subprocess
     Process.kill "INT", @io.pid

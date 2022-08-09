@@ -3,6 +3,8 @@ require 'net/http'
 class App
   CACHE_DIR = File.expand_path(__dir__ + '/../cache')
 
+  attr_reader :io
+
   def initialize(name, root_dir, opts)
     @name = name
     @root_dir = root_dir
