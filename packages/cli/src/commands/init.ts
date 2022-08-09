@@ -8,7 +8,6 @@ import { handler as previewHandler } from "./preview";
 
 export type CliArguments = ArgumentsCamelCase<{
   port?: number;
-  typescript?: "true" | "false" | boolean;
   "emails-dir"?: "./emails" | "./src/emails";
 }>;
 

@@ -50,7 +50,9 @@ const TextEmail = ({ name, headline, body, bulletedList, ctaText }) => {
               fontSize={textBase}
               lineHeight={leadingRelaxed}
             >
+              <>
               {body}
+              </>
             </MjmlText>
             {bulletedList && (
               <>

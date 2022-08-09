@@ -65,7 +65,7 @@ const TextEmail: React.FC<TextEmailProps> = ({
               fontSize={textBase}
               lineHeight={leadingRelaxed}
             >
-              {body}
+              <>{body}</>
             </MjmlText>
             {bulletedList && (
               <>
