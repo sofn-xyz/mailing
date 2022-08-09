@@ -9,6 +9,8 @@ require_relative 'app_configs/next_ts_app'
 require_relative 'app_configs/next_js_app'
 require_relative 'app_configs/redwood_ts_app'
 require_relative 'app_configs/redwood_js_app'
+require_relative 'app_configs/remix_ts_app'
+require_relative 'app_configs/remix_js_app'
 
 class TestRunner
   include TestRunnerUtils
@@ -23,7 +25,9 @@ class TestRunner
     next_ts: NextTsApp,
     next_js: NextJsApp,
     redwood_ts: RedwoodTsApp,
-    redwood_js: RedwoodJsApp
+    redwood_js: RedwoodJsApp,
+    remix_ts: RemixTsApp,
+    remix_js: RemixJsApp
   }
 
   def initialize
@@ -135,7 +139,7 @@ private
     dirs_to_cleanup = Array(Dir.glob("#{RUNS_DIR}/*")).sort{|a,b| b <=> a}.reject{|f| f =~ /latest/}[NUM_RUNS_TO_KEEP..-1]
     dirs_to_cleanup.each do |dir|
       puts "Cleaning up #{dir}"
-      FileUtils.rm_rf(dir)
+      spawn("rm -rf #{dir}")
     end
   end
 end

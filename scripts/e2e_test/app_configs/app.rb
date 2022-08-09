@@ -1,4 +1,6 @@
 class App
+  CACHE_DIR = File.expand_path(__dir__ + '/../cache')
+
   def initialize(name, root_dir)
     @name = name
     @root_dir = root_dir
@@ -8,14 +10,27 @@ class App
     announce! "Creating next #{@name} app in #{@root_dir}", "⚙️"
     FileUtils.mkdir_p(@root_dir)
 
-    yarn_create!
-    verify!
+    use_cache do
+      yarn_create!
+      # prompt to save to cache?
+      verify!
+    end
 
     yalc_add_mailing!
     run_mailing!
   end
 
 private
+  def use_cache(&block)
+    framework_cache_dir = File.join(CACHE_DIR, @name)
+    if Dir.exist?(framework_cache_dir)
+      puts "Using cache..."
+      FileUtils.cp_r(framework_cache_dir + '/.', @root_dir)
+      
+      verify!
+    end
+  end
+
   def verify!
     fail "missing package.json in #{@root_dir}" unless File.exist?(File.join(@root_dir, "package.json"))
   end
