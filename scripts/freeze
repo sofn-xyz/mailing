@@ -8,4 +8,4 @@ cd packages/cli
 NEXT_PUBLIC_STATIC=1 npx next build
 NEXT_PUBLIC_STATIC=1 npx next export
 
-kill DEV_PID
+kill $DEV_PID
