@@ -33,7 +33,6 @@ private
       FileUtils.cp_r(framework_cache_dir + '/.', @root_dir)
     else
       block.call
-      # prompt to save to cache?
 
       if @save_cache
         verify!
