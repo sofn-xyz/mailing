@@ -250,3 +250,7 @@ The script supports some basic options for running today
 
 - `--only=redwood_ts` to run the tests only on the specified framework
 - `--skip-build` to skip the yarn build part of the script, useful when debugging something unrelated to the build
+
+**Cache the framework installs for faster runs**
+
+- In the directory `scripts/e2e_test`, run `bundle exec ruby e2e_test.rb --save-cache --skip-build` to save each framework install (before mailing is added) to the `cache` directory. Subsequent test runs will use the cache instead of running `yarn create` and `yarn install`, which will speed things up 🏎
