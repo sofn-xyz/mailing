@@ -59,7 +59,7 @@ class TestRunner
       begin
         tmp_dir_name = File.join(runs_dir_name, config_name.to_s)
 
-        klass.new(tmp_dir_name).setup!
+        klass.new(tmp_dir_name, save_cache: opt?('save-cache')).setup!
 
         run_cypress_tests
       ensure

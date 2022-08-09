@@ -3,8 +3,8 @@ require_relative '../helpers/test_runner_utils'
 class RemixJsApp < App
   include TestRunnerUtils
 
-  def initialize(root_dir)
-    super('remix_js', root_dir)
+  def initialize(root_dir, *args)
+    super('remix_js', root_dir, *args)
   end
 
 private

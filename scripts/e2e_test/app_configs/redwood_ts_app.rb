@@ -3,8 +3,8 @@ require_relative '../helpers/test_runner_utils'
 class RedwoodTsApp < App
   include TestRunnerUtils
 
-  def initialize(root_dir)
-    super('redwood_ts', root_dir)
+  def initialize(root_dir, *args)
+    super('redwood_ts', root_dir, *args)
   end
 
 private

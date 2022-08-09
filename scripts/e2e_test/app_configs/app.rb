@@ -1,18 +1,18 @@
 class App
   CACHE_DIR = File.expand_path(__dir__ + '/../cache')
 
-  def initialize(name, root_dir)
+  def initialize(name, root_dir, opts)
     @name = name
     @root_dir = root_dir
+    @save_cache = opts[:save_cache]
   end
 
   def setup!
-    announce! "Creating next #{@name} app in #{@root_dir}", "⚙️"
+    announce! "Creating new #{@name} app in #{@root_dir}", "⚙️"
     FileUtils.mkdir_p(@root_dir)
 
     use_cache do
       yarn_create!
-      # prompt to save to cache?
     end
 
     verify!
@@ -29,6 +29,12 @@ private
       FileUtils.cp_r(framework_cache_dir + '/.', @root_dir)
     else
       block.call
+      # prompt to save to cache?
+
+      if @save_cache
+        verify!
+        FileUtils.cp_r(@root_dir, CACHE_DIR)
+      end
     end
   end
 
