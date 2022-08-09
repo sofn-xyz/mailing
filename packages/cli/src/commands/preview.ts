@@ -167,16 +167,20 @@ export const handler = async (argv: PreviewArgs) => {
       }
     });
 
-  // simple live reload implementation
-  const changeWatchPath = getExistingEmailsDir();
-  if (!changeWatchPath) {
-    log("Error finding emails dir in . or ./src");
-    return;
+  try {
+    // simple live reload implementation
+    const changeWatchPath = getExistingEmailsDir();
+    if (!changeWatchPath) {
+      log("Error finding emails dir in . or ./src");
+      return;
+    }
+    watch(changeWatchPath, { recursive: true }, (eventType, filename) => {
+      log(`Detected ${eventType} on ${filename}, reloading`);
+      delete require.cache[resolve(changeWatchPath, filename)];
+      shouldReload = true;
+    });
+    log(`Watching for changes to ${relative(cwd(), changeWatchPath)}`);
+  } catch (e) {
+    error(`Error starting change watcher`, e);
   }
-  watch(changeWatchPath, { recursive: true }, (eventType, filename) => {
-    log(`Detected ${eventType} on ${filename}, reloading`);
-    delete require.cache[resolve(changeWatchPath, filename)];
-    shouldReload = true;
-  });
-  log(`Watching for changes to ${relative(cwd(), changeWatchPath)}`);
 };
