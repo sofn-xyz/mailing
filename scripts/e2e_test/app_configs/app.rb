@@ -1,3 +1,5 @@
+require 'net/http'
+
 class App
   CACHE_DIR = File.expand_path(__dir__ + '/../cache')
 
@@ -73,7 +75,8 @@ private
     # If we can speed up the uncached previews.json load then this wait can likely be removed
     # see: https://github.com/sofn-xyz/mailing/issues/102
 
-    curl_exit_code = system_quiet("curl http://localhost:3883/previews.json")
-    fail "curl http://localhost:3883/previews.json did not succeed" unless curl_exit_code
+    uri = URI('http://localhost:3883/previews.json')
+    res = Net::HTTP.get_response(uri)
+    fail "HTTP Get #{uri} did not succeed" unless '200' == res.code
   end
 end
