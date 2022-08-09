@@ -11,7 +11,7 @@
 - Preview server with live reload for quick development
 - Dev mode opens emails in your browser instead of sending
 - Test mode for ensuring emails send and have the correct content
-- Plays well with js frameworks like redwood.js, remix, next.js
+- Plays well with js frameworks like next.js, redwood.js, remix
 - Written in TypeScript, inspired by Action Mailer from Ruby on Rails
 
 <br/>
@@ -25,7 +25,6 @@ We’re longtime users of Action Mailer and wanted something similar for our typ
 ## ●&nbsp;&nbsp;Demo
 
 <a href="https://www.youtube.com/watch?v=FUCoXg2sAg0" target="_blank"><img width="600" alt="Mailing demo video" src="https://user-images.githubusercontent.com/609038/183299543-fbe8b7de-daab-4a79-8644-1d4b3af1bf63.jpg"></a>
-
 
 <br/>
 
@@ -225,3 +224,29 @@ For development, you may want to have a demo next app that pulls in your changes
 - Make your changes in `mailing`
 - Run `yarn build` in the `mailing` root directory to create new `dist` files
 - Run `yalc push` in the `mailing` root directory to both publish your changes (`yalc publish`) and pull them in to your next app (`yalc update`)
+
+### Run cypress tests for the preview server
+
+- Start a mailing preview server on localhost:3883
+- cd into packages/cli and run `yarn cypress run`
+
+### Cypress smoke tests
+
+The directory `scripts/e2e_test` contains smoke tests targeting supported frameworks that should be run before every public npm release. Each test uses the `yarn create` command to create new projects from their `create-*` starter kits and then runs the cypress cli tests contained in `packages/cli/cypress`. The frameworks currently covered by the tests are:
+
+- Next.js (typescript)
+- Next.js (javascript)
+
+**Initial test setup**
+
+- In the project root, run `asdf install` to install ruby 3.1.2
+- In the directory `scripts/e2e_test`, run `bundle install` to install the required ruby gems
+
+**Run the smoke tests**
+
+- In the directory `scripts/e2e_test`, run `bundle exec ruby e2e_test.rb`
+
+The script supports some basic options for running today
+
+- `--only=redwood_ts` to run the tests only on the specified framework
+- `--skip-build` to skip the yarn build part of the script, useful when debugging something unrelated to the build
