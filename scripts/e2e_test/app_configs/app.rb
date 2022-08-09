@@ -13,8 +13,9 @@ class App
     use_cache do
       yarn_create!
       # prompt to save to cache?
-      verify!
     end
+
+    verify!
 
     yalc_add_mailing!
     run_mailing!
@@ -26,8 +27,8 @@ private
     if Dir.exist?(framework_cache_dir)
       puts "Using cache..."
       FileUtils.cp_r(framework_cache_dir + '/.', @root_dir)
-      
-      verify!
+    else
+      block.call
     end
   end
 
