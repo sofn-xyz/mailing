@@ -1,6 +1,8 @@
 dev-app
 tmp-testMailQueue.json
 dist
+previews_html
+out
 
 # Logs
 logs
