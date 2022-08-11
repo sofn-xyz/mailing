@@ -15,7 +15,12 @@
     "skipLibCheck": true /* Skip type checking all .d.ts files. */
   },
   "$schema": "https://json.schemastore.org/tsconfig",
-  "include": ["packages/*/src/**/*", "testSetup.ts", "emails/**/*"],
+  "include": [
+    "packages/*/src/**/*",
+    "packages/web/**/*",
+    "testSetup.ts",
+    "emails/**/*"
+  ],
   "exclude": [
     "packages/*/src/**/__test__/*",
     "packages/*/src/emails/**/*",
