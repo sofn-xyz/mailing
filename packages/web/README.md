@@ -5,6 +5,7 @@
 Run the development server:
 
 ```bash
+cd packages/web
 yarn dev
 ```
 
@@ -19,6 +20,7 @@ DATABASE_URL="postgresql://petersugihara:petersugihara@localhost:5432/mailing"
 Then run migrate to create the DB and initialize the schema.
 
 ```bash
+cd packages/web
 npx prisma migrate dev
 ```
 
