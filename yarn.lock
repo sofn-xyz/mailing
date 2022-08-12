@@ -6802,7 +6802,7 @@
 
 "mailing-core@file:/Users/petersugihara/mailing/packages/core":
   "resolved" "file:packages/core"
-  "version" "0.6.5"
+  "version" "0.6.6"
   dependencies:
     "chalk" "^4.1.2"
     "fs-extra" "^10.1.0"
@@ -6813,7 +6813,7 @@
 
 "mailing@file:/Users/petersugihara/mailing/packages/cli":
   "resolved" "file:packages/cli"
-  "version" "0.6.5"
+  "version" "0.6.6"
   dependencies:
     "@babel/core" "^7.18.9"
     "@babel/preset-env" "^7.18.6"

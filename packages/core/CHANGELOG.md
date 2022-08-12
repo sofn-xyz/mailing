@@ -1,5 +1,11 @@
 # mailing-core
 
+## 0.6.7
+
+### Patch Changes
+
+- 730fa5e: Add mailing export-previews command
+
 ## 0.6.5
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # web
 
+## 0.2.6
+
+### Patch Changes
+
+- 730fa5e: Add mailing export-previews command
+
 ## 0.2.5
 
 ### Patch Changes
