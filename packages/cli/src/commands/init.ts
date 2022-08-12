@@ -34,12 +34,37 @@ export const builder = {
   },
 };
 
+function writeConfigFile() {
+  const MAILING_CONFIG_FILE = "./mailing.config.json";
+  const prettier = require("prettier");
+
+  if (!existsSync(MAILING_CONFIG_FILE)) {
+    const fs = require("fs");
+
+    const configJsonString = prettier.format(
+      JSON.stringify({
+        typescript: looksLikeTypescriptProject(),
+        emailsDir: "./emails",
+      }),
+      { parser: "json", printWidth: 0 }
+    );
+
+    try {
+      fs.writeFileSync(MAILING_CONFIG_FILE, configJsonString);
+    } catch (err) {
+      console.error(err);
+    }
+  }
+}
+
 export const handler = async (args: CliArguments) => {
   // check if emails directory already exists
   if (!existsSync("./package.json")) {
     log("No package.json found. Please run from the project root.");
     return;
   }
+
+  writeConfigFile();
 
   if (!getExistingEmailsDir()) {
     // options: assign isTypescript

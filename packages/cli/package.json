@@ -25,6 +25,7 @@
   },
   "description": "Fun email development environment",
   "devDependencies": {
+    "@babel/parser": "^7.18.11",
     "@next/eslint-plugin-next": "^12.2.0",
     "@types/fs-extra": "^9.0.13",
     "@types/html-minifier-terser": "^6.1.0",
