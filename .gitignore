@@ -1,6 +1,8 @@
 dev-app
 tmp-testMailQueue.json
 dist
+previews_html
+out
 
 # Logs
 logs
@@ -111,6 +113,7 @@ emails
 !packages/cli/src/generator_templates/js/emails/
 
 scripts/e2e_test/runs/*
+scripts/e2e_test/cache/*
 
 # Mac
 *.DS_Store

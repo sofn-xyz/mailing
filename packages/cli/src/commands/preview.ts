@@ -17,6 +17,7 @@ import {
 import { cwd, exit } from "process";
 import { parse } from "url";
 import next from "next";
+import registerRequireHooks from "./util/registerRequireHooks";
 
 export type PreviewArgs = ArgumentsCamelCase<{
   port?: number;
@@ -40,29 +41,7 @@ export const handler = async (argv: PreviewArgs) => {
     return; // for now
   }
 
-  if (!process.env.MM_DEV) {
-    require("ts-node").register({
-      compilerOptions: {
-        module: "commonjs",
-        jsx: "react-jsx",
-        moduleResolution: "node",
-        skipLibCheck: true,
-      },
-    });
-
-    require("@babel/register")({
-      presets: [
-        [
-          "@babel/react",
-          {
-            runtime: "automatic",
-          },
-        ],
-        "@babel/preset-env",
-      ],
-      compact: false,
-    });
-  }
+  registerRequireHooks();
 
   const port = argv?.port || DEFAULT_PORT;
 

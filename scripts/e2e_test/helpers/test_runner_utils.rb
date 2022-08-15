@@ -10,4 +10,5 @@ module TestRunnerUtils
     puts "\n" * 10
     puts "#{emoji}  " * 10 + "\n" + text + "\n" + "#{emoji}  " * 10
   end
+  
 end
