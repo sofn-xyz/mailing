@@ -5,7 +5,7 @@ import { getPreviewsDirectory } from "../paths";
 import { error, log } from "../log";
 import { render } from "../mjml";
 import registerRequireHooks from "./util/registerRequireHooks";
-import { DEFAULTS } from "../config";
+import { DEFAULTS, setConfig } from "../config";
 
 export type ExportPreviewsArgs = ArgumentsCamelCase<{
   emailsDir: string;

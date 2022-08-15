@@ -18,7 +18,7 @@ import { cwd, exit } from "process";
 import { parse } from "url";
 import next from "next";
 import registerRequireHooks from "./util/registerRequireHooks";
-import { DEFAULTS } from "../config";
+import { DEFAULTS, setConfig } from "../config";
 
 export type PreviewArgs = ArgumentsCamelCase<{
   port: number;
@@ -47,6 +47,8 @@ export const builder = {
 };
 
 export const handler = async (argv: PreviewArgs) => {
+  setConfig({ emailsDir: argv.emailsDir });
+
   const port = argv.port;
 
   if (process.env.NODE_ENV === "test") {
@@ -115,24 +117,20 @@ export const handler = async (argv: PreviewArgs) => {
           log(`${res.statusCode} ${req.url} ${Date.now() - startTime}ms`);
       });
 
-      const config = {
-        emailsDir: argv.emailsDir,
-      };
-
       try {
         if (req.url === "/previews.json") {
-          showPreviewIndex(req, res, config);
+          showPreviewIndex(req, res);
         } else if (req.url === "/should_reload.json") {
           noLog = true;
           showShouldReload(req, res);
         } else if (req.url === "/intercepts" && req.method === "POST") {
           createIntercept(req, res);
         } else if (req.url === "/previews/send.json" && req.method === "POST") {
-          await sendPreview(req, res, config);
+          await sendPreview(req, res);
         } else if (/^\/intercepts\/[a-zA-Z0-9]+\.json/.test(req.url)) {
           showIntercept(req, res);
         } else if (/^\/previews\/.*\.json/.test(req.url)) {
-          showPreview(req, res, config);
+          showPreview(req, res);
         } else if (/^\/_+next/.test(req.url)) {
           noLog = true;
           await app.render(req, res, `${pathname}`, query);

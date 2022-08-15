@@ -4,11 +4,11 @@ import { log } from "../log";
 import { getExistingEmailsDir, getPackageJSON } from "../paths";
 import { generateEmailsDirectory } from "../generators";
 import { handler as previewHandler } from "./preview";
-import { writeDefaultConfigFile, DEFAULTS } from "../config";
+import { writeDefaultConfigFile, DEFAULTS, setConfig } from "../config";
 
 export type InitArguments = ArgumentsCamelCase<{
   emailsDir: string;
-  isTypescript: boolean;
+  typescript: boolean;
   port: number;
   quiet: boolean;
 }>;
@@ -38,7 +38,9 @@ export const builder = {
   },
 };
 
-export const handler = async (args: InitArguments) => {
+export const handler = async (argv: InitArguments) => {
+  setConfig({ emailsDir: argv.emailsDir });
+
   // check if emails directory already exists
   if (!existsSync("./package.json")) {
     log("No package.json found. Please run from the project root.");
@@ -49,11 +51,11 @@ export const handler = async (args: InitArguments) => {
 
   if (!getExistingEmailsDir()) {
     const options = {
-      isTypescript: args.isTypescript,
-      emailsDir: args.emailsDir,
+      isTypescript: argv.typescript,
+      emailsDir: argv.emailsDir,
     };
     await generateEmailsDirectory(options);
   }
 
-  previewHandler(args);
+  previewHandler(argv);
 };
