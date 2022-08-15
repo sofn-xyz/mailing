@@ -1,7 +1,6 @@
 import { existsSync } from "fs-extra";
 import { ArgumentsCamelCase } from "yargs";
 import { log } from "../log";
-import { getExistingEmailsDir, getPackageJSON } from "../paths";
 import { generateEmailsDirectory } from "../generators";
 import { handler as previewHandler } from "./preview";
 import { writeDefaultConfigFile, DEFAULTS, setConfig } from "../config";
@@ -49,7 +48,7 @@ export const handler = async (argv: InitArguments) => {
 
   writeDefaultConfigFile();
 
-  if (!getExistingEmailsDir()) {
+  if (!existsSync(argv.emailsDir)) {
     const options = {
       isTypescript: argv.typescript,
       emailsDir: argv.emailsDir,

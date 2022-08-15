@@ -2,9 +2,6 @@ import { existsSync } from "fs-extra";
 import { getPackageJSON } from "./paths";
 import { writeFileSync } from "fs";
 import { error } from "./log";
-import { InitArguments } from "./commands/init";
-import { PreviewArgs } from "./commands/preview";
-import { ExportPreviewsArgs } from "./commands/exportPreviews";
 
 export const MAILING_CONFIG_FILE = "./mailing.config.json";
 
