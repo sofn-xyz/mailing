@@ -6,7 +6,10 @@ jest.mock("../../log");
 
 describe("exportPreviews command", () => {
   it("outputs html files to outDir", async () => {
-    await handler({ "out-dir": "./out" } as ExportPreviewsArgs);
+    await handler({
+      outDir: "./out",
+      emailsDir: "./emails",
+    } as ExportPreviewsArgs);
     expect(error).not.toHaveBeenCalled();
     expect(log).toHaveBeenCalledWith("Exporting preview html to");
     expect(log).toHaveBeenCalledWith("✅ Processed 4 previews");
@@ -16,7 +19,10 @@ describe("exportPreviews command", () => {
     jest
       .spyOn(fsExtra, "existsSync")
       .mockImplementation((path) => /package\.json/.test(path.toString()));
-    await handler({ "out-dir": "./out" } as ExportPreviewsArgs);
+    await handler({
+      outDir: "./out",
+      emailsDir: "./NoTaDiReCtOrY",
+    } as ExportPreviewsArgs);
     expect(error).toHaveBeenCalledWith(
       "Could not find emails directory. Have you initialized the project with `mailing init`?"
     );

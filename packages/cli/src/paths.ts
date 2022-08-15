@@ -1,8 +1,13 @@
+import { existsSync } from "fs";
 import { readFileSync } from "fs-extra";
 import { resolve } from "path";
 
-export function getPreviewsDirectory(emailsDir: string) {
-  return resolve(emailsDir, "previews");
+// appends /previews to emailsDir string if that directory exists
+// otherwise, return null
+export function getPreviewsDirectory(emailsDir: string): string | null {
+  const previewsDirectory = resolve(emailsDir, "previews");
+
+  return existsSync(previewsDirectory) ? previewsDirectory : null;
 }
 
 export function readPackageJSON() {
