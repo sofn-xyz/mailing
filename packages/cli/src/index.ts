@@ -5,6 +5,7 @@ import * as preview from "./commands/preview";
 import * as init from "./commands/init";
 import { looksLikeTypescriptProject, MAILING_CONFIG_FILE } from "./config";
 import { readFileSync } from "fs";
+import * as exportPreviews from "./commands/exportPreviews";
 
 const config = existsSync(MAILING_CONFIG_FILE)
   ? JSON.parse(readFileSync(MAILING_CONFIG_FILE).toString())
@@ -19,5 +20,6 @@ yargs(process.argv.slice(2))
   .default('typescript', looksLikeTypescriptProject())
   .command(preview)
   .command(init)
+  .command(exportPreviews)
   .help()
   .argv;
