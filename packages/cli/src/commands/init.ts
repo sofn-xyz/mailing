@@ -6,9 +6,11 @@ import { generateEmailsDirectory } from "../generators";
 import { handler as previewHandler } from "./preview";
 import { writeDefaultConfigFile, DEFAULTS } from "../config";
 
-export type CliArguments = ArgumentsCamelCase<{
+export type InitArguments = ArgumentsCamelCase<{
+  emailsDir: string;
+  isTypescript: boolean;
   port: number;
-  "emails-dir": string;
+  quiet: boolean;
 }>;
 
 export const command = ["$0", "init"];
@@ -36,7 +38,7 @@ export const builder = {
   },
 };
 
-export const handler = async (args: CliArguments) => {
+export const handler = async (args: InitArguments) => {
   // check if emails directory already exists
   if (!existsSync("./package.json")) {
     log("No package.json found. Please run from the project root.");
@@ -48,12 +50,10 @@ export const handler = async (args: CliArguments) => {
   if (!getExistingEmailsDir()) {
     const options = {
       isTypescript: args.isTypescript,
-      emailsDir: args["emails-dir"],
+      emailsDir: args.emailsDir,
     };
-    // @ts-ignore
     await generateEmailsDirectory(options);
   }
 
-  // @ts-ignore
   previewHandler(args);
 };

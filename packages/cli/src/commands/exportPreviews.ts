@@ -9,7 +9,7 @@ import { DEFAULTS } from "../config";
 
 export type ExportPreviewsArgs = ArgumentsCamelCase<{
   emailsDir: string;
-  "out-dir": string;
+  outDir: string;
 }>;
 
 export const command = "export-previews";

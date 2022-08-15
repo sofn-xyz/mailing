@@ -23,6 +23,7 @@ import { DEFAULTS } from "../config";
 export type PreviewArgs = ArgumentsCamelCase<{
   port: number;
   quiet: boolean;
+  emailsDir: string;
 }>;
 
 export const command = "preview";
@@ -66,7 +67,6 @@ export const handler = async (argv: PreviewArgs) => {
   const nextHandle = app.getRequestHandler();
   await app.prepare();
 
-  // @ts-ignore
   const previewsPath = getPreviewsDirectory(argv.emailsDir);
   if (!previewsPath) {
     error(
@@ -167,13 +167,10 @@ export const handler = async (argv: PreviewArgs) => {
     return;
   }
 
-  // @ts-ignore
   watch(changeWatchPath, { recursive: true }, (eventType, filename) => {
     log(`Detected ${eventType} on ${filename}, reloading`);
-    // @ts-ignore
     delete require.cache[resolve(changeWatchPath, filename)];
     shouldReload = true;
   });
-  // @ts-ignore
   log(`Watching for changes to ${relative(cwd(), changeWatchPath)}`);
 };
