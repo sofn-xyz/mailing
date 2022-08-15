@@ -8,15 +8,20 @@ import registerRequireHooks from "./util/registerRequireHooks";
 import { DEFAULTS } from "../config";
 
 export type ExportPreviewsArgs = ArgumentsCamelCase<{
-  "out-dir"?: string;
+  emailsDir: string;
+  "out-dir": string;
 }>;
 
 export const command = "export-previews";
 
 export const builder = {
+  "emails-dir": {
+    default: DEFAULTS.emailsDir,
+    description: "the directory of your email templates",
+  },
   outDir: {
     default: DEFAULTS.outDir,
-    description: "directory in which we output the templates",
+    description: "directory in which we output the html",
   },
 };
 
@@ -42,7 +47,7 @@ export const handler = async (argv: ExportPreviewsArgs) => {
     return;
   }
 
-  const previewsPath = getPreviewsDirectory();
+  const previewsPath = getPreviewsDirectory(argv.emailsDir);
   if (!previewsPath) {
     error(
       "Could not find emails directory. Have you initialized the project with `mailing init`?"

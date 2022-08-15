@@ -16,9 +16,8 @@ export function getExistingEmailsDir() {
   return null;
 }
 
-export function getPreviewsDirectory() {
-  const existingEmailsDir = getExistingEmailsDir();
-  return existingEmailsDir ? resolve(existingEmailsDir, "previews") : null;
+export function getPreviewsDirectory(emailsDir: string) {
+  return resolve(emailsDir, "previews");
 }
 
 export function getPackageJSON() {

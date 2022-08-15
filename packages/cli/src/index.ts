@@ -15,8 +15,10 @@ const config = existsSync(MAILING_CONFIG_FILE)
 yargs(process.argv.slice(2))
 .config(config)
 // @ts-ignore
-  .command(init)
-  .command(preview)
+.command(init)
+// @ts-ignore
+.command(preview)
+// @ts-ignore
   .command(exportPreviews)
   .help()
   .argv;

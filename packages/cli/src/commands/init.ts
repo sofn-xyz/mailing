@@ -23,7 +23,7 @@ export const builder = {
   },
   "emails-dir": {
     default: DEFAULTS.emailsDir,
-    description: "the directory to put your emails",
+    description: "the directory to put your email templates",
   },
   port: {
     default: DEFAULTS.port,
@@ -54,5 +54,6 @@ export const handler = async (args: CliArguments) => {
     await generateEmailsDirectory(options);
   }
 
+  // @ts-ignore
   previewHandler(args);
 };

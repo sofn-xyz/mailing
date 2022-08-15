@@ -18,8 +18,12 @@ const LIVE_RELOAD_SNIPPET = `
   }
 `;
 
-export function showPreviewIndex(req: IncomingMessage, res: ServerResponse) {
-  const previewsPath = getPreviewsDirectory();
+export function showPreviewIndex(
+  req: IncomingMessage,
+  res: ServerResponse,
+  config: any
+) {
+  const previewsPath = getPreviewsDirectory(config.emailsDir);
 
   if (!req.url || !previewsPath) {
     return renderNotFound(res);
@@ -43,8 +47,12 @@ export function showPreviewIndex(req: IncomingMessage, res: ServerResponse) {
   }
 }
 
-export function showPreview(req: IncomingMessage, res: ServerResponse) {
-  const previewsPath = getPreviewsDirectory();
+export function showPreview(
+  req: IncomingMessage,
+  res: ServerResponse,
+  config: any
+) {
+  const previewsPath = getPreviewsDirectory(config.emailsDir);
 
   if (!req.url || !previewsPath) {
     return renderNotFound(res);
@@ -87,8 +95,12 @@ export function showPreview(req: IncomingMessage, res: ServerResponse) {
     res.end(msg);
   }
 }
-export async function sendPreview(req: IncomingMessage, res: ServerResponse) {
-  const previewsPath = getPreviewsDirectory();
+export async function sendPreview(
+  req: IncomingMessage,
+  res: ServerResponse,
+  config: any
+) {
+  const previewsPath = getPreviewsDirectory(config.emailsDir);
 
   if (!previewsPath) {
     error("Previews path not found");
