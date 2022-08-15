@@ -1,6 +1,5 @@
 import { copySync, existsSync } from "fs-extra";
 import { relative, resolve } from "path";
-import prompts from "prompts";
 import tree from "tree-node-cli";
 import { getExistingEmailsDir } from "./paths";
 import { log } from "./log";
@@ -27,36 +26,16 @@ export async function generateEmailsDirectory({
     return false;
   }
 
-  let targetEmailsDir;
+  const targetEmailsDir = emailsDir;
 
-  if (emailsDir) {
-    targetEmailsDir = emailsDir;
-  } else {
-    const emailsPath = getPotentialEmailsDirPath();
-    const response = await prompts({
-      type: "text",
-      name: "path",
-      message: "Where should we put your emails?",
-      initial: "./" + relative(process.cwd(), emailsPath) + "/",
-    });
-    targetEmailsDir = response.path;
-  }
+  // copy the emails dir template in!
+  const path = `generator_templates/${isTypescript ? "ts" : "js"}/emails`;
+  await copySync(resolve(__dirname, path), targetEmailsDir, {
+    overwrite: false,
+  });
+  log(
+    `Generated your emails dir at ${targetEmailsDir}:\n${tree(targetEmailsDir)}`
+  );
 
-  if (targetEmailsDir) {
-    // copy the emails dir template in!
-    const path = `generator_templates/${isTypescript ? "ts" : "js"}/emails`;
-    await copySync(resolve(__dirname, path), targetEmailsDir, {
-      overwrite: false,
-    });
-    log(
-      `Generated your emails dir at ${targetEmailsDir}:\n${tree(
-        targetEmailsDir
-      )}`
-    );
-
-    return true;
-  } else {
-    log("OK, bye!");
-    return false;
-  }
+  return true;
 }

@@ -18,6 +18,7 @@ describe("init command", () => {
       );
     removeSync("/tmp/src/emails");
   });
+
   it("creates the ts emails directory", async () => {
     prompts.inject([true, "/tmp/src/emails"]);
     jest

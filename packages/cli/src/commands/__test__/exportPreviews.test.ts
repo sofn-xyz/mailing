@@ -1,4 +1,3 @@
-import prompts from "prompts";
 import fsExtra from "fs-extra";
 import { log, error } from "../../log";
 import { ExportPreviewsArgs, handler } from "../exportPreviews";
