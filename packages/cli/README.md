@@ -199,6 +199,20 @@ describe("Example API", () => {
 
 <br/>
 
+### mailing.config.js
+
+Running `mailing init` generates a mailing.config.js file that can be used to control the CLI commands. The default options are:
+
+```
+  {
+    "typescript": true, // (if you have a tsconfig.json in your root, otherwise false)
+    "emailsDir": "./emails",
+    "outDir": "./previews_html" // (for email previews)
+  }
+```
+
+Append --help to your CLI command for a full list of supported options. Any of these options can be added to your config file.
+
 ## ●&nbsp;&nbsp;&nbsp;Contributing
 
 Want to improve Mailing? Incredible. Try it out, file an issue or open a PR!
