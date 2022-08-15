@@ -40,7 +40,7 @@ export function previewFilename(moduleName: string, functionName: string) {
 }
 
 export const handler = async (argv: ExportPreviewsArgs) => {
-  const outDir = argv["out-dir"];
+  const outDir = argv.outDir;
 
   if (typeof outDir !== "string") {
     error("please specify an outDir like --outDir ./html");

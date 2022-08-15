@@ -1,7 +1,6 @@
 import { copySync, existsSync } from "fs-extra";
 import { resolve } from "path";
 import tree from "tree-node-cli";
-import { getExistingEmailsDir } from "./paths";
 import { log } from "./log";
 
 function getPotentialEmailsDirPath() {
