@@ -19,7 +19,7 @@ export const builder = {
     default: DEFAULTS.emailsDir,
     description: "the directory of your email templates",
   },
-  outDir: {
+  "out-dir": {
     default: DEFAULTS.outDir,
     description: "directory in which we output the html",
   },
