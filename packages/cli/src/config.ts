@@ -15,7 +15,6 @@ export function looksLikeTypescriptProject(): boolean {
 }
 
 export function writeDefaultConfigFile(): void {
-  const fs = require("fs");
   const prettier = require("prettier");
 
   if (!existsSync(MAILING_CONFIG_FILE)) {
