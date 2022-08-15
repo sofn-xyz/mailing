@@ -3,9 +3,9 @@ import "dotenv/config";
 import yargs from "yargs/yargs";
 import * as preview from "./commands/preview";
 import * as init from "./commands/init";
+import * as exportPreviews from "./commands/exportPreviews";
 import { MAILING_CONFIG_FILE } from "./config";
 import { readFileSync } from "fs";
-import * as exportPreviews from "./commands/exportPreviews";
 
 const config = existsSync(MAILING_CONFIG_FILE)
   ? JSON.parse(readFileSync(MAILING_CONFIG_FILE).toString())
@@ -13,7 +13,8 @@ const config = existsSync(MAILING_CONFIG_FILE)
 
 // prettier-ignore
 yargs(process.argv.slice(2))
-  .config(config)
+.config(config)
+// @ts-ignore
   .command(init)
   .command(preview)
   .command(exportPreviews)

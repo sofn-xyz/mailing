@@ -8,8 +8,8 @@ import { handler as previewHandler } from "./preview";
 import { writeDefaultConfigFile, DEFAULTS } from "../config";
 
 export type CliArguments = ArgumentsCamelCase<{
-  port?: number;
-  "emails-dir"?: "./emails" | "./src/emails";
+  port: number;
+  "emails-dir": string;
 }>;
 
 export const command = ["$0", "init"];
@@ -26,6 +26,15 @@ export const builder = {
     default: DEFAULTS.emailsDir,
     description: "the directory to put your emails",
   },
+  port: {
+    default: DEFAULTS.port,
+    description: "what port to start the preview server on",
+  },
+  quiet: {
+    default: DEFAULTS.quiet,
+    descriptioin: "quiet mode (don't open browser after starting)",
+    boolean: true,
+  },
 };
 
 export const handler = async (args: CliArguments) => {
@@ -38,25 +47,11 @@ export const handler = async (args: CliArguments) => {
   writeDefaultConfigFile();
 
   if (!getExistingEmailsDir()) {
-    // options: assign isTypescript
-    let isTypescript;
-    if ("false" === args.typescript) {
-      isTypescript = false;
-    } else if (args.typescript) {
-      isTypescript = true;
-    } else {
-      const ts = await prompts({
-        type: "confirm",
-        name: "value",
-        message: "Are you using typescript?",
-      });
-      isTypescript = ts.value;
-    }
-
     const options = {
-      isTypescript: isTypescript,
+      isTypescript: args.isTypescript,
       emailsDir: args["emails-dir"],
     };
+    // @ts-ignore
     await generateEmailsDirectory(options);
   }
 

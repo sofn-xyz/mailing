@@ -18,7 +18,7 @@ export async function generateEmailsDirectory({
   emailsDir,
 }: {
   isTypescript: boolean;
-  emailsDir?: "./emails" | "./src/emails";
+  emailsDir: string;
 }): Promise<boolean> {
   const existingEmailsPath = getExistingEmailsDir();
   if (existingEmailsPath) {

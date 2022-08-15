@@ -35,7 +35,7 @@ export const builder = {
     description: "what port to start the preview server on",
   },
   quiet: {
-    default: false,
+    default: DEFAULTS.quiet,
     descriptioin: "quiet mode (don't open browser after starting)",
     boolean: true,
   },
