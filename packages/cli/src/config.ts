@@ -12,7 +12,7 @@ interface PreviewServerConfig {
 // defaults for all options
 export const DEFAULTS = {
   typescript: looksLikeTypescriptProject(),
-  emailsDir: "./emails",
+  emailsDir: existsSync("./src/emails") ? "./src/emails" : "./emails",
   outDir: "./previews_html",
   port: 3883,
   quiet: false,
