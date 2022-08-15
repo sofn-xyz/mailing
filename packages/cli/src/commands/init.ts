@@ -5,7 +5,7 @@ import { log } from "../log";
 import { getExistingEmailsDir, getPackageJSON } from "../paths";
 import { generateEmailsDirectory } from "../generators";
 import { handler as previewHandler } from "./preview";
-import { writeDefaultConfigFile } from "../config";
+import { writeDefaultConfigFile, DEFAULTS } from "../config";
 
 export type CliArguments = ArgumentsCamelCase<{
   port?: number;
@@ -18,9 +18,12 @@ export const describe = "initialize mailing in your app";
 
 export const builder = {
   typescript: {
+    default: DEFAULTS.typescript,
     description: "use Typescript",
+    boolean: true,
   },
   "emails-dir": {
+    default: DEFAULTS.emailsDir,
     description: "the directory to put your emails",
   },
 };

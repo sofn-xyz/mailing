@@ -5,6 +5,7 @@ import { getPreviewsDirectory } from "../paths";
 import { error, log } from "../log";
 import { render } from "../mjml";
 import registerRequireHooks from "./util/registerRequireHooks";
+import { DEFAULTS } from "../config";
 
 export type ExportPreviewsArgs = ArgumentsCamelCase<{
   "out-dir"?: string;
@@ -14,7 +15,7 @@ export const command = "export-previews";
 
 export const builder = {
   outDir: {
-    default: "./previews_html",
+    default: DEFAULTS.outDir,
     description: "directory in which we output the templates",
   },
 };

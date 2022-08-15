@@ -18,6 +18,7 @@ import { cwd, exit } from "process";
 import { parse } from "url";
 import next from "next";
 import registerRequireHooks from "./util/registerRequireHooks";
+import { DEFAULTS } from "../config";
 
 export type PreviewArgs = ArgumentsCamelCase<{
   port?: number;
@@ -27,6 +28,18 @@ export type PreviewArgs = ArgumentsCamelCase<{
 export const command = "preview";
 
 export const describe = "start the email preview server";
+
+export const builder = {
+  port: {
+    default: DEFAULTS.port,
+    description: "what port to start the preview server on",
+  },
+  quiet: {
+    default: false,
+    descriptioin: "quiet mode (don't open browser after starting)",
+    boolean: true,
+  },
+};
 
 export const handler = async (argv: PreviewArgs) => {
   const port = argv.port;
