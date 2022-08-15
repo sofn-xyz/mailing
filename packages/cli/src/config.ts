@@ -1,6 +1,7 @@
 import { existsSync } from "fs-extra";
 import { getPackageJSON } from "./paths";
 import { writeFileSync } from "fs";
+import { error } from "./log";
 
 export const MAILING_CONFIG_FILE = "./mailing.config.json";
 
@@ -29,7 +30,7 @@ export function writeDefaultConfigFile(): void {
     try {
       writeFileSync(MAILING_CONFIG_FILE, configJsonString);
     } catch (err) {
-      console.error(err);
+      error(err);
     }
   }
 }
