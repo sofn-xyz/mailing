@@ -1,5 +1,5 @@
 import { existsSync } from "fs-extra";
-import { getPackageJSON } from "./paths";
+import { readPackageJSON } from "./paths";
 import { writeFileSync } from "fs";
 import { error } from "./log";
 
@@ -34,7 +34,7 @@ function looksLikeTypescriptProject(): boolean {
     return true;
   }
 
-  const pkg = getPackageJSON();
+  const pkg = readPackageJSON();
   return !!(pkg.devDependencies?.typescript || pkg.dependencies?.typescript);
 }
 
