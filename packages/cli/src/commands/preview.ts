@@ -23,19 +23,13 @@ export type PreviewArgs = ArgumentsCamelCase<{
   quiet?: boolean;
 }>;
 
-const DEFAULT_PORT = 3883;
-
 export const command = "preview";
 
 export const describe = "start the email preview server";
 
-export const builder = {
-  port: {
-    default: DEFAULT_PORT,
-  },
-};
-
 export const handler = async (argv: PreviewArgs) => {
+  const port = argv.port;
+
   if (process.env.NODE_ENV === "test") {
     return; // for now
   }
@@ -64,8 +58,6 @@ export const handler = async (argv: PreviewArgs) => {
     });
   }
 
-  const port = argv?.port || DEFAULT_PORT;
-
   const dev = !!process.env.MM_DEV;
   const hostname = "localhost";
 
@@ -91,7 +83,7 @@ export const handler = async (argv: PreviewArgs) => {
   let shouldReload = false;
 
   http
-    .createServer(async function (req, res) {
+    .createServer(async function(req, res) {
       const startTime = Date.now();
       let noLog = false;
 
