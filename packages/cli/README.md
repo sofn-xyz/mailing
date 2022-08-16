@@ -144,6 +144,8 @@ This is a simpler template for text-based transactional emails.
 
 <img width="600" alt="Mailing text email template" src="https://user-images.githubusercontent.com/609038/183301563-893a99f9-2ac3-4da0-af7d-ef5003c73383.jpg">
 
+<br/>
+
 ## ●&nbsp;&nbsp;Testing emails with jest
 
 When `NODE_ENV === "test"`, calling `sendMail` pushes messages into a queue for later examination. The `mail-core` package exports a couple of functions for testing that emails send with the correct content.
@@ -197,8 +199,6 @@ describe("Example API", () => {
 
 [source entrypoint](https://github.com/sofn-xyz/mailing/blob/main/packages/cli/src/index.ts)
 
-<br/>
-
 ### mailing.config.js
 
 Running `mailing init` generates a mailing.config.js file that will be used as default options for the CLI commands. The default options are:
@@ -212,6 +212,8 @@ Running `mailing init` generates a mailing.config.js file that will be used as d
 ```
 
 Append --help to your CLI command for a full list of supported options. Any of these options can be added to your config file.
+
+<br/>
 
 ## ●&nbsp;&nbsp;&nbsp;Contributing
 
