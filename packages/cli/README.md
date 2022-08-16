@@ -201,13 +201,13 @@ describe("Example API", () => {
 
 ### mailing.config.js
 
-Running `mailing init` generates a mailing.config.js file that can be used to control the CLI commands. The default options are:
+Running `mailing init` generates a mailing.config.js file that will be used as default options for the CLI commands. The default options are:
 
 ```
   {
-    "typescript": true, // (if you have a tsconfig.json in your root, otherwise false)
+    "typescript": ???, // ("true" if you have a tsconfig.json in your root, otherwise "false")
     "emailsDir": "./emails",
-    "outDir": "./previews_html" // (for email previews)
+    "outDir": "./previews_html" // (directory for export-previews html output)
   }
 ```
 
