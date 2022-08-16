@@ -61,26 +61,28 @@ export const handler = async (argv: InitArguments) => {
     };
     await generateEmailsDirectory(options);
 
-    const emailResponse = await prompts({
-      type: "text",
-      name: "email",
-      message:
-        "Enter your email for occasional updates about mailing (optional)",
-    });
-    const { email } = emailResponse;
-    if (email?.length > 0) {
-      log("Great, talk soon.");
-      try {
-        await fetch(`${getMailingAPIBaseURL()}/api/users`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email }),
-        });
-      } catch (e) {
-        error(e);
+    if (!argv.quiet) {
+      const emailResponse = await prompts({
+        type: "text",
+        name: "email",
+        message:
+          "Enter your email for occasional updates about mailing (optional)",
+      });
+      const { email } = emailResponse;
+      if (email?.length > 0) {
+        log("Great, talk soon.");
+        try {
+          await fetch(`${getMailingAPIBaseURL()}/api/users`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email }),
+          });
+        } catch (e) {
+          error(e);
+        }
+      } else {
+        log("OK, no problem!");
       }
-    } else {
-      log("OK, no problem!");
     }
   }
 

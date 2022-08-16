@@ -25,7 +25,7 @@ describe("init command", () => {
       emailsDir: "/tmp/src/emails",
       typescript: true,
       port: 3883,
-      quiet: true,
+      quiet: false,
     } as InitArguments);
     expect(log).toHaveBeenCalledWith(
       `Generated your emails dir at /tmp/src/emails:
@@ -47,7 +47,6 @@ emails
   });
 
   it("creates the js emails directory", async () => {
-    prompts.inject(["\n"]);
     jest
       .spyOn(fsExtra, "existsSync")
       .mockImplementation((path) => /package\.json/.test(path.toString()));
