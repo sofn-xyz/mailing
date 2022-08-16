@@ -72,7 +72,7 @@ export const handler = async (argv: InitArguments) => {
       if (email?.length > 0) {
         log("Great, talk soon.");
         try {
-          await fetch(`${getMailingAPIBaseURL()}/api/users`, {
+          fetch(`${getMailingAPIBaseURL()}/api/users`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ email }),
