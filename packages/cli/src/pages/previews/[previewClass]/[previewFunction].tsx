@@ -4,6 +4,7 @@ import Header from "../../../components/Header";
 import HotIFrame from "../../../components/HotIFrame";
 import MjmlErrors from "../../../components/MjmlErrors";
 import { GetStaticProps } from "next";
+import { hotkeysMap } from "../../../components/hooks/usePreviewHotkeys";
 
 type Params = { previewClass: string; previewFunction: string };
 
@@ -95,23 +96,27 @@ const Preview = ({ initialData }: { initialData: ShowPreviewResponseBody }) => {
           <>
             <div className="title">Hotkeys</div>
             <div className="hotkey">
-              <span className="character">/</span>
+              <span className="character">{hotkeysMap.showPreviews}</span>
               <span className="description">Jump to previews</span>
             </div>
             <div className="hotkey">
-              <span className="character">.</span>
-              <span className="description">Toggle view mode</span>
+              <span className="character">{hotkeysMap.viewModeNext}</span>
+              <span className="description">Next view mode</span>
             </div>
             <div className="hotkey">
-              <span className="character">D</span>
+              <span className="character">{hotkeysMap.viewModePrevious}</span>
+              <span className="description">Previous view mode</span>
+            </div>
+            <div className="hotkey">
+              <span className="character">{hotkeysMap.viewModeDesktop}</span>
               <span className="description">Desktop view</span>
             </div>
             <div className="hotkey">
-              <span className="character">M</span>
+              <span className="character">{hotkeysMap.viewModeMobile}</span>
               <span className="description">Mobile view</span>
             </div>
             <div className="hotkey">
-              <span className="character">H</span>
+              <span className="character">{hotkeysMap.viewModeHTML}</span>
               <span className="description">HTML view</span>
             </div>
           </>
