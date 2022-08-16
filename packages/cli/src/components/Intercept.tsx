@@ -18,6 +18,7 @@ const Intercept: React.FC<InterceptProps> = ({ data }) => {
         title={data.subject || ""}
         setViewMode={setViewMode}
         viewMode={viewMode}
+        hasPlaintext
         helpContent={
           <>
             <div className="title">Hotkeys</div>

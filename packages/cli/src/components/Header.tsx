@@ -14,6 +14,7 @@ type HeaderProps = {
   previous?: string;
   next?: string;
   helpContent: ReactElement;
+  hasPlaintext?: boolean;
 };
 
 const Header: React.FC<HeaderProps> = ({
@@ -23,6 +24,7 @@ const Header: React.FC<HeaderProps> = ({
   viewMode,
   setViewMode,
   helpContent,
+  hasPlaintext,
 }) => {
   return (
     <div className="header">
@@ -37,7 +39,7 @@ const Header: React.FC<HeaderProps> = ({
       <div className="segmented-control-container">
         <div className="segmented-control">
           <button
-            className={`desktop${viewMode === "desktop" ? " active" : ""}`}
+            className={`${viewMode === "desktop" ? " active" : ""}`}
             onClick={() => setViewMode("desktop")}
           >
             <Image
@@ -49,7 +51,7 @@ const Header: React.FC<HeaderProps> = ({
             />
           </button>
           <button
-            className={`mobile${viewMode === "mobile" ? " active" : ""}`}
+            className={`${viewMode === "mobile" ? " active" : ""}`}
             onClick={() => setViewMode("mobile")}
           >
             <Image
@@ -61,7 +63,7 @@ const Header: React.FC<HeaderProps> = ({
             />
           </button>
           <button
-            className={`html${viewMode === "html" ? " active" : ""}`}
+            className={`${viewMode === "html" ? " active" : ""}`}
             onClick={() => setViewMode("html")}
           >
             <Image
@@ -72,6 +74,20 @@ const Header: React.FC<HeaderProps> = ({
               title="Toggle HTML view"
             />
           </button>
+          {hasPlaintext && (
+            <button
+              className={`${viewMode === "plaintext" ? " active" : ""}`}
+              onClick={() => setViewMode("plaintext")}
+            >
+              <Image
+                src="/icon-plaintext.svg"
+                width="11.68"
+                height="13"
+                alt="Plaintext icon"
+                title="Toggle plaintext view"
+              />
+            </button>
+          )}
         </div>
       </div>
       <div className="buttons-container">
@@ -193,22 +209,25 @@ const Header: React.FC<HeaderProps> = ({
         .buttons-container {
           text-align: end;
         }
-        .desktop,
-        .mobile,
-        .html {
+        .segmented-control button {
           height: 40px;
           width: 60px;
           display: flex;
           align-items: center;
           justify-content: center;
         }
-        .desktop {
-          border-right: none;
+        .segmented-control button:first-of-type {
           border-top-left-radius: 16px;
           border-bottom-left-radius: 16px;
         }
-        .html {
+        .segmented-control button:nth-of-type(2) {
           border-left: none;
+          border-right: none;
+        }
+        .segmented-control button:nth-of-type(4) {
+          border-left: none;
+        }
+        .segmented-control button:last-of-type {
           border-top-right-radius: 16px;
           border-bottom-right-radius: 16px;
         }

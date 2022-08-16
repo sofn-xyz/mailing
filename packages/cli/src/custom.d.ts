@@ -31,4 +31,4 @@ type MjmlError = {
   formattedMessage: string;
 };
 
-type ViewMode = "desktop" | "mobile" | "html";
+type ViewMode = "desktop" | "mobile" | "html" | "plaintext";
