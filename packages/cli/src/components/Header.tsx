@@ -62,6 +62,20 @@ const Header: React.FC<HeaderProps> = ({
               title="Toggle mobile view"
             />
           </button>
+          {hasPlaintext && (
+            <button
+              className={`${viewMode === "plaintext" ? " active" : ""}`}
+              onClick={() => setViewMode("plaintext")}
+            >
+              <Image
+                src="/icon-plaintext.svg"
+                width="14.37"
+                height="16"
+                alt="Plaintext icon"
+                title="Toggle plaintext view"
+              />
+            </button>
+          )}
           <button
             className={`${viewMode === "html" ? " active" : ""}`}
             onClick={() => setViewMode("html")}
@@ -74,20 +88,6 @@ const Header: React.FC<HeaderProps> = ({
               title="Toggle HTML view"
             />
           </button>
-          {hasPlaintext && (
-            <button
-              className={`${viewMode === "plaintext" ? " active" : ""}`}
-              onClick={() => setViewMode("plaintext")}
-            >
-              <Image
-                src="/icon-plaintext.svg"
-                width="11.68"
-                height="13"
-                alt="Plaintext icon"
-                title="Toggle plaintext view"
-              />
-            </button>
-          )}
         </div>
       </div>
       <div className="buttons-container">
