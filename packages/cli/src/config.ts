@@ -38,6 +38,7 @@ function looksLikeTypescriptProject(): boolean {
 // write the default mailing.config.json file to get you started
 export function writeDefaultConfigFile(): void {
   if (!existsSync(MAILING_CONFIG_FILE)) {
+    console.log("hello world");
     const configJsonString = prettier.format(
       JSON.stringify(DEFAULTS_FOR_CONFIG_FILE),
       {
