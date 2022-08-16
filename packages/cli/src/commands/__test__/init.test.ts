@@ -1,7 +1,7 @@
-import fsExtra, { removeSync, existsSync } from "fs-extra";
+import prompts from "prompts";
+import fsExtra, { removeSync } from "fs-extra";
 import { handler, InitArguments } from "../init";
 import { log } from "../../log";
-import { ArgumentsCamelCase } from "yargs";
 
 jest.mock("../../log");
 jest.mock("../preview", () => ({ handler: jest.fn() }));
@@ -17,6 +17,7 @@ describe("init command", () => {
   });
 
   it("creates the ts emails directory", async () => {
+    prompts.inject(["pete22r@cam11psh.com"]);
     jest
       .spyOn(fsExtra, "existsSync")
       .mockImplementation((path) => /package\.json/.test(path.toString()));
@@ -46,6 +47,7 @@ emails
   });
 
   it("creates the js emails directory", async () => {
+    prompts.inject(["\n"]);
     jest
       .spyOn(fsExtra, "existsSync")
       .mockImplementation((path) => /package\.json/.test(path.toString()));
