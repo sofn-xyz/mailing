@@ -1,7 +1,7 @@
 import { existsSync } from "fs-extra";
 import { readPackageJSON } from "./paths";
 import { writeFileSync } from "fs";
-import { error } from "./log";
+import { log, error } from "./log";
 import * as prettier from "prettier";
 
 export const MAILING_CONFIG_FILE = "./mailing.config.json";
@@ -51,6 +51,11 @@ export function writeDefaultConfigFile(): void {
     } catch (err) {
       error(err);
     }
+
+    log(
+      `Added mailing.config.json to your project with the following contents:
+${configJsonString}`
+    );
   }
 }
 
