@@ -59,7 +59,7 @@ export function writeDefaultConfigFile(): void {
   }
 }
 
-/* Config singleton */
+/* Preview server config singleton */
 
 let previewServerConfig: PreviewServerConfig | undefined;
 
