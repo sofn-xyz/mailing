@@ -22,21 +22,23 @@ class App
     verify!
 
     yalc_add_mailing!
+    yarn!
+    yarn_add_dependencies!
     run_mailing!
   end
 
 private
   def use_cache(&block)
     framework_cache_dir = File.join(CACHE_DIR, @name)
-    if Dir.exist?(framework_cache_dir)
-      puts "Using cache..."
+    if Dir.exist?(framework_cache_dir) && !@save_cache
+      puts "Using cached #{@name}..."
       FileUtils.cp_r(framework_cache_dir + '/.', @root_dir)
     else
       block.call
 
       if @save_cache
         verify!
-        FileUtils.cp_r(@root_dir, CACHE_DIR)
+        FileUtils.cp_r(@root_dir, File.join(CACHE_DIR, @name))
       end
     end
   end
@@ -45,10 +47,26 @@ private
     fail "missing package.json in #{@root_dir}" unless File.exist?(File.join(@root_dir, "package.json"))
   end
 
+  ## add mailing to the project
   def yalc_add_mailing!
+    puts "Adding mailing via yalc"
     Dir.chdir(@root_dir) do
-      ## add mailing to the project
-      system("npx yalc add mailing")
+      system_quiet("npx yalc add --dev mailing")
+    end
+  end
+  
+  def yarn!
+    puts "Running yarn"
+    Dir.chdir(@root_dir) do
+      system_quiet("yarn")
+    end
+  end
+  
+  def yarn_add_dependencies!
+    puts "Adding mailing dependencies"
+    Dir.chdir(@root_dir) do
+      system_quiet("yarn add mailing-core mjml mjml-react nodemailer &&\
+        yarn add --dev @types/mjml @types/mjml-react @types/nodemailer")
     end
   end
 
