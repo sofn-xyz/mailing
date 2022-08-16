@@ -1,5 +1,3 @@
-// @ts-nocheck
-
 import { resolve } from "path";
 import { IncomingMessage, ServerResponse } from "http";
 import { render } from "../../mjml";
