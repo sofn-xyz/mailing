@@ -21,9 +21,9 @@ import registerRequireHooks from "./util/registerRequireHooks";
 import { DEFAULTS, setConfig } from "../config";
 
 export type PreviewArgs = ArgumentsCamelCase<{
-  port: number;
-  quiet: boolean;
-  emailsDir: string;
+  port?: number;
+  quiet?: boolean;
+  emailsDir?: string;
 }>;
 
 export const command = "preview";
@@ -47,6 +47,10 @@ export const builder = {
 };
 
 export const handler = async (argv: PreviewArgs) => {
+  if (!argv.emailsDir) throw new Error("emailsDir option is not set");
+  if (undefined === argv.port) throw new Error("port option is not set");
+  if (undefined === argv.quiet) throw new Error("quiet option is not set");
+
   setConfig({ emailsDir: argv.emailsDir });
 
   const port = argv.port;

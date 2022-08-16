@@ -4,12 +4,13 @@ import { log } from "../log";
 import { generateEmailsDirectory } from "../generators";
 import { handler as previewHandler } from "./preview";
 import { writeDefaultConfigFile, DEFAULTS, setConfig } from "../config";
+import { pick } from "../utils";
 
 export type InitArguments = ArgumentsCamelCase<{
-  emailsDir: string;
-  typescript: boolean;
-  port: number;
-  quiet: boolean;
+  emailsDir?: string;
+  typescript?: boolean;
+  port?: number;
+  quiet?: boolean;
 }>;
 
 export const command = ["$0", "init"];
@@ -38,6 +39,10 @@ export const builder = {
 };
 
 export const handler = async (argv: InitArguments) => {
+  if (!argv.emailsDir) throw new Error("emailsDir option is not set");
+  if (undefined === argv.typescript)
+    throw new Error("typescript option is not set");
+
   setConfig({ emailsDir: argv.emailsDir });
 
   // check if emails directory already exists
@@ -56,5 +61,5 @@ export const handler = async (argv: InitArguments) => {
     await generateEmailsDirectory(options);
   }
 
-  previewHandler(argv);
+  previewHandler(pick(argv, "port", "quiet", "emailsDir"));
 };

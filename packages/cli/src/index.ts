@@ -1,5 +1,3 @@
-// @ts-nocheck
-
 import { existsSync } from "fs-extra";
 import "dotenv/config";
 import yargs from "yargs/yargs";

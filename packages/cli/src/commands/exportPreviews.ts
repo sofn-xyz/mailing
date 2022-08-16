@@ -8,8 +8,8 @@ import registerRequireHooks from "./util/registerRequireHooks";
 import { DEFAULTS, setConfig } from "../config";
 
 export type ExportPreviewsArgs = ArgumentsCamelCase<{
-  emailsDir: string;
-  outDir: string;
+  emailsDir?: string;
+  outDir?: string;
 }>;
 
 export const command = "export-previews";
@@ -40,6 +40,9 @@ export function previewFilename(moduleName: string, functionName: string) {
 }
 
 export const handler = async (argv: ExportPreviewsArgs) => {
+  if (!argv.emailsDir) throw new Error("emailsDir option is not set");
+  if (!argv.outDir) throw new Error("outDir option is not set");
+
   const outDir = argv.outDir;
 
   if (typeof outDir !== "string") {
