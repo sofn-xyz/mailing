@@ -26,7 +26,7 @@ export const builder = {
   },
   "emails-dir": {
     default: DEFAULTS.emailsDir,
-    description: "the directory to put your email templates",
+    description: "the directory to put your email templates in",
   },
   port: {
     default: DEFAULTS.port,
@@ -34,7 +34,7 @@ export const builder = {
   },
   quiet: {
     default: DEFAULTS.quiet,
-    descriptioin: "quiet mode (don't open browser after starting)",
+    descriptioin: "quiet mode (don't prompt or open browser after starting)",
     boolean: true,
   },
 };
