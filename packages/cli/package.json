@@ -33,6 +33,7 @@
     "@types/node": "^17.0.24",
     "@types/node-fetch": "^2.6.1",
     "@types/nodemailer": "^6.4.4",
+    "@types/prompts": "^2.0.14",
     "@types/yargs": "^17.0.10",
     "cypress": "^10.3.1"
   },
@@ -54,6 +55,7 @@
     "nodemailer": "^6.7.5",
     "open": "^8.4.0",
     "prettier": "^2.7.1",
+    "prompts": "^2.4.2",
     "react-hotkeys-hook": "^3.4.6",
     "react-tiny-popover": "^7.1.0",
     "tree-node-cli": "^1.5.2",

@@ -1,7 +1,11 @@
 #! /bin/sh
 
-yarn dev &
+yarn dev --quiet &
+DEV_PID=$!
 sleep 10
+
 cd packages/cli
 NEXT_PUBLIC_STATIC=1 npx next build
 NEXT_PUBLIC_STATIC=1 npx next export
+
+kill $DEV_PID

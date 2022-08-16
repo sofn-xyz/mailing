@@ -13,3 +13,11 @@ export function getPreviewsDirectory(emailsDir: string): string | null {
 export function readPackageJSON() {
   return JSON.parse(readFileSync("./package.json").toString());
 }
+
+export function getMailingAPIBaseURL() {
+  if (process.env.MM_DEV) {
+    return `http://localhost:3000`;
+  } else {
+    return "https://www.mailing.run";
+  }
+}

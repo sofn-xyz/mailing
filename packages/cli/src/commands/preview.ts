@@ -86,7 +86,7 @@ export const handler = async (argv: PreviewArgs) => {
   let shouldReload = false;
 
   http
-    .createServer(async function(req, res) {
+    .createServer(async function (req, res) {
       const startTime = Date.now();
       let noLog = false;
 
@@ -162,17 +162,21 @@ export const handler = async (argv: PreviewArgs) => {
       }
     });
 
-  // simple live reload implementation
-  const changeWatchPath = argv.emailsDir;
-  if (!changeWatchPath) {
-    log("Error finding emails dir in . or ./src");
-    return;
-  }
+  try {
+    // simple live reload implementation
+    const changeWatchPath = argv.emailsDir;
+    if (!changeWatchPath) {
+      log("Error finding emails dir in . or ./src");
+      return;
+    }
 
-  watch(changeWatchPath, { recursive: true }, (eventType, filename) => {
-    log(`Detected ${eventType} on ${filename}, reloading`);
-    delete require.cache[resolve(changeWatchPath, filename)];
-    shouldReload = true;
-  });
-  log(`Watching for changes to ${relative(cwd(), changeWatchPath)}`);
+    watch(changeWatchPath, { recursive: true }, (eventType, filename) => {
+      log(`Detected ${eventType} on ${filename}, reloading`);
+      delete require.cache[resolve(changeWatchPath, filename)];
+      shouldReload = true;
+    });
+    log(`Watching for changes to ${relative(cwd(), changeWatchPath)}`);
+  } catch (e) {
+    error(`Error starting change watcher`, e);
+  }
 };
