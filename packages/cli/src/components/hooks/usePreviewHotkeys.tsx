@@ -6,7 +6,7 @@ type Options = {
   setViewMode: React.Dispatch<React.SetStateAction<ViewMode>>;
 };
 
-const hotkeysMap = {
+export const hotkeysMap = {
   showPreviews: '/',
   viewModeDesktop: '1',
   viewModeHTML: '3',
