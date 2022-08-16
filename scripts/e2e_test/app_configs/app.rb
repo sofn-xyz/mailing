@@ -71,6 +71,7 @@ private
   end
 
   def run_mailing!
+    puts "Running mailing"
     Dir.chdir(@root_dir) do
       # open the subprocess
       @io = IO.popen("npx mailing --quiet")
