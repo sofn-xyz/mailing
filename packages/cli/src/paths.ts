@@ -1,26 +1,15 @@
-import { existsSync, readFileSync } from "fs-extra";
+import { existsSync } from "fs";
+import { readFileSync } from "fs-extra";
 import { resolve } from "path";
 
-function pathHasExistingEmailsDir(path: string) {
-  // could do a better check of whether this exists
-  return existsSync(path);
+// appends /previews to emailsDir string if that directory exists
+// otherwise, return null
+export function getPreviewsDirectory(emailsDir: string): string | null {
+  const previewsDirectory = resolve(emailsDir, "previews");
+
+  return existsSync(previewsDirectory) ? previewsDirectory : null;
 }
 
-export function getExistingEmailsDir() {
-  if (pathHasExistingEmailsDir("./src/emails")) {
-    return resolve("./src/emails");
-  }
-  if (pathHasExistingEmailsDir("./emails")) {
-    return resolve("./emails");
-  }
-  return null;
-}
-
-export function getPreviewsDirectory() {
-  const existingEmailsDir = getExistingEmailsDir();
-  return existingEmailsDir ? resolve(existingEmailsDir, "previews") : null;
-}
-
-export function getPackageJSON() {
+export function readPackageJSON() {
   return JSON.parse(readFileSync("./package.json").toString());
 }

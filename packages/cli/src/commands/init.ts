@@ -1,24 +1,16 @@
 import { existsSync } from "fs-extra";
-import prompts from "prompts";
 import { ArgumentsCamelCase } from "yargs";
 import { log } from "../log";
-import { getExistingEmailsDir, getPackageJSON } from "../paths";
 import { generateEmailsDirectory } from "../generators";
-import { handler as previewHandler } from "./preview";
+import { handler as previewHandler, PreviewArgs } from "./preview";
+import { writeDefaultConfigFile, DEFAULTS, setConfig } from "../config";
 
-export type CliArguments = ArgumentsCamelCase<{
+export type InitArguments = ArgumentsCamelCase<{
+  emailsDir?: string;
+  typescript?: boolean;
   port?: number;
-  "emails-dir"?: "./emails" | "./src/emails";
+  quiet?: boolean;
 }>;
-
-function looksLikeTypescriptProject(): boolean {
-  if (existsSync("./tsconfig.json")) {
-    return true;
-  }
-
-  const pkg = getPackageJSON();
-  return !!(pkg.devDependencies?.typescript || pkg.dependencies?.typescript);
-}
 
 export const command = ["$0", "init"];
 
@@ -26,44 +18,55 @@ export const describe = "initialize mailing in your app";
 
 export const builder = {
   typescript: {
+    default: DEFAULTS.typescript,
     description: "use Typescript",
+    boolean: true,
   },
   "emails-dir": {
-    description:
-      "where to put your emails - ./emails or ./src/emails are currently the only valid options",
+    default: DEFAULTS.emailsDir,
+    description: "the directory to put your email templates",
+  },
+  port: {
+    default: DEFAULTS.port,
+    description: "what port to start the preview server on",
+  },
+  quiet: {
+    default: DEFAULTS.quiet,
+    descriptioin: "quiet mode (don't open browser after starting)",
+    boolean: true,
   },
 };
 
-export const handler = async (args: CliArguments) => {
+export const handler = async (argv: InitArguments) => {
+  if (!argv.emailsDir) throw new Error("emailsDir option is not set");
+  if (undefined === argv.typescript)
+    throw new Error("typescript option is not set");
+
+  setConfig({ emailsDir: argv.emailsDir });
+
   // check if emails directory already exists
   if (!existsSync("./package.json")) {
     log("No package.json found. Please run from the project root.");
     return;
   }
 
-  if (!getExistingEmailsDir()) {
-    // options: assign isTypescript
-    let isTypescript;
-    if ("false" === args.typescript) {
-      isTypescript = false;
-    } else if (args.typescript) {
-      isTypescript = true;
-    } else {
-      const ts = await prompts({
-        type: "confirm",
-        name: "value",
-        message: "Are you using typescript?",
-        initial: looksLikeTypescriptProject(),
-      });
-      isTypescript = ts.value;
-    }
+  writeDefaultConfigFile();
 
+  if (!existsSync(argv.emailsDir)) {
     const options = {
-      isTypescript: isTypescript,
-      emailsDir: args["emails-dir"],
+      isTypescript: argv.typescript,
+      emailsDir: argv.emailsDir,
     };
     await generateEmailsDirectory(options);
   }
 
-  previewHandler(args);
+  const previewHandlerArgv: PreviewArgs = {
+    port: argv.port,
+    quiet: argv.quiet,
+    emailsDir: argv.emailsDir,
+    $0: argv.$0,
+    _: argv._,
+  };
+
+  previewHandler(previewHandlerArgv);
 };

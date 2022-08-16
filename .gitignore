@@ -1,6 +1,7 @@
 dev-app
 tmp-testMailQueue.json
 dist
+mailing.config.json
 previews_html
 out
 
