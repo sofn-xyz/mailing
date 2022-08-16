@@ -5,10 +5,6 @@ import { error } from "./log";
 
 export const MAILING_CONFIG_FILE = "./mailing.config.json";
 
-interface PreviewServerConfig {
-  emailsDir: string;
-}
-
 // defaults for all options
 export const DEFAULTS = {
   typescript: looksLikeTypescriptProject(),
@@ -60,6 +56,10 @@ export function writeDefaultConfigFile(): void {
 }
 
 /* Preview server config singleton */
+
+interface PreviewServerConfig {
+  emailsDir: string;
+}
 
 let previewServerConfig: PreviewServerConfig | undefined;
 
