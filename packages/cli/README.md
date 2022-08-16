@@ -193,6 +193,8 @@ describe("Example API", () => {
 
 `mailing preview` launches the development server
 
+`mailing export-previews` exports template previews as plain html files
+
 `mailing` runs init then preview
 
 `mm` is a cute alias for `mailing`
