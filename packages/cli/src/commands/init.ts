@@ -4,7 +4,6 @@ import { log } from "../log";
 import { generateEmailsDirectory } from "../generators";
 import { handler as previewHandler, PreviewArgs } from "./preview";
 import { writeDefaultConfigFile, DEFAULTS, setConfig } from "../config";
-import { pick } from "../utils";
 
 export type InitArguments = ArgumentsCamelCase<{
   emailsDir?: string;
