@@ -2,7 +2,7 @@ import { existsSync } from "fs-extra";
 import { ArgumentsCamelCase } from "yargs";
 import { log } from "../log";
 import { generateEmailsDirectory } from "../generators";
-import { handler as previewHandler } from "./preview";
+import { handler as previewHandler, PreviewArgs } from "./preview";
 import { writeDefaultConfigFile, DEFAULTS, setConfig } from "../config";
 import { pick } from "../utils";
 
@@ -61,5 +61,13 @@ export const handler = async (argv: InitArguments) => {
     await generateEmailsDirectory(options);
   }
 
-  previewHandler(pick(argv, "port", "quiet", "emailsDir"));
+  const previewHandlerArgv: PreviewArgs = {
+    port: argv.port,
+    quiet: argv.quiet,
+    emailsDir: argv.emailsDir,
+    $0: argv.$0,
+    _: argv._,
+  };
+
+  previewHandler(previewHandlerArgv);
 };
