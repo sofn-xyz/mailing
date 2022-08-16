@@ -1,5 +1,11 @@
 # web
 
+## 0.2.8
+
+### Patch Changes
+
+- collect dev emails to send release notes
+
 ## 0.2.7
 
 ### Patch Changes

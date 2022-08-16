@@ -1,5 +1,11 @@
 # mailing
 
+## 0.6.9
+
+### Patch Changes
+
+- collect dev emails to send release notes
+
 ## 0.6.8
 
 ### Patch Changes
