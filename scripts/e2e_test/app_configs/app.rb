@@ -19,7 +19,7 @@ class App
       yarn_create!
     end
 
-    verify!
+    verify_package_json_exists!
 
     yalc_add_mailing!
     yarn!
@@ -37,13 +37,13 @@ private
       block.call
 
       if @save_cache
-        verify!
+        verify_package_json_exists!
         FileUtils.cp_r(@root_dir, File.join(CACHE_DIR, @name))
       end
     end
   end
 
-  def verify!
+  def verify_package_json_exists!
     fail "missing package.json in #{@root_dir}" unless File.exist?(File.join(@root_dir, "package.json"))
   end
 
