@@ -30,7 +30,7 @@ class App
 private
   def use_cache(&block)
     framework_cache_dir = File.join(CACHE_DIR, @name)
-    if Dir.exist?(framework_cache_dir) && !@save_cache
+    if Dir.exist?(framework_cache_dir)
       puts "Using cached #{@name}..."
       FileUtils.cp_r(framework_cache_dir + '/.', @root_dir)
     else

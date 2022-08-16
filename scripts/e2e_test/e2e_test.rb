@@ -101,6 +101,7 @@ private
 
     Dir.chdir(CLI_ROOT) do
       system("npx yalc add")
+      system("npx yalc publish")
     end
   end
 
