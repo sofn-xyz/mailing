@@ -1,10 +1,7 @@
-import prompts from "prompts";
-import { resolve } from "path";
 import fsExtra, { removeSync, existsSync } from "fs-extra";
-import { handler } from "../init";
+import { handler, InitArguments } from "../init";
 import { log } from "../../log";
 import { ArgumentsCamelCase } from "yargs";
-import tree from "tree-node-cli";
 
 jest.mock("../../log");
 jest.mock("../preview", () => ({ handler: jest.fn() }));
@@ -18,12 +15,17 @@ describe("init command", () => {
       );
     removeSync("/tmp/src/emails");
   });
+
   it("creates the ts emails directory", async () => {
-    prompts.inject([true, "/tmp/src/emails"]);
     jest
       .spyOn(fsExtra, "existsSync")
       .mockImplementation((path) => /package\.json/.test(path.toString()));
-    await handler({} as ArgumentsCamelCase<unknown>);
+    await handler({
+      emailsDir: "/tmp/src/emails",
+      typescript: true,
+      port: 3883,
+      quiet: true,
+    } as InitArguments);
     expect(log).toHaveBeenCalledWith(
       `Generated your emails dir at /tmp/src/emails:
 emails
@@ -44,11 +46,16 @@ emails
   });
 
   it("creates the js emails directory", async () => {
-    prompts.inject([false, "/tmp/src/emails"]);
     jest
       .spyOn(fsExtra, "existsSync")
       .mockImplementation((path) => /package\.json/.test(path.toString()));
-    await handler({} as ArgumentsCamelCase<unknown>);
+
+    await handler({
+      emailsDir: "/tmp/src/emails",
+      typescript: false,
+      port: 3883,
+      quiet: true,
+    } as InitArguments);
     expect(log).toHaveBeenCalledWith(
       `Generated your emails dir at /tmp/src/emails:
 emails
@@ -69,12 +76,16 @@ emails
   });
 
   it("skips the emails directory if it already exists", async () => {
-    prompts.inject(["/tmp/src/emails"]);
     const spy = jest
       .spyOn(fsExtra, "existsSync")
       .mockImplementation(() => true);
     expect(fsExtra.existsSync("nothing")).toBe(true);
-    await handler({} as ArgumentsCamelCase<unknown>);
+    await handler({
+      emailsDir: "./emails",
+      typescript: true,
+      port: 3883,
+      quiet: true,
+    } as InitArguments);
     jest.restoreAllMocks();
     expect(fsExtra.existsSync("/tmp/src/emails")).toBe(false);
   });

@@ -5,6 +5,7 @@ import { error, log } from "../../log";
 import { getPreviewsDirectory } from "../../paths";
 import { renderNotFound } from "./application";
 import { readdirSync } from "fs-extra";
+import { getConfig } from "../../config";
 
 const LIVE_RELOAD_SNIPPET = `
   if (window.location.hostname === "localhost") {
@@ -19,7 +20,8 @@ const LIVE_RELOAD_SNIPPET = `
 `;
 
 export function showPreviewIndex(req: IncomingMessage, res: ServerResponse) {
-  const previewsPath = getPreviewsDirectory();
+  const config = getConfig();
+  const previewsPath = getPreviewsDirectory(config.emailsDir);
 
   if (!req.url || !previewsPath) {
     return renderNotFound(res);
@@ -44,7 +46,8 @@ export function showPreviewIndex(req: IncomingMessage, res: ServerResponse) {
 }
 
 export function showPreview(req: IncomingMessage, res: ServerResponse) {
-  const previewsPath = getPreviewsDirectory();
+  const config = getConfig();
+  const previewsPath = getPreviewsDirectory(config.emailsDir);
 
   if (!req.url || !previewsPath) {
     return renderNotFound(res);
@@ -88,7 +91,8 @@ export function showPreview(req: IncomingMessage, res: ServerResponse) {
   }
 }
 export async function sendPreview(req: IncomingMessage, res: ServerResponse) {
-  const previewsPath = getPreviewsDirectory();
+  const config = getConfig();
+  const previewsPath = getPreviewsDirectory(config.emailsDir);
 
   if (!previewsPath) {
     error("Previews path not found");

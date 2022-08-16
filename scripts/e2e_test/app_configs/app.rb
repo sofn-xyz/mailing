@@ -55,8 +55,7 @@ private
   def run_mailing!
     Dir.chdir(@root_dir) do
       # open the subprocess
-      ## TODO: fail if npx mailing exits right away
-      @io = IO.popen("npx mailing --quiet --typescript --emails-dir=\"./emails\"")
+      @io = IO.popen("npx mailing --quiet")
     end
 
     # wait for the preview server to start

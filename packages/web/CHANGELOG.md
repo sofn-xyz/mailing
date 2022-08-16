@@ -1,5 +1,12 @@
 # web
 
+## 0.2.7
+
+### Patch Changes
+
+- 5b66bfb: Introduce mailing.config.json
+- e1fe04d: swap babel and ts-node template compilation for swc
+
 ## 0.2.6
 
 ### Patch Changes

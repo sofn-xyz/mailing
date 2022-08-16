@@ -5,17 +5,23 @@ import { getPreviewsDirectory } from "../paths";
 import { error, log } from "../log";
 import { render } from "../mjml";
 import registerRequireHooks from "./util/registerRequireHooks";
+import { DEFAULTS, setConfig } from "../config";
 
 export type ExportPreviewsArgs = ArgumentsCamelCase<{
-  "out-dir"?: string;
+  emailsDir?: string;
+  outDir?: string;
 }>;
 
 export const command = "export-previews";
 
 export const builder = {
-  outDir: {
-    default: "./previews_html",
-    description: "directory in which we output the templates",
+  "emails-dir": {
+    default: DEFAULTS.emailsDir,
+    description: "the directory of your email templates",
+  },
+  "out-dir": {
+    default: DEFAULTS.outDir,
+    description: "directory in which we output the html",
   },
 };
 
@@ -34,14 +40,17 @@ export function previewFilename(moduleName: string, functionName: string) {
 }
 
 export const handler = async (argv: ExportPreviewsArgs) => {
-  const outDir = argv["out-dir"];
+  if (!argv.emailsDir) throw new Error("emailsDir option is not set");
+  if (!argv.outDir) throw new Error("outDir option is not set");
+
+  const outDir = argv.outDir;
 
   if (typeof outDir !== "string") {
     error("please specify an outDir like --outDir ./html");
     return;
   }
 
-  const previewsPath = getPreviewsDirectory();
+  const previewsPath = getPreviewsDirectory(argv.emailsDir);
   if (!previewsPath) {
     error(
       "Could not find emails directory. Have you initialized the project with `mailing init`?"

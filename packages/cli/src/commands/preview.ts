@@ -3,7 +3,7 @@ import { relative, resolve } from "path";
 import open from "open";
 import { watch } from "fs-extra";
 import { ArgumentsCamelCase } from "yargs";
-import { getPreviewsDirectory, getExistingEmailsDir } from "../paths";
+import { getPreviewsDirectory } from "../paths";
 import { error, log } from "../log";
 import {
   createIntercept,
@@ -18,13 +18,13 @@ import { cwd, exit } from "process";
 import { parse } from "url";
 import next from "next";
 import registerRequireHooks from "./util/registerRequireHooks";
+import { DEFAULTS, setConfig } from "../config";
 
 export type PreviewArgs = ArgumentsCamelCase<{
   port?: number;
   quiet?: boolean;
+  emailsDir?: string;
 }>;
-
-const DEFAULT_PORT = 3883;
 
 export const command = "preview";
 
@@ -32,18 +32,34 @@ export const describe = "start the email preview server";
 
 export const builder = {
   port: {
-    default: DEFAULT_PORT,
+    default: DEFAULTS.port,
+    description: "what port to start the preview server on",
+  },
+  quiet: {
+    default: DEFAULTS.quiet,
+    descriptioin: "quiet mode (don't open browser after starting)",
+    boolean: true,
+  },
+  "emails-dir": {
+    default: DEFAULTS.emailsDir,
+    description: "the directory of your email templates",
   },
 };
 
 export const handler = async (argv: PreviewArgs) => {
+  if (!argv.emailsDir) throw new Error("emailsDir option is not set");
+  if (undefined === argv.port) throw new Error("port option is not set");
+  if (undefined === argv.quiet) throw new Error("quiet option is not set");
+
+  setConfig({ emailsDir: argv.emailsDir });
+
+  const port = argv.port;
+
   if (process.env.NODE_ENV === "test") {
     return; // for now
   }
 
   registerRequireHooks();
-
-  const port = argv?.port || DEFAULT_PORT;
 
   const dev = !!process.env.MM_DEV;
   const hostname = "localhost";
@@ -57,7 +73,7 @@ export const handler = async (argv: PreviewArgs) => {
   const nextHandle = app.getRequestHandler();
   await app.prepare();
 
-  const previewsPath = getPreviewsDirectory();
+  const previewsPath = getPreviewsDirectory(argv.emailsDir);
   if (!previewsPath) {
     error(
       "Could not find emails directory. Have you initialized the project with `mailing init`?"
@@ -148,11 +164,12 @@ export const handler = async (argv: PreviewArgs) => {
 
   try {
     // simple live reload implementation
-    const changeWatchPath = getExistingEmailsDir();
+    const changeWatchPath = argv.emailsDir;
     if (!changeWatchPath) {
       log("Error finding emails dir in . or ./src");
       return;
     }
+
     watch(changeWatchPath, { recursive: true }, (eventType, filename) => {
       log(`Detected ${eventType} on ${filename}, reloading`);
       delete require.cache[resolve(changeWatchPath, filename)];
