@@ -33,6 +33,7 @@
     "@types/node": "^17.0.24",
     "@types/node-fetch": "^2.6.1",
     "@types/nodemailer": "^6.4.4",
+    "@types/prompts": "^2.0.14",
     "@types/yargs": "^17.0.10",
     "cypress": "^10.3.1"
   },
