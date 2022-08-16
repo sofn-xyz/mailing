@@ -2,6 +2,7 @@ import { existsSync } from "fs-extra";
 import { readPackageJSON } from "./paths";
 import { writeFileSync } from "fs";
 import { error } from "./log";
+import * as prettier from "prettier";
 
 export const MAILING_CONFIG_FILE = "./mailing.config.json";
 
@@ -36,8 +37,6 @@ function looksLikeTypescriptProject(): boolean {
 
 // write the default mailing.config.json file to get you started
 export function writeDefaultConfigFile(): void {
-  const prettier = require("prettier");
-
   if (!existsSync(MAILING_CONFIG_FILE)) {
     const configJsonString = prettier.format(
       JSON.stringify(DEFAULTS_FOR_CONFIG_FILE),
