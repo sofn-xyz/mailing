@@ -117,8 +117,6 @@ export function buildSendMail(options: BuildSendMailOptions) {
     }
 
     const response = await options.transport.sendMail(htmlMail);
-    log("sendMail response", response);
-
     return response;
   };
 }
