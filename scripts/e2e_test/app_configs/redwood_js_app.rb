@@ -10,11 +10,7 @@ class RedwoodJsApp < App
 private
   def yarn_create!
     Dir.chdir(@root_dir) do
-      # ignore stderr and stdout output because this command is expected to fail
-      system("yarn create redwood-app . 2>&1 > /dev/null")
-      
-      system("touch yarn.lock")
-      system_quiet("yarn")
+      system_quiet("yarn create redwood-app .")
     end
   end
 end
