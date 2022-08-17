@@ -7,18 +7,6 @@ import { renderNotFound } from "./application";
 import { readdirSync } from "fs-extra";
 import { getConfig } from "../../config";
 
-const LIVE_RELOAD_SNIPPET = `
-  if (window.location.hostname === "localhost") {
-    window.setInterval(async function checkForReload() {
-      const shouldReload = await fetch("/should_reload.json");
-      const json = await shouldReload.json()
-      if (json['shouldReload']) {
-        window.location.reload();
-      }
-    }, 1200);
-  }
-`;
-
 export function showPreviewIndex(req: IncomingMessage, res: ServerResponse) {
   const config = getConfig();
   const previewsPath = getPreviewsDirectory(config.emailsDir);

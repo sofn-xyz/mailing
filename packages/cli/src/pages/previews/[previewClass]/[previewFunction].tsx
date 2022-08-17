@@ -56,7 +56,7 @@ const Preview = ({ initialData }: { initialData: ShowPreviewResponseBody }) => {
   );
 
   useEffect(() => {
-    // TODO: exit if not in dev
+    if (process.env.NODE_ENV === "production") return;
 
     const fetchPreview = async () => {
       const response = await fetch(`${document.location.pathname}.json`);
