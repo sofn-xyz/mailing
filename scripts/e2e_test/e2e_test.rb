@@ -97,6 +97,7 @@ private
 
     Dir.chdir(PROJECT_ROOT) do
       system_quiet("yarn build")
+      fail "yarn build failed" unless $?.success?
     end
 
     Dir.chdir(CLI_ROOT) do
