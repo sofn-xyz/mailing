@@ -16,10 +16,11 @@ class TestRunner
   include TestRunnerUtils
 
   NUM_RUNS_TO_KEEP = 5
-  PROJECT_ROOT = File.expand_path(__dir__ + '/../..') 
+  PROJECT_ROOT = File.expand_path(__dir__ + '/../..')
+  TEST_ROOT = File.expand_path(PROJECT_ROOT + '/../mailing_e2e_tests')
   CLI_ROOT = File.join(PROJECT_ROOT, 'packages/cli')
-  RUNS_DIR = File.expand_path(__dir__ + '/runs')
   CYPRESS_DIR = File.join(PROJECT_ROOT, 'packages/cli/cypress')
+  RUNS_DIR = File.expand_path(TEST_ROOT + '/runs')
 
   E2E_CONFIG = {
     next_ts: NextTsApp,
@@ -34,6 +35,19 @@ class TestRunner
     assign_opts!
 
     fail "Check that PROJECT_ROOT exists: #{PROJECT_ROOT}" unless Dir.exists?(PROJECT_ROOT)
+    FileUtils.mkdir_p File.join(TEST_ROOT, "runs")
+    FileUtils.mkdir_p File.join(TEST_ROOT, "cache")
+    FileUtils.cp File.join(PROJECT_ROOT, ".tool-versions"), File.join(TEST_ROOT, ".tool-versions")
+
+    unless File.symlink?(File.join(__dir__ + "/runs"))
+      FileUtils.rm_rf File.join(__dir__ + "/runs")
+      FileUtils.ln_s File.join(TEST_ROOT, "runs"), File.join(__dir__ + "/runs")
+    end
+    
+    unless File.symlink?(File.join(__dir__ + "/cache"))
+      FileUtils.rm_rf File.join(__dir__ + "/cache")
+      FileUtils.ln_s File.join(TEST_ROOT, "cache"), File.join(__dir__ + "/cache")
+    end
 
     package_json_file = File.join(PROJECT_ROOT, 'package.json')
     fail "Check that PROJECT_ROOT is the project root: #{PROJECT_ROOT}" unless File.exists?(package_json_file) && 'mailing-monorepo' == JSON::parse(File.read(package_json_file))['name']
@@ -51,7 +65,8 @@ class TestRunner
 
     # create latest symlink
     latest_dir = File.join(RUNS_DIR, 'latest')
-    system("rm #{latest_dir}; ln -s #{runs_dir_name} #{latest_dir}")
+    FileUtils.rm(latest_dir) if File.symlink?(latest_dir)
+    FileUtils.ln_s(runs_dir_name, latest_dir)
       
     configs_to_run.each do |config_name, klass|
       @config_name = config_name
@@ -82,10 +97,12 @@ private
 
     Dir.chdir(PROJECT_ROOT) do
       system_quiet("yarn build")
+      fail "yarn build failed" unless $?.success?
     end
 
     Dir.chdir(CLI_ROOT) do
       system("npx yalc add")
+      system("npx yalc publish")
     end
   end
 
