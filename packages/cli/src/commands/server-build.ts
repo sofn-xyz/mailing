@@ -2,7 +2,7 @@ import { existsSync } from "fs-extra";
 import { ArgumentsCamelCase } from "yargs";
 import { error, log } from "../log";
 import { DEFAULTS, setConfig } from "../config";
-import { exec, execSync, spawnSync } from "child_process";
+import { exec } from "child_process";
 import startPreviewServer from "./util/startPreviewServer";
 import { resolve } from "path";
 
@@ -55,16 +55,19 @@ export const handler = async (argv: ServerBuildArguments) => {
 
   log("Building next app at", path);
 
-  const command = `NEXT_PUBLIC_STATIC=1 npx next build ${path} && mv ${path}/.next ${process.cwd()}/.next-mailing`;
+  const command = `NEXT_PUBLIC_STATIC=1 npx next build ${path} &&\
+  rm -rf ${process.cwd()}/.mailing/next-src &&\
+  mv ${path} ${process.cwd()}/.mailing/`;
 
   const child = exec(command);
   // child.stdout?.pipe(process.stdout);
+  child.stderr?.pipe(process.stderr);
+
   child.on("close", (code, _signal) => {
     if (code === 0) {
       log("Success");
     } else {
       log("Build exited with error code", code);
-      child.stderr?.pipe(process.stderr);
     }
     log("command finished with code", code);
     server?.close();
