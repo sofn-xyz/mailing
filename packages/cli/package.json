@@ -16,12 +16,17 @@
     "mm": "./bin.js"
   },
   "files": [
-    "dist",
     "bin.js",
-    ".next"
+    "next-env.d.ts",
+    "package.json",
+    "src",
+    "next.config.js",
+    "tsconfig.json",
+    "public",
+    "dist"
   ],
   "scripts": {
-    "build": "rm -rf .next && yarn next build && cp -R .next dist/ && rm -rf dist/.next/cache"
+    "build": "rm -rf .next"
   },
   "description": "Fun email development environment",
   "devDependencies": {
