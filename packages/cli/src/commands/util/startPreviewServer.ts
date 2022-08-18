@@ -71,7 +71,7 @@ export default async function startPreviewServer(opts: PreviewServerOptions) {
     dev,
     hostname,
     port,
-    dir: dev ? resolve(__dirname, "../..") : __dirname,
+    dir: dev ? resolve(__dirname, "../../..") : __dirname,
     quiet,
   });
   const nextHandle = app.getRequestHandler();
