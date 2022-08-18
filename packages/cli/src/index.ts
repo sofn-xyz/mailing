@@ -4,6 +4,7 @@ import yargs from "yargs/yargs";
 import * as init from "./commands/init";
 import * as preview from "./commands/preview";
 import * as exportPreviews from "./commands/exportPreviews";
+import * as serverBuild from "./commands/server-build";
 import { MAILING_CONFIG_FILE } from "./config";
 import { readFileSync } from "fs";
 
@@ -17,5 +18,6 @@ yargs(process.argv.slice(2))
   .command(init)
   .command(preview)
   .command(exportPreviews)
+  .command(serverBuild)
   .help()
   .argv;

@@ -2,7 +2,14 @@ import chalk from "chalk";
 
 const { DEBUG } = process.env;
 
+let quiet = false;
+
+export function setQuiet(v: boolean) {
+  quiet = true;
+}
+
 export function log(message?: any, ...optionalParams: any[]) {
+  if (quiet) return;
   console.log(chalk.blue("[mailing]"), message, ...optionalParams);
 }
 

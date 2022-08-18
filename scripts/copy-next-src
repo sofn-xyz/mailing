@@ -1,0 +1,28 @@
+#! /bin/sh
+
+SRC='packages/cli/dist/next-src'
+CLI='packages/cli'
+
+# Cleanup
+rm -rf $SRC
+mkdir -p $SRC
+
+# Maybe safer
+# cp -R $CLI/src/pages $SRC
+# cp -R $CLI/public $SRC
+# cp -R $CLI/src/styles $SRC
+# cp -R $CLI/src/components $SRC
+# cp -R $CLI/package.json $SRC
+# cp -R $CLI/src/tsconfig.json $SRC
+# cp -R $CLI/next* $SRC
+# cp -R $CLI/src/custom.d.ts $SRC
+
+# Nice for dev
+ln -s $CLI/src/pages $SRC
+ln -s $CLI/public $SRC
+ln -s $CLI/src/styles $SRC
+ln -s $CLI/src/components $SRC
+ln -s $CLI/package.json $SRC
+ln -s $CLI/src/tsconfig.json $SRC
+ln -s $CLI/next* $SRC
+ln -s $CLI/src/custom.d.ts $SRC
