@@ -1,7 +1,7 @@
 import http from "http";
 import { relative, resolve } from "path";
 import open from "open";
-import { readdir, watch, writeFile } from "fs-extra";
+import { mkdir, readdir, watch, writeFile } from "fs-extra";
 import { getPreviewsDirectory } from "../../paths";
 import { error, log, setQuiet } from "../../log";
 import {
@@ -29,14 +29,27 @@ async function writeModuleManifest(previewsPath: string) {
     (path) => !/^\./.test(path)
   );
   const uniquePreviewCollections = Array.from(new Set(previewCollections));
+  let exportedModuleNames: string[] = [];
   const previews: string[] = uniquePreviewCollections.map((p) => {
-    return `import ${p.split(".")[0]} from "${resolve(previewsPath, p)};"`;
+    const moduleName = p.replaceAll(/\.[jt]sx/g, "");
+    exportedModuleNames.push(moduleName);
+    const path = resolve(previewsPath, moduleName);
+    return `import * as ${moduleName} from "${path}";`;
   });
 
-  let contents = previews.join("\n") + "\n";
+  const contents =
+    previews.join("\n") +
+    "\n\n" +
+    `export default { ${exportedModuleNames.join(", ")} };` +
+    "\n\n";
 
-  const manifestPath = resolve(process.cwd(), ".mailing", "moduleManifest.ts");
-  writeFile(manifestPath, contents);
+  const mailingPath = resolve(process.cwd(), ".mailing");
+  const manifestPath = resolve(mailingPath, "moduleManifest.ts");
+
+  await mkdir(mailingPath, { recursive: true });
+  await writeFile(manifestPath, contents);
+
+  delete require.cache[manifestPath];
 }
 
 export default async function startPreviewServer(opts: PreviewServerOptions) {
@@ -46,6 +59,9 @@ export default async function startPreviewServer(opts: PreviewServerOptions) {
   registerRequireHooks();
 
   const previewsPath = getPreviewsDirectory(emailsDir);
+
+  if (!previewsPath) throw new Error("previewsPath is not defined");
+
   await writeModuleManifest(previewsPath);
 
   const dev = !!process.env.MM_DEV;
@@ -161,8 +177,9 @@ export default async function startPreviewServer(opts: PreviewServerOptions) {
       return;
     }
 
-    watch(changeWatchPath, { recursive: true }, (eventType, filename) => {
+    watch(changeWatchPath, { recursive: true }, async (eventType, filename) => {
       log(`Detected ${eventType} on ${filename}, reloading`);
+      await writeModuleManifest(previewsPath);
       delete require.cache[resolve(changeWatchPath, filename)];
       shouldReload = true;
     });
