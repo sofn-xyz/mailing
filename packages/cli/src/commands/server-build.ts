@@ -56,8 +56,9 @@ export const handler = async (argv: ServerBuildArguments) => {
   log("Building next app at", path);
 
   const command = `NEXT_PUBLIC_STATIC=1 npx next build ${path} &&\
-  rm -rf ${process.cwd()}/.mailing/next-src &&\
-  mv ${path} ${process.cwd()}/.mailing/`;
+  rm -rf ${process.cwd()}/.mailing/.next &&\
+  mkdir -p ${process.cwd()}/.mailing &&\
+  mv ${path}/.next ${process.cwd()}/.mailing/.next`;
 
   const child = exec(command);
   // child.stdout?.pipe(process.stdout);

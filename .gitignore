@@ -4,6 +4,7 @@ dist
 mailing.config.json
 previews_html
 out
+.mailing
 
 # Logs
 logs
