@@ -22,7 +22,6 @@ const Home: NextPage = () => {
       if (json["shouldReload"]) {
         fetchData();
       }
-      fetchData();
     }, 1200);
     return () => {
       clearInterval(interval);
