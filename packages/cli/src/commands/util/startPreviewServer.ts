@@ -1,8 +1,8 @@
 import http from "http";
 import { relative, resolve } from "path";
 import open from "open";
-import { mkdir, readdir, watch, writeFile } from "fs-extra";
-import { cpSync, rmSync, existsSync, symlinkSync } from "fs";
+import { mkdir, readdir, symlink, watch, writeFile } from "fs-extra";
+import { rmSync, symlinkSync } from "fs";
 import { getPreviewsDirectory } from "../../paths";
 import { error, log, setQuiet } from "../../log";
 import {
@@ -27,6 +27,9 @@ export type PreviewServerOptions = {
 };
 
 async function writeModuleManifest(emailsDir: string, previewsPath: string) {
+  const mailingPath = resolve(process.cwd(), ".mailing");
+  const manifestPath = resolve(mailingPath, "moduleManifest.ts");
+
   const previewCollections = (await readdir(previewsPath)).filter(
     (path) => !/^\./.test(path)
   );
@@ -35,7 +38,7 @@ async function writeModuleManifest(emailsDir: string, previewsPath: string) {
   const previews: string[] = uniquePreviewCollections.map((p) => {
     const moduleName = p.replaceAll(/\.[jt]sx/g, "");
     exportedModuleNames.push(moduleName);
-    const path = emailsDir + "/" + moduleName;
+    const path = relative(manifestPath, emailsDir + "/previews/" + moduleName);
     return `import * as ${moduleName} from "${path}";`;
   });
 
@@ -44,9 +47,6 @@ async function writeModuleManifest(emailsDir: string, previewsPath: string) {
     "\n\n" +
     `export default { ${exportedModuleNames.join(", ")} };` +
     "\n\n";
-
-  const mailingPath = resolve(process.cwd(), ".mailing");
-  const manifestPath = resolve(mailingPath, "moduleManifest.ts");
 
   await mkdir(mailingPath, { recursive: true });
   await writeFile(manifestPath, contents);
@@ -60,17 +60,19 @@ async function setupNextServer(emailsDir: string) {
   const nodeMailingPath = resolve(process.cwd(), "node_modules/mailing");
 
   rmSync(resolve(mailingPath), { recursive: true, force: true });
+
+  if (process.env.MM_DEV) {
+    await symlink("packages/cli/", ".mailing");
+    return;
+  }
+
   await mkdir(mailingPath, { recursive: true });
   // cpSync(nodeMailingPath + "/*", mailingPath, { recursive: true }, () => false);
   execSync(`cp -R ${nodeMailingPath + "/*"} ${mailingPath}`);
 
   // emails dir: delete boilerplate and symlink
   execSync(`rm -rf ${mailingPath + "/emails"}`);
-  symlinkSync(
-    resolve(emailsDir),
-    resolve(mailingPath + "/emails"),
-    () => false
-  );
+  symlinkSync(resolve(emailsDir), resolve(mailingPath + "/emails"));
 
   // run npm commands
   execSync(`cd ${mailingPath} && npm add react react-dom && npm i`);
@@ -163,9 +165,9 @@ export default async function startPreviewServer(opts: PreviewServerOptions) {
           await sendPreview(req, res);
         } else if (/^\/intercepts\/[a-zA-Z0-9]+\.json/.test(req.url)) {
           showIntercept(req, res);
-        } else if (/^\/previews\/.*\.json/.test(req.url)) {
-          // TODO: move this to next app
-          showPreview(req, res);
+          // } else if (/^\/previews\/.*\.json/.test(req.url)) {
+          //   // TODO: move this to next app
+          //   showPreview(req, res);
         } else if (/^\/_+next/.test(req.url)) {
           noLog = true;
           await app.render(req, res, `${pathname}`, query);

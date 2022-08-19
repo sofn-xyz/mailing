@@ -14,8 +14,9 @@ export default function showPreview(
   // render preview
   const { moduleName, functionName } = req.query;
 
+  const cleanFunctionName = functionName.toString().replace(/\.json$/, "");
   const previewModule = moduleManifest[moduleName.toString()];
-  const component = previewModule[functionName]();
+  const component = previewModule[cleanFunctionName]();
 
   if (component?.props) {
     try {

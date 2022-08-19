@@ -37,8 +37,9 @@ export const getStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps = async (context) => {
   const { previewFunction, previewClass } = context.params as Params;
+  const cleanPreviewClass = previewClass.replace(/\.[jt]sx/, "");
   const res = await fetch(
-    `http://localhost:3883/previews/${previewClass}/${previewFunction}.json`
+    `http://localhost:3883/api/previews/${cleanPreviewClass}/${previewFunction}.json`
   );
   const initialData = await res.json();
 
