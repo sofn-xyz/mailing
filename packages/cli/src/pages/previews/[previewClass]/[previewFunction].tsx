@@ -15,7 +15,7 @@ export const getStaticPaths = async () => {
 
   if (process.env.NEXT_PUBLIC_STATIC) {
     const res = await fetch("http://localhost:3883/api/previews");
-    const previews: [string, string[]][] = await res.json();
+    const previews: [string, string[]][] = (await res.json()).previews;
 
     previews.forEach((previewClass) => {
       paths = paths.concat(

@@ -9,7 +9,7 @@ export const getStaticProps: GetStaticProps<HomeProps> = async () => {
   let previews: [string, string[]][] = [];
   if (process.env.NEXT_PUBLIC_STATIC) {
     const res = await fetch("http://localhost:3883/api/previews");
-    previews = await res.json();
+    previews = (await res.json()).previews;
   }
   return { props: { previews } };
 };
