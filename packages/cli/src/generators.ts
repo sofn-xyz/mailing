@@ -26,7 +26,7 @@ export async function generateEmailsDirectory({
 
   // copy the emails dir template in!
   const path = `generator_templates/${isTypescript ? "ts" : "js"}/emails`;
-  await copySync(resolve(__dirname, path), emailsDir, {
+  await copySync(resolve(__dirname, "../src", path), emailsDir, {
     overwrite: false,
   });
   log(`Generated your emails dir at ${emailsDir}:\n${tree(emailsDir)}`);
