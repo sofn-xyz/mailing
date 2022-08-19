@@ -10,7 +10,6 @@ import {
   createIntercept,
   showIntercept,
 } from "../../preview/controllers/intercepts";
-import { sendPreview } from "../../preview/controllers/previews";
 import { cwd } from "process";
 import { parse } from "url";
 import next from "next";
@@ -71,6 +70,7 @@ async function writeModuleManifest(emailsDir: string, previewsPath: string) {
     "\n\n" +
     `const previews = { ${previewConsts.join(", ")} }\n` +
     `const templates = { ${templateModuleNames.join(", ")} }\n\n` +
+    `export { templates, previews, sendMail };\n` +
     `export default { templates, previews, sendMail };\n\n`;
 
   debug("Writing module manifest to", manifestPath);
@@ -232,8 +232,6 @@ export default async function startPreviewServer(opts: PreviewServerOptions) {
           showShouldReload(req, res);
         } else if (req.url === "/intercepts" && req.method === "POST") {
           createIntercept(req, res);
-        } else if (req.url === "/previews/send.json" && req.method === "POST") {
-          await sendPreview(req, res);
         } else if (/^\/intercepts\/[a-zA-Z0-9]+\.json/.test(req.url)) {
           showIntercept(req, res);
         } else if (/^\/_+next/.test(req.url)) {

@@ -42,8 +42,9 @@ const PreviewSender: React.FC<PreviewSenderProps> = ({
           previewClass,
           subject: `${previewClass} - ${previewFunction}`,
         };
-        const response = await fetch("/previews/send.json", {
+        const response = await fetch("/api/previews/send", {
           method: "POST",
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload),
         });
         const data: SendPreviewResponseBody = await response.json();
