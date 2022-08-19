@@ -153,10 +153,7 @@ export default async function startPreviewServer(opts: PreviewServerOptions) {
       });
 
       try {
-        if (req.url === "/previews.json") {
-          // TODO: move this to next app
-          showPreviewIndex(req, res);
-        } else if (req.url === "/should_reload.json") {
+        if (req.url === "/should_reload.json") {
           noLog = true;
           showShouldReload(req, res);
         } else if (req.url === "/intercepts" && req.method === "POST") {
@@ -165,9 +162,6 @@ export default async function startPreviewServer(opts: PreviewServerOptions) {
           await sendPreview(req, res);
         } else if (/^\/intercepts\/[a-zA-Z0-9]+\.json/.test(req.url)) {
           showIntercept(req, res);
-          // } else if (/^\/previews\/.*\.json/.test(req.url)) {
-          //   // TODO: move this to next app
-          //   showPreview(req, res);
         } else if (/^\/_+next/.test(req.url)) {
           noLog = true;
           await app.render(req, res, `${pathname}`, query);
