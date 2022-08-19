@@ -1,3 +1,4 @@
-import * as Welcome from "./emails/previews/Welcome";
+import * as TextEmail from "./src/emails/previews/TextEmail";
+import * as Welcome from "./src/emails/previews/Welcome";
 
-export default { Welcome };
+export default { TextEmail, Welcome };
