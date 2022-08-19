@@ -60,7 +60,9 @@ const Preview = ({ initialData }: { initialData: ShowPreviewResponseBody }) => {
     if (process.env.NODE_ENV === "production") return;
 
     const fetchPreview = async () => {
-      const response = await fetch(`${document.location.pathname}.json`);
+      const response = await fetch(
+        `/api/${document.location.pathname.replace(/\.[jt]sx/, "")}.json`
+      );
       setData(await response.json());
     };
 
