@@ -9,7 +9,7 @@ export function setQuiet(v: boolean) {
 }
 
 export function log(message?: any, ...optionalParams: any[]) {
-  if (quiet) return;
+  if (quiet && !debug) return;
   console.log(chalk.blue("[mailing]"), message, ...optionalParams);
 }
 

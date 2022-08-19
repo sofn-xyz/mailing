@@ -1,6 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import moduleManifest from "../../../../moduleManifest";
-import { log, error } from "../../../log";
+import moduleManifest from "../../../moduleManifest";
 
 type Data = {
   previews?: [string, string[]][];
@@ -12,7 +11,10 @@ export default function showPreviewsIndex(
 ) {
   const previewCollections = Object.keys(moduleManifest);
   const previews: [string, string[]][] = previewCollections.map((p) => {
-    return [p, Object.keys(moduleManifest[p]).sort()];
+    return [
+      p,
+      Object.keys(moduleManifest[p as keyof typeof moduleManifest]).sort(),
+    ];
   });
 
   res.json({ previews });

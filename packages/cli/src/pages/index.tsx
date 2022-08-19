@@ -22,9 +22,23 @@ const Home: NextPage<HomeProps> = ({ previews: initialPreviews }) => {
     const res = await fetch("/api/previews");
     setPreviews((await res.json()).previews);
   };
+
   useEffect(() => {
     if (!previews?.length) fetchData();
   }, [previews?.length]);
+
+  useEffect(() => {
+    const interval = window.setInterval(async function checkForReload() {
+      const shouldReload = await fetch("/should_reload.json");
+      const json = await shouldReload.json();
+      if (json["shouldReload"]) {
+        fetchData();
+      }
+    }, 1200);
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
 
   if (!previews) {
     return <></>; // loading, should be quick bc everything is local

@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import moduleManifest from "../../../../../moduleManifest";
+import { ReactElement } from "react";
+import moduleManifest from "../../../../moduleManifest";
 import { error } from "../../../../log";
 import { render } from "../../../../mjml";
 
@@ -14,8 +15,16 @@ export default function showPreview(
   // render preview
   const { moduleName, functionName } = req.query;
 
-  const cleanFunctionName = functionName.toString().replace(/\.json$/, "");
-  const previewModule = moduleManifest[moduleName.toString()];
+  if (typeof functionName !== "string" || typeof moduleName !== "string") {
+    res.writeHead(404);
+    res.end("moduleName and functionName required");
+    return;
+  }
+
+  const cleanFunctionName = functionName.replace(/\.json$/, "");
+  const previewModule: {
+    [key: string]: () => ReactElement;
+  } = moduleManifest[moduleName as keyof typeof moduleManifest];
   const component = previewModule[cleanFunctionName]();
 
   if (component?.props) {
