@@ -12,14 +12,19 @@ const Preview: NextPage = () => {
   const [data, setData] = useState<ShowPreviewResponseBody | null>(null);
 
   useEffect(() => {
-    if (process.env.NODE_ENV === "production") return;
-
     const fetchPreview = async () => {
       const response = await fetch(`/api/${document.location.pathname}`);
       setData(await response.json());
     };
 
+    if (process.env.NODE_ENV === "production") {
+      fetchPreview();
+      return;
+    }
+
     const interval = window.setInterval(async function checkForReload() {
+      if (process.env.NODE_ENV === "production") return;
+
       const shouldReload = await fetch("/should_reload.json");
       const json = await shouldReload.json();
       if (json["shouldReload"]) {

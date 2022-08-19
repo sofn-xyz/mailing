@@ -5,22 +5,24 @@ import Image from "next/image";
 
 const Home: NextPage = () => {
   const [previews, setPreviews] = useState<[string, string[]][] | null>(null);
-  const fetchData = async () => {
-    const res = await fetch("/api/previews");
-    setPreviews((await res.json()).previews);
-  };
-
   useEffect(() => {
-    if (!previews?.length) fetchData();
-  }, [previews?.length]);
+    const fetchData = async () => {
+      const res = await fetch("/api/previews");
+      setPreviews((await res.json()).previews);
+    };
 
-  useEffect(() => {
+    if (process.env.NODE_ENV === "production") {
+      fetchData();
+      return;
+    }
+
     const interval = window.setInterval(async function checkForReload() {
       const shouldReload = await fetch("/should_reload.json");
       const json = await shouldReload.json();
       if (json["shouldReload"]) {
         fetchData();
       }
+      fetchData();
     }, 1200);
     return () => {
       clearInterval(interval);
