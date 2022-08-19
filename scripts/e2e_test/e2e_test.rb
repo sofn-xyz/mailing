@@ -101,8 +101,8 @@ private
     end
 
     Dir.chdir(CLI_ROOT) do
-      system("npx yalc add")
-      system("npx yalc publish")
+      system_quiet("npx yalc add")
+      system_quiet("npx yalc publish")
     end
   end
 
