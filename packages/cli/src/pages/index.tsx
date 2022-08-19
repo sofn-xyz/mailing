@@ -1,23 +1,10 @@
 import { useEffect, useState } from "react";
-import { GetStaticProps, NextPage } from "next";
+import { NextPage } from "next";
 import Link from "next/link";
 import Image from "next/image";
 
-type HomeProps = { previews: [string, string[]][] };
-
-export const getStaticProps: GetStaticProps<HomeProps> = async () => {
-  let previews: [string, string[]][] = [];
-  if (process.env.NEXT_PUBLIC_STATIC) {
-    const res = await fetch("http://localhost:3883/api/previews");
-    previews = (await res.json()).previews;
-  }
-  return { props: { previews } };
-};
-
-const Home: NextPage<HomeProps> = ({ previews: initialPreviews }) => {
-  const [previews, setPreviews] = useState<[string, string[]][] | null>(
-    initialPreviews.length ? initialPreviews : null
-  );
+const Home: NextPage = () => {
+  const [previews, setPreviews] = useState<[string, string[]][] | null>(null);
   const fetchData = async () => {
     const res = await fetch("/api/previews");
     setPreviews((await res.json()).previews);

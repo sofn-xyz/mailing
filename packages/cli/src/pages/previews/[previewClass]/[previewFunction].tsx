@@ -3,57 +3,13 @@ import { useRouter } from "next/router";
 import Header from "../../../components/Header";
 import HotIFrame from "../../../components/HotIFrame";
 import MjmlErrors from "../../../components/MjmlErrors";
-import { GetStaticProps } from "next";
+import { NextPage } from "next";
 import { hotkeysMap } from "../../../components/hooks/usePreviewHotkeys";
 
-type Params = { previewClass: string; previewFunction: string };
-
-export const getStaticPaths = async () => {
-  let paths: {
-    params: Params;
-  }[] = [];
-
-  if (process.env.NEXT_PUBLIC_STATIC) {
-    const res = await fetch("http://localhost:3883/api/previews");
-    const previews: [string, string[]][] = (await res.json()).previews;
-
-    previews.forEach((previewClass) => {
-      paths = paths.concat(
-        previewClass[1].map((previewFunction) => ({
-          params: {
-            previewClass: previewClass[0],
-            previewFunction,
-          },
-        }))
-      );
-    });
-  }
-
-  return {
-    paths,
-    fallback: true,
-  };
-};
-
-export const getStaticProps: GetStaticProps = async (context) => {
-  const { previewFunction, previewClass } = context.params as Params;
-  const res = await fetch(
-    `http://localhost:3883/api/previews/${previewClass}/${previewFunction}`
-  );
-  const initialData = await res.json();
-
-  return {
-    props: { initialData },
-    revalidate: 1,
-  };
-};
-
-const Preview = ({ initialData }: { initialData: ShowPreviewResponseBody }) => {
+const Preview: NextPage = () => {
   const router = useRouter();
   const [viewMode, setViewMode] = useState<ViewMode>("desktop");
-  const [data, setData] = useState<ShowPreviewResponseBody | null>(
-    process.env.NEXT_PUBLIC_STATIC ? initialData : null
-  );
+  const [data, setData] = useState<ShowPreviewResponseBody | null>(null);
 
   useEffect(() => {
     if (process.env.NODE_ENV === "production") return;
