@@ -18,7 +18,9 @@
     "watch": "preconstruct watch",
     "release": "yarn build && yarn changeset publish",
     "postinstall": "preconstruct dev",
-    "e2e": "cd scripts/e2e_test/ && bundle && bundle exec ruby e2e_test.rb"
+    "e2e": "cd scripts/e2e_test/ && bundle && bundle exec ruby e2e_test.rb",
+    "server:start": "cd .mailing/mailing && yarn next build && yarn next start",
+    "server:dev": "cd .mailing/mailing && npx next dev"
   },
   "license": "MIT",
   "workspaces": [

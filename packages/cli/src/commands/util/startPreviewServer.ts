@@ -2,6 +2,7 @@ import http from "http";
 import { relative, resolve } from "path";
 import open from "open";
 import { mkdir, readdir, watch, writeFile } from "fs-extra";
+import { cpSync, rmSync, existsSync, symlinkSync } from "fs";
 import { getPreviewsDirectory } from "../../paths";
 import { error, log, setQuiet } from "../../log";
 import {
@@ -17,6 +18,7 @@ import { cwd, exit } from "process";
 import { parse } from "url";
 import next from "next";
 import registerRequireHooks from "./registerRequireHooks";
+import { execSync } from "child_process";
 
 export type PreviewServerOptions = {
   emailsDir: string;
@@ -24,7 +26,7 @@ export type PreviewServerOptions = {
   quiet: boolean;
 };
 
-async function writeModuleManifest(previewsPath: string) {
+async function writeModuleManifest(emailsDir: string, previewsPath: string) {
   const previewCollections = (await readdir(previewsPath)).filter(
     (path) => !/^\./.test(path)
   );
@@ -33,7 +35,7 @@ async function writeModuleManifest(previewsPath: string) {
   const previews: string[] = uniquePreviewCollections.map((p) => {
     const moduleName = p.replaceAll(/\.[jt]sx/g, "");
     exportedModuleNames.push(moduleName);
-    const path = resolve(previewsPath, moduleName);
+    const path = emailsDir + "/" + moduleName;
     return `import * as ${moduleName} from "${path}";`;
   });
 
@@ -52,9 +54,33 @@ async function writeModuleManifest(previewsPath: string) {
   delete require.cache[manifestPath];
 }
 
+async function setupNextServer(emailsDir: string) {
+  // copy node_modules mailing into .mailing
+  const mailingPath = resolve(process.cwd(), ".mailing/mailing");
+  const nodeMailingPath = resolve(process.cwd(), "node_modules/mailing");
+
+  rmSync(resolve(mailingPath), { recursive: true, force: true });
+  await mkdir(mailingPath, { recursive: true });
+  // cpSync(nodeMailingPath + "/*", mailingPath, { recursive: true }, () => false);
+  execSync(`cp -R ${nodeMailingPath + "/*"} ${mailingPath}`);
+
+  // emails dir: delete boilerplate and symlink
+  execSync(`rm -rf ${mailingPath + "/emails"}`);
+  symlinkSync(
+    resolve(emailsDir),
+    resolve(mailingPath + "/emails"),
+    () => false
+  );
+
+  // run npm commands
+  execSync(`cd ${mailingPath} && npm add react react-dom && npm i`);
+}
+
 export default async function startPreviewServer(opts: PreviewServerOptions) {
   const { emailsDir, port, quiet } = opts;
   setQuiet(quiet);
+
+  await setupNextServer(emailsDir);
 
   registerRequireHooks();
 
@@ -62,7 +88,7 @@ export default async function startPreviewServer(opts: PreviewServerOptions) {
 
   if (!previewsPath) throw new Error("previewsPath is not defined");
 
-  await writeModuleManifest(previewsPath);
+  await writeModuleManifest(emailsDir, previewsPath);
 
   const dev = !!process.env.MM_DEV;
   const hostname = "localhost";
