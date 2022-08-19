@@ -2,31 +2,15 @@ import { useEffect, useState } from "react";
 import { NextPage } from "next";
 import Link from "next/link";
 import Image from "next/image";
+import useLiveReload from "../components/hooks/useLiveReload";
 
 const Home: NextPage = () => {
   const [previews, setPreviews] = useState<[string, string[]][] | null>(null);
-  useEffect(() => {
-    const fetchData = async () => {
-      const res = await fetch("/api/previews");
-      setPreviews((await res.json()).previews);
-    };
 
-    if (process.env.NODE_ENV === "production") {
-      fetchData();
-      return;
-    }
-
-    const interval = window.setInterval(async function checkForReload() {
-      const shouldReload = await fetch("/should_reload.json");
-      const json = await shouldReload.json();
-      if (json["shouldReload"]) {
-        fetchData();
-      }
-    }, 1200);
-    return () => {
-      clearInterval(interval);
-    };
-  }, []);
+  useLiveReload(async function fetchData() {
+    const res = await fetch("/api/previews");
+    setPreviews((await res.json()).previews);
+  });
 
   if (!previews) {
     return <></>; // loading, should be quick bc everything is local

@@ -5,39 +5,16 @@ import HotIFrame from "../../../components/HotIFrame";
 import MjmlErrors from "../../../components/MjmlErrors";
 import { NextPage } from "next";
 import { hotkeysMap } from "../../../components/hooks/usePreviewHotkeys";
+import useLiveReload from "../../../components/hooks/useLiveReload";
 
 const Preview: NextPage = () => {
   const router = useRouter();
   const [viewMode, setViewMode] = useState<ViewMode>("desktop");
   const [data, setData] = useState<ShowPreviewResponseBody | null>(null);
-
-  useEffect(() => {
-    const fetchPreview = async () => {
-      const response = await fetch(`/api/${document.location.pathname}`);
-      setData(await response.json());
-    };
-
-    if (process.env.NODE_ENV === "production") {
-      fetchPreview();
-      return;
-    }
-
-    const interval = window.setInterval(async function checkForReload() {
-      if (process.env.NODE_ENV === "production") return;
-
-      const shouldReload = await fetch("/should_reload.json");
-      const json = await shouldReload.json();
-      if (json["shouldReload"]) {
-        fetchPreview();
-      }
-    }, 1200);
-
-    fetchPreview();
-
-    return () => {
-      window.clearInterval(interval);
-    };
-  }, []);
+  useLiveReload(async function fetchPreview() {
+    const response = await fetch(`/api/${document.location.pathname}`);
+    setData(await response.json());
+  });
 
   const { previewClass, previewFunction } = router.query;
 
