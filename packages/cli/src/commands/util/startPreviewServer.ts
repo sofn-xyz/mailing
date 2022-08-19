@@ -1,7 +1,7 @@
 import http from "http";
 import { relative, resolve } from "path";
 import open from "open";
-import { rmSync, existsSync, symlinkSync, readFileSync } from "fs";
+import { rmSync, symlinkSync, readFileSync } from "fs";
 import { mkdir, readdir, symlink, watch, writeFile } from "fs-extra";
 import { getPreviewsDirectory } from "../../paths";
 import { error, log, setQuiet, debug } from "../../log";
@@ -48,7 +48,6 @@ async function writeModuleManifest(emailsDir: string, previewsPath: string) {
   const templateModuleNames: string[] = [];
   let indexFound = false;
   uniqueTemplates.forEach((p) => {
-    console.log(p);
     if (/^index\.[jt]sx?$/.test(p)) {
       // index.ts, index.js
       indexFound = true;
@@ -57,8 +56,8 @@ async function writeModuleManifest(emailsDir: string, previewsPath: string) {
 
     const moduleName = p.replaceAll(/\.[jt]sx/g, "");
     templateModuleNames.push(moduleName);
-    const path = relative(manifestPath, emailsDir + "/previews/" + moduleName);
-    templateImports.push(`import * as ${moduleName} from "${path}";`);
+    const path = relative(manifestPath, emailsDir + "/" + moduleName);
+    templateImports.push(`import ${moduleName} from "${path}";`);
   });
 
   if (!indexFound)
@@ -93,8 +92,8 @@ function packageJsonVersionsMatch(): boolean {
     mailingPackageJsonVersion = JSON.parse(
       mailingPackageJson.toString()
     ).version;
-  } catch (err) {
-    if ("ENOENT" === err.code) {
+  } catch (err: any) {
+    if ("ENOENT" === err?.code) {
       // .mailing package.json doesn't exist
       return false;
     } else {
@@ -106,8 +105,8 @@ function packageJsonVersionsMatch(): boolean {
   try {
     const cliPackageJson = readFileSync(cliPackageJsonPath);
     cliPackageJsonVersion = JSON.parse(cliPackageJson.toString()).version;
-  } catch (err) {
-    if ("ENOENT" === err.code) {
+  } catch (err: any) {
+    if ("ENOENT" === err?.code) {
       // cli package.json doesn't exist
       return false;
     } else {

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Header from "../../../components/Header";
 import HotIFrame from "../../../components/HotIFrame";
@@ -11,10 +11,11 @@ const Preview: NextPage = () => {
   const router = useRouter();
   const [viewMode, setViewMode] = useState<ViewMode>("desktop");
   const [data, setData] = useState<ShowPreviewResponseBody | null>(null);
-  useLiveReload(async function fetchPreview() {
+  const fetchData = useCallback(async () => {
     const response = await fetch(`/api/${document.location.pathname}`);
     setData(await response.json());
-  });
+  }, [setData]);
+  useLiveReload(fetchData);
 
   const { previewClass, previewFunction } = router.query;
 

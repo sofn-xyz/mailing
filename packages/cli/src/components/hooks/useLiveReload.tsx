@@ -20,5 +20,5 @@ export default function useLiveReload(onShouldReload: () => void) {
     return () => {
       clearInterval(interval);
     };
-  }, []);
+  }, [onShouldReload]);
 }

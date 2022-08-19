@@ -1,6 +1,6 @@
 import sendMail from "../../../packages/cli/src/emails";
-import * as TextEmail from "../../../packages/cli/src/emails/previews/TextEmail";
-import * as Welcome from "../../../packages/cli/src/emails/previews/Welcome";
+import TextEmail from "../../../packages/cli/src/emails/TextEmail";
+import Welcome from "../../../packages/cli/src/emails/Welcome";
 import * as TextEmailPreview from "../../../packages/cli/src/emails/previews/TextEmail";
 import * as WelcomePreview from "../../../packages/cli/src/emails/previews/Welcome";
 
