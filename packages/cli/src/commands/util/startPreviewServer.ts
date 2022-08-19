@@ -143,7 +143,7 @@ export default async function startPreviewServer(opts: PreviewServerOptions) {
   });
   const nextHandle = app.getRequestHandler();
   await app.prepare();
-  console.log("hi");
+
   if (!previewsPath) {
     error(
       "Could not find emails directory. Have you initialized the project with `mailing init`?"
@@ -234,9 +234,6 @@ export default async function startPreviewServer(opts: PreviewServerOptions) {
         error("Preview server error:", JSON.stringify(e));
       }
     });
-
-  console.log("hey");
-  log(`Starting livereload`);
 
   try {
     // simple live reload implementation

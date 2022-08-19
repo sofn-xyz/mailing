@@ -1,44 +1,16 @@
 import { useEffect, useState } from "react";
-import { GetStaticProps, NextPage } from "next";
+import { NextPage } from "next";
 import Link from "next/link";
 import Image from "next/image";
+import useLiveReload from "../components/hooks/useLiveReload";
 
-type HomeProps = { previews: [string, string[]][] };
+const Home: NextPage = () => {
+  const [previews, setPreviews] = useState<[string, string[]][] | null>(null);
 
-export const getStaticProps: GetStaticProps<HomeProps> = async () => {
-  let previews: [string, string[]][] = [];
-  if (process.env.NEXT_PUBLIC_STATIC) {
-    const res = await fetch("http://localhost:3883/api/previews");
-    previews = await res.json();
-  }
-  return { props: { previews } };
-};
-
-const Home: NextPage<HomeProps> = ({ previews: initialPreviews }) => {
-  const [previews, setPreviews] = useState<[string, string[]][] | null>(
-    initialPreviews.length ? initialPreviews : null
-  );
-  const fetchData = async () => {
+  useLiveReload(async function fetchData() {
     const res = await fetch("/api/previews");
     setPreviews((await res.json()).previews);
-  };
-
-  useEffect(() => {
-    if (!previews?.length) fetchData();
-  }, [previews?.length]);
-
-  useEffect(() => {
-    const interval = window.setInterval(async function checkForReload() {
-      const shouldReload = await fetch("/should_reload.json");
-      const json = await shouldReload.json();
-      if (json["shouldReload"]) {
-        fetchData();
-      }
-    }, 1200);
-    return () => {
-      clearInterval(interval);
-    };
-  }, []);
+  });
 
   if (!previews) {
     return <></>; // loading, should be quick bc everything is local
