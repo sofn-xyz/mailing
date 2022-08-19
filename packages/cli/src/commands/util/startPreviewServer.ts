@@ -2,8 +2,8 @@ import http from "http";
 import { relative, resolve } from "path";
 import open from "open";
 import { mkdir, readdir, watch, writeFile } from "fs-extra";
-import { cpSync, rmSync, existsSync, symlinkSync } from "fs";
-import { getPreviewsDirectory } from "../../paths";
+import { rmSync, existsSync, symlinkSync, readFileSync } from "fs";
+import { getPreviewsDirectory, readPackageJSON } from "../../paths";
 import { error, log, setQuiet } from "../../log";
 import {
   createIntercept,
@@ -55,8 +55,30 @@ async function writeModuleManifest(emailsDir: string, previewsPath: string) {
 }
 
 async function setupNextServer(emailsDir: string) {
+  const mailingPath = ".mailing";
+  const mailingPackageJson = mailingPath + "/package.json";
+
+  // return early if .mailing exists and version matches packages.json
+  if (existsSync(mailingPackageJson)) {
+    // read it
+    const mailingPackageJsonVersion = JSON.parse(
+      readFileSync(mailingPackageJson).toString()
+    ).version;
+
+    // read cli package.json
+    const cliPackageJson = "./packages/cli/package.json";
+    const cliPackageJsonVersion = JSON.parse(
+      readFileSync(cliPackageJson).toString()
+    ).version;
+
+    // compare versions and return early if the same
+    if (cliPackageJsonVersion === mailingPackageJsonVersion) {
+      console.log("early return");
+      return;
+    }
+  }
+
   // copy node_modules mailing into .mailing
-  const mailingPath = resolve(process.cwd(), ".mailing");
   const nodeMailingPath = resolve(process.cwd(), "node_modules/mailing");
 
   rmSync(resolve(mailingPath), { recursive: true, force: true });
