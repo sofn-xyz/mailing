@@ -8,7 +8,7 @@ type HomeProps = { previews: [string, string[]][] };
 export const getStaticProps: GetStaticProps<HomeProps> = async () => {
   let previews: [string, string[]][] = [];
   if (process.env.NEXT_PUBLIC_STATIC) {
-    const res = await fetch("http://localhost:3883/previews.json");
+    const res = await fetch("http://localhost:3883/api/previews");
     previews = await res.json();
   }
   return { props: { previews } };
@@ -19,12 +19,26 @@ const Home: NextPage<HomeProps> = ({ previews: initialPreviews }) => {
     initialPreviews.length ? initialPreviews : null
   );
   const fetchData = async () => {
-    const res = await fetch("/previews.json");
-    setPreviews(await res.json());
+    const res = await fetch("/api/previews");
+    setPreviews((await res.json()).previews);
   };
+
   useEffect(() => {
     if (!previews?.length) fetchData();
   }, [previews?.length]);
+
+  useEffect(() => {
+    const interval = window.setInterval(async function checkForReload() {
+      const shouldReload = await fetch("/should_reload.json");
+      const json = await shouldReload.json();
+      if (json["shouldReload"]) {
+        fetchData();
+      }
+    }, 1200);
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
 
   if (!previews) {
     return <></>; // loading, should be quick bc everything is local

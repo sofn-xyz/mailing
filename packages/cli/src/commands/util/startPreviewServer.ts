@@ -1,20 +1,17 @@
 import http from "http";
 import { relative, resolve } from "path";
 import open from "open";
-import { mkdir, readdir, watch, writeFile } from "fs-extra";
 import { rmSync, existsSync, symlinkSync, readFileSync } from "fs";
-import { getPreviewsDirectory, readPackageJSON } from "../../paths";
-import { error, log, setQuiet } from "../../log";
+import { mkdir, readdir, symlink, watch, writeFile } from "fs-extra";
+import { getPreviewsDirectory } from "../../paths";
+import { error, log, setQuiet, debug } from "../../log";
+import { debounce } from "lodash";
 import {
   createIntercept,
   showIntercept,
 } from "../../preview/controllers/intercepts";
-import {
-  sendPreview,
-  showPreview,
-  showPreviewIndex,
-} from "../../preview/controllers/previews";
-import { cwd, exit } from "process";
+import { sendPreview } from "../../preview/controllers/previews";
+import { cwd } from "process";
 import { parse } from "url";
 import next from "next";
 import registerRequireHooks from "./registerRequireHooks";
@@ -27,6 +24,9 @@ export type PreviewServerOptions = {
 };
 
 async function writeModuleManifest(emailsDir: string, previewsPath: string) {
+  const mailingPath = resolve(process.cwd(), ".mailing/src");
+  const manifestPath = resolve(mailingPath, "moduleManifest.ts");
+
   const previewCollections = (await readdir(previewsPath)).filter(
     (path) => !/^\./.test(path)
   );
@@ -35,7 +35,7 @@ async function writeModuleManifest(emailsDir: string, previewsPath: string) {
   const previews: string[] = uniquePreviewCollections.map((p) => {
     const moduleName = p.replaceAll(/\.[jt]sx/g, "");
     exportedModuleNames.push(moduleName);
-    const path = emailsDir + "/" + moduleName;
+    const path = relative(manifestPath, emailsDir + "/previews/" + moduleName);
     return `import * as ${moduleName} from "${path}";`;
   });
 
@@ -45,9 +45,7 @@ async function writeModuleManifest(emailsDir: string, previewsPath: string) {
     `export default { ${exportedModuleNames.join(", ")} };` +
     "\n\n";
 
-  const mailingPath = resolve(process.cwd(), ".mailing");
-  const manifestPath = resolve(mailingPath, "moduleManifest.ts");
-
+  debug("Writing module manifest to", manifestPath);
   await mkdir(mailingPath, { recursive: true });
   await writeFile(manifestPath, contents);
 
@@ -82,17 +80,19 @@ async function setupNextServer(emailsDir: string) {
   const nodeMailingPath = resolve(process.cwd(), "node_modules/mailing");
 
   rmSync(resolve(mailingPath), { recursive: true, force: true });
+
+  if (process.env.MM_DEV) {
+    await symlink("packages/cli/", ".mailing");
+    return;
+  }
+
   await mkdir(mailingPath, { recursive: true });
   // cpSync(nodeMailingPath + "/*", mailingPath, { recursive: true }, () => false);
   execSync(`cp -R ${nodeMailingPath + "/*"} ${mailingPath}`);
 
   // emails dir: delete boilerplate and symlink
   execSync(`rm -rf ${mailingPath + "/emails"}`);
-  symlinkSync(
-    resolve(emailsDir),
-    resolve(mailingPath + "/emails"),
-    () => false
-  );
+  symlinkSync(resolve(emailsDir), resolve(mailingPath + "/emails"));
 
   // run npm commands
   execSync(`cd ${mailingPath} && npm add react react-dom && npm i`);
@@ -107,7 +107,6 @@ export default async function startPreviewServer(opts: PreviewServerOptions) {
   registerRequireHooks();
 
   const previewsPath = getPreviewsDirectory(emailsDir);
-
   if (!previewsPath) throw new Error("previewsPath is not defined");
 
   await writeModuleManifest(emailsDir, previewsPath);
@@ -124,7 +123,7 @@ export default async function startPreviewServer(opts: PreviewServerOptions) {
   });
   const nextHandle = app.getRequestHandler();
   await app.prepare();
-
+  console.log("hi");
   if (!previewsPath) {
     error(
       "Could not find emails directory. Have you initialized the project with `mailing init`?"
@@ -157,6 +156,13 @@ export default async function startPreviewServer(opts: PreviewServerOptions) {
       res.setHeader("Pragma", "no-cache");
       res.setHeader("Expires", "-1");
 
+      const emailsPath = resolve(previewsPath, "..");
+      for (const path in require.cache) {
+        if (path.startsWith(emailsPath)) {
+          delete require.cache[path];
+        }
+      }
+
       currentUrl = `${host}${req.url}`;
       function showShouldReload(
         _req: http.IncomingMessage,
@@ -173,10 +179,7 @@ export default async function startPreviewServer(opts: PreviewServerOptions) {
       });
 
       try {
-        if (req.url === "/previews.json") {
-          // TODO: move this to next app
-          showPreviewIndex(req, res);
-        } else if (req.url === "/should_reload.json") {
+        if (req.url === "/should_reload.json") {
           noLog = true;
           showShouldReload(req, res);
         } else if (req.url === "/intercepts" && req.method === "POST") {
@@ -185,9 +188,6 @@ export default async function startPreviewServer(opts: PreviewServerOptions) {
           await sendPreview(req, res);
         } else if (/^\/intercepts\/[a-zA-Z0-9]+\.json/.test(req.url)) {
           showIntercept(req, res);
-        } else if (/^\/previews\/.*\.json/.test(req.url)) {
-          // TODO: move this to next app
-          showPreview(req, res);
         } else if (/^\/_+next/.test(req.url)) {
           noLog = true;
           await app.render(req, res, `${pathname}`, query);
@@ -215,7 +215,8 @@ export default async function startPreviewServer(opts: PreviewServerOptions) {
       }
     });
 
-  if (process.env.NODE_ENV === "production") return server;
+  console.log("hey");
+  log(`Starting livereload`);
 
   try {
     // simple live reload implementation
@@ -225,11 +226,16 @@ export default async function startPreviewServer(opts: PreviewServerOptions) {
       return;
     }
 
-    watch(changeWatchPath, { recursive: true }, async (eventType, filename) => {
-      log(`Detected ${eventType} on ${filename}, reloading`);
-      await writeModuleManifest(previewsPath);
-      delete require.cache[resolve(changeWatchPath, filename)];
+    const reload = debounce(async () => {
+      debug("Reload from change");
+      await writeModuleManifest(emailsDir, previewsPath);
       shouldReload = true;
+    }, 200);
+
+    watch(changeWatchPath, { recursive: true }, (eventType, filename) => {
+      log(`Detected ${eventType} on ${filename}, reloading`);
+      delete require.cache[resolve(changeWatchPath, filename)];
+      reload();
     });
     log(`Watching for changes to ${relative(cwd(), changeWatchPath)}`);
   } catch (e) {
