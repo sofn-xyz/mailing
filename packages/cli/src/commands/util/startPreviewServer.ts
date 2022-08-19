@@ -139,8 +139,8 @@ async function setupNextServer(emailsDir: string) {
   execSync(`cp -R ${nodeMailingPath + "/*"} ${mailingPath}`);
 
   // emails dir: delete boilerplate and symlink
-  execSync(`rm -rf ${mailingPath + "/emails"}`);
-  symlinkSync(resolve(emailsDir), resolve(mailingPath + "/emails"));
+  execSync(`rm -rf ${mailingPath + "/src/emails"}`);
+  symlinkSync(resolve(emailsDir), resolve(mailingPath + "/src/emails"));
 
   // run npm commands
   execSync(`cd ${mailingPath} && npm add react react-dom && npm i`);
