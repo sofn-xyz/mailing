@@ -52,29 +52,49 @@ async function writeModuleManifest(emailsDir: string, previewsPath: string) {
   delete require.cache[manifestPath];
 }
 
-async function setupNextServer(emailsDir: string) {
-  const mailingPath = ".mailing";
-  const mailingPackageJson = mailingPath + "/package.json";
+function packageJsonVersionsMatch(): boolean {
+  const mailingPackageJsonPath = ".mailing/package.json";
+  const cliPackageJsonPath = "./packages/cli/package.json";
 
-  // return early if .mailing exists and version matches packages.json
-  if (existsSync(mailingPackageJson)) {
-    // read it
-    const mailingPackageJsonVersion = JSON.parse(
-      readFileSync(mailingPackageJson).toString()
+  let mailingPackageJsonVersion: string, cliPackageJsonVersion: string;
+
+  // read .mailing package.json
+  try {
+    const mailingPackageJson = readFileSync(mailingPackageJsonPath);
+    mailingPackageJsonVersion = JSON.parse(
+      mailingPackageJson.toString()
     ).version;
-
-    // read cli package.json
-    const cliPackageJson = "./packages/cli/package.json";
-    const cliPackageJsonVersion = JSON.parse(
-      readFileSync(cliPackageJson).toString()
-    ).version;
-
-    // compare versions and return early if the same
-    if (cliPackageJsonVersion === mailingPackageJsonVersion) {
-      console.log("early return");
-      return;
+  } catch (err) {
+    if ("ENOENT" === err.code) {
+      // .mailing package.json doesn't exist
+      return false;
+    } else {
+      throw err;
     }
   }
+
+  // read cli package.json
+  try {
+    const cliPackageJson = readFileSync(cliPackageJsonPath);
+    cliPackageJsonVersion = JSON.parse(cliPackageJson.toString()).version;
+  } catch (err) {
+    if ("ENOENT" === err.code) {
+      // cli package.json doesn't exist
+      return false;
+    } else {
+      throw err;
+    }
+  }
+
+  // compare versions and return early if the same
+  return cliPackageJsonVersion === mailingPackageJsonVersion;
+}
+
+async function setupNextServer(emailsDir: string) {
+  const mailingPath = ".mailing";
+
+  // return early if .mailing exists and version matches packages.json
+  if (packageJsonVersionsMatch()) return;
 
   // copy node_modules mailing into .mailing
   const nodeMailingPath = resolve(process.cwd(), "node_modules/mailing");
