@@ -45,7 +45,7 @@ async function writeModuleManifest(emailsDir: string, previewsPath: string) {
     `export default { ${exportedModuleNames.join(", ")} };` +
     "\n\n";
 
-  const mailingPath = resolve(process.cwd(), ".mailing/mailing");
+  const mailingPath = resolve(process.cwd(), ".mailing");
   const manifestPath = resolve(mailingPath, "moduleManifest.ts");
 
   await mkdir(mailingPath, { recursive: true });
@@ -56,7 +56,7 @@ async function writeModuleManifest(emailsDir: string, previewsPath: string) {
 
 async function setupNextServer(emailsDir: string) {
   // copy node_modules mailing into .mailing
-  const mailingPath = resolve(process.cwd(), ".mailing/mailing");
+  const mailingPath = resolve(process.cwd(), ".mailing");
   const nodeMailingPath = resolve(process.cwd(), "node_modules/mailing");
 
   rmSync(resolve(mailingPath), { recursive: true, force: true });
