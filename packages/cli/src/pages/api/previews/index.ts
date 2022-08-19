@@ -9,11 +9,12 @@ export default function showPreviewsIndex(
   _req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  const previewCollections = Object.keys(moduleManifest);
+  const previewModules = moduleManifest.previews;
+  const previewCollections = Object.keys(previewModules);
   const previews: [string, string[]][] = previewCollections.map((p) => {
     return [
       p,
-      Object.keys(moduleManifest[p as keyof typeof moduleManifest]).sort(),
+      Object.keys(previewModules[p as keyof typeof previewModules]).sort(),
     ];
   });
 

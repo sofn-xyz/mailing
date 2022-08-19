@@ -31,19 +31,48 @@ async function writeModuleManifest(emailsDir: string, previewsPath: string) {
     (path) => !/^\./.test(path)
   );
   const uniquePreviewCollections = Array.from(new Set(previewCollections));
-  let exportedModuleNames: string[] = [];
-  const previews: string[] = uniquePreviewCollections.map((p) => {
+  const previewImports: string[] = [];
+  const previewConsts: string[] = [];
+  uniquePreviewCollections.forEach((p) => {
     const moduleName = p.replaceAll(/\.[jt]sx/g, "");
-    exportedModuleNames.push(moduleName);
     const path = relative(manifestPath, emailsDir + "/previews/" + moduleName);
-    return `import * as ${moduleName} from "${path}";`;
+    previewImports.push(`import * as ${moduleName}Preview from "${path}";`);
+    previewConsts.push(`${moduleName}: ${moduleName}Preview`);
   });
 
+  const templates = (await readdir(emailsDir)).filter(
+    (path) => !/^\./.test(path) && /\.[jt]sx?$/.test(path)
+  );
+  const uniqueTemplates = Array.from(new Set(templates));
+  const templateImports: string[] = [];
+  const templateModuleNames: string[] = [];
+  let indexFound = false;
+  uniqueTemplates.forEach((p) => {
+    console.log(p);
+    if (/^index\.[jt]sx?$/.test(p)) {
+      // index.ts, index.js
+      indexFound = true;
+      return;
+    }
+
+    const moduleName = p.replaceAll(/\.[jt]sx/g, "");
+    templateModuleNames.push(moduleName);
+    const path = relative(manifestPath, emailsDir + "/previews/" + moduleName);
+    templateImports.push(`import * as ${moduleName} from "${path}";`);
+  });
+
+  if (!indexFound)
+    throw new Error("index.ts or index.js not found in emails directory");
+
   const contents =
-    previews.join("\n") +
+    `import sendMail from "${relative(manifestPath, emailsDir)}";\n` +
+    templateImports.join("\n") +
+    "\n" +
+    previewImports.join("\n") +
     "\n\n" +
-    `export default { ${exportedModuleNames.join(", ")} };` +
-    "\n\n";
+    `const previews = { ${previewConsts.join(", ")} }\n` +
+    `const templates = { ${templateModuleNames.join(", ")} }\n\n` +
+    `export default { templates, previews, sendMail };\n\n`;
 
   debug("Writing module manifest to", manifestPath);
   await mkdir(mailingPath, { recursive: true });

@@ -21,10 +21,11 @@ export default function showPreview(
     return;
   }
 
+  const previewModules = moduleManifest.previews;
   const cleanFunctionName = functionName.replace(/\.json$/, "");
   const previewModule: {
     [key: string]: () => ReactElement;
-  } = moduleManifest[moduleName as keyof typeof moduleManifest];
+  } = previewModules[moduleName as keyof typeof previewModules];
   const component = previewModule[cleanFunctionName]();
 
   if (component?.props) {
