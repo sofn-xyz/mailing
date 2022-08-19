@@ -45,7 +45,7 @@ async function writeModuleManifest(emailsDir: string, previewsPath: string) {
     `export default { ${exportedModuleNames.join(", ")} };` +
     "\n\n";
 
-  const mailingPath = resolve(process.cwd(), ".mailing");
+  const mailingPath = resolve(process.cwd(), ".mailing/mailing");
   const manifestPath = resolve(mailingPath, "moduleManifest.ts");
 
   await mkdir(mailingPath, { recursive: true });
