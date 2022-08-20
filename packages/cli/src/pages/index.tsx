@@ -3,15 +3,12 @@ import { GetStaticProps, NextPage } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import useLiveReload from "../components/hooks/useLiveReload";
+import { previewTree } from "../util/moduleManifestUtil";
 
 type HomeProps = { previews: [string, string[]][] };
 
 export const getStaticProps: GetStaticProps<HomeProps> = async () => {
-  let previews: [string, string[]][] = [];
-  if (process.env.NEXT_PUBLIC_STATIC) {
-    const res = await fetch("http://localhost:3883/previews.json");
-    previews = await res.json();
-  }
+  let previews: [string, string[]][] = previewTree();
   return { props: { previews } };
 };
 

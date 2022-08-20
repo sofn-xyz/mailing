@@ -8,6 +8,10 @@ import { hotkeysMap } from "../../../components/hooks/usePreviewHotkeys";
 import useLiveReload from "../../../components/hooks/useLiveReload";
 import moduleManifest, { previews } from "../../../moduleManifest";
 import { render } from "../../../mjml";
+import {
+  getPreviewModule,
+  previewTree,
+} from "../../../util/moduleManifestUtil";
 
 type Params = { previewClass: string; previewFunction: string };
 
@@ -16,13 +20,7 @@ export const getStaticPaths = async () => {
     params: Params;
   }[] = [];
 
-  const previewModules = moduleManifest.previews;
-  const previews: [string, string[]][] = Object.keys(previewModules).map(
-    (previewName: string) => {
-      const m = previewModules[previewName as keyof typeof previewModules];
-      return [previewName, Object.keys(m)];
-    }
-  );
+  const previews: [string, string[]][] = previewTree();
 
   previews.forEach((previewClass) => {
     paths = paths.concat(
@@ -43,7 +41,7 @@ export const getStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps = async (context) => {
   const { previewFunction, previewClass } = context.params as Params;
-  const previewModule = previews[previewClass as keyof typeof previews];
+  const previewModule = getPreviewModule(previewClass);
   const component = previewModule[previewFunction]();
 
   const initialData = render(component);
