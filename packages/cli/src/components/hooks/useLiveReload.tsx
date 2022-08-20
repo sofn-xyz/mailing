@@ -6,7 +6,6 @@ export default function useLiveReload(onShouldReload: () => void) {
       onShouldReload();
       return;
     }
-
     const interval = window.setInterval(async function checkForReload() {
       const shouldReload = await fetch("/should_reload.json");
       const json = await shouldReload.json();
@@ -14,9 +13,7 @@ export default function useLiveReload(onShouldReload: () => void) {
         onShouldReload();
       }
     }, 1200);
-
     onShouldReload();
-
     return () => {
       clearInterval(interval);
     };

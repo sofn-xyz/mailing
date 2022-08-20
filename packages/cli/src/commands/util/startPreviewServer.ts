@@ -23,7 +23,7 @@ export type PreviewServerOptions = {
 };
 
 async function writeModuleManifest(emailsDir: string, previewsPath: string) {
-  const mailingPath = resolve(process.cwd(), ".mailing/src");
+  const mailingPath = resolve(cwd(), ".mailing/src");
   const manifestPath = resolve(mailingPath, "moduleManifest.ts");
 
   const previewCollections = (await readdir(previewsPath)).filter(
@@ -81,17 +81,20 @@ async function writeModuleManifest(emailsDir: string, previewsPath: string) {
 }
 
 function packageJsonVersionsMatch(): boolean {
-  const mailingPackageJsonPath = ".mailing/package.json";
-  const cliPackageJsonPath = "./packages/cli/package.json";
+  const mailingPackageJsonPath = "./.mailing/package.json";
+  const cliPackageJsonPath = process.env.MM_DEV
+    ? "./packages/cli/package.json"
+    : "./node_modules/mailing/package.json";
 
   let mailingPackageJsonVersion: string, cliPackageJsonVersion: string;
 
   // read .mailing package.json
   try {
-    const mailingPackageJson = readFileSync(mailingPackageJsonPath);
+    const mailingPackageJson = readFileSync(resolve(mailingPackageJsonPath));
     mailingPackageJsonVersion = JSON.parse(
       mailingPackageJson.toString()
     ).version;
+    debug(mailingPackageJsonPath, "version", cliPackageJsonVersion);
   } catch (err: any) {
     if ("ENOENT" === err?.code) {
       // .mailing package.json doesn't exist
@@ -103,8 +106,9 @@ function packageJsonVersionsMatch(): boolean {
 
   // read cli package.json
   try {
-    const cliPackageJson = readFileSync(cliPackageJsonPath);
+    const cliPackageJson = readFileSync(resolve(cliPackageJsonPath));
     cliPackageJsonVersion = JSON.parse(cliPackageJson.toString()).version;
+    debug(cliPackageJsonPath, "version", cliPackageJsonVersion);
   } catch (err: any) {
     if ("ENOENT" === err?.code) {
       // cli package.json doesn't exist
@@ -122,7 +126,12 @@ async function setupNextServer(emailsDir: string) {
   const mailingPath = ".mailing";
 
   // return early if .mailing exists and version matches packages.json
-  if (packageJsonVersionsMatch()) return;
+  if (packageJsonVersionsMatch()) {
+    debug("setupNextServer: versions match, returning");
+    return;
+  }
+
+  debug("setupNextServer: versions do not match, constructing .mailing");
 
   // copy node_modules mailing into .mailing
   const nodeMailingPath = resolve(process.cwd(), "node_modules/mailing");
