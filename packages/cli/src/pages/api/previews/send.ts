@@ -1,9 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { ReactElement } from "react";
-import { pickBy, identity } from "lodash";
 import { error } from "../../../log";
-import { sendMail, previews } from "../../../moduleManifest";
-import { ComponentMail } from "mailing-core";
+import { sendMail } from "../../../moduleManifest";
 import { getPreviewComponent } from "../../../util/moduleManifestUtil";
 
 export default async function showPreviewsIndex(

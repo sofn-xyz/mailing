@@ -1,5 +1,4 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import moduleManifest from "../../../moduleManifest";
 import { previewTree } from "../../../util/moduleManifestUtil";
 
 type Data = {

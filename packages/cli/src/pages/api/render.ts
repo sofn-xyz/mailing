@@ -1,4 +1,4 @@
-import React, { ComponentClass, FC, FunctionComponent } from "react";
+import React, { FC } from "react";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { render } from "mailing-core";
 import { MjmlError } from "mjml-react";

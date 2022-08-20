@@ -1,6 +1,4 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { ReactElement } from "react";
-import moduleManifest from "../../../../moduleManifest";
 import { error } from "../../../../log";
 import { render } from "../../../../mjml";
 import { getPreviewComponent } from "../../../../util/moduleManifestUtil";

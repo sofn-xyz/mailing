@@ -6,11 +6,9 @@ import MjmlErrors from "../../../components/MjmlErrors";
 import { GetStaticProps, NextPage } from "next";
 import { hotkeysMap } from "../../../components/hooks/usePreviewHotkeys";
 import useLiveReload from "../../../components/hooks/useLiveReload";
-import moduleManifest, { previews } from "../../../moduleManifest";
 import { render } from "../../../mjml";
 import {
   getPreviewComponent,
-  getPreviewModule,
   previewTree,
 } from "../../../util/moduleManifestUtil";
 
