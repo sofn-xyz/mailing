@@ -9,6 +9,7 @@ import useLiveReload from "../../../components/hooks/useLiveReload";
 import moduleManifest, { previews } from "../../../moduleManifest";
 import { render } from "../../../mjml";
 import {
+  getPreviewComponent,
   getPreviewModule,
   previewTree,
 } from "../../../util/moduleManifestUtil";
@@ -41,8 +42,7 @@ export const getStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps = async (context) => {
   const { previewFunction, previewClass } = context.params as Params;
-  const previewModule = getPreviewModule(previewClass);
-  const component = previewModule[previewFunction]();
+  const component = getPreviewComponent(previewClass, previewFunction);
 
   const initialData = render(component);
 

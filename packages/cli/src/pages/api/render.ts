@@ -2,7 +2,7 @@ import React, { ComponentClass, FC, FunctionComponent } from "react";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { render } from "mailing-core";
 import { MjmlError } from "mjml-react";
-import moduleManifest from "../../moduleManifest";
+import { templates } from "../../moduleManifest";
 
 type Data = {
   error?: string; // api error messages
@@ -14,7 +14,6 @@ function renderTemplate(
   templateName: string,
   props: { [key: string]: any }
 ): { error?: string; mjmlErrors?: MjmlError[]; html?: string } {
-  const { templates } = moduleManifest;
   const Template = templates[templateName as keyof typeof templates];
   if (!Template) {
     return {

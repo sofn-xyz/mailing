@@ -4,6 +4,7 @@ import { pickBy, identity } from "lodash";
 import { error } from "../../../log";
 import { sendMail, previews } from "../../../moduleManifest";
 import { ComponentMail } from "mailing-core";
+import { getPreviewComponent } from "../../../util/moduleManifestUtil";
 
 export default async function showPreviewsIndex(
   req: NextApiRequest,
@@ -20,10 +21,7 @@ export default async function showPreviewsIndex(
   const { html, to, subject, previewClass, previewFunction } = body;
   let component;
   if (!html && previewClass && previewFunction) {
-    const previewModule: {
-      [key: string]: () => ReactElement;
-    } = previews[previewClass as keyof typeof previews];
-    component = previewModule[previewFunction]();
+    component = getPreviewComponent(previewClass, previewFunction);
   }
 
   if (!html && !component) {

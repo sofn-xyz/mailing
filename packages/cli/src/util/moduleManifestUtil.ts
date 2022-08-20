@@ -1,4 +1,4 @@
-import { FunctionComponent } from "react";
+import { ReactElement } from "react";
 import { previews } from "../moduleManifest";
 
 export function previewTree(): [string, string[]][] {
@@ -10,4 +10,11 @@ export function previewTree(): [string, string[]][] {
 
 export function getPreviewModule(name: string) {
   return previews[name as keyof typeof previews];
+}
+
+export function getPreviewComponent(name: string, functionName: string) {
+  const previewModule: {
+    [key: string]: () => ReactElement;
+  } = previews[name as keyof typeof previews];
+  return previewModule[functionName]();
 }
