@@ -1,11 +1,24 @@
 import { useCallback, useEffect, useState } from "react";
-import { NextPage } from "next";
+import { GetStaticProps, NextPage } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import useLiveReload from "../components/hooks/useLiveReload";
 
-const Home: NextPage = () => {
-  const [previews, setPreviews] = useState<[string, string[]][] | null>(null);
+type HomeProps = { previews: [string, string[]][] };
+
+export const getStaticProps: GetStaticProps<HomeProps> = async () => {
+  let previews: [string, string[]][] = [];
+  if (process.env.NEXT_PUBLIC_STATIC) {
+    const res = await fetch("http://localhost:3883/previews.json");
+    previews = await res.json();
+  }
+  return { props: { previews } };
+};
+
+const Home: NextPage<HomeProps> = ({ previews: initialPreviews }) => {
+  const [previews, setPreviews] = useState<[string, string[]][] | null>(
+    initialPreviews.length ? initialPreviews : null
+  );
 
   const fetchData = useCallback(async () => {
     const res = await fetch("/api/previews");
