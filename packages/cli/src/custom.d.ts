@@ -7,6 +7,18 @@ type Intercept = {
   bcc?: string | string[];
 };
 
+type SendPreviewRequestBody = {
+  to: string;
+  html?: string;
+  previewFunction?: string;
+  previewClass?: string;
+  subject: string;
+};
+
+type SendPreviewResponseBody = {
+  error?: string;
+};
+
 type ShowPreviewResponseBody = {
   errors: MjmlError[];
   html: string;

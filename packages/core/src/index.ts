@@ -7,7 +7,7 @@ import { error, log } from "./log";
 import fetch from "node-fetch";
 
 export type ComponentMail = nodemailer.SendMailOptions & {
-  component: ReactElement<any, string | JSXElementConstructor<any>>;
+  component?: ReactElement<any, string | JSXElementConstructor<any>>;
   forceDeliver?: boolean;
   forcePreview?: boolean;
 };
