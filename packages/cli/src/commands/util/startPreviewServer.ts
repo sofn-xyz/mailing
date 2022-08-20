@@ -68,8 +68,8 @@ async function writeModuleManifest(emailsDir: string, previewsPath: string) {
     "\n" +
     previewImports.join("\n") +
     "\n\n" +
-    `const previews = { ${previewConsts.join(", ")} }\n` +
-    `const templates = { ${templateModuleNames.join(", ")} }\n\n` +
+    `const previews = { ${previewConsts.join(", ")} };\n` +
+    `const templates = { ${templateModuleNames.join(", ")} };\n\n` +
     `export { templates, previews, sendMail };\n` +
     `export default { templates, previews, sendMail };\n\n`;
 

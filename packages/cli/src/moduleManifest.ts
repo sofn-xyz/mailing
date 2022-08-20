@@ -9,3 +9,4 @@ const templates = { TextEmail, Welcome };
 
 export { templates, previews, sendMail };
 export default { templates, previews, sendMail };
+
