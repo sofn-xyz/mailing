@@ -3,14 +3,61 @@ import { useRouter } from "next/router";
 import Header from "../../../components/Header";
 import HotIFrame from "../../../components/HotIFrame";
 import MjmlErrors from "../../../components/MjmlErrors";
-import { NextPage } from "next";
+import { GetStaticProps, NextPage } from "next";
 import { hotkeysMap } from "../../../components/hooks/usePreviewHotkeys";
 import useLiveReload from "../../../components/hooks/useLiveReload";
+import moduleManifest, { previews } from "../../../moduleManifest";
+import { render } from "../../../mjml";
 
-const Preview: NextPage = () => {
+type Params = { previewClass: string; previewFunction: string };
+
+export const getStaticPaths = async () => {
+  let paths: {
+    params: Params;
+  }[] = [];
+
+  const previewModules = moduleManifest.previews;
+  const previews: [string, string[]][] = Object.keys(previewModules).map(
+    (previewName: string) => {
+      const m = previewModules[previewName as keyof typeof previewModules];
+      return [previewName, Object.keys(m)];
+    }
+  );
+
+  previews.forEach((previewClass) => {
+    paths = paths.concat(
+      previewClass[1].map((previewFunction) => ({
+        params: {
+          previewClass: previewClass[0],
+          previewFunction,
+        },
+      }))
+    );
+  });
+
+  return {
+    paths,
+    fallback: true,
+  };
+};
+
+export const getStaticProps: GetStaticProps = async (context) => {
+  const { previewFunction, previewClass } = context.params as Params;
+  const previewModule = previews[previewClass as keyof typeof previews];
+  const component = previewModule[previewFunction]();
+
+  const initialData = render(component);
+
+  return {
+    props: { initialData },
+    revalidate: 1,
+  };
+};
+
+const Preview = ({ initialData }: { initialData: ShowPreviewResponseBody }) => {
   const router = useRouter();
   const [viewMode, setViewMode] = useState<ViewMode>("desktop");
-  const [data, setData] = useState<ShowPreviewResponseBody | null>(null);
+  const [data, setData] = useState<ShowPreviewResponseBody | null>(initialData);
   const fetchData = useCallback(async () => {
     const response = await fetch(`/api/${document.location.pathname}`);
     setData(await response.json());

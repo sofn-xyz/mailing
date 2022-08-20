@@ -163,7 +163,7 @@ export default async function startPreviewServer(opts: PreviewServerOptions) {
   const hostname = "localhost";
 
   const app = next({
-    dev,
+    dev: true, // true will use the app from source, not built .next bundle
     hostname,
     port,
     dir: dev ? resolve(__dirname, "../../..") : __dirname,
