@@ -173,7 +173,7 @@ describe("Example API", () => {
     // sendMail({
     //   to: "someone@something.com",
     //   subject: "test",
-    //   component: <IssueNotification />
+    //   component: <TextEmail ... />,
     // });
 
     const emails = await getTestMailQueue();

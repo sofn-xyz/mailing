@@ -1,20 +1,21 @@
 import http from "http";
 import { relative, resolve } from "path";
 import open from "open";
+import { execSync } from "child_process";
+import next from "next";
 import { rmSync, symlinkSync, readFileSync } from "fs";
-import { mkdir, readdir, symlink, watch, writeFile } from "fs-extra";
+import { copy, mkdir, readdir, remove, watch, writeFile } from "fs-extra";
+import { debounce } from "lodash";
+import { cwd } from "process";
+import { parse } from "url";
+
 import { getPreviewsDirectory } from "../../paths";
 import { error, log, setQuiet, debug } from "../../log";
-import { debounce } from "lodash";
 import {
   createIntercept,
   showIntercept,
 } from "../../preview/controllers/intercepts";
-import { cwd } from "process";
-import { parse } from "url";
-import next from "next";
 import registerRequireHooks from "./registerRequireHooks";
-import { execSync } from "child_process";
 
 export type PreviewServerOptions = {
   emailsDir: string;
@@ -22,9 +23,16 @@ export type PreviewServerOptions = {
   quiet: boolean;
 };
 
-async function writeModuleManifest(emailsDir: string, previewsPath: string) {
+async function writeModuleManifest(emailsDir: string) {
   const mailingPath = resolve(cwd(), ".mailing/src");
   const manifestPath = resolve(mailingPath, "moduleManifest.ts");
+  const previewsPath = resolve("./.mailing/src/emails/previews");
+
+  // Might need this so that
+  // await remove(resolve(mailingPath + "/emails"));
+  // await copy(resolve(emailsDir), resolve(mailingPath + "/emails"), {
+  //   overwrite: true,
+  // });
 
   const previewCollections = (await readdir(previewsPath)).filter(
     (path) => !/^\./.test(path)
@@ -34,12 +42,12 @@ async function writeModuleManifest(emailsDir: string, previewsPath: string) {
   const previewConsts: string[] = [];
   uniquePreviewCollections.forEach((p) => {
     const moduleName = p.replaceAll(/\.[jt]sx/g, "");
-    const path = relative(manifestPath, emailsDir + "/previews/" + moduleName);
+    const path = "./emails/previews/" + moduleName;
     previewImports.push(`import * as ${moduleName}Preview from "${path}";`);
     previewConsts.push(`${moduleName}: ${moduleName}Preview`);
   });
 
-  const templates = (await readdir(emailsDir)).filter(
+  const templates = (await readdir("./.mailing/src/emails")).filter(
     (path) => !/^\./.test(path) && /\.[jt]sx?$/.test(path)
   );
   const uniqueTemplates = Array.from(new Set(templates));
@@ -55,7 +63,7 @@ async function writeModuleManifest(emailsDir: string, previewsPath: string) {
 
     const moduleName = p.replaceAll(/\.[jt]sx/g, "");
     templateModuleNames.push(moduleName);
-    const path = relative(manifestPath, emailsDir + "/" + moduleName);
+    const path = "./emails/" + moduleName;
     templateImports.push(`import ${moduleName} from "${path}";`);
   });
 
@@ -63,7 +71,7 @@ async function writeModuleManifest(emailsDir: string, previewsPath: string) {
     throw new Error("index.ts or index.js not found in emails directory");
 
   const contents =
-    `import sendMail from "${relative(manifestPath, emailsDir)}";\n` +
+    `import sendMail from "./emails";\n` +
     templateImports.join("\n") +
     "\n" +
     previewImports.join("\n") +
@@ -82,19 +90,15 @@ async function writeModuleManifest(emailsDir: string, previewsPath: string) {
 
 function packageJsonVersionsMatch(): boolean {
   const mailingPackageJsonPath = "./.mailing/package.json";
-  const cliPackageJsonPath = process.env.MM_DEV
-    ? "./packages/cli/package.json"
-    : "./node_modules/mailing/package.json";
 
   let mailingPackageJsonVersion: string, cliPackageJsonVersion: string;
 
   // read .mailing package.json
   try {
-    const mailingPackageJson = readFileSync(resolve(mailingPackageJsonPath));
-    mailingPackageJsonVersion = JSON.parse(
-      mailingPackageJson.toString()
-    ).version;
-    debug(mailingPackageJsonPath, "version", cliPackageJsonVersion);
+    const mailingPackageJson = readFileSync(mailingPackageJsonPath);
+    const pkgJSON = JSON.parse(mailingPackageJson.toString());
+    mailingPackageJsonVersion = pkgJSON.version;
+    debug(".mailing version:\t", mailingPackageJsonVersion);
   } catch (err: any) {
     if ("ENOENT" === err?.code) {
       // .mailing package.json doesn't exist
@@ -104,26 +108,15 @@ function packageJsonVersionsMatch(): boolean {
     }
   }
 
-  // read cli package.json
-  try {
-    const cliPackageJson = readFileSync(resolve(cliPackageJsonPath));
-    cliPackageJsonVersion = JSON.parse(cliPackageJson.toString()).version;
-    debug(cliPackageJsonPath, "version", cliPackageJsonVersion);
-  } catch (err: any) {
-    if ("ENOENT" === err?.code) {
-      // cli package.json doesn't exist
-      return false;
-    } else {
-      throw err;
-    }
-  }
+  cliPackageJsonVersion = execSync("npx mailing --version").toString().trim();
+  debug("cli version:\t\t", cliPackageJsonVersion);
 
   // compare versions and return early if the same
   return cliPackageJsonVersion === mailingPackageJsonVersion;
 }
 
 async function setupNextServer(emailsDir: string) {
-  const mailingPath = ".mailing";
+  const mailingPath = "./.mailing";
 
   // return early if .mailing exists and version matches packages.json
   if (packageJsonVersionsMatch()) {
@@ -134,14 +127,15 @@ async function setupNextServer(emailsDir: string) {
   debug("setupNextServer: versions do not match, constructing .mailing");
 
   // copy node_modules mailing into .mailing
-  const nodeMailingPath = resolve(process.cwd(), "node_modules/mailing");
+  const nodeMailingPath = resolve("./node_modules/mailing");
 
   rmSync(resolve(mailingPath), { recursive: true, force: true });
 
-  if (process.env.MM_DEV) {
-    await symlink("packages/cli/", ".mailing");
-    return;
-  }
+  // symlink break next?
+  // if (process.env.MM_DEV) {
+  //   await symlink("./packages/cli/", mailingPath);
+  //   return;
+  // }
 
   await mkdir(mailingPath, { recursive: true });
   // cpSync(nodeMailingPath + "/*", mailingPath, { recursive: true }, () => false);
@@ -163,16 +157,15 @@ export default async function startPreviewServer(opts: PreviewServerOptions) {
   const previewsPath = getPreviewsDirectory(emailsDir);
   if (!previewsPath) throw new Error("previewsPath is not defined");
 
-  await writeModuleManifest(emailsDir, previewsPath);
+  await writeModuleManifest(emailsDir);
 
-  const dev = !!process.env.MM_DEV;
   const hostname = "localhost";
 
   const app = next({
     dev: true, // true will use the app from source, not built .next bundle
     hostname,
     port,
-    dir: dev ? resolve(__dirname, "../../..") : __dirname,
+    dir: resolve("./.mailing"),
     quiet,
   });
   const nextHandle = app.getRequestHandler();
@@ -277,7 +270,7 @@ export default async function startPreviewServer(opts: PreviewServerOptions) {
 
     const reload = debounce(async () => {
       debug("Reload from change");
-      await writeModuleManifest(emailsDir, previewsPath);
+      await writeModuleManifest(emailsDir);
       shouldReload = true;
     }, 200);
 
