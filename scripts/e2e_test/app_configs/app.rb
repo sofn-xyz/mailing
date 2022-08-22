@@ -71,20 +71,20 @@ private
     wait_for_preview_server!
     wait_for_previews_json!
   end
-
+  
   def wait_for_preview_server!
     @io.select do |line|
-      break if line =~ %r{Running preview at http://localhost:3883/}
+      break if line =~ %r{mailing running preview at http://localhost:3883/}
     end
   end
 
   def wait_for_previews_json!
-    # N.B. currently takes about 4 seconds for to load previews.json the first time in a Next.js js (non-ts) app,
+    # N.B. currently takes about 4 seconds for to load the preview json the first time in a Next.js js (non-ts) app,
     # which causes the cypress tests to falsely fail (blank page while previews.json is loading).
-    # If we can speed up the uncached previews.json load then this wait can likely be removed
+    # If we can speed up the uncached previews json load then this wait can likely be removed
     # see: https://github.com/sofn-xyz/mailing/issues/102
 
-    uri = URI('http://localhost:3883/previews.json')
+    uri = URI('http://localhost:3883/api/previews')
     res = Net::HTTP.get_response(uri)
     fail "HTTP Get #{uri} did not succeed" unless '200' == res.code
   end
