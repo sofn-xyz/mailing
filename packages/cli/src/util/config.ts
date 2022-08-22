@@ -84,6 +84,8 @@ ${configJsonString}`
 
 interface PreviewServerConfig {
   emailsDir: string;
+  quiet: boolean;
+  port: number;
 }
 
 let previewServerConfig: PreviewServerConfig | undefined;
