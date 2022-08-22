@@ -24,4 +24,9 @@ export function debug(message?: any, ...optionalParams: any[]) {
     console.info(chalk.yellowBright(PREFIX), message, ...optionalParams);
 }
 
+export function logPlain(message?: any, ...optionalParams: any[]) {
+  if (quiet && !debug) return;
+  console.log(message, ...optionalParams);
+}
+
 export default { log, debug, error };

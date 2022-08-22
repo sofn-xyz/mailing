@@ -2,7 +2,7 @@
 module.exports = {
   preset: "ts-jest",
   testEnvironment: "node",
-  testPathIgnorePatterns: ["scripts"],
+  testPathIgnorePatterns: ["scripts", "<rootDir>/.mailing/"],
   setupFilesAfterEnv: ["<rootDir>/testSetup.ts"],
   watchPathIgnorePatterns: ["tmp-testMailQueue.json"],
 };

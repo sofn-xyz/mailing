@@ -1,7 +1,7 @@
 import { existsSync } from "fs-extra";
 import { readPackageJSON } from "./paths";
 import { writeFileSync } from "fs";
-import { log, error } from "./log";
+import { log, error, logPlain } from "./log";
 import * as prettier from "prettier";
 
 export const MAILING_CONFIG_FILE = "./mailing.config.json";
@@ -52,7 +52,7 @@ export function writeDefaultConfigFile(): void {
       error(err);
     }
 
-    console.log(`
+    logPlain(`
     ███╗   ███╗ █████╗ ██╗██╗     ██╗███╗   ██╗ ██████╗ 
     ████╗ ████║██╔══██╗██║██║     ██║████╗  ██║██╔════╝ 
     ██╔████╔██║███████║██║██║     ██║██╔██╗ ██║██║  ███╗
