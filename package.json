@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "packages/cli/src/dev.js --emails-dir packages/cli/src/emails",
     "dev:js": "yarn link:emails:js && packages/cli/src/dev.js",
-    "dev:init": "rm -rf emails mailing.config.json; packages/cli/src/dev.js",
+    "dev:init": "rm -rf .mailing emails mailing.config.json; packages/cli/src/dev.js",
     "dev:export-previews": "rm -rf previews_html; yarn link:emails; packages/cli/src/dev.js export-previews",
     "link:emails": "rm -rf emails; ln -s packages/cli/src/generator_templates/ts/emails emails;",
     "link:emails:js": "rm -rf emails; ln -s packages/cli/src/generator_templates/js/emails emails;",

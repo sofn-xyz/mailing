@@ -52,6 +52,15 @@ export function writeDefaultConfigFile(): void {
       error(err);
     }
 
+    console.log(`
+    ███╗   ███╗ █████╗ ██╗██╗     ██╗███╗   ██╗ ██████╗ 
+    ████╗ ████║██╔══██╗██║██║     ██║████╗  ██║██╔════╝ 
+    ██╔████╔██║███████║██║██║     ██║██╔██╗ ██║██║  ███╗
+    ██║╚██╔╝██║██╔══██║██║██║     ██║██║╚██╗██║██║   ██║
+    ██║ ╚═╝ ██║██║  ██║██║███████╗██║██║ ╚████║╚██████╔╝
+    ╚═╝     ╚═╝╚═╝  ╚═╝╚═╝╚══════╝╚═╝╚═╝  ╚═══╝ ╚═════╝ 
+    
+        `);
     log(
       `Added mailing.config.json to your project with the following contents:
 ${configJsonString}`

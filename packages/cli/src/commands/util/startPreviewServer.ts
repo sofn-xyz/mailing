@@ -156,6 +156,11 @@ export default async function startPreviewServer(opts: PreviewServerOptions) {
   const { emailsDir, port, quiet } = opts;
   setQuiet(quiet);
 
+  // delaying this makes the load feel faster
+  const loadLag = setTimeout(() => {
+    log("Starting preview server");
+  }, 500);
+
   await setupNextServer();
 
   registerRequireHooks();
@@ -254,6 +259,7 @@ export default async function startPreviewServer(opts: PreviewServerOptions) {
       }
     })
     .listen(port, async () => {
+      clearTimeout(loadLag);
       log(`Running preview at ${currentUrl}`);
       if (!quiet) await open(currentUrl);
     })
