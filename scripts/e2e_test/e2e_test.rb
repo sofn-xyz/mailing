@@ -57,19 +57,23 @@ class TestRunner
   end
 
   def run
-    @timestamp_dir = Time.now.strftime("%Y%m%d%H%M%S")
+    if opt?('rerun')
+      runs_dir_name = File.join(RUNS_DIR, "latest")
+    else
+      @timestamp_dir = Time.now.strftime("%Y%m%d%H%M%S")
+
+      # create runs_dir
+      runs_dir_name = File.join(RUNS_DIR, @timestamp_dir)
+      FileUtils.mkdir_p(runs_dir_name)
+
+      # create latest symlink
+      latest_dir = File.join(RUNS_DIR, 'latest')
+      FileUtils.rm(latest_dir) if File.symlink?(latest_dir)
+      FileUtils.ln_s(runs_dir_name, latest_dir)
+    end
 
     build_mailing unless opt?('skip-build')
 
-    # create runs_dir
-    runs_dir_name = File.join(RUNS_DIR, @timestamp_dir)
-    FileUtils.mkdir_p(runs_dir_name)
-
-    # create latest symlink
-    latest_dir = File.join(RUNS_DIR, 'latest')
-    FileUtils.rm(latest_dir) if File.symlink?(latest_dir)
-    FileUtils.ln_s(runs_dir_name, latest_dir)
-      
     configs_to_run.each do |config_name, klass|
       @config_name = config_name
       
@@ -77,8 +81,9 @@ class TestRunner
         tmp_dir_name = File.join(runs_dir_name, config_name.to_s)
 
         app = klass.new(tmp_dir_name, save_cache: opt?('save-cache'))
-        app.setup!
-
+        app.setup! unless opt?('rerun')
+        
+        app.run_mailing!
         @io = app.io
 
         run_cypress_tests

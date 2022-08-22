@@ -22,7 +22,18 @@ class App
 
     yalc_add_mailing!
     yarn!
-    run_mailing!
+  end
+
+  def run_mailing!
+    puts "Running mailing"
+    Dir.chdir(@root_dir) do
+      # open the subprocess
+      @io = IO.popen("npx mailing --quiet")
+    end
+
+    # wait for the preview server to start
+    wait_for_preview_server!
+    wait_for_previews_json!
   end
 
 private
@@ -58,18 +69,6 @@ private
     Dir.chdir(@root_dir) do
       system_quiet("yarn")
     end
-  end
-  
-  def run_mailing!
-    puts "Running mailing"
-    Dir.chdir(@root_dir) do
-      # open the subprocess
-      @io = IO.popen("npx mailing --quiet")
-    end
-
-    # wait for the preview server to start
-    wait_for_preview_server!
-    wait_for_previews_json!
   end
   
   def wait_for_preview_server!

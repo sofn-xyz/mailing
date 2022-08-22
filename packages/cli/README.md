@@ -264,10 +264,11 @@ The directory `scripts/e2e_test` contains smoke tests targeting supported framew
 
 - In the directory `scripts/e2e_test`, run `bundle exec ruby e2e_test.rb`
 
-The script supports some basic options for running today
+The script supports some options for running:
 
 - `--only=redwood_ts` to run the tests only on the specified framework
 - `--skip-build` to skip the yarn build part of the script, useful when debugging something unrelated to the build
+- `--rerun` to skip the framework install part of the script, useful when debugging something in your cypress tests unrelated to the build or the framework install. This will use the framework installs that are present in the runs/latest directory, i.e. the assumption is you've run a test against some framework(s) and you now want to re-running them after adjusting your cypress tests.
 
 **Cache the framework installs for faster runs**
 
