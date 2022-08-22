@@ -86,7 +86,6 @@ export async function linkEmailsDirectory(emailsDir: string) {
   });
   debug(`copied ${emailsDir} to ${mailingEmailsPath}`);
   debug("writing module manifest to", manifestPath);
-  // await mkdir(mailingPath, { recursive: true });
   await writeFile(manifestPath, contents);
 
   delete require.cache[manifestPath];
