@@ -10,6 +10,7 @@ import {
   mkdirp,
   readdir,
   remove,
+  rm,
   watch,
   writeFile,
 } from "fs-extra";
@@ -25,7 +26,7 @@ import {
 } from "../../preview/controllers/intercepts";
 import registerRequireHooks from "./registerRequireHooks";
 
-const COMPONENT_FILE_REGEXP = /^[^\s-]+\.[tj]sx$/; // no spaces, .jsx or .tsx
+const SOURCE_FILE_REGEXP = /^[^\s-]+\.[tj]sx?$/; // no spaces, .js/x or .ts/x
 
 export type PreviewServerOptions = {
   emailsDir: string;
@@ -40,7 +41,7 @@ async function writeModuleManifest(emailsDir: string) {
   const mailingEmailsPath = resolve(mailingPath, "emails");
 
   const previewCollections = (await readdir(previewsPath)).filter((path) =>
-    COMPONENT_FILE_REGEXP.test(path)
+    SOURCE_FILE_REGEXP.test(path)
   );
   debug("scanning for previews at", previewsPath, previewCollections);
   const uniquePreviewCollections = Array.from(new Set(previewCollections));
@@ -55,7 +56,7 @@ async function writeModuleManifest(emailsDir: string) {
   });
 
   const templates = (await readdir("./.mailing/src/emails")).filter((path) =>
-    COMPONENT_FILE_REGEXP.test(path)
+    SOURCE_FILE_REGEXP.test(path)
   );
   const uniqueTemplates = Array.from(new Set(templates));
   const templateImports: string[] = [];
@@ -94,7 +95,7 @@ async function writeModuleManifest(emailsDir: string) {
     recursive: true,
     dereference: true,
   });
-  debug(`copied ${emailsDir} to ${mailingEmailsPath}`);
+  debug(`Copied ${emailsDir} to ${mailingEmailsPath}`);
   debug("Writing module manifest to", manifestPath);
   // await mkdir(mailingPath, { recursive: true });
   await writeFile(manifestPath, contents);
@@ -123,7 +124,7 @@ function packageJsonVersionsMatch(): boolean {
   }
 
   cliPackageJsonVersion = execSync("npx mailing --version").toString().trim();
-  debug("cli version:\t\t", cliPackageJsonVersion);
+  debug("CLI version:\t\t", cliPackageJsonVersion);
 
   // compare versions and return early if the same
   return cliPackageJsonVersion === mailingPackageJsonVersion;
@@ -134,23 +135,21 @@ async function setupNextServer() {
 
   // return early if .mailing exists and version matches packages.json
   if (packageJsonVersionsMatch()) {
-    debug("setupNextServer: versions match, returning");
+    debug("Versions match, returning");
     return;
   }
-
-  debug("setupNextServer: versions do not match, constructing .mailing");
+  debug("Versions do not match, constructing .mailing");
 
   // copy node_modules mailing into .mailing
   const nodeMailingPath = resolve("./node_modules/mailing");
 
-  rmSync(resolve(mailingPath), { recursive: true, force: true });
-
+  await rm(resolve(mailingPath), { recursive: true, force: true });
   await mkdir(mailingPath, { recursive: true });
-  // cpSync(nodeMailingPath + "/*", mailingPath, { recursive: true }, () => false);
-  execSync(`cp -R ${nodeMailingPath + "/*"} ${mailingPath}`);
-
-  // emails dir: delete boilerplate and symlink
-  execSync(`rm -rf ${mailingPath + "/src/emails"}`);
+  await copy(nodeMailingPath, mailingPath, {
+    recursive: true,
+    dereference: true,
+    overwrite: true,
+  });
 }
 
 export default async function startPreviewServer(opts: PreviewServerOptions) {
@@ -173,7 +172,7 @@ export default async function startPreviewServer(opts: PreviewServerOptions) {
     hostname,
     port,
     dir: resolve("./.mailing"),
-    quiet,
+    quiet: true,
   });
   const nextHandle = app.getRequestHandler();
   await app.prepare();
