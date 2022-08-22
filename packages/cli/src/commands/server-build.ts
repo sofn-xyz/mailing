@@ -1,10 +1,12 @@
 import { existsSync } from "fs-extra";
 import { ArgumentsCamelCase } from "yargs";
-import { error, log } from "../log";
 import { defaults, setConfig } from "../config";
 import { exec } from "child_process";
-import startPreviewServer from "./util/previewServer/start";
-import { resolve } from "path";
+import { log } from "../util/log";
+import {
+  bootstrapMailingDir,
+  linkEmailsDirectory,
+} from "./util/previewServer/setup";
 
 export type ServerBuildArguments = ArgumentsCamelCase<{
   emailsDir?: string;
@@ -34,8 +36,6 @@ export const builder = {
 
 export const handler = async (argv: ServerBuildArguments) => {
   if (!argv.emailsDir) throw new Error("emailsDir option is not set");
-  if (undefined === argv.typescript)
-    throw new Error("typescript option is not set");
   if (!argv.port) throw new Error("port option is not set");
 
   setConfig({ emailsDir: argv.emailsDir });
@@ -46,32 +46,21 @@ export const handler = async (argv: ServerBuildArguments) => {
     return;
   }
 
-  const { port, emailsDir } = argv;
-  const server = await startPreviewServer({ emailsDir, port, quiet: true });
+  await bootstrapMailingDir();
+  await linkEmailsDirectory(argv.emailsDir);
 
-  const path = resolve(
-    process.env.MM_DEV ? `${__dirname}/../` : `${__dirname}/next-src/`
-  );
+  log("building .mailing...");
 
-  log("Building next app at", path);
-
-  const command = `NEXT_PUBLIC_STATIC=1 npx next build ${path} &&\
-  rm -rf ${process.cwd()}/.mailing/.next &&\
-  mkdir -p ${process.cwd()}/.mailing &&\
-  mv ${path}/.next ${process.cwd()}/.mailing/.next`;
-
-  const child = exec(command);
-  // child.stdout?.pipe(process.stdout);
+  const child = exec("npx next build .mailing");
+  child.stdout?.pipe(process.stdout);
   child.stderr?.pipe(process.stderr);
 
   child.on("close", (code, _signal) => {
     if (code === 0) {
-      log("Success");
+      log("success");
     } else {
-      log("Build exited with error code", code);
+      log("build exited with error code", code);
     }
-    log("command finished with code", code);
-    server?.close();
     process.exit(0);
   });
 };

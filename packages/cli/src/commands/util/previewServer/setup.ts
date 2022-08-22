@@ -132,6 +132,9 @@ export async function bootstrapMailingDir() {
     recursive: true,
     dereference: true,
     overwrite: true,
-    filter: (path) => !/__test__|generator_templates|src\/commands/.test(path),
+    filter: (path) =>
+      !/__test__|generator_templates|src\/commands|src\/index|src\/util/.test(
+        path
+      ),
   });
 }
