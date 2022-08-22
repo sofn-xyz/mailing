@@ -7,6 +7,5 @@ import * as WelcomePreview from "../../../packages/cli/src/emails/previews/Welco
 const previews = { TextEmail: TextEmailPreview, Welcome: WelcomePreview };
 const templates = { TextEmail, Welcome };
 
-export { templates, previews, sendMail };
-export default { templates, previews, sendMail };
-
+export const moduleManifest = { templates, previews, sendMail };
+export default moduleManifest;

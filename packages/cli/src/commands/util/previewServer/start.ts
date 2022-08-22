@@ -7,8 +7,8 @@ import { debounce } from "lodash";
 import { cwd } from "process";
 import { parse } from "url";
 
-import { getPreviewsDirectory } from "../../../paths";
-import { error, log, setQuiet, debug } from "../../../log";
+import { getPreviewsDirectory } from "../../../util/paths";
+import { error, log, setQuiet, debug } from "../../../util/log";
 import {
   createIntercept,
   showIntercept,

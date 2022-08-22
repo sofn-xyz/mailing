@@ -1,11 +1,11 @@
 import { resolve } from "path";
 import { outputFile, readdirSync } from "fs-extra";
 import { ArgumentsCamelCase } from "yargs";
-import { getPreviewsDirectory } from "../paths";
-import { error, log } from "../log";
-import { render } from "../mjml";
+import { getPreviewsDirectory } from "../util/paths";
+import { error, log } from "../util/log";
+import { render } from "../util/mjml";
 import registerRequireHooks from "./util/registerRequireHooks";
-import { defaults, setConfig } from "../config";
+import { defaults } from "../util/config";
 
 export type ExportPreviewsArgs = ArgumentsCamelCase<{
   emailsDir?: string;

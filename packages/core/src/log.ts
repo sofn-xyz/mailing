@@ -13,5 +13,3 @@ export function error(message?: any, ...optionalParams: any[]) {
 export function debug(message?: any, ...optionalParams: any[]) {
   if (DEBUG) console.info(chalk.red("mailing"), message, ...optionalParams);
 }
-
-export default { log, debug, error };

@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { error } from "../../../../log";
-import { render } from "../../../../mjml";
+import { error } from "../../../../util/log";
+import { render } from "../../../../util/mjml";
 import { getPreviewComponent } from "../../../../util/moduleManifestUtil";
 
 type Data = {

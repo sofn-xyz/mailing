@@ -1,9 +1,9 @@
 import prompts from "prompts";
 import fsExtra, { removeSync } from "fs-extra";
 import { handler, InitArguments } from "../init";
-import { log } from "../../log";
+import { log } from "../../util/log";
 
-jest.mock("../../log");
+jest.mock("../../util/log");
 jest.mock("../preview", () => ({ handler: jest.fn() }));
 
 describe("init command", () => {

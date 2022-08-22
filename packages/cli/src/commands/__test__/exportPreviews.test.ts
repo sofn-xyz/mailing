@@ -1,8 +1,8 @@
 import fsExtra from "fs-extra";
-import { log, error } from "../../log";
+import { log, error } from "../../util/log";
 import { ExportPreviewsArgs, handler } from "../exportPreviews";
 
-jest.mock("../../log");
+jest.mock("../../util/log");
 
 describe("exportPreviews command", () => {
   it("outputs html files to outDir", async () => {

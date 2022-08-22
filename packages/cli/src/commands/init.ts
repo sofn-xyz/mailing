@@ -1,11 +1,11 @@
 import prompts from "prompts";
 import { existsSync } from "fs-extra";
 import { ArgumentsCamelCase } from "yargs";
-import { error, log } from "../log";
-import { getMailingAPIBaseURL } from "../paths";
-import { generateEmailsDirectory } from "../generators";
+import { error, log } from "../util/log";
+import { getMailingAPIBaseURL } from "../util/paths";
+import { generateEmailsDirectory } from "../util/generators";
 import { handler as previewHandler, PreviewArgs } from "./preview";
-import { writeDefaultConfigFile, defaults, setConfig } from "../config";
+import { writeDefaultConfigFile, defaults, setConfig } from "../util/config";
 
 export type InitArguments = ArgumentsCamelCase<{
   emailsDir?: string;
