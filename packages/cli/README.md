@@ -46,6 +46,20 @@ npm install --save mailing
 
 Note: you may want to add mailing as a dev dependency instead if you don't plan to use it outside of development.
 
+Note: mailing requires version 17 or 18 of react and react-dom, so if you're not already in a react-based app, you'll need to add the following:
+
+yarn:
+
+```
+yarn add react react-dom
+```
+
+npm:
+
+```
+npm install --save react react-dom
+```
+
 2. Run `npx mailing` to start the preview server and scaffold your `emails` directory. This will create the following directory for all of your emails:
 
 ```
