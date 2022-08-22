@@ -158,7 +158,7 @@ export default async function startPreviewServer(opts: PreviewServerOptions) {
 
   // delaying this makes the load feel faster
   const loadLag = setTimeout(() => {
-    log("Starting preview server");
+    log("starting preview server");
   }, 500);
 
   await setupNextServer();
@@ -260,7 +260,7 @@ export default async function startPreviewServer(opts: PreviewServerOptions) {
     })
     .listen(port, async () => {
       clearTimeout(loadLag);
-      log(`Running preview at ${currentUrl}`);
+      log(`running preview at ${currentUrl}`);
       if (!quiet) await open(currentUrl);
     })
     .on("error", function onServerError(e: NodeJS.ErrnoException) {
@@ -276,22 +276,22 @@ export default async function startPreviewServer(opts: PreviewServerOptions) {
     // simple live reload implementation
     const changeWatchPath = emailsDir;
     if (!changeWatchPath) {
-      log("Error finding emails dir in . or ./src");
+      log("error finding emails dir in . or ./src");
       return;
     }
 
     const reload = debounce(async () => {
-      debug("Reload from change");
+      debug("reload from change");
       await writeModuleManifest(emailsDir);
       shouldReload = true;
     }, 200);
 
     watch(changeWatchPath, { recursive: true }, (eventType, filename) => {
-      log(`Detected ${eventType} on ${filename}, reloading`);
+      log(`detected ${eventType} on ${filename}, reloading`);
       delete require.cache[resolve(changeWatchPath, filename)];
       reload();
     });
-    log(`Watching for changes to ${relative(cwd(), changeWatchPath)}`);
+    log(`watching for changes to ${relative(cwd(), changeWatchPath)}`);
   } catch (e) {
     error(`Error starting change watcher`, e);
   }
