@@ -42,7 +42,7 @@ export const handler = async (argv: ServerArguments) => {
   if (!argv.emailsDir) throw new Error("emailsDir option is not set");
   if (!argv.port) throw new Error("port option is not set");
 
-  setConfig({ emailsDir: argv.emailsDir });
+  setConfig({ emailsDir: argv.emailsDir, quiet: argv.quiet, port: argv.port });
 
   // check if emails directory already exists
   if (!existsSync("./package.json")) {

@@ -44,7 +44,7 @@ export const handler = async (argv: InitArguments) => {
   if (undefined === argv.typescript)
     throw new Error("typescript option is not set");
 
-  setConfig({ emailsDir: argv.emailsDir });
+  setConfig({ emailsDir: argv.emailsDir, quiet: argv.quiet, port: argv.port });
 
   // check if emails directory already exists
   if (!existsSync("./package.json")) {

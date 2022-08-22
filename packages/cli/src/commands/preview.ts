@@ -33,7 +33,7 @@ export const handler = async (argv: PreviewArgs) => {
   if (undefined === argv.port) throw new Error("port option is not set");
   if (undefined === argv.quiet) throw new Error("quiet option is not set");
 
-  setConfig({ emailsDir: argv.emailsDir });
+  setConfig({ emailsDir: argv.emailsDir, quiet: argv.quiet, port: argv.port });
 
   const { port, emailsDir, quiet } = argv;
 
@@ -41,5 +41,5 @@ export const handler = async (argv: PreviewArgs) => {
     return; // for now
   }
 
-  await startPreviewServer({ emailsDir, port, quiet });
+  await startPreviewServer();
 };

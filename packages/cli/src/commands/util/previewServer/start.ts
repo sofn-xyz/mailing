@@ -8,25 +8,17 @@ import { cwd } from "process";
 import { parse } from "url";
 
 import { getPreviewsDirectory } from "../../../util/paths";
-import { error, log, setQuiet, debug } from "../../../util/log";
+import { error, log, debug } from "../../../util/log";
 import {
   createIntercept,
   showIntercept,
 } from "../../../preview/controllers/intercepts";
 import registerRequireHooks from "../registerRequireHooks";
 import { bootstrapMailingDir, linkEmailsDirectory } from "./setup";
+import { getConfig } from "../../../util/config";
 
-const SOURCE_FILE_REGEXP = /^[^\s-]+\.[tj]sx?$/; // no spaces, .js/x or .ts/x
-
-export type PreviewServerOptions = {
-  emailsDir: string;
-  port: number;
-  quiet: boolean;
-};
-
-export default async function startPreviewServer(opts: PreviewServerOptions) {
-  const { emailsDir, port, quiet } = opts;
-  setQuiet(quiet);
+export default async function startPreviewServer() {
+  const { emailsDir, port, quiet } = getConfig();
 
   // delaying this makes the load feel faster
   const loadLag = setTimeout(() => {

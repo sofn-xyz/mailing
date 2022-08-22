@@ -1,17 +1,12 @@
 import chalk from "chalk";
+import { getConfig } from "./config";
 
 const { DEBUG } = process.env;
 
 const PREFIX = "mailing";
 
-let quiet = false;
-
-export function setQuiet(v: boolean) {
-  quiet = true;
-}
-
 export function log(message?: any, ...optionalParams: any[]) {
-  if (quiet && !debug) return;
+  if (getConfig().quiet && !debug) return;
   console.log(chalk.white(PREFIX), message, ...optionalParams);
 }
 
@@ -25,6 +20,6 @@ export function debug(message?: any, ...optionalParams: any[]) {
 }
 
 export function logPlain(message?: any, ...optionalParams: any[]) {
-  if (quiet && !debug) return;
+  if (getConfig().quiet && !debug) return;
   console.log(message, ...optionalParams);
 }
