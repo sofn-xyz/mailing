@@ -96,8 +96,8 @@ async function writeModuleManifest(emailsDir: string) {
     dereference: true,
     filter: (path) => !/__test__/.test(path),
   });
-  debug(`Copied ${emailsDir} to ${mailingEmailsPath}`);
-  debug("Writing module manifest to", manifestPath);
+  debug(`copied ${emailsDir} to ${mailingEmailsPath}`);
+  debug("writing module manifest to", manifestPath);
   // await mkdir(mailingPath, { recursive: true });
   await writeFile(manifestPath, contents);
 
@@ -179,10 +179,11 @@ export default async function startPreviewServer(opts: PreviewServerOptions) {
     hostname,
     port,
     dir: resolve("./.mailing"),
-    quiet: true,
   });
   const nextHandle = app.getRequestHandler();
   await app.prepare();
+
+  debug("prepared next server");
 
   if (!previewsPath) {
     error(
