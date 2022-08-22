@@ -7,7 +7,15 @@ import * as prettier from "prettier";
 
 export const MAILING_CONFIG_FILE = "./mailing.config.json";
 
-let DEFAULTS: object | undefined;
+type ConfigDefaults = {
+  typescript: boolean;
+  emailsDir: string;
+  outDir: string;
+  port: number;
+  quiet: boolean;
+};
+
+let DEFAULTS: ConfigDefaults | undefined;
 
 // defaults for all options
 export function defaults() {

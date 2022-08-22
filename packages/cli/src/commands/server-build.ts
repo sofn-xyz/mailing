@@ -3,7 +3,7 @@ import { ArgumentsCamelCase } from "yargs";
 import { error, log } from "../log";
 import { defaults, setConfig } from "../config";
 import { exec } from "child_process";
-import startPreviewServer from "./util/startPreviewServer";
+import startPreviewServer from "./util/previewServer/start";
 import { resolve } from "path";
 
 export type ServerBuildArguments = ArgumentsCamelCase<{
