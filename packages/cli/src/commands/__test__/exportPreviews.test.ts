@@ -1,5 +1,5 @@
 import fsExtra from "fs-extra";
-import { log, error } from "../../log";
+import { log, error } from "../../util/log";
 import { ExportPreviewsArgs, handler } from "../exportPreviews";
 
 jest.mock("../../log");

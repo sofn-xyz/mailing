@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { error } from "../../../log";
+import { error } from "../../../util/log";
 import { sendMail } from "../../../moduleManifest";
 import { getPreviewComponent } from "../../../util/moduleManifestUtil";
 

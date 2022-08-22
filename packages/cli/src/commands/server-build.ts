@@ -1,6 +1,6 @@
 import { existsSync } from "fs-extra";
 import { ArgumentsCamelCase } from "yargs";
-import { defaults, setConfig } from "../config";
+import { defaults, setConfig } from "../util/config";
 import { exec } from "child_process";
 import { log } from "../util/log";
 import {

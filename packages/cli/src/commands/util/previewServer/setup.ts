@@ -3,7 +3,7 @@ import { execSync } from "child_process";
 import { readFileSync } from "fs";
 import { copy, mkdir, mkdirp, readdir, remove, rm, writeFile } from "fs-extra";
 
-import { debug } from "../../../log";
+import { debug } from "../../../util/log";
 
 const SOURCE_FILE_REGEXP = /^[^\s-]+\.[tj]sx?$/; // no spaces, .js/x or .ts/x
 
@@ -27,7 +27,7 @@ export async function linkEmailsDirectory(emailsDir: string) {
   const previewImports: string[] = [];
   const previewConsts: string[] = [];
   uniquePreviewCollections.forEach((p) => {
-    const moduleName = p.replaceAll(/\.[jt]sx/g, "");
+    const moduleName = p.replace(/\.[jt]sx/g, "");
     previewImports.push(
       `import * as ${moduleName}Preview from "./emails/previews/${moduleName}";`
     );
@@ -64,7 +64,8 @@ export async function linkEmailsDirectory(emailsDir: string) {
     `const previews = { ${previewConsts.join(", ")} };\n` +
     `const templates = { ${templateModuleNames.join(", ")} };\n\n` +
     `export { templates, previews, sendMail };\n` +
-    `export default { templates, previews, sendMail };\n\n`;
+    `const moduleManifest = { templates, previews, sendMail };\n` +
+    `export default moduleManifest;\n\n`;
 
   // Re-copy emails directory
   await remove(mailingEmailsPath);
@@ -133,8 +134,6 @@ export async function bootstrapMailingDir() {
     dereference: true,
     overwrite: true,
     filter: (path) =>
-      !/__test__|generator_templates|src\/commands|src\/index|src\/util/.test(
-        path
-      ),
+      !/__test__|generator_templates|src\/commands|src\/index/.test(path),
   });
 }
