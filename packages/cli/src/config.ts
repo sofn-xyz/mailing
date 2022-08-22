@@ -2,31 +2,35 @@ import { existsSync } from "fs-extra";
 import { readPackageJSON } from "./paths";
 import { writeFileSync } from "fs";
 import { log, error, logPlain } from "./log";
+import { pick } from "lodash";
 import * as prettier from "prettier";
 
 export const MAILING_CONFIG_FILE = "./mailing.config.json";
 
+let DEFAULTS: object | undefined;
+
 // defaults for all options
-export const DEFAULTS = {
-  typescript: looksLikeTypescriptProject(),
-  emailsDir: existsSync("./src/emails") ? "./src/emails" : "./emails",
-  outDir: "./previews_html",
-  port: 3883,
-  quiet: false,
-};
+export function defaults() {
+  if (DEFAULTS === undefined)
+    DEFAULTS = {
+      typescript: looksLikeTypescriptProject(),
+      emailsDir: existsSync("./src/emails") ? "./src/emails" : "./emails",
+      outDir: "./previews_html",
+      port: 3883,
+      quiet: false,
+    };
+  return DEFAULTS;
+}
 
 // options to include in the default config file
 const DEFAULT_KEYS_FOR_CONFIG_FILE = ["typescript", "emailsDir", "outDir"];
 
 // an object to JSON stringify and write to the default config file
-const DEFAULTS_FOR_CONFIG_FILE = Object.fromEntries(
-  DEFAULT_KEYS_FOR_CONFIG_FILE.map((key) => [
-    key,
-    DEFAULTS[key as keyof typeof DEFAULTS],
-  ])
-);
+function defaultsForConfigFile() {
+  return pick(defaults(), DEFAULT_KEYS_FOR_CONFIG_FILE);
+}
 
-function looksLikeTypescriptProject(): boolean {
+export function looksLikeTypescriptProject(): boolean {
   if (existsSync("./tsconfig.json")) {
     return true;
   }
@@ -39,7 +43,7 @@ function looksLikeTypescriptProject(): boolean {
 export function writeDefaultConfigFile(): void {
   if (!existsSync(MAILING_CONFIG_FILE)) {
     const configJsonString = prettier.format(
-      JSON.stringify(DEFAULTS_FOR_CONFIG_FILE),
+      JSON.stringify(defaultsForConfigFile()),
       {
         parser: "json",
         printWidth: 0,

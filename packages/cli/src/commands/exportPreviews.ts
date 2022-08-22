@@ -5,7 +5,7 @@ import { getPreviewsDirectory } from "../paths";
 import { error, log } from "../log";
 import { render } from "../mjml";
 import registerRequireHooks from "./util/registerRequireHooks";
-import { DEFAULTS, setConfig } from "../config";
+import { defaults, setConfig } from "../config";
 
 export type ExportPreviewsArgs = ArgumentsCamelCase<{
   emailsDir?: string;
@@ -16,11 +16,11 @@ export const command = "export-previews";
 
 export const builder = {
   "emails-dir": {
-    default: DEFAULTS.emailsDir,
+    default: defaults().emailsDir,
     description: "the directory of your email templates",
   },
   "out-dir": {
-    default: DEFAULTS.outDir,
+    default: defaults().outDir,
     description: "directory in which we output the html",
   },
 };

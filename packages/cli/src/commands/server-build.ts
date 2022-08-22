@@ -1,7 +1,7 @@
 import { existsSync } from "fs-extra";
 import { ArgumentsCamelCase } from "yargs";
 import { error, log } from "../log";
-import { DEFAULTS, setConfig } from "../config";
+import { defaults, setConfig } from "../config";
 import { exec } from "child_process";
 import startPreviewServer from "./util/startPreviewServer";
 import { resolve } from "path";
@@ -18,15 +18,15 @@ export const describe = "build the mailing server";
 
 export const builder = {
   "emails-dir": {
-    default: DEFAULTS.emailsDir,
+    default: defaults().emailsDir,
     description: "the directory to look for your email templates in",
   },
   port: {
-    default: DEFAULTS.port,
+    default: defaults().port,
     description: "what port to start the preview server on",
   },
   quiet: {
-    default: DEFAULTS.quiet,
+    default: defaults().quiet,
     descriptioin: "quiet mode (don't prompt or open browser after starting)",
     boolean: true,
   },

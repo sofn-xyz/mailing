@@ -1,5 +1,5 @@
 import { ArgumentsCamelCase } from "yargs";
-import { DEFAULTS, setConfig } from "../config";
+import { defaults, setConfig } from "../config";
 import startPreviewServer from "./util/startPreviewServer";
 
 export type PreviewArgs = ArgumentsCamelCase<{
@@ -14,16 +14,16 @@ export const describe = "start the email preview server";
 
 export const builder = {
   port: {
-    default: DEFAULTS.port,
+    default: defaults().port,
     description: "what port to start the preview server on",
   },
   quiet: {
-    default: DEFAULTS.quiet,
+    default: defaults().quiet,
     descriptioin: "quiet mode (don't open browser after starting)",
     boolean: true,
   },
   "emails-dir": {
-    default: DEFAULTS.emailsDir,
+    default: defaults().emailsDir,
     description: "the directory of your email templates",
   },
 };

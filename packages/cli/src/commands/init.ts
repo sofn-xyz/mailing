@@ -5,7 +5,7 @@ import { error, log } from "../log";
 import { getMailingAPIBaseURL } from "../paths";
 import { generateEmailsDirectory } from "../generators";
 import { handler as previewHandler, PreviewArgs } from "./preview";
-import { writeDefaultConfigFile, DEFAULTS, setConfig } from "../config";
+import { writeDefaultConfigFile, defaults, setConfig } from "../config";
 
 export type InitArguments = ArgumentsCamelCase<{
   emailsDir?: string;
@@ -20,20 +20,20 @@ export const describe = "initialize mailing in your app";
 
 export const builder = {
   typescript: {
-    default: DEFAULTS.typescript,
+    default: defaults().typescript,
     description: "use Typescript",
     boolean: true,
   },
   "emails-dir": {
-    default: DEFAULTS.emailsDir,
+    default: defaults().emailsDir,
     description: "the directory to put your email templates in",
   },
   port: {
-    default: DEFAULTS.port,
+    default: defaults().port,
     description: "what port to start the preview server on",
   },
   quiet: {
-    default: DEFAULTS.quiet,
+    default: defaults().quiet,
     descriptioin: "quiet mode (don't prompt or open browser after starting)",
     boolean: true,
   },
