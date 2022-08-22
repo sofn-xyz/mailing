@@ -74,7 +74,7 @@ export function writeDefaultConfigFile(): void {
     
         `);
     log(
-      `Added mailing.config.json to your project with the following contents:
+      `added mailing.config.json to your project with the following contents:
 ${configJsonString}`
     );
   }

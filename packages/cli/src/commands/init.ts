@@ -66,11 +66,11 @@ export const handler = async (argv: InitArguments) => {
         type: "text",
         name: "email",
         message:
-          "Enter your email for occasional updates about mailing (optional)",
+          "enter your email for occasional updates about mailing (optional)",
       });
       const { email } = emailResponse;
       if (email?.length > 0) {
-        log("Great, talk soon.");
+        log("great, talk soon");
         try {
           fetch(`${getMailingAPIBaseURL()}/api/users`, {
             method: "POST",
@@ -81,7 +81,7 @@ export const handler = async (argv: InitArguments) => {
           error(e);
         }
       } else {
-        log("OK, no problem!");
+        log("ok, no problem");
       }
     }
   }

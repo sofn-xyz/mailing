@@ -29,7 +29,7 @@ export async function generateEmailsDirectory({
   await copySync(resolve(__dirname, "..", path), emailsDir, {
     overwrite: false,
   });
-  log(`Generated your emails dir at ${emailsDir}:\n${tree(emailsDir)}`);
+  log(`generated your emails dir at ${emailsDir}:\n${tree(emailsDir)}`);
 
   return true;
 }

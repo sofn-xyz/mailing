@@ -9,9 +9,10 @@ import {
   rm,
   writeFile,
   readFile,
+  appendFile,
 } from "fs-extra";
 
-import { debug } from "../../../util/log";
+import { debug, log } from "../../../util/log";
 
 const SOURCE_FILE_REGEXP = /^[^\s-]+\.[tj]sx?$/; // no spaces, .js/x or .ts/x
 
@@ -145,4 +146,20 @@ export async function bootstrapMailingDir() {
     filter: (path) =>
       !/__test__|generator_templates|src\/commands|src\/index/.test(path),
   });
+
+  // add .mailing to .gitignore if it does not exist
+  try {
+    const ignored = (await readFile(".gitignore")).toString().split("\n");
+    if (ignored.includes(".mailing")) return;
+    log("adding .mailing to .gitignore");
+    await appendFile(".gitignore", "\n.mailing\n");
+  } catch (err: any) {
+    if ("ENOENT" === err?.code) {
+      log("adding .gitignore");
+      await writeFile(".gitignore", ".mailing\nnode_modules\n");
+      return false;
+    } else {
+      throw err;
+    }
+  }
 }
