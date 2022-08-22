@@ -1,7 +1,15 @@
 import { resolve } from "path";
 import { execSync } from "child_process";
-import { readFileSync } from "fs";
-import { copy, mkdir, mkdirp, readdir, remove, rm, writeFile } from "fs-extra";
+import {
+  copy,
+  mkdir,
+  mkdirp,
+  readdir,
+  remove,
+  rm,
+  writeFile,
+  readFile,
+} from "fs-extra";
 
 import { debug } from "../../../log";
 
@@ -83,14 +91,14 @@ export async function linkEmailsDirectory(emailsDir: string) {
   delete require.cache[manifestPath];
 }
 
-export function packageJsonVersionsMatch(): boolean {
+export async function packageJsonVersionsMatch(): Promise<boolean> {
   const mailingPackageJsonPath = "./.mailing/package.json";
 
   let mailingPackageJsonVersion: string;
 
   // read .mailing package.json
   try {
-    const mailingPackageJson = readFileSync(mailingPackageJsonPath);
+    const mailingPackageJson = await readFile(mailingPackageJsonPath);
     const pkgJSON = JSON.parse(mailingPackageJson.toString());
     mailingPackageJsonVersion = pkgJSON.version;
     debug(".mailing version:\t", mailingPackageJsonVersion);
@@ -116,7 +124,7 @@ export async function bootstrapMailingDir() {
   const mailingPath = "./.mailing";
 
   // return early if .mailing exists and version matches packages.json
-  if (packageJsonVersionsMatch()) {
+  if (await packageJsonVersionsMatch()) {
     debug("versions match, returning");
     return;
   }
