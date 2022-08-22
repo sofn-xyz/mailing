@@ -27,7 +27,7 @@ export async function linkEmailsDirectory(emailsDir: string) {
   const previewImports: string[] = [];
   const previewConsts: string[] = [];
   uniquePreviewCollections.forEach((p) => {
-    const moduleName = p.replaceAll(/\.[jt]sx/g, "");
+    const moduleName = p.replace(/\.[jt]sx/g, "");
     previewImports.push(
       `import * as ${moduleName}Preview from "./emails/previews/${moduleName}";`
     );
@@ -47,7 +47,7 @@ export async function linkEmailsDirectory(emailsDir: string) {
       return;
     }
 
-    const moduleName = p.replaceAll(/\.[jt]sx/g, "");
+    const moduleName = p.replace(/\.[jt]sx/g, "");
     templateModuleNames.push(moduleName);
     templateImports.push(`import ${moduleName} from "./emails/${moduleName}";`);
   });
@@ -86,7 +86,7 @@ export async function linkEmailsDirectory(emailsDir: string) {
 export function packageJsonVersionsMatch(): boolean {
   const mailingPackageJsonPath = "./.mailing/package.json";
 
-  let mailingPackageJsonVersion: string, cliPackageJsonVersion: string;
+  let mailingPackageJsonVersion: string;
 
   // read .mailing package.json
   try {
@@ -103,7 +103,9 @@ export function packageJsonVersionsMatch(): boolean {
     }
   }
 
-  cliPackageJsonVersion = execSync("npx mailing --version").toString().trim();
+  const cliPackageJsonVersion = execSync("npx mailing --version")
+    .toString()
+    .trim();
   debug("cli version:\t\t", cliPackageJsonVersion);
 
   // compare versions and return early if the same
