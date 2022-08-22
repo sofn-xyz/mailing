@@ -1,6 +1,6 @@
 import { ArgumentsCamelCase } from "yargs";
-import { defaults, setConfig } from "../util/config";
-import startPreviewServer from "./util/previewServer/start";
+import { defaults, setConfig } from "../../util/config";
+import startPreviewServer from "./server/start";
 
 export type PreviewArgs = ArgumentsCamelCase<{
   port?: number;

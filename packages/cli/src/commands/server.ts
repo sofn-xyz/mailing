@@ -6,7 +6,7 @@ import { log } from "../util/log";
 import {
   bootstrapMailingDir,
   linkEmailsDirectory,
-} from "./util/previewServer/setup";
+} from "./preview/server/setup";
 
 export type ServerArguments = ArgumentsCamelCase<{
   emailsDir?: string;

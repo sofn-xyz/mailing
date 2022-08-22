@@ -2,7 +2,7 @@ import { existsSync } from "fs-extra";
 import "dotenv/config";
 import yargs from "yargs/yargs";
 import * as init from "./commands/init";
-import * as preview from "./commands/preview";
+import * as preview from "./commands/preview/preview";
 import * as exportPreviews from "./commands/exportPreviews";
 import * as server from "./commands/server";
 import { MAILING_CONFIG_FILE } from "./util/config";

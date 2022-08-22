@@ -13,7 +13,7 @@ import {
   createIntercept,
   showIntercept,
 } from "../../../preview/controllers/intercepts";
-import registerRequireHooks from "../registerRequireHooks";
+import registerRequireHooks from "../../util/registerRequireHooks";
 import { bootstrapMailingDir, linkEmailsDirectory } from "./setup";
 import { getConfig } from "../../../util/config";
 

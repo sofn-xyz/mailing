@@ -4,7 +4,7 @@ import { ArgumentsCamelCase } from "yargs";
 import { error, log } from "../util/log";
 import { getMailingAPIBaseURL } from "../util/paths";
 import { generateEmailsDirectory } from "../util/generators";
-import { handler as previewHandler, PreviewArgs } from "./preview";
+import { handler as previewHandler, PreviewArgs } from "./preview/preview";
 import { writeDefaultConfigFile, defaults, setConfig } from "../util/config";
 
 export type InitArguments = ArgumentsCamelCase<{
