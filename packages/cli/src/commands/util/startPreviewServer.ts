@@ -124,7 +124,7 @@ function packageJsonVersionsMatch(): boolean {
   }
 
   cliPackageJsonVersion = execSync("npx mailing --version").toString().trim();
-  debug("CLI version:\t\t", cliPackageJsonVersion);
+  debug("cli version:\t\t", cliPackageJsonVersion);
 
   // compare versions and return early if the same
   return cliPackageJsonVersion === mailingPackageJsonVersion;
@@ -135,10 +135,10 @@ async function setupNextServer() {
 
   // return early if .mailing exists and version matches packages.json
   if (packageJsonVersionsMatch()) {
-    debug("Versions match, returning");
+    debug("versions match, returning");
     return;
   }
-  debug("Versions do not match, constructing .mailing");
+  debug("versions do not match, constructing .mailing");
 
   // copy node_modules mailing into .mailing
   const nodeMailingPath = resolve("./node_modules/mailing");
@@ -184,7 +184,7 @@ export default async function startPreviewServer(opts: PreviewServerOptions) {
 
   if (!previewsPath) {
     error(
-      "Could not find emails directory. Have you initialized the project with `mailing init`?"
+      "could not find emails directory\nhave you initialized the project with `mailing init`?"
     );
     return;
   }
@@ -265,10 +265,10 @@ export default async function startPreviewServer(opts: PreviewServerOptions) {
     })
     .on("error", function onServerError(e: NodeJS.ErrnoException) {
       if (e.code === "EADDRINUSE") {
-        error(`Port ${port} is taken, is mailing already running?`);
+        error(`port ${port} is taken, is mailing already running?`);
         process.exit(1);
       } else {
-        error("Preview server error:", JSON.stringify(e));
+        error("preview server error:", JSON.stringify(e));
       }
     });
 
@@ -293,7 +293,7 @@ export default async function startPreviewServer(opts: PreviewServerOptions) {
     });
     log(`watching for changes to ${relative(cwd(), changeWatchPath)}`);
   } catch (e) {
-    error(`Error starting change watcher`, e);
+    error(`error starting change watcher`, e);
   }
 
   return server;
