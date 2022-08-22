@@ -17,13 +17,11 @@ class App
 
     use_cache do
       yarn_create!
+      verify_package_json_exists!
     end
-
-    verify_package_json_exists!
 
     yalc_add_mailing!
     yarn!
-    yarn_add_dependencies!
     run_mailing!
   end
 
@@ -62,14 +60,6 @@ private
     end
   end
   
-  def yarn_add_dependencies!
-    puts "Adding mailing dependencies"
-    Dir.chdir(@root_dir) do
-      system_quiet("yarn add mailing-core mjml mjml-react nodemailer &&\
-        yarn add --dev @types/mjml @types/mjml-react @types/nodemailer")
-    end
-  end
-
   def run_mailing!
     puts "Running mailing"
     Dir.chdir(@root_dir) do
