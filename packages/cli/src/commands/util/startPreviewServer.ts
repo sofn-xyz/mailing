@@ -55,7 +55,7 @@ async function writeModuleManifest(emailsDir: string) {
     previewConsts.push(`${moduleName}: ${moduleName}Preview`);
   });
 
-  const templates = (await readdir("./.mailing/src/emails")).filter((path) =>
+  const templates = (await readdir(emailsDir)).filter((path) =>
     SOURCE_FILE_REGEXP.test(path)
   );
   const uniqueTemplates = Array.from(new Set(templates));
