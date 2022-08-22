@@ -11,6 +11,7 @@ require_relative 'app_configs/redwood_ts_app'
 require_relative 'app_configs/redwood_js_app'
 require_relative 'app_configs/remix_ts_app'
 require_relative 'app_configs/remix_js_app'
+require_relative 'app_configs/standalone_app'
 
 class TestRunner
   include TestRunnerUtils
@@ -23,6 +24,7 @@ class TestRunner
   RUNS_DIR = File.expand_path(TEST_ROOT + '/runs')
 
   E2E_CONFIG = {
+    standalone: StandaloneApp,
     next_ts: NextTsApp,
     next_js: NextJsApp,
     redwood_ts: RedwoodTsApp,
