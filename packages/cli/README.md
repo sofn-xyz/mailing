@@ -30,21 +30,21 @@ We’re longtime users of Action Mailer and wanted something similar for our typ
 
 ## ●&nbsp;&nbsp;Setup
 
-1. Install mailing-core and the development server with yarn or npm:
+1. Install mailing with yarn or npm:
 
 yarn:
 
 ```
-yarn add mailing-core mjml mjml-react nodemailer &&\
-yarn add --dev mailing @types/mjml @types/mjml-react @types/nodemailer
+yarn add mailing
 ```
 
 npm:
 
 ```
-npm install --save mailing-core mjml mjml-react nodemailer &&\
-npm install --save-dev mailing @types/mjml @types/mjml-react @types/nodemailer
+npm install --save mailing
 ```
+
+Note: you may want to add mailing as a dev dependency instead if you don't plan to use it outside of development.
 
 2. Run `npx mailing` to start the preview server and scaffold your `emails` directory. This will create the following directory for all of your emails:
 
