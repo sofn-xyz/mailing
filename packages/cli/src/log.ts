@@ -2,6 +2,8 @@ import chalk from "chalk";
 
 const { DEBUG } = process.env;
 
+const PREFIX = "mailing";
+
 let quiet = false;
 
 export function setQuiet(v: boolean) {
@@ -10,16 +12,16 @@ export function setQuiet(v: boolean) {
 
 export function log(message?: any, ...optionalParams: any[]) {
   if (quiet && !debug) return;
-  console.log(chalk.blue("[mailing]"), message, ...optionalParams);
+  console.log(chalk.white(PREFIX), message, ...optionalParams);
 }
 
 export function error(message?: any, ...optionalParams: any[]) {
-  console.error(chalk.red("[mailing]"), message, ...optionalParams);
+  console.error(chalk.red(PREFIX), message, ...optionalParams);
 }
 
 export function debug(message?: any, ...optionalParams: any[]) {
   if (DEBUG)
-    console.info(chalk.yellowBright("[mailing]"), message, ...optionalParams);
+    console.info(chalk.yellowBright(PREFIX), message, ...optionalParams);
 }
 
 export default { log, debug, error };
