@@ -8,10 +8,10 @@ import { handler as previewHandler, PreviewArgs } from "./preview/preview";
 import { writeDefaultConfigFile, defaults, setConfig } from "../util/config";
 
 export type InitArguments = ArgumentsCamelCase<{
-  emailsDir?: string;
-  typescript?: boolean;
-  port?: number;
-  quiet?: boolean;
+  emailsDir: string;
+  typescript: boolean;
+  port: number;
+  quiet: boolean;
 }>;
 
 export const command = ["$0", "init"];
