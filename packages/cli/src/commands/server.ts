@@ -1,24 +1,28 @@
 import { existsSync } from "fs-extra";
 import { ArgumentsCamelCase } from "yargs";
 import { defaults, setConfig } from "../util/config";
-import { exec } from "child_process";
+import { execSync } from "child_process";
 import { log } from "../util/log";
 import {
   bootstrapMailingDir,
   linkEmailsDirectory,
 } from "./util/previewServer/setup";
 
-export type ServerBuildArguments = ArgumentsCamelCase<{
+export type ServerArguments = ArgumentsCamelCase<{
   emailsDir?: string;
   port?: number;
   quiet?: boolean;
+  subcommand?: string;
 }>;
 
-export const command = ["server build"];
+export const command = ["server [subcommand]"];
 
-export const describe = "build the mailing server";
+export const describe = "build and start the mailing server";
 
 export const builder = {
+  subcommand: {
+    describe: "'build' or 'start', blank does both",
+  },
   "emails-dir": {
     default: defaults().emailsDir,
     description: "the directory to look for your email templates in",
@@ -34,7 +38,7 @@ export const builder = {
   },
 };
 
-export const handler = async (argv: ServerBuildArguments) => {
+export const handler = async (argv: ServerArguments) => {
   if (!argv.emailsDir) throw new Error("emailsDir option is not set");
   if (!argv.port) throw new Error("port option is not set");
 
@@ -49,18 +53,13 @@ export const handler = async (argv: ServerBuildArguments) => {
   await bootstrapMailingDir();
   await linkEmailsDirectory(argv.emailsDir);
 
-  log("building .mailing...");
+  if (argv.subcommand !== "start") {
+    log("building .mailing...");
+    execSync("npx next build .mailing", { stdio: "inherit" });
+  }
 
-  const child = exec("npx next build .mailing");
-  child.stdout?.pipe(process.stdout);
-  child.stderr?.pipe(process.stderr);
-
-  child.on("close", (code, _signal) => {
-    if (code === 0) {
-      log("success");
-    } else {
-      log("build exited with error code", code);
-    }
-    process.exit(0);
-  });
+  if (argv.subcommand !== "build") {
+    log("starting .mailing...");
+    execSync("npx next start .mailing", { stdio: "inherit" });
+  }
 };
