@@ -94,6 +94,7 @@ async function writeModuleManifest(emailsDir: string) {
     overwrite: true,
     recursive: true,
     dereference: true,
+    filter: (path) => !/__test__/.test(path),
   });
   debug(`Copied ${emailsDir} to ${mailingEmailsPath}`);
   debug("Writing module manifest to", manifestPath);
@@ -149,6 +150,7 @@ async function setupNextServer() {
     recursive: true,
     dereference: true,
     overwrite: true,
+    filter: (path) => !/__test__|generator_templates|src\/commands/.test(path),
   });
 }
 
