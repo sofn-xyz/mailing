@@ -14,4 +14,6 @@ export function debug(message?: any, ...optionalParams: any[]) {
   if (DEBUG) console.info(chalk.red("[mailing]"), message, ...optionalParams);
 }
 
-export default { log, debug, error };
+const exportFunctions = { log, debug, error };
+
+export default exportFunctions;
