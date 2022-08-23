@@ -35,16 +35,16 @@ We’re longtime users of Action Mailer and wanted something similar for our typ
 yarn:
 
 ```
-yarn add mailing
+yarn add mailing mailing-core
 ```
 
 npm:
 
 ```
-npm install --save mailing
+npm install --save mailing mailing-core
 ```
 
-Note: you may want to add mailing as a dev dependency instead if you don't plan to use it outside of development.
+Note: you may want to add mailing as a dev dependency instead if you don't plan to use the preview function outside of development. mailing-core exports buildSendMail, which returns the sendMail function
 
 2. Run `npx mailing` to start the preview server and scaffold your `emails` directory. This will create the following directory for all of your emails:
 
