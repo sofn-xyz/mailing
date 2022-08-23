@@ -40,7 +40,7 @@ export async function clearTestMailQueue() {
 
   try {
     await fs.unlinkSync(TMP_TEST_FILE);
-  } catch (e: any) {
+  } catch (e) {
     if (e.code === "ENOENT") return; // file does not exist
     throw e;
   }
