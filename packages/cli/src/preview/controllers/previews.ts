@@ -112,8 +112,8 @@ export async function sendPreview(req: IncomingMessage, res: ServerResponse) {
   if (!html && body.previewClass && body.previewFunction) {
     const modulePath = resolve(previewsPath, body.previewClass);
     delete require.cache[modulePath]; // clean require
-    const module = require(modulePath);
-    component = module[body.previewFunction]();
+    const previewModule = require(modulePath);
+    component = previewModule[body.previewFunction]();
   }
 
   if (!html && !component) {
