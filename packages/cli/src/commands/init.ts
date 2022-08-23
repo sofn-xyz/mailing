@@ -8,10 +8,10 @@ import { handler as previewHandler, PreviewArgs } from "./preview/preview";
 import { writeDefaultConfigFile, defaults, setConfig } from "../util/config";
 
 export type InitArguments = ArgumentsCamelCase<{
-  emailsDir: string;
-  typescript: boolean;
-  port: number;
-  quiet: boolean;
+  emailsDir?: string;
+  typescript?: boolean;
+  port?: number;
+  quiet?: boolean;
 }>;
 
 export const command = ["$0", "init"];
@@ -40,11 +40,16 @@ export const builder = {
 };
 
 export const handler = async (argv: InitArguments) => {
-  if (!argv.emailsDir) throw new Error("emailsDir option is not set");
+  if (!argv.emailsDir) throw new Error("emailsDir option not set");
   if (undefined === argv.typescript)
-    throw new Error("typescript option is not set");
+    throw new Error("typescript option not set");
+  if (undefined === argv.quiet) throw new Error("quiet option not set");
 
-  setConfig({ emailsDir: argv.emailsDir, quiet: argv.quiet, port: argv.port });
+  setConfig({
+    emailsDir: argv.emailsDir!,
+    quiet: argv.quiet!,
+    port: argv.port!,
+  });
 
   // check if emails directory already exists
   if (!existsSync("./package.json")) {
