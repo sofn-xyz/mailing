@@ -68,25 +68,34 @@ describe("bootstrapMailingDir", () => {
     const copyMock = jest.fn(() => true);
     jest.spyOn(fsExtra, "copy").mockImplementation(copyMock);
 
-    // const rmMock = jest.fn(() => true);
-    // jest.spyOn(fsExtra, "rm").mockImplementation(rmMock);
+    const rmMock = jest.fn();
+    jest.spyOn(fsExtra, "rm").mockImplementation(rmMock);
 
-    // const mkdirMock = jest.fn(() => true);
-    // jest.spyOn(fsExtra, "mkdir").mockImplementation(mkdirMock);
+    const mkdirMock = jest.fn();
+    jest.spyOn(fsExtra, "mkdir").mockImplementation(mkdirMock);
 
     await bootstrapMailingDir();
 
-    // copy
-    expect(copyMock).toHaveBeenCalled();
-    const firstCall: string[] = copyMock.mock.calls[0];
-    expect(firstCall[0]).toMatch(
+    // copy preview directory to ./.mailing
+    expect(copyMock).toHaveBeenCalledTimes(1);
+    const copyCall: any[] = copyMock.mock.calls[0];
+    expect(copyCall[0]).toMatch(
       new RegExp("/mailing/packages/cli/src/commands/preview")
     );
-    expect(firstCall[1]).toBe("./.mailing");
+    expect(copyCall[1]).toBe("./.mailing");
+    expect(copyCall[2].recursive).toBe(true);
 
-    // rm
+    // rm -f ./.mailing
+    expect(rmMock).toHaveBeenCalledTimes(1);
+    const rmCall: any[] = rmMock.mock.calls[0];
+    expect(rmCall[0]).toBe("./.mailing");
+    expect(rmCall[1]).toEqual({ force: true, recursive: true });
 
-    // mkdir
+    // mkdir ./.mailing
+    expect(mkdirMock).toHaveBeenCalledTimes(1);
+    const mkdirCall: any[] = mkdirMock.mock.calls[0];
+    expect(mkdirCall[0]).toBe("./.mailing");
+    expect(mkdirCall[1]).toEqual({ recursive: true });
   });
 
   it("should return early if packageJsonVersionsMatch is true", async () => {
