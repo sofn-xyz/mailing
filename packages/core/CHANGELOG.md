@@ -1,5 +1,11 @@
 # mailing-core
 
+## 0.6.10
+
+### Patch Changes
+
+- 329e5bf: Removes some logging and updates dependencies
+
 ## 0.6.9
 
 ### Patch Changes
