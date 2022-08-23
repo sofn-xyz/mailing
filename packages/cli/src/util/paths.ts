@@ -1,5 +1,4 @@
-import { existsSync } from "fs";
-import { readFileSync } from "fs-extra";
+import { readFileSync, existsSync } from "fs-extra";
 import { resolve } from "path";
 
 // appends /previews to emailsDir string if that directory exists

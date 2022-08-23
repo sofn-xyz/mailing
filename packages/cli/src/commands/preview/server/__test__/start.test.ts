@@ -21,7 +21,7 @@ describe("start", () => {
     jest.spyOn(paths, "getPreviewsDirectory").mockImplementation(() => null);
     await expect(async () => {
       await startPreviewServer();
-    }).rejects.toThrow("previewsPath is not defined");
+    }).rejects.toThrow("previews directory does not exist");
     expect(mockHttpServer).not.toHaveBeenCalled();
   });
 });

@@ -2,7 +2,7 @@ import http from "http";
 import { relative, resolve } from "path";
 import open from "open";
 import next from "next";
-import { watch } from "fs-extra";
+import { watch, pathExists } from "fs-extra";
 import { debounce } from "lodash";
 import { cwd } from "process";
 import { parse } from "url";
@@ -20,15 +20,23 @@ import { getConfig } from "../../../util/config";
 export default async function startPreviewServer() {
   const { emailsDir, port, quiet } = getConfig();
 
+  const emailsDirExists = await pathExists(emailsDir);
+
+  if (!emailsDirExists)
+    throw new Error(`emailsDir does not exist in ${resolve(emailsDir)}`);
+
+  const previewsPath = getPreviewsDirectory(emailsDir);
+  if (!previewsPath)
+    throw new Error(
+      `previews directory does not exist in ${resolve(emailsDir)}`
+    );
+
   // delaying this makes the load feel faster
   const loadLag = setTimeout(() => {
     log("starting preview server");
   }, 500);
 
   registerRequireHooks();
-
-  const previewsPath = getPreviewsDirectory(emailsDir);
-  if (!previewsPath) throw new Error("previewsPath is not defined");
 
   await bootstrapMailingDir();
   await linkEmailsDirectory(emailsDir);
