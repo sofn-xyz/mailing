@@ -6,6 +6,7 @@ import { getMailingAPIBaseURL } from "../util/paths";
 import { generateEmailsDirectory } from "../util/generators";
 import { handler as previewHandler, PreviewArgs } from "./preview/preview";
 import { writeDefaultConfigFile, defaults, setConfig } from "../util/config";
+import { resolve } from "path";
 
 export type InitArguments = ArgumentsCamelCase<{
   emailsDir?: string;
@@ -59,7 +60,7 @@ export const handler = async (argv: InitArguments) => {
 
   writeDefaultConfigFile();
 
-  if (!existsSync(argv.emailsDir)) {
+  if (!existsSync(resolve(argv.emailsDir, "previews"))) {
     const options = {
       isTypescript: argv.typescript,
       emailsDir: argv.emailsDir,

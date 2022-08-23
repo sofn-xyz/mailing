@@ -79,12 +79,23 @@ export async function linkEmailsDirectory(emailsDir: string) {
   // Re-copy emails directory
   await remove(mailingEmailsPath);
   await mkdirp(mailingEmailsPath);
-  await copy(resolve(emailsDir), mailingEmailsPath, {
-    overwrite: true,
-    recursive: true,
-    dereference: true,
-    filter: (path) => !/__test__/.test(path),
-  });
+  const copyEmailsDirContents = (await readdir(resolve(emailsDir)))
+    .filter(
+      (path) =>
+        !/__test__$|\.mailing$|\.next$|node_modules|package\.json|^\.|yarn\.lock|yalc\.lock|mailing\.config\.json/.test(
+          path
+        )
+    )
+    .map((path) => {
+      console.log("emails copy", path);
+      return copy(resolve(emailsDir, path), resolve(mailingEmailsPath, path), {
+        overwrite: true,
+        recursive: true,
+        dereference: true,
+      });
+    });
+  await Promise.all(copyEmailsDirContents);
+
   debug(`copied ${emailsDir} to ${mailingEmailsPath}`);
   debug("writing module manifest to", manifestPath);
   await writeFile(manifestPath, contents);
@@ -143,8 +154,11 @@ export async function bootstrapMailingDir() {
     recursive: true,
     dereference: true,
     overwrite: true,
-    filter: (path) =>
-      !/__test__|generator_templates|src\/commands|src\/index/.test(path),
+    filter: (path) => {
+      return !/__test__$|generator_templates$|src\/commands$|src\/index$|\.mailing$|\.next$|node_modules$|\/cypress$/.test(
+        path
+      );
+    },
   });
 
   // add .mailing to .gitignore if it does not exist
@@ -156,8 +170,7 @@ export async function bootstrapMailingDir() {
   } catch (err: any) {
     if ("ENOENT" === err?.code) {
       log("adding .gitignore");
-      await writeFile(".gitignore", ".mailing\nnode_modules\n");
-      return false;
+      await writeFile(".gitignore", ".mailing\nnode_modules\n", { flag: "wx" });
     } else {
       throw err;
     }

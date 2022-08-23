@@ -17,6 +17,8 @@ import registerRequireHooks from "../../util/registerRequireHooks";
 import { bootstrapMailingDir, linkEmailsDirectory } from "./setup";
 import { getConfig } from "../../../util/config";
 
+export const WATCH_IGNORE = /^\.|node_modules/;
+
 export default async function startPreviewServer() {
   const { emailsDir, port, quiet } = getConfig();
 
@@ -159,6 +161,7 @@ export default async function startPreviewServer() {
     }, 200);
 
     watch(changeWatchPath, { recursive: true }, (eventType, filename) => {
+      if (WATCH_IGNORE.test(filename)) return;
       log(`detected ${eventType} on ${filename}, reloading`);
       delete require.cache[resolve(changeWatchPath, filename)];
       reload();

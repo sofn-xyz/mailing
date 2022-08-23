@@ -1,4 +1,4 @@
-import startPreviewServer from "../start";
+import startPreviewServer, { WATCH_IGNORE } from "../start";
 import * as config from "../../../../util/config";
 import http from "http";
 import * as paths from "../../../../util/paths";
@@ -23,5 +23,13 @@ describe("start", () => {
       await startPreviewServer();
     }).rejects.toThrow("previews directory does not exist");
     expect(mockHttpServer).not.toHaveBeenCalled();
+  });
+
+  it("ignores the right files when watching", () => {
+    expect(
+      WATCH_IGNORE.test(".mailing/src/emails/node_modules/lodash/fp/rest.js")
+    ).toBe(true);
+    expect(WATCH_IGNORE.test(".next")).toBe(true);
+    expect(WATCH_IGNORE.test("node_modules")).toBe(true);
   });
 });

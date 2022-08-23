@@ -14,9 +14,8 @@ export const getStaticProps: GetStaticProps<HomeProps> = async () => {
 
 const Home: NextPage<HomeProps> = ({ previews: initialPreviews }) => {
   const [previews, setPreviews] = useState<[string, string[]][] | null>(
-    initialPreviews.length ? initialPreviews : null
+    initialPreviews?.length ? initialPreviews : null
   );
-
   const fetchData = useCallback(async () => {
     const res = await fetch("/api/previews");
     setPreviews((await res.json()).previews);
