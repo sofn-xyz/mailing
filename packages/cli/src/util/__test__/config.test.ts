@@ -47,7 +47,7 @@ describe("writeDefaultConfigFile", () => {
       defaultJsonString
     );
     expect(log)
-      .toHaveBeenCalledWith(`Added mailing.config.json to your project with the following contents:
+      .toHaveBeenCalledWith(`added mailing.config.json to your project with the following contents:
 {
   \"typescript\": true,
   \"emailsDir\": \"./emails\",

@@ -4,7 +4,7 @@ import { handler, InitArguments } from "../init";
 import { log } from "../../util/log";
 
 jest.mock("../../util/log");
-jest.mock("../preview", () => ({ handler: jest.fn() }));
+jest.mock("../preview/preview", () => ({ handler: jest.fn() }));
 
 describe("init command", () => {
   beforeEach(() => {
@@ -28,7 +28,7 @@ describe("init command", () => {
       quiet: false,
     } as InitArguments);
     expect(log).toHaveBeenCalledWith(
-      `Generated your emails dir at /tmp/src/emails:
+      `generated your emails dir at /tmp/src/emails:
 emails
 ├── TextEmail.tsx
 ├── Welcome.tsx
@@ -58,7 +58,7 @@ emails
       quiet: true,
     } as InitArguments);
     expect(log).toHaveBeenCalledWith(
-      `Generated your emails dir at /tmp/src/emails:
+      `generated your emails dir at /tmp/src/emails:
 emails
 ├── TextEmail.jsx
 ├── Welcome.jsx

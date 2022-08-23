@@ -40,11 +40,16 @@ export const builder = {
 };
 
 export const handler = async (argv: InitArguments) => {
-  if (!argv.emailsDir) throw new Error("emailsDir option is not set");
+  if (!argv.emailsDir) throw new Error("emailsDir option not set");
   if (undefined === argv.typescript)
-    throw new Error("typescript option is not set");
+    throw new Error("typescript option not set");
+  if (undefined === argv.quiet) throw new Error("quiet option not set");
 
-  setConfig({ emailsDir: argv.emailsDir, quiet: argv.quiet, port: argv.port });
+  setConfig({
+    emailsDir: argv.emailsDir!,
+    quiet: argv.quiet!,
+    port: argv.port!,
+  });
 
   // check if emails directory already exists
   if (!existsSync("./package.json")) {
@@ -66,11 +71,11 @@ export const handler = async (argv: InitArguments) => {
         type: "text",
         name: "email",
         message:
-          "Enter your email for occasional updates about mailing (optional)",
+          "enter your email for occasional updates about mailing (optional)",
       });
       const { email } = emailResponse;
       if (email?.length > 0) {
-        log("Great, talk soon.");
+        log("great, talk soon");
         try {
           fetch(`${getMailingAPIBaseURL()}/api/users`, {
             method: "POST",
@@ -81,7 +86,7 @@ export const handler = async (argv: InitArguments) => {
           error(e);
         }
       } else {
-        log("OK, no problem!");
+        log("ok, no problem");
       }
     }
   }
