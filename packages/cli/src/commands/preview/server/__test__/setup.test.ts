@@ -74,6 +74,10 @@ describe("bootstrapMailingDir", () => {
     const mkdirMock = jest.fn();
     jest.spyOn(fsExtra, "mkdir").mockImplementation(mkdirMock);
 
+    // don't actually write a .gitignore while the test is running
+    const writeFileMock = jest.fn();
+    jest.spyOn(fsExtra, "writeFile").mockImplementation(writeFileMock);
+
     await bootstrapMailingDir();
 
     // copy preview directory to ./.mailing
