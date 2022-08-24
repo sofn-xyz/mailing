@@ -1,5 +1,13 @@
 # web
 
+## 0.3.0
+
+### Minor Changes
+
+- 5603613: - Introduces .mailing, remote control next app architecture
+  - Adds `GET /api/render`
+  - Adds `npx mailing server`, `npx mailing server build`, `npx mailing server start`
+
 ## 0.2.9
 
 ### Patch Changes
