@@ -11,18 +11,18 @@ import { Mjml, MjmlBody, MjmlRaw, MjmlText } from "mjml-react";
 
 describe("index", () => {
   describe("buildSendMail", () => {
-    it("returns a function", () => {
-      const transport = nodemailer.createTransport({
-        pool: true,
-        host: "smtp.example.com",
-        port: 465,
-        secure: true, // use TLS
-        auth: {
-          user: "username",
-          pass: "password",
-        },
-      });
+    const transport = nodemailer.createTransport({
+      pool: true,
+      host: "smtp.example.com",
+      port: 465,
+      secure: true, // use TLS
+      auth: {
+        user: "username",
+        pass: "password",
+      },
+    });
 
+    it("returns a function", () => {
       const sendMail = buildSendMail({
         transport,
         defaultFrom: "replace@me.with.your.com",
@@ -35,6 +35,17 @@ describe("index", () => {
       expect(() => {
         buildSendMail({} as BuildSendMailOptions);
       }).toThrow();
+    });
+
+    it("throws a runtime error without a component or html", async () => {
+      const sendMail = buildSendMail({
+        transport,
+        defaultFrom: "replace@me.with.your.com",
+      });
+
+      await expect(async () => {
+        await sendMail({});
+      }).rejects.toThrow();
     });
   });
 

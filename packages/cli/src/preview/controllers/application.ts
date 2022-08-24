@@ -1,7 +1,4 @@
-import { readFileSync } from "fs-extra";
-import { ServerResponse, IncomingMessage } from "http";
-import { resolve } from "path";
-import { error } from "../../log";
+import { ServerResponse } from "http";
 
 export function renderNotFound(res: ServerResponse) {
   res.writeHead(404);

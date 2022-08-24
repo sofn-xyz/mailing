@@ -1,10 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Header from "../../../components/Header";
 import HotIFrame from "../../../components/HotIFrame";
 import MjmlErrors from "../../../components/MjmlErrors";
-import { GetStaticProps } from "next";
+import { GetStaticProps, NextPage } from "next";
 import { hotkeysMap } from "../../../components/hooks/usePreviewHotkeys";
+import useLiveReload from "../../../components/hooks/useLiveReload";
+import { render } from "../../../util/mjml";
+import {
+  getPreviewComponent,
+  previewTree,
+} from "../../../util/moduleManifestUtil";
 
 type Params = { previewClass: string; previewFunction: string };
 
@@ -13,21 +19,18 @@ export const getStaticPaths = async () => {
     params: Params;
   }[] = [];
 
-  if (process.env.NEXT_PUBLIC_STATIC) {
-    const res = await fetch("http://localhost:3883/previews.json");
-    const previews: [string, string[]][] = await res.json();
+  const previews: [string, string[]][] = previewTree();
 
-    previews.forEach((previewClass) => {
-      paths = paths.concat(
-        previewClass[1].map((previewFunction) => ({
-          params: {
-            previewClass: previewClass[0],
-            previewFunction,
-          },
-        }))
-      );
-    });
-  }
+  previews.forEach((previewClass) => {
+    paths = paths.concat(
+      previewClass[1].map((previewFunction) => ({
+        params: {
+          previewClass: previewClass[0],
+          previewFunction,
+        },
+      }))
+    );
+  });
 
   return {
     paths,
@@ -37,10 +40,9 @@ export const getStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps = async (context) => {
   const { previewFunction, previewClass } = context.params as Params;
-  const res = await fetch(
-    `http://localhost:3883/previews/${previewClass}/${previewFunction}.json`
-  );
-  const initialData = await res.json();
+  const component = getPreviewComponent(previewClass, previewFunction);
+
+  const initialData = render(component);
 
   return {
     props: { initialData },
@@ -51,32 +53,12 @@ export const getStaticProps: GetStaticProps = async (context) => {
 const Preview = ({ initialData }: { initialData: ShowPreviewResponseBody }) => {
   const router = useRouter();
   const [viewMode, setViewMode] = useState<ViewMode>("desktop");
-  const [data, setData] = useState<ShowPreviewResponseBody | null>(
-    process.env.NEXT_PUBLIC_STATIC ? initialData : null
-  );
-
-  useEffect(() => {
-    // TODO: exit if not in dev
-
-    const fetchPreview = async () => {
-      const response = await fetch(`${document.location.pathname}.json`);
-      setData(await response.json());
-    };
-
-    const interval = window.setInterval(async function checkForReload() {
-      const shouldReload = await fetch("/should_reload.json");
-      const json = await shouldReload.json();
-      if (json["shouldReload"]) {
-        fetchPreview();
-      }
-    }, 1200);
-
-    fetchPreview();
-
-    return () => {
-      window.clearInterval(interval);
-    };
-  }, []);
+  const [data, setData] = useState<ShowPreviewResponseBody | null>(initialData);
+  const fetchData = useCallback(async () => {
+    const response = await fetch(`/api/${document.location.pathname}`);
+    setData(await response.json());
+  }, [setData]);
+  useLiveReload(fetchData);
 
   const { previewClass, previewFunction } = router.query;
 

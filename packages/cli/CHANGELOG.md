@@ -1,5 +1,58 @@
 # mailing
 
+## 0.7.0
+
+# New Architecture: Remote Control Next App
+
+In Mailing v0.7 we’re making an update to the module architecture that allows us to add a lot of features we’ve been wanting. The new architecture unlocks the ability to deploy your mailing app to a public web address with a simple `git push`. This is the single biggest update to `mailing` since its inception and we’re incredibly excited by the possibilities it unlocks.
+
+### Introducing .mailing
+
+The `.mailing` directory now contains a vanilla Next.js app with all of the preview UI you see when you use mailing. It lives in the root of your project. When you edit templates and previews in your emails directory, these get synced into the .mailing app and reload live. In development, `mailing` runs the Next.js app in dev mode and syncs in changes to your emails.
+
+_Caution: Please add .mailing to your .gitignore. Users should never edit .mailing directly. As framework authors we want to be able to improve mailing and ship big improvements without breaking user code. When the mailing CLI is run, it makes sure that the files in `.mailing` are up to date by ensuring the package.json version of your current install matches the version of mailing in your node_modules. If it doesn’t match, we update the `.mailing` install before booting the app._
+
+### Deployment: server CLI commands
+
+Just like any other next app, `.mailing` can be bundled for production and hosted in serverful or serverless environments. You can deploy to any host that can run a Next.js app.
+
+`npx mailing server build` builds the next app in `.mailing`
+
+`npx mailing server start` starts the next app built in `.mailing/.next`
+
+`npx mailing server` builds and starts it
+
+### New APIs
+
+We’ve heard from several users that you’d like to be able to use mailing’s fun email development environment from projects that are not written in JavaScript or TypeScript. Other users want to include their emails as a dedicated package in a monorepo.
+
+`GET /api/render` takes a template name and props and returns your rendered HTML ready to be sent. [Example](https://demo.mailing.run/api/render?templateName=Welcome.tsx&props=%7B%22name%22%3A%22peter%22%7D)
+
+`GET /api/previews` returns the list of previews. [Example](https://demo.mailing.run/api/previews)
+
+`GET /api/previews/[previewClass]/[previewFunction]` returns the rendered preview. [Example](https://demo.mailing.run/api/previews)
+
+### On shoulders of giants
+
+This would not be possible without the work of the Next.js team. We’re incredibly grateful for the carefully crafted open source framework they’ve put together and are excited to extend its capability even further with mailing.
+
+### What’s next?
+
+- Get feedback, squash bugs, polish
+- Password protection for your previews and APIs
+- `/api/send` will take template name, props, and sendMail options to actually send email (but we need password protection to keep spammers away)
+
+### Minor Changes
+
+- 5603613: - Introduces .mailing, remote control next app architecture
+  - Adds `GET /api/render`
+  - Adds `npx mailing server`, `npx mailing server build`, `npx mailing server start`
+
+### Patch Changes
+
+- Updated dependencies [5603613]
+  - mailing-core@0.7.0
+
 ## 0.6.10
 
 ### Patch Changes

@@ -1,30 +1,26 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { GetStaticProps, NextPage } from "next";
 import Link from "next/link";
 import Image from "next/image";
+import useLiveReload from "../components/hooks/useLiveReload";
+import { previewTree } from "../util/moduleManifestUtil";
 
 type HomeProps = { previews: [string, string[]][] };
 
 export const getStaticProps: GetStaticProps<HomeProps> = async () => {
-  let previews: [string, string[]][] = [];
-  if (process.env.NEXT_PUBLIC_STATIC) {
-    const res = await fetch("http://localhost:3883/previews.json");
-    previews = await res.json();
-  }
+  let previews: [string, string[]][] = previewTree();
   return { props: { previews } };
 };
 
 const Home: NextPage<HomeProps> = ({ previews: initialPreviews }) => {
   const [previews, setPreviews] = useState<[string, string[]][] | null>(
-    initialPreviews.length ? initialPreviews : null
+    initialPreviews?.length ? initialPreviews : null
   );
-  const fetchData = async () => {
-    const res = await fetch("/previews.json");
-    setPreviews(await res.json());
-  };
-  useEffect(() => {
-    if (!previews?.length) fetchData();
-  }, [previews?.length]);
+  const fetchData = useCallback(async () => {
+    const res = await fetch("/api/previews");
+    setPreviews((await res.json()).previews);
+  }, [setPreviews]);
+  useLiveReload(fetchData);
 
   if (!previews) {
     return <></>; // loading, should be quick bc everything is local

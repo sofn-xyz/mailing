@@ -1,6 +1,6 @@
 {
   "name": "mailing",
-  "version": "0.6.10",
+  "version": "0.7.0",
   "main": "dist/mailing.cjs.js",
   "license": "MIT",
   "homepage": "https://github.com/sofn-xyz/mailing#readme",
@@ -16,18 +16,21 @@
     "mm": "./bin.js"
   },
   "files": [
-    "dist",
     "bin.js",
-    ".next"
+    "next-env.d.ts",
+    "package.json",
+    "src",
+    "next.config.js",
+    "tsconfig.json",
+    "public",
+    "dist"
   ],
-  "scripts": {
-    "build": "rm -rf .next && yarn next build && cp -R .next dist/ && rm -rf dist/.next/cache"
-  },
   "description": "Fun email development environment",
   "devDependencies": {
     "@next/eslint-plugin-next": "^12.2.0",
     "@types/fs-extra": "^9.0.13",
     "@types/html-minifier-terser": "^6.1.0",
+    "@types/lodash": "^4.14.184",
     "@types/node": "^17.0.24",
     "@types/node-fetch": "^2.6.1",
     "@types/prompts": "^2.0.14",
@@ -48,10 +51,11 @@
     "chalk": "^4.1.2",
     "dotenv": "^16.0.1",
     "fs-extra": "^10.1.0",
-    "mailing-core": "^0.6.10",
+    "lodash": "^4.17.21",
+    "mailing-core": "^0.7.0",
     "mjml": "^4.12.0",
     "mjml-react": "^2.0.7",
-    "next": "12.2.2",
+    "next": "12.2.5",
     "node-fetch": "^2.6.7",
     "nodemailer": "^6.7.5",
     "open": "^8.4.0",
@@ -60,7 +64,7 @@
     "react-hotkeys-hook": "^3.4.6",
     "react-tiny-popover": "^7.1.0",
     "tree-node-cli": "^1.5.2",
-    "typescript": "^4.6.3",
+    "typescript": "^4.7.4",
     "uglify-js": "^3.15.4",
     "yargs": "^17.5.1"
   },

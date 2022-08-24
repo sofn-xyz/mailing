@@ -1,11 +1,11 @@
 import { resolve } from "path";
 import { outputFile, readdirSync } from "fs-extra";
 import { ArgumentsCamelCase } from "yargs";
-import { getPreviewsDirectory } from "../paths";
-import { error, log } from "../log";
-import { render } from "../mjml";
+import { getPreviewsDirectory } from "../util/paths";
+import { error, log } from "../util/log";
+import { render } from "../util/mjml";
 import registerRequireHooks from "./util/registerRequireHooks";
-import { DEFAULTS, setConfig } from "../config";
+import { defaults } from "../util/config";
 
 export type ExportPreviewsArgs = ArgumentsCamelCase<{
   emailsDir?: string;
@@ -16,11 +16,11 @@ export const command = "export-previews";
 
 export const builder = {
   "emails-dir": {
-    default: DEFAULTS.emailsDir,
+    default: defaults().emailsDir,
     description: "the directory of your email templates",
   },
   "out-dir": {
-    default: DEFAULTS.outDir,
+    default: defaults().outDir,
     description: "directory in which we output the html",
   },
 };

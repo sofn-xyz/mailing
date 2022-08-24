@@ -7,7 +7,7 @@ import { error, log } from "./log";
 import fetch from "node-fetch";
 
 export type ComponentMail = nodemailer.SendMailOptions & {
-  component: ReactElement<any, string | JSXElementConstructor<any>>;
+  component?: ReactElement<any, string | JSXElementConstructor<any>>;
   forceDeliver?: boolean;
   forcePreview?: boolean;
 };
@@ -61,9 +61,13 @@ export function buildSendMail(options: BuildSendMailOptions) {
       mail.forcePreview ||
       (process.env.NODE_ENV !== "production" && !mail.forceDeliver);
 
-    const { html, errors } = mail.html
-      ? { html: mail.html, errors: [] }
-      : render(mail.component);
+    if (!mail.html && typeof mail.component === "undefined")
+      throw new Error("sendMail requires either html or a component");
+
+    const { html, errors } =
+      mail.html || !mail.component
+        ? { html: mail.html, errors: [] }
+        : render(mail.component);
 
     if (errors?.length) {
       error(errors);

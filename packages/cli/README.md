@@ -46,6 +46,20 @@ npm install --save mailing mailing-core
 
 Note: you may want to add mailing as a dev dependency instead if you don't plan to use the preview function outside of development. mailing-core exports buildSendMail, which returns the sendMail function
 
+Note: mailing requires version 17 or 18 of react and react-dom, so if you're not already in a react-based app, you'll need to add the following:
+
+yarn:
+
+```
+yarn add react react-dom
+```
+
+npm:
+
+```
+npm install --save react react-dom
+```
+
 2. Run `npx mailing` to start the preview server and scaffold your `emails` directory. This will create the following directory for all of your emails:
 
 ```
@@ -173,7 +187,7 @@ describe("Example API", () => {
     // sendMail({
     //   to: "someone@something.com",
     //   subject: "test",
-    //   component: <IssueNotification />
+    //   component: <TextEmail ... />,
     // });
 
     const emails = await getTestMailQueue();
@@ -192,6 +206,12 @@ describe("Example API", () => {
 `mailing init` initializes a project then starts the development server
 
 `mailing preview` launches the development server
+
+`mailing server build` builds the next app in .mailing
+
+`mailing server start` starts the next app built in .mailing/.next
+
+`mailing server` builds and starts it
 
 `mailing export-previews` exports template previews as plain html files
 
@@ -214,6 +234,18 @@ Running `mailing init` generates a mailing.config.js file that will be used as d
 ```
 
 Append --help to your CLI command for a full list of supported options. Any of these options can be added to your config file.
+
+<br/>
+
+## ●&nbsp;&nbsp;&nbsp;REST API
+
+With the REST API, you can use mailing for email templating even if most of your app is not written in TypeScript or JavaScript.
+
+`GET /api/render` takes a template name and props and returns your rendered HTML ready to be sent. [Example](https://demo.mailing.run/api/render?templateName=Welcome.tsx&props=%7B%22name%22%3A%22peter%22%7D)
+
+`GET /api/previews` returns the list of previews. [Example](https://demo.mailing.run/api/previews)
+
+`GET /api/previews/[previewClass]/[previewFunction]` returns the rendered preview. [Example](https://demo.mailing.run/api/previews)
 
 <br/>
 
@@ -264,10 +296,11 @@ The directory `scripts/e2e_test` contains smoke tests targeting supported framew
 
 - In the directory `scripts/e2e_test`, run `bundle exec ruby e2e_test.rb`
 
-The script supports some basic options for running today
+The script supports some options for running:
 
 - `--only=redwood_ts` to run the tests only on the specified framework
 - `--skip-build` to skip the yarn build part of the script, useful when debugging something unrelated to the build
+- `--rerun` to skip the framework install part of the script, useful when debugging something in your cypress tests unrelated to the build or the framework install. This will use the framework installs that are present in the runs/latest directory, i.e. the assumption is you've run a test against some framework(s) and you now want to re-running them after adjusting your cypress tests.
 
 **Cache the framework installs for faster runs**
 

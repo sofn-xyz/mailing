@@ -1,3 +1,4 @@
 .DS_Store
 node_modules
-.next/cache/*
+.next
+__test__

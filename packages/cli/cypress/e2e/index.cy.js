@@ -29,7 +29,7 @@ describe("cypress tests", () => {
 
     cy.location("pathname").should(
       "match",
-      /previews\/TextEmail\.[jt]sx\/accountDeleted/
+      /previews\/TextEmail\/accountDeleted/
     );
   });
 });
