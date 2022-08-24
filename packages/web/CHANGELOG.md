@@ -1,5 +1,11 @@
 # web
 
+## 0.2.9
+
+### Patch Changes
+
+- 329e5bf: Removes some logging and updates dependencies
+
 ## 0.2.8
 
 ### Patch Changes
