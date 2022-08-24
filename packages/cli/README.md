@@ -207,6 +207,12 @@ describe("Example API", () => {
 
 `mailing preview` launches the development server
 
+`mailing server build` builds the next app in .mailing
+
+`mailing server start` starts the next app built in .mailing/.next
+
+`mailing server` builds and starts it
+
 `mailing export-previews` exports template previews as plain html files
 
 `mailing` runs init then preview
