@@ -237,6 +237,18 @@ Append --help to your CLI command for a full list of supported options. Any of t
 
 <br/>
 
+## ●&nbsp;&nbsp;&nbsp;REST API
+
+With the REST API, you can use mailing for email templating even if most of your app is not written in TypeScript or JavaScript.
+
+`GET /api/render` takes a template name and props and returns your rendered HTML ready to be sent. [Example](https://demo.mailing.run/api/render?templateName=Welcome.tsx&props=%7B%22name%22%3A%22peter%22%7D)
+
+`GET /api/previews` returns the list of previews. [Example](https://demo.mailing.run/api/previews)
+
+`GET /api/previews/[previewClass]/[previewFunction]` returns the rendered preview. [Example](https://demo.mailing.run/api/previews)
+
+<br/>
+
 ## ●&nbsp;&nbsp;&nbsp;Contributing
 
 Want to improve Mailing? Incredible. Try it out, file an issue or open a PR!
