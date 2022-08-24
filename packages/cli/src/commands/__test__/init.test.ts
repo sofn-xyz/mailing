@@ -3,6 +3,7 @@ import fsExtra, { removeSync } from "fs-extra";
 import { handler, InitArguments } from "../init";
 import { log } from "../../util/log";
 
+jest.useFakeTimers();
 jest.mock("../../util/log");
 jest.mock("../preview/preview", () => ({ handler: jest.fn() }));
 
