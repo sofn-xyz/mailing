@@ -87,7 +87,7 @@ export async function linkEmailsDirectory(emailsDir: string) {
         )
     )
     .map((path) => {
-      console.log("emails copy", path);
+      debug("copy to .mailing/src/emails", path);
       return copy(resolve(emailsDir, path), resolve(mailingEmailsPath, path), {
         overwrite: true,
         recursive: true,
