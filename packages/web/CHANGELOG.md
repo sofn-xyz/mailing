@@ -1,5 +1,11 @@
 # web
 
+## 0.3.1-next.3
+
+### Patch Changes
+
+- fix export-previews; only eslint in mailing dev
+
 ## 0.3.1-next.2
 
 ### Patch Changes

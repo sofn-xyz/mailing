@@ -1,5 +1,13 @@
 # mailing
 
+## 0.7.1-next.3
+
+### Patch Changes
+
+- fix export-previews; only eslint in mailing dev
+- Updated dependencies
+  - mailing-core@0.7.1-next.3
+
 ## 0.7.1-next.2
 
 ### Patch Changes
