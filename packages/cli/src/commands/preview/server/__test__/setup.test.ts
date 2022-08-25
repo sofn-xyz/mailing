@@ -1,5 +1,9 @@
 import fsExtra from "fs-extra";
-import { packageJsonVersionsMatch, bootstrapMailingDir } from "../setup";
+import {
+  packageJsonVersionsMatch,
+  bootstrapMailingDir,
+  COMPONENT_FILE_REGEXP,
+} from "../setup";
 import childProcess from "child_process";
 
 jest.mock("../../../../util/log");
@@ -109,5 +113,16 @@ describe("bootstrapMailingDir", () => {
 
     await bootstrapMailingDir();
     expect(fsExtra.copy).not.toHaveBeenCalled();
+  });
+});
+
+describe("SOURCE_FILE_REGEXP", () => {
+  it("should match jsx and tsx without matching js and ts files", () => {
+    expect(COMPONENT_FILE_REGEXP.test("file.ts")).toBe(false);
+    expect(COMPONENT_FILE_REGEXP.test("file.js")).toBe(false);
+    expect(COMPONENT_FILE_REGEXP.test("file.tsx")).toBe(true);
+    expect(COMPONENT_FILE_REGEXP.test("file.jsx")).toBe(true);
+    expect(COMPONENT_FILE_REGEXP.test("bad file name.jsx")).toBe(false);
+    expect(COMPONENT_FILE_REGEXP.test("bad file name.tsx")).toBe(false);
   });
 });

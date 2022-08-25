@@ -14,7 +14,7 @@ import {
 
 import { debug, log } from "../../../util/log";
 
-const SOURCE_FILE_REGEXP = /^[^\s-]+\.[tj]sx?$/; // no spaces, .js/x or .ts/x
+export const COMPONENT_FILE_REGEXP = /^[^\s-]+\.[tj]sx$/; // no spaces, .jsx or .tsx
 
 export type PreviewServerOptions = {
   emailsDir: string;
@@ -29,7 +29,7 @@ export async function linkEmailsDirectory(emailsDir: string) {
   const mailingEmailsPath = mailingPath + "/emails";
 
   const previewCollections = (await readdir(previewsPath)).filter((path) =>
-    SOURCE_FILE_REGEXP.test(path)
+    COMPONENT_FILE_REGEXP.test(path)
   );
   debug("scanning for previews at", previewsPath, previewCollections);
   const uniquePreviewCollections = Array.from(new Set(previewCollections));
@@ -43,26 +43,25 @@ export async function linkEmailsDirectory(emailsDir: string) {
     previewConsts.push(`${moduleName}: ${moduleName}Preview`);
   });
 
-  const templates = (await readdir(emailsDir)).filter((path) =>
-    SOURCE_FILE_REGEXP.test(path)
-  );
+  let indexFound = false;
+  const templates = (await readdir(emailsDir)).filter((path) => {
+    if (/^index\.[jt]sx?$/.test(path)) {
+      indexFound = true; // index.ts, index.js
+      return false;
+    }
+    COMPONENT_FILE_REGEXP.test(path);
+  });
+  if (!indexFound)
+    throw new Error("index.ts or index.js not found in emails directory");
+
   const uniqueTemplates = Array.from(new Set(templates));
   const templateImports: string[] = [];
   const templateModuleNames: string[] = [];
-  let indexFound = false;
   uniqueTemplates.forEach((p) => {
-    if (/^index\.[jt]sx?$/.test(p)) {
-      indexFound = true; // index.ts, index.js
-      return;
-    }
-
     const moduleName = p.replace(/\.[jt]sx/g, "");
     templateModuleNames.push(moduleName);
     templateImports.push(`import ${moduleName} from "./emails/${moduleName}";`);
   });
-
-  if (!indexFound)
-    throw new Error("index.ts or index.js not found in emails directory");
 
   const contents =
     `import sendMail from "./emails";\n` +
