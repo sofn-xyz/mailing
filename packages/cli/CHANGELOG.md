@@ -1,5 +1,13 @@
 # mailing
 
+## 0.7.1-next.0
+
+### Patch Changes
+
+- b87a2ed: bugfix: only treat jsx and tsx files as templates; see #141
+- Updated dependencies [b87a2ed]
+  - mailing-core@0.7.1-next.0
+
 ## 0.7.0
 
 # New Architecture: Remote Control Next App

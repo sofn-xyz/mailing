@@ -1,0 +1,12 @@
+{
+  "mode": "pre",
+  "tag": "next",
+  "initialVersions": {
+    "mailing": "0.7.0",
+    "mailing-core": "0.7.0",
+    "web": "0.3.0"
+  },
+  "changesets": [
+    "weak-suns-glow"
+  ]
+}
