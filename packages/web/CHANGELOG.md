@@ -1,5 +1,11 @@
 # web
 
+## 0.3.1
+
+### Patch Changes
+
+- b87a2ed: bugfix: only treat jsx and tsx files as templates; see #141
+
 ## 0.3.0
 
 ### Minor Changes
