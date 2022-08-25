@@ -7,6 +7,7 @@
     "web": "0.3.0"
   },
   "changesets": [
+    "lovely-pugs-glow",
     "weak-suns-glow"
   ]
 }
