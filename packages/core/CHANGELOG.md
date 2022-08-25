@@ -1,5 +1,11 @@
 # mailing-core
 
+## 0.7.1-next.4
+
+### Patch Changes
+
+- merge
+
 ## 0.7.1-next.3
 
 ### Patch Changes
