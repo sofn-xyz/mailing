@@ -5,6 +5,7 @@ import fs from "fs-extra";
 import { render } from "./mjml";
 import { error, log } from "./log";
 import fetch from "node-fetch";
+import postHogClient from "./util/postHog";
 
 export type ComponentMail = nodemailer.SendMailOptions & {
   component?: ReactElement<any, string | JSXElementConstructor<any>>;
@@ -40,7 +41,7 @@ export async function clearTestMailQueue() {
 
   try {
     await fs.unlinkSync(TMP_TEST_FILE);
-  } catch (e: any) {
+  } catch (e) {
     if (e.code === "ENOENT") return; // file does not exist
     throw e;
   }
@@ -57,6 +58,14 @@ export function buildSendMail(options: BuildSendMailOptions) {
   }
 
   return async function sendMail(mail: ComponentMail) {
+    // anonymous telemetry
+    if (anonymousId) {
+      postHogClient().capture({
+        distinctId: argv.anonymousId,
+        event: "cli init",
+      });
+    }
+
     const forcePreview =
       mail.forcePreview ||
       (process.env.NODE_ENV !== "production" && !mail.forceDeliver);
@@ -124,5 +133,3 @@ export function buildSendMail(options: BuildSendMailOptions) {
     return response;
   };
 }
-
-export { buildSendMail as default, render };

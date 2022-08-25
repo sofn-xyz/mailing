@@ -6,7 +6,7 @@ import { error, log } from "../util/log";
 import { render } from "../util/mjml";
 import registerRequireHooks from "./util/registerRequireHooks";
 import { defaults } from "../util/config";
-import postHogClient from "../../../shared/util/postHog";
+import postHogClient from "../util/postHog";
 
 export type ExportPreviewsArgs = ArgumentsCamelCase<{
   emailsDir?: string;
