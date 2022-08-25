@@ -1,5 +1,13 @@
 # mailing
 
+## 0.7.1-next.2
+
+### Patch Changes
+
+- bugfix bugfix
+- Updated dependencies
+  - mailing-core@0.7.1-next.2
+
 ## 0.7.1-next.1
 
 ### Patch Changes

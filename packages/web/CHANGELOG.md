@@ -1,5 +1,11 @@
 # web
 
+## 0.3.1-next.2
+
+### Patch Changes
+
+- bugfix bugfix
+
 ## 0.3.1-next.1
 
 ### Patch Changes
