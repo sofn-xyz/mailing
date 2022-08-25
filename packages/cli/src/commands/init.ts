@@ -14,7 +14,7 @@ export type InitArguments = ArgumentsCamelCase<{
   typescript?: boolean;
   port?: number;
   quiet?: boolean;
-  anonymousId?: string;
+  anonymousId?: string | null;
 }>;
 
 export const command = ["$0", "init"];
@@ -43,6 +43,14 @@ export const builder = {
 };
 
 export const handler = async (argv: InitArguments) => {
+  // anonymous telemetry
+  if (argv.anonymousId) {
+    postHogClient().capture({
+      distinctId: argv.anonymousId,
+      event: "cli init",
+    });
+  }
+
   if (!argv.emailsDir) throw new Error("emailsDir option not set");
   if (undefined === argv.typescript)
     throw new Error("typescript option not set");
@@ -52,14 +60,8 @@ export const handler = async (argv: InitArguments) => {
     emailsDir: argv.emailsDir!,
     quiet: argv.quiet!,
     port: argv.port!,
+    anonymousId: argv.anonymousId,
   });
-
-  if (argv.anonymousId) {
-    postHogClient().capture({
-      distinctId: argv.anonymousId,
-      event: "cli.init",
-    });
-  }
 
   // check if emails directory already exists
   if (!existsSync("./package.json")) {

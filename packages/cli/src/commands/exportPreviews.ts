@@ -6,10 +6,12 @@ import { error, log } from "../util/log";
 import { render } from "../util/mjml";
 import registerRequireHooks from "./util/registerRequireHooks";
 import { defaults } from "../util/config";
+import postHogClient from "../../../shared/util/postHog";
 
 export type ExportPreviewsArgs = ArgumentsCamelCase<{
   emailsDir?: string;
   outDir?: string;
+  anonymousId?: string | null;
 }>;
 
 export const command = "export-previews";
@@ -40,6 +42,14 @@ export function previewFilename(moduleName: string, functionName: string) {
 }
 
 export const handler = async (argv: ExportPreviewsArgs) => {
+  // anonymous telemetry
+  if (argv.anonymousId) {
+    postHogClient().capture({
+      distinctId: argv.anonymousId,
+      event: "cli exportPreviews",
+    });
+  }
+
   if (!argv.emailsDir) throw new Error("emailsDir option is not set");
   if (!argv.outDir) throw new Error("outDir option is not set");
 

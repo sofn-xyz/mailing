@@ -7,12 +7,14 @@ import {
   bootstrapMailingDir,
   linkEmailsDirectory,
 } from "./preview/server/setup";
+import postHogClient from "../util/postHog";
 
 export type ServerArguments = ArgumentsCamelCase<{
   emailsDir?: string;
   port?: number;
   quiet?: boolean;
   subcommand?: string;
+  anonymousId?: string | null;
 }>;
 
 export const command = ["server [subcommand]"];
@@ -39,6 +41,17 @@ export const builder = {
 };
 
 export const handler = async (argv: ServerArguments) => {
+  // anonymous telemetry
+  if (argv.anonymousId) {
+    postHogClient().capture({
+      distinctId: argv.anonymousId,
+      event: "cli server",
+      properties: {
+        subcommand: argv.subcommand,
+      },
+    });
+  }
+
   if (!argv.emailsDir) throw new Error("emailsDir option is not set");
   if (undefined === argv.port) throw new Error("port option is not set");
   if (undefined === argv.quiet) throw new Error("quiet option is not set");
@@ -47,6 +60,7 @@ export const handler = async (argv: ServerArguments) => {
     emailsDir: argv.emailsDir!,
     quiet: argv.quiet!,
     port: argv.port!,
+    anonymousId: argv.anonymousId,
   });
 
   // check if emails directory already exists

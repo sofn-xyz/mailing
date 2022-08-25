@@ -90,21 +90,22 @@ ${configJsonString}`
 
 /* Preview server config singleton */
 
-interface PreviewServerConfig {
+interface Config {
   emailsDir: string;
   quiet: boolean;
   port: number;
+  anonymousId: string | null | undefined;
 }
 
-let previewServerConfig: PreviewServerConfig | undefined;
+let config: Config | undefined;
 
-export function setConfig(newConfig: PreviewServerConfig) {
-  previewServerConfig = newConfig;
+export function setConfig(newConfig: Config) {
+  config = newConfig;
 }
 
-export function getConfig(): PreviewServerConfig {
-  if (undefined === previewServerConfig) {
-    throw new Error("previewServerConfig is undefined");
+export function getConfig(): Config {
+  if (undefined === config) {
+    throw new Error("config is undefined");
   }
-  return previewServerConfig;
+  return config;
 }
