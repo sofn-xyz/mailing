@@ -63,6 +63,7 @@ export const handler = async (argv: ExportPreviewsArgs) => {
     emailsDir: argv.emailsDir!,
     quiet: argv.quiet!,
     port: defaults().port,
+    anonymousId: argv.anonymousId,
   });
 
   const outDir = argv.outDir;
