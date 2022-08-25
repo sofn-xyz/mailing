@@ -4,6 +4,7 @@ import { writeFileSync } from "fs";
 import { log, error, logPlain } from "./log";
 import { pick } from "lodash";
 import * as prettier from "prettier";
+import { randomUUID } from "crypto";
 
 export const MAILING_CONFIG_FILE = "./mailing.config.json";
 
@@ -13,6 +14,7 @@ type ConfigDefaults = {
   outDir: string;
   port: number;
   quiet: boolean;
+  anonymousId: string;
 };
 
 let DEFAULTS: ConfigDefaults | undefined;
@@ -26,12 +28,13 @@ export function defaults() {
       outDir: "./previews_html",
       port: 3883,
       quiet: false,
+      anonymousId: randomUUID()
     };
   return DEFAULTS;
 }
 
 // options to include in the default config file
-const DEFAULT_KEYS_FOR_CONFIG_FILE = ["typescript", "emailsDir", "outDir"];
+const DEFAULT_KEYS_FOR_CONFIG_FILE = ["typescript", "emailsDir", "outDir", "anonymousId"];
 
 // an object to JSON stringify and write to the default config file
 function defaultsForConfigFile() {
