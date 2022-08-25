@@ -28,13 +28,18 @@ export function defaults() {
       outDir: "./previews_html",
       port: 3883,
       quiet: false,
-      anonymousId: randomUUID()
+      anonymousId: randomUUID(),
     };
   return DEFAULTS;
 }
 
 // options to include in the default config file
-const DEFAULT_KEYS_FOR_CONFIG_FILE = ["typescript", "emailsDir", "outDir", "anonymousId"];
+const DEFAULT_KEYS_FOR_CONFIG_FILE = [
+  "typescript",
+  "emailsDir",
+  "outDir",
+  "anonymousId",
+];
 
 // an object to JSON stringify and write to the default config file
 function defaultsForConfigFile() {

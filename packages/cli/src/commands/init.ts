@@ -7,12 +7,14 @@ import { generateEmailsDirectory } from "../util/generators";
 import { handler as previewHandler, PreviewArgs } from "./preview/preview";
 import { writeDefaultConfigFile, defaults, setConfig } from "../util/config";
 import { resolve } from "path";
+import postHogClient from "../util/postHog";
 
 export type InitArguments = ArgumentsCamelCase<{
   emailsDir?: string;
   typescript?: boolean;
   port?: number;
   quiet?: boolean;
+  anonymousId?: string;
 }>;
 
 export const command = ["$0", "init"];
@@ -35,7 +37,7 @@ export const builder = {
   },
   quiet: {
     default: defaults().quiet,
-    descriptioin: "quiet mode (don't prompt or open browser after starting)",
+    description: "quiet mode (don't prompt or open browser after starting)",
     boolean: true,
   },
 };
@@ -51,6 +53,13 @@ export const handler = async (argv: InitArguments) => {
     quiet: argv.quiet!,
     port: argv.port!,
   });
+
+  if (argv.anonymousId) {
+    postHogClient().capture({
+      distinctId: argv.anonymousId,
+      event: "cli.init",
+    });
+  }
 
   // check if emails directory already exists
   if (!existsSync("./package.json")) {
