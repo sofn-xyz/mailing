@@ -51,7 +51,7 @@ export async function linkEmailsDirectory(emailsDir: string) {
   const templateModuleNames: string[] = [];
   let indexFound = false;
   uniqueTemplates.forEach((p) => {
-    if (/^index\.[jt]sx?$/.test(p)) {
+    if (/^index\.[jt]sx$/.test(p)) {
       indexFound = true; // index.ts, index.js
       return;
     }
