@@ -5,11 +5,12 @@ import { getPreviewsDirectory } from "../util/paths";
 import { error, log } from "../util/log";
 import { render } from "../util/mjml";
 import registerRequireHooks from "./util/registerRequireHooks";
-import { defaults } from "../util/config";
+import { defaults, setConfig } from "../util/config";
 
 export type ExportPreviewsArgs = ArgumentsCamelCase<{
   emailsDir?: string;
   outDir?: string;
+  quiet?: boolean;
 }>;
 
 export const command = "export-previews";
@@ -22,6 +23,11 @@ export const builder = {
   "out-dir": {
     default: defaults().outDir,
     description: "directory in which we output the html",
+  },
+  quiet: {
+    default: defaults().quiet,
+    descriptioin: "less output",
+    boolean: true,
   },
 };
 
@@ -42,6 +48,12 @@ export function previewFilename(moduleName: string, functionName: string) {
 export const handler = async (argv: ExportPreviewsArgs) => {
   if (!argv.emailsDir) throw new Error("emailsDir option is not set");
   if (!argv.outDir) throw new Error("outDir option is not set");
+
+  setConfig({
+    emailsDir: argv.emailsDir!,
+    quiet: argv.quiet!,
+    port: defaults().port,
+  });
 
   const outDir = argv.outDir;
 
