@@ -29,7 +29,7 @@ describe("exportPreviews command", () => {
     );
   });
 
-  describe("e2e", () => {
+  describe("cli", () => {
     it("runs on templates", () => {
       const out = execSync(
         __dirname + "/../../dev.js export-previews"
