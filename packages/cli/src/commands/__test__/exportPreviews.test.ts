@@ -1,3 +1,4 @@
+import { execSync } from "child_process";
 import fsExtra from "fs-extra";
 import { log, error } from "../../util/log";
 import { ExportPreviewsArgs, handler } from "../exportPreviews";
@@ -26,5 +27,14 @@ describe("exportPreviews command", () => {
     expect(error).toHaveBeenCalledWith(
       "Could not find emails directory. Have you initialized the project with `mailing init`?"
     );
+  });
+
+  describe("e2e", () => {
+    it("runs on templates", () => {
+      const out = execSync(
+        __dirname + "/../../dev.js export-previews"
+      ).toString();
+      expect(out).toMatchSnapshot();
+    });
   });
 });
