@@ -3,8 +3,6 @@ import { execSync } from "child_process";
 jest.mock("../../util/log");
 
 describe("server command", () => {
-  it("builds", async () => {});
-
   describe("e2e", () => {
     it("builds", () => {
       const out = execSync(__dirname + "/../../dev.js server build").toString();
