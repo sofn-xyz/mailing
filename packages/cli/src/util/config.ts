@@ -90,12 +90,12 @@ ${configJsonString}`
 
 /* Preview server config singleton */
 
-interface Config {
+type Config = {
   emailsDir: string;
   quiet: boolean;
   port: number;
   anonymousId: string | null | undefined;
-}
+};
 
 let config: Config | undefined;
 

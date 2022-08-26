@@ -5,6 +5,7 @@ import fs from "fs-extra";
 import { render } from "./mjml";
 import { error, log } from "./log";
 import fetch from "node-fetch";
+import { getConfig } from "./util/config";
 import postHogClient from "./util/postHog";
 
 export type ComponentMail = nodemailer.SendMailOptions & {
@@ -39,6 +40,7 @@ export async function clearTestMailQueue() {
     throw new Error("tried to clear test mail queue not in test mode");
   }
 
+  // prettier-ignore
   try {
     await fs.unlinkSync(TMP_TEST_FILE);
   } catch (e: any) {
@@ -58,11 +60,13 @@ export function buildSendMail(options: BuildSendMailOptions) {
   }
 
   return async function sendMail(mail: ComponentMail) {
+    const config = await getConfig();
+
     // anonymous telemetry
-    if (anonymousId) {
+    if (config?.anonymousId) {
       postHogClient().capture({
-        distinctId: argv.anonymousId,
-        event: "cli init",
+        distinctId: config.anonymousId,
+        event: "sendMail",
       });
     }
 
