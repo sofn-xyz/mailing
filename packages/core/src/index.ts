@@ -5,8 +5,14 @@ import fs from "fs-extra";
 import { render } from "./mjml";
 import { error, log } from "./log";
 import fetch from "node-fetch";
-import { getConfig } from "./util/config";
 import postHogClient from "./util/postHog";
+
+export type Config = {
+  emailsDir?: string;
+  quiet?: boolean;
+  port?: number;
+  anonymousId?: string | null;
+};
 
 export type ComponentMail = nodemailer.SendMailOptions & {
   component?: ReactElement<any, string | JSXElementConstructor<any>>;
@@ -16,6 +22,7 @@ export type ComponentMail = nodemailer.SendMailOptions & {
 export type BuildSendMailOptions = {
   transport: nodemailer.Transporter;
   defaultFrom: string;
+  config?: Config;
 };
 
 // In test, we write the email queue to this file so that it can be read
@@ -59,9 +66,9 @@ export function buildSendMail(options: BuildSendMailOptions) {
     throw new Error("buildSendMail options are missing defaultFrom");
   }
 
-  return async function sendMail(mail: ComponentMail) {
-    const config = await getConfig();
+  const config = options?.config;
 
+  return async function sendMail(mail: ComponentMail) {
     // anonymous telemetry
     if (config?.anonymousId) {
       postHogClient().capture({
