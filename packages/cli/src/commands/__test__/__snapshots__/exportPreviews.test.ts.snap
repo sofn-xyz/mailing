@@ -1,12 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`exportPreviews command cli runs on templates 1`] = `
-"[37mmailing[39m Exporting preview html to
-[37mmailing[39m ./previews_html
-[37mmailing[39m   |-- text_email_reset_password.html
-[37mmailing[39m   |-- text_email_account_deleted.html
-[37mmailing[39m   |-- text_email_new_sign_in.html
-[37mmailing[39m   |-- welcome_to_amelita.html
-[37mmailing[39m ✅ Processed 4 previews
+"mailing Exporting preview html to
+mailing ./previews_html
+mailing   |-- text_email_reset_password.html
+mailing   |-- text_email_account_deleted.html
+mailing   |-- text_email_new_sign_in.html
+mailing   |-- welcome_to_amelita.html
+mailing ✅ Processed 4 previews
 "
 `;

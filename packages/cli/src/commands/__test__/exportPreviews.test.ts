@@ -1,7 +1,7 @@
-import { execSync } from "child_process";
 import fsExtra from "fs-extra";
 import { log, error } from "../../util/log";
 import { ExportPreviewsArgs, handler } from "../exportPreviews";
+import execCli from "./execCli";
 
 jest.mock("../../util/log");
 
@@ -31,9 +31,7 @@ describe("exportPreviews command", () => {
 
   describe("cli", () => {
     it("runs on templates", () => {
-      const out = execSync(
-        __dirname + "/../../dev.js export-previews"
-      ).toString();
+      const out = execCli("export-previews");
       expect(out).toMatchSnapshot();
     });
   });
