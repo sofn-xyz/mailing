@@ -1,4 +1,10 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, {
+  JSXElementConstructor,
+  ReactElement,
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
 import { useRouter } from "next/router";
 import Header from "../../../components/Header";
 import HotIFrame from "../../../components/HotIFrame";
@@ -42,25 +48,53 @@ export const getStaticProps: GetStaticProps = async (context) => {
   const { previewFunction, previewClass } = context.params as Params;
   const component = getPreviewComponent(previewClass, previewFunction);
 
-  const initialData = render(component);
+  const preview = render(component);
 
   return {
-    props: { initialData },
+    props: { initialData: { preview, previews: previewTree() } },
     revalidate: 1,
   };
 };
 
-const Preview = ({ initialData }: { initialData: ShowPreviewResponseBody }) => {
+type Data = {
+  preview: ShowPreviewResponseBody;
+  previews: [string, string[]][];
+};
+
+type PreviewProps = {
+  initialData: Data;
+};
+
+async function fetchJson(url: string) {
+  const response = await fetch(url);
+  return await response.json();
+}
+
+const Preview: NextPage<PreviewProps> = ({ initialData }) => {
   const router = useRouter();
   const [viewMode, setViewMode] = useState<ViewMode>("desktop");
-  const [data, setData] = useState<ShowPreviewResponseBody | null>(initialData);
+  const [data, setData] = useState<Data | null>(initialData);
   const fetchData = useCallback(async () => {
-    const response = await fetch(`/api/${document.location.pathname}`);
-    setData(await response.json());
+    const json = await Promise.all([
+      fetchJson(`/api/${document.location.pathname}`),
+      fetchJson("/api/previews"),
+    ]);
+    setData({
+      preview: json[0],
+      previews: json[1],
+    });
   }, [setData]);
   useLiveReload(fetchData);
 
+  const navigateTo = useCallback(
+    (previewClass, previewFunction) => {
+      console.log(previewClass, previewFunction);
+    },
+    [router]
+  );
+
   const { previewClass, previewFunction } = router.query;
+  const { preview, previews } = data;
 
   if (!(previewClass && previewFunction)) {
     return <></>;
@@ -104,22 +138,28 @@ const Preview = ({ initialData }: { initialData: ShowPreviewResponseBody }) => {
           </>
         }
       />
-      {!!data?.errors.length && <MjmlErrors errors={data.errors} />}
-      {data?.html && !data?.errors.length && (
-        <HotIFrame
-          srcDoc={data.html}
-          viewMode={viewMode}
-          setViewMode={setViewMode}
-        />
-      )}
+      <div className="left-pane">{JSON.stringify(previews)}</div>
+      <div className="right-pane">
+        {!!preview?.errors.length && <MjmlErrors errors={preview?.errors} />}
+        {preview?.html && !preview?.errors.length && (
+          <HotIFrame
+            srcDoc={preview.html}
+            viewMode={viewMode}
+            setViewMode={setViewMode}
+          />
+        )}
+      </div>
 
       <style jsx>{`
-        iframe {
-          margin-top: 8px;
-          height: calc(100vh - 50px);
-          width: 100%;
-          max-width: ${viewMode === "mobile" ? "320px" : "100%"};
-          border: 0;
+        .left-pane {
+          height: calc(100vh - 65px);
+          display: inline-block;
+          max-width: 300px;
+          vertical-align: top;
+        }
+        .right-pane {
+          display: inline-block;
+          width: calc(100vw - 300px);
         }
         .title {
           padding-bottom: 4px;
