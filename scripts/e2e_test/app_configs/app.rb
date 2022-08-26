@@ -20,7 +20,7 @@ class App
       verify_package_json_exists!
     end
 
-    yalc_add_mailing!
+    yalc_add_packages!
     yarn!
   end
 
@@ -56,11 +56,11 @@ private
     fail "missing package.json in #{@root_dir}" unless File.exist?(File.join(@root_dir, "package.json"))
   end
 
-  ## add mailing to the project
-  def yalc_add_mailing!
-    puts "Adding mailing via yalc"
+  ## yalc add mailing and mailing-cor to the project
+  def yalc_add_packages!
+    puts "Adding mailing and mailing-core via yalc"
     Dir.chdir(@root_dir) do
-      system_quiet("npx yalc add --dev mailing")
+      system_quiet("npx yalc add --dev mailing mailing-core")
     end
   end
   
