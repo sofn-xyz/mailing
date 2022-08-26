@@ -13,6 +13,7 @@ import {
 } from "fs-extra";
 
 import { debug, log } from "../../../util/log";
+import { build } from "esbuild";
 
 export const COMPONENT_FILE_REGEXP = /^[^\s-]+\.[tj]sx$/; // no spaces, .jsx or .tsx
 
@@ -98,6 +99,36 @@ export async function linkEmailsDirectory(emailsDir: string) {
   debug(`copied ${emailsDir} to ${mailingEmailsPath}`);
   debug("writing module manifest to", manifestPath);
   await writeFile(manifestPath, contents);
+
+  console.log("bundle module manifest...", manifestPath + ".bundle.ts");
+  // non-working swc version
+  // const bundleOptions: BundleInput = {
+  //   entry: {
+  //     manifestPath,
+  //   },
+  //   output: {
+  //     name: "index.ts",
+  //     path: ".",
+  //   },
+  //   module: {
+  //     type: "commonjs",
+  //   },
+  // };
+  // await bundle(bundleOptions);
+
+  const pkg = require("../../../../package.json");
+  const bundled = await build({
+    entryPoints: [manifestPath],
+    write: true,
+    bundle: true,
+    target: "node12",
+    external: [
+      ...Object.keys(pkg.dependencies || {}),
+      ...Object.keys(pkg.peerDependencies || {}),
+    ],
+  });
+
+  console.log("bundled", bundled);
 
   delete require.cache[manifestPath];
 }

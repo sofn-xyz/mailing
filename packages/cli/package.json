@@ -51,6 +51,7 @@
     "@types/yargs": "^17.0.10",
     "chalk": "^4.1.2",
     "dotenv": "^16.0.1",
+    "esbuild": "^0.15.5",
     "fs-extra": "^10.1.0",
     "lodash": "^4.17.21",
     "mailing-core": "^0.7.1",
