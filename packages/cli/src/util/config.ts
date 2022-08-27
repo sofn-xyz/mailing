@@ -64,15 +64,20 @@ export function writeDefaultConfigFile(): void {
       error(err);
     }
 
+    // ascii art moment
     logPlain(`
-    ███╗   ███╗ █████╗ ██╗██╗     ██╗███╗   ██╗ ██████╗ 
-    ████╗ ████║██╔══██╗██║██║     ██║████╗  ██║██╔════╝ 
-    ██╔████╔██║███████║██║██║     ██║██╔██╗ ██║██║  ███╗
-    ██║╚██╔╝██║██╔══██║██║██║     ██║██║╚██╗██║██║   ██║
-    ██║ ╚═╝ ██║██║  ██║██║███████╗██║██║ ╚████║╚██████╔╝
-    ╚═╝     ╚═╝╚═╝  ╚═╝╚═╝╚══════╝╚═╝╚═╝  ╚═══╝ ╚═════╝ 
-    
-        `);
+  ,,    ,,    ,,
+  \`7MMM.     ,MMF'           db  \`7MM    db
+    MMMb    dPMM                   MM
+    M YM   ,M MM   ,6"Yb.  \`7MM    MM  \`7MM  \`7MMpMMMb.  .P"Ybmmm
+    M  Mb  M' MM  8)   MM    MM    MM    MM    MM    MM :MI  I8
+    M  YM.P'  MM   ,pm9MM    MM    MM    MM    MM    MM  WmmmP"
+    M  \`YM'   MM  8M   MM    MM    MM    MM    MM    MM 8M
+  .JML. \`'  .JMML.\`Moo9^Yo..JMML..JMML..JMML..JMML  JMML.YMMMMMb
+                                                        6'     dP
+                                                        Ybmmmd'
+
+    `);
     log(
       `added mailing.config.json to your project with the following contents:
 ${configJsonString}`
