@@ -1,10 +1,4 @@
-import React, {
-  JSXElementConstructor,
-  ReactElement,
-  useCallback,
-  useEffect,
-  useState,
-} from "react";
+import React, { useCallback, useState } from "react";
 import { useRouter } from "next/router";
 import Header from "../../../components/Header";
 import HotIFrame from "../../../components/HotIFrame";
@@ -17,6 +11,7 @@ import {
   getPreviewComponent,
   previewTree,
 } from "../../../util/moduleManifestUtil";
+import IndexPane from "../../../components/IndexPane/IndexPane";
 
 type Params = { previewClass: string; previewFunction: string };
 
@@ -76,16 +71,17 @@ const Preview: NextPage<PreviewProps> = ({ initialData }) => {
   const [data, setData] = useState<Data | null>(initialData);
   const fetchData = useCallback(async () => {
     const json = await Promise.all([
-      fetchJson(`/api/${document.location.pathname}`),
+      fetchJson(`/api${document.location.pathname}`),
       fetchJson("/api/previews"),
     ]);
     setData({
       preview: json[0],
-      previews: json[1],
+      previews: json[1].previews,
     });
-  }, [setData]);
+  }, [setData, router.pathname]);
   useLiveReload(fetchData);
 
+  console.log(data);
   const navigateTo = useCallback(
     (previewClass, previewFunction) => {
       console.log(previewClass, previewFunction);
@@ -99,6 +95,13 @@ const Preview: NextPage<PreviewProps> = ({ initialData }) => {
   if (!(previewClass && previewFunction)) {
     return <></>;
   }
+
+  const showNullState =
+    previews.length === 0 ||
+    (previews.length === 2 &&
+      previews[0][0] === "TextEmail.tsx" &&
+      previews[1][0] === "Welcome.tsx" &&
+      !process.env.NEXT_PUBLIC_STATIC);
 
   return (
     <div>
@@ -138,28 +141,37 @@ const Preview: NextPage<PreviewProps> = ({ initialData }) => {
           </>
         }
       />
-      <div className="left-pane">{JSON.stringify(previews)}</div>
-      <div className="right-pane">
-        {!!preview?.errors.length && <MjmlErrors errors={preview?.errors} />}
-        {preview?.html && !preview?.errors.length && (
-          <HotIFrame
-            srcDoc={preview.html}
-            viewMode={viewMode}
-            setViewMode={setViewMode}
-          />
-        )}
+      <div className="relative">
+        <div className="left-pane">
+          <IndexPane previews={previews} />
+        </div>
+        <div className="right-pane">
+          {!!preview?.errors.length && <MjmlErrors errors={preview?.errors} />}
+          {preview?.html && !preview?.errors.length && (
+            <HotIFrame
+              srcDoc={preview.html}
+              viewMode={viewMode}
+              setViewMode={setViewMode}
+            />
+          )}
+        </div>
       </div>
-
       <style jsx>{`
         .left-pane {
-          height: calc(100vh - 65px);
-          display: inline-block;
-          max-width: 300px;
-          vertical-align: top;
+          width: 300px;
+          position: absolute;
+          top: 65px;
+          bottom: 0;
+          left: 0;
+          overflow: scroll;
         }
         .right-pane {
-          display: inline-block;
-          width: calc(100vw - 300px);
+          position: absolute;
+          top: 65px;
+          bottom: 0;
+          right: 0;
+          left: 300px;
+          width: calc(100vw - 40px);
         }
         .title {
           padding-bottom: 4px;
