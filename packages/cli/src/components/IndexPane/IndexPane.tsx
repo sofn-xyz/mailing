@@ -23,15 +23,15 @@ const IndexPane: React.FC<IndexPaneProps> = ({ previews }) => {
 
   return (
     <>
-      <label>
+      <label className="toggle">
         <input type="checkbox" onChange={handleToggle} checked={compact} />
       </label>
-      {previews ? view : "Loading"}
+      {previews?.map ? view : "Loading"}
 
       <style jsx>{`
-        .frame {
-          margin: auto;
-          display: block;
+        .toggle {
+          float: right;
+          position: relative;
         }
       `}</style>
     </>

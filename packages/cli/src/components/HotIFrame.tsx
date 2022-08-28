@@ -30,7 +30,6 @@ const HotIFrame: React.FC<HotIFrameProps> = ({
       <style jsx>{`
         .frame {
           margin: auto;
-          display: block;
         }
         .mobile.frame {
           padding: 64px 16px 74px;
@@ -43,6 +42,7 @@ const HotIFrame: React.FC<HotIFrameProps> = ({
           max-width: 320px;
         }
         iframe {
+          vertical-align: top;
           width: 100%;
           border: none;
           height: calc(100vh - 65px);

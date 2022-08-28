@@ -61,40 +61,31 @@ type PreviewProps = {
 };
 
 async function fetchJson(url: string) {
-  const response = await fetch(url);
+  const response = await fetch(url, {
+    headers: { "Content-Type": "application/json" },
+  });
   return await response.json();
 }
 
 const Preview: NextPage<PreviewProps> = ({ initialData }) => {
   const router = useRouter();
+  const { previewClass, previewFunction } = router.query;
   const [viewMode, setViewMode] = useState<ViewMode>("desktop");
   const [data, setData] = useState<Data | null>(initialData);
   const fetchData = useCallback(async () => {
+    if (!previewClass || !previewFunction) return;
     const json = await Promise.all([
-      fetchJson(`/api${document.location.pathname}`),
-      fetchJson("/api/previews"),
+      fetchJson(`/api/previews/${previewClass}/${previewFunction}`),
+      // fetchJson("/api/previews"),
     ]);
     setData({
       preview: json[0],
-      previews: json[1].previews,
+      previews: json[0].previews,
     });
-  }, [setData, router.pathname]);
+  }, [setData, previewClass, previewFunction]);
   useLiveReload(fetchData);
 
-  console.log(data);
-  const navigateTo = useCallback(
-    (previewClass, previewFunction) => {
-      console.log(previewClass, previewFunction);
-    },
-    [router]
-  );
-
-  const { previewClass, previewFunction } = router.query;
   const { preview, previews } = data;
-
-  if (!(previewClass && previewFunction)) {
-    return <></>;
-  }
 
   const showNullState =
     previews.length === 0 ||
@@ -143,6 +134,13 @@ const Preview: NextPage<PreviewProps> = ({ initialData }) => {
       />
       <div className="relative">
         <div className="left-pane">
+          {showNullState && (
+            <div className="null-sub">
+              Build new email templates in <span className="code">emails</span>.
+              Add previews to <span className="code">emails/previews</span> and
+              they’ll appear below.
+            </div>
+          )}
           <IndexPane previews={previews} />
         </div>
         <div className="right-pane">
@@ -171,7 +169,7 @@ const Preview: NextPage<PreviewProps> = ({ initialData }) => {
           bottom: 0;
           right: 0;
           left: 300px;
-          width: calc(100vw - 40px);
+          width: calc(100vw - 300px);
         }
         .title {
           padding-bottom: 4px;

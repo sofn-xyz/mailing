@@ -16,6 +16,7 @@ const ClientView: React.FC<ClientViewProps> = ({ previews }) => {
               <Link
                 key={previewFunction}
                 href={`/previews/${preview[0]}/${previewFunction}`}
+                shallow
               >
                 <a className="email">{previewFunction}</a>
               </Link>
@@ -27,6 +28,7 @@ const ClientView: React.FC<ClientViewProps> = ({ previews }) => {
         .email-group {
           margin: auto;
           display: block;
+          padding: 32px;
         }
       `}</style>
     </>

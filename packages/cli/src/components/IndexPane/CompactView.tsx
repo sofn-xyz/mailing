@@ -1,67 +1,51 @@
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 type CompactViewProps = {
   previews: [string, string[]][];
 };
 
 const CompactView: React.FC<CompactViewProps> = ({ previews }) => {
+  const router = useRouter();
+  const { previewClass, previewFunction } = router.query;
+  console.log(typeof previewClass, previewClass);
+  console.log(typeof previewFunction, previewFunction);
+
   return (
     <>
       Compact
       {previews.map((preview) => (
         <div className="email-group" key={preview[0]}>
           <h2>{preview[0]}</h2>
-          {preview[1].map((previewFunction) => (
-            <div className="email-container" key={previewFunction}>
+          {preview[1].map((pFunction) => (
+            <div
+              className={`email-container ${
+                previewFunction === pFunction && previewClass === preview[0]
+                  ? " active"
+                  : ""
+              }`}
+              key={preview[0] + ";" + pFunction}
+            >
               <Link
-                key={previewFunction}
-                href={`/previews/${preview[0]}/${previewFunction}`}
+                href={`/previews/${preview[0]}/${pFunction}`}
+                shallow
+                key={preview[0] + ";" + pFunction}
               >
-                <a className="email">{previewFunction}</a>
+                <a>
+                  {previewFunction === pFunction && previewClass === preview[0]
+                    ? " active"
+                    : ""}
+                  {pFunction}
+                  <br />
+                  <br />
+                </a>
               </Link>
             </div>
           ))}
         </div>
       ))}
       <style jsx>{`
-        .frame {
-          margin: auto;
-          display: block;
-        }
-        .mobile.frame {
-          padding: 64px 16px 74px;
-          max-width: 324px;
-          border-radius: 32px;
-          margin: 64px auto;
-        }
-        .mobile iframe {
-          height: 568px;
-          max-width: 320px;
-        }
-        iframe {
-          width: 100%;
-          border: none;
-          height: calc(100vh - 65px);
-        }
-        .mobile,
-        .mobile iframe {
-          border: 1px dotted #333;
-        }
-        .code-container {
-          font-size: 10px;
-          white-space: pre-wrap;
-          padding: 16px;
-          outline: none;
-          height: calc(100vh - 65px);
-          width: 100%;
-          resize: none;
-        }
-        @media (prefers-color-scheme: dark) {
-          .code-container {
-            white-space: pre-wrap;
-            color: white;
-            background: #212121;
-          }
+        .active {
         }
       `}</style>
     </>
