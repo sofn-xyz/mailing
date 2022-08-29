@@ -66,13 +66,14 @@ export async function linkEmailsDirectory(emailsDir: string) {
 
   const contents =
     `import sendMail from "./emails";\n` +
+    `import config from "../../mailing.config.json";\n` +
     templateImports.join("\n") +
     "\n" +
     previewImports.join("\n") +
     "\n\n" +
     `const previews = { ${previewConsts.join(", ")} };\n` +
     `const templates = { ${templateModuleNames.join(", ")} };\n\n` +
-    `export { templates, previews, sendMail };\n` +
+    `export { config, templates, previews, sendMail };\n` +
     `const moduleManifest = { templates, previews, sendMail };\n` +
     `export default moduleManifest;\n\n`;
 
@@ -117,8 +118,11 @@ export async function linkEmailsDirectory(emailsDir: string) {
   // await bundle(bundleOptions);
 
   const pkg = require("../../../../package.json");
+  const outdir = ".mailing/bundled";
+
   const bundled = await build({
     entryPoints: [manifestPath],
+    outdir,
     write: true,
     bundle: true,
     target: "node12",
@@ -128,7 +132,7 @@ export async function linkEmailsDirectory(emailsDir: string) {
     ],
   });
 
-  console.log("bundled", bundled);
+  debug("bundled to", outdir);
 
   delete require.cache[manifestPath];
 }
