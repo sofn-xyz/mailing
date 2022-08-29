@@ -130,6 +130,10 @@ export async function linkEmailsDirectory(emailsDir: string) {
 
   debug("bundled to", outdir);
 
+  // delete the original .ts files so there is no confusion loading the bundled .js files
+  await remove(manifestPath);
+  await remove(feManifestPath);
+
   delete require.cache[manifestPath];
 }
 
