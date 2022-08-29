@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { error } from "../../../util/log";
-import { sendMail } from "../../../moduleManifest";
+import sendMail from "../../../emails";
 import { getPreviewComponent } from "../../../util/moduleManifestUtil";
 
 export default async function showPreviewsIndex(

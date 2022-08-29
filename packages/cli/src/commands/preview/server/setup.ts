@@ -26,6 +26,7 @@ export type PreviewServerOptions = {
 export async function linkEmailsDirectory(emailsDir: string) {
   const mailingPath = ".mailing/src";
   const manifestPath = mailingPath + "/moduleManifest.ts";
+  const feManifestPath = mailingPath + "/feManifest.ts";
   const previewsPath = emailsDir + "/previews";
   const mailingEmailsPath = mailingPath + "/emails";
 
@@ -64,8 +65,7 @@ export async function linkEmailsDirectory(emailsDir: string) {
     templateImports.push(`import ${moduleName} from "./emails/${moduleName}";`);
   });
 
-  const contents =
-    `import sendMail from "./emails";\n` +
+  const moduleManifestContents =
     `import config from "../../mailing.config.json";\n` +
     templateImports.join("\n") +
     "\n" +
@@ -73,9 +73,19 @@ export async function linkEmailsDirectory(emailsDir: string) {
     "\n\n" +
     `const previews = { ${previewConsts.join(", ")} };\n` +
     `const templates = { ${templateModuleNames.join(", ")} };\n\n` +
-    `export { config, templates, previews, sendMail };\n` +
-    `const moduleManifest = { templates, previews, sendMail };\n` +
+    `export { config, templates, previews };\n` +
+    `const moduleManifest = { templates, previews };\n` +
     `export default moduleManifest;\n\n`;
+
+  await writeFile(manifestPath, moduleManifestContents);
+
+  const feManifestContents =
+    `import config from "../../mailing.config.json";\n` +
+    `export { config };\n` +
+    `const feManifest = { config };\n` +
+    `export default feManifest;\n\n`;
+
+  await writeFile(feManifestPath, feManifestContents);
 
   // Re-copy emails directory
   await remove(mailingEmailsPath);
@@ -99,33 +109,19 @@ export async function linkEmailsDirectory(emailsDir: string) {
 
   debug(`copied ${emailsDir} to ${mailingEmailsPath}`);
   debug("writing module manifest to", manifestPath);
-  await writeFile(manifestPath, contents);
 
   console.log("bundle module manifest...", manifestPath + ".bundle.ts");
-  // non-working swc version
-  // const bundleOptions: BundleInput = {
-  //   entry: {
-  //     manifestPath,
-  //   },
-  //   output: {
-  //     name: "index.ts",
-  //     path: ".",
-  //   },
-  //   module: {
-  //     type: "commonjs",
-  //   },
-  // };
-  // await bundle(bundleOptions);
 
   const pkg = require("../../../../package.json");
-  const outdir = ".mailing/bundled";
+  const outdir = ".mailing/src";
 
   const bundled = await build({
-    entryPoints: [manifestPath],
+    entryPoints: [manifestPath, feManifestPath],
     outdir,
     write: true,
     bundle: true,
     target: "node12",
+    format: "esm",
     external: [
       ...Object.keys(pkg.dependencies || {}),
       ...Object.keys(pkg.peerDependencies || {}),
