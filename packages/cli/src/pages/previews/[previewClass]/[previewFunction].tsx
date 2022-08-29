@@ -71,7 +71,7 @@ const Preview: NextPage<PreviewProps> = ({ initialData }) => {
   const router = useRouter();
   const { previewClass, previewFunction } = router.query;
   const [viewMode, setViewMode] = useState<ViewMode>("desktop");
-  const [data, setData] = useState<Data | null>(initialData);
+  const [data, setData] = useState<Data>(initialData);
   const fetchData = useCallback(async () => {
     if (!previewClass || !previewFunction) return;
     const json = await Promise.all([
@@ -85,9 +85,10 @@ const Preview: NextPage<PreviewProps> = ({ initialData }) => {
   }, [setData, previewClass, previewFunction]);
   useLiveReload(fetchData);
 
-  const { preview, previews } = data;
+  const { preview, previews } = data || { preview: null, previews: [] };
 
   const showNullState =
+    !data ||
     previews.length === 0 ||
     (previews.length === 2 &&
       previews[0][0] === "TextEmail.tsx" &&
@@ -132,7 +133,7 @@ const Preview: NextPage<PreviewProps> = ({ initialData }) => {
           </>
         }
       />
-      <div className="relative">
+      <div>
         <div className="left-pane">
           {showNullState && (
             <div className="null-sub">
@@ -155,18 +156,18 @@ const Preview: NextPage<PreviewProps> = ({ initialData }) => {
         </div>
       </div>
       <style jsx>{`
-        .left-pane {
-          width: 300px;
-          position: absolute;
-          top: 65px;
-          bottom: 0;
-          left: 0;
-          overflow: scroll;
-        }
+        .left-pane,
         .right-pane {
           position: absolute;
+          overflow: scroll;
           top: 65px;
           bottom: 0;
+        }
+        .left-pane {
+          width: 300px;
+          left: 0;
+        }
+        .right-pane {
           right: 0;
           left: 300px;
           width: calc(100vw - 300px);

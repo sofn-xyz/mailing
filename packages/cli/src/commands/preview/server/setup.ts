@@ -1,4 +1,4 @@
-import { resolve } from "path";
+import { relative, resolve } from "path";
 import { execSync } from "child_process";
 import {
   copy,
@@ -149,16 +149,37 @@ export async function bootstrapMailingDir() {
 
   await rm(mailingPath, { recursive: true, force: true });
   await mkdir(mailingPath, { recursive: true });
-  await copy(nodeMailingPath, mailingPath, {
-    recursive: true,
-    dereference: true,
-    overwrite: true,
-    filter: (path) => {
-      return !/__test__|generator_templates|src\/commands|src\/index\.ts$|src\/dev\.js$|\.mailing$|\.next$|node_modules$|\/cypress$/.test(
-        path
-      );
-    },
-  });
+  if (process.env.MM_DEV) {
+    await Promise.all(
+      (
+        await readdir(nodeMailingPath)
+      )
+        .filter(
+          (path) =>
+            !/__test__|generator_templates|src\/commands|src\/index\.ts$|src\/dev\.js$|\.mailing$|\.next|node_modules$|\/cypress$/.test(
+              path
+            )
+        )
+        .map(async (p) =>
+          copy(p, mailingPath + "/" + relative(".", p), {
+            recursive: true,
+            dereference: true,
+            overwrite: true,
+          })
+        )
+    );
+  } else {
+    await copy(nodeMailingPath, mailingPath, {
+      recursive: true,
+      dereference: true,
+      overwrite: true,
+      filter: (path) => {
+        return !/__test__|generator_templates|src\/commands|src\/index\.ts$|src\/dev\.js$|\.mailing$|\.next$|node_modules$|\/cypress$/.test(
+          path
+        );
+      },
+    });
+  }
 
   // add .mailing to .gitignore if it does not exist
   try {

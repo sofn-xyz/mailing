@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 body {
   font-family: neue-haas-unica, sans-serif;
   font-weight: 400;
