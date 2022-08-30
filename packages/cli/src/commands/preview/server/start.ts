@@ -2,10 +2,11 @@ import http from "http";
 import { relative, resolve } from "path";
 import open from "open";
 import next from "next";
-import { watch, pathExists } from "fs-extra";
+import { pathExists } from "fs-extra";
 import { debounce } from "lodash";
 import { cwd } from "process";
 import { parse } from "url";
+import { watch } from "chokidar";
 
 import { getPreviewsDirectory } from "../../../util/paths";
 import { error, log, debug } from "../../../util/log";
@@ -160,7 +161,7 @@ export default async function startPreviewServer() {
       shouldReload = true;
     }, 200);
 
-    watch(changeWatchPath, { recursive: true }, (eventType, filename) => {
+    watch(changeWatchPath).on("all", (eventType, filename) => {
       if (WATCH_IGNORE.test(filename)) return;
       log(`detected ${eventType} on ${filename}, reloading`);
       delete require.cache[resolve(changeWatchPath, filename)];
