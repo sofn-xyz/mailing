@@ -12,6 +12,7 @@ export default function useRoutes({
   previews,
 }: {
   previews: [string, string[]][];
+  withTemplates?: boolean;
 }) {
   const router = useRouter();
   const { previewClass, previewFunction } = router.query;

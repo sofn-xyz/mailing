@@ -87,14 +87,6 @@ const Preview: NextPage<PreviewProps> = ({ initialData }) => {
 
   const { preview, previews } = data || { preview: null, previews: [] };
 
-  const showNullState =
-    !data ||
-    previews.length === 0 ||
-    (previews.length === 2 &&
-      previews[0][0] === "TextEmail.tsx" &&
-      previews[1][0] === "Welcome.tsx" &&
-      !process.env.NEXT_PUBLIC_STATIC);
-
   return (
     <div>
       <Header
@@ -135,13 +127,6 @@ const Preview: NextPage<PreviewProps> = ({ initialData }) => {
       />
       <div>
         <div className="left-pane">
-          {showNullState && (
-            <div className="null-sub">
-              Build new email templates in <span className="code">emails</span>.
-              Add previews to <span className="code">emails/previews</span> and
-              they’ll appear below.
-            </div>
-          )}
           <IndexPane previews={previews} />
         </div>
         <div className="right-pane">
