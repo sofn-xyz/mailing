@@ -1,8 +1,5 @@
 import Link from "next/link";
-import { useRouter } from "next/router";
 import { useHotkeys } from "react-hotkeys-hook";
-import { flatten } from "lodash";
-import { useCallback } from "react";
 import useRoutes from "./useRoutes";
 
 type CompactViewProps = {
@@ -16,6 +13,8 @@ const CompactView: React.FC<CompactViewProps> = ({ previews }) => {
   useHotkeys(
     "up, down, left, right",
     (e, handler) => {
+      if (!routes || !current) return;
+
       if (handler.key === "up") {
         const next = routes[(current - 1 + routes.length) % routes.length];
         router.replace(next.path, undefined, { shallow: true });

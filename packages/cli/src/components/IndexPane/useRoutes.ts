@@ -15,8 +15,8 @@ export default function useRoutes({
 }) {
   const router = useRouter();
   const { previewClass, previewFunction } = router.query;
-  const [routes, setRoutes] = useState<Route[]>(null);
-  const [current, setCurrent] = useState<number>(null);
+  const [routes, setRoutes] = useState<Route[] | null>(null);
+  const [current, setCurrent] = useState<number | null>(null);
 
   useEffect(() => {
     const flat = flatten(
@@ -35,7 +35,7 @@ export default function useRoutes({
 
     setRoutes(flat);
     setCurrent(idx);
-  }, [previews, setRoutes, setCurrent]);
+  }, [previews, setRoutes, setCurrent, previewClass, previewFunction]);
 
   return { routes, current, router };
 }
