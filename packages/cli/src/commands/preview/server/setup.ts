@@ -14,7 +14,7 @@ import {
 } from "fs-extra";
 
 import { debug, log } from "../../../util/log";
-import { build } from "esbuild";
+import { build, BuildOptions } from "esbuild";
 
 export const COMPONENT_FILE_REGEXP = /^[^\s-]+\.[tj]sx$/; // no spaces, .jsx or .tsx
 
@@ -196,7 +196,7 @@ async function buildManifest(
 ) {
   const buildOutdir = ".mailing/src";
 
-  const buildOpts = {
+  const buildOpts: BuildOptions = {
     entryPoints: [manifestPath],
     outdir: buildOutdir,
     write: true,
@@ -206,8 +206,6 @@ async function buildManifest(
       ...Object.keys(pkg.dependencies || {}),
       ...Object.keys(pkg.peerDependencies || {}),
     ],
-    platform: undefined,
-    target: undefined,
   };
 
   if ("node" === buildType) {
