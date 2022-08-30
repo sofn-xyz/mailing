@@ -25,7 +25,6 @@ export default function usePreviewHotkeys({ setViewMode }: Options) {
   const router = useRouter();
   const handleKey = useCallback(
     (e: KeyboardEvent) => {
-      console.log("config is", config);
       switch (e.key) {
         case hotkeysMap.showPreviews:
           router.push("/");
