@@ -10,7 +10,6 @@ import {
   MjmlImage,
   MjmlSpacer,
 } from "mjml-react";
-import BulletedList from "./components/BulletedList";
 import ButtonPrimary from "./components/ButtonPrimary";
 import {
   leadingTight,
@@ -30,7 +29,7 @@ const MyFirstEmail: React.FC<{ name: string }> = ({ name }) => (
             cssClass="hero"
             padding="0 0 40px"
             align="left"
-            src="https://s3.amazonaws.com/lab.campsh.com/real%402x.jpg"
+            src="https://s3.amazonaws.com/lab.campsh.com/bb-hero%402x.jpg"
           />
         </MjmlColumn>
       </MjmlSection>
@@ -42,52 +41,30 @@ const MyFirstEmail: React.FC<{ name: string }> = ({ name }) => (
             fontSize={textXl}
             lineHeight={leadingTight}
           >
-            Welcome, {name}!
+            {name}, your table awaits.
           </MjmlText>
           <MjmlText
-            padding="24px 0 16px"
+            padding="24px 0 0"
             fontSize={textBase}
             lineHeight={leadingRelaxed}
             cssClass="paragraph"
           >
-            Mailing makes it easy to send great emails from your React app.
-            Here’s a bit about Mailing in a nutshell:
+            Thank you for joining BookBook! We’re excited to help you enjoy
+            great meals without any begging, guessing, waiting or phone calls.
+            Just a couple taps, and the table is yours.
           </MjmlText>
-          <BulletedList
-            items={[
-              "Email templates with React components",
-              "MJML components that work across clients (Outlook!)",
-              "Preview server for quick development",
-              "Dev mode opens emails in your browser instead of sending",
-              "Test mode for ensuring emails send and have the correct content",
-              "Plays well with js frameworks like redwood.js, remix, next.js",
-              "Written in Typescript, inspired by Action Mailer from Ruby on Rails",
-            ]}
-          />
           <MjmlSpacer height="24px" />
-          <ButtonPrimary
-            link={"https://github.com/psugihara/mailing"}
-            uiText={"View Github Repo"}
-          />
+          <ButtonPrimary link="#" uiText={"Book a Reservation"} />
           <MjmlSpacer height="24px" />
           <MjmlText
-            cssClass="paragraph"
             padding="0"
             fontSize={textBase}
             lineHeight={leadingRelaxed}
-          >
-            Thank you for checking out our project. We’d love to hear your ideas
-            on how we can make sending great emails more fun and simple.
-          </MjmlText>
-          <MjmlText
-            padding="16px 0 0"
-            fontSize={textBase}
-            lineHeight={leadingRelaxed}
             cssClass="paragraph"
           >
-            ♥,
+            Enjoy!
             <br />
-            Mailing
+            The BookBook Team
           </MjmlText>
         </MjmlColumn>
       </MjmlSection>

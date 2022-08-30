@@ -10,10 +10,10 @@ const Header: React.FC<HeaderProps> = ({ big }) => {
       <MjmlColumn>
         <MjmlImage
           padding="0 24px 0"
-          width={big ? "146px" : "91px"}
-          height={big ? "32px" : "20px"}
-          align="left"
-          src="https://s3.amazonaws.com/lab.campsh.com/mailing-logo%402x.png"
+          width="49px"
+          height="54px"
+          align="center"
+          src="https://s3.amazonaws.com/lab.campsh.com/bb-transparent%402x.png"
           cssClass="logo"
         />
       </MjmlColumn>
