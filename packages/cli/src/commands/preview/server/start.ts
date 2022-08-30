@@ -161,12 +161,15 @@ export default async function startPreviewServer() {
       shouldReload = true;
     }, 200);
 
-    watch(changeWatchPath).on("all", (eventType, filename) => {
-      if (WATCH_IGNORE.test(filename)) return;
-      log(`detected ${eventType} on ${filename}, reloading`);
-      delete require.cache[resolve(changeWatchPath, filename)];
-      reload();
-    });
+    watch(changeWatchPath, { ignoreInitial: true }).on(
+      "all",
+      (eventType, filename) => {
+        if (WATCH_IGNORE.test(filename)) return;
+        log(`detected ${eventType} on ${filename}, reloading`);
+        delete require.cache[resolve(changeWatchPath, filename)];
+        reload();
+      }
+    );
     log(`watching for changes to ${relative(cwd(), changeWatchPath)}`);
   } catch (e) {
     error(`error starting change watcher`, e);
