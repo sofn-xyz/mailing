@@ -111,50 +111,9 @@ export async function linkEmailsDirectory(emailsDir: string) {
   debug(`copied ${emailsDir} to ${mailingEmailsPath}`);
   debug("writing module manifest to", manifestPath);
 
-  const buildOutdir = ".mailing/src";
-
-  // build moduleManifest.js for node
-  debug("bundling moduleManifest.js...", manifestPath + ".bundle.ts");
-  await build({
-    entryPoints: [manifestPath],
-    outdir: buildOutdir,
-    write: true,
-    bundle: true,
-    platform: "node",
-    target: "node12",
-    format: "esm",
-    external: [
-      ...Object.keys(pkg.dependencies || {}),
-      ...Object.keys(pkg.peerDependencies || {}),
-    ],
-  });
-
-  // delete the original .ts file so there is no confusion loading the bundled .js files
-  await remove(manifestPath);
-  delete require.cache[manifestPath];
-  debug("bundled moduleManifest.js to", buildOutdir);
-
-  // build feManifest.js for the browser
-  debug("bundling feManifest.js...", manifestPath + ".bundle.ts");
-  await build({
-    entryPoints: [feManifestPath],
-    outdir: buildOutdir,
-    write: true,
-    bundle: true,
-    platform: "browser",
-    target: "esnext",
-    format: "esm",
-    external: [
-      ...Object.keys(pkg.dependencies || {}),
-      ...Object.keys(pkg.peerDependencies || {}),
-    ],
-  });
-
-  // delete the original .ts file so there is no confusion loading the bundled .js files
-  await remove(feManifestPath);
-  debug("bundled feManifest.js to", buildOutdir);
-
-  delete require.cache[feManifestPath];
+  // build the module manifests
+  await buildManifest("node", manifestPath);
+  await buildManifest("browser", feManifestPath);
 }
 
 export async function packageJsonVersionsMatch(): Promise<boolean> {
@@ -229,4 +188,42 @@ export async function bootstrapMailingDir() {
       throw err;
     }
   }
+}
+
+async function buildManifest(
+  buildType: "node" | "browser",
+  manifestPath: string
+) {
+  const buildOutdir = ".mailing/src";
+
+  const buildOpts = {
+    entryPoints: [manifestPath],
+    outdir: buildOutdir,
+    write: true,
+    bundle: true,
+    format: "esm",
+    external: [
+      ...Object.keys(pkg.dependencies || {}),
+      ...Object.keys(pkg.peerDependencies || {}),
+    ],
+    platform: undefined,
+    target: undefined,
+  };
+
+  if ("node" === buildType) {
+    buildOpts.platform = "node";
+    buildOpts.target = "node12";
+  } else {
+    buildOpts.platform = "browser";
+    buildOpts.target = "esnext";
+  }
+
+  // build moduleManifest.js for node
+  debug(`bundling ${buildType} manifest for ${manifestPath}...`);
+  await build(buildOpts);
+
+  // delete the original .ts file so there is no confusion loading the bundled .js files
+  await remove(manifestPath);
+  delete require.cache[manifestPath];
+  debug(`bundled ${buildType} manifest for ${manifestPath} to ${buildOutdir}`);
 }
