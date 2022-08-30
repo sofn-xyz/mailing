@@ -2,29 +2,32 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useHotkeys } from "react-hotkeys-hook";
 import { flatten } from "lodash";
+import { useCallback } from "react";
+import useRoutes from "./useRoutes";
 
 type CompactViewProps = {
   previews: [string, string[]][];
 };
 
 const CompactView: React.FC<CompactViewProps> = ({ previews }) => {
-  // const useState()
-  const router = useRouter();
-  const { previewClass, previewFunction } = router.query;
-  // previewClass = previewClass.toString();
+  const { routes, current, router } = useRoutes({ previews });
+  const { previewFunction, previewClass } = router.query;
 
-  useHotkeys("up, down, left, right", (e, handler) => {
-    // console.log("ok", handler.key);
-    if (handler.key === "up") {
-      // const flat = flatten(flatten(previews));
-      // const next =
-      //   flat[(flat.indexOf(previewFunction?.toString() || previewClass) - 1) % flat.length];
-      // console.log(next);
-    } else if (handler.key === "down") {
-    } else if (handler.key === "right") {
-    } else if (handler.key === "left") {
-    }
-  });
+  useHotkeys(
+    "up, down, left, right",
+    (e, handler) => {
+      if (handler.key === "up") {
+        const next = routes[(current - 1 + routes.length) % routes.length];
+        router.replace(next.path, undefined, { shallow: true });
+      } else if (handler.key === "down") {
+        const next = routes[(current + 1) % routes.length];
+        router.replace(next.path, undefined, { shallow: true });
+      } else if (handler.key === "right") {
+      } else if (handler.key === "left") {
+      }
+    },
+    [routes, current]
+  );
 
   return (
     <div className="focus:outline-2 px-3 py-4" tabIndex={1}>
