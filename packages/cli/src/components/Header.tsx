@@ -1,6 +1,7 @@
 import { ReactElement } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import cx from "classnames";
 
 import Tooltip from "./Tooltip";
 import PreviewSender from "./PreviewSender";
@@ -37,7 +38,7 @@ const Header: React.FC<HeaderProps> = ({
       <div className="segmented-control-container">
         <div className="segmented-control">
           <button
-            className={`desktop${viewMode === "desktop" ? " active" : ""}`}
+            className={cx("desktop", { active: viewMode === "desktop" })}
             onClick={() => setViewMode("desktop")}
           >
             <Image
@@ -49,7 +50,7 @@ const Header: React.FC<HeaderProps> = ({
             />
           </button>
           <button
-            className={`mobile${viewMode === "mobile" ? " active" : ""}`}
+            className={cx("mobile", { active: viewMode === "mobile" })}
             onClick={() => setViewMode("mobile")}
           >
             <Image
@@ -61,7 +62,7 @@ const Header: React.FC<HeaderProps> = ({
             />
           </button>
           <button
-            className={`html${viewMode === "html" ? " active" : ""}`}
+            className={cx("html", { active: viewMode === "html" })}
             onClick={() => setViewMode("html")}
           >
             <Image

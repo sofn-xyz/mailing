@@ -51,6 +51,7 @@
     "@types/yargs": "^17.0.10",
     "autoprefixer": "^10.4.8",
     "chalk": "^4.1.2",
+    "classnames": "^2.3.1",
     "dotenv": "^16.0.1",
     "fs-extra": "^10.1.0",
     "lodash": "^4.17.21",

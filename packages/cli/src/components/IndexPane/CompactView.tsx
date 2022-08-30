@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { useHotkeys } from "react-hotkeys-hook";
 import useRoutes from "./useRoutes";
+import cx from "classnames";
 
 type CompactViewProps = {
   previews: [string, string[]][];
@@ -36,11 +37,10 @@ const CompactView: React.FC<CompactViewProps> = ({ previews }) => {
           <div className="pl-2">{preview[0]}</div>
           {preview[1].map((pFunction) => (
             <div
-              className={`email-container pl-4 ${
-                previewFunction === pFunction && previewClass === preview[0]
-                  ? " bg-zinc-300"
-                  : ""
-              }`}
+              className={cx("email-container pl-4", {
+                "bg-zinc-300":
+                  previewFunction === pFunction && previewClass === preview[0],
+              })}
               key={preview[0] + ";" + pFunction}
             >
               <Link
