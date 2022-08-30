@@ -1,5 +1,6 @@
 import { resolve } from "path";
 import { execSync } from "child_process";
+import pkg from "../../../../package.json";
 import {
   copy,
   mkdir,
@@ -112,12 +113,11 @@ export async function linkEmailsDirectory(emailsDir: string) {
 
   console.log("bundle module manifest...", manifestPath + ".bundle.ts");
 
-  const pkg = require("../../../../package.json");
-  const outdir = ".mailing/src";
+  const buildOutdir = ".mailing/src";
 
   const bundled = await build({
     entryPoints: [manifestPath, feManifestPath],
-    outdir,
+    outdir: buildOutdir,
     write: true,
     bundle: true,
     target: "node12",
