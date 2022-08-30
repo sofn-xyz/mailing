@@ -245,7 +245,7 @@ With the REST API, you can use mailing for email templating even if most of your
 
 `GET /api/previews` returns the list of previews. [Example](https://demo.mailing.run/api/previews)
 
-`GET /api/previews/[previewClass]/[previewFunction]` returns the renedered preview and data for `/previews/[previewClass]/[previewFunction]`. [Example](https://demo.mailing.run/api/previews)
+`GET /api/previews/[previewClass]/[previewFunction]` returns the rendered preview and data for `/previews/[previewClass]/[previewFunction]`. [Example](https://demo.mailing.run/api/previews)
 
 <br/>
 
