@@ -13,7 +13,7 @@ const CompactView: React.FC<CompactViewProps> = ({ previews }) => {
   useHotkeys(
     "up, down, left, right",
     (e, handler) => {
-      if (!routes || !current) return;
+      if (!routes || typeof current !== "number") return;
 
       if (handler.key === "up") {
         const next = routes[(current - 1 + routes.length) % routes.length];
