@@ -111,15 +111,16 @@ export async function linkEmailsDirectory(emailsDir: string) {
   debug(`copied ${emailsDir} to ${mailingEmailsPath}`);
   debug("writing module manifest to", manifestPath);
 
-  console.log("bundle module manifest...", manifestPath + ".bundle.ts");
-
   const buildOutdir = ".mailing/src";
 
-  const bundled = await build({
-    entryPoints: [manifestPath, feManifestPath],
+  // build moduleManifest.js for node
+  debug("bundling moduleManifest.js...", manifestPath + ".bundle.ts");
+  await build({
+    entryPoints: [manifestPath],
     outdir: buildOutdir,
     write: true,
     bundle: true,
+    platform: "node",
     target: "node12",
     format: "esm",
     external: [
@@ -128,13 +129,32 @@ export async function linkEmailsDirectory(emailsDir: string) {
     ],
   });
 
-  debug("bundled to", buildOutdir);
-
-  // delete the original .ts files so there is no confusion loading the bundled .js files
+  // delete the original .ts file so there is no confusion loading the bundled .js files
   await remove(manifestPath);
-  await remove(feManifestPath);
-
   delete require.cache[manifestPath];
+  debug("bundled moduleManifest.js to", buildOutdir);
+
+  // build feManifest.js for the browser
+  debug("bundling feManifest.js...", manifestPath + ".bundle.ts");
+  await build({
+    entryPoints: [feManifestPath],
+    outdir: buildOutdir,
+    write: true,
+    bundle: true,
+    platform: "browser",
+    target: "esnext",
+    format: "esm",
+    external: [
+      ...Object.keys(pkg.dependencies || {}),
+      ...Object.keys(pkg.peerDependencies || {}),
+    ],
+  });
+
+  // delete the original .ts file so there is no confusion loading the bundled .js files
+  await remove(feManifestPath);
+  debug("bundled feManifest.js to", buildOutdir);
+
+  delete require.cache[feManifestPath];
 }
 
 export async function packageJsonVersionsMatch(): Promise<boolean> {
