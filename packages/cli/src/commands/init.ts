@@ -2,7 +2,7 @@ import prompts from "prompts";
 import { existsSync } from "fs-extra";
 import { ArgumentsCamelCase } from "yargs";
 import { error, log } from "../util/log";
-import { getMailingAPIBaseURL, verifyCwdIsMailingRoot } from "../util/paths";
+import { getMailingAPIBaseURL, cwdIsMailingPackageRoot } from "../util/paths";
 import { generateEmailsDirectory } from "../util/generators";
 import { handler as previewHandler, PreviewArgs } from "./preview/preview";
 import { writeDefaultConfigFile, defaults, setConfig } from "../util/config";
@@ -52,7 +52,10 @@ export const handler = async (argv: InitArguments) => {
     port: argv.port!,
   });
 
-  verifyCwdIsMailingRoot();
+  if (!cwdIsMailingPackageRoot()) {
+    log("Please run from the project root.");
+    return;
+  }
 
   writeDefaultConfigFile();
 

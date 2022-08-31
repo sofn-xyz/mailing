@@ -21,12 +21,6 @@ export function getMailingAPIBaseURL() {
   }
 }
 
-export function verifyCwdIsMailingRoot() {
-  if (!cwdIsMailingPackageRoot()) {
-    throw new Error("Please run from the project root.");
-  }
-}
-
 export function cwdIsMailingPackageRoot() {
   try {
     const packageJSON = readPackageJSON();
