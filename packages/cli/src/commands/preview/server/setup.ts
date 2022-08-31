@@ -217,7 +217,7 @@ async function buildManifest(
     buildOpts.target = "esnext";
   }
 
-  // build moduleManifest.js
+  // build the manifest
   debug(`bundling ${buildType} manifest for ${manifestPath}...`);
   await build(buildOpts);
 
