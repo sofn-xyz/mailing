@@ -17,7 +17,7 @@ import {
 type ResetPasswordProps = {
   name: string;
   body: ReactElement;
-  ctaText?: string;
+  ctaText: string;
 };
 
 const ResetPassword: React.FC<ResetPasswordProps> = ({

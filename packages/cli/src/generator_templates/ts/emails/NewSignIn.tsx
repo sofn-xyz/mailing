@@ -20,9 +20,9 @@ import {
 
 type NewSignInProps = {
   name: string;
-  headline?: string;
+  headline: string;
   body: ReactElement;
-  bulletedList?: ReactElement;
+  bulletedList: ReactElement;
 };
 
 const NewSignIn: React.FC<NewSignInProps> = ({

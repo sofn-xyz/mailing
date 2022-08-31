@@ -20,9 +20,9 @@ import {
 } from "mjml-react";
 
 type ReservationProps = {
-  headline?: string;
+  headline: string;
   body: ReactElement;
-  bulletedList?: ReactElement;
+  bulletedList: ReactElement;
   ctaText?: string;
 };
 
