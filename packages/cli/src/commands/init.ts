@@ -2,7 +2,7 @@ import prompts from "prompts";
 import { existsSync } from "fs-extra";
 import { ArgumentsCamelCase } from "yargs";
 import { error, log } from "../util/log";
-import { getMailingAPIBaseURL } from "../util/paths";
+import { getMailingAPIBaseURL, cwdIsMailingPackageRoot } from "../util/paths";
 import { generateEmailsDirectory } from "../util/generators";
 import { handler as previewHandler, PreviewArgs } from "./preview/preview";
 import { writeDefaultConfigFile, defaults, setConfig } from "../util/config";
@@ -52,14 +52,14 @@ export const handler = async (argv: InitArguments) => {
     port: argv.port!,
   });
 
-  // check if emails directory already exists
-  if (!existsSync("./package.json")) {
-    log("No package.json found. Please run from the project root.");
+  if (!cwdIsMailingPackageRoot()) {
+    log("Please run from the project root.");
     return;
   }
 
   writeDefaultConfigFile();
 
+  // check if emails directory already exists
   if (!existsSync(resolve(argv.emailsDir, "previews"))) {
     const options = {
       isTypescript: argv.typescript,

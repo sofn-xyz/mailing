@@ -3,6 +3,7 @@ import { ArgumentsCamelCase } from "yargs";
 import { defaults, setConfig } from "../util/config";
 import { execSync } from "child_process";
 import { log } from "../util/log";
+import { cwdIsMailingPackageRoot as cwdIsMailingRoot } from "../util/paths";
 import {
   bootstrapMailingDir,
   linkEmailsDirectory,
@@ -49,9 +50,8 @@ export const handler = async (argv: ServerArguments) => {
     port: argv.port!,
   });
 
-  // check if emails directory already exists
-  if (!existsSync("./package.json")) {
-    log("No package.json found. Please run from the project root.");
+  if (!cwdIsMailingRoot()) {
+    log("Please run from the project root.");
     return;
   }
 

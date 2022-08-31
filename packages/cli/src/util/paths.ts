@@ -1,4 +1,4 @@
-import { readFileSync, existsSync } from "fs-extra";
+import { readFile, readFileSync, existsSync } from "fs-extra";
 import { resolve } from "path";
 
 // appends /previews to emailsDir string if that directory exists
@@ -18,5 +18,19 @@ export function getMailingAPIBaseURL() {
     return `http://localhost:3000`;
   } else {
     return "https://www.mailing.run";
+  }
+}
+
+export function cwdIsMailingPackageRoot() {
+  try {
+    const packageJSON = readPackageJSON();
+    return "mailing-monorepo" === packageJSON.name;
+  } catch (err: any) {
+    if ("ENOENT" === err?.code) {
+      // .mailing package.json doesn't exist
+      return false;
+    } else {
+      throw err;
+    }
   }
 }
