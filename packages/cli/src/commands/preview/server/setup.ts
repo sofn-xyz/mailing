@@ -47,12 +47,13 @@ export async function linkEmailsDirectory(emailsDir: string) {
   });
 
   let indexFound = false;
-  const templates = (await readdir(emailsDir)).filter((path) => {
+  const emailsDirContents = await readdir(emailsDir);
+  const templates = emailsDirContents.filter((path) => {
     if (/^index\.[jt]sx?$/.test(path)) {
       indexFound = true; // index.ts, index.js
       return false;
     }
-    COMPONENT_FILE_REGEXP.test(path);
+    return COMPONENT_FILE_REGEXP.test(path);
   });
   if (!indexFound)
     throw new Error("index.ts or index.js not found in emails directory");
