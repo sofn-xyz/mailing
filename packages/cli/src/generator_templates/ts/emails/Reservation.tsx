@@ -19,16 +19,14 @@ import {
   MjmlSpacer,
 } from "mjml-react";
 
-type TextEmailProps = {
-  name: string;
+type ReservationProps = {
   headline?: string;
   body: ReactElement;
   bulletedList?: ReactElement;
   ctaText?: string;
 };
 
-const TextEmail: React.FC<TextEmailProps> = ({
-  name,
+const Reservation: React.FC<ReservationProps> = ({
   headline,
   body,
   bulletedList,
@@ -39,7 +37,7 @@ const TextEmail: React.FC<TextEmailProps> = ({
       <Head />
       <MjmlBody width={600}>
         <Header />
-        <MjmlSection padding="0 24px 0" cssClass="smooth">
+        <MjmlSection padding="0 24px" cssClass="smooth">
           <MjmlColumn>
             <MjmlText
               padding="24px 0"
@@ -84,4 +82,4 @@ const TextEmail: React.FC<TextEmailProps> = ({
   );
 };
 
-export default TextEmail;
+export default Reservation;

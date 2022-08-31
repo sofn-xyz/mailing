@@ -18,27 +18,25 @@ import {
   MjmlSpacer,
 } from "mjml-react";
 
-type TextEmailProps = {
+type NewSignInProps = {
   name: string;
   headline?: string;
   body: ReactElement;
   bulletedList?: ReactElement;
-  ctaText?: string;
 };
 
-const TextEmail: React.FC<TextEmailProps> = ({
+const NewSignIn: React.FC<NewSignInProps> = ({
   name,
   headline,
   body,
   bulletedList,
-  ctaText,
 }) => {
   return (
     <Mjml>
       <Head />
       <MjmlBody width={600}>
         <Header />
-        <MjmlSection padding="0 24px 0" cssClass="smooth">
+        <MjmlSection padding="0 24px" cssClass="smooth">
           <MjmlColumn>
             <MjmlText
               padding="24px 0 8px"
@@ -49,7 +47,7 @@ const TextEmail: React.FC<TextEmailProps> = ({
               {headline}
             </MjmlText>
             <MjmlText
-              padding="16px 0 16px"
+              padding="16px 0"
               fontSize={textBase}
               lineHeight={leadingRelaxed}
               cssClass="paragraph"
@@ -84,4 +82,4 @@ const TextEmail: React.FC<TextEmailProps> = ({
   );
 };
 
-export default TextEmail;
+export default NewSignIn;

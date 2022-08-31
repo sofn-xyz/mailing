@@ -3,12 +3,7 @@ import Head from "./components/Head";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import ButtonPrimary from "./components/ButtonPrimary";
-import {
-  leadingTight,
-  leadingRelaxed,
-  textBase,
-  textLg,
-} from "./components/theme";
+import { leadingRelaxed, textBase } from "./components/theme";
 
 import {
   Mjml,
@@ -19,19 +14,15 @@ import {
   MjmlSpacer,
 } from "mjml-react";
 
-type TextEmailProps = {
+type ResetPasswordProps = {
   name: string;
-  headline?: string;
   body: ReactElement;
-  bulletedList?: ReactElement;
   ctaText?: string;
 };
 
-const TextEmail: React.FC<TextEmailProps> = ({
+const ResetPassword: React.FC<ResetPasswordProps> = ({
   name,
-  headline,
   body,
-  bulletedList,
   ctaText,
 }) => {
   return (
@@ -39,10 +30,10 @@ const TextEmail: React.FC<TextEmailProps> = ({
       <Head />
       <MjmlBody width={600}>
         <Header />
-        <MjmlSection padding="0 24px 0" cssClass="smooth">
+        <MjmlSection padding="0 24px" cssClass="smooth">
           <MjmlColumn>
             <MjmlText
-              padding="16px 0 16px"
+              padding="16px 0"
               fontSize={textBase}
               lineHeight={leadingRelaxed}
               cssClass="paragraph"
@@ -78,4 +69,4 @@ const TextEmail: React.FC<TextEmailProps> = ({
   );
 };
 
-export default TextEmail;
+export default ResetPassword;
