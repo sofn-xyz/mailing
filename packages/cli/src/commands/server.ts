@@ -3,7 +3,7 @@ import { ArgumentsCamelCase } from "yargs";
 import { defaults, setConfig } from "../util/config";
 import { execSync } from "child_process";
 import { log } from "../util/log";
-import { cwdIsMailingPackageRoot as cwdIsMailingRoot } from "../util/paths";
+import { verifyCwdIsMailingRoot } from "../util/paths";
 import {
   bootstrapMailingDir,
   linkEmailsDirectory,
@@ -50,10 +50,7 @@ export const handler = async (argv: ServerArguments) => {
     port: argv.port!,
   });
 
-  if (!cwdIsMailingRoot()) {
-    log("Please run from the project root.");
-    return;
-  }
+  verifyCwdIsMailingRoot();
 
   await bootstrapMailingDir();
   await linkEmailsDirectory(argv.emailsDir);
