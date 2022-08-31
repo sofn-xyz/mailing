@@ -22,9 +22,7 @@ function renderTemplate(
       ).join(", ")}`,
     };
   }
-  return render(
-    React.createElement(Template as FC<{ [key: string]: string }>, props)
-  );
+  return render(React.createElement(Template, props as any));
 }
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
