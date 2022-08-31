@@ -1,7 +1,6 @@
 import prompts from "prompts";
 import fsExtra, { removeSync } from "fs-extra";
 import { handler, InitArguments } from "../init";
-import * as paths from "../../util/paths";
 import { log } from "../../util/log";
 
 jest.useFakeTimers();
@@ -10,7 +9,11 @@ jest.mock("../preview/preview", () => ({ handler: jest.fn() }));
 
 describe("init command", () => {
   beforeEach(() => {
-    jest.spyOn(paths, "cwdIsMailingPackageRoot").mockImplementation(jest.fn());
+    jest
+      .spyOn(fsExtra, "readFileSync")
+      .mockImplementation((path) =>
+        /package\.json/.test(path.toString()) ? "{}" : ""
+      );
     removeSync("/tmp/src/emails");
   });
 
