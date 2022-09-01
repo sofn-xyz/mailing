@@ -78,14 +78,15 @@ export async function linkEmailsDirectory(emailsDir: string) {
 
   const moduleManifestContents =
     `import config from "../../mailing.config.json";\n` +
+    `import sendMail from "${relativePathToEmailsDir}";\n` +
     templateImports.join("\n") +
     "\n" +
     previewImports.join("\n") +
     "\n\n" +
     `const previews = { ${previewConsts.join(", ")} };\n` +
     `const templates = { ${templateModuleNames.join(", ")} };\n\n` +
-    `export { config, templates, previews };\n` +
-    `const moduleManifest = { templates, previews };\n` +
+    `export { sendMail, config, templates, previews };\n` +
+    `const moduleManifest = { sendMail, templates, previews };\n` +
     `export default moduleManifest;\n\n`;
 
   await writeFile(dynManifestPath, moduleManifestContents);

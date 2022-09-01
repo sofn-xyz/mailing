@@ -94,7 +94,7 @@ describe("bootstrapMailingDir", () => {
     expect(copyCall[2].recursive).toBe(true);
 
     // rm -f ./.mailing
-    expect(rmMock).toHaveBeenCalledTimes(1);
+    expect(rmMock).toHaveBeenCalledTimes(2);
     const rmCall: any[] = rmMock.mock.calls[0];
     expect(rmCall[0]).toBe("./.mailing");
     expect(rmCall[1]).toEqual({ force: true, recursive: true });
