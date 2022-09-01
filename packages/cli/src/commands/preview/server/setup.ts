@@ -29,13 +29,8 @@ export async function linkEmailsDirectory(emailsDir: string) {
   const dynManifestPath = dotMailingSrcPath + "/moduleManifest.ts";
   const dynFeManifestPath = dotMailingSrcPath + "/feManifest.ts";
 
-  // TODO: try deleting moduleManifest.ts and feModuleManifest.ts
-  // TODO: delete emailsDir in .mailing/src
   const previewsPath = emailsDir + "/previews";
 
-  console.log("emailsDir is", emailsDir);
-
-  // TODO: check that this is using ../../emailsDir/previews and not .mailing/src/emailsDir
   const previewCollections = (await readdir(previewsPath)).filter((path) =>
     COMPONENT_FILE_REGEXP.test(path)
   );
@@ -44,7 +39,9 @@ export async function linkEmailsDirectory(emailsDir: string) {
   const previewImports: string[] = [];
   const previewConsts: string[] = [];
 
-  // calculate the relative path the user's emailsDir so we can import templates and previews from there
+  // calculate the relative path the user's emailsDir
+  // so we can import templates and previews from there
+  // when in the context of the build output
   const relativePathToEmailsDir = relative(dotMailingSrcPath, emailsDir);
 
   uniquePreviewCollections.forEach((p) => {
@@ -57,7 +54,6 @@ export async function linkEmailsDirectory(emailsDir: string) {
 
   let indexFound = false;
 
-  // TODO: check that this is reading ../../emailsDir and not .mailing/src/emailsDir
   const emailsDirContents = await readdir(emailsDir);
   const templates = emailsDirContents.filter((path) => {
     if (/^index\.[jt]sx?$/.test(path)) {
@@ -165,6 +161,13 @@ export async function bootstrapMailingDir() {
         path
       );
     },
+  });
+
+  // delete .mailing/src/emails after copying because we should be using the user's
+  // emailsDir, not the copied version (mostly for sanity)
+  await rm(resolve(mailingPath, "src/emails"), {
+    recursive: true,
+    force: true,
   });
 
   // add .mailing to .gitignore if it does not exist
