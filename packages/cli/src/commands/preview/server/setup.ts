@@ -1,5 +1,6 @@
 import { resolve } from "path";
 import { execSync } from "child_process";
+import pkg from "../../../../package.json";
 import {
   copy,
   mkdir,
@@ -13,6 +14,7 @@ import {
 } from "fs-extra";
 
 import { debug, log } from "../../../util/log";
+import { build, BuildOptions } from "esbuild";
 
 export const COMPONENT_FILE_REGEXP = /^[^\s-]+\.[tj]sx$/; // no spaces, .jsx or .tsx
 
@@ -25,6 +27,7 @@ export type PreviewServerOptions = {
 export async function linkEmailsDirectory(emailsDir: string) {
   const mailingPath = ".mailing/src";
   const manifestPath = mailingPath + "/moduleManifest.ts";
+  const feManifestPath = mailingPath + "/feManifest.ts";
   const previewsPath = emailsDir + "/previews";
   const mailingEmailsPath = mailingPath + "/emails";
 
@@ -44,12 +47,13 @@ export async function linkEmailsDirectory(emailsDir: string) {
   });
 
   let indexFound = false;
-  const templates = (await readdir(emailsDir)).filter((path) => {
+  const emailsDirContents = await readdir(emailsDir);
+  const templates = emailsDirContents.filter((path) => {
     if (/^index\.[jt]sx?$/.test(path)) {
       indexFound = true; // index.ts, index.js
       return false;
     }
-    COMPONENT_FILE_REGEXP.test(path);
+    return COMPONENT_FILE_REGEXP.test(path);
   });
   if (!indexFound)
     throw new Error("index.ts or index.js not found in emails directory");
@@ -63,17 +67,27 @@ export async function linkEmailsDirectory(emailsDir: string) {
     templateImports.push(`import ${moduleName} from "./emails/${moduleName}";`);
   });
 
-  const contents =
-    `import sendMail from "./emails";\n` +
+  const moduleManifestContents =
+    `import config from "../../mailing.config.json";\n` +
     templateImports.join("\n") +
     "\n" +
     previewImports.join("\n") +
     "\n\n" +
     `const previews = { ${previewConsts.join(", ")} };\n` +
     `const templates = { ${templateModuleNames.join(", ")} };\n\n` +
-    `export { templates, previews, sendMail };\n` +
-    `const moduleManifest = { templates, previews, sendMail };\n` +
+    `export { config, templates, previews };\n` +
+    `const moduleManifest = { templates, previews };\n` +
     `export default moduleManifest;\n\n`;
+
+  await writeFile(manifestPath, moduleManifestContents);
+
+  const feManifestContents =
+    `import config from "../../mailing.config.json";\n` +
+    `export { config };\n` +
+    `const feManifest = { config };\n` +
+    `export default feManifest;\n\n`;
+
+  await writeFile(feManifestPath, feManifestContents);
 
   // Re-copy emails directory
   await remove(mailingEmailsPath);
@@ -97,9 +111,10 @@ export async function linkEmailsDirectory(emailsDir: string) {
 
   debug(`copied ${emailsDir} to ${mailingEmailsPath}`);
   debug("writing module manifest to", manifestPath);
-  await writeFile(manifestPath, contents);
 
-  delete require.cache[manifestPath];
+  // build the module manifests
+  await buildManifest("node", manifestPath);
+  await buildManifest("browser", feManifestPath);
 }
 
 export async function packageJsonVersionsMatch(): Promise<boolean> {
@@ -174,4 +189,40 @@ export async function bootstrapMailingDir() {
       throw err;
     }
   }
+}
+
+async function buildManifest(
+  buildType: "node" | "browser",
+  manifestPath: string
+) {
+  const buildOutdir = ".mailing/src";
+
+  const buildOpts: BuildOptions = {
+    entryPoints: [manifestPath],
+    outdir: buildOutdir,
+    write: true,
+    bundle: true,
+    format: "esm",
+    external: [
+      ...Object.keys(pkg.dependencies || {}),
+      ...Object.keys(pkg.peerDependencies || {}),
+    ],
+  };
+
+  if ("node" === buildType) {
+    buildOpts.platform = "node";
+    buildOpts.target = "node12";
+  } else {
+    buildOpts.platform = "browser";
+    buildOpts.target = "esnext";
+  }
+
+  // build the manifest
+  debug(`bundling ${buildType} manifest for ${manifestPath}...`);
+  await build(buildOpts);
+
+  // delete the original .ts file so there is no confusion loading the bundled .js files
+  await remove(manifestPath);
+  delete require.cache[manifestPath];
+  debug(`bundled ${buildType} manifest for ${manifestPath} to ${buildOutdir}`);
 }
