@@ -5,6 +5,7 @@ import { log, error, logPlain } from "./log";
 import { pick } from "lodash";
 import * as prettier from "prettier";
 import { randomUUID } from "crypto";
+import { setAnonymousId } from "./postHog";
 
 export const MAILING_CONFIG_FILE = "./mailing.config.json";
 
@@ -28,7 +29,7 @@ export function defaults() {
       outDir: "./previews_html",
       port: 3883,
       quiet: false,
-      anonymousId: randomUUID(),
+      anonymousId: generateAnonymousId(),
     };
   return DEFAULTS;
 }
@@ -88,13 +89,17 @@ ${configJsonString}`
   }
 }
 
+function generateAnonymousId() {
+  const id = randomUUID();
+  setAnonymousId(id);
+  return id;
+}
 /* Preview server config singleton */
 
 type Config = {
   emailsDir: string;
   quiet: boolean;
   port: number;
-  anonymousId: string | null | undefined;
 };
 
 let config: Config | undefined;

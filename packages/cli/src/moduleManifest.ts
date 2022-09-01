@@ -7,7 +7,7 @@ import * as WelcomePreview from "./emails/previews/Welcome";
 
 const previews = { TextEmail: TextEmailPreview, Welcome: WelcomePreview };
 const templates = { TextEmail, Welcome };
-const config = {};
+const config = { anonymousId: null };
 
 export { sendMail, config, templates, previews };
 const moduleManifest = { sendMail, config, templates, previews };

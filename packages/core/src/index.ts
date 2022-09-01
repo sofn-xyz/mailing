@@ -5,7 +5,7 @@ import fs from "fs-extra";
 import { render } from "./mjml";
 import { error, log } from "./log";
 import fetch from "node-fetch";
-import postHogClient from "./util/postHog";
+// import postHogClient from "./util/postHog";
 
 export type Config = {
   emailsDir?: string;
@@ -70,12 +70,12 @@ export function buildSendMail(options: BuildSendMailOptions) {
 
   return async function sendMail(mail: ComponentMail) {
     // anonymous telemetry
-    if (config?.anonymousId) {
-      postHogClient().capture({
-        distinctId: config.anonymousId,
-        event: "sendMail",
-      });
-    }
+    // if (config?.anonymousId) {
+    //   postHogClient().capture({
+    //     distinctId: config.anonymousId,
+    //     event: "sendMail invoked",
+    //   });
+    // }
 
     const forcePreview =
       mail.forcePreview ||

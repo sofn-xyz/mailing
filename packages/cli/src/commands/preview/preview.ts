@@ -1,6 +1,5 @@
 import { ArgumentsCamelCase } from "yargs";
 import { defaults, setConfig } from "../../util/config";
-import postHogClient from "../../util/postHog";
 import startPreviewServer from "./server/start";
 
 export type PreviewArgs = ArgumentsCamelCase<{
@@ -31,14 +30,6 @@ export const builder = {
 };
 
 export const handler = async (argv: PreviewArgs) => {
-  // anonymous telemetry
-  if (argv.anonymousId) {
-    postHogClient().capture({
-      distinctId: argv.anonymousId,
-      event: "cli preview",
-    });
-  }
-
   if (!argv.emailsDir) throw new Error("emailsDir option is not set");
   if (undefined === argv.port) throw new Error("port option is not set");
   if (undefined === argv.quiet) throw new Error("quiet option is not set");
@@ -49,7 +40,6 @@ export const handler = async (argv: PreviewArgs) => {
     emailsDir,
     quiet,
     port,
-    anonymousId,
   });
 
   if (process.env.NODE_ENV === "test") {

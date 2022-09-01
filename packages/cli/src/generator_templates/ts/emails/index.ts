@@ -1,6 +1,5 @@
 import nodemailer from "nodemailer";
 import { buildSendMail } from "mailing-core";
-import config from "./mailing.config.json";
 
 const transport = nodemailer.createTransport({
   pool: true,
@@ -16,7 +15,6 @@ const transport = nodemailer.createTransport({
 const sendMail = buildSendMail({
   transport,
   defaultFrom: "replace@me.with.your.com",
-  config,
 });
 
 export default sendMail;
