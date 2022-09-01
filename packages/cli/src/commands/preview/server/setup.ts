@@ -199,6 +199,7 @@ async function buildManifest(
     write: true,
     bundle: true,
     format: "esm",
+    jsx: "preserve",
     external: [
       ...Object.keys(pkg.dependencies || {}),
       ...Object.keys(pkg.peerDependencies || {}),
