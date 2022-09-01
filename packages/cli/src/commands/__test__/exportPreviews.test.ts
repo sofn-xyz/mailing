@@ -13,7 +13,7 @@ describe("exportPreviews command", () => {
     } as ExportPreviewsArgs);
     expect(error).not.toHaveBeenCalled();
     expect(log).toHaveBeenCalledWith("Exporting preview html to");
-    expect(log).toHaveBeenCalledWith("✅ Processed 4 previews");
+    expect(log).toHaveBeenCalledWith("✅ Processed 6 previews");
   });
 
   it("errors without emails dir", async () => {
