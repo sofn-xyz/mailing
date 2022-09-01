@@ -22,7 +22,8 @@ function renderTemplate(
       ).join(", ")}`,
     };
   }
-  return render(React.createElement(Template, props as any));
+
+  return render(React.createElement(Template as any, props as any));
 }
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
