@@ -55,7 +55,7 @@ const Preview = ({ initialData }: { initialData: ShowPreviewResponseBody }) => {
   const [viewMode, setViewMode] = useState<ViewMode>("desktop");
   const [data, setData] = useState<ShowPreviewResponseBody | null>(initialData);
   const fetchData = useCallback(async () => {
-    const response = await fetch(`/api/${document.location.pathname}`);
+    const response = await fetch(`/api${document.location.pathname}`);
     setData(await response.json());
   }, [setData]);
   useLiveReload(fetchData);
