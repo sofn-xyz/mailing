@@ -1,4 +1,4 @@
-import { resolve } from "path";
+import { relative, resolve } from "path";
 import { execSync } from "child_process";
 import pkg from "../../../../package.json";
 import {
@@ -25,12 +25,17 @@ export type PreviewServerOptions = {
 };
 
 export async function linkEmailsDirectory(emailsDir: string) {
-  const mailingPath = ".mailing/src";
-  const manifestPath = mailingPath + "/moduleManifest.ts";
-  const feManifestPath = mailingPath + "/feManifest.ts";
-  const previewsPath = emailsDir + "/previews";
-  const mailingEmailsPath = mailingPath + "/emails";
+  const dotMailingSrcPath = ".mailing/src";
+  const dynManifestPath = dotMailingSrcPath + "/moduleManifest.ts";
+  const dynFeManifestPath = dotMailingSrcPath + "/feManifest.ts";
 
+  // TODO: try deleting moduleManifest.ts and feModuleManifest.ts
+  // TODO: delete emailsDir in .mailing/src
+  const previewsPath = emailsDir + "/previews";
+
+  console.log("emailsDir is", emailsDir);
+
+  // TODO: check that this is using ../../emailsDir/previews and not .mailing/src/emailsDir
   const previewCollections = (await readdir(previewsPath)).filter((path) =>
     COMPONENT_FILE_REGEXP.test(path)
   );
@@ -38,15 +43,21 @@ export async function linkEmailsDirectory(emailsDir: string) {
   const uniquePreviewCollections = Array.from(new Set(previewCollections));
   const previewImports: string[] = [];
   const previewConsts: string[] = [];
+
+  // calculate the relative path the user's emailsDir so we can import templates and previews from there
+  const relativePathToEmailsDir = relative(dotMailingSrcPath, emailsDir);
+
   uniquePreviewCollections.forEach((p) => {
     const moduleName = p.replace(/\.[jt]sx/g, "");
     previewImports.push(
-      `import * as ${moduleName}Preview from "./emails/previews/${moduleName}";`
+      `import * as ${moduleName}Preview from "${relativePathToEmailsDir}/previews/${moduleName}";`
     );
     previewConsts.push(`${moduleName}: ${moduleName}Preview`);
   });
 
   let indexFound = false;
+
+  // TODO: check that this is reading ../../emailsDir and not .mailing/src/emailsDir
   const emailsDirContents = await readdir(emailsDir);
   const templates = emailsDirContents.filter((path) => {
     if (/^index\.[jt]sx?$/.test(path)) {
@@ -64,7 +75,9 @@ export async function linkEmailsDirectory(emailsDir: string) {
   uniqueTemplates.forEach((p) => {
     const moduleName = p.replace(/\.[jt]sx/g, "");
     templateModuleNames.push(moduleName);
-    templateImports.push(`import ${moduleName} from "./emails/${moduleName}";`);
+    templateImports.push(
+      `import ${moduleName} from "${relativePathToEmailsDir}/${moduleName}";`
+    );
   });
 
   const moduleManifestContents =
@@ -79,7 +92,7 @@ export async function linkEmailsDirectory(emailsDir: string) {
     `const moduleManifest = { templates, previews };\n` +
     `export default moduleManifest;\n\n`;
 
-  await writeFile(manifestPath, moduleManifestContents);
+  await writeFile(dynManifestPath, moduleManifestContents);
 
   const feManifestContents =
     `import config from "../../mailing.config.json";\n` +
@@ -87,34 +100,13 @@ export async function linkEmailsDirectory(emailsDir: string) {
     `const feManifest = { config };\n` +
     `export default feManifest;\n\n`;
 
-  await writeFile(feManifestPath, feManifestContents);
+  await writeFile(dynFeManifestPath, feManifestContents);
 
-  // Re-copy emails directory
-  await remove(mailingEmailsPath);
-  await mkdirp(mailingEmailsPath);
-  const copyEmailsDirContents = (await readdir(resolve(emailsDir)))
-    .filter(
-      (path) =>
-        !/__test__$|\.mailing$|\.next$|node_modules|package\.json|^\.|yarn\.lock|yalc\.lock|mailing\.config\.json/.test(
-          path
-        )
-    )
-    .map((path) => {
-      debug("copy to .mailing/src/emails", path);
-      return copy(resolve(emailsDir, path), resolve(mailingEmailsPath, path), {
-        overwrite: true,
-        recursive: true,
-        dereference: true,
-      });
-    });
-  await Promise.all(copyEmailsDirContents);
-
-  debug(`copied ${emailsDir} to ${mailingEmailsPath}`);
-  debug("writing module manifest to", manifestPath);
+  debug("writing module manifest to", dynManifestPath);
 
   // build the module manifests
-  await buildManifest("node", manifestPath);
-  await buildManifest("browser", feManifestPath);
+  await buildManifest("node", dynManifestPath);
+  await buildManifest("browser", dynFeManifestPath);
 }
 
 export async function packageJsonVersionsMatch(): Promise<boolean> {
