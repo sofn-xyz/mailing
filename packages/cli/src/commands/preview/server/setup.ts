@@ -166,7 +166,7 @@ export async function bootstrapMailingDir() {
 
   // delete .mailing/src/emails after copying because we should be using the user's
   // emailsDir, not the copied version (mostly for sanity)
-  await rm(resolve(mailingPath, "src/emails"), {
+  await rm(mailingPath + "/src/emails", {
     recursive: true,
     force: true,
   });
