@@ -3,10 +3,15 @@ import { log } from "./log";
 import { existsSync } from "fs-extra";
 import { setConfig, writeDefaultConfigFile } from "./config";
 
+type CaptureProperties = {
+  subcommand?: string;
+  nodeEnv?: string;
+};
+
 type BuildHandlerOptions = {
   captureOptions?: (argv: any) => {
     event: string;
-    properties?: { subcommand?: string }; // later could give this the real type
+    properties?: CaptureProperties;
   };
 };
 
@@ -40,6 +45,9 @@ export function buildHandler(
           distinctId: argv.anonymousId,
           ...options.captureOptions(argv),
         };
+
+        if (!captureOpts.properties) captureOpts.properties = {};
+        captureOpts.properties.nodeEnv = process.env.NODE_ENV;
 
         capture(captureOpts);
       }
