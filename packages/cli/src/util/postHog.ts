@@ -19,6 +19,8 @@ const POSTHOG_API_KEY = process.env.POSTHOG_API_KEY;
 let client: undefined | PostHog;
 
 function postHogClient() {
+  if ("test" === process.env.NODE_ENV) return;
+
   if (undefined === POSTHOG_API_KEY) {
     throw new Error("POSTHOG_API_KEY is undefined");
   }
