@@ -5,7 +5,7 @@ import { getGeneratedAnonymousId } from "./config";
 
 // ** modified from posthog-node
 interface IdentifyMessageV1 {
-  distinctId?: string | boolean; // yarg will convert --no-anonymousId into argv.anonymousId === false which trickles through to here
+  distinctId?: string;
   properties?: Record<string | number, any>;
 }
 interface EventMessageV1 extends IdentifyMessageV1 {
@@ -19,6 +19,10 @@ const POSTHOG_API_KEY = process.env.POSTHOG_API_KEY;
 let client: undefined | PostHog;
 
 function postHogClient() {
+  if (undefined === POSTHOG_API_KEY) {
+    throw new Error("POSTHOG_API_KEY is undefined");
+  }
+
   if (undefined === client) {
     client = new PostHog(POSTHOG_API_KEY, {
       host: "https://app.posthog.com",
@@ -29,12 +33,6 @@ function postHogClient() {
 }
 
 export function capture(options: EventMessageV1) {
-  // return early if --no-anonymous-id flag is passed to command
-  if (false === options.distinctId) {
-    debug("capture is returning early because options.distinctId was false");
-    return;
-  }
-
   debug(
     `options.distinctId was ${options.distinctId} and config.anonymousId was ${
       config.anonymousId
@@ -59,14 +57,18 @@ export function capture(options: EventMessageV1) {
   return postHogClient().capture(captureOpts);
 }
 
-function sleep(ms) {
+function sleep(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 export async function shutdown() {
-  debug("calling postHog shutdown");
-  postHogClient().shutdown();
+  if (client) {
+    debug("calling postHog shutdown");
+    postHogClient().shutdown();
 
-  // unfortunately, calling posthog-node's shutdown in a `finally` does not work without this, 1000ms is a guess
-  await sleep(1000);
+    // unfortunately, calling posthog-node's shutdown in a `finally` does not work without this, 1000ms is a guess
+    await sleep(1000);
+  } else {
+    debug("skipping postHog client shutdown because it was never instantiated");
+  }
 }

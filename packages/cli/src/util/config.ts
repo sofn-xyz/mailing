@@ -116,7 +116,7 @@ ${configJsonString}`
   when you had no config and so argv has no anonymousId set 
 */
 
-let generatedAnonymousId = null;
+let generatedAnonymousId: string | undefined;
 
 // only call getOrSetGeneratedAnonymousId when an anonymousId is missing and *should be set*
 // because otherwise setting generatedAnonymousId will create side effects.  The only time we do this

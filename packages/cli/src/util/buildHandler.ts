@@ -1,5 +1,5 @@
 import { capture, shutdown as shutdownAnalytics } from "./postHog";
-import { log, debug } from "./log";
+import { log } from "./log";
 import { existsSync } from "fs-extra";
 import { setConfig, writeDefaultConfigFile } from "./config";
 
@@ -10,7 +10,10 @@ type BuildHandlerOptions = {
   };
 };
 
-export function buildHandler(handler, options: BuildHandlerOptions) {
+export function buildHandler(
+  handler: (argv: any) => void,
+  options: BuildHandlerOptions
+) {
   return async (argv: any) => {
     try {
       // check if emails directory already exists
@@ -32,12 +35,15 @@ export function buildHandler(handler, options: BuildHandlerOptions) {
 
       writeDefaultConfigFile();
 
-      const captureOpts = {
-        distinctId: argv.anonymousId,
-        ...options.captureOptions(argv),
-      };
+      if (options.captureOptions) {
+        const captureOpts = {
+          distinctId: argv.anonymousId,
+          ...options.captureOptions(argv),
+        };
 
-      capture(captureOpts);
+        capture(captureOpts);
+      }
+
       await handler(argv);
     } finally {
       shutdownAnalytics();
