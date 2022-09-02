@@ -21,7 +21,7 @@ export const builder = {
   },
   quiet: {
     default: defaults().quiet,
-    descriptioin: "quiet mode (don't open browser after starting)",
+    description: "quiet mode (don't open browser after starting)",
     boolean: true,
   },
   "emails-dir": {
@@ -33,6 +33,7 @@ export const builder = {
 export const handler = buildHandler(
   async (argv: PreviewArgs) => {
     if (undefined === argv.port) throw new Error("port option is not set");
+    if (undefined === argv.quiet) throw new Error("quiet option is not set");
 
     await startPreviewServer();
   },

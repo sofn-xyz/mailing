@@ -5,8 +5,7 @@ import { getPreviewsDirectory } from "../util/paths";
 import { error, log } from "../util/log";
 import { render } from "../util/mjml";
 import registerRequireHooks from "./util/registerRequireHooks";
-import { capture } from "../util/postHog";
-import { defaults, setConfig } from "../util/config";
+import { defaults } from "../util/config";
 import { buildHandler } from "../util/buildHandler";
 
 export type ExportPreviewsArgs = ArgumentsCamelCase<{
@@ -59,7 +58,7 @@ export const handler = buildHandler(
       return;
     }
 
-    const previewsPath = getPreviewsDirectory(argv.emailsDir);
+    const previewsPath = getPreviewsDirectory(argv.emailsDir!);
     if (!previewsPath) {
       error(
         "Could not find emails directory. Have you initialized the project with `mailing init`?"
