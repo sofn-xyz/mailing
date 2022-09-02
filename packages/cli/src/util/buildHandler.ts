@@ -21,7 +21,6 @@ export function buildHandler(
 ) {
   return async (argv: any) => {
     try {
-      // check if emails directory already exists
       if (!existsSync("./package.json")) {
         log("No package.json found. Please run from the project root.");
         return;
@@ -30,7 +29,6 @@ export function buildHandler(
       // check for presence of options that apply to every command
       if (!argv.emailsDir) throw new Error("emailsDir option is not set");
 
-      // TODO: add options for ever command
       setConfig({
         emailsDir: argv.emailsDir!,
         port: argv.port,
