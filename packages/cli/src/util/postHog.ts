@@ -16,7 +16,7 @@ interface EventMessageV1 extends IdentifyMessageV1 {
 
 let anonymousId = null;
 
-const POSTHOG_API_KEY = "{POSTHOG_API_KEY}";
+const POSTHOG_API_KEY = "";
 let client: undefined | PostHog;
 
 function postHogClient() {
@@ -47,11 +47,19 @@ export function capture(options: EventMessageV1) {
     distinctId,
   };
 
-  debug(`calling postHog capture with ${JSON.stringify(captureOpts)}`);
+  debug(`calling capture with ${JSON.stringify(captureOpts)}`);
 
   return postHogClient().capture(captureOpts);
 }
 
-export function shutdown() {
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+export async function shutdown() {
+  debug("calling postHog shutdown");
   postHogClient().shutdown();
+
+  // unfortunately, calling posthog-node's shutdown in a `finally` does not work without this, 1000ms is a guess
+  await sleep(1000);
 }
