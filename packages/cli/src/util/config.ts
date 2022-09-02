@@ -1,6 +1,5 @@
-import { existsSync } from "fs-extra";
+import { existsSync, writeFileSync } from "fs-extra";
 import { readJSONverbose, readPackageJSON } from "./paths";
-import { writeFileSync } from "fs-extra";
 import { log, debug, logPlain } from "./log";
 import { pick } from "lodash";
 import * as prettier from "prettier";
@@ -82,6 +81,11 @@ export function writeDefaultConfigFile(): void {
       });
 
       writeFileSync(MAILING_CONFIG_FILE, configJsonString);
+
+      log(
+        `updated mailing.config.json in your project with the following contents:
+  ${configJsonString}`
+      );
     }
   } else {
     const configJsonString = prettier.format(
@@ -104,7 +108,7 @@ export function writeDefaultConfigFile(): void {
     
         `);
     log(
-      `added mailing.config.json to your project with the following contents:
+      `added mailing.config.json in your project with the following contents:
 ${configJsonString}`
     );
   }

@@ -1,4 +1,3 @@
-import fs from "fs";
 import { log } from "../log";
 import fsExtra from "fs-extra";
 import crypto from "crypto";
@@ -7,7 +6,6 @@ import {
   looksLikeTypescriptProject,
   writeDefaultConfigFile,
 } from "../config";
-import exp from "constants";
 
 jest.mock("../log");
 
@@ -62,7 +60,7 @@ describe("writeDefaultConfigFile", () => {
     expect(log).toMatchSnapshot();
   });
 
-  it("does not writes mailing.config.json if it exists and has anonymousId", () => {
+  it("does not write mailing.config.json if it exists and has anonymousId", () => {
     // config file exists
     jest.spyOn(fsExtra, "existsSync").mockImplementation((path) => true);
 
@@ -76,7 +74,7 @@ describe("writeDefaultConfigFile", () => {
       }));
 
     const mockWriteFileSync = jest
-      .spyOn(fs, "writeFileSync")
+      .spyOn(fsExtra, "writeFileSync")
       .mockImplementation(() => false);
 
     writeDefaultConfigFile();
@@ -85,14 +83,14 @@ describe("writeDefaultConfigFile", () => {
     expect(log).not.toHaveBeenCalled();
   });
 
-  it("does not writes mailing.config.json if it exists and has no anonymousId", () => {
+  it("adds an anonymousId to mailing.config.json if if it exists and has no anonymousId", () => {
     // config file exists
     const mockExistsSync = jest
       .spyOn(fsExtra, "existsSync")
       .mockImplementation((path) => true);
 
     const mockWriteFileSync = jest
-      .spyOn(fs, "writeFileSync")
+      .spyOn(fsExtra, "writeFileSync")
       .mockImplementation(() => false);
 
     const mockReadJSON = jest
@@ -106,6 +104,49 @@ describe("writeDefaultConfigFile", () => {
     writeDefaultConfigFile();
     expect(mockExistsSync).toHaveBeenCalled();
     expect(mockReadJSON).toHaveBeenCalled();
+    expect(mockWriteFileSync).toHaveBeenCalled();
+    expect(log).toHaveBeenCalled();
+  });
+
+  it("does not add an anonymousId to mailing.config.json if if it exists and anonymousId is set to null or blank string", () => {
+    // config file exists
+    const mockExistsSync = jest
+      .spyOn(fsExtra, "existsSync")
+      .mockImplementation((path) => true);
+
+    const mockWriteFileSync = jest
+      .spyOn(fsExtra, "writeFileSync")
+      .mockImplementation(() => false);
+
+    // anonymousId is null
+    const mockReadJSONWithNull = jest
+      .spyOn(fsExtra, "readJSONSync")
+      .mockImplementation(() => ({
+        typescript: true,
+        emailsDir: "./emails",
+        outDir: "./previews_html",
+        anonymousId: null,
+      }));
+
+    writeDefaultConfigFile();
+    expect(mockExistsSync).toHaveBeenCalled();
+    expect(mockReadJSONWithNull).toHaveBeenCalled();
+    expect(mockWriteFileSync).not.toHaveBeenCalled();
+    expect(log).not.toHaveBeenCalled();
+
+    // anonymousId is ""
+    const mockReadJSONWithBlankString = jest
+      .spyOn(fsExtra, "readJSONSync")
+      .mockImplementation(() => ({
+        typescript: true,
+        emailsDir: "./emails",
+        outDir: "./previews_html",
+        anonymousId: "",
+      }));
+
+    writeDefaultConfigFile();
+    expect(mockExistsSync).toHaveBeenCalled();
+    expect(mockReadJSONWithBlankString).toHaveBeenCalled();
     expect(mockWriteFileSync).not.toHaveBeenCalled();
     expect(log).not.toHaveBeenCalled();
   });
