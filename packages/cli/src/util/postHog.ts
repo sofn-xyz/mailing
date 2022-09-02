@@ -1,6 +1,7 @@
 import { debug } from "./log";
 import { PostHog } from "posthog-node";
 import { config } from "../moduleManifest";
+import { getGeneratedAnonymousId } from "./config";
 
 // ** modified from posthog-node
 interface IdentifyMessageV1 {
@@ -14,8 +15,6 @@ interface EventMessageV1 extends IdentifyMessageV1 {
 }
 // ** end
 
-let anonymousId = null;
-
 const POSTHOG_API_KEY = process.env.POSTHOG_API_KEY;
 let client: undefined | PostHog;
 
@@ -27,12 +26,6 @@ function postHogClient() {
   }
 
   return client;
-}
-
-// this is necessary to report analytics the first time you run init,
-// when you had no config and so argv has no anonymousId set
-export function setAnonymousId(id) {
-  anonymousId = id;
 }
 
 export function capture(options: EventMessageV1) {
@@ -49,16 +42,23 @@ export function capture(options: EventMessageV1) {
     return;
   }
 
-  const distinctId = options.distinctId || config.anonymousId || anonymousId;
+  const distinctId =
+    options.distinctId || config.anonymousId || getGeneratedAnonymousId();
   if (!distinctId) {
     debug(
-      `options.distinctId was ${options.distinctId} and config.anonymousId was ${config.anonymousId} and anonymousId was ${anonymousId}, so capture is returning early`
+      `options.distinctId was ${
+        options.distinctId
+      } and config.anonymousId was ${
+        config.anonymousId
+      } and anonymousId was ${getGeneratedAnonymousId()}, so capture is returning early`
     );
     return;
   }
 
   debug(
-    `options.distinctId was ${options.distinctId} and config.anonymousId was ${config.anonymousId} and anonymousId was ${anonymousId}, so capture is doing its thing!`
+    `options.distinctId was ${options.distinctId} and config.anonymousId was ${
+      config.anonymousId
+    } and anonymousId was ${getGeneratedAnonymousId()}, so capture is doing its thing!`
   );
 
   const captureOpts = {

@@ -1,11 +1,10 @@
 import { existsSync } from "fs-extra";
 import { readPackageJSON } from "./paths";
-import { writeFileSync } from "fs";
+import { readFileSync, writeFileSync } from "fs-extra";
 import { log, error, logPlain } from "./log";
 import { pick } from "lodash";
 import * as prettier from "prettier";
 import { randomUUID } from "crypto";
-import { setAnonymousId } from "./postHog";
 
 export const MAILING_CONFIG_FILE = "./mailing.config.json";
 
@@ -29,7 +28,7 @@ export function defaults() {
       outDir: "./previews_html",
       port: 3883,
       quiet: false,
-      anonymousId: generateAnonymousId(),
+      anonymousId: getGeneratedAnonymousId(),
     };
   return DEFAULTS;
 }
@@ -58,7 +57,24 @@ export function looksLikeTypescriptProject(): boolean {
 
 // write the default mailing.config.json file to get you started
 export function writeDefaultConfigFile(): void {
-  if (!existsSync(MAILING_CONFIG_FILE)) {
+  if (existsSync(MAILING_CONFIG_FILE)) {
+    // read the JSON object
+    const json = JSON.parse(readFileSync(MAILING_CONFIG_FILE).toString());
+
+    // check if anonymousId in JSON object
+    if (!("anonymousId" in json)) {
+      // if not, add it
+      json.anonymousId = getGeneratedAnonymousId();
+
+      // ... and overwrite the JSON file
+      const configJsonString = prettier.format(JSON.stringify(json), {
+        parser: "json",
+        printWidth: 0,
+      });
+
+      writeFileSync(MAILING_CONFIG_FILE, configJsonString);
+    }
+  } else {
     const configJsonString = prettier.format(
       JSON.stringify(defaultsForConfigFile()),
       {
@@ -67,11 +83,7 @@ export function writeDefaultConfigFile(): void {
       }
     );
 
-    try {
-      writeFileSync(MAILING_CONFIG_FILE, configJsonString);
-    } catch (err) {
-      error(err);
-    }
+    writeFileSync(MAILING_CONFIG_FILE, configJsonString);
 
     logPlain(`
     ███╗   ███╗ █████╗ ██╗██╗     ██╗███╗   ██╗ ██████╗ 
@@ -89,11 +101,22 @@ ${configJsonString}`
   }
 }
 
-function generateAnonymousId() {
+/* 
+  Functions for generating an anonymousId and get/set to a singleton
+  this is necessary to report analytics the first time you run init,
+  when you had no config and so argv has no anonymousId set 
+*/
+
+let generatedAnonymousId = null;
+
+export function getGeneratedAnonymousId() {
+  if (generatedAnonymousId) return generatedAnonymousId;
+
   const id = randomUUID();
-  setAnonymousId(id);
+  generatedAnonymousId = id;
   return id;
 }
+
 /* Preview server config singleton */
 
 type Config = {
