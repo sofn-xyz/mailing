@@ -12,16 +12,16 @@ export default function showPreview(
   res: NextApiResponse<Data>
 ) {
   // render preview
-  const { moduleName, functionName } = req.query;
+  const { previewClass, previewFunction } = req.query;
 
-  if (typeof functionName !== "string" || typeof moduleName !== "string") {
+  if (typeof previewFunction !== "string" || typeof previewClass !== "string") {
     res.writeHead(404);
-    res.end("moduleName and functionName required");
+    res.end("previewClass and previewFunction required");
     return;
   }
 
-  const cleanFunctionName = functionName.replace(/\.json$/, "");
-  const component = getPreviewComponent(moduleName, cleanFunctionName);
+  const cleanpreviewFunction = previewFunction.replace(/\.json$/, "");
+  const component = getPreviewComponent(previewClass, cleanpreviewFunction);
 
   if (component?.props) {
     try {
@@ -39,7 +39,7 @@ export default function showPreview(
       res.end(JSON.stringify(e));
     }
   } else {
-    const msg = `${functionName}() from previews/${moduleName} must return an email template`;
+    const msg = `${previewFunction}() from previews/${previewClass} must return an email template`;
     error(msg);
     res.writeHead(404);
     res.end(msg);
