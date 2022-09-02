@@ -48,11 +48,9 @@ export const builder = {
 
 export const handler = buildHandler(
   async (argv: InitArguments) => {
-    if (!argv.emailsDir) throw new Error("emailsDir option not set");
     if (undefined === argv.port) throw new Error("port option is not set");
     if (undefined === argv.typescript)
       throw new Error("typescript option not set");
-    if (undefined === argv.quiet) throw new Error("quiet option not set");
 
     if (!existsSync(resolve(argv.emailsDir, "previews"))) {
       const options = {
