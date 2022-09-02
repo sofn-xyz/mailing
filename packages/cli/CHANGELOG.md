@@ -1,5 +1,13 @@
 # mailing
 
+## 0.7.3
+
+### Patch Changes
+
+- 2b666f0: switch fs.watch to chokidar.watch
+- Updated dependencies [2b666f0]
+  - mailing-core@0.7.3
+
 ## 0.7.2
 
 ### Patch Changes
