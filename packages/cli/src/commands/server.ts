@@ -43,10 +43,7 @@ export const builder = {
 
 export const handler = buildHandler(
   async (argv: ServerArguments) => {
-    if (!argv.emailsDir) throw new Error("emailsDir option is not set");
     if (undefined === argv.port) throw new Error("port option is not set");
-    if (undefined === argv.quiet) throw new Error("quiet option is not set");
-
     await bootstrapMailingDir();
     await linkEmailsDirectory(argv.emailsDir);
 

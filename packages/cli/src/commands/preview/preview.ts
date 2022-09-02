@@ -36,6 +36,8 @@ export const handler = buildHandler(
       return; // for now
     }
 
+    if (undefined === argv.port) throw new Error("port option is not set");
+
     await startPreviewServer();
   },
   {

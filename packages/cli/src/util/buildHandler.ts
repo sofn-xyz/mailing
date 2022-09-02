@@ -19,8 +19,8 @@ export function buildHandler(handler, options: BuildHandlerOptions) {
         return;
       }
 
+      // check for presence of options that apply to every command
       if (!argv.emailsDir) throw new Error("emailsDir option is not set");
-      if (undefined === argv.port) throw new Error("port option is not set");
       if (undefined === argv.quiet) throw new Error("quiet option is not set");
 
       // TODO: add options for ever command

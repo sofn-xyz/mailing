@@ -50,8 +50,6 @@ export function previewFilename(moduleName: string, functionName: string) {
 
 export const handler = buildHandler(
   async (argv: ExportPreviewsArgs) => {
-    console.log(argv);
-    if (!argv.emailsDir) throw new Error("emailsDir option is not set");
     if (!argv.outDir) throw new Error("outDir option is not set");
 
     const outDir = argv.outDir;
