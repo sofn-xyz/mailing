@@ -16,7 +16,7 @@ interface EventMessageV1 extends IdentifyMessageV1 {
 
 let anonymousId = null;
 
-const POSTHOG_API_KEY = "";
+const POSTHOG_API_KEY = process.env.POSTHOG_API_KEY;
 let client: undefined | PostHog;
 
 function postHogClient() {
