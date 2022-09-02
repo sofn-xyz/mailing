@@ -54,11 +54,11 @@ const Preview = ({ initialData }: { initialData: ShowPreviewResponseBody }) => {
   const router = useRouter();
   const [viewMode, setViewMode] = useState<ViewMode>("desktop");
   const [data, setData] = useState<ShowPreviewResponseBody | null>(initialData);
-  const [fetching, setFetching] = useState(true);
+  const [fetching, setFetching] = useState(false);
   const fetchData = useCallback(async () => {
     setFetching(true);
     const response = await fetch(`/api${document.location.pathname}`);
-    // setFetching(false);
+    setFetching(false);
     setData(await response.json());
   }, [setData]);
   useLiveReload(fetchData);
@@ -108,7 +108,9 @@ const Preview = ({ initialData }: { initialData: ShowPreviewResponseBody }) => {
         }
       />
       {fetching && (
-        <div className="fetch-indicator animate-spin absolute t-4 l-5">~</div>
+        <div className="fetch-indicator animate-spin position-absolute top-4 left-5">
+          ~
+        </div>
       )}
       {!!data?.errors.length && <MjmlErrors errors={data.errors} />}
       {data?.html && !data?.errors.length && (
@@ -161,6 +163,8 @@ const Preview = ({ initialData }: { initialData: ShowPreviewResponseBody }) => {
           width: 100px;
           top: 0;
           left: 0;
+          right: 0;
+          bottom: 0;
           font-size: 48px;
           background-color: pink;
         }

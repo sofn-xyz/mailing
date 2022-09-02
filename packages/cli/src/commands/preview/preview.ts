@@ -35,8 +35,6 @@ export const handler = async (argv: PreviewArgs) => {
 
   setConfig({ emailsDir: argv.emailsDir, quiet: argv.quiet, port: argv.port });
 
-  const { port, emailsDir, quiet } = argv;
-
   if (process.env.NODE_ENV === "test") {
     return; // for now
   }

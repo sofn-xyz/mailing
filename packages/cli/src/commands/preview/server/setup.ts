@@ -11,6 +11,7 @@ import {
   writeFile,
   readFile,
   appendFile,
+  symlink,
 } from "fs-extra";
 
 import { debug, log } from "../../../util/log";

@@ -7,13 +7,17 @@ export default function useLiveReload(onShouldReload: () => void) {
       onShouldReload();
       return;
     }
-    const interval = window.setInterval(async function checkForReload() {
+    async function checkForReload() {
       const shouldReload = await fetch("/should_reload.json");
       const json = await shouldReload.json();
+      let interval = setInterval(checkForReload, LONG_POLLING_INTERVAL);
       if (json["shouldReload"]) {
         onShouldReload();
+        clearInterval(interval);
+        interval = setInterval(checkForReload, LONG_POLLING_INTERVAL);
       }
-    }, LONG_POLLING_INTERVAL);
+    }
+    let interval = setInterval(checkForReload, LONG_POLLING_INTERVAL);
     onShouldReload();
     return () => {
       clearInterval(interval);
