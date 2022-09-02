@@ -8,6 +8,7 @@ interface IdentifyMessageV1 {
   distinctId?: string;
   properties?: Record<string | number, any>;
 }
+
 interface EventMessageV1 extends IdentifyMessageV1 {
   event: string;
   groups?: Record<string, string | number>;
