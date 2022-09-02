@@ -67,26 +67,26 @@ export function writeDefaultConfigFile(): void {
     const json = readJSONverbose(MAILING_CONFIG_FILE);
 
     // check if anonymousId in JSON object
-    if (!("anonymousId" in json)) {
-      // if not, add it
-      json.anonymousId = getOrSetGeneratedAnonymousId();
+    if ("anonymousId" in json) return;
 
-      // ... and overwrite the JSON file
-      debug(
-        `patching mailing.config.json to include anonymousId ${getGeneratedAnonymousId()}`
-      );
-      const configJsonString = prettier.format(JSON.stringify(json), {
-        parser: "json",
-        printWidth: 0,
-      });
+    // if not, add it
+    json.anonymousId = getOrSetGeneratedAnonymousId();
 
-      writeFileSync(MAILING_CONFIG_FILE, configJsonString);
+    // ... and overwrite the JSON file
+    debug(
+      `patching mailing.config.json to include anonymousId ${getGeneratedAnonymousId()}`
+    );
+    const configJsonString = prettier.format(JSON.stringify(json), {
+      parser: "json",
+      printWidth: 0,
+    });
 
-      log(
-        `updated mailing.config.json in your project with the following contents:
+    writeFileSync(MAILING_CONFIG_FILE, configJsonString);
+
+    log(
+      `updated mailing.config.json in your project with the following contents:
   ${configJsonString}`
-      );
-    }
+    );
   } else {
     const configJsonString = prettier.format(
       JSON.stringify(defaultsForConfigFile()),
@@ -112,6 +112,8 @@ export function writeDefaultConfigFile(): void {
 ${configJsonString}`
     );
   }
+  log("mailing now collects anonymous telemetry data about usage");
+  log("to disable this, set anonymousId to null in your mailing.config.json\n");
 }
 
 /* 
