@@ -96,6 +96,8 @@ export const handler = buildHandler(
     previewHandler(previewHandlerArgv);
   },
   {
-    name: "init",
+    captureOptions: () => {
+      return { event: "init" };
+    },
   }
 );

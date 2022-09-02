@@ -1,5 +1,6 @@
 import { ArgumentsCamelCase } from "yargs";
-import { defaults, setConfig } from "../../util/config";
+import { buildHandler } from "../../util/buildHandler";
+import { defaults } from "../../util/config";
 import startPreviewServer from "./server/start";
 
 export type PreviewArgs = ArgumentsCamelCase<{
@@ -29,22 +30,17 @@ export const builder = {
   },
 };
 
-export const handler = async (argv: PreviewArgs) => {
-  if (!argv.emailsDir) throw new Error("emailsDir option is not set");
-  if (undefined === argv.port) throw new Error("port option is not set");
-  if (undefined === argv.quiet) throw new Error("quiet option is not set");
+export const handler = buildHandler(
+  async (argv: PreviewArgs) => {
+    if (process.env.NODE_ENV === "test") {
+      return; // for now
+    }
 
-  const { port, emailsDir, quiet, anonymousId } = argv;
-
-  setConfig({
-    emailsDir,
-    quiet,
-    port,
-  });
-
-  if (process.env.NODE_ENV === "test") {
-    return; // for now
+    await startPreviewServer();
+  },
+  {
+    captureOptions: () => {
+      return { event: "preview" };
+    },
   }
-
-  await startPreviewServer();
-};
+);

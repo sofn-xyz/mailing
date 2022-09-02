@@ -1,11 +1,13 @@
 import { capture, shutdown as shutdownAnalytics } from "./postHog";
-import { log } from "./log";
+import { log, debug } from "./log";
 import { existsSync } from "fs-extra";
 import { setConfig, writeDefaultConfigFile } from "./config";
 
 type BuildHandlerOptions = {
-  name: string;
-  captureProperties?: (argv: any) => { subcommand?: string };
+  captureOptions?: (argv: any) => {
+    event: string;
+    properties?: { subcommand?: string }; // later could give this the real type
+  };
 };
 
 export function buildHandler(handler, options: BuildHandlerOptions) {
@@ -17,24 +19,26 @@ export function buildHandler(handler, options: BuildHandlerOptions) {
         return;
       }
 
+      if (!argv.emailsDir) throw new Error("emailsDir option is not set");
+      if (undefined === argv.port) throw new Error("port option is not set");
+      if (undefined === argv.quiet) throw new Error("quiet option is not set");
+
       // TODO: add options for ever command
       setConfig({
-        emailsDir: argv.emailsDir,
-        quiet: argv.quiet,
+        emailsDir: argv.emailsDir!,
         port: argv.port,
+        quiet: argv.quiet,
       });
 
       writeDefaultConfigFile();
 
-      console.log("buildHandler argv is", argv);
+      debug("buildHandler argv is", argv);
 
       const captureOpts = {
         distinctId: argv.anonymousId,
-        event: `${options.name} invoked`,
-        properties: options.captureProperties
-          ? options.captureProperties(argv)
-          : undefined,
+        ...options.captureOptions(argv),
       };
+
       capture(captureOpts);
       await handler(argv);
     } finally {
