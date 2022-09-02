@@ -61,7 +61,7 @@ export function capture(options: EventMessageV1) {
     return;
   }
 
-  return postHogClient().capture(captureOpts);
+  return postHogClient()?.capture(captureOpts);
 }
 
 function sleep(ms: number) {
@@ -71,7 +71,7 @@ function sleep(ms: number) {
 export async function shutdown() {
   if (client) {
     debug("calling postHog shutdown");
-    postHogClient().shutdown();
+    client.shutdown();
 
     // unfortunately, calling posthog-node's shutdown in a `finally` does not work without this, 1000ms is a guess
     await sleep(1000);
