@@ -17,6 +17,7 @@ import {
   MjmlColumn,
   MjmlText,
   MjmlSpacer,
+  MjmlDivider,
 } from "mjml-react";
 
 type ReservationProps = {
@@ -35,10 +36,16 @@ const Reservation: React.FC<ReservationProps> = ({
   return (
     <Mjml>
       <Head />
-      <MjmlBody width={600}>
+      <MjmlBody width={400}>
         <Header />
         <MjmlSection padding="0 24px" cssClass="smooth">
           <MjmlColumn>
+            <MjmlDivider
+              borderColor="#666"
+              borderStyle="dotted"
+              borderWidth="1px"
+              padding="8px 0"
+            ></MjmlDivider>
             <MjmlText
               padding="24px 0"
               fontSize={textLg}
@@ -49,13 +56,6 @@ const Reservation: React.FC<ReservationProps> = ({
             </MjmlText>
             {bulletedList}
             <MjmlSpacer height="16px" />
-            {ctaText && (
-              <>
-                <MjmlSpacer height="8px" />
-                <ButtonPrimary link={"#"} uiText={ctaText} />
-                <MjmlSpacer height="24px" />
-              </>
-            )}
             <MjmlText
               cssClass="paragraph"
               padding="0"
@@ -64,16 +64,19 @@ const Reservation: React.FC<ReservationProps> = ({
             >
               <>{body}</>
             </MjmlText>
-            <MjmlText
-              padding="16px 0"
-              fontSize={textBase}
-              lineHeight={leadingRelaxed}
-              cssClass="paragraph"
-            >
-              ♥,
-              <br />
-              The BookBook Team
-            </MjmlText>
+            {ctaText && (
+              <>
+                <MjmlSpacer height="24px" />
+                <ButtonPrimary link={"#"} uiText={ctaText} />
+                <MjmlSpacer height="8px" />
+              </>
+            )}
+            <MjmlDivider
+              borderColor="#666"
+              borderStyle="dotted"
+              borderWidth="1px"
+              padding="32px 0 0"
+            ></MjmlDivider>
           </MjmlColumn>
         </MjmlSection>
         <Footer />

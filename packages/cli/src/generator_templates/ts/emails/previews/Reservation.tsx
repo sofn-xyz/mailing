@@ -4,7 +4,7 @@ import BulletedList from "../components/BulletedList";
 export function reservationCanceled() {
   return (
     <Reservation
-      headline="Your reservation has been canceled."
+      headline="Reservation Canceled"
       bulletedList={
         <BulletedList
           items={[
@@ -14,7 +14,13 @@ export function reservationCanceled() {
           ]}
         />
       }
-      body={<>If you have any questions, please reply to this email.</>}
+      body={
+        <>
+          If this was a mistake or if you changed your mind, you can use the
+          link below to rebook your reservation.
+        </>
+      }
+      ctaText={"Rebook Now"}
     />
   );
 }
@@ -22,7 +28,7 @@ export function reservationCanceled() {
 export function reservationConfirmed() {
   return (
     <Reservation
-      headline="Your reservation is confirmed."
+      headline="Reservation Confirmed"
       bulletedList={
         <BulletedList
           items={[
@@ -46,7 +52,7 @@ export function reservationConfirmed() {
 export function reservationChanged() {
   return (
     <Reservation
-      headline="Your reservation has been changed."
+      headline="Reservation Changed"
       bulletedList={
         <BulletedList
           items={[

@@ -16,6 +16,7 @@ import {
   MjmlColumn,
   MjmlText,
   MjmlSpacer,
+  MjmlDivider,
 } from "mjml-react";
 
 type NewSignInProps = {
@@ -34,10 +35,16 @@ const NewSignIn: React.FC<NewSignInProps> = ({
   return (
     <Mjml>
       <Head />
-      <MjmlBody width={600}>
+      <MjmlBody width={400}>
         <Header />
         <MjmlSection padding="0 24px" cssClass="smooth">
           <MjmlColumn>
+            <MjmlDivider
+              borderColor="#666"
+              borderStyle="dotted"
+              borderWidth="1px"
+              padding="8px 0"
+            ></MjmlDivider>
             <MjmlText
               padding="24px 0 8px"
               fontSize={textLg}
@@ -74,6 +81,12 @@ const NewSignIn: React.FC<NewSignInProps> = ({
               <br />
               The BookBook Team
             </MjmlText>
+            <MjmlDivider
+              borderColor="#666"
+              borderStyle="dotted"
+              borderWidth="1px"
+              padding="20px 0 8px"
+            ></MjmlDivider>
           </MjmlColumn>
         </MjmlSection>
         <Footer />

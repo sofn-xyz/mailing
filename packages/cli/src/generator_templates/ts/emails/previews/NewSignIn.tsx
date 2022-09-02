@@ -4,7 +4,7 @@ import BulletedList from "../components/BulletedList";
 export function newSignIn() {
   return (
     <NewSignIn
-      headline="We detected a new sign-in."
+      headline="Security Alert: New Sign-In"
       name="Amelita"
       body={
         <>

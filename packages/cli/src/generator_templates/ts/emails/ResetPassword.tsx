@@ -12,6 +12,7 @@ import {
   MjmlColumn,
   MjmlText,
   MjmlSpacer,
+  MjmlDivider,
 } from "mjml-react";
 
 type ResetPasswordProps = {
@@ -28,10 +29,16 @@ const ResetPassword: React.FC<ResetPasswordProps> = ({
   return (
     <Mjml>
       <Head />
-      <MjmlBody width={600}>
+      <MjmlBody width={400}>
         <Header />
         <MjmlSection padding="0 24px" cssClass="smooth">
           <MjmlColumn>
+            <MjmlDivider
+              borderColor="#666"
+              borderStyle="dotted"
+              borderWidth="1px"
+              padding="8px 0 16px 0"
+            ></MjmlDivider>
             <MjmlText
               padding="16px 0"
               fontSize={textBase}
@@ -61,6 +68,12 @@ const ResetPassword: React.FC<ResetPasswordProps> = ({
               <br />
               The BookBook Team
             </MjmlText>
+            <MjmlDivider
+              borderColor="#666"
+              borderStyle="dotted"
+              borderWidth="1px"
+              padding="16px 0 0"
+            ></MjmlDivider>
           </MjmlColumn>
         </MjmlSection>
         <Footer />

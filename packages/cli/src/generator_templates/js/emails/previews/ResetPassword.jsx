@@ -1,68 +1,18 @@
-import Reservation from "../Reservation";
-import BulletedList from "../components/BulletedList";
+import ResetPassword from "../ReetPassword";
 
-export function reservationCanceled() {
+export function resetPassword() {
   return (
-    <Reservation
-      headline="Your reservation has been canceled."
-      bulletedList={
-        <BulletedList
-          items={[
-            "Salazar in Silver Lake",
-            "Sunday, Aug 22 at 1:30pm",
-            "Party of 4, patio",
-          ]}
-        />
-      }
-      body={<>If you have any questions, please reply to this email.</>}
-    />
-  );
-}
-
-export function reservationConfirmed() {
-  return (
-    <Reservation
-      headline="Your reservation is confirmed."
-      bulletedList={
-        <BulletedList
-          items={[
-            "Salazar in Silver Lake",
-            "Saturday, Aug 22 at 1:30pm",
-            "Party of 4, patio",
-          ]}
-        />
-      }
+    <ResetPassword
+      name="Amelita"
       body={
         <>
-          Thanks for booking your reservation at Salazar with BookBook! If you
-          need to cancel or make any changes, just click the link above.
+          We’ve received your request to change your password. Use the link
+          below to set up a new password for your account. This link is only
+          usable once! If you need to, you can reinitiate the password process
+          again <a href="#">here</a>.
         </>
       }
-      ctaText={"View Reservation"}
-    />
-  );
-}
-
-export function reservationChanged() {
-  return (
-    <Reservation
-      headline="Your reservation has been changed."
-      bulletedList={
-        <BulletedList
-          items={[
-            "Salazar in Silver Lake",
-            "Sunday, Aug 22 at 1:30pm",
-            "Party of 4, patio",
-          ]}
-        />
-      }
-      body={
-        <>
-          You’re all set! Your reservation at Salazar has been successfully
-          changed. If you have any questions, please reply to this email.
-        </>
-      }
-      ctaText={"View Reservation"}
+      ctaText="Reset Password"
     />
   );
 }

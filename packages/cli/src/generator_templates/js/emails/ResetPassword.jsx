@@ -14,16 +14,23 @@ import {
   MjmlColumn,
   MjmlText,
   MjmlSpacer,
+  MjmlDivider,
 } from "mjml-react";
 
 const ResetPassword = ({ name, body, ctaText }) => {
   return (
     <Mjml>
       <Head />
-      <MjmlBody width={600}>
+      <MjmlBody width={400}>
         <Header />
         <MjmlSection padding="0 24px" cssClass="smooth">
           <MjmlColumn>
+          <MjmlDivider
+              borderColor="#666"
+              borderStyle="dotted"
+              borderWidth="1px"
+              padding="8px 0 16px 0"
+            ></MjmlDivider>
             <MjmlText
               padding="16px 0"
               fontSize={textBase}
@@ -55,6 +62,12 @@ const ResetPassword = ({ name, body, ctaText }) => {
               <br />
               The BookBook Team
             </MjmlText>
+            <MjmlDivider
+              borderColor="#666"
+              borderStyle="dotted"
+              borderWidth="1px"
+              padding="16px 0 0"
+            ></MjmlDivider>
           </MjmlColumn>
         </MjmlSection>
         <Footer />

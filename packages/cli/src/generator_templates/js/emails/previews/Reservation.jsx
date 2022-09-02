@@ -1,61 +1,74 @@
-import TextEmail from "../TextEmail";
+import Reservation from "../Reservation";
 import BulletedList from "../components/BulletedList";
 
-export function resetPassword() {
+export function reservationCanceled() {
   return (
-    <TextEmail
-      name="Amelita"
-      body={
-        <>
-          We’ve received your request to change your password. Use the link
-          below to set up a new password for your account. This link is only
-          usable once! If you need to, you can reinitiate the password process
-          again <a href="#">here</a>.
-        </>
-      }
-      ctaText="Reset Password"
-    />
-  );
-}
-
-export function accountDeleted() {
-  return (
-    <TextEmail
-      name="Amelita"
-      body={
-        <>
-          We’ve received your request to delete your account and your account
-          has been deleted. We’re sad to see you go! If you’ve changed your mind
-          or did this on accident, just reply to this email and let us know.
-        </>
-      }
-    />
-  );
-}
-
-export function newSignIn() {
-  return (
-    <TextEmail
-      headline="New sign-in detected"
-      name="Amelita"
-      body={
-        <>
-          We’ve received your request to delete your Mailing account. Your
-          account has been deleted. If you changed your mind or did this on
-          accident, reply to this email and let us know.
-        </>
-      }
+    <Reservation
+      headline="Reservation Canceled"
       bulletedList={
         <BulletedList
           items={[
-            "Date: July 14, 2022 4:26 PM PST",
-            "Device: Mac",
-            "Browser: Safari",
-            "Location: Los Angeles, CA",
-            "IP Address: XXX.XX.XXX.XX",
+            "Salazar in Silver Lake",
+            "Sunday, Aug 22 at 1:30pm",
+            "Party of 4, patio",
           ]}
         />
       }
+      body={
+        <>
+          If this was a mistake or if you changed your mind, you can use the
+          link below to rebook your reservation.
+        </>
+      }
+      ctaText={"Rebook Now"}
+    />
+  );
+}
+
+export function reservationConfirmed() {
+  return (
+    <Reservation
+      headline="Reservation Confirmed"
+      bulletedList={
+        <BulletedList
+          items={[
+            "Salazar in Silver Lake",
+            "Saturday, Aug 22 at 1:30pm",
+            "Party of 4, patio",
+          ]}
+        />
+      }
+      body={
+        <>
+          Thanks for booking your reservation at Salazar with BookBook! If you
+          need to cancel or make any changes, just click the link above.
+        </>
+      }
+      ctaText={"View Reservation"}
+    />
+  );
+}
+
+export function reservationChanged() {
+  return (
+    <Reservation
+      headline="Reservation Changed"
+      bulletedList={
+        <BulletedList
+          items={[
+            "Salazar in Silver Lake",
+            "Sunday, Aug 22 at 1:30pm",
+            "Party of 4, patio",
+          ]}
+        />
+      }
+      body={
+        <>
+          You’re all set! Your reservation at Salazar has been successfully
+          changed. If you have any questions, please reply to this email.
+        </>
+      }
+      ctaText={"View Reservation"}
     />
   );
 }
