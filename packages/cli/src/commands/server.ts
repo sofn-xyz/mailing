@@ -62,7 +62,10 @@ export const handler = buildHandler(
   },
   {
     captureOptions: (argv) => {
-      return { event: "server", properties: { subcommand: argv.subcommand } };
+      return {
+        event: "server invoked",
+        properties: { subcommand: argv.subcommand },
+      };
     },
   }
 );

@@ -97,7 +97,7 @@ export const handler = buildHandler(
   },
   {
     captureOptions: () => {
-      return { event: "init" };
+      return { event: "init invoked" };
     },
   }
 );

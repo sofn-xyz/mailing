@@ -40,7 +40,7 @@ export const handler = buildHandler(
   },
   {
     captureOptions: () => {
-      return { event: "preview" };
+      return { event: "preview invoked" };
     },
   }
 );

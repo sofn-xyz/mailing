@@ -100,7 +100,7 @@ export const handler = buildHandler(
   },
   {
     captureOptions: () => {
-      return { event: "export-previews" };
+      return { event: "export-previews invoked" };
     },
   }
 );
