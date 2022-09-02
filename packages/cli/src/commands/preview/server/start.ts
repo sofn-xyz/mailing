@@ -17,6 +17,7 @@ import {
 import registerRequireHooks from "../../util/registerRequireHooks";
 import { bootstrapMailingDir, linkEmailsDirectory } from "./setup";
 import { getConfig } from "../../../util/config";
+import { setShouldReload, pollShouldReload } from "./liveReload";
 
 export const WATCH_IGNORE = /^\.|node_modules/;
 
@@ -66,7 +67,6 @@ export default async function startPreviewServer() {
 
   const host = `http://${hostname}:${port}`;
   let currentUrl = `${host}/`;
-  let shouldReload = false;
 
   const server = http
     .createServer(async function (req, res) {
@@ -97,14 +97,6 @@ export default async function startPreviewServer() {
       }
 
       currentUrl = `${host}${req.url}`;
-      function showShouldReload(
-        _req: http.IncomingMessage,
-        res: http.ServerResponse
-      ): void {
-        res.writeHead(200);
-        res.end(JSON.stringify({ shouldReload }));
-        shouldReload = false;
-      }
 
       res.once("close", () => {
         if (!noLog || process.env.MM_VERBOSE)
@@ -113,8 +105,8 @@ export default async function startPreviewServer() {
 
       try {
         if (req.url === "/should_reload.json") {
-          noLog = true;
-          showShouldReload(req, res);
+          // noLog = true;
+          pollShouldReload(req, res);
         } else if (req.url === "/intercepts" && req.method === "POST") {
           createIntercept(req, res);
         } else if (/^\/intercepts\/[a-zA-Z0-9]+\.json/.test(req.url)) {
@@ -155,11 +147,15 @@ export default async function startPreviewServer() {
       return;
     }
 
-    const reload = debounce(async () => {
-      debug("reload from change");
-      await linkEmailsDirectory(emailsDir);
-      shouldReload = true;
-    }, 200);
+    const reload = debounce(
+      async () => {
+        debug("reload from change");
+        await linkEmailsDirectory(emailsDir);
+        setShouldReload(true);
+      },
+      100,
+      { leading: true }
+    );
 
     watch(changeWatchPath, { ignoreInitial: true }).on(
       "all",

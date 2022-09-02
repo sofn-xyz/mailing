@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { LONG_POLLING_INTERVAL } from "../../commands/preview/server/livereload";
 
 export default function useLiveReload(onShouldReload: () => void) {
   useEffect(() => {
@@ -12,7 +13,7 @@ export default function useLiveReload(onShouldReload: () => void) {
       if (json["shouldReload"]) {
         onShouldReload();
       }
-    }, 1200);
+    }, LONG_POLLING_INTERVAL);
     onShouldReload();
     return () => {
       clearInterval(interval);

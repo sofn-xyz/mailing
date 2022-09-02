@@ -54,8 +54,11 @@ const Preview = ({ initialData }: { initialData: ShowPreviewResponseBody }) => {
   const router = useRouter();
   const [viewMode, setViewMode] = useState<ViewMode>("desktop");
   const [data, setData] = useState<ShowPreviewResponseBody | null>(initialData);
+  const [fetching, setFetching] = useState(true);
   const fetchData = useCallback(async () => {
+    setFetching(true);
     const response = await fetch(`/api${document.location.pathname}`);
+    // setFetching(false);
     setData(await response.json());
   }, [setData]);
   useLiveReload(fetchData);
@@ -104,6 +107,9 @@ const Preview = ({ initialData }: { initialData: ShowPreviewResponseBody }) => {
           </>
         }
       />
+      {fetching && (
+        <div className="fetch-indicator animate-spin absolute t-4 l-5">~</div>
+      )}
       {!!data?.errors.length && <MjmlErrors errors={data.errors} />}
       {data?.html && !data?.errors.length && (
         <HotIFrame
@@ -148,6 +154,15 @@ const Preview = ({ initialData }: { initialData: ShowPreviewResponseBody }) => {
         .description {
           position: relative;
           top: 1.25px;
+        }
+        .fetch-indicator {
+          z-index: 9999;
+          height: 100px;
+          width: 100px;
+          top: 0;
+          left: 0;
+          font-size: 48px;
+          background-color: pink;
         }
       `}</style>
     </div>
