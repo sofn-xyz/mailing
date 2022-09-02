@@ -34,10 +34,16 @@ export function capture(options: EventMessageV1) {
     return;
   }
 
-  // early return if config
-  if (!config.anonymousId && undefined !== config.anonymousId) {
+  // return early if config has a falsy anonymousId that is not undefined or if an anonymousId was not just generated
+  if (
+    !config.anonymousId &&
+    undefined !== config.anonymousId &&
+    !getGeneratedAnonymousId()
+  ) {
     debug(
-      `capture is returning early because config.anonymousId was ${config.anonymousId}`
+      `capture is returning early because config.anonymousId was ${
+        config.anonymousId
+      } and getGeneratedAnonymousId() returned ${getGeneratedAnonymousId()}`
     );
     return;
   }
@@ -50,7 +56,7 @@ export function capture(options: EventMessageV1) {
         options.distinctId
       } and config.anonymousId was ${
         config.anonymousId
-      } and anonymousId was ${getGeneratedAnonymousId()}, so capture is returning early`
+      } and getGeneratedAnonymousId() returned ${getGeneratedAnonymousId()}, so capture is returning early`
     );
     return;
   }
@@ -58,7 +64,7 @@ export function capture(options: EventMessageV1) {
   debug(
     `options.distinctId was ${options.distinctId} and config.anonymousId was ${
       config.anonymousId
-    } and anonymousId was ${getGeneratedAnonymousId()}, so capture is doing its thing!`
+    } and getGeneratedAnonymousId() returned ${getGeneratedAnonymousId()}, so capture is doing its thing!`
   );
 
   const captureOpts = {

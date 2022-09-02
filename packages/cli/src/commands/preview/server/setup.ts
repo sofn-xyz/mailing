@@ -11,6 +11,7 @@ import {
   writeFile,
   readFile,
   appendFile,
+  readJSONSync,
 } from "fs-extra";
 
 import { debug, log } from "../../../util/log";
@@ -113,8 +114,8 @@ export async function packageJsonVersionsMatch(): Promise<boolean> {
 
   // read .mailing package.json
   try {
-    const mailingPackageJson = await readFile(mailingPackageJsonPath);
-    const pkgJSON = JSON.parse(mailingPackageJson.toString());
+    // const mailingPackageJson = await readFile(mailingPackageJsonPath);
+    const pkgJSON = readJSONSync(mailingPackageJsonPath);
     mailingPackageJsonVersion = pkgJSON.version;
     debug(".mailing version:\t", mailingPackageJsonVersion);
   } catch (err: any) {

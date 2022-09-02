@@ -1,7 +1,7 @@
 import { existsSync } from "fs-extra";
-import { readPackageJSON } from "./paths";
+import { readJSONverbose, readPackageJSON } from "./paths";
 import { readFileSync, writeFileSync } from "fs-extra";
-import { log, error, logPlain } from "./log";
+import { log, debug, logPlain } from "./log";
 import { pick } from "lodash";
 import * as prettier from "prettier";
 import { randomUUID } from "crypto";
@@ -14,7 +14,6 @@ type ConfigDefaults = {
   outDir: string;
   port: number;
   quiet: boolean;
-  anonymousId: string;
 };
 
 let DEFAULTS: ConfigDefaults | undefined;
@@ -28,7 +27,6 @@ export function defaults() {
       outDir: "./previews_html",
       port: 3883,
       quiet: false,
-      anonymousId: getGeneratedAnonymousId(),
     };
   return DEFAULTS;
 }
@@ -43,7 +41,15 @@ const DEFAULT_KEYS_FOR_CONFIG_FILE = [
 
 // an object to JSON stringify and write to the default config file
 function defaultsForConfigFile() {
-  return pick(defaults(), DEFAULT_KEYS_FOR_CONFIG_FILE);
+  // set anonymousId here and not in DEFAULTS so that it getOrSetGeneratedAnonymousId is only called
+  // when an anonymousId needs to be generated
+
+  const defaultsToWriteToConfig = {
+    ...defaults(),
+    anonymousId: getOrSetGeneratedAnonymousId(),
+  };
+
+  return pick(defaultsToWriteToConfig, DEFAULT_KEYS_FOR_CONFIG_FILE);
 }
 
 export function looksLikeTypescriptProject(): boolean {
@@ -58,13 +64,14 @@ export function looksLikeTypescriptProject(): boolean {
 // write the default mailing.config.json file to get you started
 export function writeDefaultConfigFile(): void {
   if (existsSync(MAILING_CONFIG_FILE)) {
-    // read the JSON object
-    const json = JSON.parse(readFileSync(MAILING_CONFIG_FILE).toString());
+    // read the JSON file
+    const json = readJSONverbose(MAILING_CONFIG_FILE);
 
     // check if anonymousId in JSON object
     if (!("anonymousId" in json)) {
+      debug("patching mailing.config.json to include anonymousId");
       // if not, add it
-      json.anonymousId = getGeneratedAnonymousId();
+      json.anonymousId = getOrSetGeneratedAnonymousId();
 
       // ... and overwrite the JSON file
       const configJsonString = prettier.format(JSON.stringify(json), {
@@ -109,12 +116,19 @@ ${configJsonString}`
 
 let generatedAnonymousId = null;
 
-export function getGeneratedAnonymousId() {
+// only call getOrSetGeneratedAnonymousId when an anonymousId is missing and *should be set*
+// because otherwise setting generatedAnonymousId will create side effects.  The only time we do this
+// is when a config file has no "anonymousId" in its keys
+function getOrSetGeneratedAnonymousId() {
   if (generatedAnonymousId) return generatedAnonymousId;
 
   const id = randomUUID();
   generatedAnonymousId = id;
   return id;
+}
+
+export function getGeneratedAnonymousId() {
+  return generatedAnonymousId;
 }
 
 /* Preview server config singleton */

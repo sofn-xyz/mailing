@@ -32,8 +32,6 @@ export function buildHandler(handler, options: BuildHandlerOptions) {
 
       writeDefaultConfigFile();
 
-      debug("buildHandler argv is", argv);
-
       const captureOpts = {
         distinctId: argv.anonymousId,
         ...options.captureOptions(argv),
