@@ -3,12 +3,7 @@ import Head from "./components/Head";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import ButtonPrimary from "./components/ButtonPrimary";
-import {
-  leadingTight,
-  leadingRelaxed,
-  textBase,
-  textLg,
-} from "./components/theme";
+import { leadingRelaxed, textBase } from "./components/theme";
 
 import {
   Mjml,
@@ -17,42 +12,35 @@ import {
   MjmlColumn,
   MjmlText,
   MjmlSpacer,
+  MjmlDivider,
 } from "mjml-react";
 
-type TextEmailProps = {
+type ResetPasswordProps = {
   name: string;
-  headline?: string;
   body: ReactElement;
-  bulletedList?: ReactElement;
-  ctaText?: string;
+  ctaText: string;
 };
 
-const TextEmail: React.FC<TextEmailProps> = ({
+const ResetPassword: React.FC<ResetPasswordProps> = ({
   name,
-  headline,
   body,
-  bulletedList,
   ctaText,
 }) => {
   return (
     <Mjml>
       <Head />
-      <MjmlBody width={600}>
+      <MjmlBody width={400}>
         <Header />
-        <MjmlSection padding="0 24px 0" cssClass="smooth">
+        <MjmlSection padding="0 24px" cssClass="smooth">
           <MjmlColumn>
-            {headline && (
-              <MjmlText
-                padding="24px 0 8px"
-                fontSize={textLg}
-                lineHeight={leadingTight}
-                cssClass="paragraph"
-              >
-                {headline}
-              </MjmlText>
-            )}
+            <MjmlDivider
+              borderColor="#666"
+              borderStyle="dotted"
+              borderWidth="1px"
+              padding="8px 0 16px 0"
+            ></MjmlDivider>
             <MjmlText
-              padding="16px 0 16px"
+              padding="16px 0"
               fontSize={textBase}
               lineHeight={leadingRelaxed}
               cssClass="paragraph"
@@ -67,19 +55,9 @@ const TextEmail: React.FC<TextEmailProps> = ({
             >
               <>{body}</>
             </MjmlText>
-            {bulletedList && (
-              <>
-                <MjmlSpacer height="16px" />
-                {bulletedList}
-              </>
-            )}
-            {ctaText && (
-              <>
-                <MjmlSpacer height="24px" />
-                <ButtonPrimary link={"#"} uiText={ctaText} />
-                <MjmlSpacer height="8px" />
-              </>
-            )}
+            <MjmlSpacer height="24px" />
+            <ButtonPrimary link={"#"} uiText={ctaText} />
+            <MjmlSpacer height="8px" />
             <MjmlText
               padding="16px 0"
               fontSize={textBase}
@@ -88,8 +66,14 @@ const TextEmail: React.FC<TextEmailProps> = ({
             >
               ♥,
               <br />
-              Mailing
+              The BookBook Team
             </MjmlText>
+            <MjmlDivider
+              borderColor="#666"
+              borderStyle="dotted"
+              borderWidth="1px"
+              padding="16px 0 0"
+            ></MjmlDivider>
           </MjmlColumn>
         </MjmlSection>
         <Footer />
@@ -98,4 +82,4 @@ const TextEmail: React.FC<TextEmailProps> = ({
   );
 };
 
-export default TextEmail;
+export default ResetPassword;

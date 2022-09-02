@@ -1,6 +1,7 @@
 import fsExtra from "fs-extra";
 import { log, error } from "../../util/log";
 import { ExportPreviewsArgs, handler } from "../exportPreviews";
+import execCli from "./execCli";
 
 jest.mock("../../util/log");
 
@@ -12,7 +13,7 @@ describe("exportPreviews command", () => {
     } as ExportPreviewsArgs);
     expect(error).not.toHaveBeenCalled();
     expect(log).toHaveBeenCalledWith("Exporting preview html to");
-    expect(log).toHaveBeenCalledWith("✅ Processed 4 previews");
+    expect(log).toHaveBeenCalledWith("✅ Processed 6 previews");
   });
 
   it("errors without emails dir", async () => {
@@ -26,5 +27,12 @@ describe("exportPreviews command", () => {
     expect(error).toHaveBeenCalledWith(
       "Could not find emails directory. Have you initialized the project with `mailing init`?"
     );
+  });
+
+  describe("cli", () => {
+    it("runs on templates", () => {
+      const out = execCli("export-previews");
+      expect(out).toMatchSnapshot();
+    });
   });
 });

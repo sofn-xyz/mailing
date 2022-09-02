@@ -1,5 +1,6 @@
 import { relative, resolve } from "path";
 import { execSync } from "child_process";
+import pkg from "../../../../package.json";
 import {
   copy,
   mkdir,
@@ -13,6 +14,7 @@ import {
 } from "fs-extra";
 
 import { debug, log } from "../../../util/log";
+import { build, BuildOptions } from "esbuild";
 
 export const COMPONENT_FILE_REGEXP = /^[^\s-]+\.[tj]sx$/; // no spaces, .jsx or .tsx
 
@@ -23,10 +25,11 @@ export type PreviewServerOptions = {
 };
 
 export async function linkEmailsDirectory(emailsDir: string) {
-  const mailingPath = ".mailing/src";
-  const manifestPath = mailingPath + "/moduleManifest.ts";
+  const dotMailingSrcPath = ".mailing/src";
+  const dynManifestPath = dotMailingSrcPath + "/moduleManifest.ts";
+  const dynFeManifestPath = dotMailingSrcPath + "/feManifest.ts";
+
   const previewsPath = emailsDir + "/previews";
-  const mailingEmailsPath = mailingPath + "/emails";
 
   const previewCollections = (await readdir(previewsPath)).filter((path) =>
     COMPONENT_FILE_REGEXP.test(path)
@@ -35,21 +38,29 @@ export async function linkEmailsDirectory(emailsDir: string) {
   const uniquePreviewCollections = Array.from(new Set(previewCollections));
   const previewImports: string[] = [];
   const previewConsts: string[] = [];
+
+  // calculate the relative path the user's emailsDir
+  // so we can import templates and previews from there
+  // when in the context of the build output
+  const relativePathToEmailsDir = relative(dotMailingSrcPath, emailsDir);
+
   uniquePreviewCollections.forEach((p) => {
     const moduleName = p.replace(/\.[jt]sx/g, "");
     previewImports.push(
-      `import * as ${moduleName}Preview from "./emails/previews/${moduleName}";`
+      `import * as ${moduleName}Preview from "${relativePathToEmailsDir}/previews/${moduleName}";`
     );
     previewConsts.push(`${moduleName}: ${moduleName}Preview`);
   });
 
   let indexFound = false;
-  const templates = (await readdir(emailsDir)).filter((path) => {
+
+  const emailsDirContents = await readdir(emailsDir);
+  const templates = emailsDirContents.filter((path) => {
     if (/^index\.[jt]sx?$/.test(path)) {
       indexFound = true; // index.ts, index.js
       return false;
     }
-    COMPONENT_FILE_REGEXP.test(path);
+    return COMPONENT_FILE_REGEXP.test(path);
   });
   if (!indexFound)
     throw new Error("index.ts or index.js not found in emails directory");
@@ -60,46 +71,39 @@ export async function linkEmailsDirectory(emailsDir: string) {
   uniqueTemplates.forEach((p) => {
     const moduleName = p.replace(/\.[jt]sx/g, "");
     templateModuleNames.push(moduleName);
-    templateImports.push(`import ${moduleName} from "./emails/${moduleName}";`);
+    templateImports.push(
+      `import ${moduleName} from "${relativePathToEmailsDir}/${moduleName}";`
+    );
   });
 
-  const contents =
-    `import sendMail from "./emails";\n` +
+  const moduleManifestContents =
+    `import config from "../../mailing.config.json";\n` +
+    `import sendMail from "${relativePathToEmailsDir}";\n` +
     templateImports.join("\n") +
     "\n" +
     previewImports.join("\n") +
     "\n\n" +
     `const previews = { ${previewConsts.join(", ")} };\n` +
     `const templates = { ${templateModuleNames.join(", ")} };\n\n` +
-    `export { templates, previews, sendMail };\n` +
-    `const moduleManifest = { templates, previews, sendMail };\n` +
+    `export { sendMail, config, templates, previews };\n` +
+    `const moduleManifest = { sendMail, templates, previews };\n` +
     `export default moduleManifest;\n\n`;
 
-  // Re-copy emails directory
-  await remove(mailingEmailsPath);
-  await mkdirp(mailingEmailsPath);
-  const copyEmailsDirContents = (await readdir(resolve(emailsDir)))
-    .filter(
-      (path) =>
-        !/__test__$|\.mailing$|\.next$|node_modules|package\.json|^\.|yarn\.lock|yalc\.lock|mailing\.config\.json/.test(
-          path
-        )
-    )
-    .map((path) => {
-      debug("copy to .mailing/src/emails", path);
-      return copy(resolve(emailsDir, path), resolve(mailingEmailsPath, path), {
-        overwrite: true,
-        recursive: true,
-        dereference: true,
-      });
-    });
-  await Promise.all(copyEmailsDirContents);
+  await writeFile(dynManifestPath, moduleManifestContents);
 
-  debug(`copied ${emailsDir} to ${mailingEmailsPath}`);
-  debug("writing module manifest to", manifestPath);
-  await writeFile(manifestPath, contents);
+  const feManifestContents =
+    `import config from "../../mailing.config.json";\n` +
+    `export { config };\n` +
+    `const feManifest = { config };\n` +
+    `export default feManifest;\n\n`;
 
-  delete require.cache[manifestPath];
+  await writeFile(dynFeManifestPath, feManifestContents);
+
+  debug("writing module manifest to", dynManifestPath);
+
+  // build the module manifests
+  await buildManifest("node", dynManifestPath);
+  await buildManifest("browser", dynFeManifestPath);
 }
 
 export async function packageJsonVersionsMatch(): Promise<boolean> {
@@ -181,6 +185,13 @@ export async function bootstrapMailingDir() {
     });
   }
 
+  // delete .mailing/src/emails after copying because we should be using the user's
+  // emailsDir, not the copied version (mostly for sanity)
+  await rm(mailingPath + "/src/emails", {
+    recursive: true,
+    force: true,
+  });
+
   // add .mailing to .gitignore if it does not exist
   try {
     const ignored = (await readFile(".gitignore")).toString().split("\n");
@@ -195,4 +206,41 @@ export async function bootstrapMailingDir() {
       throw err;
     }
   }
+}
+
+async function buildManifest(
+  buildType: "node" | "browser",
+  manifestPath: string
+) {
+  const buildOutdir = ".mailing/src";
+
+  const buildOpts: BuildOptions = {
+    entryPoints: [manifestPath],
+    outdir: buildOutdir,
+    write: true,
+    bundle: true,
+    format: "esm",
+    jsx: "preserve",
+    external: [
+      ...Object.keys(pkg.dependencies || {}),
+      ...Object.keys(pkg.peerDependencies || {}),
+    ],
+  };
+
+  if ("node" === buildType) {
+    buildOpts.platform = "node";
+    buildOpts.target = "node12";
+  } else {
+    buildOpts.platform = "browser";
+    buildOpts.target = "esnext";
+  }
+
+  // build the manifest
+  debug(`bundling ${buildType} manifest for ${manifestPath}...`);
+  await build(buildOpts);
+
+  // delete the original .ts file so there is no confusion loading the bundled .js files
+  await remove(manifestPath);
+  delete require.cache[manifestPath];
+  debug(`bundled ${buildType} manifest for ${manifestPath} to ${buildOutdir}`);
 }

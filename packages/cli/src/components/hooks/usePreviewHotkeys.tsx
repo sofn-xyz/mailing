@@ -1,6 +1,7 @@
 import React, { useCallback } from "react";
 import { useRouter } from "next/router";
 import { useHotkeys } from "react-hotkeys-hook";
+import { config } from "../../feManifest";
 
 type Options = {
   setViewMode: React.Dispatch<React.SetStateAction<ViewMode>>;

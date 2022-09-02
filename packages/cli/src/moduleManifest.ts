@@ -1,12 +1,19 @@
 import sendMail from "./emails";
 
-import * as TextEmailPreview from "./emails/previews/TextEmail";
-import * as WelcomePreview from "./emails/previews/Welcome";
+import * as AccountCreatedPreview from "./emails/previews/AccountCreated";
+import * as NewSignInPreview from "./emails/previews/NewSignIn";
+import * as ReservationPreview from "./emails/previews/Reservation";
+import * as ResetPasswordPreview from "./emails/previews/ResetPassword";
 
-const previews = { TextEmail: TextEmailPreview, Welcome: WelcomePreview };
-const templates = {  };
+const previews = {
+  AccountCreated: AccountCreatedPreview,
+  NewSignIn: NewSignInPreview,
+  Reservation: ReservationPreview,
+  ResetPassword: ResetPasswordPreview,
+};
+const templates = {};
+const config = {};
 
-export { templates, previews, sendMail };
-const moduleManifest = { templates, previews, sendMail };
+export { sendMail, config, templates, previews };
+const moduleManifest = { sendMail, config, templates, previews };
 export default moduleManifest;
-
