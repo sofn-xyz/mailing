@@ -4,7 +4,7 @@ import { config } from "../moduleManifest";
 
 // ** modified from posthog-node
 interface IdentifyMessageV1 {
-  distinctId?: string;
+  distinctId?: string | boolean; // yarg will convert --no-anonymousId into argv.anonymousId === false which trickles through to here
   properties?: Record<string | number, any>;
 }
 interface EventMessageV1 extends IdentifyMessageV1 {
@@ -36,6 +36,19 @@ export function setAnonymousId(id) {
 }
 
 export function capture(options: EventMessageV1) {
+  if (false === options.distinctId) {
+    debug("capture is returning early because options.distinctId was false");
+    return;
+  }
+
+  // early return if config
+  if (!config.anonymousId && undefined !== config.anonymousId) {
+    debug(
+      `capture is returning early because config.anonymousId was ${config.anonymousId}`
+    );
+    return;
+  }
+
   const distinctId = options.distinctId || config.anonymousId || anonymousId;
   if (!distinctId) {
     debug(
@@ -43,6 +56,10 @@ export function capture(options: EventMessageV1) {
     );
     return;
   }
+
+  debug(
+    `options.distinctId was ${options.distinctId} and config.anonymousId was ${config.anonymousId} and anonymousId was ${anonymousId}, so capture is doing its thing!`
+  );
 
   const captureOpts = {
     ...options,

@@ -90,6 +90,7 @@ export const handler = buildHandler(
       port: argv.port,
       quiet: argv.quiet,
       emailsDir: argv.emailsDir,
+      anonymousId: argv.anonymousId,
       $0: argv.$0,
       _: argv._,
     };
