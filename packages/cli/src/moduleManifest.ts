@@ -12,7 +12,8 @@ const previews = {
   ResetPassword: ResetPasswordPreview,
 };
 const templates = {};
+const config = {};
 
-export { templates, previews, sendMail };
-const moduleManifest = { templates, previews, sendMail };
+export { sendMail, config, templates, previews };
+const moduleManifest = { sendMail, config, templates, previews };
 export default moduleManifest;

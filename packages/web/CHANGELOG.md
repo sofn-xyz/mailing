@@ -1,5 +1,21 @@
 # web
 
+## 0.3.3
+
+### Patch Changes
+
+- 2b666f0: switch fs.watch to chokidar.watch
+
+## 0.3.2
+
+### Patch Changes
+
+- c87cc5b: remove an additional / from api route (fix #158)
+- 3e324e8: - Introduce esbuild for bundling templates to put in .mailing. Previously, we copied the templates, but bundling greatly improves the ability to include modules and resolve paths.
+  - Build a feManifest.js that lets the frontend app get the user’s config settings
+  - Update tsconfigs to support above changes
+  - Fix a bad bug where moduleManifest.js always set templates to `{}` because the function invoked by `filter` had no return value.
+
 ## 0.3.1
 
 ### Patch Changes
