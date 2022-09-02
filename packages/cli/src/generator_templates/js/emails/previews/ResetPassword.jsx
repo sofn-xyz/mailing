@@ -1,4 +1,4 @@
-import ResetPassword from "../ReetPassword";
+import ResetPassword from "../ResetPassword";
 
 export function resetPassword() {
   return (
