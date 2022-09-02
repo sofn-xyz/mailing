@@ -29,6 +29,8 @@ function postHogClient() {
   return client;
 }
 
+// this is necessary to report analytics the first time you run init,
+// when you had no config and so argv has no anonymousId set
 export function setAnonymousId(id) {
   anonymousId = id;
 }
