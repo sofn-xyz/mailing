@@ -1,0 +1,24 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`writeDefaultConfigFile writes mailing.config.json if it doesn't exist 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      "added mailing.config.json to your project with the following contents:
+{
+  \\"typescript\\": true,
+  \\"emailsDir\\": \\"./emails\\",
+  \\"outDir\\": \\"./previews_html\\",
+  \\"anonymousId\\": \\"TEST_VALUE\\"
+}
+",
+    ],
+  ],
+  "results": Array [
+    Object {
+      "type": "return",
+      "value": undefined,
+    },
+  ],
+}
+`;
