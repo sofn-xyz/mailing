@@ -69,11 +69,13 @@ export function writeDefaultConfigFile(): void {
 
     // check if anonymousId in JSON object
     if (!("anonymousId" in json)) {
-      debug("patching mailing.config.json to include anonymousId");
       // if not, add it
       json.anonymousId = getOrSetGeneratedAnonymousId();
 
       // ... and overwrite the JSON file
+      debug(
+        `patching mailing.config.json to include anonymousId ${getGeneratedAnonymousId()}`
+      );
       const configJsonString = prettier.format(JSON.stringify(json), {
         parser: "json",
         printWidth: 0,

@@ -29,43 +29,25 @@ function postHogClient() {
 }
 
 export function capture(options: EventMessageV1) {
+  // return early if --no-anonymous-id flag is passed to command
   if (false === options.distinctId) {
     debug("capture is returning early because options.distinctId was false");
-    return;
-  }
-
-  // return early if config has a falsy anonymousId that is not undefined or if an anonymousId was not just generated
-  if (
-    !config.anonymousId &&
-    undefined !== config.anonymousId &&
-    !getGeneratedAnonymousId()
-  ) {
-    debug(
-      `capture is returning early because config.anonymousId was ${
-        config.anonymousId
-      } and getGeneratedAnonymousId() returned ${getGeneratedAnonymousId()}`
-    );
-    return;
-  }
-
-  const distinctId =
-    options.distinctId || config.anonymousId || getGeneratedAnonymousId();
-  if (!distinctId) {
-    debug(
-      `options.distinctId was ${
-        options.distinctId
-      } and config.anonymousId was ${
-        config.anonymousId
-      } and getGeneratedAnonymousId() returned ${getGeneratedAnonymousId()}, so capture is returning early`
-    );
     return;
   }
 
   debug(
     `options.distinctId was ${options.distinctId} and config.anonymousId was ${
       config.anonymousId
-    } and getGeneratedAnonymousId() returned ${getGeneratedAnonymousId()}, so capture is doing its thing!`
+    } and getGeneratedAnonymousId() returned ${getGeneratedAnonymousId()}`
   );
+
+  const distinctId =
+    options.distinctId || config.anonymousId || getGeneratedAnonymousId();
+
+  if (!distinctId) {
+    debug(`capture is returning early because distinctId was ${distinctId}`);
+    return;
+  }
 
   const captureOpts = {
     ...options,
