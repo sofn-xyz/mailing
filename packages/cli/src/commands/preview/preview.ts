@@ -32,10 +32,6 @@ export const builder = {
 
 export const handler = buildHandler(
   async (argv: PreviewArgs) => {
-    if (process.env.NODE_ENV === "test") {
-      return; // for now
-    }
-
     if (undefined === argv.port) throw new Error("port option is not set");
 
     await startPreviewServer();
