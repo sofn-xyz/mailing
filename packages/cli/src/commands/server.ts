@@ -1,4 +1,3 @@
-import { existsSync } from "fs-extra";
 import { ArgumentsCamelCase } from "yargs";
 import { defaults, setConfig } from "../util/config";
 import { execSync } from "child_process";
@@ -7,7 +6,6 @@ import {
   bootstrapMailingDir,
   linkEmailsDirectory,
 } from "./preview/server/setup";
-import { capture } from "../util/postHog";
 import { buildHandler } from "../util/buildHandler";
 
 export type ServerArguments = ArgumentsCamelCase<{
