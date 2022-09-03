@@ -3,6 +3,7 @@ import { debounce } from "lodash";
 import { cwd } from "process";
 import { relative, resolve } from "path";
 import { watch } from "chokidar";
+import querystring from "querystring";
 
 import { error, log, debug } from "../../../util/log";
 import { linkEmailsDirectory } from "./setup";
@@ -10,30 +11,53 @@ import {
   LONG_POLLING_INTERVAL,
   SHORT_POLLING_INTERVAL,
 } from "../../util/livereloadUtil";
+import { URL } from "url";
 
 export const WATCH_IGNORE = /^\.|node_modules/;
 
-let shouldReload = false;
+let vectorClock = Date.now();
+
+function renderClock(res: ServerResponse) {
+  res.writeHead(200);
+  res.end(JSON.stringify({ vectorClock }));
+}
+
+function requireParam(
+  param: string,
+  req: IncomingMessage,
+  res: ServerResponse
+) {
+  try {
+    const url = new URL(req.url!);
+    return JSON.parse(url.searchParams.get(param)!);
+  } catch (e) {
+    res.writeHead(403);
+    res.end(
+      JSON.stringify({
+        error: `error parsing ${param} from url`,
+      })
+    );
+    return null;
+  }
+}
 
 export function pollShouldReload(
-  _req: IncomingMessage,
+  req: IncomingMessage,
   res: ServerResponse
 ): void {
-  const render = () => {
-    res.writeHead(200);
-    res.end(JSON.stringify({ shouldReload }));
-  };
+  const clientVectorClock: number = requireParam("vectorClock", req, res);
+  if (res.statusCode) return;
+
   const poller = setInterval(() => {
-    if (!shouldReload) return;
+    if (clientVectorClock <= vectorClock) return;
     clearInterval(poller);
     clearTimeout(timeout);
-    res.writeHead(200);
-    res.end(JSON.stringify({ shouldReload }));
-    shouldReload = false;
+    renderClock(res);
   }, SHORT_POLLING_INTERVAL);
   const timeout = setTimeout(() => {
+    // timed out long poll, close connection
     clearInterval(poller);
-    render();
+    renderClock(res);
   }, LONG_POLLING_INTERVAL);
 }
 
@@ -50,7 +74,7 @@ export function startChangeWatcher(emailsDir: string) {
       async () => {
         debug("reload from change");
         await linkEmailsDirectory(emailsDir);
-        shouldReload = true;
+        vectorClock++;
       },
       100,
       { leading: true }
@@ -67,6 +91,6 @@ export function startChangeWatcher(emailsDir: string) {
     );
     log(`watching for changes to ${relative(cwd(), changeWatchPath)}`);
   } catch (e) {
-    error(`error starting change watcher`, e);
+    error(`error starting livereload change watcher`, e);
   }
 }

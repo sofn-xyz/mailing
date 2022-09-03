@@ -42,7 +42,7 @@ const MyFirstEmail: React.FC<{ name: string }> = ({ name }) => (
             fontSize={textXl}
             lineHeight={leadingTight}
           >
-            Welcome, {name}!
+            Wel weswe, {name}!
           </MjmlText>
           <MjmlText
             padding="24px 0 16px"

@@ -1,8 +1,10 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { LONG_POLLING_INTERVAL } from "../../commands/util/livereloadUtil";
 
 export default function useLiveReload(onShouldReload: () => void) {
   useEffect(() => {
+    const [vectorClock, setVectorClock] = useState(0);
+
     if (process.env.NODE_ENV === "production") {
       // we don't actually want live relaoad in production, just fetch
       onShouldReload();
@@ -11,7 +13,8 @@ export default function useLiveReload(onShouldReload: () => void) {
     async function checkForReload() {
       const shouldReload = await fetch("/should_reload.json");
       const json = await shouldReload.json();
-      if (json["shouldReload"]) {
+      console.log("hello", json);
+      if (json["vectorClock"]) {
         onShouldReload();
 
         // restart the interval

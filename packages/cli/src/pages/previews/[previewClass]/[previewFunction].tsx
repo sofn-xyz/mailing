@@ -59,8 +59,10 @@ const Preview = ({ initialData }: { initialData: ShowPreviewResponseBody }) => {
   const fetchData = useCallback(async () => {
     setFetching(true);
     const response = await fetch(`/api${document.location.pathname}`);
+    const json = await response.json();
+    console.log("json", json?.html?.match(/^.*\!$/));
+    setData(json);
     setFetching(false);
-    setData(await response.json());
   }, [setData]);
   useLiveReload(fetchData);
 
@@ -171,8 +173,8 @@ const Preview = ({ initialData }: { initialData: ShowPreviewResponseBody }) => {
         }
         .loader-position {
           position: absolute;
-          top: 83px;
-          right: 18px;
+          bottom: 24px;
+          right: 24px;
         }
       `}</style>
     </div>
