@@ -108,8 +108,8 @@ const Preview = ({ initialData }: { initialData: ShowPreviewResponseBody }) => {
           </>
         }
       />
-      {true && (
-        <div className="absolute top-54px">
+      {fetching && (
+        <div className="loader-position">
           <CircleLoader />
         </div>
       )}
@@ -168,6 +168,11 @@ const Preview = ({ initialData }: { initialData: ShowPreviewResponseBody }) => {
           bottom: 0;
           font-size: 48px;
           background-color: pink;
+        }
+        .loader-position {
+          position: absolute;
+          top: 83px;
+          right: 18px;
         }
       `}</style>
     </div>
