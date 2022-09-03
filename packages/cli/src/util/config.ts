@@ -126,7 +126,7 @@ let generatedAnonymousId: string | undefined;
 
 // only call getOrSetGeneratedAnonymousId when an anonymousId is missing and *should be set*
 // because otherwise setting generatedAnonymousId will create side effects.  The only time we do this
-// is when a config file has no "anonymousId" in its keys
+// is when we're generating an anonymousId for the first time
 function getOrSetGeneratedAnonymousId() {
   if (generatedAnonymousId) return generatedAnonymousId;
 
