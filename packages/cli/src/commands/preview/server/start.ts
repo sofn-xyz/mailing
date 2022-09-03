@@ -1,12 +1,9 @@
 import http from "http";
-import { relative, resolve } from "path";
+import { resolve } from "path";
 import open from "open";
 import next from "next";
 import { pathExists } from "fs-extra";
-import { debounce } from "lodash";
-import { cwd } from "process";
 import { parse } from "url";
-import { watch } from "chokidar";
 
 import { getPreviewsDirectory } from "../../../util/paths";
 import { error, log, debug } from "../../../util/log";
@@ -17,9 +14,7 @@ import {
 import registerRequireHooks from "../../util/registerRequireHooks";
 import { bootstrapMailingDir, linkEmailsDirectory } from "./setup";
 import { getConfig } from "../../../util/config";
-import { setShouldReload, pollShouldReload } from "./liveReload";
-
-export const WATCH_IGNORE = /^\.|node_modules/;
+import { pollShouldReload, startChangeWatcher } from "./livereload";
 
 export default async function startPreviewServer() {
   const { emailsDir, port, quiet } = getConfig();
@@ -139,37 +134,7 @@ export default async function startPreviewServer() {
       }
     });
 
-  try {
-    // simple live reload implementation
-    const changeWatchPath = emailsDir;
-    if (!changeWatchPath) {
-      log("error finding emails dir in . or ./src");
-      return;
-    }
-
-    const reload = debounce(
-      async () => {
-        debug("reload from change");
-        await linkEmailsDirectory(emailsDir);
-        setShouldReload(true);
-      },
-      100,
-      { leading: true }
-    );
-
-    watch(changeWatchPath, { ignoreInitial: true }).on(
-      "all",
-      (eventType, filename) => {
-        if (WATCH_IGNORE.test(filename)) return;
-        log(`detected ${eventType} on ${filename}, reloading`);
-        delete require.cache[resolve(changeWatchPath, filename)];
-        reload();
-      }
-    );
-    log(`watching for changes to ${relative(cwd(), changeWatchPath)}`);
-  } catch (e) {
-    error(`error starting change watcher`, e);
-  }
+  startChangeWatcher(emailsDir);
 
   return server;
 }

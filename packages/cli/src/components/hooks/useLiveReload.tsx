@@ -1,20 +1,23 @@
 import { useEffect } from "react";
-import { LONG_POLLING_INTERVAL } from "../../commands/preview/server/livereload";
+import { LONG_POLLING_INTERVAL } from "../../commands/util/livereloadUtil";
 
 export default function useLiveReload(onShouldReload: () => void) {
   useEffect(() => {
     if (process.env.NODE_ENV === "production") {
+      // we don't actually want live relaoad in production, just fetch
       onShouldReload();
       return;
     }
     async function checkForReload() {
       const shouldReload = await fetch("/should_reload.json");
       const json = await shouldReload.json();
-      let interval = setInterval(checkForReload, LONG_POLLING_INTERVAL);
       if (json["shouldReload"]) {
         onShouldReload();
+
+        // restart the interval
         clearInterval(interval);
         interval = setInterval(checkForReload, LONG_POLLING_INTERVAL);
+        checkForReload(); // leading edge
       }
     }
     let interval = setInterval(checkForReload, LONG_POLLING_INTERVAL);
