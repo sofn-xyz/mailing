@@ -17,10 +17,10 @@ export function postHogClient() {
     });
   }
 
-  return client as any;
+  return client;
 }
 
 // readonly version of postHogClient
 export function getPostHogClient() {
-  return client as any;
+  return client;
 }
