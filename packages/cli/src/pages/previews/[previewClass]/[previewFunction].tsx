@@ -11,6 +11,7 @@ import {
   getPreviewComponent,
   previewTree,
 } from "../../../util/moduleManifestUtil";
+import CircleLoader from "../../../components/CircleLoader";
 
 type Params = { previewClass: string; previewFunction: string };
 
@@ -107,9 +108,9 @@ const Preview = ({ initialData }: { initialData: ShowPreviewResponseBody }) => {
           </>
         }
       />
-      {fetching && (
-        <div className="fetch-indicator animate-spin position-absolute top-4 left-5">
-          ~
+      {true && (
+        <div className="absolute top-54px">
+          <CircleLoader />
         </div>
       )}
       {!!data?.errors.length && <MjmlErrors errors={data.errors} />}
