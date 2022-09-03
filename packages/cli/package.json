@@ -28,7 +28,8 @@
   "description": "Fun email development environment",
   "devDependencies": {
     "@next/eslint-plugin-next": "^12.2.0",
-    "cypress": "^10.3.1"
+    "cypress": "^10.3.1",
+    "node-fetch": "^3.2.10"
   },
   "peerDependencies": {
     "react": "^17.0.0 || ^18.0.0",

@@ -2,6 +2,7 @@
   "name": "mailing-monorepo",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "packages/cli/src/dev.js --emails-dir packages/cli/src/emails",
     "dev:js": "yarn link:emails:js && packages/cli/src/dev.js",
