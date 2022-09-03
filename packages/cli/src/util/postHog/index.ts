@@ -1,7 +1,8 @@
-import { debug } from "./log";
-import { PostHog } from "posthog-node";
-import { config } from "../moduleManifest";
-import { getGeneratedAnonymousId } from "./config";
+import { debug } from "../log";
+import { config } from "../../moduleManifest";
+import { getGeneratedAnonymousId } from "../config";
+
+import { postHogClient, getPostHogClient } from "./client";
 
 // ** modified from posthog-node
 interface IdentifyMessageV1 {
@@ -14,27 +15,6 @@ interface EventMessageV1 extends IdentifyMessageV1 {
   groups?: Record<string, string | number>;
   sendFeatureFlags?: boolean;
 }
-// ** end
-
-const POSTHOG_API_KEY = process.env.POSTHOG_API_KEY;
-let client: undefined | PostHog;
-
-function postHogClient() {
-  if ("test" === process.env.NODE_ENV) return;
-
-  if (undefined === POSTHOG_API_KEY) {
-    throw new Error("POSTHOG_API_KEY is undefined");
-  }
-
-  if (undefined === client) {
-    client = new PostHog(POSTHOG_API_KEY, {
-      host: "https://app.posthog.com",
-    });
-  }
-
-  return client;
-}
-
 export function capture(options: EventMessageV1) {
   debug(
     `options.distinctId was ${options.distinctId} and config.anonymousId was ${
@@ -70,6 +50,7 @@ function sleep(ms: number) {
 }
 
 export async function shutdown() {
+  const client = getPostHogClient();
   if (client) {
     debug("calling postHog shutdown");
     client.shutdown();
