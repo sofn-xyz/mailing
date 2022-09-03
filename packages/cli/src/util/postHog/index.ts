@@ -1,5 +1,5 @@
 import { debug } from "../log";
-import { config } from "../../moduleManifest";
+import { getConfig } from "../moduleManifestUtil";
 import { getGeneratedAnonymousId } from "../config";
 
 import { postHogClient, getPostHogClient } from "./client";
@@ -16,6 +16,8 @@ interface EventMessageV1 extends IdentifyMessageV1 {
   sendFeatureFlags?: boolean;
 }
 export function capture(options: EventMessageV1) {
+  const config = getConfig();
+
   debug(
     `options.distinctId was ${options.distinctId} and config.anonymousId was ${
       config.anonymousId

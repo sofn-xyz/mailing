@@ -1,5 +1,5 @@
 import { ReactElement } from "react";
-import { previews } from "../moduleManifest";
+import { previews, config } from "../moduleManifest";
 
 export function previewTree(): [string, string[]][] {
   return Object.keys(previews).map((previewName: string) => {
@@ -17,4 +17,8 @@ export function getPreviewComponent(name: string, functionName: string) {
     [key: string]: () => ReactElement;
   } = previews[name as keyof typeof previews] as any;
   return previewModule[functionName]();
+}
+
+export function getConfig(): MailingConfig {
+  return config;
 }
