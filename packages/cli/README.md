@@ -124,17 +124,13 @@ export function toAmelita() {
 }
 ```
 
-It will show up in the index:
+On the left, you'll see a list of all of your emails. On the right, you'll see an individual email preview with a mobile/desktop/HTML toggle and live reload as you edit:
 
-<img width="600" alt="Mailing index" src="https://user-images.githubusercontent.com/609038/183299565-184b3919-6448-40e9-b585-c39a150f370d.jpg">
+<img width="600" alt="Mailing desktop preview" src="https://user-images.githubusercontent.com/609038/188324943-729009f0-c6f2-45a5-87b7-ae6338d7c45f.jpg">
 
-Clicking through shows you the email with a mobile/desktop toggle and live reload as you edit:
+When your email is nice, send it to yourself or your QA tool of choice for final testing (we like [Litmus](<[url](https://www.litmus.com)>)):
 
-<img width="600" alt="Mailing desktop preview" src="https://user-images.githubusercontent.com/609038/183301497-4f0cd257-bb49-44c0-8106-2e717c430cb7.jpg">
-
-When it's nice, send it to yourself or your QA tool of choice for final testing (we like [Litmus](<[url](https://www.litmus.com)>)):
-
-<img width="600" alt="Mailing mobile preview" src="https://user-images.githubusercontent.com/609038/183301531-0b111b5b-10d7-4dc3-b02d-814cd35fd2d5.jpg">
+<img width="600" alt="Mailing mobile preview" src="https://user-images.githubusercontent.com/609038/188325280-541ada05-ee35-4ab0-b16f-fcf1a77d89e8.jpg">
 
 <br/>
 
