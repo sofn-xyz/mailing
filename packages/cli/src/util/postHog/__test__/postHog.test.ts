@@ -8,8 +8,7 @@ describe("postHog", () => {
   let mockPostHogClient: PostHog;
   beforeEach(() => {
     mockPostHogClient = { capture: jest.fn() } as unknown as PostHog;
-
-    // jest.resetAllMocks();
+    jest.restoreAllMocks();
   });
 
   afterEach(() => {
@@ -33,11 +32,13 @@ describe("postHog", () => {
   });
 
   it("should call capture on the postHog client - with config.anonymousId if options.distinctId is blank", () => {
-    // jest.spyOn(moduleManifestUtil, "getConfig").mockImplementation(() => {
-    //   return {
-    //     anonymousId: "config-xyz",
-    //   };
-    // });
+    const spy = jest
+      .spyOn(moduleManifestUtil, "getConfig")
+      .mockImplementation(() => {
+        return {
+          anonymousId: "config-xyz",
+        };
+      });
 
     jest
       .spyOn(postHogClient, "postHogClient")
