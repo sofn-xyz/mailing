@@ -43,7 +43,7 @@ describe("livereload", () => {
 
   it("returns pollers immediatly when vectorClock=0", async () => {
     await Promise.all([fetchClock(0), fetchClock(0), fetchClock(0)]);
-    expect(Date.now() - start).toBeLessThan(100);
+    expect(Date.now() - start).toBeLessThan(200);
   });
 
   it("returns pollers immediatly when vectorClock=0", (done) => {
