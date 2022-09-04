@@ -2,9 +2,13 @@ import { capture } from "..";
 import * as postHogClient from "../client";
 import * as moduleManifestUtil from "../../moduleManifestUtil";
 import * as config from "../../config";
+import { PostHog } from "posthog-node";
 
 describe("postHog", () => {
+  let mockPostHogClient: PostHog;
   beforeEach(() => {
+    mockPostHogClient = { capture: jest.fn() } as unknown as PostHog;
+
     // jest.resetAllMocks();
   });
 
@@ -13,11 +17,8 @@ describe("postHog", () => {
   });
 
   it("should call capture on the postHog client", () => {
-    const mockPostHogClient = { capture: jest.fn() };
-
     jest
       .spyOn(postHogClient, "postHogClient")
-      // @ts-ignore
       .mockImplementation(() => mockPostHogClient);
 
     capture({
@@ -37,11 +38,9 @@ describe("postHog", () => {
     //     anonymousId: "config-xyz",
     //   };
     // });
-    const mockPostHogClient = { capture: jest.fn() };
 
     jest
       .spyOn(postHogClient, "postHogClient")
-      // @ts-ignore
       .mockImplementation(() => mockPostHogClient);
 
     capture({
@@ -55,14 +54,12 @@ describe("postHog", () => {
   });
 
   it("should call capture on the postHog client - with generatedAnonymousId if options.distinctId and config.anonymousId are blank", () => {
-    const mockPostHogClient = { capture: jest.fn() };
     jest
       .spyOn(config, "getGeneratedAnonymousId")
       .mockImplementation(() => "generated-xyz");
 
     jest
       .spyOn(postHogClient, "postHogClient")
-      // @ts-ignore
       .mockImplementation(() => mockPostHogClient);
 
     capture({
@@ -76,11 +73,8 @@ describe("postHog", () => {
   });
 
   it("should not call capture if there is no anonymousId", () => {
-    const mockPostHogClient = { capture: jest.fn() };
-
     jest
       .spyOn(postHogClient, "postHogClient")
-      // @ts-ignore
       .mockImplementation(() => mockPostHogClient);
 
     capture({
@@ -92,11 +86,9 @@ describe("postHog", () => {
 
   it("should not call capture if MM_DEV", () => {
     process.env.MM_DEV = "1";
-    const mockPostHogClient = { capture: jest.fn() };
 
     jest
       .spyOn(postHogClient, "postHogClient")
-      // @ts-ignore
       .mockImplementation(() => mockPostHogClient);
 
     capture({
