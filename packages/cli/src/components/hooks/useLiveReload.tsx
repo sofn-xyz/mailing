@@ -2,9 +2,8 @@ import { useEffect, useState } from "react";
 import { LONG_POLLING_INTERVAL } from "../../commands/util/livereloadUtil";
 
 export default function useLiveReload(onShouldReload: () => void) {
+  const [vectorClock, setVectorClock] = useState(0);
   useEffect(() => {
-    const [vectorClock, setVectorClock] = useState(0);
-
     if (process.env.NODE_ENV === "production") {
       // we don't actually want live relaoad in production, just fetch
       onShouldReload();

@@ -1,8 +1,16 @@
+import Image from "next/image";
+
 // A tiny loader written in the classical style.
 const CircleLoader: React.FC = () => {
   return (
     <div className="content-loader">
-      <img className="loader" src="/circle-loader.svg" width="10" height="10" />
+      <Image
+        className="loader"
+        src="/circle-loader.svg"
+        width="10"
+        height="10"
+        alt="live reloading"
+      />
       <style jsx>{`
         img {
           position: relative;
