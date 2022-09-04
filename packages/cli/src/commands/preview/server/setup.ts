@@ -10,12 +10,10 @@ import {
   writeFile,
   readFile,
   appendFile,
-  copyFile,
 } from "fs-extra";
 
 import { debug, log } from "../../../util/log";
 import { build, BuildOptions } from "esbuild";
-import { last } from "lodash";
 
 export const COMPONENT_FILE_REGEXP = /^[^\s-]+\.[tj]sx$/; // no spaces, .jsx or .tsx
 

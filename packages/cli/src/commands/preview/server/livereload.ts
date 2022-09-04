@@ -3,7 +3,6 @@ import { debounce } from "lodash";
 import { cwd } from "process";
 import { relative, resolve } from "path";
 import { watch } from "chokidar";
-import querystring from "querystring";
 
 import { error, log, debug } from "../../../util/log";
 import { linkEmailsDirectory } from "./setup";
