@@ -14,6 +14,8 @@
     "build": "preconstruct build",
     "test": "yarn link:emails; jest",
     "test:watch": "yarn test --watch",
+    "ci": "start-server-and-test ci:server http://localhost:3883 test",
+    "ci:server": "packages/cli/src/dev.js --quiet --emails-dir packages/cli/src/emails",
     "prepublish": "yarn build",
     "watch": "preconstruct watch",
     "release": "yarn build && yarn changeset publish",
@@ -48,6 +50,7 @@
   "dependencies": {
     "@babel/core": "^7.18.5",
     "@babel/preset-env": "^7.18.2",
+    "start-server-and-test": "^1.14.0",
     "yalc": "^1.0.0-pre.53"
   }
 }
