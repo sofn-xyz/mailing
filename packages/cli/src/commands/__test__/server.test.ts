@@ -12,19 +12,5 @@ describe("server command", () => {
       expect(out).toContain("Finalizing page optimization...");
       expect(out).toContain("First Load JS shared by all");
     });
-
-    it("starts after building", (done) => {
-      const child = execCliChild("server start");
-      const interval = setInterval(async () => {
-        try {
-          await fetch("http://localhost:3000");
-          clearInterval(interval);
-          child.kill();
-          done();
-        } catch (e) {
-          console.log(e);
-        }
-      }, 1000);
-    });
   });
 });
