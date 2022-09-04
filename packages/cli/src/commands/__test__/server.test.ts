@@ -5,7 +5,6 @@ jest.mock("../../util/log");
 
 describe("server command", () => {
   describe("cli", () => {
-    // n.b. jest runs files sequentially so we just build once at the top
     it("builds", async () => {
       const out = await execCli("server build");
       expect(out).toContain("Compiled successfully");
