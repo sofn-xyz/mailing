@@ -60,7 +60,6 @@ const Preview = ({ initialData }: { initialData: ShowPreviewResponseBody }) => {
     setFetching(true);
     const response = await fetch(`/api${document.location.pathname}`);
     const json = await response.json();
-    console.log("json", json?.html?.match(/^.*\!$/));
     setData(json);
     setFetching(false);
   }, [setData]);

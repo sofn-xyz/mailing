@@ -5,7 +5,7 @@ import { relative, resolve } from "path";
 import { watch } from "chokidar";
 import querystring from "querystring";
 
-import { error, log, debug } from "../../../util/log";
+import { error, log, debug, logPlain } from "../../../util/log";
 import { linkEmailsDirectory } from "./setup";
 import {
   LONG_POLLING_INTERVAL,
@@ -18,6 +18,7 @@ export const WATCH_IGNORE = /^\.|node_modules/;
 let vectorClock = Date.now();
 
 function renderClock(res: ServerResponse) {
+  debug("livereload render clock", vectorClock);
   res.writeHead(200);
   res.end(JSON.stringify({ vectorClock }));
 }
@@ -28,15 +29,13 @@ function requireParam(
   res: ServerResponse
 ) {
   try {
-    const url = new URL(req.url!);
+    const url = new URL(req.url!, `http://${req.headers.host}`);
     return JSON.parse(url.searchParams.get(param)!);
   } catch (e) {
+    const err = `error parsing ${param} from url`;
+    error(err, e);
     res.writeHead(403);
-    res.end(
-      JSON.stringify({
-        error: `error parsing ${param} from url`,
-      })
-    );
+    res.end(JSON.stringify({ err }));
     return null;
   }
 }
@@ -45,11 +44,13 @@ export function pollShouldReload(
   req: IncomingMessage,
   res: ServerResponse
 ): void {
+  res.setHeader("Content-Type", "application/json");
+
   const clientVectorClock: number = requireParam("vectorClock", req, res);
-  if (res.statusCode) return;
+  if (403 === res.statusCode) return;
 
   const poller = setInterval(() => {
-    if (clientVectorClock <= vectorClock) return;
+    if (clientVectorClock >= vectorClock) return;
     clearInterval(poller);
     clearTimeout(timeout);
     renderClock(res);

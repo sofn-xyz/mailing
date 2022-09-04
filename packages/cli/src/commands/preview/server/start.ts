@@ -99,8 +99,8 @@ export default async function startPreviewServer() {
       });
 
       try {
-        if (req.url === "/should_reload.json") {
-          // noLog = true;
+        if (/^\/should_reload\.json/.test(req.url)) {
+          noLog = true;
           pollShouldReload(req, res);
         } else if (req.url === "/intercepts" && req.method === "POST") {
           createIntercept(req, res);
