@@ -156,17 +156,17 @@ export async function bootstrapMailingDir() {
   await mkdir(mailingPath, { recursive: true });
 
   if (process.env.MM_DEV) {
-    // handle symlink?
+    // copy directory contents so that it works in packages/cli
+    // otherwise there will be an error because .mailing is in the dir being copied
     const copies = (await readdir(nodeMailingPath))
       .filter((path) => !DOT_MAILING_IGNORE_REGEXP.test(path))
-      .map(async (p) => {
-        console.log("cp", p, mailingPath + "/" + relative(".", p));
-        return copy(p, mailingPath + "/" + relative(".", p), {
+      .map(async (p) =>
+        copy(p, mailingPath + "/" + relative(".", p), {
           recursive: true,
           dereference: true,
           overwrite: true,
-        });
-      });
+        })
+      );
     await Promise.all(copies);
   } else {
     await copy(nodeMailingPath, mailingPath, {

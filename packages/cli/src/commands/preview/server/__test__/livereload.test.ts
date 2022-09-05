@@ -1,6 +1,8 @@
 import { readFile, writeFile } from "fs-extra";
+import { template } from "lodash";
 import fetch, { Response } from "node-fetch";
 import type { AbortSignal } from "node-fetch/externals";
+import { resolve } from "path";
 import { WATCH_IGNORE } from "../livereload";
 
 describe("livereload", () => {
@@ -33,6 +35,12 @@ describe("livereload", () => {
     return json["vectorClock"] as number;
   }
 
+  async function touchTemplate() {
+    const template = resolve(__dirname + "/../../../../emails/Reservation.tsx");
+    const fileContents = await readFile(template);
+    await writeFile(template, fileContents);
+  }
+
   it("ignores the right files when watching", () => {
     expect(
       WATCH_IGNORE.test(".mailing/src/emails/node_modules/lodash/fp/rest.js")
@@ -56,13 +64,15 @@ describe("livereload", () => {
       ]);
       expect(Date.now() - start).toBeLessThan(1000);
       expect(Date.now() - start).toBeGreaterThan(100);
+      clearTimeout(timeout);
       done();
     }, 0);
 
-    setTimeout(async () => {
-      const fileContents = await readFile("./emails/Welcome.tsx");
-      await writeFile("./emails/Welcome.tsx", fileContents);
-    }, 100); // n.b. this must happen after polling
+    setTimeout(touchTemplate, 100); // n.b. this must happen after polling
+    const timeout = setTimeout(() => {
+      controller.abort();
+      fail("timeout");
+    }, 4000);
   });
 
   it("does not return poller when a file is touched and vectorClock is ahead", (done) => {
@@ -78,10 +88,7 @@ describe("livereload", () => {
       }
     });
 
-    setTimeout(async () => {
-      const fileContents = await readFile("./emails/Welcome.tsx");
-      await writeFile("./emails/Welcome.tsx", fileContents);
-    }, 500); // n.b. this must happen after polling
+    setTimeout(touchTemplate, 500); // n.b. this must happen after polling
 
     setTimeout(async () => {
       // still not returned

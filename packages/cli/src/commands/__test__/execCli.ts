@@ -2,7 +2,9 @@ import { exec } from "child_process";
 
 export async function execCli(command: string, opts?: { debug: boolean }) {
   return new Promise((resolve, reject) => {
-    const child = exec(`FORCE_COLOR=0 ${__dirname}/../../dev.js ${command}`);
+    const child = exec(
+      `cd packages/cli && FORCE_COLOR=0 ${__dirname}/../../dev.js ${command}`
+    );
     let out = "";
     let err = "";
     child.stdout?.on("data", (stream) => {

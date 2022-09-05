@@ -27,5 +27,5 @@ export default function useLiveReload(onShouldReload: () => void) {
     return () => {
       clearInterval(interval);
     };
-  }, [vectorClock]);
+  }, [vectorClock, onShouldReload]);
 }

@@ -7,6 +7,7 @@ export default {
     "scripts",
     "<rootDir>/emails/",
     "<rootDir>/.mailing/",
+    "<rootDir>/packages/cli/.mailing/",
   ],
   watchPathIgnorePatterns: [
     "<rootDir>/emails/",

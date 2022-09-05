@@ -9,7 +9,7 @@ describe("exportPreviews command", () => {
   it("outputs html files to outDir", async () => {
     await handler({
       outDir: "./out",
-      emailsDir: "./emails",
+      emailsDir: "packages/cli/src/emails",
     } as ExportPreviewsArgs);
     expect(error).not.toHaveBeenCalled();
     expect(log).toHaveBeenCalledWith("Exporting preview html to");
