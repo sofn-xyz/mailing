@@ -15,7 +15,7 @@
     "test": "yarn link:emails; jest",
     "test:watch": "yarn test --watch",
     "ci": "start-server-and-test ci:server http://localhost:3883 test",
-    "ci:server": "packages/cli/src/dev.js --quiet --emails-dir packages/cli/src/emails",
+    "ci:server": "cd packages/cli && rm -rf .mailing && src/dev.js --quiet",
     "prepublish": "yarn build",
     "watch": "preconstruct watch",
     "release": "yarn build && yarn changeset publish",

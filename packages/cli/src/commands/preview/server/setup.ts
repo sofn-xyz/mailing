@@ -16,6 +16,8 @@ import { debug, log } from "../../../util/log";
 import { build, BuildOptions } from "esbuild";
 
 export const COMPONENT_FILE_REGEXP = /^[^\s-]+\.[tj]sx$/; // no spaces, .jsx or .tsx
+export const DOT_MAILING_IGNORE_REGEXP =
+  /__test__|generator_templates|yarn-error.log|src\/commands|src\/index\.ts$|src\/dev\.js$|\.mailing$|\.next|node_modules$|^cypress/;
 
 export type PreviewServerOptions = {
   emailsDir: string;
@@ -154,34 +156,24 @@ export async function bootstrapMailingDir() {
   await mkdir(mailingPath, { recursive: true });
 
   if (process.env.MM_DEV) {
-    await Promise.all(
-      (
-        await readdir(nodeMailingPath)
-      )
-        .filter(
-          (path) =>
-            !/__test__|generator_templates|src\/commands|src\/index\.ts$|src\/dev\.js$|\.mailing$|\.next|node_modules$|\/cypress$/.test(
-              path
-            )
-        )
-        .map(async (p) =>
-          copy(p, mailingPath + "/" + relative(".", p), {
-            recursive: true,
-            dereference: true,
-            overwrite: true,
-          })
-        )
-    );
+    // handle symlink?
+    const copies = (await readdir(nodeMailingPath))
+      .filter((path) => !DOT_MAILING_IGNORE_REGEXP.test(path))
+      .map(async (p) => {
+        console.log("cp", p, mailingPath + "/" + relative(".", p));
+        return copy(p, mailingPath + "/" + relative(".", p), {
+          recursive: true,
+          dereference: true,
+          overwrite: true,
+        });
+      });
+    await Promise.all(copies);
   } else {
     await copy(nodeMailingPath, mailingPath, {
       recursive: true,
       dereference: true,
       overwrite: true,
-      filter: (path) => {
-        return !/__test__|generator_templates|src\/index\.ts$|src\/dev\.js$|\.mailing$|\.next$|node_modules$|\/cypress$/.test(
-          path
-        );
-      },
+      filter: (path) => !DOT_MAILING_IGNORE_REGEXP.test(path),
     });
   }
 
