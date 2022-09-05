@@ -62,7 +62,7 @@ const Preview = ({ initialData }: { initialData: ShowPreviewResponseBody }) => {
     const json = await response.json();
     setData(json);
     setFetching(false);
-  }, [setData]);
+  }, [setData, setFetching]);
   useLiveReload(fetchData);
 
   const { previewClass, previewFunction } = router.query;

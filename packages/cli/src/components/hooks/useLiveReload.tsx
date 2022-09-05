@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { LONG_POLLING_INTERVAL } from "../../commands/util/livereloadUtil";
 
 export default function useLiveReload(onShouldReload: () => void) {
@@ -23,6 +23,7 @@ export default function useLiveReload(onShouldReload: () => void) {
       }
     }
     let interval = setInterval(checkForReload, LONG_POLLING_INTERVAL);
+    checkForReload();
     return () => {
       clearInterval(interval);
     };
