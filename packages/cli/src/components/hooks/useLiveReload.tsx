@@ -22,7 +22,7 @@ export default function useLiveReload(onShouldReload: () => void) {
         checkForReload();
       }
     }
-    let interval = setInterval(checkForReload, LONG_POLLING_INTERVAL);
+    const interval = setInterval(checkForReload, LONG_POLLING_INTERVAL);
     checkForReload();
     return () => {
       clearInterval(interval);
