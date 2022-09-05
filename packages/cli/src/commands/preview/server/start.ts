@@ -1,12 +1,9 @@
 import http from "http";
-import { relative, resolve } from "path";
+import { resolve } from "path";
 import open from "open";
 import next from "next";
 import { pathExists } from "fs-extra";
-import { debounce } from "lodash";
-import { cwd } from "process";
 import { parse } from "url";
-import { watch } from "chokidar";
 
 import { getPreviewsDirectory } from "../../../util/paths";
 import { error, log, debug } from "../../../util/log";
@@ -17,8 +14,7 @@ import {
 import registerRequireHooks from "../../util/registerRequireHooks";
 import { bootstrapMailingDir, linkEmailsDirectory } from "./setup";
 import { getConfig } from "../../../util/config";
-
-export const WATCH_IGNORE = /^\.|node_modules/;
+import { pollShouldReload, startChangeWatcher } from "./livereload";
 
 export default async function startPreviewServer() {
   const { emailsDir, port, quiet } = getConfig();
@@ -68,7 +64,6 @@ export default async function startPreviewServer() {
 
   const host = `http://${hostname}:${port}`;
   let currentUrl = `${host}/`;
-  let shouldReload = false;
 
   const server = http
     .createServer(async function (req, res) {
@@ -99,14 +94,6 @@ export default async function startPreviewServer() {
       }
 
       currentUrl = `${host}${req.url}`;
-      function showShouldReload(
-        _req: http.IncomingMessage,
-        res: http.ServerResponse
-      ): void {
-        res.writeHead(200);
-        res.end(JSON.stringify({ shouldReload }));
-        shouldReload = false;
-      }
 
       res.once("close", () => {
         if (!noLog || process.env.MM_VERBOSE)
@@ -114,9 +101,9 @@ export default async function startPreviewServer() {
       });
 
       try {
-        if (req.url === "/should_reload.json") {
+        if (/^\/should_reload\.json/.test(req.url)) {
           noLog = true;
-          showShouldReload(req, res);
+          pollShouldReload(req, res);
         } else if (req.url === "/intercepts" && req.method === "POST") {
           createIntercept(req, res);
         } else if (/^\/intercepts\/[a-zA-Z0-9]+\.json/.test(req.url)) {
@@ -149,33 +136,7 @@ export default async function startPreviewServer() {
       }
     });
 
-  try {
-    // simple live reload implementation
-    const changeWatchPath = emailsDir;
-    if (!changeWatchPath) {
-      log("error finding emails dir in . or ./src");
-      return;
-    }
-
-    const reload = debounce(async () => {
-      debug("reload from change");
-      await linkEmailsDirectory(emailsDir);
-      shouldReload = true;
-    }, 200);
-
-    watch(changeWatchPath, { ignoreInitial: true }).on(
-      "all",
-      (eventType, filename) => {
-        if (WATCH_IGNORE.test(filename)) return;
-        log(`detected ${eventType} on ${filename}, reloading`);
-        delete require.cache[resolve(changeWatchPath, filename)];
-        reload();
-      }
-    );
-    log(`watching for changes to ${relative(cwd(), changeWatchPath)}`);
-  } catch (e) {
-    error(`error starting change watcher`, e);
-  }
+  startChangeWatcher(emailsDir);
 
   return server;
 }

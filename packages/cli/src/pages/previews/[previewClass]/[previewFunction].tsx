@@ -12,6 +12,7 @@ import {
   previewTree,
 } from "../../../util/moduleManifestUtil";
 import IndexPane from "../../../components/IndexPane/IndexPane";
+import CircleLoader from "../../../components/CircleLoader";
 
 type Params = { previewClass: string; previewFunction: string };
 
@@ -72,8 +73,11 @@ const Preview: NextPage<PreviewProps> = ({ initialData }) => {
   const { previewClass, previewFunction } = router.query;
   const [viewMode, setViewMode] = useState<ViewMode>("desktop");
   const [data, setData] = useState<Data>(initialData);
+  const [fetching, setFetching] = useState(false);
+
   const fetchData = useCallback(async () => {
     if (!previewClass || !previewFunction) return;
+    setFetching(true);
     const json = await Promise.all([
       fetchJson(`/api/previews/${previewClass}/${previewFunction}`),
       // fetchJson("/api/previews"),
@@ -82,7 +86,9 @@ const Preview: NextPage<PreviewProps> = ({ initialData }) => {
       preview: json[0],
       previews: json[0].previews,
     });
+    setFetching(false);
   }, [setData, previewClass, previewFunction]);
+
   useLiveReload(fetchData);
 
   const { preview, previews } = data || { preview: null, previews: [] };
@@ -125,6 +131,7 @@ const Preview: NextPage<PreviewProps> = ({ initialData }) => {
           </>
         }
       />
+
       <div>
         <div className="left-pane">
           <IndexPane previews={previews} />
@@ -138,8 +145,14 @@ const Preview: NextPage<PreviewProps> = ({ initialData }) => {
               setViewMode={setViewMode}
             />
           )}
+          {fetching && (
+            <div className="loader-position">
+              <CircleLoader />
+            </div>
+          )}
         </div>
       </div>
+
       <style jsx>{`
         .left-pane,
         .right-pane {
@@ -184,6 +197,22 @@ const Preview: NextPage<PreviewProps> = ({ initialData }) => {
         .description {
           position: relative;
           top: 1.25px;
+        }
+        .fetch-indicator {
+          z-index: 9999;
+          height: 100px;
+          width: 100px;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          font-size: 48px;
+          background-color: pink;
+        }
+        .loader-position {
+          position: absolute;
+          bottom: 24px;
+          right: 24px;
         }
       `}</style>
     </div>
