@@ -5,9 +5,6 @@ name: Node.js CI
 
 on:
   push:
-    branches: [main]
-  pull_request:
-    branches: [main]
 
 jobs:
   build:
@@ -27,4 +24,4 @@ jobs:
           cache: "npm"
       - run: yarn
       - run: yarn build
-      - run: yarn test
+      - run: yarn ci

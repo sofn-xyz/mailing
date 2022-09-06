@@ -4,7 +4,6 @@ import pkg from "../../../../package.json";
 import {
   copy,
   mkdir,
-  mkdirp,
   readdir,
   remove,
   rm,
@@ -158,7 +157,7 @@ export async function bootstrapMailingDir() {
     dereference: true,
     overwrite: true,
     filter: (path) => {
-      return !/__test__|generator_templates|src\/commands|src\/index\.ts$|src\/dev\.js$|\.mailing$|\.next$|node_modules$|\/cypress$/.test(
+      return !/__test__|generator_templates|src\/index\.ts$|src\/dev\.js$|\.mailing$|\.next$|node_modules$|\/cypress$/.test(
         path
       );
     },
