@@ -5,14 +5,6 @@ import fs from "fs-extra";
 import { render } from "./mjml";
 import { error, log } from "./log";
 import fetch from "node-fetch";
-// import postHogClient from "./util/postHog";
-
-export type Config = {
-  emailsDir?: string;
-  quiet?: boolean;
-  port?: number;
-  anonymousId?: string | null;
-};
 
 export type ComponentMail = nodemailer.SendMailOptions & {
   component?: ReactElement<any, string | JSXElementConstructor<any>>;
@@ -22,7 +14,6 @@ export type ComponentMail = nodemailer.SendMailOptions & {
 export type BuildSendMailOptions = {
   transport: nodemailer.Transporter;
   defaultFrom: string;
-  config?: Config;
 };
 
 // In test, we write the email queue to this file so that it can be read
@@ -47,7 +38,6 @@ export async function clearTestMailQueue() {
     throw new Error("tried to clear test mail queue not in test mode");
   }
 
-  // prettier-ignore
   try {
     await fs.unlinkSync(TMP_TEST_FILE);
   } catch (e: any) {
@@ -66,17 +56,7 @@ export function buildSendMail(options: BuildSendMailOptions) {
     throw new Error("buildSendMail options are missing defaultFrom");
   }
 
-  const config = options?.config;
-
   return async function sendMail(mail: ComponentMail) {
-    // anonymous telemetry
-    // if (config?.anonymousId) {
-    //   postHogClient().capture({
-    //     distinctId: config.anonymousId,
-    //     event: "sendMail invoked",
-    //   });
-    // }
-
     const forcePreview =
       mail.forcePreview ||
       (process.env.NODE_ENV !== "production" && !mail.forceDeliver);
