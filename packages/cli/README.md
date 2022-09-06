@@ -102,7 +102,7 @@ const transport = nodemailer.createTransport({
 
 ```tsx
 import { sendMail } from "emails";
-import Welcome from "emails/AccountCreated";
+import AccountCreated from "emails/AccountCreated";
 
 sendMail({
   subject: "My First Email",
@@ -125,7 +125,7 @@ For example, here's `emails/previews/AccountCreated.tsx`:
 import AccountCreated from "../AccountCreated";
 
 export function accountCreated() {
-  return <accountCreated name="Amelita" />;
+  return <AccountCreated name="Amelita" />;
 }
 ```
 
