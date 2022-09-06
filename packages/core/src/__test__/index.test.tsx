@@ -26,6 +26,7 @@ describe("index", () => {
       const sendMail = buildSendMail({
         transport,
         defaultFrom: "replace@me.with.your.com",
+        configPath: "./mailing.config.json",
       });
 
       expect(typeof sendMail).toBe("function");
@@ -41,6 +42,7 @@ describe("index", () => {
       const sendMail = buildSendMail({
         transport,
         defaultFrom: "replace@me.with.your.com",
+        configPath: "./mailing.config.json",
       });
 
       await expect(async () => {
@@ -67,6 +69,7 @@ describe("index", () => {
       sendMail = buildSendMail({
         transport,
         defaultFrom: "replace@me.with.your.com",
+        configPath: "./mailing.config.json",
       });
     });
 
