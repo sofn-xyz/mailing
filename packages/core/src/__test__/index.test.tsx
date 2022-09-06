@@ -8,6 +8,7 @@ import {
   BuildSendMailOptions,
 } from "..";
 import { Mjml, MjmlBody, MjmlRaw, MjmlText } from "mjml-react";
+import * as log from "../util/log";
 
 describe("index", () => {
   describe("buildSendMail", () => {
@@ -48,6 +49,34 @@ describe("index", () => {
       await expect(async () => {
         await sendMail({});
       }).rejects.toThrow();
+    });
+
+    it("logs an error without a valid configPath", async () => {
+      await clearTestMailQueue();
+      const errorSpy = jest.spyOn(log, "error").mockImplementation(() => {});
+
+      const sendMail = buildSendMail({
+        transport,
+        defaultFrom: "replace@me.with.your.com",
+        configPath: "./garbage_path.json",
+      });
+
+      expect(errorSpy).toHaveBeenCalledWith(
+        "error loading config at ./garbage_path.json"
+      );
+
+      await sendMail({
+        component: <div></div>,
+        to: ["ok@ok.com"],
+        from: "ok@ok.com",
+        subject: "hello",
+        text: "ok",
+        html: "ok",
+      });
+
+      const queue = await getTestMailQueue();
+      expect(queue.length).toBe(1);
+      errorSpy.mockRestore();
     });
   });
 
