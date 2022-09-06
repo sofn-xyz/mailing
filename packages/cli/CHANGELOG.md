@@ -1,5 +1,15 @@
 # mailing
 
+## 0.7.4
+
+### Patch Changes
+
+- 6c0a488: improve livereload performance and reliability
+- 8b980fc: Introduce anonymous telemetry to help us prioritize development
+- Updated dependencies [6c0a488]
+- Updated dependencies [8b980fc]
+  - mailing-core@0.7.4
+
 ## 0.7.3
 
 ### Patch Changes
