@@ -79,7 +79,9 @@ export async function linkEmailsDirectory(emailsDir: string) {
 
   const moduleManifestTemplate = template(
     (
-      await readFile(__dirname + "/templates/moduleManifest.template.js")
+      await readFile(
+        ".mailing/src/commands/preview/server/templates/moduleManifest.template.js"
+      )
     ).toString()
   );
 
@@ -94,7 +96,9 @@ export async function linkEmailsDirectory(emailsDir: string) {
   await writeFile(dynManifestPath, moduleManifestContents);
 
   const feManifestContents = (
-    await readFile(__dirname + "/templates/feModuleManifest.template.js")
+    await readFile(
+      ".mailing/src/commands/preview/server/templates/feModuleManifest.template.js"
+    )
   ).toString();
 
   await writeFile(dynFeManifestPath, feManifestContents);
