@@ -3,8 +3,9 @@ import nodemailer from "nodemailer";
 import open from "open";
 import fs from "fs-extra";
 import { render } from "./mjml";
-import { error, log } from "./log";
+import { error, log } from "./util/log";
 import fetch from "node-fetch";
+import { capture } from "./util/postHog";
 
 export type ComponentMail = nodemailer.SendMailOptions & {
   component?: ReactElement<any, string | JSXElementConstructor<any>>;
@@ -14,6 +15,7 @@ export type ComponentMail = nodemailer.SendMailOptions & {
 export type BuildSendMailOptions = {
   transport: nodemailer.Transporter;
   defaultFrom: string;
+  configPath: string;
 };
 
 // In test, we write the email queue to this file so that it can be read
@@ -54,6 +56,19 @@ export function buildSendMail(options: BuildSendMailOptions) {
   }
   if (!options?.defaultFrom) {
     throw new Error("buildSendMail options are missing defaultFrom");
+  }
+
+  let anonymousId = null;
+  try {
+    const configRaw = fs.readFileSync(options.configPath);
+    const config: { anonymousId?: string | null } = JSON.parse(configRaw);
+    anonymousId = config.anonymousId;
+  } catch (e) {
+    if (!options.configPath) {
+      error("buildSendMail requires configPath");
+    } else {
+      error(`error loading config at ${options.configPath}`);
+    }
   }
 
   return async function sendMail(mail: ComponentMail) {
@@ -121,6 +136,11 @@ export function buildSendMail(options: BuildSendMailOptions) {
     }
 
     const response = await options.transport.sendMail(htmlMail);
+    capture({
+      distinctId: anonymousId,
+      event: "mail sent",
+    });
+
     return response;
   };
 }
