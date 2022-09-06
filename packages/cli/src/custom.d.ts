@@ -32,3 +32,10 @@ type MjmlError = {
 };
 
 type ViewMode = "desktop" | "mobile" | "html";
+
+type MailingConfig = {
+  anonymousId?: string | null;
+  emailsDir?: string;
+  port?: number;
+  quiet?: boolean;
+};

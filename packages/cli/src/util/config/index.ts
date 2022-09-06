@@ -1,9 +1,12 @@
-import { existsSync } from "fs-extra";
-import { readPackageJSON } from "./paths";
-import { writeFileSync } from "fs";
-import { log, error, logPlain } from "./log";
+import { existsSync, writeFileSync } from "fs-extra";
+import { readJSONverbose, readPackageJSON } from "../paths";
+import { log, debug, logPlain } from "../log";
 import { pick } from "lodash";
 import * as prettier from "prettier";
+import {
+  getOrSetGeneratedAnonymousId,
+  getGeneratedAnonymousId,
+} from "./anonymousId";
 
 export const MAILING_CONFIG_FILE = "./mailing.config.json";
 
@@ -31,11 +34,24 @@ export function defaults() {
 }
 
 // options to include in the default config file
-const DEFAULT_KEYS_FOR_CONFIG_FILE = ["typescript", "emailsDir", "outDir"];
+const DEFAULT_KEYS_FOR_CONFIG_FILE = [
+  "typescript",
+  "emailsDir",
+  "outDir",
+  "anonymousId",
+];
 
 // an object to JSON stringify and write to the default config file
 function defaultsForConfigFile() {
-  return pick(defaults(), DEFAULT_KEYS_FOR_CONFIG_FILE);
+  // set anonymousId here and not in DEFAULTS so that it getOrSetGeneratedAnonymousId is only called
+  // when an anonymousId needs to be generated
+
+  const defaultsToWriteToConfig = {
+    ...defaults(),
+    anonymousId: getOrSetGeneratedAnonymousId(),
+  };
+
+  return pick(defaultsToWriteToConfig, DEFAULT_KEYS_FOR_CONFIG_FILE);
 }
 
 export function looksLikeTypescriptProject(): boolean {
@@ -49,7 +65,32 @@ export function looksLikeTypescriptProject(): boolean {
 
 // write the default mailing.config.json file to get you started
 export function writeDefaultConfigFile(): void {
-  if (!existsSync(MAILING_CONFIG_FILE)) {
+  if (existsSync(MAILING_CONFIG_FILE)) {
+    // read the JSON file
+    const json = readJSONverbose(MAILING_CONFIG_FILE);
+
+    // check if anonymousId in JSON object
+    if ("anonymousId" in json) return;
+
+    // if not, add it
+    json.anonymousId = getOrSetGeneratedAnonymousId();
+
+    // ... and overwrite the JSON file
+    debug(
+      `patching mailing.config.json to include anonymousId ${getGeneratedAnonymousId()}`
+    );
+    const configJsonString = prettier.format(JSON.stringify(json), {
+      parser: "json",
+      printWidth: 0,
+    });
+
+    writeFileSync(MAILING_CONFIG_FILE, configJsonString);
+
+    log(
+      `updated mailing.config.json in your project with the following contents:
+  ${configJsonString}`
+    );
+  } else {
     const configJsonString = prettier.format(
       JSON.stringify(defaultsForConfigFile()),
       {
@@ -58,11 +99,7 @@ export function writeDefaultConfigFile(): void {
       }
     );
 
-    try {
-      writeFileSync(MAILING_CONFIG_FILE, configJsonString);
-    } catch (err) {
-      error(err);
-    }
+    writeFileSync(MAILING_CONFIG_FILE, configJsonString);
 
     logPlain(`
     ███╗   ███╗ █████╗ ██╗██╗     ██╗███╗   ██╗ ██████╗ 
@@ -74,29 +111,31 @@ export function writeDefaultConfigFile(): void {
     
         `);
     log(
-      `added mailing.config.json to your project with the following contents:
+      `added mailing.config.json in your project with the following contents:
 ${configJsonString}`
     );
   }
+  log("mailing now collects anonymous telemetry data about usage");
+  log("to disable this, set anonymousId to null in your mailing.config.json\n");
 }
 
 /* Preview server config singleton */
 
-interface PreviewServerConfig {
+type Config = {
   emailsDir: string;
   quiet: boolean;
   port: number;
+};
+
+let config: Config | undefined;
+
+export function setConfig(newConfig: Config) {
+  config = newConfig;
 }
 
-let previewServerConfig: PreviewServerConfig | undefined;
-
-export function setConfig(newConfig: PreviewServerConfig) {
-  previewServerConfig = newConfig;
-}
-
-export function getConfig(): PreviewServerConfig {
-  if (undefined === previewServerConfig) {
-    throw new Error("previewServerConfig is undefined");
+export function getConfig(): Config {
+  if (undefined === config) {
+    throw new Error("config is undefined");
   }
-  return previewServerConfig;
+  return config;
 }

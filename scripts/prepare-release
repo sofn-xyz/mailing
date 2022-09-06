@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+# load .env file
+if [[ -f .env ]]; then
+    source .env
+fi
+
+# throw an error if process.env.POSTHOG_API_KEY is undefined
+if [[ -z "$POSTHOG_API_KEY" ]]; then
+    echo "Must provide POSTHOG_API_KEY in environment" 1>&2
+    exit 1
+fi
+
+# throw an error if there aren't 2 files matching packages/cli/dist/mailing.cjs.*.js
+
+# search packages/cli/dist/mailing.cjs.*.js and replace "process.env.POSTHOG_API_KEY" with "\"${process.env.POSTHOG_API_KEY}\""
+find "packages/cli/dist" -type f -name "*.js" -exec sed -i '' "s/process\.env\.POSTHOG_API_KEY/\"$POSTHOG_API_KEY\"/g" {} +
