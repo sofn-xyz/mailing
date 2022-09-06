@@ -1,6 +1,6 @@
 import { debug } from "../log";
 import { getConfig } from "../moduleManifestUtil";
-import { getGeneratedAnonymousId } from "../config";
+import { getGeneratedAnonymousId } from "../config/anonymousId";
 
 import { postHogClient, getPostHogClient } from "./client";
 

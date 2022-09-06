@@ -1,9 +1,12 @@
 import { existsSync, writeFileSync } from "fs-extra";
-import { readJSONverbose, readPackageJSON } from "./paths";
-import { log, debug, logPlain } from "./log";
+import { readJSONverbose, readPackageJSON } from "../paths";
+import { log, debug, logPlain } from "../log";
 import { pick } from "lodash";
 import * as prettier from "prettier";
-import { randomUUID } from "crypto";
+import {
+  getOrSetGeneratedAnonymousId,
+  getGeneratedAnonymousId,
+} from "./anonymousId";
 
 export const MAILING_CONFIG_FILE = "./mailing.config.json";
 
@@ -114,29 +117,6 @@ ${configJsonString}`
   }
   log("mailing now collects anonymous telemetry data about usage");
   log("to disable this, set anonymousId to null in your mailing.config.json\n");
-}
-
-/* 
-  Functions for generating an anonymousId and get/set to a singleton
-  this is necessary to report analytics the first time you run init,
-  when you had no config and so argv has no anonymousId set 
-*/
-
-let generatedAnonymousId: string | undefined;
-
-// only call getOrSetGeneratedAnonymousId when an anonymousId is missing and *should be set*
-// because otherwise setting generatedAnonymousId will create side effects.  The only time we do this
-// is when we're generating an anonymousId for the first time
-function getOrSetGeneratedAnonymousId() {
-  if (generatedAnonymousId) return generatedAnonymousId;
-
-  const id = randomUUID();
-  generatedAnonymousId = id;
-  return id;
-}
-
-export function getGeneratedAnonymousId() {
-  return generatedAnonymousId;
 }
 
 /* Preview server config singleton */

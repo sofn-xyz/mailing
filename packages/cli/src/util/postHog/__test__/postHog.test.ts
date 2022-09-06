@@ -1,7 +1,7 @@
 import { capture } from "..";
 import * as postHogClient from "../client";
 import * as moduleManifestUtil from "../../moduleManifestUtil";
-import * as config from "../../config";
+import * as anonymousId from "../../config/anonymousId";
 import { PostHog } from "posthog-node";
 
 describe("postHog", () => {
@@ -56,7 +56,7 @@ describe("postHog", () => {
 
   it("should call capture on the postHog client - with generatedAnonymousId if options.distinctId and config.anonymousId are blank", () => {
     jest
-      .spyOn(config, "getGeneratedAnonymousId")
+      .spyOn(anonymousId, "getGeneratedAnonymousId")
       .mockImplementation(() => "generated-xyz");
 
     jest

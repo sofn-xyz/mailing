@@ -1,13 +1,13 @@
-import { log } from "../log";
+import { log } from "../../log";
 import fsExtra from "fs-extra";
 import crypto from "crypto";
 import {
   defaults,
   looksLikeTypescriptProject,
   writeDefaultConfigFile,
-} from "../config";
+} from "..";
 
-jest.mock("../log");
+jest.mock("../../log");
 
 describe("writeDefaultConfigFile", () => {
   beforeAll(() => {
