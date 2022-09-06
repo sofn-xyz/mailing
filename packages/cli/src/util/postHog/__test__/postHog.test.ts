@@ -13,6 +13,7 @@ describe("postHog", () => {
 
   afterEach(() => {
     delete process.env.MM_DEV;
+    delete process.env.MAILING_E2E;
   });
 
   it("should call capture on the postHog client", () => {
@@ -87,6 +88,20 @@ describe("postHog", () => {
 
   it("should not call capture if MM_DEV", () => {
     process.env.MM_DEV = "1";
+
+    jest
+      .spyOn(postHogClient, "postHogClient")
+      .mockImplementation(() => mockPostHogClient);
+
+    capture({
+      event: "ate pizza",
+    });
+
+    expect(mockPostHogClient.capture).not.toHaveBeenCalled();
+  });
+
+  it("should not call capture if MAILING_E2E", () => {
+    process.env.MAILING_E2E = "1";
 
     jest
       .spyOn(postHogClient, "postHogClient")

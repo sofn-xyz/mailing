@@ -28,7 +28,7 @@ class App
     puts "Running mailing"
     Dir.chdir(@root_dir) do
       # open the subprocess
-      @io = IO.popen("NODE_ENV=test npx mailing --quiet")
+      @io = IO.popen("MAILING_E2E=1 npx mailing --quiet")
     end
 
     # wait for the preview server to start
