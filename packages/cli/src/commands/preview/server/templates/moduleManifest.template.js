@@ -2,13 +2,13 @@
     import sendMail from "${relativePathToEmailsDir}";
     
     // template imports
-    ${templateImports}
+    ${templateImports.join("\n")}
 
     // preview imports
-    ${previewImports}
+    ${previewImports.join("\n")}
     
-    const previews = { ${previewConsts} };
-    const templates = { ${templateModuleNames} };
+    const previews = { ${previewConsts.join(", ")} };
+    const templates = { ${ templateModuleNames.join(", ")} };
 
     export { sendMail, config, templates, previews };
     const moduleManifest = { sendMail, templates, previews };

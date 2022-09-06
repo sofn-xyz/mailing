@@ -15,6 +15,7 @@ import {
 
 import { debug, log } from "../../../util/log";
 import { build, BuildOptions } from "esbuild";
+import { template } from "lodash";
 
 export const COMPONENT_FILE_REGEXP = /^[^\s-]+\.[tj]sx$/; // no spaces, .jsx or .tsx
 
@@ -76,26 +77,25 @@ export async function linkEmailsDirectory(emailsDir: string) {
     );
   });
 
-  const moduleManifestContents =
-    `import config from "../../mailing.config.json";\n` +
-    `import sendMail from "${relativePathToEmailsDir}";\n` +
-    templateImports.join("\n") +
-    "\n" +
-    previewImports.join("\n") +
-    "\n\n" +
-    `const previews = { ${previewConsts.join(", ")} };\n` +
-    `const templates = { ${templateModuleNames.join(", ")} };\n\n` +
-    `export { sendMail, config, templates, previews };\n` +
-    `const moduleManifest = { sendMail, templates, previews };\n` +
-    `export default moduleManifest;\n\n`;
+  const moduleManifestTemplate = template(
+    (
+      await readFile(__dirname + "/templates/moduleManifest.template.js")
+    ).toString()
+  );
+
+  const moduleManifestContents = moduleManifestTemplate({
+    relativePathToEmailsDir,
+    templateImports,
+    previewImports,
+    previewConsts,
+    templateModuleNames,
+  });
 
   await writeFile(dynManifestPath, moduleManifestContents);
 
-  const feManifestContents =
-    `import config from "../../mailing.config.json";\n` +
-    `export { config };\n` +
-    `const feManifest = { config };\n` +
-    `export default feManifest;\n\n`;
+  const feManifestContents = (
+    await readFile(__dirname + "/templates/feModuleManifest.template.js")
+  ).toString();
 
   await writeFile(dynFeManifestPath, feManifestContents);
 
