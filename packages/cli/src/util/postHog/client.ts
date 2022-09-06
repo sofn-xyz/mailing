@@ -15,6 +15,8 @@ export function postHogClient(): PostHog | undefined {
 
   if (undefined === client) {
     client = new PostHog(POSTHOG_API_KEY, {
+      flushAt: 0,
+      flushInterval: 0,
       host: "https://app.posthog.com",
     });
   }
