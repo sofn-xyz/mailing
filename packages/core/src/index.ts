@@ -6,6 +6,7 @@ import { render } from "./mjml";
 import { error, log } from "./util/log";
 import fetch from "node-fetch";
 import { capture } from "./util/postHog";
+import { getPostHogClient } from "./util/postHog/client";
 
 export type ComponentMail = nodemailer.SendMailOptions & {
   component?: ReactElement<any, string | JSXElementConstructor<any>>;
@@ -62,7 +63,8 @@ export function buildSendMail(options: BuildSendMailOptions) {
   try {
     const configRaw = fs.readFileSync(options.configPath).toString();
     const config = JSON.parse(configRaw);
-    anonymousId = config.anonymousId;
+    anonymousId =
+      process.env.NODE_ENV === "production" ? config.anonymousId : null;
   } catch (e) {
     if (!options.configPath) {
       error("buildSendMail requires configPath");
