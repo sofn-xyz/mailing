@@ -10,11 +10,21 @@ export default function useLiveReload(onShouldReload: () => void) {
       // we don't actually want live relaoad in production, just fetch
       return;
     }
+    const abortController = new AbortController();
     async function checkForReload() {
-      const shouldReload = await fetch(
-        `/should_reload.json?vectorClock=${vectorClock.current}`,
-        { headers: { "Content-Type": "application/json" } }
-      );
+      let shouldReload;
+      try {
+        shouldReload = await fetch(
+          `/should_reload.json?vectorClock=${vectorClock.current}`,
+          {
+            headers: { "Content-Type": "application/json" },
+            signal: abortController.signal,
+          }
+        );
+      } catch (e: any) {
+        if (!/AbortError/.test(e?.message)) return;
+      }
+      if (!shouldReload) return;
       const json = await shouldReload.json();
       if (json["vectorClock"] > vectorClock.current) {
         vectorClock.current = json["vectorClock"];
@@ -25,6 +35,7 @@ export default function useLiveReload(onShouldReload: () => void) {
     const interval = setInterval(checkForReload, LONG_POLLING_INTERVAL);
     checkForReload();
     return () => {
+      abortController.abort();
       clearInterval(interval);
     };
   }, [vectorClock, onShouldReload]);

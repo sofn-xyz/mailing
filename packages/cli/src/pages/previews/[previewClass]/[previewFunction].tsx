@@ -78,13 +78,13 @@ const Preview: NextPage<PreviewProps> = ({ initialData }) => {
   const fetchData = useCallback(async () => {
     if (!previewClass || !previewFunction) return;
     setFetching(true);
-    const json = await Promise.all([
-      fetchJson(`/api/previews/${previewClass}/${previewFunction}`),
-      // fetchJson("/api/previews"),
-    ]);
+    const json = await fetchJson(
+      `/api/previews/${previewClass}/${previewFunction}`
+    );
+
     setData({
-      preview: json[0],
-      previews: json[0].previews,
+      preview: json,
+      previews: json.previews,
     });
     setFetching(false);
   }, [setData, previewClass, previewFunction]);
