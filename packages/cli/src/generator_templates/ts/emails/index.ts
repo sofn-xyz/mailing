@@ -15,7 +15,7 @@ const transport = nodemailer.createTransport({
 const sendMail = buildSendMail({
   transport,
   defaultFrom: "replace@me.with.your.com",
-  configPath: "{MAILING_CONFIG_PATH}",
+  configPath: "./mailing.config.json",
 });
 
 export default sendMail;
