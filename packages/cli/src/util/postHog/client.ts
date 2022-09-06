@@ -2,9 +2,9 @@ import { PostHog } from "posthog-node";
 
 const POSTHOG_API_KEY = process.env.POSTHOG_API_KEY;
 
-let client: undefined | PostHog;
+let client: PostHog | undefined;
 
-export function postHogClient() {
+export function postHogClient(): PostHog | undefined {
   if ("test" === process.env.NODE_ENV) return;
 
   if (undefined === POSTHOG_API_KEY) {
@@ -21,6 +21,6 @@ export function postHogClient() {
 }
 
 // readonly version of postHogClient
-export function getPostHogClient() {
+export function getPostHogClient(): PostHog | undefined {
   return client;
 }
