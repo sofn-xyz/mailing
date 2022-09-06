@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 
 # load .env file
-source .env
+if [[ -f .env ]]; then
+    source .env
+fi
 
 # throw an error if process.env.POSTHOG_API_KEY is undefined
 if [[ -z "$POSTHOG_API_KEY" ]]; then
