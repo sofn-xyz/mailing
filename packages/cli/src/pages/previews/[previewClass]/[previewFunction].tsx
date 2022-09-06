@@ -11,6 +11,7 @@ import {
   getPreviewComponent,
   previewTree,
 } from "../../../util/moduleManifestUtil";
+import CircleLoader from "../../../components/CircleLoader";
 
 type Params = { previewClass: string; previewFunction: string };
 
@@ -54,10 +55,14 @@ const Preview = ({ initialData }: { initialData: ShowPreviewResponseBody }) => {
   const router = useRouter();
   const [viewMode, setViewMode] = useState<ViewMode>("desktop");
   const [data, setData] = useState<ShowPreviewResponseBody | null>(initialData);
+  const [fetching, setFetching] = useState(false);
   const fetchData = useCallback(async () => {
+    setFetching(true);
     const response = await fetch(`/api${document.location.pathname}`);
-    setData(await response.json());
-  }, [setData]);
+    const json = await response.json();
+    setData(json);
+    setFetching(false);
+  }, [setData, setFetching]);
   useLiveReload(fetchData);
 
   const { previewClass, previewFunction } = router.query;
@@ -104,6 +109,11 @@ const Preview = ({ initialData }: { initialData: ShowPreviewResponseBody }) => {
           </>
         }
       />
+      {fetching && (
+        <div className="loader-position">
+          <CircleLoader />
+        </div>
+      )}
       {!!data?.errors.length && <MjmlErrors errors={data.errors} />}
       {data?.html && !data?.errors.length && (
         <HotIFrame
@@ -148,6 +158,22 @@ const Preview = ({ initialData }: { initialData: ShowPreviewResponseBody }) => {
         .description {
           position: relative;
           top: 1.25px;
+        }
+        .fetch-indicator {
+          z-index: 9999;
+          height: 100px;
+          width: 100px;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          font-size: 48px;
+          background-color: pink;
+        }
+        .loader-position {
+          position: absolute;
+          bottom: 24px;
+          right: 24px;
         }
       `}</style>
     </div>

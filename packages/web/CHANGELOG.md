@@ -1,5 +1,11 @@
 # web
 
+## 0.3.3
+
+### Patch Changes
+
+- 2b666f0: switch fs.watch to chokidar.watch
+
 ## 0.3.2
 
 ### Patch Changes
