@@ -14,6 +14,8 @@ interface EventMessageV1 extends IdentifyMessageV1 {
   sendFeatureFlags?: boolean;
 }
 export function capture(options: EventMessageV1) {
+  if (process.env.NODE_ENV !== "production") return;
+
   const distinctId = options.distinctId;
 
   const captureOpts = {
@@ -29,21 +31,4 @@ export function capture(options: EventMessageV1) {
   }
 
   return postHogClient()?.capture(captureOpts);
-}
-
-function sleep(ms: number) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
-
-export async function shutdown() {
-  const client = getPostHogClient();
-  if (client) {
-    debug("calling postHog shutdown");
-    client.shutdown();
-
-    // unfortunately, calling posthog-node's shutdown in a `finally` does not work without this, 1000ms is a guess
-    await sleep(1000);
-  } else {
-    debug("skipping postHog client shutdown because it was never instantiated");
-  }
 }
