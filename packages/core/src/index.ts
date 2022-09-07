@@ -1,20 +1,19 @@
 import { ReactElement, JSXElementConstructor } from "react";
-import nodemailer from "nodemailer";
+import type { SendMailOptions, Transporter } from "nodemailer";
 import open from "open";
 import fs from "fs-extra";
 import { render } from "./mjml";
 import { error, log } from "./util/log";
 import fetch from "node-fetch";
 import { capture } from "./util/postHog";
-import { getPostHogClient } from "./util/postHog/client";
 
-export type ComponentMail = nodemailer.SendMailOptions & {
+export type ComponentMail = SendMailOptions & {
   component?: ReactElement<any, string | JSXElementConstructor<any>>;
   forceDeliver?: boolean;
   forcePreview?: boolean;
 };
 export type BuildSendMailOptions = {
-  transport: nodemailer.Transporter;
+  transport: Transporter;
   defaultFrom: string;
   configPath: string;
 };
