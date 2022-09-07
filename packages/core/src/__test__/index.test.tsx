@@ -51,7 +51,7 @@ describe("index", () => {
       }).rejects.toThrow();
     });
 
-    it("logs an error without a valid configPath", async () => {
+    it("logs an error without a valid configPath but still sends", async () => {
       await clearTestMailQueue();
       const errorSpy = jest.spyOn(log, "error").mockImplementation(() => {});
 
@@ -74,6 +74,7 @@ describe("index", () => {
         html: "ok",
       });
 
+      // still hits the queue even with the error
       const queue = await getTestMailQueue();
       expect(queue.length).toBe(1);
       errorSpy.mockRestore();

@@ -28,7 +28,7 @@ export async function getTestMailQueue() {
   }
 
   try {
-    const queue = await fs.readFileSync(TMP_TEST_FILE);
+    const queue = await fs.readFile(TMP_TEST_FILE);
     return JSON.parse(queue.toString());
   } catch (e) {
     return [];
@@ -106,14 +106,14 @@ export function buildSendMail(options: BuildSendMailOptions) {
     if (testMode) {
       const testMessageQueue = await getTestMailQueue();
       testMessageQueue.push(htmlMail);
-      fs.writeFileSync(TMP_TEST_FILE, JSON.stringify(testMessageQueue));
+      await fs.writeFile(TMP_TEST_FILE, JSON.stringify(testMessageQueue));
       return;
     }
 
     if (forcePreview) {
       log("💌 opening sendMail preview", mail);
-      // open on preview server url
-      // hit echo endpoint with html
+      // create an intercept on the preview server
+      // then open it in the browser
       const PREVIEW_SERVER_URL = "http://localhost:3883/intercepts";
       try {
         const response = await fetch(PREVIEW_SERVER_URL, {
