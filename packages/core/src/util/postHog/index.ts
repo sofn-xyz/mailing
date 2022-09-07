@@ -30,5 +30,9 @@ export function capture(options: EventMessageV1) {
     return;
   }
 
-  return postHogClient()?.capture(captureOpts);
+  try {
+    postHogClient()?.capture(captureOpts);
+  } catch (e) {
+    debug("posthog capture error", e);
+  }
 }
