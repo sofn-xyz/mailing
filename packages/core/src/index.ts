@@ -138,7 +138,7 @@ export function buildSendMail(options: BuildSendMailOptions) {
 
     const response = await options.transport.sendMail(htmlMail);
     if (anonymousId)
-      capture({
+      await capture({
         distinctId: anonymousId,
         event: "mail sent",
       });

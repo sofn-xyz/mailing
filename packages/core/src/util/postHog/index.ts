@@ -13,7 +13,7 @@ interface EventMessageV1 extends IdentifyMessageV1 {
   groups?: Record<string, string | number>;
   sendFeatureFlags?: boolean;
 }
-export function capture(options: EventMessageV1) {
+export async function capture(options: EventMessageV1) {
   if (process.env.NODE_ENV !== "production") return;
 
   const distinctId = options.distinctId;
@@ -32,7 +32,7 @@ export function capture(options: EventMessageV1) {
 
   try {
     postHogClient()?.capture(captureOpts);
-    postHogClient()?.flush();
+    await postHogClient()?.shutdownAsync();
   } catch (e) {
     debug("posthog capture error", e);
   }
