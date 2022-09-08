@@ -80,7 +80,7 @@ export async function linkEmailsDirectory(emailsDir: string) {
   const moduleManifestTemplate = template(
     (
       await readFile(
-        ".mailing/src/commands/preview/server/templates/moduleManifest.template"
+        ".mailing/src/commands/preview/server/templates/moduleManifest.template.ejs"
       )
     ).toString()
   );
@@ -97,7 +97,7 @@ export async function linkEmailsDirectory(emailsDir: string) {
 
   const feManifestContents = (
     await readFile(
-      ".mailing/src/commands/preview/server/templates/feModuleManifest.template"
+      ".mailing/src/commands/preview/server/templates/feModuleManifest.template.ejs"
     )
   ).toString();
 
