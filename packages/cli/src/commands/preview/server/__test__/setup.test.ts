@@ -3,7 +3,6 @@ import path from "path";
 import {
   packageJsonVersionsMatch,
   bootstrapMailingDir,
-  getNodeModulesDirs,
   COMPONENT_FILE_REGEXP,
 } from "../setup";
 import childProcess from "child_process";
@@ -117,18 +116,6 @@ describe("setup", () => {
 
       await bootstrapMailingDir();
       expect(fsExtra.copy).not.toHaveBeenCalled();
-    });
-  });
-
-  describe("getNodeModulesDirs", () => {
-    it("should return an array with all the node_modules folders", () => {
-      jest.spyOn(path, "resolve").mockImplementation(() => "/a/b/c");
-      expect(getNodeModulesDirs()).toEqual([
-        "../../../node_modules",
-        "../../node_modules",
-        "../node_modules",
-        "./node_modules",
-      ]);
     });
   });
 

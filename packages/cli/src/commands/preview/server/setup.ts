@@ -1,4 +1,4 @@
-import { relative, resolve, normalize, sep } from "path";
+import { relative, resolve } from "path";
 import { execSync } from "child_process";
 import {
   copy,
@@ -14,6 +14,7 @@ import {
 
 import { debug, log } from "../../../util/log";
 import { build, BuildOptions } from "esbuild";
+import { getNodeModulesDirsFrom } from "../../util/getNodeModulesDirsFrom";
 
 export const COMPONENT_FILE_REGEXP = /^[^\s-]+\.[tj]sx$/; // no spaces, .jsx or .tsx
 
@@ -185,21 +186,6 @@ export async function bootstrapMailingDir() {
   }
 }
 
-export function getNodeModulesDirs() {
-  const nodeModulesDirs = [];
-
-  const pathDepth = resolve(".").split(sep).length - 1;
-  let i = pathDepth;
-
-  do {
-    nodeModulesDirs.push(normalize(`..${sep}`.repeat(i) + "node_modules"));
-  } while (--i);
-
-  nodeModulesDirs.push("./node_modules");
-
-  return nodeModulesDirs;
-}
-
 async function buildManifest(
   buildType: "node" | "browser",
   manifestPath: string
@@ -213,7 +199,7 @@ async function buildManifest(
     bundle: true,
     format: "esm",
     jsx: "preserve",
-    external: getNodeModulesDirs(),
+    external: getNodeModulesDirsFrom("."),
   };
 
   if ("node" === buildType) {
