@@ -1,5 +1,4 @@
 import fsExtra from "fs-extra";
-import path from "path";
 import {
   packageJsonVersionsMatch,
   bootstrapMailingDir,
