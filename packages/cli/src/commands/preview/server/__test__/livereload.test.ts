@@ -54,7 +54,7 @@ describe("livereload", () => {
         fetchClock(startClock),
         fetchClock(startClock),
       ]);
-      expect(Date.now() - start).toBeLessThan(1000);
+      expect(Date.now() - start).toBeLessThan(3000);
       expect(Date.now() - start).toBeGreaterThan(100);
       done();
     }, 0);
