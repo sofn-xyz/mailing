@@ -1,4 +1,4 @@
-import { relative, resolve } from "path";
+import { relative, resolve, normalize, sep } from "path";
 import { execSync } from "child_process";
 import {
   copy,
@@ -185,6 +185,21 @@ export async function bootstrapMailingDir() {
   }
 }
 
+export function getNodeModulesDirs() {
+  const nodeModulesDirs = [];
+
+  const pathDepth = resolve(".").split(sep).length - 1;
+  let i = pathDepth;
+
+  do {
+    nodeModulesDirs.push(normalize(`..${sep}`.repeat(i) + "node_modules"));
+  } while (--i);
+
+  nodeModulesDirs.push("./node_modules");
+
+  return nodeModulesDirs;
+}
+
 async function buildManifest(
   buildType: "node" | "browser",
   manifestPath: string
@@ -198,13 +213,7 @@ async function buildManifest(
     bundle: true,
     format: "esm",
     jsx: "preserve",
-    external: [
-      "./node_modules/*",
-      "../node_modules/*",
-      "../../node_modules/*",
-      "../../../node_modules/*",
-      "../../../../node_modules/*",
-    ],
+    external: getNodeModulesDirs(),
   };
 
   if ("node" === buildType) {
