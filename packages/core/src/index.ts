@@ -58,7 +58,7 @@ export function buildSendMail(options: BuildSendMailOptions) {
     throw new Error("buildSendMail options are missing defaultFrom");
   }
 
-  let anonymousId: string | undefined | null;
+  let anonymousId = "unknown";
   try {
     const configRaw = fs.readFileSync(options.configPath).toString();
     const config = JSON.parse(configRaw);
@@ -137,11 +137,10 @@ export function buildSendMail(options: BuildSendMailOptions) {
     }
 
     const response = await options.transport.sendMail(htmlMail);
-    if (anonymousId)
-      await capture({
-        distinctId: anonymousId,
-        event: "mail sent",
-      });
+    await capture({
+      distinctId: anonymousId,
+      event: "mail sent",
+    });
 
     return response;
   };
