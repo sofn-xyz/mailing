@@ -1,4 +1,4 @@
-import { relative, resolve } from "path";
+import { relative, resolve, normalize } from "path";
 import { execSync } from "child_process";
 import pkg from "../../../../package.json";
 import {
@@ -48,7 +48,9 @@ export async function linkEmailsDirectory(emailsDir: string) {
   uniquePreviewCollections.forEach((p) => {
     const moduleName = p.replace(/\.[jt]sx/g, "");
     previewImports.push(
-      `import * as ${moduleName}Preview from "${relativePathToEmailsDir}/previews/${moduleName}";`
+      `import * as ${moduleName}Preview from "${normalize(
+        relativePathToEmailsDir + "/previews/" + moduleName
+      )}";`
     );
     previewConsts.push(`${moduleName}: ${moduleName}Preview`);
   });
@@ -73,7 +75,9 @@ export async function linkEmailsDirectory(emailsDir: string) {
     const moduleName = p.replace(/\.[jt]sx/g, "");
     templateModuleNames.push(moduleName);
     templateImports.push(
-      `import ${moduleName} from "${relativePathToEmailsDir}/${moduleName}";`
+      `import ${moduleName} from "${normalize(
+        relativePathToEmailsDir + "/" + moduleName
+      )}";`
     );
   });
 
