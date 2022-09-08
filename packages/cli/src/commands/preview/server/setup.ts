@@ -1,6 +1,5 @@
 import { relative, resolve } from "path";
 import { execSync } from "child_process";
-import pkg from "../../../../package.json";
 import {
   copy,
   mkdir,
@@ -200,8 +199,11 @@ async function buildManifest(
     format: "esm",
     jsx: "preserve",
     external: [
-      ...Object.keys(pkg.dependencies || {}),
-      ...Object.keys(pkg.peerDependencies || {}),
+      "./node_modules/*",
+      "../node_modules/*",
+      "../../node_modules/*",
+      "../../../node_modules/*",
+      "../../../../node_modules/*",
     ],
   };
 
@@ -212,6 +214,8 @@ async function buildManifest(
     buildOpts.platform = "browser";
     buildOpts.target = "esnext";
   }
+
+  debug("invoking esbuild with buildOpts: ", JSON.stringify(buildOpts));
 
   // build the manifest
   debug(`bundling ${buildType} manifest for ${manifestPath}...`);
