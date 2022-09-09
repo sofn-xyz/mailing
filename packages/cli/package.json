@@ -1,6 +1,6 @@
 {
   "name": "mailing",
-  "version": "0.7.4",
+  "version": "0.7.5",
   "main": "dist/mailing.cjs.js",
   "license": "MIT",
   "homepage": "https://github.com/sofn-xyz/mailing#readme",
