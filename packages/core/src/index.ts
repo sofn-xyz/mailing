@@ -3,7 +3,7 @@ import type { SendMailOptions, Transporter } from "nodemailer";
 import open from "open";
 import fs from "fs-extra";
 import { render } from "./mjml";
-import { error, log } from "./util/log";
+import { error, log, debug } from "./util/log";
 import fetch from "node-fetch";
 import { capture } from "./util/postHog";
 
@@ -66,7 +66,7 @@ export function buildSendMail(options: BuildSendMailOptions) {
       process.env.NODE_ENV === "production" ? config.anonymousId : null;
   } catch (e) {
     if (!options.configPath) {
-      error("buildSendMail requires configPath");
+      debug("buildSendMail requires configPath");
     } else {
       error(`error loading config at ${options.configPath}`);
     }
