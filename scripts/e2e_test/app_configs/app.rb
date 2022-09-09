@@ -16,6 +16,7 @@ class App
     FileUtils.mkdir_p(@root_dir)
 
     use_cache do
+      write_dot_env!
       yarn_create!
       verify_package_json_exists!
     end
@@ -26,9 +27,10 @@ class App
 
   def run_mailing!
     puts "Running mailing"
+    mailing_command = ->{ IO.popen("MM_E2E=1 npx mailing --quiet") }
+
     Dir.chdir(@root_dir) do
-      # open the subprocess
-      @io = IO.popen("MM_E2E=1 npx mailing --quiet")
+      @io = in_subdir(mailing_command)
     end
 
     # wait for the preview server to start
@@ -37,6 +39,16 @@ class App
   end
 
 private
+  def in_subdir(lam)
+    if @sub_dir
+      Dir.chdir(@sub_dir) do
+        lam.call
+      end
+    else
+      lam.call
+    end
+  end
+
   def use_cache(&block)
     framework_cache_dir = File.join(CACHE_DIR, @name)
     if Dir.exist?(framework_cache_dir)
@@ -52,6 +64,10 @@ private
     end
   end
 
+  def write_dot_env!
+    system_quiet('echo "MM_E2E=1" > .env')
+  end
+
   def verify_package_json_exists!
     fail "missing package.json in #{@root_dir}" unless File.exist?(File.join(@root_dir, "package.json"))
   end
@@ -59,8 +75,11 @@ private
   ## yalc add mailing and mailing-cor to the project
   def yalc_add_packages!
     puts "Adding mailing and mailing-core via yalc"
+
+    yalc_command = ->{ system_quiet("npx yalc add --dev mailing mailing-core") }
+
     Dir.chdir(@root_dir) do
-      system_quiet("npx yalc add --dev mailing mailing-core")
+      in_subdir(yalc_command)
     end
   end
   
