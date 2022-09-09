@@ -213,9 +213,11 @@ async function buildManifest(
     bundle: true,
     format: "esm",
     jsx: "preserve",
-    external: getNodeModulesDirsFrom(".").concat(
-      getNodeModulesDirsFrom(globalNodeModulesDirectory)
-    ),
+    external: globalNodeModulesDirectory
+      ? getNodeModulesDirsFrom(".").concat(
+          getNodeModulesDirsFrom(globalNodeModulesDirectory)
+        )
+      : getNodeModulesDirsFrom("."),
   };
 
   if ("node" === buildType) {
