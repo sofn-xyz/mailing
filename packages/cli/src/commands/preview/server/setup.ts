@@ -1,4 +1,4 @@
-import { resolve, posix } from "path";
+import { resolve, posix, relative } from "path";
 import { execSync } from "child_process";
 import {
   copy,
