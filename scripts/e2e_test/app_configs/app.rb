@@ -27,8 +27,10 @@ class App
   def run_mailing!
     puts "Running mailing"
     Dir.chdir(@root_dir) do
-      # open the subprocess
-      @io = IO.popen("MM_E2E=1 npx mailing --quiet")
+      Dir.chdir(@sub_dir) do
+        # open the subprocess
+        @io = IO.popen("MM_E2E=1 npx mailing --quiet")
+      end
     end
 
     # wait for the preview server to start
@@ -60,7 +62,9 @@ private
   def yalc_add_packages!
     puts "Adding mailing and mailing-core via yalc"
     Dir.chdir(@root_dir) do
-      system_quiet("npx yalc add --dev mailing mailing-core")
+      Dir.chdir(@sub_dir) do
+        system_quiet("npx yalc add --dev mailing mailing-core")
+      end
     end
   end
   

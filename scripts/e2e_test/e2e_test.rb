@@ -12,6 +12,7 @@ require_relative 'app_configs/redwood_js_app'
 require_relative 'app_configs/remix_ts_app'
 require_relative 'app_configs/remix_js_app'
 require_relative 'app_configs/standalone_app'
+require_relative 'app_configs/turbo_app'
 
 class TestRunner
   include TestRunnerUtils
@@ -26,6 +27,7 @@ class TestRunner
 
   E2E_CONFIG = {
     standalone: StandaloneApp,
+    turbo: TurboApp,
     next_ts: NextTsApp,
     next_js: NextJsApp,
     redwood_ts: RedwoodTsApp,
