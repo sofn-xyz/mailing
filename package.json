@@ -18,7 +18,7 @@
     "ci:server": "cd packages/cli && rm -rf .mailing && src/dev.js --quiet",
     "prepublish": "yarn build",
     "watch": "preconstruct watch",
-    "release": "yarn build && yarn changeset publish",
+    "release": "yarn build && ./scripts/prepare-release && yarn changeset publish",
     "postinstall": "preconstruct dev",
     "e2e": "cd scripts/e2e_test/ && bundle && bundle exec ruby e2e_test.rb"
   },

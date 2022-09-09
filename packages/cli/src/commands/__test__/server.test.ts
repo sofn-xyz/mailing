@@ -1,5 +1,4 @@
-import { execCli, execCliChild } from "./execCli";
-import fetch from "node-fetch";
+import { execCli } from "./execCli";
 
 jest.mock("../../util/log");
 

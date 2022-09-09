@@ -7708,6 +7708,13 @@ postcss@^8.4.16:
     picocolors "^1.0.0"
     source-map-js "^1.0.2"
 
+posthog-node@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/posthog-node/-/posthog-node-2.0.2.tgz#f2a5b087d512508dd5b7cf996c0bc7a873840742"
+  integrity sha512-lB7y5znEGHhL6CP+Xwq4v+js4x0oGqyJXwZM2SXPXakZzPq+UQo/HLYZCOnsCpk8DnXLZOKjut9vYLqkTCjGJQ==
+  dependencies:
+    undici "^5.8.0"
+
 preferred-pm@^3.0.0:
   version "3.0.3"
   resolved "https://registry.npmjs.org/preferred-pm/-/preferred-pm-3.0.3.tgz"
@@ -8927,6 +8934,11 @@ unbox-primitive@^1.0.2:
     has-bigints "^1.0.2"
     has-symbols "^1.0.3"
     which-boxed-primitive "^1.0.2"
+
+undici@^5.8.0:
+  version "5.10.0"
+  resolved "https://registry.yarnpkg.com/undici/-/undici-5.10.0.tgz#dd9391087a90ccfbd007568db458674232ebf014"
+  integrity sha512-c8HsD3IbwmjjbLvoZuRI26TZic+TSEe8FPMLLOkN1AfYRhdjnKBU6yL+IwcSCbdZiX4e5t0lfMDLDCqj4Sq70g==
 
 unicode-canonical-property-names-ecmascript@^2.0.0:
   version "2.0.0"

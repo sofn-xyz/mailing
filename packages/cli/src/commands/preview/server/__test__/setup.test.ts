@@ -11,28 +11,23 @@ jest.mock("../../../../util/log");
 function mockPackageJsonVersionToMatch() {
   // mock the .mailing/package.json version
   jest
-    .spyOn(fsExtra, "readFile")
-    .mockImplementation(
-      (path) =>
-        new Promise((resolve) => resolve(Buffer.from(`{"version":"0.6.6"}`)))
-    );
+    .spyOn(fsExtra, "readJSONSync")
+    .mockImplementation(() => ({ version: "0.6.6" }));
 
   // mock the npx mailing version
   jest.spyOn(childProcess, "execSync").mockImplementation(() => "0.6.6");
 }
 
-function mockReadFileToThrowErrno() {
+function mockReadJSONSyncToThrowErrno() {
   const fileNotFoundError = { code: "ENOENT" };
-
-  jest.spyOn(fsExtra, "readFile").mockImplementation((path) => {
+  jest.spyOn(fsExtra, "readJSONSync").mockImplementation((path) => {
     throw fileNotFoundError;
   });
 }
 
 describe("packageJsonVersionsMatch", () => {
   it("should return false if .mailing package.json does not exist", async () => {
-    mockReadFileToThrowErrno();
-
+    mockReadJSONSyncToThrowErrno();
     const match = await packageJsonVersionsMatch();
     expect(match).toBe(false);
   });
@@ -47,11 +42,8 @@ describe("packageJsonVersionsMatch", () => {
   it("should return false if .mailing package.json does not match the cli version", async () => {
     // mock the .mailing/package.json version
     jest
-      .spyOn(fsExtra, "readFile")
-      .mockImplementation(
-        (path) =>
-          new Promise((resolve) => resolve(Buffer.from(`{"version":"1.2.3"}`)))
-      );
+      .spyOn(fsExtra, "readJSONSync")
+      .mockImplementation(() => ({ version: "1.2.3" }));
 
     // mock the npx mailing version
     jest.spyOn(childProcess, "execSync").mockImplementation(() => "4.5.6");
@@ -63,7 +55,7 @@ describe("packageJsonVersionsMatch", () => {
 
 describe("bootstrapMailingDir", () => {
   it("should rm, mkdir, and copy", async () => {
-    mockReadFileToThrowErrno();
+    mockReadJSONSyncToThrowErrno();
 
     const match = await packageJsonVersionsMatch();
     expect(match).toBe(false);

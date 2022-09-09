@@ -4,6 +4,7 @@ import open from "open";
 import next from "next";
 import { pathExists } from "fs-extra";
 import { parse } from "url";
+import { shutdown as shutdownAnalytics } from "../../../util/postHog";
 
 import { getPreviewsDirectory } from "../../../util/paths";
 import { error, log, debug } from "../../../util/log";
@@ -127,9 +128,10 @@ export default async function startPreviewServer() {
       log(`running preview at ${currentUrl}`);
       if (!quiet) await open(currentUrl);
     })
-    .on("error", function onServerError(e: NodeJS.ErrnoException) {
+    .on("error", async function onServerError(e: NodeJS.ErrnoException) {
       if (e.code === "EADDRINUSE") {
         error(`port ${port} is taken, is mailing already running?`);
+        await shutdownAnalytics();
         process.exit(1);
       } else {
         error("preview server error:", JSON.stringify(e));

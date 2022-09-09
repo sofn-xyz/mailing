@@ -1,4 +1,3 @@
-import { existsSync } from "fs-extra";
 import { ArgumentsCamelCase } from "yargs";
 import { defaults, setConfig } from "../util/config";
 import { execSync } from "child_process";
@@ -7,12 +6,14 @@ import {
   bootstrapMailingDir,
   linkEmailsDirectory,
 } from "./preview/server/setup";
+import { buildHandler } from "../util/buildHandler";
 
 export type ServerArguments = ArgumentsCamelCase<{
   emailsDir?: string;
   port?: number;
   quiet?: boolean;
   subcommand?: string;
+  anonymousId?: string | null;
 }>;
 
 export const command = ["server [subcommand]"];
@@ -38,33 +39,30 @@ export const builder = {
   },
 };
 
-export const handler = async (argv: ServerArguments) => {
-  if (!argv.emailsDir) throw new Error("emailsDir option is not set");
-  if (undefined === argv.port) throw new Error("port option is not set");
-  if (undefined === argv.quiet) throw new Error("quiet option is not set");
+export const handler = buildHandler(
+  async (argv: ServerArguments) => {
+    if (undefined === argv.port) throw new Error("port option is not set");
+    if (undefined === argv.quiet) throw new Error("quiet option is not set");
 
-  setConfig({
-    emailsDir: argv.emailsDir!,
-    quiet: argv.quiet!,
-    port: argv.port!,
-  });
+    await bootstrapMailingDir();
+    await linkEmailsDirectory(argv.emailsDir!);
 
-  // check if emails directory already exists
-  if (!existsSync("./package.json")) {
-    log("No package.json found. Please run from the project root.");
-    return;
+    if (argv.subcommand !== "start") {
+      log("building .mailing...");
+      execSync("npx next build .mailing", { stdio: "inherit" });
+    }
+
+    if (argv.subcommand !== "build") {
+      log("starting .mailing...");
+      execSync("npx next start .mailing", { stdio: "inherit" });
+    }
+  },
+  {
+    captureOptions: (argv) => {
+      return {
+        event: "server invoked",
+        properties: { subcommand: argv.subcommand },
+      };
+    },
   }
-
-  await bootstrapMailingDir();
-  await linkEmailsDirectory(argv.emailsDir);
-
-  if (argv.subcommand !== "start") {
-    log("building .mailing...");
-    execSync("npx next build .mailing", { stdio: "inherit" });
-  }
-
-  if (argv.subcommand !== "build") {
-    log("starting .mailing...");
-    execSync("npx next start .mailing", { stdio: "inherit" });
-  }
-};
+);

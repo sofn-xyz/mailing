@@ -234,6 +234,14 @@ With the REST API, you can use mailing for email templating even if most of your
 
 <br/>
 
+## ●&nbsp;&nbsp;&nbsp;Telemetry
+
+To help understand how people are using mailing so that we can prioritize efforts, mailing collects some anonymized telemetry about usage.
+
+To disable this, you can set `anonymousId: null` in your `mailing.config.json` or pass `--anonymous-id=` (empty string) on the command line.
+
+<br/>
+
 ## ●&nbsp;&nbsp;&nbsp;Contributing
 
 Want to improve Mailing? Incredible. Try it out, file an issue or open a PR!
