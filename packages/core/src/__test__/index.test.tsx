@@ -53,11 +53,7 @@ describe("index", () => {
 
     it("logs an error without a valid configPath but still sends", async () => {
       await clearTestMailQueue();
-<<<<<<< Updated upstream
-      const errorSpy = jest.spyOn(log, "error").mockImplementation(() => {});
-=======
       const debugSpy = jest.spyOn(log, "debug").mockImplementation(() => {});
->>>>>>> Stashed changes
 
       const sendMail = buildSendMail({
         transport,
