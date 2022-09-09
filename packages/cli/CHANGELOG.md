@@ -1,5 +1,21 @@
 # mailing
 
+## 0.7.5
+
+### Patch Changes
+
+- 65cfe73: Fix #163 by updating the "externals" option passed to esbuild to include more possible node_modules directories.
+
+## 0.7.4
+
+### Patch Changes
+
+- 6c0a488: improve livereload performance and reliability
+- 8b980fc: Introduce anonymous telemetry to help us prioritize development
+- Updated dependencies [6c0a488]
+- Updated dependencies [8b980fc]
+  - mailing-core@0.7.4
+
 ## 0.7.3
 
 ### Patch Changes

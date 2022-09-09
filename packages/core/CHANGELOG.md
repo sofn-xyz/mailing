@@ -1,5 +1,18 @@
 # mailing-core
 
+## 0.7.5
+
+### Patch Changes
+
+- Anonymous telemetry in core
+
+## 0.7.4
+
+### Patch Changes
+
+- 6c0a488: improve livereload performance and reliability
+- 8b980fc: Introduce anonymous telemetry to help us prioritize development
+
 ## 0.7.3
 
 ### Patch Changes
