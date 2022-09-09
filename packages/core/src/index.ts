@@ -68,7 +68,7 @@ export function buildSendMail(options: BuildSendMailOptions) {
     if (!options.configPath) {
       debug("buildSendMail requires configPath");
     } else {
-      error(`error loading config at ${options.configPath}`);
+      debug(`error loading config at ${options.configPath}`);
     }
   }
 
