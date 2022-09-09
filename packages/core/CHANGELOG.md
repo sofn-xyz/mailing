@@ -1,5 +1,11 @@
 # mailing-core
 
+## 0.7.6
+
+### Patch Changes
+
+- 9003bed: Don't look for npm root modules, use posix paths always
+
 ## 0.7.5
 
 ### Patch Changes
