@@ -35,13 +35,13 @@ We’re longtime users of Action Mailer and wanted something similar for our typ
 yarn:
 
 ```
-yarn add mailing mailing-core
+yarn add mailing mailing-core next
 ```
 
 npm:
 
 ```
-npm install --save mailing mailing-core
+npm install --save mailing mailing-core next
 ```
 
 Note: you may want to add mailing as a dev dependency instead if you don't plan to use the preview function outside of development. mailing-core exports buildSendMail, which returns the sendMail function
