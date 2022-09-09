@@ -14,18 +14,10 @@ exports[`writeDefaultConfigFile writes mailing.config.json if it doesn't exist 1
 ",
     ],
     Array [
-      "mailing now collects anonymous telemetry data about usage",
-    ],
-    Array [
-      "to disable this, set anonymousId to null in your mailing.config.json
-",
+      "mailing collects anonymous telemetry data about usage",
     ],
   ],
   "results": Array [
-    Object {
-      "type": "return",
-      "value": undefined,
-    },
     Object {
       "type": "return",
       "value": undefined,

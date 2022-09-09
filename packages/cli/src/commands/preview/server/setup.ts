@@ -1,6 +1,5 @@
 import { relative, resolve } from "path";
 import { execSync } from "child_process";
-import pkg from "../../../../package.json";
 import {
   copy,
   mkdir,
@@ -15,6 +14,8 @@ import {
 
 import { debug, log } from "../../../util/log";
 import { build, BuildOptions } from "esbuild";
+import { template } from "lodash";
+import { getNodeModulesDirsFrom } from "../../util/getNodeModulesDirsFrom";
 
 export const COMPONENT_FILE_REGEXP = /^[^\s-]+\.[tj]sx$/; // no spaces, .jsx or .tsx
 export const DOT_MAILING_IGNORE_REGEXP =
@@ -78,26 +79,29 @@ export async function linkEmailsDirectory(emailsDir: string) {
     );
   });
 
-  const moduleManifestContents =
-    `import config from "../../mailing.config.json";\n` +
-    `import sendMail from "${relativePathToEmailsDir}";\n` +
-    templateImports.join("\n") +
-    "\n" +
-    previewImports.join("\n") +
-    "\n\n" +
-    `const previews = { ${previewConsts.join(", ")} };\n` +
-    `const templates = { ${templateModuleNames.join(", ")} };\n\n` +
-    `export { sendMail, config, templates, previews };\n` +
-    `const moduleManifest = { sendMail, templates, previews };\n` +
-    `export default moduleManifest;\n\n`;
+  const moduleManifestTemplate = template(
+    (
+      await readFile(
+        ".mailing/src/commands/preview/server/templates/moduleManifest.template.ejs"
+      )
+    ).toString()
+  );
+
+  const moduleManifestContents = moduleManifestTemplate({
+    relativePathToEmailsDir,
+    templateImports,
+    previewImports,
+    previewConsts,
+    templateModuleNames,
+  });
 
   await writeFile(dynManifestPath, moduleManifestContents);
 
-  const feManifestContents =
-    `import config from "../../mailing.config.json";\n` +
-    `export { config };\n` +
-    `const feManifest = { config };\n` +
-    `export default feManifest;\n\n`;
+  const feManifestContents = (
+    await readFile(
+      ".mailing/src/commands/preview/server/templates/feModuleManifest.template.ejs"
+    )
+  ).toString();
 
   await writeFile(dynFeManifestPath, feManifestContents);
 
@@ -206,6 +210,8 @@ async function buildManifest(
 ) {
   const buildOutdir = ".mailing/src";
 
+  const globalNodeModulesDirectory = execSync("npm -g root").toString();
+
   const buildOpts: BuildOptions = {
     entryPoints: [manifestPath],
     outdir: buildOutdir,
@@ -213,10 +219,9 @@ async function buildManifest(
     bundle: true,
     format: "esm",
     jsx: "preserve",
-    external: [
-      ...Object.keys(pkg.dependencies || {}),
-      ...Object.keys(pkg.peerDependencies || {}),
-    ],
+    external: getNodeModulesDirsFrom(".").concat(
+      getNodeModulesDirsFrom(globalNodeModulesDirectory)
+    ),
   };
 
   if ("node" === buildType) {
@@ -226,6 +231,8 @@ async function buildManifest(
     buildOpts.platform = "browser";
     buildOpts.target = "esnext";
   }
+
+  debug("invoking esbuild with buildOpts: ", JSON.stringify(buildOpts));
 
   // build the manifest
   debug(`bundling ${buildType} manifest for ${manifestPath}...`);

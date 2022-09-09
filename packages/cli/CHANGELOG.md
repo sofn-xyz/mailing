@@ -1,5 +1,11 @@
 # mailing
 
+## 0.7.5
+
+### Patch Changes
+
+- 65cfe73: Fix #163 by updating the "externals" option passed to esbuild to include more possible node_modules directories.
+
 ## 0.7.4
 
 ### Patch Changes

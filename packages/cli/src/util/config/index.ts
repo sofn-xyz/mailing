@@ -120,8 +120,7 @@ export function writeDefaultConfigFile(): void {
 ${configJsonString}`
     );
   }
-  log("mailing now collects anonymous telemetry data about usage");
-  log("to disable this, set anonymousId to null in your mailing.config.json\n");
+  log("mailing collects anonymous telemetry data about usage");
 }
 
 /* Preview server config singleton */
