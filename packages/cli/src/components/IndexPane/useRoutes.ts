@@ -1,10 +1,11 @@
 import { flatten } from "lodash";
 import { useRouter } from "next/router";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 export type Route = {
-  previewClass: string;
-  previewFunction: string;
+  previewClass?: string;
+  previewFunction?: string;
+  displayName?: string;
   path: string;
 };
 
@@ -20,15 +21,23 @@ export default function useRoutes({
   const [current, setCurrent] = useState<number | null>(null);
 
   useEffect(() => {
-    const flat = flatten(
-      previews.map((p) =>
-        p[1].map((previewFunction) => ({
+    const flat: Route[] = flatten([
+      {
+        displayName: "Emails",
+        path: "/previews",
+      },
+      ...previews.map((p) => [
+        {
+          previewClass: p[0],
+          path: `/previews/${p[0]}`,
+        },
+        ...(p[1].map((previewFunction) => ({
           previewClass: p[0],
           previewFunction,
           path: `/previews/${p[0]}/${previewFunction}`,
-        }))
-      )
-    );
+        })) as Route[]),
+      ]),
+    ]);
     const idx = flat.findIndex(
       (p) =>
         p.previewClass === previewClass && p.previewFunction === previewFunction

@@ -34,7 +34,14 @@ const CompactView: React.FC<CompactViewProps> = ({ previews }) => {
       Emails
       {previews.map((preview) => (
         <div className="email-group" key={preview[0]}>
-          <div className="pl-2">{preview[0]}</div>
+          <div
+            className={cx("pl-2", {
+              "bg-zinc-300 rounded-2xl":
+                !previewFunction && previewClass === preview[0],
+            })}
+          >
+            {preview[0]}
+          </div>
           {preview[1].map((pFunction) => (
             <div
               className={cx("email-container pl-4", {
