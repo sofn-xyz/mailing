@@ -52,45 +52,6 @@ const PreviewViewer: React.FC<PreviewViewerProps> = ({ initialData }) => {
 
   return (
     <div>
-      <Header
-        title={compact([previewClass, previewFunction]).join(" - ")}
-        previewClass={previewClass as string}
-        previewFunction={
-          previewFunction ? (previewFunction as string) : undefined
-        }
-        viewMode={viewMode}
-        setViewMode={setViewMode}
-        helpContent={
-          <>
-            <div className="title">Hotkeys</div>
-            <div className="hotkey">
-              <span className="character">{hotkeysMap.showPreviews}</span>
-              <span className="description">Jump to previews</span>
-            </div>
-            <div className="hotkey">
-              <span className="character">{hotkeysMap.viewModeNext}</span>
-              <span className="description">Next view mode</span>
-            </div>
-            <div className="hotkey">
-              <span className="character">{hotkeysMap.viewModePrevious}</span>
-              <span className="description">Previous view mode</span>
-            </div>
-            <div className="hotkey">
-              <span className="character">{hotkeysMap.viewModeDesktop}</span>
-              <span className="description">Desktop view</span>
-            </div>
-            <div className="hotkey">
-              <span className="character">{hotkeysMap.viewModeMobile}</span>
-              <span className="description">Mobile view</span>
-            </div>
-            <div className="hotkey">
-              <span className="character">{hotkeysMap.viewModeHTML}</span>
-              <span className="description">HTML view</span>
-            </div>
-          </>
-        }
-      />
-
       <div>
         <div className="left-pane">
           <IndexPane previews={previews} />
@@ -98,11 +59,63 @@ const PreviewViewer: React.FC<PreviewViewerProps> = ({ initialData }) => {
         <div className="right-pane">
           {!!preview?.errors?.length && <MjmlErrors errors={preview?.errors} />}
           {preview?.html && !preview?.errors.length && (
-            <HotIFrame
-              srcDoc={preview.html}
-              viewMode={viewMode}
-              setViewMode={setViewMode}
-            />
+            <>
+              <Header
+                title={compact([previewClass, previewFunction]).join(" - ")}
+                previewClass={previewClass as string}
+                previewFunction={
+                  previewFunction ? (previewFunction as string) : undefined
+                }
+                viewMode={viewMode}
+                setViewMode={setViewMode}
+                helpContent={
+                  <>
+                    <div className="title">Hotkeys</div>
+                    <div className="hotkey">
+                      <span className="character">
+                        {hotkeysMap.showPreviews}
+                      </span>
+                      <span className="description">Jump to previews</span>
+                    </div>
+                    <div className="hotkey">
+                      <span className="character">
+                        {hotkeysMap.viewModeNext}
+                      </span>
+                      <span className="description">Next view mode</span>
+                    </div>
+                    <div className="hotkey">
+                      <span className="character">
+                        {hotkeysMap.viewModePrevious}
+                      </span>
+                      <span className="description">Previous view mode</span>
+                    </div>
+                    <div className="hotkey">
+                      <span className="character">
+                        {hotkeysMap.viewModeDesktop}
+                      </span>
+                      <span className="description">Desktop view</span>
+                    </div>
+                    <div className="hotkey">
+                      <span className="character">
+                        {hotkeysMap.viewModeMobile}
+                      </span>
+                      <span className="description">Mobile view</span>
+                    </div>
+                    <div className="hotkey">
+                      <span className="character">
+                        {hotkeysMap.viewModeHTML}
+                      </span>
+                      <span className="description">HTML view</span>
+                    </div>
+                  </>
+                }
+              />
+              <HotIFrame
+                srcDoc={preview.html}
+                viewMode={viewMode}
+                setViewMode={setViewMode}
+              />
+            </>
           )}
           {fetching && (
             <div className="loader-position">
@@ -117,7 +130,7 @@ const PreviewViewer: React.FC<PreviewViewerProps> = ({ initialData }) => {
         .right-pane {
           position: absolute;
           overflow: scroll;
-          top: 65px;
+          top: 0;
           bottom: 0;
         }
         .left-pane {
