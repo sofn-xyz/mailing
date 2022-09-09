@@ -53,7 +53,11 @@ describe("index", () => {
 
     it("logs an error without a valid configPath but still sends", async () => {
       await clearTestMailQueue();
+<<<<<<< Updated upstream
       const errorSpy = jest.spyOn(log, "error").mockImplementation(() => {});
+=======
+      const debugSpy = jest.spyOn(log, "debug").mockImplementation(() => {});
+>>>>>>> Stashed changes
 
       const sendMail = buildSendMail({
         transport,
@@ -61,7 +65,7 @@ describe("index", () => {
         configPath: "./garbage_path.json",
       });
 
-      expect(errorSpy).toHaveBeenCalledWith(
+      expect(debugSpy).toHaveBeenCalledWith(
         "error loading config at ./garbage_path.json"
       );
 
@@ -77,7 +81,7 @@ describe("index", () => {
       // still hits the queue even with the error
       const queue = await getTestMailQueue();
       expect(queue.length).toBe(1);
-      errorSpy.mockRestore();
+      debugSpy.mockRestore();
     });
   });
 
