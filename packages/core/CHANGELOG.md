@@ -1,5 +1,11 @@
 # mailing-core
 
+## 0.7.7
+
+### Patch Changes
+
+- Move next to peer dependencies
+
 ## 0.7.6
 
 ### Patch Changes
