@@ -1,4 +1,4 @@
-import { relative, resolve } from "path";
+import { resolve, posix } from "path";
 import { execSync } from "child_process";
 import {
   copy,
@@ -45,12 +45,14 @@ export async function linkEmailsDirectory(emailsDir: string) {
   // calculate the relative path the user's emailsDir
   // so we can import templates and previews from there
   // when in the context of the build output
-  const relativePathToEmailsDir = relative(dotMailingSrcPath, emailsDir);
+  const relativePathToEmailsDir = posix.relative(dotMailingSrcPath, emailsDir);
 
   uniquePreviewCollections.forEach((p) => {
     const moduleName = p.replace(/\.[jt]sx/g, "");
     previewImports.push(
-      `import * as ${moduleName}Preview from "${relativePathToEmailsDir}/previews/${moduleName}";`
+      `import * as ${moduleName}Preview from "${
+        relativePathToEmailsDir + "/previews/" + moduleName
+      }";`
     );
     previewConsts.push(`${moduleName}: ${moduleName}Preview`);
   });
@@ -75,7 +77,9 @@ export async function linkEmailsDirectory(emailsDir: string) {
     const moduleName = p.replace(/\.[jt]sx/g, "");
     templateModuleNames.push(moduleName);
     templateImports.push(
-      `import ${moduleName} from "${relativePathToEmailsDir}/${moduleName}";`
+      `import ${moduleName} from "${
+        relativePathToEmailsDir + "/" + moduleName
+      }";`
     );
   });
 
@@ -210,8 +214,6 @@ async function buildManifest(
 ) {
   const buildOutdir = ".mailing/src";
 
-  const globalNodeModulesDirectory = execSync("npm -g root").toString();
-
   const buildOpts: BuildOptions = {
     entryPoints: [manifestPath],
     outdir: buildOutdir,
@@ -219,9 +221,7 @@ async function buildManifest(
     bundle: true,
     format: "esm",
     jsx: "preserve",
-    external: getNodeModulesDirsFrom(".").concat(
-      getNodeModulesDirsFrom(globalNodeModulesDirectory)
-    ),
+    external: getNodeModulesDirsFrom("."),
   };
 
   if ("node" === buildType) {

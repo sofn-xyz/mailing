@@ -1,5 +1,11 @@
 # web
 
+## 0.3.5
+
+### Patch Changes
+
+- 9003bed: Don't look for npm root modules, use posix paths always
+
 ## 0.3.4
 
 ### Patch Changes
