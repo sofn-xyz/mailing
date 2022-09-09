@@ -1,9 +1,11 @@
 import Link from "next/link";
 import { useHotkeys } from "react-hotkeys-hook";
-import useRoutes from "./useRoutes";
 import cx from "classnames";
-import usePreviewPath from "../hooks/usePreviewPath";
 import { useRouter } from "next/router";
+import Image from "next/image";
+
+import useRoutes from "./useRoutes";
+import usePreviewPath from "../hooks/usePreviewPath";
 
 type CompactViewProps = {
   previews: [string, string[]][];
@@ -33,48 +35,54 @@ const CompactView: React.FC<CompactViewProps> = ({ previews }) => {
   );
 
   return (
-    <div className="focus:outline-2 px-3 py-4" tabIndex={1}>
-      <div
-        className={cx({
-          "bg-zinc-300 rounded-2xl": !previewFunction && !previewClass,
-        })}
-      >
-        Emails
+    <div className="focus:outline-2" tabIndex={1}>
+      <div className="border-dashed border-b border-gray-600 mb-6 pt-4 pb-3 px-4">
+        <Image
+          src="/logo-light-header@2x.png"
+          width="91"
+          height="20"
+          alt="mailing logo"
+        />
       </div>
-      {previews.map((preview) => (
-        <div className="email-group" key={preview[0]}>
-          <div
-            className={cx("pl-2", {
-              "bg-zinc-300 rounded-2xl":
-                !previewFunction && previewClass === preview[0],
-            })}
-          >
-            {preview[0]}
-          </div>
-          {preview[1].map((pFunction) => (
+      <div className="py-4 px-3">
+        <div
+          className={cx({
+            "bg-blue text-black rounded-2xl": !previewFunction && !previewClass,
+          })}
+        >
+          Emails
+        </div>
+        {previews.map((preview) => (
+          <div className="email-group" key={preview[0]}>
             <div
-              className={cx("email-container pl-4", {
-                "bg-zinc-300 rounded-2xl":
-                  previewFunction === pFunction && previewClass === preview[0],
+              className={cx("pl-2", {
+                "bg-blue text-black rounded-2xl":
+                  !previewFunction && previewClass === preview[0],
               })}
-              key={preview[0] + ";" + pFunction}
             >
-              <Link
-                href={`/previews/${preview[0]}/${pFunction}`}
-                shallow
+              {preview[0]}
+            </div>
+            {preview[1].map((pFunction) => (
+              <div
+                className={cx("email-container pl-4", {
+                  "bg-blue text-black rounded-2xl":
+                    previewFunction === pFunction &&
+                    previewClass === preview[0],
+                })}
                 key={preview[0] + ";" + pFunction}
               >
-                <a>{pFunction}</a>
-              </Link>
-            </div>
-          ))}
-        </div>
-      ))}
-      <style jsx>{`
-        .active {
-          color: white;
-        }
-      `}</style>
+                <Link
+                  href={`/previews/${preview[0]}/${pFunction}`}
+                  shallow
+                  key={preview[0] + ";" + pFunction}
+                >
+                  <a>{pFunction}</a>
+                </Link>
+              </div>
+            ))}
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

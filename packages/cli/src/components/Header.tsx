@@ -27,14 +27,7 @@ const Header: React.FC<HeaderProps> = ({
 }) => {
   return (
     <div className="header">
-      <div className="path">
-        <Link href="/">
-          <a className="index">
-            <span>previews</span>
-          </a>
-        </Link>
-        <span> / {title}</span>
-      </div>
+      <div className="path"></div>
       <div className="segmented-control-container">
         <div className="segmented-control">
           <button
