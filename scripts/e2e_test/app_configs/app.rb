@@ -29,13 +29,7 @@ class App
     mailing_command = ->{ IO.popen("MM_E2E=1 npx mailing --quiet") }
 
     Dir.chdir(@root_dir) do
-      @io = if @sub_dir
-        Dir.chdir(@sub_dir) do
-          mailing_command.call
-        end
-      else
-        mailing_command.call
-      end
+      @io = in_subdir(mailing_command)
     end
 
     # wait for the preview server to start
@@ -44,6 +38,16 @@ class App
   end
 
 private
+  def in_subdir(lam)
+    if @sub_dir
+      Dir.chdir(@sub_dir) do
+        lam.call
+      end
+    else
+      lam.call
+    end
+  end
+
   def use_cache(&block)
     framework_cache_dir = File.join(CACHE_DIR, @name)
     if Dir.exist?(framework_cache_dir)
@@ -70,13 +74,7 @@ private
     yalc_command = ->{ system_quiet("npx yalc add --dev mailing mailing-core") }
 
     Dir.chdir(@root_dir) do
-      if @sub_dir
-        Dir.chdir(@sub_dir) do
-          yalc_command.call
-        end
-      else
-        yalc_command.call
-      end
+      in_subdir(yalc_command)
     end
   end
   
