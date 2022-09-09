@@ -55,10 +55,7 @@ export async function shutdown() {
   const client = getPostHogClient();
   if (client) {
     debug("calling postHog shutdown");
-    client.shutdown();
-
-    // unfortunately, calling posthog-node's shutdown in a `finally` does not work without this, 1000ms is a guess
-    await sleep(1000);
+    await client.shutdownAsync();
   } else {
     debug("skipping postHog client shutdown because it was never instantiated");
   }
