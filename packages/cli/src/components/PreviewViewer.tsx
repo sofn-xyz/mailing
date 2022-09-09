@@ -53,12 +53,12 @@ const PreviewViewer: React.FC<PreviewViewerProps> = ({ initialData }) => {
   return (
     <div>
       <div>
-        <div className="left-pane">
+        <div className="left-pane border-dotted border-r border-gray-600">
           <IndexPane previews={previews} />
         </div>
         <div className="right-pane">
           {!!preview?.errors?.length && <MjmlErrors errors={preview?.errors} />}
-          {preview?.html && !preview?.errors.length && (
+          {preview?.html && !preview?.errors.length ? (
             <>
               <Header
                 title={compact([previewClass, previewFunction]).join(" - ")}
@@ -116,6 +116,10 @@ const PreviewViewer: React.FC<PreviewViewerProps> = ({ initialData }) => {
                 setViewMode={setViewMode}
               />
             </>
+          ) : (
+            <div className="text-2xl grid h-screen place-items-center text-gray-600">
+              No preview selected
+            </div>
           )}
           {fetching && (
             <div className="loader-position">
