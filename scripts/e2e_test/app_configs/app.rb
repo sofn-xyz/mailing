@@ -16,6 +16,7 @@ class App
     FileUtils.mkdir_p(@root_dir)
 
     use_cache do
+      write_dot_env!
       yarn_create!
       verify_package_json_exists!
     end
@@ -61,6 +62,10 @@ private
         FileUtils.cp_r(@root_dir, File.join(CACHE_DIR, @name))
       end
     end
+  end
+
+  def write_dot_env!
+    system_quiet('echo "MM_E2E=1" > .env')
   end
 
   def verify_package_json_exists!
