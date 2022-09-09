@@ -200,8 +200,6 @@ async function buildManifest(
 ) {
   const buildOutdir = ".mailing/src";
 
-  const globalNodeModulesDirectory = execSync("npm -g root").toString();
-
   const buildOpts: BuildOptions = {
     entryPoints: [manifestPath],
     outdir: buildOutdir,
@@ -209,9 +207,7 @@ async function buildManifest(
     bundle: true,
     format: "esm",
     jsx: "preserve",
-    external: getNodeModulesDirsFrom(".").concat(
-      getNodeModulesDirsFrom(globalNodeModulesDirectory)
-    ),
+    external: getNodeModulesDirsFrom("."),
   };
 
   if ("node" === buildType) {
