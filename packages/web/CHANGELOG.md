@@ -1,5 +1,11 @@
 # web
 
+## 0.3.6
+
+### Patch Changes
+
+- set configPath error to debug
+
 ## 0.3.5
 
 ### Patch Changes

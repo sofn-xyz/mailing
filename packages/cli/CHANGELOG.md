@@ -1,5 +1,13 @@
 # mailing
 
+## 0.7.7
+
+### Patch Changes
+
+- set configPath error to debug
+- Updated dependencies
+  - mailing-core@0.7.7
+
 ## 0.7.6
 
 ### Patch Changes
