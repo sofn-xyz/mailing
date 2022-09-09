@@ -196,7 +196,15 @@ async function buildManifest(
 ) {
   const buildOutdir = ".mailing/src";
 
-  const globalNodeModulesDirectory = execSync("npm -g root").toString();
+  let globalNodeModulesDirectory = "";
+  try {
+    globalNodeModulesDirectory = execSync("npm -g root", {
+      stdio: "ignore",
+    }).toString();
+  } catch (e) {
+    // npm ERR! Workspaces not supported for global packages
+    debug("error getting global node_modules", e);
+  }
 
   const buildOpts: BuildOptions = {
     entryPoints: [manifestPath],
