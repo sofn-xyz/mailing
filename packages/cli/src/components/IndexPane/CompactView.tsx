@@ -2,14 +2,17 @@ import Link from "next/link";
 import { useHotkeys } from "react-hotkeys-hook";
 import useRoutes from "./useRoutes";
 import cx from "classnames";
+import usePreviewPath from "../hooks/usePreviewPath";
+import { useRouter } from "next/router";
 
 type CompactViewProps = {
   previews: [string, string[]][];
 };
 
 const CompactView: React.FC<CompactViewProps> = ({ previews }) => {
-  const { routes, current, router } = useRoutes({ previews });
-  const { previewFunction, previewClass } = router.query;
+  const router = useRouter();
+  const { routes, current } = useRoutes({ previews });
+  const { previewFunction, previewClass } = usePreviewPath();
 
   useHotkeys(
     "up, down, left, right",
@@ -31,7 +34,13 @@ const CompactView: React.FC<CompactViewProps> = ({ previews }) => {
 
   return (
     <div className="focus:outline-2 px-3 py-4" tabIndex={1}>
-      Emails
+      <div
+        className={cx({
+          "bg-zinc-300 rounded-2xl": !previewFunction && !previewClass,
+        })}
+      >
+        Emails
+      </div>
       {previews.map((preview) => (
         <div className="email-group" key={preview[0]}>
           <div

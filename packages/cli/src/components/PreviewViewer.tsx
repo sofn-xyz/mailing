@@ -1,5 +1,4 @@
 import React, { useCallback, useState } from "react";
-import { useRouter } from "next/router";
 import Header from "./Header";
 import HotIFrame from "./HotIFrame";
 import MjmlErrors from "./MjmlErrors";
@@ -8,6 +7,7 @@ import useLiveReload from "./hooks/useLiveReload";
 import IndexPane from "./IndexPane/IndexPane";
 import CircleLoader from "./CircleLoader";
 import { compact } from "lodash";
+import usePreviewPath from "./hooks/usePreviewPath";
 
 type Data = {
   preview: ShowPreviewResponseBody;
@@ -26,8 +26,7 @@ async function fetchJson(url: string) {
 }
 
 const PreviewViewer: React.FC<PreviewViewerProps> = ({ initialData }) => {
-  const router = useRouter();
-  const { previewClass, previewFunction } = router.query;
+  const { previewFunction, previewClass } = usePreviewPath();
   const [viewMode, setViewMode] = useState<ViewMode>("desktop");
   const [data, setData] = useState<Data>(initialData);
   const [fetching, setFetching] = useState(false);

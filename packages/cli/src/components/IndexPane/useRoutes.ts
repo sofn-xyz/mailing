@@ -1,6 +1,6 @@
 import { flatten } from "lodash";
-import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import usePreviewPath from "../hooks/usePreviewPath";
 
 export type Route = {
   previewClass?: string;
@@ -15,8 +15,7 @@ export default function useRoutes({
   previews: [string, string[]][];
   withTemplates?: boolean;
 }) {
-  const router = useRouter();
-  const { previewClass, previewFunction } = router.query;
+  const { previewClass, previewFunction } = usePreviewPath();
   const [routes, setRoutes] = useState<Route[] | null>(null);
   const [current, setCurrent] = useState<number | null>(null);
 
@@ -47,5 +46,5 @@ export default function useRoutes({
     setCurrent(idx);
   }, [previews, setRoutes, setCurrent, previewClass, previewFunction]);
 
-  return { routes, current, router };
+  return { routes, current };
 }
