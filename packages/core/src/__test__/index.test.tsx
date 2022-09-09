@@ -51,9 +51,9 @@ describe("index", () => {
       }).rejects.toThrow();
     });
 
-    it("logs an error without a valid configPath but still sends", async () => {
+    it("logs a debug error without a valid configPath but still sends", async () => {
       await clearTestMailQueue();
-      const errorSpy = jest.spyOn(log, "error").mockImplementation(() => {});
+      const errorSpy = jest.spyOn(log, "debug").mockImplementation(() => {});
 
       const sendMail = buildSendMail({
         transport,
