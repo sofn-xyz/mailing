@@ -5,7 +5,7 @@ export default function usePreviewPath(): {
   previewFunction?: string;
 } {
   const router = useRouter();
-  const path = router.query.path as string[] | undefined;
+  const path = router?.query.path as string[] | undefined;
   const [previewClass, previewFunction] = path || [];
   return { previewClass, previewFunction };
 }

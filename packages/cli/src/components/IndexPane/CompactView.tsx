@@ -4,80 +4,34 @@ import cx from "classnames";
 import { useRouter } from "next/router";
 import Image from "next/image";
 
-import useRoutes from "./useRoutes";
-import usePreviewPath from "../hooks/usePreviewPath";
-import { useState } from "react";
+import { usePreviewTree } from "./hooks/usePreviewTree";
 
 type CompactViewProps = {
   previews: [string, string[]][];
 };
 
-function previewPath(previewClass?: string, previewFunction?: string) {
-  let path = "/previews";
-  if (previewClass) path += `/${previewClass}`;
-  if (previewFunction) path += `/${previewFunction}`;
-  return path;
-}
-
 const CompactView: React.FC<CompactViewProps> = ({ previews }) => {
-  const router = useRouter();
-  const { routes, current } = useRoutes({ previews });
-  const { previewFunction, previewClass } = usePreviewPath();
-  const [collapsed, setCollapsed] = useState<string[]>([]);
+  const { up, down, left, right, treeRoutes, cursor } =
+    usePreviewTree(previews);
 
   useHotkeys(
     "up, down, left, right",
     (_e, handler) => {
-      if (!routes || typeof current !== "number") return;
-
       if (handler.key === "up") {
-        let next = routes[(current - 1 + routes.length) % routes.length];
-        while (
-          next.previewClass &&
-          next.previewFunction &&
-          collapsed.includes(next.previewClass)
-        )
-          next =
-            routes[(routes.indexOf(next) - 1 + routes.length) % routes.length];
-        router.replace(next.path, undefined, { shallow: true });
+        console.log("up");
+        up();
       } else if (handler.key === "down") {
-        let next = routes[(current + 1) % routes.length];
-        while (
-          next.previewClass &&
-          next.previewFunction &&
-          collapsed.includes(next.previewClass)
-        )
-          next = routes[(routes.indexOf(next) + 1) % routes.length];
-        router.replace(next.path, undefined, { shallow: true });
-      } else if (handler.key === "right") {
-        const route = routes[current];
-        setCollapsed((c) => c.filter((p) => p !== route.previewClass));
+        down();
       } else if (handler.key === "left") {
-        const route = routes[current];
-        if (!route.previewClass) return;
-        setCollapsed((c) => {
-          const nextCollapsed = c.concat([route.previewClass!]);
-
-          // go up
-          let next = routes[(current - 1 + routes.length) % routes.length];
-          while (
-            next.previewClass &&
-            next.previewFunction &&
-            nextCollapsed.includes(next.previewClass)
-          )
-            next =
-              routes[
-                (routes.indexOf(next) - 1 + routes.length) % routes.length
-              ];
-          router.replace(next.path, undefined, { shallow: true });
-
-          return nextCollapsed;
-        });
+        left();
+      } else if (handler.key === "right") {
+        right();
       }
     },
-    [routes, current, router.asPath, collapsed]
+    [up, down, left, right]
   );
 
+  let collapseLevel = 999;
   return (
     <div className="focus:outline-2" tabIndex={1}>
       <div className="border-dotted border-b border-gray-600 mb-6 pt-4 pb-3 px-4">
@@ -89,47 +43,27 @@ const CompactView: React.FC<CompactViewProps> = ({ previews }) => {
         />
       </div>
       <div className="py-4 px-3">
-        <div
-          className={cx("pl-2", {
-            "bg-blue text-black rounded-2xl": !previewFunction && !previewClass,
-          })}
-        >
-          Emails
-        </div>
-        {previews.map((preview) => (
-          <div className="email-group" key={preview[0]}>
+        {treeRoutes?.map((route, i) => {
+          if (route.collapsed && route.level <= collapseLevel) {
+            collapseLevel = route.level;
+          } else if (route.level === collapseLevel) {
+            collapseLevel = 999;
+          }
+          return route.level > collapseLevel ? (
+            <></>
+          ) : (
             <div
-              className={cx("pl-3", {
-                "bg-blue text-black rounded-2xl":
-                  !previewFunction && previewClass === preview[0],
+              className={cx({
+                "pl-3": route.level === 0,
+                "pl-4": route.level === 1,
+                "pl-6": route.level === 2,
+                "bg-blue text-black rounded-2xl": i === cursor,
               })}
             >
-              {preview[0]}
+              {route.displayName}
             </div>
-            {collapsed.includes(preview[0]) ? (
-              <></>
-            ) : (
-              preview[1].map((pFunction) => (
-                <div
-                  className={cx("email-container pl-6", {
-                    "bg-blue text-black rounded-2xl":
-                      previewFunction === pFunction &&
-                      previewClass === preview[0],
-                  })}
-                  key={preview[0] + ";" + pFunction}
-                >
-                  <Link
-                    href={`/previews/${preview[0]}/${pFunction}`}
-                    shallow
-                    key={preview[0] + ";" + pFunction}
-                  >
-                    <a>{pFunction}</a>
-                  </Link>
-                </div>
-              ))
-            )}
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );
