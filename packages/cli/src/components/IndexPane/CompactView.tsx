@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { useHotkeys } from "react-hotkeys-hook";
+import useHotkeys from "@reecelucas/react-use-hotkeys";
 import cx from "classnames";
 import { useRouter } from "next/router";
 import Image from "next/image";
@@ -15,25 +15,23 @@ const CompactView: React.FC<CompactViewProps> = ({ previews }) => {
     usePreviewTree(previews);
 
   useHotkeys(
-    "up, down, left, right",
-    (_e, handler) => {
-      if (handler.key === "up") {
-        console.log("up");
+    ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"],
+    (e: KeyboardEvent) => {
+      if (e.key === "ArrowUp") {
         up();
-      } else if (handler.key === "down") {
+      } else if (e.key === "ArrowDown") {
         down();
-      } else if (handler.key === "left") {
+      } else if (e.key === "ArrowLeft") {
         left();
-      } else if (handler.key === "right") {
+      } else if (e.key === "ArrowRight") {
         right();
       }
-    },
-    [up, down, left, right]
+    }
   );
 
   let collapseLevel = 999;
   return (
-    <div className="focus:outline-2" tabIndex={1}>
+    <div className="focus:outline-2">
       <div className="border-dotted border-b border-gray-600 mb-6 pt-4 pb-3 px-4">
         <Image
           src="/logo-light-header@2x.png"
@@ -42,17 +40,19 @@ const CompactView: React.FC<CompactViewProps> = ({ previews }) => {
           alt="mailing logo"
         />
       </div>
-      <div className="py-4 px-3">
+      <div className="py-4 px-3" tabIndex={1} role="tree">
         {treeRoutes?.map((route, i) => {
           if (route.collapsed && route.level <= collapseLevel) {
             collapseLevel = route.level;
           } else if (route.level === collapseLevel) {
             collapseLevel = 999;
           }
-          return route.level > collapseLevel ? (
-            <></>
-          ) : (
+          return route.level > collapseLevel ? null : (
             <div
+              key={route.path}
+              role="treeitem"
+              aria-expanded={!route.collapsed}
+              aria-selected={i === cursor}
               className={cx({
                 "pl-3": route.level === 0,
                 "pl-4": route.level === 1,
