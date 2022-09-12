@@ -12,6 +12,7 @@ export type ExportPreviewsArgs = ArgumentsCamelCase<{
   emailsDir?: string;
   outDir?: string;
   quiet?: boolean;
+  minify?: boolean;
   anonymousId?: string | null;
 }>;
 
@@ -25,6 +26,11 @@ export const builder = {
   "out-dir": {
     default: defaults().outDir,
     description: "directory in which we output the html",
+  },
+  minify: {
+    default: false,
+    boolean: true,
+    description: "minify the html",
   },
   quiet: {
     default: defaults().quiet,
@@ -73,6 +79,10 @@ export const handler = buildHandler(
 
     let count = 0;
 
+    const mjmlOptions = {
+      minify: argv.minify,
+    };
+
     readdirSync(previewsPath)
       .filter((path) => !/^\./.test(path))
       .forEach(async (p) => {
@@ -84,7 +94,10 @@ export const handler = buildHandler(
             log(`  |-- ${filename}`);
             count++;
 
-            const { html, errors } = render(previewModule[previewFunction]());
+            const { html, errors } = render(
+              previewModule[previewFunction](),
+              mjmlOptions
+            );
             if (errors.length) {
               error(`MJML errors rendering ${filename}:`, errors);
             }
