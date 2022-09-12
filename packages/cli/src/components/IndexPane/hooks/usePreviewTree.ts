@@ -1,8 +1,6 @@
 import { debounce, flatten } from "lodash";
 import { NextRouter, useRouter } from "next/router";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { previewTree } from "../../../util/moduleManifestUtil";
-import usePreviewPath from "../../hooks/usePreviewPath";
 
 export type TreeRoute = {
   collapsed: boolean;
@@ -38,7 +36,10 @@ const findParent = (treeRoutes: TreeRoute[], cursor: number): number => {
 // this hook handles navigation around the previewTree including collapsing
 // the canonical state of the tree is in memory for speed
 // periodically flush the current node's url to browser
-export function usePreviewTree(previews: [string, string[]][]): {
+export function usePreviewTree(
+  previews: [string, string[]][],
+  options: { leavesOnly?: boolean } = {}
+): {
   cursor: number;
   up: () => void;
   down: () => void;
@@ -46,11 +47,13 @@ export function usePreviewTree(previews: [string, string[]][]): {
   right: () => void;
   treeRoutes?: TreeRoute[];
 } {
-  const { router } = usePreviewPath();
+  const router = useRouter();
   const [cursor, setCursor] = useState(-1); // sets after previewFunction and previewClass load in?
   const [treeRoutes, setTreeRoutes] = useState<TreeRoute[] | undefined>(
     undefined
   );
+
+  const { leavesOnly } = options;
 
   const routes = useMemo(() => {
     const flat: TreeRoute[] = flatten([
@@ -122,25 +125,29 @@ export function usePreviewTree(previews: [string, string[]][]): {
     let next = cursor;
     do {
       next = (next - 1 + treeRoutes.length) % treeRoutes.length;
-    } while (treeRoutes[findParent(treeRoutes, next)].collapsed);
+    } while (
+      next !== cursor &&
+      (leavesOnly
+        ? treeRoutes[next].level !== 2
+        : treeRoutes[findParent(treeRoutes, next)].collapsed)
+    );
     navigate(next);
-  }, [treeRoutes, cursor, navigate]);
+  }, [treeRoutes, cursor, navigate, leavesOnly]);
 
   const down = useCallback(() => {
     if (!treeRoutes) return;
-    const currentRoute = treeRoutes[cursor];
-    const nextIndex = (cursor + 1) % treeRoutes.length;
-    if (currentRoute.collapsed) {
-      const nextAtLevel = treeRoutes
-        .slice(nextIndex)
-        .findIndex((r) => r.level === currentRoute.level);
-      navigate((c) =>
-        nextAtLevel > -1 ? (nextAtLevel + c + 1) % treeRoutes.length : 0
-      );
-    } else {
-      navigate(nextIndex);
-    }
-  }, [treeRoutes, cursor, navigate]);
+    // find next uncollapsed route down
+    let next = cursor;
+    do {
+      next = (next + 1) % treeRoutes.length;
+    } while (
+      next !== cursor &&
+      (leavesOnly
+        ? treeRoutes[next].level !== 2
+        : treeRoutes[findParent(treeRoutes, next)].collapsed)
+    );
+    navigate(next);
+  }, [treeRoutes, cursor, navigate, leavesOnly]);
 
   const left = useCallback(() => {
     if (!treeRoutes) return;
@@ -170,6 +177,14 @@ export function usePreviewTree(previews: [string, string[]][]): {
       )
     );
   }, [treeRoutes, cursor]);
+
+  const goToNearestLeaf = useCallback(() => {
+    if (treeRoutes && treeRoutes[cursor].level !== 2) down();
+  }, [treeRoutes, cursor, leavesOnly]);
+
+  useEffect(() => {
+    if (leavesOnly) goToNearestLeaf();
+  }, [leavesOnly]);
 
   return {
     cursor,

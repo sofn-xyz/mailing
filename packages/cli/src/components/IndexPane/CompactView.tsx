@@ -1,43 +1,16 @@
-import useHotkeys from "@reecelucas/react-use-hotkeys";
 import cx from "classnames";
-import Image from "next/image";
 
-import { usePreviewTree } from "./hooks/usePreviewTree";
+import type { TreeRoute } from "./hooks/usePreviewTree";
 
 type CompactViewProps = {
-  previews: [string, string[]][];
+  treeRoutes?: TreeRoute[];
+  cursor: number;
 };
 
-const CompactView: React.FC<CompactViewProps> = ({ previews }) => {
-  const { up, down, left, right, treeRoutes, cursor } =
-    usePreviewTree(previews);
-
-  useHotkeys(
-    ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"],
-    (e: KeyboardEvent) => {
-      if (e.key === "ArrowUp") {
-        up();
-      } else if (e.key === "ArrowDown") {
-        down();
-      } else if (e.key === "ArrowLeft") {
-        left();
-      } else if (e.key === "ArrowRight") {
-        right();
-      }
-    }
-  );
-
+const CompactView: React.FC<CompactViewProps> = ({ treeRoutes, cursor }) => {
   let collapseLevel = 999;
   return (
     <div className="focus:outline-2">
-      <div className="border-dotted border-b border-gray-600 pt-4 pb-3 px-4">
-        <Image
-          src="/logo-light-header@2x.png"
-          width="91"
-          height="20"
-          alt="mailing logo"
-        />
-      </div>
       <div className="py-4 px-3 font-bold text-sm" tabIndex={1} role="tree">
         {treeRoutes?.map((route, i) => {
           if (route.collapsed && route.level <= collapseLevel) {
