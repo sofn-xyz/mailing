@@ -5,7 +5,6 @@ import useHotkeys from "@reecelucas/react-use-hotkeys";
 import ClientView from "./ClientView";
 import CompactView from "./CompactView";
 import { usePreviewTree } from "./hooks/usePreviewTree";
-import tree from "tree-node-cli";
 
 type IndexPaneProps = {
   previews?: [string, string[]][];
@@ -13,13 +12,11 @@ type IndexPaneProps = {
 
 const IndexPane: React.FC<IndexPaneProps> = ({ previews }) => {
   const [compact, setCompact] = useState(true);
-  const { up, down, left, right, treeRoutes, cursor } = usePreviewTree(
-    previews || [],
-    { leavesOnly: !compact }
-  );
+  const { up, down, left, right, treeRoutes, cursor, navigate, setCollapse } =
+    usePreviewTree(previews || [], { leavesOnly: !compact });
 
   useHotkeys(
-    ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"],
+    ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", " "],
     (e: KeyboardEvent) => {
       if (e.key === "ArrowUp") {
         up();
@@ -29,6 +26,8 @@ const IndexPane: React.FC<IndexPaneProps> = ({ previews }) => {
         left();
       } else if (compact && e.key === "ArrowRight") {
         right();
+      } else if (compact && e.key === " " && treeRoutes) {
+        setCollapse(cursor, !treeRoutes[cursor].collapsed);
       }
     }
   );
@@ -46,9 +45,14 @@ const IndexPane: React.FC<IndexPaneProps> = ({ previews }) => {
       !process.env.NEXT_PUBLIC_STATIC);
 
   const view = compact ? (
-    <CompactView treeRoutes={treeRoutes} cursor={cursor} />
+    <CompactView
+      treeRoutes={treeRoutes}
+      cursor={cursor}
+      navigate={navigate}
+      setCollapse={setCollapse}
+    />
   ) : (
-    <ClientView treeRoutes={treeRoutes} cursor={cursor} />
+    <ClientView treeRoutes={treeRoutes} cursor={cursor} navigate={navigate} />
   );
 
   return (

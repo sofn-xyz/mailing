@@ -57,6 +57,18 @@ describe("IndexPane", () => {
       });
       expect(selected.textContent).toBe("Emails");
     });
+
+    // it("selects an item with a click", async () => {
+    //   const { findByRole, user, findByText } = setup(<IndexPane previews={previews} />);
+    //   const tree = await findByRole("tree");
+    //   const item = await findByText("");
+    //   await user.click(item)
+    //   const selected = await findByRole("treeitem", {
+    //     selected: true,
+    //     expanded: false,
+    //   });
+    //   expect(selected.textContent).toBe("Emails");
+    // });
   });
 
   describe("ClientView", () => {

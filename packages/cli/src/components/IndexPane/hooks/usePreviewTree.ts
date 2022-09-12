@@ -11,19 +11,15 @@ export type TreeRoute = {
   level: number;
 };
 
-const safeReplaceState = debounce(
-  (router: NextRouter | null, path: string) => {
-    try {
-      router?.replace(path, undefined, { shallow: true });
-    } catch (e) {
-      // Debounce should be avoiding this error, but catch just in case:
-      // SecurityError: Attempt to use history.replaceState() more than 100 times per 30 seconds
-      console.error("safeReplaceState error", e);
-    }
-  },
-  500,
-  { leading: true, trailing: true }
-);
+const safeReplaceState = debounce((router: NextRouter | null, path: string) => {
+  try {
+    router?.replace(path, undefined, { shallow: true });
+  } catch (e) {
+    // Debounce should be avoiding this error, but catch just in case:
+    // SecurityError: Attempt to use history.replaceState() more than 100 times per 30 seconds
+    console.error("safeReplaceState error", e);
+  }
+}, 200);
 
 const findParent = (treeRoutes: TreeRoute[], cursor: number): number => {
   if (cursor === 0) return 0;
@@ -45,6 +41,8 @@ export function usePreviewTree(
   down: () => void;
   left: () => void;
   right: () => void;
+  navigate: (nextCursor: number | ((current: number) => number)) => void;
+  setCollapse: (cursor: number, collapse: boolean) => void;
   treeRoutes?: TreeRoute[];
 } {
   const router = useRouter();
@@ -98,7 +96,7 @@ export function usePreviewTree(
   }, [router.asPath, cursor, treeRoutes]);
 
   useEffect(() => {
-    if (cursor === -1) return;
+    if (cursor === -1 || router?.asPath === routes[cursor]?.path) return;
     safeReplaceState(router, routes[cursor]?.path);
   }, [cursor, router, routes]);
 
@@ -186,12 +184,26 @@ export function usePreviewTree(
     if (leavesOnly) goToNearestLeaf();
   }, [leavesOnly]);
 
+  const setCollapse = useCallback(
+    (cursor: number, collapse: boolean) => {
+      setTreeRoutes((tr) =>
+        tr?.map((r, i) => ({
+          ...r,
+          collapsed: i === cursor ? collapse : r.collapsed,
+        }))
+      );
+    },
+    [setTreeRoutes]
+  );
+
   return {
     cursor,
     up,
     down,
     left,
     right,
+    navigate,
+    setCollapse,
     treeRoutes: cursor > -1 ? treeRoutes : [],
   };
 }

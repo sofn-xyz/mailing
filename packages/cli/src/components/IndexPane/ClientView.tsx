@@ -6,9 +6,14 @@ import type { TreeRoute } from "./hooks/usePreviewTree";
 type ClientViewProps = {
   treeRoutes?: TreeRoute[];
   cursor: number;
+  navigate: (nextCursor: number | ((current: number) => number)) => void;
 };
 
-const ClientView: React.FC<ClientViewProps> = ({ treeRoutes, cursor }) => {
+const ClientView: React.FC<ClientViewProps> = ({
+  treeRoutes,
+  cursor,
+  navigate,
+}) => {
   return (
     <>
       <div className="py-4 px-3 font-bold text-sm" tabIndex={1} role="listbox">

@@ -5,9 +5,16 @@ import type { TreeRoute } from "./hooks/usePreviewTree";
 type CompactViewProps = {
   treeRoutes?: TreeRoute[];
   cursor: number;
+  navigate: (nextCursor: number | ((current: number) => number)) => void;
+  setCollapse: (cursor: number, collapse: boolean) => void;
 };
 
-const CompactView: React.FC<CompactViewProps> = ({ treeRoutes, cursor }) => {
+const CompactView: React.FC<CompactViewProps> = ({
+  treeRoutes,
+  cursor,
+  navigate,
+  setCollapse,
+}) => {
   let collapseLevel = 999;
   return (
     <div className="focus:outline-2">
@@ -30,6 +37,7 @@ const CompactView: React.FC<CompactViewProps> = ({ treeRoutes, cursor }) => {
                 "pl-12": route.level === 2,
                 "bg-blue text-black rounded-2xl": i === cursor,
               })}
+              onClick={() => navigate(i)}
             >
               {route.level < 2 && (
                 <svg
@@ -47,6 +55,7 @@ const CompactView: React.FC<CompactViewProps> = ({ treeRoutes, cursor }) => {
                         route.collapsed,
                     }
                   )}
+                  onClick={() => setCollapse(i, !route.collapsed)}
                 >
                   <path
                     d="M1.5 1.5L4.5 4.5L7.5 1.5"
