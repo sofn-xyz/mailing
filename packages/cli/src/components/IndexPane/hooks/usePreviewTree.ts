@@ -1,6 +1,8 @@
 import { debounce, flatten } from "lodash";
 import { NextRouter, useRouter } from "next/router";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { previewTree } from "../../../util/moduleManifestUtil";
+import usePreviewPath from "../../hooks/usePreviewPath";
 
 export type TreeRoute = {
   collapsed: boolean;
@@ -44,9 +46,8 @@ export function usePreviewTree(previews: [string, string[]][]): {
   right: () => void;
   treeRoutes?: TreeRoute[];
 } {
-  // const { previewFunction, previewClass } = usePreviewPath();
-  const router = useRouter();
-  const [cursor, setCursor] = useState(0);
+  const { router } = usePreviewPath();
+  const [cursor, setCursor] = useState(-1); // sets after previewFunction and previewClass load in?
   const [treeRoutes, setTreeRoutes] = useState<TreeRoute[] | undefined>(
     undefined
   );
@@ -85,6 +86,13 @@ export function usePreviewTree(previews: [string, string[]][]): {
     );
     return flat;
   }, [previews]);
+
+  useEffect(() => {
+    if (cursor !== -1 || !treeRoutes) return;
+    const path = router.asPath;
+    const idx = treeRoutes.findIndex((route) => route.path === path);
+    if (idx >= 0) setCursor(idx);
+  }, [router.asPath, cursor, treeRoutes]);
 
   useEffect(() => {
     if (cursor === -1) return;
@@ -169,6 +177,6 @@ export function usePreviewTree(previews: [string, string[]][]): {
     down,
     left,
     right,
-    treeRoutes,
+    treeRoutes: cursor > -1 ? treeRoutes : [],
   };
 }

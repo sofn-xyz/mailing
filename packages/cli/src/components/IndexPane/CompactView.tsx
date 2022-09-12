@@ -1,7 +1,5 @@
-import Link from "next/link";
 import useHotkeys from "@reecelucas/react-use-hotkeys";
 import cx from "classnames";
-import { useRouter } from "next/router";
 import Image from "next/image";
 
 import { usePreviewTree } from "./hooks/usePreviewTree";

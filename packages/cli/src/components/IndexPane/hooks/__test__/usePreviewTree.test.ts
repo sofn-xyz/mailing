@@ -4,8 +4,15 @@
 
 import { act, renderHook } from "@testing-library/react";
 import { usePreviewTree } from "../usePreviewTree";
+import mockRouter from "next-router-mock";
+
+jest.mock("next/router", () => require("next-router-mock"));
 
 describe("usePreviewTree", () => {
+  beforeEach(() => {
+    mockRouter.setCurrentUrl("/previews");
+  });
+
   const previews: [string, string[]][] = [
     ["AccountCreated", ["accountCreated"]],
     ["NewSignIn", ["newSignIn"]],
@@ -21,6 +28,20 @@ describe("usePreviewTree", () => {
     const { cursor, treeRoutes } = result.current;
     expect(cursor).toBe(0);
     expect(treeRoutes).toMatchSnapshot();
+  });
+
+  it("sets cursor from previews with previewFunction path", () => {
+    mockRouter.setCurrentUrl("/previews/NewSignIn/newSignIn");
+    const { result } = renderHook(() => usePreviewTree(previews));
+    const { cursor } = result.current;
+    expect(cursor).toBe(4);
+  });
+
+  it("sets cursor from previews with previewClass path", () => {
+    mockRouter.setCurrentUrl("/previews/NewSignIn");
+    const { result } = renderHook(() => usePreviewTree(previews));
+    const { cursor } = result.current;
+    expect(cursor).toBe(3);
   });
 
   it("navigates up down left right", () => {

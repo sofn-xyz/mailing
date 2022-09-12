@@ -3,13 +3,17 @@
  */
 
 import React from "react";
-import { fireEvent, act, waitFor } from "@testing-library/react";
-import { prettyDOM } from "@testing-library/dom";
-import userEvent from "@testing-library/user-event";
 import CompactView from "../CompactView";
-import { setup, triggerKey } from "../../../util/__test__/testUtils";
+import { setup } from "../../../util/__test__/testUtils";
+import mockRouter from "next-router-mock";
+
+jest.mock("next/router", () => require("next-router-mock"));
 
 describe("CompactView", () => {
+  beforeEach(() => {
+    mockRouter.setCurrentUrl("/previews");
+  });
+
   const previews: [string, string[]][] = [
     ["AccountCreated", ["accountCreated"]],
     ["NewSignIn", ["newSignIn"]],
