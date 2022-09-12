@@ -74,7 +74,9 @@ export const handler = buildHandler(
 
     registerRequireHooks();
 
-    log(`Exporting preview html to`);
+    const previewText = argv.minify ? "minified preview html" : "preview html";
+
+    log(`Exporting ${previewText} to`);
     log(outDir);
 
     let count = 0;

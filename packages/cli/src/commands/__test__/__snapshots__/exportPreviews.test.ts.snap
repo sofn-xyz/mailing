@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`exportPreviews command cli --minify runs on templates 1`] = `
-"mailing Exporting preview html to
+"mailing Exporting minified preview html to
 mailing ./previews_html
 mailing   |-- text_email_reset_password.html
 mailing   |-- text_email_account_deleted.html
