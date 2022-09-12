@@ -79,8 +79,8 @@ const CompactView: React.FC<CompactViewProps> = ({ previews }) => {
                 >
                   <path
                     d="M1.5 1.5L4.5 4.5L7.5 1.5"
-                    stroke-width="2"
-                    stroke-linecap="round"
+                    strokeWidth="2"
+                    strokeLinecap="round"
                   />
                 </svg>
               )}

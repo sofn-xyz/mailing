@@ -89,13 +89,11 @@ export function usePreviewTree(previews: [string, string[]][]): {
   useEffect(() => {
     if (cursor === -1) return;
     safeReplaceState(router, routes[cursor]?.path);
-  }, [cursor]);
+  }, [cursor, router, routes]);
 
   /* Navigation callbacks */
   const navigate = useCallback(
     (nextCursor: number | ((current: number) => number)) => {
-      const next =
-        typeof nextCursor === "number" ? nextCursor : nextCursor(cursor);
       if (typeof nextCursor === "number") {
         safeReplaceState(router, routes[nextCursor]?.path);
         setCursor(nextCursor);
@@ -163,7 +161,7 @@ export function usePreviewTree(previews: [string, string[]][]): {
         cursor === i ? { ...route, collapsed: false } : r
       )
     );
-  }, [treeRoutes, cursor, navigate]);
+  }, [treeRoutes, cursor]);
 
   return {
     cursor,
