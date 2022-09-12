@@ -32,7 +32,7 @@ const CompactView: React.FC<CompactViewProps> = ({ previews }) => {
   let collapseLevel = 999;
   return (
     <div className="focus:outline-2">
-      <div className="border-dotted border-b border-gray-600 mb-6 pt-4 pb-3 px-4">
+      <div className="border-dotted border-b border-gray-600 pt-4 pb-3 px-4">
         <Image
           src="/logo-light-header@2x.png"
           width="91"
@@ -40,7 +40,7 @@ const CompactView: React.FC<CompactViewProps> = ({ previews }) => {
           alt="mailing logo"
         />
       </div>
-      <div className="py-4 px-3" tabIndex={1} role="tree">
+      <div className="py-4 px-3 font-bold text-sm" tabIndex={1} role="tree">
         {treeRoutes?.map((route, i) => {
           if (route.collapsed && route.level <= collapseLevel) {
             collapseLevel = route.level;
@@ -53,13 +53,37 @@ const CompactView: React.FC<CompactViewProps> = ({ previews }) => {
               role="treeitem"
               aria-expanded={!route.collapsed}
               aria-selected={i === cursor}
-              className={cx({
-                "pl-3": route.level === 0,
-                "pl-4": route.level === 1,
-                "pl-6": route.level === 2,
+              className={cx("pb-1 pt-1 mb-1", {
+                "pl-2": route.level === 0,
+                "pl-6": route.level === 1,
+                "pl-12": route.level === 2,
                 "bg-blue text-black rounded-2xl": i === cursor,
               })}
             >
+              {route.level < 2 && (
+                <svg
+                  width="9"
+                  height="9"
+                  viewBox="0 0 9 9"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  className={cx(
+                    "inline origin-center arrow transition-transform mr-3",
+                    {
+                      "stroke-black": i === cursor,
+                      "stroke-white": i !== cursor,
+                      "collapsed -rotate-90 relative -top-[1px]":
+                        route.collapsed,
+                    }
+                  )}
+                >
+                  <path
+                    d="M1.5 1.5L4.5 4.5L7.5 1.5"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                  />
+                </svg>
+              )}
               {route.displayName}
             </div>
           );
