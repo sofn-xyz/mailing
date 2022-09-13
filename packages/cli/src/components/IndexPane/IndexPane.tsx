@@ -64,13 +64,18 @@ const IndexPane: React.FC<IndexPaneProps> = ({ previews }) => {
           height="20"
           alt="mailing logo"
         />
-        <label className="toggle">
-          <input
-            type="checkbox"
-            aria-label="Show compact view"
-            onChange={handleToggle}
-            checked={compact}
-          />
+        <label className="toggle float-right text-sm cursor-pointer">
+          Compact view
+          <div id="toggle-compact-view" className="ml-2">
+            <input
+              type="checkbox"
+              aria-label="Show compact view"
+              onChange={handleToggle}
+              checked={compact}
+              className="ml-2"
+            />
+            <span className="slider"></span>
+          </div>
         </label>
       </div>
       {showNullState && (
@@ -81,6 +86,58 @@ const IndexPane: React.FC<IndexPaneProps> = ({ previews }) => {
         </div>
       )}
       {previews?.map ? view : "Loading"}
+      <style jsx>{`
+        #toggle-compact-view {
+          position: relative;
+          display: inline-block;
+          width: 20px;
+          height: 12px;
+          top: 5px;
+        }
+
+        #toggle-compact-view input {
+          opacity: 0;
+          width: 0;
+          height: 0;
+        }
+
+        #toggle-compact-view .slider {
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: -2px;
+          bottom: 0;
+          background-color: #ccc;
+          -webkit-transition: 0.4s;
+          transition: 0.4s;
+          border-radius: 16px;
+          background-color: #333;
+        }
+
+        #toggle-compact-view .slider:before {
+          position: absolute;
+          content: "";
+          height: 8px;
+          width: 8px;
+          top: 2px;
+          left: 2px;
+          background-color: #666;
+          -webkit-transition: 0.4s;
+          transition: 0.4s;
+          border-radius: 16px;
+        }
+
+        #toggle-compact-view input:checked + .slider {
+          background-color: #e4ebfa;
+        }
+
+        #toggle-compact-view input:checked + .slider:before {
+          background-color: #000;
+          -webkit-transform: translateX(10px);
+          -ms-transform: translateX(10px);
+          transform: translateX(10x);
+        }
+      `}</style>
     </>
   );
 };
