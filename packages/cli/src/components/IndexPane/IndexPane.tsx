@@ -66,15 +66,18 @@ const IndexPane: React.FC<IndexPaneProps> = ({ previews }) => {
         />
         <label className="toggle float-right text-sm cursor-pointer">
           Compact view
-          <div id="toggle-compact-view" className="ml-2">
+          <div
+            id="toggle-compact-view"
+            className="ml-2 w-5 h-[12px] relative inline-block top-[5px]"
+          >
             <input
               type="checkbox"
               aria-label="Show compact view"
               onChange={handleToggle}
               checked={compact}
-              className="ml-2"
+              className="ml-2 opacity-0 w-0 h-0"
             />
-            <span className="slider"></span>
+            <span className="slider bg-[#333] duration-[400ms] rounded-2xl absolute top-0 left-0 right-[-2px] bottom-0"></span>
           </div>
         </label>
       </div>
@@ -87,33 +90,6 @@ const IndexPane: React.FC<IndexPaneProps> = ({ previews }) => {
       )}
       {previews?.map ? view : "Loading"}
       <style jsx>{`
-        #toggle-compact-view {
-          position: relative;
-          display: inline-block;
-          width: 20px;
-          height: 12px;
-          top: 5px;
-        }
-
-        #toggle-compact-view input {
-          opacity: 0;
-          width: 0;
-          height: 0;
-        }
-
-        #toggle-compact-view .slider {
-          position: absolute;
-          top: 0;
-          left: 0;
-          right: -2px;
-          bottom: 0;
-          background-color: #ccc;
-          -webkit-transition: 0.4s;
-          transition: 0.4s;
-          border-radius: 16px;
-          background-color: #333;
-        }
-
         #toggle-compact-view .slider:before {
           position: absolute;
           content: "";
