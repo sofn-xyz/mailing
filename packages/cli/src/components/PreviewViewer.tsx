@@ -47,7 +47,13 @@ const PreviewViewer: React.FC<PreviewViewerProps> = ({ initialData }) => {
     // fire this one async, no loader
     fetchPreviews();
 
-    if (!(previewClass && previewFunction)) return;
+    if (!(previewClass && previewFunction)) {
+      setData((data: Data) => ({
+        ...data,
+        preview: { html: "", errors: [] },
+      }));
+      return;
+    }
 
     setFetching(true);
     const json = await fetchJson(
