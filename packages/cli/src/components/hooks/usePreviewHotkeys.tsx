@@ -56,7 +56,7 @@ export default function usePreviewHotkeys({ setViewMode }: Options) {
     },
     [router, setViewMode]
   );
-  useHotkeys(Object.values(hotkeysMap).join(","), handleKey);
+  useHotkeys(Object.values(hotkeysMap), handleKey);
 
   const iframeRef = useCallback(
     (node: HTMLIFrameElement) => {
