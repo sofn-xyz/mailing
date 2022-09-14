@@ -1,4 +1,5 @@
 import cx from "classnames";
+import { useCallback } from "react";
 
 import type { TreeRoute } from "./hooks/usePreviewTree";
 
@@ -15,6 +16,14 @@ const CompactView: React.FC<CompactViewProps> = ({
   navigate,
   setCollapse,
 }) => {
+  const handleClick = useCallback(
+    (i: number, collapsed: boolean) => (e: React.MouseEvent<HTMLDivElement>) => {
+      setCollapse(i, !collapsed);
+      navigate(i);
+    },
+    [navigate, setCollapse]
+  );
+
   let collapseLevel = 999;
   return (
     <div
@@ -34,14 +43,13 @@ const CompactView: React.FC<CompactViewProps> = ({
             role="treeitem"
             aria-expanded={!route.collapsed}
             aria-selected={i === cursor}
-            className={cx("mb-1", {
+            className={cx("mb-1 cursor-pointer hover:underline", {
               "pl-2": route.level === 0,
               "pl-6": route.level === 1,
               "pl-[70px] pb-1 pt-1": route.level === 2,
               "bg-blue text-black rounded-2xl": i === cursor,
-              "cursor-pointer hover:underline": i !== cursor,
             })}
-            onClick={() => navigate(i)}
+            onClick={handleClick(i, route.collapsed)}
           >
             {route.level < 2 && (
               <button
