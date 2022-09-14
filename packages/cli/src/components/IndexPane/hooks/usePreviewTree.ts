@@ -178,11 +178,11 @@ export function usePreviewTree(
 
   const goToNearestLeaf = useCallback(() => {
     if (treeRoutes && treeRoutes[cursor].level !== 2) down();
-  }, [treeRoutes, cursor, leavesOnly]);
+  }, [treeRoutes, cursor, down]);
 
   useEffect(() => {
     if (leavesOnly) goToNearestLeaf();
-  }, [leavesOnly]);
+  }, [leavesOnly, goToNearestLeaf]);
 
   const setCollapse = useCallback(
     (cursor: number, collapse: boolean) => {

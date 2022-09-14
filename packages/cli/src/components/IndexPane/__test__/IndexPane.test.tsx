@@ -1,7 +1,3 @@
-/**
- * @jest-environment jsdom
- */
-
 import React from "react";
 import IndexPane from "../IndexPane";
 import { setup } from "../../../util/__test__/testUtils";

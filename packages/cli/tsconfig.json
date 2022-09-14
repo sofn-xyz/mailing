@@ -22,7 +22,6 @@
   "$schema": "https://json.schemastore.org/tsconfig",
   "include": ["src/**/*"],
   "exclude": [
-    "src/**/__test__/*",
     "src/emails/**/*",
     "dist/**/*",
     "src/cli/generator_templates/**/*"

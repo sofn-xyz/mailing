@@ -1,10 +1,11 @@
 import type { JSXElementConstructor, ReactElement } from "react";
 import { render } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { UserEvent } from "@testing-library/user-event/dist/types/setup/setup";
 
 export function setup(
-  jsx: ReactElement<any, string | JSXElementConstructor<any>>
-) {
+  jsx: ReactElement
+): ReturnType<typeof render> & { user: UserEvent } {
   return {
     user: userEvent.setup(),
     ...render(jsx),
