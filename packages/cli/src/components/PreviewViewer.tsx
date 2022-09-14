@@ -74,7 +74,7 @@ const PreviewViewer: React.FC<PreviewViewerProps> = ({ initialData }) => {
     <div>
       <div>
         <div className="left-pane border-dotted border-r border-gray-600">
-          <IndexPane previews={previews} previewText={data.previewText} />
+          <IndexPane previews={previews} previewText={data?.previewText} />
         </div>
         <div className="right-pane">
           {!!preview?.errors?.length && <MjmlErrors errors={preview?.errors} />}
