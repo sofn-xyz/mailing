@@ -35,7 +35,7 @@ export default function showPreview(
 
       res.setHeader("Content-Type", "application/json");
       res.writeHead(200);
-      res.end(JSON.stringify({ html, errors, previews: previewTree() }));
+      res.end(JSON.stringify({ html, errors }));
     } catch (e) {
       error("caught error rendering mjml to html", e);
       res.writeHead(500);

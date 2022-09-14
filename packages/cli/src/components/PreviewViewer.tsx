@@ -1,4 +1,5 @@
 import React, { useCallback, useState } from "react";
+
 import Header from "./Header";
 import HotIFrame from "./HotIFrame";
 import MjmlErrors from "./MjmlErrors";
@@ -9,9 +10,12 @@ import CircleLoader from "./CircleLoader";
 import { compact } from "lodash";
 import usePreviewPath from "./hooks/usePreviewPath";
 
+import type { PreviewIndexResponseBody } from "../pages/api/previews";
+
 type Data = {
   preview: ShowPreviewResponseBody;
-  previews: [string, string[]][];
+  previews: PreviewIndexResponseBody["previews"];
+  previewText: PreviewIndexResponseBody["previewText"];
 };
 
 export type PreviewViewerProps = {
@@ -31,18 +35,28 @@ const PreviewViewer: React.FC<PreviewViewerProps> = ({ initialData }) => {
   const [data, setData] = useState<Data>(initialData);
   const [fetching, setFetching] = useState(false);
 
-  const fetchData = useCallback(async () => {
-    let url = `/api/previews`;
-    if (previewClass && previewFunction) {
-      url = `/api/previews/${previewClass}/${previewFunction}`;
-    }
-    setFetching(true);
-    const json = await fetchJson(url);
+  const fetchPreviews = useCallback(async () => {
+    const json = (await fetchJson("/api/previews")) as PreviewIndexResponseBody;
+    setData((data: Data) => ({
+      ...data,
+      ...json,
+    }));
+  }, [setData]);
 
-    setData({
+  const fetchData = useCallback(async () => {
+    // fire this one async, no loader
+    fetchPreviews();
+
+    if (!(previewClass && previewFunction)) return;
+
+    setFetching(true);
+    const json = await fetchJson(
+      `/api/previews/${previewClass}/${previewFunction}`
+    );
+    setData((data: Data) => ({
+      ...data,
       preview: json,
-      previews: json.previews,
-    });
+    }));
     setFetching(false);
   }, [setData, previewClass, previewFunction]);
 
@@ -54,7 +68,7 @@ const PreviewViewer: React.FC<PreviewViewerProps> = ({ initialData }) => {
     <div>
       <div>
         <div className="left-pane border-dotted border-r border-gray-600">
-          <IndexPane previews={previews} />
+          <IndexPane previews={previews} previewText={data.previewText} />
         </div>
         <div className="right-pane">
           {!!preview?.errors?.length && <MjmlErrors errors={preview?.errors} />}

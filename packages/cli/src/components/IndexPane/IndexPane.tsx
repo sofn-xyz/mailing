@@ -6,11 +6,14 @@ import ClientView from "./ClientView";
 import CompactView from "./CompactView";
 import { usePreviewTree } from "./hooks/usePreviewTree";
 
+import type { PreviewIndexResponseBody } from "../../pages/api/previews";
+
 type IndexPaneProps = {
-  previews?: [string, string[]][];
+  previews?: PreviewIndexResponseBody["previews"];
+  previewText?: PreviewIndexResponseBody["previewText"];
 };
 
-const IndexPane: React.FC<IndexPaneProps> = ({ previews }) => {
+const IndexPane: React.FC<IndexPaneProps> = ({ previews, previewText }) => {
   const [compact, setCompact] = useState(true);
   const { up, down, left, right, treeRoutes, cursor, navigate, setCollapse } =
     usePreviewTree(previews || [], { leavesOnly: !compact });
@@ -52,7 +55,12 @@ const IndexPane: React.FC<IndexPaneProps> = ({ previews }) => {
       setCollapse={setCollapse}
     />
   ) : (
-    <ClientView treeRoutes={treeRoutes} cursor={cursor} navigate={navigate} />
+    <ClientView
+      treeRoutes={treeRoutes}
+      cursor={cursor}
+      navigate={navigate}
+      previewText={previewText}
+    />
   );
 
   return (
