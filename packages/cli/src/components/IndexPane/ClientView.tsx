@@ -17,42 +17,42 @@ const ClientView: React.FC<ClientViewProps> = ({
   previewText,
 }) => {
   return (
-    <>
-      <div className="py-4 px-3 text-sm" tabIndex={1} role="listbox">
-        {treeRoutes?.map((route, i) => {
-          const isCursor = i === cursor;
-          return route.level !== 2 ? null : (
+    <div className="py-4 px-3 text-sm outline-none" tabIndex={1} role="listbox">
+      {treeRoutes?.map((route, i) => {
+        const isCursor = i === cursor;
+        return route.level !== 2 ? null : (
+          <div
+            key={route.path}
+            role="option"
+            aria-selected={isCursor}
+            className={cx("rounded-2xl cursor-pointer", {
+              "pl-1": route.level === 2,
+              "bg-blue text-black -mt-[1px] pt-[1px]": isCursor,
+              "hover:bg-neutral-900 hover:-mt-[1px] hover:pt-[1px]": !isCursor,
+            })}
+            onClick={() => navigate(i)}
+          >
             <div
-              key={route.path}
-              role="option"
-              aria-selected={isCursor}
-              className={cx("pt-4", {
-                "pl-1": route.level === 2,
-                "bg-blue text-black rounded-2xl -mt-[2px] mb-[2px]": isCursor,
+              className={cx("py-4 mx-3 border-b border-dotted", {
+                "border-gray-600 hover:border-transparent": !isCursor,
+                "border-transparent": isCursor,
               })}
             >
+              <div className="font-bold">{route.previewClass}</div>
+              <div className="pb-[1px]">{route.previewFunction}</div>
               <div
-                className={cx("pb-4 mx-3 border-b border-dotted", {
-                  "border-white": !isCursor,
-                  "border-transparent": isCursor,
+                className={cx("line-clamp-2 leading-tight", {
+                  "text-gray-300": !isCursor,
+                  "text-gray-600": isCursor,
                 })}
               >
-                <div className="font-bold">{route.previewClass}</div>
-                <div className="py-[2px]">{route.previewFunction}</div>
-                <div
-                  className={cx("line-clamp-2", {
-                    "text-gray-300": !isCursor,
-                    "text-gray-600": isCursor,
-                  })}
-                >
-                  {previewText && previewText[route.path]}
-                </div>
+                {previewText && previewText[route.path]}
               </div>
             </div>
-          );
-        })}
-      </div>
-    </>
+          </div>
+        );
+      })}
+    </div>
   );
 };
 
