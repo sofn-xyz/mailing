@@ -36,6 +36,7 @@ const CompactView: React.FC<CompactViewProps> = ({
                 "pl-6": route.level === 1,
                 "pl-12": route.level === 2,
                 "bg-blue text-black rounded-2xl": i === cursor,
+                "cursor-pointer hover:underline": i !== cursor,
                 "pb-1 pt-1": route.level === 2,
               })}
               onClick={() => navigate(i)}
