@@ -1,7 +1,3 @@
-/**
- * @jest-environment jsdom
- */
-
 import { act, renderHook } from "@testing-library/react";
 import { usePreviewTree } from "../usePreviewTree";
 import mockRouter from "next-router-mock";
