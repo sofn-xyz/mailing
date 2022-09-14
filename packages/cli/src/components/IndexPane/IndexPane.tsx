@@ -98,7 +98,6 @@ const IndexPane: React.FC<IndexPaneProps> = ({ previews }) => {
           top: 2px;
           left: 2px;
           background-color: #666;
-          -webkit-transition: 0.15s ease;
           transition: 0.15s ease;
           border-radius: 16px;
         }
@@ -109,9 +108,7 @@ const IndexPane: React.FC<IndexPaneProps> = ({ previews }) => {
 
         #toggle-compact-view input:checked + .slider:before {
           background-color: #000;
-          -webkit-transform: translateX(10px);
-          -ms-transform: translateX(10px);
-          transform: translateX(10x);
+          transform: translateX(10px);
         }
       `}</style>
     </>
