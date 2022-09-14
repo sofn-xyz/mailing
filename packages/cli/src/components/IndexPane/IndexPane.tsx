@@ -98,8 +98,8 @@ const IndexPane: React.FC<IndexPaneProps> = ({ previews }) => {
           top: 2px;
           left: 2px;
           background-color: #666;
-          -webkit-transition: 0.4s;
-          transition: 0.4s;
+          -webkit-transition: 0.15s ease;
+          transition: 0.15s ease;
           border-radius: 16px;
         }
 
