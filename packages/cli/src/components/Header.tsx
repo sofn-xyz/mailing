@@ -1,5 +1,4 @@
 import { ReactElement } from "react";
-import Link from "next/link";
 import Image from "next/image";
 import cx from "classnames";
 
@@ -163,8 +162,8 @@ const Header: React.FC<HeaderProps> = ({
           display: inline-flex;
           align-items: center;
         }
+
         button {
-          background: #fff;
           height: 40px;
           border: 1px dotted #333;
           transition: background-color, box-shadow 200ms ease-out;
@@ -207,7 +206,7 @@ const Header: React.FC<HeaderProps> = ({
           border-bottom-right-radius: 16px;
         }
         .active {
-          background: #e4ebfa;
+          background: #b8ceff;
         }
         .help,
         .send {
