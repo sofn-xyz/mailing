@@ -201,6 +201,7 @@ const Header: React.FC<HeaderProps> = ({
         }
         .active {
           background: #b8ceff;
+          border-color: transparent;
         }
         .help,
         .send {
