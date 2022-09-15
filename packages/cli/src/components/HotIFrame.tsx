@@ -55,8 +55,7 @@ const HotIFrame: React.FC<HotIFrameProps> = ({
           border: none;
           height: calc(100vh - 65px);
         }
-        .mobile,
-        .mobile iframe {
+        .mobile {
           border: 1px dotted #333;
         }
         .code-container {
