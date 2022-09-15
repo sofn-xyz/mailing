@@ -13,6 +13,7 @@ import tailwindConfig from "../../tailwind.config.js";
 
 const { theme } = resolveConfig(tailwindConfig);
 const white = theme?.colors?.white;
+const gray = theme?.colors["gray-700"];
 
 type HeaderProps = {
   title: string;
@@ -44,19 +45,23 @@ const Header: React.FC<HeaderProps> = ({
             })}
             onClick={() => setViewMode("desktop")}
           >
-            <IconDesktop fill={viewMode === "desktop" ? "#333" : white} />
+            <IconDesktop fill={viewMode === "desktop" ? gray : white} />
           </button>
           <button
-            className={cx("mobile", { active: viewMode === "mobile" })}
+            className={cx("mobile cursor-pointer hover:bg-gray-700", {
+              active: viewMode === "mobile",
+            })}
             onClick={() => setViewMode("mobile")}
           >
-            <IconMobile fill={"mobile" === viewMode ? "#333" : white} />
+            <IconMobile fill={"mobile" === viewMode ? gray : white} />
           </button>
           <button
-            className={cx("html", { active: viewMode === "html" })}
+            className={cx("html cursor-pointer hover:bg-gray-700", {
+              active: viewMode === "html",
+            })}
             onClick={() => setViewMode("html")}
           >
-            <IconCode fill={white} />
+            <IconCode fill={"html" === viewMode ? gray : white} />
           </button>
         </div>
       </div>
