@@ -164,7 +164,7 @@ const Header: React.FC<HeaderProps> = ({
         }
 
         button {
-          height: 40px;
+          height: 36px;
           border: 1px dotted #333;
           transition: background-color, box-shadow 200ms ease-out;
           text-align: center;
@@ -189,7 +189,6 @@ const Header: React.FC<HeaderProps> = ({
         .desktop,
         .mobile,
         .html {
-          height: 40px;
           width: 60px;
           display: flex;
           align-items: center;
@@ -210,8 +209,7 @@ const Header: React.FC<HeaderProps> = ({
         }
         .help,
         .send {
-          width: 40px;
-          height: 40px;
+          width: 36px;
           border-radius: 16px;
           display: inline-flex;
           align-items: center;
