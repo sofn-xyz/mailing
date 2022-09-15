@@ -64,7 +64,7 @@ const PreviewViewer: React.FC<PreviewViewerProps> = ({ initialData }) => {
       preview: json,
     }));
     setFetching(false);
-  }, [setData, previewClass, previewFunction]);
+  }, [setData, previewClass, previewFunction, fetchPreviews]);
 
   useLiveReload(fetchData);
 
