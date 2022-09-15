@@ -1,5 +1,11 @@
 # mailing-core
 
+## 0.7.9
+
+### Patch Changes
+
+- fix minification deprecation warnings
+
 ## 0.7.8
 
 ### Patch Changes

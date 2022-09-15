@@ -1,5 +1,11 @@
 # web
 
+## 0.3.8
+
+### Patch Changes
+
+- fix minification deprecation warnings
+
 ## 0.3.7
 
 ### Patch Changes
