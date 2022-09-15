@@ -152,16 +152,17 @@ const PreviewViewer: React.FC<PreviewViewerProps> = ({ initialData }) => {
       <style jsx>{`
         .left-pane,
         .right-pane {
-          position: absolute;
           overflow: scroll;
           top: 0;
           bottom: 0;
         }
         .left-pane {
+          position: absolute;
           width: 300px;
           left: 0;
         }
         .right-pane {
+          position: relative;
           right: 0;
           left: 300px;
           width: calc(100vw - 300px);

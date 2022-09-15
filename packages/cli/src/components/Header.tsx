@@ -1,10 +1,15 @@
 import { ReactElement } from "react";
-import Link from "next/link";
+import IconCode from "./icons/IconCode";
+import IconMobile from "./icons/IconMobile";
+import IconDesktop from "./icons/IconDesktop";
 import Image from "next/image";
 import cx from "classnames";
 
 import Tooltip from "./Tooltip";
 import PreviewSender from "./PreviewSender";
+
+const white = "#E4EBFA";
+const gray = "#333";
 
 type HeaderProps = {
   title: string;
@@ -31,40 +36,28 @@ const Header: React.FC<HeaderProps> = ({
       <div className="segmented-control-container">
         <div className="segmented-control">
           <button
-            className={cx("desktop", { active: viewMode === "desktop" })}
+            className={cx("desktop cursor-pointer hover:bg-gray-700", {
+              active: viewMode === "desktop",
+            })}
             onClick={() => setViewMode("desktop")}
           >
-            <Image
-              src="/icon-desktop.svg"
-              width="24"
-              height="20"
-              alt="Desktop icon"
-              title="Toggle desktop view"
-            />
+            <IconDesktop fill={viewMode === "desktop" ? gray : white} />
           </button>
           <button
-            className={cx("mobile", { active: viewMode === "mobile" })}
+            className={cx("mobile cursor-pointer hover:bg-gray-700", {
+              active: viewMode === "mobile",
+            })}
             onClick={() => setViewMode("mobile")}
           >
-            <Image
-              src="/icon-mobile.svg"
-              width="12.43"
-              height="22"
-              alt="Mobile icon"
-              title="Toggle mobile view"
-            />
+            <IconMobile fill={"mobile" === viewMode ? gray : white} />
           </button>
           <button
-            className={cx("html", { active: viewMode === "html" })}
+            className={cx("html cursor-pointer hover:bg-gray-700", {
+              active: viewMode === "html",
+            })}
             onClick={() => setViewMode("html")}
           >
-            <Image
-              src="/icon-code.svg"
-              width="21"
-              height="14.5"
-              alt="HTML icon"
-              title="Toggle HTML view"
-            />
+            <IconCode fill={"html" === viewMode ? gray : white} />
           </button>
         </div>
       </div>
@@ -72,22 +65,24 @@ const Header: React.FC<HeaderProps> = ({
         <Tooltip
           trigger={(show, setShow) => (
             <button
-              className="help"
+              className="help cursor-pointer hover:bg-gray-700"
               onClick={() => setShow((current) => !current)}
             >
               {show ? (
                 <Image
+                  key="icon-close"
                   src="/icon-close.svg"
-                  width="10"
-                  height="10"
+                  width="36"
+                  height="30"
                   alt="Close icon"
                   title="Close"
                 />
               ) : (
                 <Image
+                  key="icon-question"
                   src="/icon-question.svg"
-                  width="8"
-                  height="12"
+                  width="36"
+                  height="24"
                   alt="Close icon"
                   title="Close"
                 />
@@ -100,22 +95,24 @@ const Header: React.FC<HeaderProps> = ({
           <Tooltip
             trigger={(show, setShow) => (
               <button
-                className="send"
+                className="send cursor-pointer hover:bg-gray-700"
                 onClick={() => setShow((current) => !current)}
               >
                 {show ? (
                   <Image
+                    key="icon-close"
                     src="/icon-close.svg"
-                    width="10"
-                    height="10"
+                    width="36"
+                    height="30"
                     alt="Close icon"
                     title="Close"
                   />
                 ) : (
                   <Image
+                    key="icon-send"
                     src="/icon-send.svg"
-                    width="14.43"
-                    height="14"
+                    width="15"
+                    height="13"
                     alt="Send icon"
                     title="Send a preview"
                   />
@@ -133,7 +130,7 @@ const Header: React.FC<HeaderProps> = ({
       </div>
       <style jsx>{`
         .header {
-          height: 64px;
+          height: 52px;
           border-bottom: 1px dotted #333;
           display: flex;
           justify-content: space-between;
@@ -163,21 +160,18 @@ const Header: React.FC<HeaderProps> = ({
           display: inline-flex;
           align-items: center;
         }
+
         button {
-          background: #fff;
-          height: 40px;
+          height: 36px;
           border: 1px dotted #333;
           transition: background-color, box-shadow 200ms ease-out;
           text-align: center;
         }
+
         a {
           transition: background-color, transform 200ms ease-out;
         }
-        a:hover span,
-        button:hover {
-          cursor: pointer;
-          background: #e4ebfa;
-        }
+
         button:active {
           box-shadow: inset 0 0 12px rgba(0, 0, 0, 0.5);
         }
@@ -190,8 +184,7 @@ const Header: React.FC<HeaderProps> = ({
         .desktop,
         .mobile,
         .html {
-          height: 40px;
-          width: 60px;
+          width: 59px;
           display: flex;
           align-items: center;
           justify-content: center;
@@ -207,12 +200,12 @@ const Header: React.FC<HeaderProps> = ({
           border-bottom-right-radius: 16px;
         }
         .active {
-          background: #e4ebfa;
+          background: #b8ceff;
+          border-color: transparent;
         }
         .help,
         .send {
-          width: 40px;
-          height: 40px;
+          width: 36px;
           border-radius: 16px;
           display: inline-flex;
           align-items: center;
