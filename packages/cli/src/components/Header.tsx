@@ -189,7 +189,7 @@ const Header: React.FC<HeaderProps> = ({
         .desktop,
         .mobile,
         .html {
-          width: 60px;
+          width: 59px;
           display: flex;
           align-items: center;
           justify-content: center;
