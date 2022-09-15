@@ -8,12 +8,8 @@ import cx from "classnames";
 import Tooltip from "./Tooltip";
 import PreviewSender from "./PreviewSender";
 
-import resolveConfig from "tailwindcss/resolveConfig";
-import tailwindConfig from "../../tailwind.config.js";
-
-const { theme } = resolveConfig(tailwindConfig);
-const white = theme?.colors?.white;
-const gray = theme?.colors["gray-700"];
+const white = "#E4EBFA";
+const gray = "#333";
 
 type HeaderProps = {
   title: string;
@@ -69,22 +65,22 @@ const Header: React.FC<HeaderProps> = ({
         <Tooltip
           trigger={(show, setShow) => (
             <button
-              className="help"
+              className="help cursor-pointer hover:bg-gray-700"
               onClick={() => setShow((current) => !current)}
             >
               {show ? (
                 <Image
                   src="/icon-close.svg"
-                  width="10"
-                  height="10"
+                  width="36"
+                  height="30"
                   alt="Close icon"
                   title="Close"
                 />
               ) : (
                 <Image
                   src="/icon-question.svg"
-                  width="8"
-                  height="12"
+                  width="36"
+                  height="24"
                   alt="Close icon"
                   title="Close"
                 />
@@ -97,22 +93,22 @@ const Header: React.FC<HeaderProps> = ({
           <Tooltip
             trigger={(show, setShow) => (
               <button
-                className="send"
+                className="send cursor-pointer hover:bg-gray-700"
                 onClick={() => setShow((current) => !current)}
               >
                 {show ? (
                   <Image
                     src="/icon-close.svg"
-                    width="10"
-                    height="10"
+                    width="36"
+                    height="30"
                     alt="Close icon"
                     title="Close"
                   />
                 ) : (
                   <Image
                     src="/icon-send.svg"
-                    width="14.43"
-                    height="14"
+                    width="15"
+                    height="13"
                     alt="Send icon"
                     title="Send a preview"
                   />
