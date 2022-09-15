@@ -18,7 +18,7 @@ const HotIFrame: React.FC<HotIFrameProps> = ({
     <>
       {viewMode === "html" ? (
         <textarea
-          className="code-container mono"
+          className="code-container mono text-black"
           readOnly
           value={srcDoc}
           ref={textareaRef}
