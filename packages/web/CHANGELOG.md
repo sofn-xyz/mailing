@@ -1,5 +1,11 @@
 # web
 
+## 0.3.7
+
+### Patch Changes
+
+- 2e11ee8: Add minify option to export-previews command
+
 ## 0.3.6
 
 ### Patch Changes

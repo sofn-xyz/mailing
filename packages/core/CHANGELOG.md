@@ -1,5 +1,11 @@
 # mailing-core
 
+## 0.7.8
+
+### Patch Changes
+
+- 2e11ee8: Add minify option to export-previews command
+
 ## 0.7.7
 
 ### Patch Changes
