@@ -1,5 +1,10 @@
 import sendMail from "./emails";
 
+import AccountCreated from "./emails/AccountCreated";
+import NewSignIn from "./emails/NewSignIn";
+import Reservation from "./emails/Reservation";
+import ResetPassword from "./emails/ResetPassword";
+
 import * as AccountCreatedPreview from "./emails/previews/AccountCreated";
 import * as NewSignInPreview from "./emails/previews/NewSignIn";
 import * as ReservationPreview from "./emails/previews/Reservation";
@@ -11,8 +16,8 @@ const previews = {
   Reservation: ReservationPreview,
   ResetPassword: ResetPasswordPreview,
 };
-const templates = {};
-const config = {};
+const templates = { AccountCreated, NewSignIn, Reservation, ResetPassword };
+const config = { anonymousId: null };
 
 export { sendMail, config, templates, previews };
 const moduleManifest = { sendMail, config, templates, previews };

@@ -35,13 +35,13 @@ We’re longtime users of Action Mailer and wanted something similar for our typ
 yarn:
 
 ```
-yarn add mailing mailing-core
+yarn add mailing mailing-core next
 ```
 
 npm:
 
 ```
-npm install --save mailing mailing-core
+npm install --save mailing mailing-core next
 ```
 
 Note: you may want to add mailing as a dev dependency instead if you don't plan to use the preview function outside of development. mailing-core exports buildSendMail, which returns the sendMail function
@@ -129,7 +129,7 @@ export function accountCreated() {
 }
 ```
 
-You'll see the email with a mobile/desktop/HTML toggle and live reload as you edit:
+On the left, you'll see a list of all of your emails. On the right, you'll see an individual email preview with a mobile/desktop/HTML toggle and live reload as you edit:
 
 <img width="600" alt="Mailing desktop preview" src="https://user-images.githubusercontent.com/609038/188324943-729009f0-c6f2-45a5-87b7-ae6338d7c45f.jpg">
 
@@ -230,7 +230,13 @@ With the REST API, you can use mailing for email templating even if most of your
 
 `GET /api/previews` returns the list of previews. [Example](https://demo.mailing.run/api/previews)
 
-`GET /api/previews/[previewClass]/[previewFunction]` returns the rendered preview. [Example](https://demo.mailing.run/api/previews)
+`GET /api/previews/[previewClass]/[previewFunction]` returns the rendered preview and data for `/previews/[previewClass]/[previewFunction]`. [Example](https://demo.mailing.run/api/previews)
+
+<br/>
+
+## ●&nbsp;&nbsp;&nbsp;Telemetry
+
+To help understand how people are using mailing so that we can prioritize efforts, mailing collects some anonymized telemetry about usage.
 
 <br/>
 

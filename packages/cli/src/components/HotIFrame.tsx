@@ -1,3 +1,4 @@
+import cx from "classnames";
 import usePreviewHotkeys from "./hooks/usePreviewHotkeys";
 
 type HotIFrameProps = {
@@ -23,14 +24,14 @@ const HotIFrame: React.FC<HotIFrameProps> = ({
           ref={textareaRef}
         ></textarea>
       ) : (
-        <div className={`frame ${viewMode === "mobile" ? " mobile" : ""}`}>
+        <div className={cx("frame", { mobile: viewMode === "mobile" })}>
           <iframe srcDoc={srcDoc} ref={iframeRef} />
         </div>
       )}
       <style jsx>{`
         .frame {
           margin: auto;
-          display: block;
+          background: white;
         }
         .mobile.frame {
           padding: 64px 16px 74px;
@@ -43,6 +44,7 @@ const HotIFrame: React.FC<HotIFrameProps> = ({
           max-width: 320px;
         }
         iframe {
+          vertical-align: top;
           width: 100%;
           border: none;
           height: calc(100vh - 65px);

@@ -1,5 +1,30 @@
 # mailing-core
 
+## 0.7.7
+
+### Patch Changes
+
+- set configPath error to debug
+
+## 0.7.6
+
+### Patch Changes
+
+- 9003bed: Don't look for npm root modules, use posix paths always
+
+## 0.7.5
+
+### Patch Changes
+
+- Anonymous telemetry in core
+
+## 0.7.4
+
+### Patch Changes
+
+- 6c0a488: improve livereload performance and reliability
+- 8b980fc: Introduce anonymous telemetry to help us prioritize development
+
 ## 0.7.3
 
 ### Patch Changes

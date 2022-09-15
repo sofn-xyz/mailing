@@ -11,7 +11,9 @@ private
   def yarn_create!
     Dir.chdir(@root_dir) do
       system_quiet("yarn init --yes")
-      system_quiet("yarn add react react-dom")
+
+      # yarn add peer dependencies
+      system_quiet("yarn add next react react-dom")
     end
   end
 end

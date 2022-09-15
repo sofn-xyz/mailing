@@ -12,6 +12,7 @@ require_relative 'app_configs/redwood_js_app'
 require_relative 'app_configs/remix_ts_app'
 require_relative 'app_configs/remix_js_app'
 require_relative 'app_configs/standalone_app'
+require_relative 'app_configs/turbo_app'
 
 class TestRunner
   include TestRunnerUtils
@@ -20,11 +21,13 @@ class TestRunner
   PROJECT_ROOT = File.expand_path(__dir__ + '/../..')
   TEST_ROOT = File.expand_path(PROJECT_ROOT + '/../mailing_e2e_tests')
   CLI_ROOT = File.join(PROJECT_ROOT, 'packages/cli')
+  CORE_ROOT = File.join(PROJECT_ROOT, 'packages/core')
   CYPRESS_DIR = File.join(PROJECT_ROOT, 'packages/cli/cypress')
   RUNS_DIR = File.expand_path(TEST_ROOT + '/runs')
 
   E2E_CONFIG = {
     standalone: StandaloneApp,
+    turbo: TurboApp,
     next_ts: NextTsApp,
     next_js: NextJsApp,
     redwood_ts: RedwoodTsApp,
@@ -108,6 +111,11 @@ private
     end
 
     Dir.chdir(CLI_ROOT) do
+      system_quiet("npx yalc add")
+      system_quiet("npx yalc publish")
+    end
+
+    Dir.chdir(CORE_ROOT) do
       system_quiet("npx yalc add")
       system_quiet("npx yalc publish")
     end

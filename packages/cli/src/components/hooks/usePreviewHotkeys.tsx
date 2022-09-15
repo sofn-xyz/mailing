@@ -1,7 +1,6 @@
 import React, { useCallback } from "react";
 import { useRouter } from "next/router";
-import { useHotkeys } from "react-hotkeys-hook";
-import { config } from "../../feManifest";
+import useHotkeys from "@reecelucas/react-use-hotkeys";
 
 type Options = {
   setViewMode: React.Dispatch<React.SetStateAction<ViewMode>>;
@@ -57,7 +56,7 @@ export default function usePreviewHotkeys({ setViewMode }: Options) {
     },
     [router, setViewMode]
   );
-  useHotkeys(Object.values(hotkeysMap).join(","), handleKey);
+  useHotkeys(Object.values(hotkeysMap), handleKey);
 
   const iframeRef = useCallback(
     (node: HTMLIFrameElement) => {

@@ -5,12 +5,14 @@ import { getPreviewsDirectory } from "../util/paths";
 import { error, log } from "../util/log";
 import { render } from "../util/mjml";
 import registerRequireHooks from "./util/registerRequireHooks";
-import { defaults, setConfig } from "../util/config";
+import { defaults } from "../util/config";
+import { buildHandler } from "../util/buildHandler";
 
 export type ExportPreviewsArgs = ArgumentsCamelCase<{
   emailsDir?: string;
   outDir?: string;
   quiet?: boolean;
+  anonymousId?: string | null;
 }>;
 
 export const command = "export-previews";
@@ -45,57 +47,57 @@ export function previewFilename(moduleName: string, functionName: string) {
   );
 }
 
-export const handler = async (argv: ExportPreviewsArgs) => {
-  if (!argv.emailsDir) throw new Error("emailsDir option is not set");
-  if (!argv.outDir) throw new Error("outDir option is not set");
+export const handler = buildHandler(
+  async (argv: ExportPreviewsArgs) => {
+    if (!argv.outDir) throw new Error("outDir option is not set");
 
-  setConfig({
-    emailsDir: argv.emailsDir!,
-    quiet: argv.quiet!,
-    port: defaults().port,
-  });
+    const outDir = argv.outDir;
 
-  const outDir = argv.outDir;
+    if (typeof outDir !== "string") {
+      error("please specify an outDir like --outDir ./html");
+      return;
+    }
 
-  if (typeof outDir !== "string") {
-    error("please specify an outDir like --outDir ./html");
-    return;
-  }
-
-  const previewsPath = getPreviewsDirectory(argv.emailsDir);
-  if (!previewsPath) {
-    error(
-      "Could not find emails directory. Have you initialized the project with `mailing init`?"
-    );
-    return;
-  }
-
-  registerRequireHooks();
-
-  log(`Exporting preview html to`);
-  log(outDir);
-
-  let count = 0;
-
-  readdirSync(previewsPath)
-    .filter((path) => !/^\./.test(path))
-    .forEach(async (p) => {
-      const previewPath = resolve(previewsPath, p);
-      const previewModule = require(previewPath);
-      await Promise.all(
-        Object.keys(require(previewPath)).map((previewFunction) => {
-          const filename = previewFilename(p, previewFunction);
-          log(`  |-- ${filename}`);
-          count++;
-
-          const { html, errors } = render(previewModule[previewFunction]());
-          if (errors.length) {
-            error(`MJML errors rendering ${filename}:`, errors);
-          }
-          return outputFile(resolve(outDir, filename), html);
-        })
+    const previewsPath = getPreviewsDirectory(argv.emailsDir!);
+    if (!previewsPath) {
+      error(
+        "Could not find emails directory. Have you initialized the project with `mailing init`?"
       );
-    });
+      return;
+    }
 
-  log(`✅ Processed ${count} previews`);
-};
+    registerRequireHooks();
+
+    log(`Exporting preview html to`);
+    log(outDir);
+
+    let count = 0;
+
+    readdirSync(previewsPath)
+      .filter((path) => !/^\./.test(path))
+      .forEach(async (p) => {
+        const previewPath = resolve(previewsPath, p);
+        const previewModule = require(previewPath);
+        await Promise.all(
+          Object.keys(require(previewPath)).map((previewFunction) => {
+            const filename = previewFilename(p, previewFunction);
+            log(`  |-- ${filename}`);
+            count++;
+
+            const { html, errors } = render(previewModule[previewFunction]());
+            if (errors.length) {
+              error(`MJML errors rendering ${filename}:`, errors);
+            }
+            return outputFile(resolve(outDir, filename), html);
+          })
+        );
+      });
+
+    log(`✅ Processed ${count} previews`);
+  },
+  {
+    captureOptions: () => {
+      return { event: "export-previews invoked" };
+    },
+  }
+);

@@ -1,11 +1,13 @@
 import { ArgumentsCamelCase } from "yargs";
-import { defaults, setConfig } from "../../util/config";
+import { buildHandler } from "../../util/buildHandler";
+import { defaults } from "../../util/config";
 import startPreviewServer from "./server/start";
 
 export type PreviewArgs = ArgumentsCamelCase<{
   port?: number;
   quiet?: boolean;
   emailsDir?: string;
+  anonymousId?: string | null;
 }>;
 
 export const command = "preview";
@@ -19,7 +21,7 @@ export const builder = {
   },
   quiet: {
     default: defaults().quiet,
-    descriptioin: "quiet mode (don't open browser after starting)",
+    description: "quiet mode (don't open browser after starting)",
     boolean: true,
   },
   "emails-dir": {
@@ -28,18 +30,16 @@ export const builder = {
   },
 };
 
-export const handler = async (argv: PreviewArgs) => {
-  if (!argv.emailsDir) throw new Error("emailsDir option is not set");
-  if (undefined === argv.port) throw new Error("port option is not set");
-  if (undefined === argv.quiet) throw new Error("quiet option is not set");
+export const handler = buildHandler(
+  async (argv: PreviewArgs) => {
+    if (undefined === argv.port) throw new Error("port option is not set");
+    if (undefined === argv.quiet) throw new Error("quiet option is not set");
 
-  setConfig({ emailsDir: argv.emailsDir, quiet: argv.quiet, port: argv.port });
-
-  const { port, emailsDir, quiet } = argv;
-
-  if (process.env.NODE_ENV === "test") {
-    return; // for now
+    await startPreviewServer();
+  },
+  {
+    captureOptions: () => {
+      return { event: "preview invoked" };
+    },
   }
-
-  await startPreviewServer();
-};
+);

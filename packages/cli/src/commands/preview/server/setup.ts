@@ -1,22 +1,25 @@
-import { relative, resolve } from "path";
+import { resolve, posix, relative } from "path";
 import { execSync } from "child_process";
-import pkg from "../../../../package.json";
 import {
   copy,
   mkdir,
-  mkdirp,
   readdir,
   remove,
   rm,
   writeFile,
   readFile,
   appendFile,
+  readJSONSync,
 } from "fs-extra";
 
 import { debug, log } from "../../../util/log";
 import { build, BuildOptions } from "esbuild";
+import { template } from "lodash";
+import { getNodeModulesDirsFrom } from "../../util/getNodeModulesDirsFrom";
 
 export const COMPONENT_FILE_REGEXP = /^[^\s-]+\.[tj]sx$/; // no spaces, .jsx or .tsx
+export const DOT_MAILING_IGNORE_REGEXP =
+  /__test__|generator_templates|yarn-error.log|src\/commands|src\/index\.ts$|src\/dev\.js$|\.mailing$|\.next|node_modules$|^cypress/;
 
 export type PreviewServerOptions = {
   emailsDir: string;
@@ -42,12 +45,14 @@ export async function linkEmailsDirectory(emailsDir: string) {
   // calculate the relative path the user's emailsDir
   // so we can import templates and previews from there
   // when in the context of the build output
-  const relativePathToEmailsDir = relative(dotMailingSrcPath, emailsDir);
+  const relativePathToEmailsDir = posix.relative(dotMailingSrcPath, emailsDir);
 
   uniquePreviewCollections.forEach((p) => {
     const moduleName = p.replace(/\.[jt]sx/g, "");
     previewImports.push(
-      `import * as ${moduleName}Preview from "${relativePathToEmailsDir}/previews/${moduleName}";`
+      `import * as ${moduleName}Preview from "${
+        relativePathToEmailsDir + "/previews/" + moduleName
+      }";`
     );
     previewConsts.push(`${moduleName}: ${moduleName}Preview`);
   });
@@ -72,30 +77,35 @@ export async function linkEmailsDirectory(emailsDir: string) {
     const moduleName = p.replace(/\.[jt]sx/g, "");
     templateModuleNames.push(moduleName);
     templateImports.push(
-      `import ${moduleName} from "${relativePathToEmailsDir}/${moduleName}";`
+      `import ${moduleName} from "${
+        relativePathToEmailsDir + "/" + moduleName
+      }";`
     );
   });
 
-  const moduleManifestContents =
-    `import config from "../../mailing.config.json";\n` +
-    `import sendMail from "${relativePathToEmailsDir}";\n` +
-    templateImports.join("\n") +
-    "\n" +
-    previewImports.join("\n") +
-    "\n\n" +
-    `const previews = { ${previewConsts.join(", ")} };\n` +
-    `const templates = { ${templateModuleNames.join(", ")} };\n\n` +
-    `export { sendMail, config, templates, previews };\n` +
-    `const moduleManifest = { sendMail, templates, previews };\n` +
-    `export default moduleManifest;\n\n`;
+  const moduleManifestTemplate = template(
+    (
+      await readFile(
+        ".mailing/src/commands/preview/server/templates/moduleManifest.template.ejs"
+      )
+    ).toString()
+  );
+
+  const moduleManifestContents = moduleManifestTemplate({
+    relativePathToEmailsDir,
+    templateImports,
+    previewImports,
+    previewConsts,
+    templateModuleNames,
+  });
 
   await writeFile(dynManifestPath, moduleManifestContents);
 
-  const feManifestContents =
-    `import config from "../../mailing.config.json";\n` +
-    `export { config };\n` +
-    `const feManifest = { config };\n` +
-    `export default feManifest;\n\n`;
+  const feManifestContents = (
+    await readFile(
+      ".mailing/src/commands/preview/server/templates/feModuleManifest.template.ejs"
+    )
+  ).toString();
 
   await writeFile(dynFeManifestPath, feManifestContents);
 
@@ -113,8 +123,7 @@ export async function packageJsonVersionsMatch(): Promise<boolean> {
 
   // read .mailing package.json
   try {
-    const mailingPackageJson = await readFile(mailingPackageJsonPath);
-    const pkgJSON = JSON.parse(mailingPackageJson.toString());
+    const pkgJSON = readJSONSync(mailingPackageJsonPath);
     mailingPackageJsonVersion = pkgJSON.version;
     debug(".mailing version:\t", mailingPackageJsonVersion);
   } catch (err: any) {
@@ -153,16 +162,28 @@ export async function bootstrapMailingDir() {
 
   await rm(mailingPath, { recursive: true, force: true });
   await mkdir(mailingPath, { recursive: true });
-  await copy(nodeMailingPath, mailingPath, {
-    recursive: true,
-    dereference: true,
-    overwrite: true,
-    filter: (path) => {
-      return !/__test__|generator_templates|src\/commands|src\/index\.ts$|src\/dev\.js$|\.mailing$|\.next$|node_modules$|\/cypress$/.test(
-        path
+
+  if (process.env.MM_DEV) {
+    // copy directory contents so that it works in packages/cli
+    // otherwise there will be an error because .mailing is in the dir being copied
+    const copies = (await readdir(nodeMailingPath))
+      .filter((path) => !DOT_MAILING_IGNORE_REGEXP.test(path))
+      .map(async (p) =>
+        copy(p, mailingPath + "/" + relative(".", p), {
+          recursive: true,
+          dereference: true,
+          overwrite: true,
+        })
       );
-    },
-  });
+    await Promise.all(copies);
+  } else {
+    await copy(nodeMailingPath, mailingPath, {
+      recursive: true,
+      dereference: true,
+      overwrite: true,
+      filter: (path) => !DOT_MAILING_IGNORE_REGEXP.test(path),
+    });
+  }
 
   // delete .mailing/src/emails after copying because we should be using the user's
   // emailsDir, not the copied version (mostly for sanity)
@@ -200,10 +221,7 @@ async function buildManifest(
     bundle: true,
     format: "esm",
     jsx: "preserve",
-    external: [
-      ...Object.keys(pkg.dependencies || {}),
-      ...Object.keys(pkg.peerDependencies || {}),
-    ],
+    external: getNodeModulesDirsFrom("."),
   };
 
   if ("node" === buildType) {
@@ -213,6 +231,8 @@ async function buildManifest(
     buildOpts.platform = "browser";
     buildOpts.target = "esnext";
   }
+
+  debug("invoking esbuild with buildOpts: ", JSON.stringify(buildOpts));
 
   // build the manifest
   debug(`bundling ${buildType} manifest for ${manifestPath}...`);

@@ -115,12 +115,6 @@ const Home: NextPage<HomeProps> = ({ previews: initialPreviews }) => {
           font-weight: 700;
           font-family: menlo, monospace;
         }
-        .email-group {
-          margin-bottom: 32px;
-        }
-        .email-container {
-          margin-bottom: 8px;
-        }
         a.email {
           transition: background-color, transform 200ms ease-out;
           display: inline-block;

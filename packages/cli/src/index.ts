@@ -6,10 +6,10 @@ import * as preview from "./commands/preview/preview";
 import * as exportPreviews from "./commands/exportPreviews";
 import * as server from "./commands/server";
 import { MAILING_CONFIG_FILE } from "./util/config";
-import { readFileSync } from "fs";
+import { readJSONverbose } from "./util/paths";
 
 const config = existsSync(MAILING_CONFIG_FILE)
-  ? JSON.parse(readFileSync(MAILING_CONFIG_FILE).toString())
+  ? readJSONverbose(MAILING_CONFIG_FILE)
   : {};
 
 // prettier-ignore

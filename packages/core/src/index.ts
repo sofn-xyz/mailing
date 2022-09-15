@@ -1,19 +1,21 @@
 import { ReactElement, JSXElementConstructor } from "react";
-import nodemailer from "nodemailer";
+import type { SendMailOptions, Transporter } from "nodemailer";
 import open from "open";
 import fs from "fs-extra";
 import { render } from "./mjml";
-import { error, log } from "./log";
+import { error, log, debug } from "./util/log";
 import fetch from "node-fetch";
+import { capture } from "./util/postHog";
 
-export type ComponentMail = nodemailer.SendMailOptions & {
+export type ComponentMail = SendMailOptions & {
   component?: ReactElement<any, string | JSXElementConstructor<any>>;
   forceDeliver?: boolean;
   forcePreview?: boolean;
 };
 export type BuildSendMailOptions = {
-  transport: nodemailer.Transporter;
+  transport: Transporter;
   defaultFrom: string;
+  configPath: string;
 };
 
 // In test, we write the email queue to this file so that it can be read
@@ -26,7 +28,7 @@ export async function getTestMailQueue() {
   }
 
   try {
-    const queue = await fs.readFileSync(TMP_TEST_FILE);
+    const queue = await fs.readFile(TMP_TEST_FILE);
     return JSON.parse(queue.toString());
   } catch (e) {
     return [];
@@ -54,6 +56,20 @@ export function buildSendMail(options: BuildSendMailOptions) {
   }
   if (!options?.defaultFrom) {
     throw new Error("buildSendMail options are missing defaultFrom");
+  }
+
+  let anonymousId = "unknown";
+  try {
+    const configRaw = fs.readFileSync(options.configPath).toString();
+    const config = JSON.parse(configRaw);
+    anonymousId =
+      process.env.NODE_ENV === "production" ? config.anonymousId : null;
+  } catch (e) {
+    if (!options.configPath) {
+      debug("buildSendMail requires configPath");
+    } else {
+      debug(`error loading config at ${options.configPath}`);
+    }
   }
 
   return async function sendMail(mail: ComponentMail) {
@@ -90,14 +106,14 @@ export function buildSendMail(options: BuildSendMailOptions) {
     if (testMode) {
       const testMessageQueue = await getTestMailQueue();
       testMessageQueue.push(htmlMail);
-      fs.writeFileSync(TMP_TEST_FILE, JSON.stringify(testMessageQueue));
+      await fs.writeFile(TMP_TEST_FILE, JSON.stringify(testMessageQueue));
       return;
     }
 
     if (forcePreview) {
       log("💌 opening sendMail preview", mail);
-      // open on preview server url
-      // hit echo endpoint with html
+      // create an intercept on the preview server
+      // then open it in the browser
       const PREVIEW_SERVER_URL = "http://localhost:3883/intercepts";
       try {
         const response = await fetch(PREVIEW_SERVER_URL, {
@@ -121,6 +137,11 @@ export function buildSendMail(options: BuildSendMailOptions) {
     }
 
     const response = await options.transport.sendMail(htmlMail);
+    await capture({
+      distinctId: anonymousId,
+      event: "mail sent",
+    });
+
     return response;
   };
 }

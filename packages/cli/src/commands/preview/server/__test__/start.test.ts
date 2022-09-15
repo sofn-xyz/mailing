@@ -1,4 +1,4 @@
-import startPreviewServer, { WATCH_IGNORE } from "../start";
+import startPreviewServer from "../start";
 import * as config from "../../../../util/config";
 import http from "http";
 import * as paths from "../../../../util/paths";
@@ -10,7 +10,7 @@ describe("start", () => {
     const mockHttpServer = jest.fn();
     jest.spyOn(config, "getConfig").mockImplementation(() => {
       return {
-        emailsDir: "./emails",
+        emailsDir: "./packages/cli/src/emails",
         quiet: true,
         port: 3883,
       };
@@ -23,13 +23,5 @@ describe("start", () => {
       await startPreviewServer();
     }).rejects.toThrow("previews directory does not exist");
     expect(mockHttpServer).not.toHaveBeenCalled();
-  });
-
-  it("ignores the right files when watching", () => {
-    expect(
-      WATCH_IGNORE.test(".mailing/src/emails/node_modules/lodash/fp/rest.js")
-    ).toBe(true);
-    expect(WATCH_IGNORE.test(".next")).toBe(true);
-    expect(WATCH_IGNORE.test("node_modules")).toBe(true);
   });
 });

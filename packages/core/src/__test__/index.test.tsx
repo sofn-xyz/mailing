@@ -8,6 +8,7 @@ import {
   BuildSendMailOptions,
 } from "..";
 import { Mjml, MjmlBody, MjmlRaw, MjmlText } from "mjml-react";
+import * as log from "../util/log";
 
 describe("index", () => {
   describe("buildSendMail", () => {
@@ -26,6 +27,7 @@ describe("index", () => {
       const sendMail = buildSendMail({
         transport,
         defaultFrom: "replace@me.with.your.com",
+        configPath: "./mailing.config.json",
       });
 
       expect(typeof sendMail).toBe("function");
@@ -41,11 +43,41 @@ describe("index", () => {
       const sendMail = buildSendMail({
         transport,
         defaultFrom: "replace@me.with.your.com",
+        configPath: "./mailing.config.json",
       });
 
       await expect(async () => {
         await sendMail({});
       }).rejects.toThrow();
+    });
+
+    it("logs an error without a valid configPath but still sends", async () => {
+      await clearTestMailQueue();
+      const debugSpy = jest.spyOn(log, "debug").mockImplementation(() => {});
+
+      const sendMail = buildSendMail({
+        transport,
+        defaultFrom: "replace@me.with.your.com",
+        configPath: "./garbage_path.json",
+      });
+
+      expect(debugSpy).toHaveBeenCalledWith(
+        "error loading config at ./garbage_path.json"
+      );
+
+      await sendMail({
+        component: <div></div>,
+        to: ["ok@ok.com"],
+        from: "ok@ok.com",
+        subject: "hello",
+        text: "ok",
+        html: "ok",
+      });
+
+      // still hits the queue even with the error
+      const queue = await getTestMailQueue();
+      expect(queue.length).toBe(1);
+      debugSpy.mockRestore();
     });
   });
 
@@ -67,6 +99,7 @@ describe("index", () => {
       sendMail = buildSendMail({
         transport,
         defaultFrom: "replace@me.with.your.com",
+        configPath: "./mailing.config.json",
       });
     });
 
