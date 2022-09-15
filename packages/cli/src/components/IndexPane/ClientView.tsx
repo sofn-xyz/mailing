@@ -25,6 +25,7 @@ const ClientView: React.FC<ClientViewProps> = ({
             key={route.path}
             role="option"
             aria-selected={isCursor}
+            aria-label={`${route.previewClass} - ${route.previewFunction}`}
             className={cx("rounded-2xl cursor-pointer", {
               "pl-1": route.level === 2,
               "bg-blue text-black -mt-[1px] pt-[1px]": isCursor,
