@@ -207,7 +207,7 @@ async function buildManifest(
     bundle: true,
     format: "esm",
     jsx: "preserve",
-    external: getNodeModulesDirsFrom("."),
+    external: getNodeModulesDirsFrom(process.cwd()),
   };
 
   if ("node" === buildType) {

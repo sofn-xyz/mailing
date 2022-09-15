@@ -3,7 +3,7 @@ import { getNodeModulesDirsFrom } from "../getNodeModulesDirsFrom";
 
 describe("getNodeModulesDirsFrom", () => {
   it("should return an array with all the node_modules folders", () => {
-    const output = getNodeModulesDirsFrom(".");
+    const output = getNodeModulesDirsFrom(process.cwd());
     expect(output.length).toBeGreaterThan(0);
 
     // for esbuild to look in the right place, it must end in "/*"
