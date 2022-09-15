@@ -1,9 +1,18 @@
 import { ReactElement } from "react";
+import IconCode from "./icons/IconCode";
+import IconMobile from "./icons/IconMobile";
+import IconDesktop from "./icons/IconDesktop";
 import Image from "next/image";
 import cx from "classnames";
 
 import Tooltip from "./Tooltip";
 import PreviewSender from "./PreviewSender";
+
+import resolveConfig from "tailwindcss/resolveConfig";
+import tailwindConfig from "../../tailwind.config.js";
+
+const { theme } = resolveConfig(tailwindConfig);
+const white = theme?.colors?.white;
 
 type HeaderProps = {
   title: string;
@@ -30,40 +39,24 @@ const Header: React.FC<HeaderProps> = ({
       <div className="segmented-control-container">
         <div className="segmented-control">
           <button
-            className={cx("desktop", { active: viewMode === "desktop" })}
+            className={cx("desktop cursor-pointer hover:bg-gray-700", {
+              active: viewMode === "desktop",
+            })}
             onClick={() => setViewMode("desktop")}
           >
-            <Image
-              src="/icon-desktop.svg"
-              width="24"
-              height="20"
-              alt="Desktop icon"
-              title="Toggle desktop view"
-            />
+            <IconDesktop fill={viewMode === "desktop" ? "#333" : white} />
           </button>
           <button
             className={cx("mobile", { active: viewMode === "mobile" })}
             onClick={() => setViewMode("mobile")}
           >
-            <Image
-              src="/icon-mobile.svg"
-              width="12.43"
-              height="22"
-              alt="Mobile icon"
-              title="Toggle mobile view"
-            />
+            <IconMobile fill={"mobile" === viewMode ? "#333" : white} />
           </button>
           <button
             className={cx("html", { active: viewMode === "html" })}
             onClick={() => setViewMode("html")}
           >
-            <Image
-              src="/icon-code.svg"
-              width="21"
-              height="14.5"
-              alt="HTML icon"
-              title="Toggle HTML view"
-            />
+            <IconCode fill={white} />
           </button>
         </div>
       </div>
@@ -169,14 +162,11 @@ const Header: React.FC<HeaderProps> = ({
           transition: background-color, box-shadow 200ms ease-out;
           text-align: center;
         }
+
         a {
           transition: background-color, transform 200ms ease-out;
         }
-        a:hover span,
-        button:hover {
-          cursor: pointer;
-          background: #e4ebfa;
-        }
+
         button:active {
           box-shadow: inset 0 0 12px rgba(0, 0, 0, 0.5);
         }

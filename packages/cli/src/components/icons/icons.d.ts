@@ -1,0 +1,3 @@
+type IconProps = {
+  fill: string;
+};
