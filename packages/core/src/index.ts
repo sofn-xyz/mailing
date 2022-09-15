@@ -72,7 +72,7 @@ export function buildSendMail(options: BuildSendMailOptions) {
     }
   }
 
-  return async function sendMail(mail: ComponentMail) {
+  return async function sendMail(mail: ComponentMail): Promise<any> {
     const forcePreview =
       mail.forcePreview ||
       (process.env.NODE_ENV !== "production" && !mail.forceDeliver);
