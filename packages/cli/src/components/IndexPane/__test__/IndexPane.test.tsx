@@ -99,13 +99,17 @@ describe("IndexPane", () => {
       const list = await findByRole("listbox");
       const selectedInitially = await findByRole("option", {
         selected: true,
+        name: "AccountCreated - accountCreated",
       });
-      expect(selectedInitially.textContent).toBe("accountCreated");
+      expect(selectedInitially.textContent).toBe(
+        "AccountCreatedaccountCreated"
+      );
       await user.type(list, "{ArrowDown}");
       const selected = await findByRole("option", {
         selected: true,
+        name: "NewSignIn - newSignIn",
       });
-      expect(selected.textContent).toBe("newSignIn");
+      expect(selected.textContent).toBe("NewSignInnewSignIn");
     });
   });
 });
