@@ -1,6 +1,6 @@
 {
   "name": "mailing",
-  "version": "0.7.8",
+  "version": "0.7.9-next.0",
   "main": "dist/mailing.cjs.js",
   "license": "MIT",
   "homepage": "https://github.com/sofn-xyz/mailing#readme",
@@ -57,7 +57,7 @@
     "esbuild": "^0.15.5",
     "fs-extra": "^10.1.0",
     "lodash": "^4.17.21",
-    "mailing-core": "^0.7.8",
+    "mailing-core": "^0.7.9-next.0",
     "mjml": "^4.12.0",
     "mjml-react": "^2.0.7",
     "node-fetch": "^2.6.7",

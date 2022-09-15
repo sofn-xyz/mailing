@@ -1,5 +1,13 @@
 # mailing
 
+## 0.7.9-next.0
+
+### Patch Changes
+
+- Use process.cwd instead of . to look for node modules
+- Updated dependencies
+  - mailing-core@0.7.9-next.0
+
 ## 0.7.8
 
 ### Patch Changes

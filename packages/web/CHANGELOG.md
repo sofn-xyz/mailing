@@ -1,5 +1,11 @@
 # web
 
+## 0.3.8-next.0
+
+### Patch Changes
+
+- Use process.cwd instead of . to look for node modules
+
 ## 0.3.7
 
 ### Patch Changes

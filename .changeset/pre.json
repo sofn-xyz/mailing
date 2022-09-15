@@ -1,0 +1,12 @@
+{
+  "mode": "pre",
+  "tag": "next",
+  "initialVersions": {
+    "mailing": "0.7.8",
+    "mailing-core": "0.7.8",
+    "web": "0.3.7"
+  },
+  "changesets": [
+    "strong-students-run"
+  ]
+}
