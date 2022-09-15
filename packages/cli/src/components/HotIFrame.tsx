@@ -39,7 +39,7 @@ const HotIFrame: React.FC<HotIFrameProps> = ({
         }
         .mobile.frame {
           padding: 64px 16px 74px;
-          max-width: 324px;
+          max-width: 352px;
           border-radius: 32px;
           margin: 64px auto;
           background-color: #252525;
