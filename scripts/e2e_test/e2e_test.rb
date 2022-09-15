@@ -2,6 +2,7 @@
 
 require 'tmpdir'
 require 'json'
+require 'socket'
 
 require_relative 'helpers/test_runner_utils'
 require_relative 'app_configs/app'
@@ -37,6 +38,8 @@ class TestRunner
   }
 
   def initialize
+    verify_mailing_port_is_free!
+
     assign_opts!
 
     fail "Check that PROJECT_ROOT exists: #{PROJECT_ROOT}" unless Dir.exists?(PROJECT_ROOT)
@@ -99,6 +102,16 @@ class TestRunner
   end
 
 private
+
+  def verify_mailing_port_is_free!
+    begin
+      if TCPSocket.new("localhost", 3883)
+        fail "aborting without running tests... port 3883 is busy, is mailing already running?"
+      end
+    rescue Errno::ECONNREFUSED
+      # the port is open. this is the expected case
+    end
+  end
 
   ## Mailing and projects
   #
