@@ -70,6 +70,7 @@ const Header: React.FC<HeaderProps> = ({
             >
               {show ? (
                 <Image
+                  key="icon-close"
                   src="/icon-close.svg"
                   width="36"
                   height="30"
@@ -78,6 +79,7 @@ const Header: React.FC<HeaderProps> = ({
                 />
               ) : (
                 <Image
+                  key="icon-question"
                   src="/icon-question.svg"
                   width="36"
                   height="24"
@@ -98,6 +100,7 @@ const Header: React.FC<HeaderProps> = ({
               >
                 {show ? (
                   <Image
+                    key="icon-close"
                     src="/icon-close.svg"
                     width="36"
                     height="30"
@@ -106,6 +109,7 @@ const Header: React.FC<HeaderProps> = ({
                   />
                 ) : (
                   <Image
+                    key="icon-send"
                     src="/icon-send.svg"
                     width="15"
                     height="13"
