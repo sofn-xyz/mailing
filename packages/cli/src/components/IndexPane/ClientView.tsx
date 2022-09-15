@@ -18,6 +18,9 @@ const ClientView: React.FC<ClientViewProps> = ({
 }) => {
   return (
     <div className="py-4 px-3 text-sm outline-none" tabIndex={1} role="listbox">
+      <h2 className="font-bold text-2xl pt-4 pb-4 mx-3 border-b border-dotted border-gray-600">
+        Emails
+      </h2>
       {treeRoutes?.map((route, i) => {
         const isCursor = i === cursor;
         return route.level !== 2 ? null : (
