@@ -65,7 +65,7 @@ const IndexPane: React.FC<IndexPaneProps> = ({ previews, previewText }) => {
 
   return (
     <>
-      <div className="border-dotted border-b border-gray-600 pt-4 pb-3 px-4">
+      <div className="border-dotted border-b border-gray-600 pt-4 px-4 h-[52px]">
         <Image
           src="/logo-light-header@2x.png"
           width="91"

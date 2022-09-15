@@ -132,7 +132,7 @@ const Header: React.FC<HeaderProps> = ({
       </div>
       <style jsx>{`
         .header {
-          height: 64px;
+          height: 52px;
           border-bottom: 1px dotted #333;
           display: flex;
           justify-content: space-between;
