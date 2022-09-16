@@ -7,7 +7,8 @@ type Options = {
 };
 
 export const hotkeysMap = {
-  toggleFullScreen: ".",
+  escapeFullScreen: "Escape",
+  toggleFullScreen: "Meta+.",
   viewModeDesktop: "1",
   viewModeHTML: "3",
   viewModeMobile: "2",
@@ -26,9 +27,15 @@ export default function usePreviewHotkeys({ setViewMode }: Options) {
 
   const handleKey = useCallback(
     (e: KeyboardEvent) => {
+      console.log(e, e.key);
       switch (e.key) {
-        case hotkeysMap.toggleFullScreen:
-          console.log("om");
+        case hotkeysMap.escapeFullScreen:
+          setFullScreen(false);
+          break;
+        case ".":
+          console.log("perido");
+          if (!e.metaKey) break;
+          console.log("meta");
           setFullScreen((current) => !current);
           break;
         case hotkeysMap.viewModeDesktop:
@@ -72,13 +79,5 @@ export default function usePreviewHotkeys({ setViewMode }: Options) {
     [handleKey]
   );
 
-  const textareaRef = useCallback(
-    (node: HTMLTextAreaElement) => {
-      if (null === node) return;
-      node.onkeydown = handleKey;
-    },
-    [handleKey]
-  );
-
-  return { iframeRef, textareaRef, fullScreen };
+  return { iframeRef, fullScreen };
 }

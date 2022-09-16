@@ -12,7 +12,7 @@ const HotIFrame: React.FC<HotIFrameProps> = ({
   setViewMode,
   srcDoc,
 }) => {
-  const { iframeRef, textareaRef, fullScreen } = usePreviewHotkeys({
+  const { iframeRef, fullScreen } = usePreviewHotkeys({
     setViewMode,
   });
 
@@ -20,25 +20,35 @@ const HotIFrame: React.FC<HotIFrameProps> = ({
     <>
       {viewMode === "html" ? (
         <textarea
-          className="code-container mono text-black"
+          className={cx("code-container mono text-black", {
+            "fixed top-0 left-0 right-0 bottom-0 z-50 h-full": fullScreen,
+            "h-[calc(100vh-53px)]": !fullScreen,
+          })}
           readOnly
           value={srcDoc}
-          ref={textareaRef}
         ></textarea>
       ) : (
         <div
-          className={cx("frame", {
-            mobile: viewMode === "mobile",
+          className={cx({
+            "fixed top-0 left-0 right-0 bottom-0 z-50 h-full bg-black":
+              fullScreen,
           })}
         >
-          <iframe
-            className={cx({
-              "fixed top-0 left-0 right-0 bottom-0 z-50 h-full": fullScreen,
-              "h-[calc(100vh-65px)]": !fullScreen,
+          <div
+            className={cx("frame", {
+              mobile: viewMode === "mobile",
             })}
-            srcDoc={srcDoc}
-            ref={iframeRef}
-          />
+          >
+            <iframe
+              className={cx({
+                "fixed top-0 left-0 right-0 bottom-0 z-50 h-full":
+                  fullScreen && viewMode !== "mobile",
+                "h-[calc(100vh-53px)]": !fullScreen,
+              })}
+              srcDoc={srcDoc}
+              ref={iframeRef}
+            />
+          </div>
         </div>
       )}
       <style jsx>{`
@@ -71,7 +81,6 @@ const HotIFrame: React.FC<HotIFrameProps> = ({
           white-space: pre-wrap;
           padding: 16px;
           outline: none;
-          height: calc(100vh - 65px);
           width: 100%;
           resize: none;
         }
