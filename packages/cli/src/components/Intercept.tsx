@@ -16,7 +16,6 @@ const Intercept: React.FC<InterceptProps> = ({ data }) => {
   return (
     <>
       <Header
-        title={data.subject || ""}
         setViewMode={setViewMode}
         viewMode={viewMode}
         helpContent={
