@@ -19,7 +19,7 @@ const Intercept: React.FC<InterceptProps> = ({ data }) => {
         setViewMode={setViewMode}
         viewMode={viewMode}
         helpContent={
-          <>
+          <div className="text-xs">
             <div className="title">Hotkeys</div>
             <div className="hotkey">
               <span className="character">&#8984;</span>
@@ -27,6 +27,10 @@ const Intercept: React.FC<InterceptProps> = ({ data }) => {
                 {hotkeysMap.toggleFullScreen.split("+")[1]}
               </span>
               <span className="description">Toggle full screen</span>
+            </div>
+            <div className="hotkey">
+              <span className="character">{"`"}</span>
+              <span className="description">Toggle compact view</span>
             </div>
             <div className="hotkey">
               <span className="character">{hotkeysMap.viewModeNext}</span>
@@ -48,7 +52,7 @@ const Intercept: React.FC<InterceptProps> = ({ data }) => {
               <span className="character">{hotkeysMap.viewModeHTML}</span>
               <span className="description">HTML view</span>
             </div>
-          </>
+          </div>
         }
       />
       <div className="container">
@@ -82,11 +86,9 @@ const Intercept: React.FC<InterceptProps> = ({ data }) => {
         .title,
         .character {
           text-transform: uppercase;
-          font-size: 10px;
           line-height: 100%;
         }
         .hotkey {
-          font-size: 12px;
           margin: 12px 24px 0 0;
         }
         .character {
@@ -98,7 +100,7 @@ const Intercept: React.FC<InterceptProps> = ({ data }) => {
           text-align: center;
           margin-right: 8px;
           display: inline-block;
-          line-height: 190%;
+          line-height: 180%;
         }
         .description {
           position: relative;
