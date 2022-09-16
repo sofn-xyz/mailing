@@ -27,15 +27,12 @@ export default function usePreviewHotkeys({ setViewMode }: Options) {
 
   const handleKey = useCallback(
     (e: KeyboardEvent) => {
-      console.log(e, e.key);
       switch (e.key) {
         case hotkeysMap.escapeFullScreen:
           setFullScreen(false);
           break;
         case ".":
-          console.log("perido");
           if (!e.metaKey) break;
-          console.log("meta");
           setFullScreen((current) => !current);
           break;
         case hotkeysMap.viewModeDesktop:
