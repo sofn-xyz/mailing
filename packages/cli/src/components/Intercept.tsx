@@ -22,8 +22,8 @@ const Intercept: React.FC<InterceptProps> = ({ data }) => {
           <>
             <div className="title">Hotkeys</div>
             <div className="hotkey">
-              <span className="character">{hotkeysMap.showPreviews}</span>
-              <span className="description">Jump to previews</span>
+              <span className="character">{hotkeysMap.toggleFullScreen}</span>
+              <span className="description">Toggle full screen</span>
             </div>
             <div className="hotkey">
               <span className="character">{hotkeysMap.viewModeNext}</span>
