@@ -12,7 +12,9 @@ const HotIFrame: React.FC<HotIFrameProps> = ({
   setViewMode,
   srcDoc,
 }) => {
-  const { iframeRef, textareaRef } = usePreviewHotkeys({ setViewMode });
+  const { iframeRef, textareaRef, fullScreen } = usePreviewHotkeys({
+    setViewMode,
+  });
 
   return (
     <>
@@ -29,7 +31,14 @@ const HotIFrame: React.FC<HotIFrameProps> = ({
             mobile: viewMode === "mobile",
           })}
         >
-          <iframe srcDoc={srcDoc} ref={iframeRef} />
+          <iframe
+            className={cx({
+              "fixed top-0 left-0 right-0 bottom-0 z-50 h-full": fullScreen,
+              "h-[calc(100vh-65px)]": !fullScreen,
+            })}
+            srcDoc={srcDoc}
+            ref={iframeRef}
+          />
         </div>
       )}
       <style jsx>{`
@@ -53,7 +62,6 @@ const HotIFrame: React.FC<HotIFrameProps> = ({
           vertical-align: top;
           width: 100%;
           border: none;
-          height: calc(100vh - 65px);
         }
         .mobile {
           border: 1px dotted #333;

@@ -111,9 +111,11 @@ const PreviewViewer: React.FC<PreviewViewerProps> = ({ initialData }) => {
                       <div className="title">Hotkeys</div>
                       <div className="hotkey">
                         <span className="character">
-                          {hotkeysMap.showPreviews}
+                          <span className="relative -top-1">
+                            {hotkeysMap.toggleFullScreen}
+                          </span>
                         </span>
-                        <span className="description">Jump to previews</span>
+                        <span className="description">Toggle full screen</span>
                       </div>
                       <div className="hotkey">
                         <span className="character">
