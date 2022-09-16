@@ -22,7 +22,10 @@ const Intercept: React.FC<InterceptProps> = ({ data }) => {
           <>
             <div className="title">Hotkeys</div>
             <div className="hotkey">
-              <span className="character">{hotkeysMap.toggleFullScreen}</span>
+              <span className="character">&#8984;</span>
+              <span className="character">
+                {hotkeysMap.toggleFullScreen.split("+")[1]}
+              </span>
               <span className="description">Toggle full screen</span>
             </div>
             <div className="hotkey">
@@ -88,14 +91,14 @@ const Intercept: React.FC<InterceptProps> = ({ data }) => {
         }
         .character {
           color: #bbb;
-          width: 18px;
-          height: 18px;
+          width: 24px;
+          height: 24px;
           border: solid 1px #999;
           border-radius: 2px;
           text-align: center;
           margin-right: 8px;
           display: inline-block;
-          line-height: 170%;
+          line-height: 190%;
         }
         .description {
           position: relative;
