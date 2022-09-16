@@ -32,7 +32,7 @@ if (process.env.NEXT_CLI_TESTS) {
     preset: "ts-jest",
     testEnvironment: "node",
     // TODO: keep testTimeout low and use jest.setTimeout for long ones
-    testTimeout: 30000,
+    testTimeout: 60000,
     transform: {
       "^.+\\.(ts|tsx)$": "ts-jest",
       "^.+\\.(js)$": "babel-jest",

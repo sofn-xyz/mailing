@@ -19,7 +19,7 @@ const IndexPane: React.FC<IndexPaneProps> = ({ previews, previewText }) => {
     usePreviewTree(previews || [], { leavesOnly: !compact });
 
   useHotkeys(
-    ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", " "],
+    ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", " ", "`"],
     (e: KeyboardEvent) => {
       if (e.key === "ArrowUp") {
         up();
@@ -31,6 +31,8 @@ const IndexPane: React.FC<IndexPaneProps> = ({ previews, previewText }) => {
         right();
       } else if (compact && e.key === " " && treeRoutes) {
         setCollapse(cursor, !treeRoutes[cursor].collapsed);
+      } else if (e.key === "`") {
+        setCompact((current) => !current);
       }
     }
   );
@@ -65,7 +67,7 @@ const IndexPane: React.FC<IndexPaneProps> = ({ previews, previewText }) => {
 
   return (
     <>
-      <div className="border-dotted border-b border-gray-600 pt-4 px-4 h-[52px]">
+      <div className="border-dotted border-b border-gray-600 pt-4 px-4 h-[52px] hidden sm:block">
         <Image
           src="/logo-light-header@2x.png"
           width="91"

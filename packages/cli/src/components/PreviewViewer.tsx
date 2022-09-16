@@ -1,4 +1,5 @@
 import React, { useCallback, useState } from "react";
+import cx from "classnames";
 
 import Header from "./Header";
 import HotIFrame from "./HotIFrame";
@@ -7,10 +8,10 @@ import { hotkeysMap } from "./hooks/usePreviewHotkeys";
 import useLiveReload from "./hooks/useLiveReload";
 import IndexPane from "./IndexPane/IndexPane";
 import CircleLoader from "./CircleLoader";
-import { compact } from "lodash";
 import usePreviewPath from "./hooks/usePreviewPath";
 
 import type { PreviewIndexResponseBody } from "../pages/api/previews";
+import MobileHeader from "./MobileHeader";
 
 type Data = {
   preview: ShowPreviewResponseBody;
@@ -34,6 +35,7 @@ const PreviewViewer: React.FC<PreviewViewerProps> = ({ initialData }) => {
   const [viewMode, setViewMode] = useState<ViewMode>("desktop");
   const [data, setData] = useState<Data>(initialData);
   const [fetching, setFetching] = useState(false);
+  const [hamburgerOpen, setHamburgerOpen] = useState(false);
 
   const fetchPreviews = useCallback(async () => {
     const json = (await fetchJson("/api/previews")) as PreviewIndexResponseBody;
@@ -73,63 +75,85 @@ const PreviewViewer: React.FC<PreviewViewerProps> = ({ initialData }) => {
   return (
     <div>
       <div>
-        <div className="left-pane border-dotted border-r border-gray-600">
+        <div
+          className={cx(
+            "left-pane absolute border-dotted border-r border-gray-600 w-full sm:w-[300px] sm:left-0 transition-all z-40 bg-black mt-[52px] sm:mt-0",
+            {
+              "opacity-100": hamburgerOpen,
+              "opacity-0 sm:opacity-100 pointer-events-none sm:pointer-events-auto":
+                !hamburgerOpen,
+            }
+          )}
+        >
           <IndexPane previews={previews} previewText={data?.previewText} />
         </div>
-        <div className="right-pane">
+        <div className="right-pane sm:left-[300px] sm:w-[calc(100vw-300px)]">
           {!!preview?.errors?.length && <MjmlErrors errors={preview?.errors} />}
+          <div className="sm:hidden">
+            <MobileHeader
+              title={previewFunction || previewClass || "Emails"}
+              hamburgerOpen={hamburgerOpen}
+              setHamburgerOpen={setHamburgerOpen}
+            />
+          </div>
           {preview?.html && !preview?.errors.length ? (
             <>
-              <Header
-                title={compact([previewClass, previewFunction]).join(" - ")}
-                previewClass={previewClass as string}
-                previewFunction={
-                  previewFunction ? (previewFunction as string) : undefined
-                }
-                viewMode={viewMode}
-                setViewMode={setViewMode}
-                helpContent={
-                  <>
-                    <div className="title">Hotkeys</div>
-                    <div className="hotkey">
-                      <span className="character">
-                        {hotkeysMap.showPreviews}
-                      </span>
-                      <span className="description">Jump to previews</span>
+              <div className="hidden sm:block">
+                <Header
+                  previewClass={previewClass as string}
+                  previewFunction={
+                    previewFunction ? (previewFunction as string) : undefined
+                  }
+                  viewMode={viewMode}
+                  setViewMode={setViewMode}
+                  helpContent={
+                    <div className="text-xs">
+                      <div className="title">Hotkeys</div>
+                      <div className="hotkey">
+                        <span className="character">&#8984;</span>
+                        <span className="character">
+                          {hotkeysMap.toggleFullScreen.split("+")[1]}
+                        </span>
+                        <span className="description">Toggle full screen</span>
+                      </div>
+                      <div className="hotkey">
+                        <span className="character">{"`"}</span>
+                        <span className="description">Toggle compact view</span>
+                      </div>
+                      <div className="hotkey">
+                        <span className="character">
+                          {hotkeysMap.viewModeNext}
+                        </span>
+                        <span className="description">Next view mode</span>
+                      </div>
+                      <div className="hotkey">
+                        <span className="character">
+                          {hotkeysMap.viewModePrevious}
+                        </span>
+                        <span className="description">Previous view mode</span>
+                      </div>
+                      <div className="hotkey">
+                        <span className="character">
+                          {hotkeysMap.viewModeDesktop}
+                        </span>
+                        <span className="description">Desktop view</span>
+                      </div>
+                      <div className="hotkey">
+                        <span className="character">
+                          {hotkeysMap.viewModeMobile}
+                        </span>
+                        <span className="description">Mobile view</span>
+                      </div>
+                      <div className="hotkey">
+                        <span className="character">
+                          {hotkeysMap.viewModeHTML}
+                        </span>
+                        <span className="description">HTML view</span>
+                      </div>
                     </div>
-                    <div className="hotkey">
-                      <span className="character">
-                        {hotkeysMap.viewModeNext}
-                      </span>
-                      <span className="description">Next view mode</span>
-                    </div>
-                    <div className="hotkey">
-                      <span className="character">
-                        {hotkeysMap.viewModePrevious}
-                      </span>
-                      <span className="description">Previous view mode</span>
-                    </div>
-                    <div className="hotkey">
-                      <span className="character">
-                        {hotkeysMap.viewModeDesktop}
-                      </span>
-                      <span className="description">Desktop view</span>
-                    </div>
-                    <div className="hotkey">
-                      <span className="character">
-                        {hotkeysMap.viewModeMobile}
-                      </span>
-                      <span className="description">Mobile view</span>
-                    </div>
-                    <div className="hotkey">
-                      <span className="character">
-                        {hotkeysMap.viewModeHTML}
-                      </span>
-                      <span className="description">HTML view</span>
-                    </div>
-                  </>
-                }
-              />
+                  }
+                />
+              </div>
               <HotIFrame
                 srcDoc={preview.html}
                 viewMode={viewMode}
@@ -156,16 +180,9 @@ const PreviewViewer: React.FC<PreviewViewerProps> = ({ initialData }) => {
           top: 0;
           bottom: 0;
         }
-        .left-pane {
-          position: absolute;
-          width: 300px;
-          left: 0;
-        }
         .right-pane {
           position: relative;
           right: 0;
-          left: 300px;
-          width: calc(100vw - 300px);
         }
         .title {
           padding-bottom: 4px;
@@ -173,27 +190,21 @@ const PreviewViewer: React.FC<PreviewViewerProps> = ({ initialData }) => {
         .title,
         .character {
           text-transform: uppercase;
-          font-size: 10px;
           line-height: 100%;
         }
         .hotkey {
-          font-size: 12px;
           margin: 12px 24px 0 0;
         }
         .character {
           color: #bbb;
-          width: 18px;
-          height: 18px;
+          width: 24px;
+          height: 24px;
           border: solid 1px #999;
           border-radius: 2px;
           text-align: center;
           margin-right: 8px;
           display: inline-block;
           line-height: 170%;
-        }
-        .description {
-          position: relative;
-          top: 1.25px;
         }
         .fetch-indicator {
           z-index: 9999;
