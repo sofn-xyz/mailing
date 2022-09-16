@@ -110,8 +110,9 @@ const PreviewViewer: React.FC<PreviewViewerProps> = ({ initialData }) => {
                     <>
                       <div className="title">Hotkeys</div>
                       <div className="hotkey">
+                        <span className="character">&#8984;</span>
                         <span className="character">
-                          &#8984; {hotkeysMap.toggleFullScreen.split("+")[1]}
+                          {hotkeysMap.toggleFullScreen.split("+")[1]}
                         </span>
                         <span className="description">Toggle full screen</span>
                       </div>
