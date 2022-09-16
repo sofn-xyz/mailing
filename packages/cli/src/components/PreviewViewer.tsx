@@ -111,9 +111,7 @@ const PreviewViewer: React.FC<PreviewViewerProps> = ({ initialData }) => {
                       <div className="title">Hotkeys</div>
                       <div className="hotkey">
                         <span className="character">
-                          <span className="relative -top-1">
-                            {hotkeysMap.toggleFullScreen}
-                          </span>
+                          &#8984; {hotkeysMap.toggleFullScreen.split("+")[1]}
                         </span>
                         <span className="description">Toggle full screen</span>
                       </div>
@@ -196,14 +194,14 @@ const PreviewViewer: React.FC<PreviewViewerProps> = ({ initialData }) => {
         }
         .character {
           color: #bbb;
-          width: 18px;
-          height: 18px;
+          width: 24px;
+          height: 24px;
           border: solid 1px #999;
           border-radius: 2px;
           text-align: center;
           margin-right: 8px;
           display: inline-block;
-          line-height: 170%;
+          line-height: 190%;
         }
         .description {
           position: relative;
