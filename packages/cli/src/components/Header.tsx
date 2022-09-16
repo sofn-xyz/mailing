@@ -12,7 +12,6 @@ const white = "#E4EBFA";
 const gray = "#333";
 
 type HeaderProps = {
-  title: string;
   previewFunction?: string;
   previewClass?: string;
   viewMode: ViewMode;
@@ -23,7 +22,6 @@ type HeaderProps = {
 };
 
 const Header: React.FC<HeaderProps> = ({
-  title,
   previewFunction,
   previewClass,
   viewMode,
