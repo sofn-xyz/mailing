@@ -19,7 +19,7 @@ import { getNodeModulesDirsFrom } from "../../util/getNodeModulesDirsFrom";
 
 export const COMPONENT_FILE_REGEXP = /^[^\s-]+\.[tj]sx$/; // no spaces, .jsx or .tsx
 export const DOT_MAILING_IGNORE_REGEXP =
-  /__test__|generator_templates|yarn-error.log|src\/commands|src\/index\.ts$|src\/dev\.js$|\.mailing$|\.next|node_modules$|^cypress/;
+  /__test__|generator_templates|yarn-error.log|src\/index\.ts$|src\/dev\.js$|\.mailing$|\.next|node_modules$|^cypress/;
 
 export type PreviewServerOptions = {
   emailsDir: string;
