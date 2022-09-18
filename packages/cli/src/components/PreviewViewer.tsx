@@ -107,48 +107,49 @@ const PreviewViewer: React.FC<PreviewViewerProps> = ({ initialData }) => {
                   viewMode={viewMode}
                   setViewMode={setViewMode}
                   helpContent={
-                    <div className="text-xs">
-                      <div className="title">Hotkeys</div>
-                      <div className="hotkey">
-                        <span className="character">&#8984;</span>
-                        <span className="character">
-                          {hotkeysMap.toggleFullScreen.split("+")[1]}
-                        </span>
-                        <span className="description">Toggle full screen</span>
-                      </div>
-                      <div className="hotkey">
-                        <span className="character">{"`"}</span>
+                    <div className="text-xs w-52 space-y-3">
+                      <div className="hotkey flex justify-between">
                         <span className="description">Toggle compact view</span>
+                        <span className="character">{"`"}</span>
                       </div>
-                      <div className="hotkey">
-                        <span className="character">
-                          {hotkeysMap.viewModeNext}
-                        </span>
-                        <span className="description">Next view mode</span>
-                      </div>
-                      <div className="hotkey">
-                        <span className="character">
-                          {hotkeysMap.viewModePrevious}
-                        </span>
-                        <span className="description">Previous view mode</span>
-                      </div>
-                      <div className="hotkey">
+                      <div className="hotkey flex justify-between">
+                        <span className="description">Desktop view</span>
                         <span className="character">
                           {hotkeysMap.viewModeDesktop}
                         </span>
-                        <span className="description">Desktop view</span>
                       </div>
-                      <div className="hotkey">
+                      <div className="hotkey flex justify-between">
+                        <span className="description">Mobile view</span>
                         <span className="character">
                           {hotkeysMap.viewModeMobile}
                         </span>
-                        <span className="description">Mobile view</span>
                       </div>
-                      <div className="hotkey">
+                      <div className="hotkey flex justify-between">
+                        <span className="description">HTML view</span>
                         <span className="character">
                           {hotkeysMap.viewModeHTML}
                         </span>
-                        <span className="description">HTML view</span>
+                      </div>
+                      <div className="hotkey flex justify-between">
+                        <span className="description">Next view mode</span>
+                        <span className="character">
+                          {hotkeysMap.viewModeNext}
+                        </span>
+                      </div>
+                      <div className="hotkey flex justify-between">
+                        <span className="description">Previous view mode</span>
+                        <span className="character">
+                          {hotkeysMap.viewModePrevious}
+                        </span>
+                      </div>
+                      <div className="hotkey flex justify-between">
+                        <span className="description">Toggle full screen</span>
+                        <div>
+                          <span className="character">&#8984;</span>
+                          <span className="character">
+                            {hotkeysMap.toggleFullScreen.split("+")[1]}
+                          </span>
+                        </div>
                       </div>
                     </div>
                   }
@@ -184,16 +185,9 @@ const PreviewViewer: React.FC<PreviewViewerProps> = ({ initialData }) => {
           position: relative;
           right: 0;
         }
-        .title {
-          padding-bottom: 4px;
-        }
-        .title,
         .character {
           text-transform: uppercase;
           line-height: 100%;
-        }
-        .hotkey {
-          margin: 12px 24px 0 0;
         }
         .character {
           color: #bbb;
@@ -202,7 +196,7 @@ const PreviewViewer: React.FC<PreviewViewerProps> = ({ initialData }) => {
           border: solid 1px #999;
           border-radius: 2px;
           text-align: center;
-          margin-right: 8px;
+          margin-left: 8px;
           display: inline-block;
           line-height: 170%;
         }
