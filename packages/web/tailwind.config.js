@@ -8,9 +8,12 @@ module.exports = {
     extend: {
       colors: {
         yellow: "#fafa98",
+        blue: {
+          400: "#a1bfff",
+        },
       },
       fontSize: {
-        "5xl": ["48px", "67px"],
+        "6xl": "64px",
       },
     },
   },

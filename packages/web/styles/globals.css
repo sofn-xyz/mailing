@@ -1,7 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import url("https://use.typekit.net/fih5ejy.css");
+@import url("https://use.typekit.net/qdl2rbc.css");
 
 html,
 body {
@@ -10,7 +10,7 @@ body {
   font-family: neue-haas-unica, -apple-system, BlinkMacSystemFont, Segoe UI,
     Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
     sans-serif;
-  font-weight: 400;
+  font-weight: 500;
   font-style: normal;
   color: #000;
   height: 100%;
