@@ -3,21 +3,25 @@
 exports[`exportPreviews command cli --minify runs on templates 1`] = `
 "mailing Exporting minified preview html to
 mailing ./previews_html
-mailing   |-- text_email_reset_password.html
-mailing   |-- text_email_account_deleted.html
-mailing   |-- text_email_new_sign_in.html
-mailing   |-- welcome_to_amelita.html
-mailing ✅ Processed 4 previews
+mailing   |-- account_created_account_created.html
+mailing   |-- new_sign_in_new_sign_in.html
+mailing   |-- reservation_reservation_canceled.html
+mailing   |-- reservation_reservation_confirmed.html
+mailing   |-- reservation_reservation_changed.html
+mailing   |-- reset_password_reset_password.html
+mailing ✅ Processed 6 previews
 "
 `;
 
 exports[`exportPreviews command cli runs on templates 1`] = `
 "mailing Exporting preview html to
 mailing ./previews_html
-mailing   |-- text_email_reset_password.html
-mailing   |-- text_email_account_deleted.html
-mailing   |-- text_email_new_sign_in.html
-mailing   |-- welcome_to_amelita.html
-mailing ✅ Processed 4 previews
+mailing   |-- account_created_account_created.html
+mailing   |-- new_sign_in_new_sign_in.html
+mailing   |-- reservation_reservation_canceled.html
+mailing   |-- reservation_reservation_confirmed.html
+mailing   |-- reservation_reservation_changed.html
+mailing   |-- reset_password_reset_password.html
+mailing ✅ Processed 6 previews
 "
 `;

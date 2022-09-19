@@ -23,7 +23,7 @@
     "emails/**/*"
   ],
   "exclude": [
-    "packages/*/src/**/__test__/*",
+    "packages/**/__test__/*",
     "packages/*/src/emails/**/*",
     "packages/*/dist/**/*",
     "packages/cli/src/generator_templates/**/*"

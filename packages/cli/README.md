@@ -64,18 +64,23 @@ npm install --save react react-dom
 
 ```
 emails
-├── TextEmail.tsx // a simple example email template
-├── Welcome.tsx // a complicated example email template
+├── AccountCreated.tsx
+├── NewSignIn.tsx
+├── Reservation.tsx
+├── ResetPassword.tsx
 ├── components // shared components go in here
 │   ├── BulletedList.tsx
+│   ├── ButtonPrimary.tsx
 │   ├── Footer.tsx
 │   ├── Head.tsx
 │   ├── Header.tsx
 │   └── theme.ts
 ├── index.ts // this exports sendMail and is where your SMTP config goes
 └── previews // use previews to develop and check templates
-    ├── TextEmail.tsx
-    └── Welcome.tsx
+    ├── AccountCreated.tsx
+    ├── NewSignIn.tsx
+    ├── Reservation.tsx
+    └── ResetPassword.tsx
 ```
 
 3. <a id="configure-transport"></a>Configure your email transport and `defaultFrom` in `emails/index.ts`. It defaults to nodemailer's SMTP transport, but you can read about others [here](https://nodemailer.com/transports/).
@@ -97,14 +102,14 @@ const transport = nodemailer.createTransport({
 
 ```tsx
 import { sendMail } from "emails";
-import Welcome from "emails/Welcome";
+import AccountCreated from "emails/AccountCreated";
 
 sendMail({
   subject: "My First Email",
   to: "tester@example.com",
   cc: "tester+cc@example.com",
   bcc: ["tester+bcc@example.com", "tester+bcc2@example.com"],
-  component: <Welcome firstName="Amelita" />,
+  component: <AccountCreated firstName="Amelita" />,
 });
 ```
 
@@ -114,49 +119,29 @@ sendMail({
 
 Mailing includes a development mode for working on your emails. Running `mailing` in dev will boot the preview server on localhost:3883 and show you all previews in `emails/previews`. The previews live reload when files in the emails directory change. Previews are just functions that return one of your emails loaded up with props. We recommend grouping all previews for the same email template in a file at `emails/previews/TemplateName.tsx`.
 
-For example, here's `emails/previews/Welcome.tsx`:
+For example, here's `emails/previews/AccountCreated.tsx`:
 
 ```tsx
-import Welcome from "../Welcome";
+import AccountCreated from "../AccountCreated";
 
-export function toAmelita() {
-  return <Welcome name="Amelita" />;
+export function accountCreated() {
+  return <AccountCreated name="Amelita" />;
 }
 ```
 
-It will show up in the index:
+On the left, you'll see a list of all of your emails. On the right, you'll see an individual email preview with a mobile/desktop/HTML toggle and live reload as you edit:
 
-<img width="600" alt="Mailing index" src="https://user-images.githubusercontent.com/609038/183299565-184b3919-6448-40e9-b585-c39a150f370d.jpg">
+<img width="600" alt="Mailing desktop preview" src="https://user-images.githubusercontent.com/609038/188324943-729009f0-c6f2-45a5-87b7-ae6338d7c45f.jpg">
 
-Clicking through shows you the email with a mobile/desktop toggle and live reload as you edit:
+When your email is nice, send it to yourself or your QA tool of choice for final testing (we like [Litmus](<[url](https://www.litmus.com)>)):
 
-<img width="600" alt="Mailing desktop preview" src="https://user-images.githubusercontent.com/609038/183301497-4f0cd257-bb49-44c0-8106-2e717c430cb7.jpg">
-
-When it's nice, send it to yourself or your QA tool of choice for final testing (we like [Litmus](<[url](https://www.litmus.com)>)):
-
-<img width="600" alt="Mailing mobile preview" src="https://user-images.githubusercontent.com/609038/183301531-0b111b5b-10d7-4dc3-b02d-814cd35fd2d5.jpg">
+<img width="600" alt="Mailing mobile preview" src="https://user-images.githubusercontent.com/609038/188352419-8e1be23a-fa64-4e61-9e36-ecac8d882959.jpg">
 
 <br/>
 
 ## ●&nbsp;&nbsp;Templates
 
-We ship with two templates to help you get started. We recommend using these as starting points and modifying them to fit your use case.
-
-<br/>
-
-**Welcome Template** [(link)](https://demo.mailing.run/previews/Welcome/toAmelita)
-
-This template showcases a handful of MJML and Mailing features, including a responsive hero image, bulleted list, and custom Google font with fallbacks.
-
-<img width="600" alt="Mailing Welcome email template" src="https://user-images.githubusercontent.com/609038/183301545-9aa2caba-0a5c-4d06-b5e3-bd515adc0110.jpg">
-
-<br/>
-
-**Transactional Template** [(link)](https://demo.mailing.run/previews/TextEmail/newSignIn)
-
-This is a simpler template for text-based transactional emails.
-
-<img width="600" alt="Mailing text email template" src="https://user-images.githubusercontent.com/609038/183301563-893a99f9-2ac3-4da0-af7d-ef5003c73383.jpg">
+We ship with a few templates to help you get started. These get added to your emails directory upon initialization with `mailing init`. We recommend using these as starting points and modifying them to fit your use case. Check them out [here](https://demo.mailing.run).
 
 <br/>
 
@@ -245,7 +230,7 @@ With the REST API, you can use mailing for email templating even if most of your
 
 `GET /api/previews` returns the list of previews. [Example](https://demo.mailing.run/api/previews)
 
-`GET /api/previews/[previewClass]/[previewFunction]` returns the rendered preview. [Example](https://demo.mailing.run/api/previews)
+`GET /api/previews/[previewClass]/[previewFunction]` returns the rendered preview and data for `/previews/[previewClass]/[previewFunction]`. [Example](https://demo.mailing.run/api/previews)
 
 <br/>
 

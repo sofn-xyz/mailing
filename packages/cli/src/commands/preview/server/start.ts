@@ -47,7 +47,9 @@ export default async function startPreviewServer() {
     dev: true, // true will use the app from source, not built .next bundle
     hostname,
     port,
-    dir: resolve("./.mailing"),
+    dir: process.env.MM_DEV
+      ? resolve(__dirname, "../../../../")
+      : resolve("./.mailing"),
   });
   const nextHandle = app.getRequestHandler();
   await app.prepare();

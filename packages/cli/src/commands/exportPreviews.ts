@@ -7,6 +7,7 @@ import { render } from "../util/mjml";
 import registerRequireHooks from "./util/registerRequireHooks";
 import { defaults } from "../util/config";
 import { buildHandler } from "../util/buildHandler";
+import { minify } from "html-minifier-terser";
 
 export type ExportPreviewsArgs = ArgumentsCamelCase<{
   emailsDir?: string;
@@ -81,29 +82,33 @@ export const handler = buildHandler(
 
     let count = 0;
 
-    const mjmlOptions = {
-      minify: argv.minify,
-    };
-
     readdirSync(previewsPath)
       .filter((path) => !/^\./.test(path))
       .forEach(async (p) => {
         const previewPath = resolve(previewsPath, p);
         const previewModule = require(previewPath);
         await Promise.all(
-          Object.keys(require(previewPath)).map((previewFunction) => {
+          Object.keys(require(previewPath)).map(async (previewFunction) => {
             const filename = previewFilename(p, previewFunction);
             log(`  |-- ${filename}`);
             count++;
 
-            const { html, errors } = render(
-              previewModule[previewFunction](),
-              mjmlOptions
-            );
+            const { html, errors } = render(previewModule[previewFunction]());
             if (errors.length) {
               error(`MJML errors rendering ${filename}:`, errors);
             }
-            return outputFile(resolve(outDir, filename), html);
+
+            const minifyConfig = {
+              collapseWhitespace: true,
+              minifyCSS: false,
+              caseSensitive: true,
+              removeEmptyAttributes: true,
+            };
+
+            const outHtml = argv.minify
+              ? await minify(html, minifyConfig)
+              : html;
+            return outputFile(resolve(outDir, filename), outHtml);
           })
         );
       });

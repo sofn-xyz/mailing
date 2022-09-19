@@ -1,14 +1,14 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import { useRouter } from "next/router";
-import { useHotkeys } from "react-hotkeys-hook";
-import { config } from "../../feManifest";
+import useHotkeys from "@reecelucas/react-use-hotkeys";
 
 type Options = {
   setViewMode: React.Dispatch<React.SetStateAction<ViewMode>>;
 };
 
 export const hotkeysMap = {
-  showPreviews: "/",
+  escapeFullScreen: "Escape",
+  toggleFullScreen: "Meta+.",
   viewModeDesktop: "1",
   viewModeHTML: "3",
   viewModeMobile: "2",
@@ -23,11 +23,17 @@ const viewModeOrder: ViewMode[] = ["desktop", "mobile", "html"];
 // document, so that they still work if iframe has focus.
 export default function usePreviewHotkeys({ setViewMode }: Options) {
   const router = useRouter();
+  const [fullScreen, setFullScreen] = useState(false);
+
   const handleKey = useCallback(
     (e: KeyboardEvent) => {
       switch (e.key) {
-        case hotkeysMap.showPreviews:
-          router.push("/");
+        case hotkeysMap.escapeFullScreen:
+          setFullScreen(false);
+          break;
+        case ".":
+          if (!e.metaKey) break;
+          setFullScreen((current) => !current);
           break;
         case hotkeysMap.viewModeDesktop:
           setViewMode("desktop");
@@ -57,7 +63,7 @@ export default function usePreviewHotkeys({ setViewMode }: Options) {
     },
     [router, setViewMode]
   );
-  useHotkeys(Object.values(hotkeysMap).join(","), handleKey);
+  useHotkeys(Object.values(hotkeysMap), handleKey);
 
   const iframeRef = useCallback(
     (node: HTMLIFrameElement) => {
@@ -70,13 +76,5 @@ export default function usePreviewHotkeys({ setViewMode }: Options) {
     [handleKey]
   );
 
-  const textareaRef = useCallback(
-    (node: HTMLTextAreaElement) => {
-      if (null === node) return;
-      node.onkeydown = handleKey;
-    },
-    [handleKey]
-  );
-
-  return { iframeRef, textareaRef };
+  return { iframeRef, fullScreen };
 }
