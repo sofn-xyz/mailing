@@ -66,11 +66,11 @@ const Home: NextPage = () => {
               </div>
               <div className="flex flex-col lg:flex-row justify-between md:items-center">
                 <div className="lg:max-w-[540px] text-left md:text-center lg:text-left">
-                  <h1 className="text-3xl md:text-5xl lg:text-6xl md:max-w-md text-left md:text-center lg:text-left md:mx-auto">
+                  <h1 className="text-5xl md:text-6xl max-w-lg md:max-w-2xl text-left md:text-center lg:text-left md:mx-auto">
                     Build emails in React, send from anywhere
                   </h1>
                   <p
-                    className="text-2xl leading-snug m-0 pt-4 pb-8 lg:max-w-sm"
+                    className="text-2xl leading-snug m-0 pt-4 pb-8 mx-0 md:mx-auto lg:mx-0 max-w-sm md:max-w-xl lg:max-w-sm"
                     id={styles.sub}
                   >
                     An open source email development and analytics tool
@@ -82,7 +82,7 @@ const Home: NextPage = () => {
                     Get Started on GitHub
                   </a>
                 </div>
-                <div className="md:pl-0 mt-10 lg:mt-0 hidden sm:block mx-auto lg:ml-6 lg:mr-0">
+                <div className="hidden md:block mt-10 lg:mt-0 sm:mx-0 md:mx-auto lg:ml-6 lg:mr-0">
                   <Image
                     className="rounded-2xl"
                     width="640"
