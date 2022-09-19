@@ -76,7 +76,7 @@ const Home: NextPage = () => {
                     An open source email development and analytics tool
                   </p>
                   <a
-                    className="bg-blue-400 text-black text-xl inline-block leading-none px-8 pt-5 pb-6 rounded-2xl hover:underline mx-auto"
+                    className="bg-blue-400 text-black text-xl inline-block leading-none px-8 h-16 inline-flex items-center rounded-2xl hover:underline mx-auto"
                     href="https://github.com/sofn-xyz/mailing"
                   >
                     Get Started on GitHub
