@@ -1,4 +1,4 @@
-import { resolve, posix } from "path";
+import { resolve, posix, relative } from "path";
 import { execSync } from "child_process";
 import {
   copy,
@@ -18,6 +18,8 @@ import { template } from "lodash";
 import { getNodeModulesDirsFrom } from "../../util/getNodeModulesDirsFrom";
 
 export const COMPONENT_FILE_REGEXP = /^[^\s-]+\.[tj]sx$/; // no spaces, .jsx or .tsx
+export const DOT_MAILING_IGNORE_REGEXP =
+  /__test__|generator_templates|yarn-error.log|src\/index\.ts$|src\/dev\.js$|\.mailing$|\.next|node_modules$|^cypress/;
 
 export type PreviewServerOptions = {
   emailsDir: string;
@@ -160,16 +162,28 @@ export async function bootstrapMailingDir() {
 
   await rm(mailingPath, { recursive: true, force: true });
   await mkdir(mailingPath, { recursive: true });
-  await copy(nodeMailingPath, mailingPath, {
-    recursive: true,
-    dereference: true,
-    overwrite: true,
-    filter: (path) => {
-      return !/__test__|generator_templates|src\/index\.ts$|src\/dev\.js$|\.mailing$|\.next$|node_modules$|\/cypress$/.test(
-        path
+
+  if (process.env.MM_DEV) {
+    // copy directory contents so that it works in packages/cli
+    // otherwise there will be an error because .mailing is in the dir being copied
+    const copies = (await readdir(nodeMailingPath))
+      .filter((path) => !DOT_MAILING_IGNORE_REGEXP.test(path))
+      .map(async (p) =>
+        copy(p, mailingPath + "/" + relative(".", p), {
+          recursive: true,
+          dereference: true,
+          overwrite: true,
+        })
       );
-    },
-  });
+    await Promise.all(copies);
+  } else {
+    await copy(nodeMailingPath, mailingPath, {
+      recursive: true,
+      dereference: true,
+      overwrite: true,
+      filter: (path) => !DOT_MAILING_IGNORE_REGEXP.test(path),
+    });
+  }
 
   // delete .mailing/src/emails after copying because we should be using the user's
   // emailsDir, not the copied version (mostly for sanity)

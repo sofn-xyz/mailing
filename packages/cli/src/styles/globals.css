@@ -1,10 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 body {
   font-family: neue-haas-unica, sans-serif;
   font-weight: 400;
+  color: #e4ebfa;
+  background-color: #111;
 }
-a {
-  color: black;
-}
+
 .mono {
   font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
     Bitstream Vera Sans Mono, Courier New, monospace;

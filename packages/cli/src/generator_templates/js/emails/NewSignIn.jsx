@@ -16,28 +16,33 @@ import {
   MjmlColumn,
   MjmlText,
   MjmlSpacer,
+  MjmlDivider,
 } from "mjml-react";
 
-const TextEmail = ({ name, headline, body, bulletedList, ctaText }) => {
+const NewSignIn = ({ name, headline, body, bulletedList }) => {
   return (
     <Mjml>
       <Head />
-      <MjmlBody width={600}>
+      <MjmlBody width={400}>
         <Header />
-        <MjmlSection padding="0 24px 0" cssClass="smooth">
+        <MjmlSection padding="0 24px" cssClass="smooth">
           <MjmlColumn>
-            {headline && (
-              <MjmlText
-                padding="24px 0 8px"
-                fontSize={textLg}
-                lineHeight={leadingTight}
-                cssClass="paragraph"
-              >
-                {headline}
-              </MjmlText>
-            )}
+          <MjmlDivider
+              borderColor="#666"
+              borderStyle="dotted"
+              borderWidth="1px"
+              padding="8px 0"
+            ></MjmlDivider>
             <MjmlText
-              padding="16px 0 16px"
+              padding="24px 0 8px"
+              fontSize={textLg}
+              lineHeight={leadingTight}
+              cssClass="paragraph"
+            >
+              {headline}
+            </MjmlText>
+            <MjmlText
+              padding="16px 0"
               fontSize={textBase}
               lineHeight={leadingRelaxed}
               cssClass="paragraph"
@@ -54,19 +59,8 @@ const TextEmail = ({ name, headline, body, bulletedList, ctaText }) => {
               {body}
               </>
             </MjmlText>
-            {bulletedList && (
-              <>
-                <MjmlSpacer height="16px" />
-                {bulletedList}
-              </>
-            )}
-            {ctaText && (
-              <>
-                <MjmlSpacer height="24px" />
-                <ButtonPrimary link={"#"} uiText={ctaText} />
-                <MjmlSpacer height="8px" />
-              </>
-            )}
+            <MjmlSpacer height="16px" />
+            {bulletedList}
             <MjmlText
               padding="16px 0"
               fontSize={textBase}
@@ -75,8 +69,14 @@ const TextEmail = ({ name, headline, body, bulletedList, ctaText }) => {
             >
               ♥,
               <br />
-              Mailing
+              The BookBook Team
             </MjmlText>
+            <MjmlDivider
+              borderColor="#666"
+              borderStyle="dotted"
+              borderWidth="1px"
+              padding="20px 0 8px"
+            ></MjmlDivider>
           </MjmlColumn>
         </MjmlSection>
         <Footer />
@@ -85,4 +85,4 @@ const TextEmail = ({ name, headline, body, bulletedList, ctaText }) => {
   );
 };
 
-export default TextEmail;
+export default NewSignIn;

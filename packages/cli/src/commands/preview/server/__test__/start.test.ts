@@ -10,7 +10,7 @@ describe("start", () => {
     const mockHttpServer = jest.fn();
     jest.spyOn(config, "getConfig").mockImplementation(() => {
       return {
-        emailsDir: "./emails",
+        emailsDir: "./packages/cli/src/emails",
         quiet: true,
         port: 3883,
       };

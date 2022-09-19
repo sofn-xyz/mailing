@@ -16,37 +16,40 @@ const Intercept: React.FC<InterceptProps> = ({ data }) => {
   return (
     <>
       <Header
-        title={data.subject || ""}
         setViewMode={setViewMode}
         viewMode={viewMode}
         helpContent={
-          <>
-            <div className="title">Hotkeys</div>
-            <div className="hotkey">
-              <span className="character">{hotkeysMap.showPreviews}</span>
-              <span className="description">Jump to previews</span>
-            </div>
-            <div className="hotkey">
-              <span className="character">{hotkeysMap.viewModeNext}</span>
-              <span className="description">Next view mode</span>
-            </div>
-            <div className="hotkey">
-              <span className="character">{hotkeysMap.viewModePrevious}</span>
-              <span className="description">Previous view mode</span>
-            </div>
-            <div className="hotkey">
-              <span className="character">{hotkeysMap.viewModeDesktop}</span>
+          <div className="text-xs w-[190px] space-y-2" aria-label="hotkeys">
+            <div className="hotkey flex justify-between">
               <span className="description">Desktop view</span>
+              <span className="character">{hotkeysMap.viewModeDesktop}</span>
             </div>
-            <div className="hotkey">
-              <span className="character">{hotkeysMap.viewModeMobile}</span>
+            <div className="hotkey flex justify-between">
               <span className="description">Mobile view</span>
+              <span className="character">{hotkeysMap.viewModeMobile}</span>
             </div>
-            <div className="hotkey">
-              <span className="character">{hotkeysMap.viewModeHTML}</span>
+            <div className="hotkey flex justify-between">
               <span className="description">HTML view</span>
+              <span className="character">{hotkeysMap.viewModeHTML}</span>
             </div>
-          </>
+            <div className="hotkey flex justify-between">
+              <span className="description">Next view mode</span>
+              <span className="character">{hotkeysMap.viewModeNext}</span>
+            </div>
+            <div className="hotkey flex justify-between">
+              <span className="description">Previous view mode</span>
+              <span className="character">{hotkeysMap.viewModePrevious}</span>
+            </div>
+            <div className="hotkey flex justify-between">
+              <span className="description">Toggle full screen</span>
+              <div>
+                <span className="character">&#8984;</span>
+                <span className="character">
+                  {hotkeysMap.toggleFullScreen.split("+")[1]}
+                </span>
+              </div>
+            </div>
+          </div>
         }
       />
       <div className="container">
@@ -74,29 +77,20 @@ const Intercept: React.FC<InterceptProps> = ({ data }) => {
         .container > * {
           margin: 4px 0;
         }
-        .title {
-          padding-bottom: 4px;
-        }
-        .title,
         .character {
           text-transform: uppercase;
-          font-size: 10px;
           line-height: 100%;
-        }
-        .hotkey {
-          font-size: 12px;
-          margin: 12px 24px 0 0;
         }
         .character {
           color: #bbb;
-          width: 18px;
-          height: 18px;
+          width: 24px;
+          height: 24px;
           border: solid 1px #999;
           border-radius: 2px;
           text-align: center;
-          margin-right: 8px;
+          margin-left: 8px;
           display: inline-block;
-          line-height: 170%;
+          line-height: 180%;
         }
         .description {
           position: relative;

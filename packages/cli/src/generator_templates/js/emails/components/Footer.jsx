@@ -11,7 +11,7 @@ export default function Footer() {
           fontSize={textSm}
           color={grayDark}
         >
-          © 2022 Mailing&nbsp;&nbsp;·&nbsp;&nbsp;
+          © 2022 BookBook&nbsp;&nbsp;·&nbsp;&nbsp;
           <a href="#" target="_blank">
             Unsubscribe
           </a>

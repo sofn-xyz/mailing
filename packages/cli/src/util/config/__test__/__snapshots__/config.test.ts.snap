@@ -2,27 +2,27 @@
 
 exports[`writeDefaultConfigFile writes mailing.config.json if it doesn't exist 1`] = `
 [MockFunction] {
-  "calls": Array [
-    Array [
+  "calls": [
+    [
       "added mailing.config.json in your project with the following contents:
 {
-  \\"typescript\\": true,
-  \\"emailsDir\\": \\"./emails\\",
-  \\"outDir\\": \\"./previews_html\\",
-  \\"anonymousId\\": \\"TEST_VALUE\\"
+  "typescript": true,
+  "emailsDir": "./emails",
+  "outDir": "./previews_html",
+  "anonymousId": "TEST_VALUE"
 }
 ",
     ],
-    Array [
+    [
       "mailing collects anonymous telemetry data about usage",
     ],
   ],
-  "results": Array [
-    Object {
+  "results": [
+    {
       "type": "return",
       "value": undefined,
     },
-    Object {
+    {
       "type": "return",
       "value": undefined,
     },

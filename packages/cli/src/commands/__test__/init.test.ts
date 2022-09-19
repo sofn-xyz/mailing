@@ -9,6 +9,7 @@ jest.mock("../preview/preview", () => ({ handler: jest.fn() }));
 
 describe("init command", () => {
   beforeEach(() => {
+    jest.resetAllMocks();
     jest
       .spyOn(fsExtra, "readFileSync")
       .mockImplementation((path) =>
@@ -31,8 +32,10 @@ describe("init command", () => {
     expect(log).toHaveBeenCalledWith(
       `generated your emails dir at /tmp/src/emails:
 emails
-├── TextEmail.tsx
-├── Welcome.tsx
+├── AccountCreated.tsx
+├── NewSignIn.tsx
+├── Reservation.tsx
+├── ResetPassword.tsx
 ├── components
 │   ├── BulletedList.tsx
 │   ├── ButtonPrimary.tsx
@@ -42,8 +45,10 @@ emails
 │   └── theme.ts
 ├── index.ts
 └── previews
-    ├── TextEmail.tsx
-    └── Welcome.tsx`
+    ├── AccountCreated.tsx
+    ├── NewSignIn.tsx
+    ├── Reservation.tsx
+    └── ResetPassword.tsx`
     );
   });
 
@@ -61,8 +66,10 @@ emails
     expect(log).toHaveBeenCalledWith(
       `generated your emails dir at /tmp/src/emails:
 emails
-├── TextEmail.jsx
-├── Welcome.jsx
+├── AccountCreated.jsx
+├── NewSignIn.jsx
+├── Reservation.jsx
+├── ResetPassword.jsx
 ├── components
 │   ├── BulletedList.jsx
 │   ├── ButtonPrimary.jsx
@@ -72,8 +79,10 @@ emails
 │   └── theme.js
 ├── index.js
 └── previews
-    ├── TextEmail.jsx
-    └── Welcome.jsx`
+    ├── AccountCreated.jsx
+    ├── NewSignIn.jsx
+    ├── Reservation.jsx
+    └── ResetPassword.jsx`
     );
   });
 
