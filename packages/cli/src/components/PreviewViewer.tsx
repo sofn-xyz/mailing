@@ -107,7 +107,10 @@ const PreviewViewer: React.FC<PreviewViewerProps> = ({ initialData }) => {
                   viewMode={viewMode}
                   setViewMode={setViewMode}
                   helpContent={
-                    <div className="text-xs w-52 space-y-3">
+                    <div
+                      className="text-xs  w-[190px] space-y-2"
+                      aria-label="hotkeys"
+                    >
                       <div className="hotkey flex justify-between">
                         <span className="description">Toggle compact view</span>
                         <span className="character">{"`"}</span>
