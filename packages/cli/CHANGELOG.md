@@ -1,5 +1,21 @@
 # mailing
 
+## 0.8.0
+
+### Minor Changes
+
+- 6e8ac93: New Immersion UI
+
+  - Navigate through template quickly
+  - See what preview text might look like in an email client
+  - New default templates set a better example for making focused templates vs catch-alls like the deprecated TextEmail
+  - Command+"." hotkey for chrome-less viewing
+
+### Patch Changes
+
+- Updated dependencies [6e8ac93]
+  - mailing-core@0.8.0
+
 ## 0.7.9
 
 ### Patch Changes
