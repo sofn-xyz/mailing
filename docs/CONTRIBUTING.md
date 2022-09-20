@@ -1,0 +1,70 @@
+# Contributing
+
+We're honored that people actually want to contribute to our little project and excited to build a public good together as a community.
+
+## Picking up work
+
+Our priorities now fall in 3 buckets:
+
+- bugs: mailing should be relatively bug-free squash all of these
+- compatibility: mailing should work in many environments
+- features: mailing should be fun and powerful for developing and sending emails
+
+The first 2 categories are straightforward, go ahead and grab an open issue by assiging yourself or calling dibs with a comment. Even submitting a cold PR with a bugfix is welcome.
+
+The third category is trickier. Adding features can complicate existing use-cases or make mailing more difficult to use so we want to be careful. Therefore, let's discuss new features in discussions or issues before working on them. If you want to hack together a prototype to flesh out your idea before discussing that's cool too, just know that it's not likely to be merged as-is.
+
+## Development
+
+### Dev Setup
+
+```zsh
+git clone git@github.com:sofn-xyz/mailing.git
+cd mailing
+yarn
+yarn dev
+```
+
+`yarn dev` starts the cli in dev mode
+
+### Develop using a demo next app
+
+For development, you may want to have a demo next app that pulls in your changes. We've had success using yalc[https://github.com/wclr/yalc] and the following flow:
+
+- Register `mailing` as a local package with `yalc`: in the `packages/cli` directory, run `yalc add`.
+- Create a new next app in your projects directory by running `yarn create next-app --typescript` for a typescript app OR `yarn create next-app` for a js app
+- In the next app, run `yalc add mailing`, this creates `node_modules/mailing` and `node_modules/.bin/mailing`. (Note: `yarn link` does not add the bin file, which is why `yalc` is prefered)
+- Make your changes in `mailing`
+- Run `yarn build` in the `mailing` root directory to create new `dist` files
+- Run `yalc push` in the `mailing` root directory to both publish your changes (`yalc publish`) and pull them in to your next app (`yalc update`)
+
+### Run cypress tests for the preview server
+
+- Start a mailing preview server on localhost:3883
+- cd into packages/cli and run `yarn cypress run`
+
+### Cypress smoke tests
+
+The directory `scripts/e2e_test` contains smoke tests targeting supported frameworks that should be run before every public npm release. Each test uses the `yarn create` command to create new projects from their `create-*` starter kits and then runs the cypress cli tests contained in `packages/cli/cypress`. The frameworks currently covered by the tests are:
+
+- Next.js (typescript)
+- Next.js (javascript)
+
+**Initial test setup**
+
+- In the project root, run `asdf install` to install ruby 3.1.2
+- In the directory `scripts/e2e_test`, run `bundle install` to install the required ruby gems
+
+**Run the smoke tests**
+
+- In the directory `scripts/e2e_test`, run `bundle exec ruby e2e_test.rb`
+
+The script supports some options for running:
+
+- `--only=redwood_ts` to run the tests only on the specified framework
+- `--skip-build` to skip the yarn build part of the script, useful when debugging something unrelated to the build
+- `--rerun` to skip the framework install part of the script, useful when debugging something in your cypress tests unrelated to the build or the framework install. This will use the framework installs that are present in the runs/latest directory, i.e. the assumption is you've run a test against some framework(s) and you now want to re-running them after adjusting your cypress tests.
+
+**Cache the framework installs for faster runs**
+
+- In the directory `scripts/e2e_test`, run `bundle exec ruby e2e_test.rb --save-cache --skip-build` to save each framework install (before mailing is added) to the `cache` directory. Subsequent test runs will use the cache instead of running `yarn create` and `yarn install`, which will speed things up 🏎
