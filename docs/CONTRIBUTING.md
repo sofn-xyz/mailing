@@ -59,9 +59,11 @@ The directory `scripts/e2e_test` contains smoke tests targeting supported framew
 
 - In the directory `scripts/e2e_test`, run `bundle exec ruby e2e_test.rb`
 
+This will instantiate each framework, add mailing with yalc, and then run the cypress tests contained in `packages/cli/cypress` and the jest tests contained in `scripts/e2e_test/jest_tests`.
+
 The script supports some options for running:
 
-- `--only=redwood_ts` to run the tests only on the specified framework
+- `--only=redwood_ts` to run the tests only on the specified framework. See TestRunner::E2E_CONFIG for a list of frameworks that are currently supported.
 - `--skip-build` to skip the yarn build part of the script, useful when debugging something unrelated to the build
 - `--rerun` to skip the framework install part of the script, useful when debugging something in your cypress tests unrelated to the build or the framework install. This will use the framework installs that are present in the runs/latest directory, i.e. the assumption is you've run a test against some framework(s) and you now want to re-running them after adjusting your cypress tests.
 
