@@ -1,13 +1,7 @@
-module.exports = {
-  preset: "babel-jest",
-  testEnvironment: "node",
+export default {
+  clearMocks: true,
   transform: {
     "^.+\\.(js)$": "babel-jest",
   },
-  transformIgnorePatterns: [],
-  globals: {
-    "ts-jest": {
-      isolatedModules: true,
-    },
-  },
+  testTimeout: 60000,
 };

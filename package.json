@@ -21,7 +21,8 @@
     "watch": "preconstruct watch",
     "release": "yarn build && ./scripts/prepare-release && yarn changeset publish",
     "postinstall": "preconstruct dev",
-    "e2e": "cd scripts/e2e_test/ && bundle && bundle exec ruby e2e_test.rb"
+    "e2e": "cd scripts/e2e_test/ && bundle && bundle exec ruby e2e_test.rb",
+    "e2e:jest": "yarn jest --rootDir=scripts/e2e_test/jest_tests -c scripts/e2e_test/jest_tests/jest.config.js"
   },
   "license": "MIT",
   "workspaces": [
