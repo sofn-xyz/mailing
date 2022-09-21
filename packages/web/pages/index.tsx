@@ -321,7 +321,7 @@ const Home: NextPage = () => {
                         className="text-xl md:text-2xl leading-snug m-0 pb-2 mx-0 md:mx-auto lg:mx-0 max-w-sm md:max-w-xl lg:max-w-sm"
                         id={styles.sub}
                       >
-                        ●&nbsp;&nbsp;Templates in your codebase
+                        ●&nbsp;&nbsp;Super fast development
                       </p>
                       <p className="leading-snug">
                         Mailing installs in your node app so it’s easy to import
@@ -335,13 +335,12 @@ const Home: NextPage = () => {
                         className="text-xl md:text-2xl leading-snug m-0 pb-2 mx-0 md:mx-auto lg:mx-0 max-w-sm md:max-w-xl lg:max-w-sm"
                         id={styles.sub}
                       >
-                        ●&nbsp;&nbsp;Super fast development
+                        ●&nbsp;&nbsp;Templates in your codebase
                       </p>
                       <p className="leading-snug">
-                        Mailing’s built on Next. You can use it as a library to
-                        send emails directly from JS frameworks (Next.js,
-                        RedwoodJS, Remix). There’s also a REST API so you can
-                        use your templates from any stack.
+                        Use Mailing as a library to send emails directly from JS
+                        frameworks (Next.js, RedwoodJS, Remix). There’s also a
+                        REST API so you can use your templates from any stack.
                       </p>
                     </div>
                     <div className="md:basis-1/2 grow mx-0 md:w-full lg:basis-full md:pr-4 lg:px-0 md:mx-auto lg:mx-0 text-left lg:text-left pb-8 md:pb-12">
@@ -423,10 +422,10 @@ const Home: NextPage = () => {
                     Transparent & open source
                   </h1>
                   <p className="leading-snug m-0 py-8 md:py-10 mx-0 md:mx-auto lg:mx-0 md:max-w-[470px]">
-                    Mailing is an open source email development and analytics
-                    tool. Our source code is public on GitHub so anyone can read
-                    and review it. We want it to outlast us and enthusiastically
-                    welcome feedback and contributions from the community.
+                    Mailing is an open source email development tool. Our source
+                    code is public on GitHub so anyone can read and review it.
+                    We want it to outlast us and enthusiastically welcome
+                    feedback and contributions from the community.
                   </p>
                   <a
                     className="text-black leading-none px-4 h-9 inline-flex items-center rounded-2xl border-2 border-black hover:underline"
