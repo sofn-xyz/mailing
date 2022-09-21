@@ -87,7 +87,7 @@ private
   def yarn_add_jest_dependencies!
     puts "yarn add'ing dependencies required for jest tests"
     Dir.chdir(@root_dir) do
-      system_quiet("yarn add --dev jest @babel/core @babel/preset-env")
+      system_quiet("yarn add --dev jest")
     end
   end
   
