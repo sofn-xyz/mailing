@@ -272,13 +272,12 @@ const Home: NextPage = () => {
           <div className="bg-blue-300 py-24 md:py-44">
             <div className="px-6 md:px-12">
               <div className="max-w-screen-xl mx-auto">
-                <h1 className="text-5xl md:text-6xl max-w-lg md:max-w-3xl text-left md:text-center lg:text-left lg:mb-24">
+                <h1 className="text-5xl md:text-6xl md:mx-auto lg:mx-0 max-w-lg md:max-w-3xl text-left md:text-center lg:text-left lg:mb-24">
                   A modern stack for rapid email development
                 </h1>
                 <div className="flex flex-col-reverse lg:flex-row justify-between md:items-center">
-                  <div>
-                    ;
-                    <div className="sm:max-w-[440px] mx-0 md:mx-auto lg:mx-0 lg:max-w-[500px] text-left md:text-center lg:text-left pb-8 md:pb-12">
+                  <div className="flex flex-row flex-wrap items-stretch justify-items-stretch lg:max-w-[500px]">
+                    <div className="md:basis-1/2 grow mx-0 md:w-full lg:basis-full md:pr-4 lg:px-0 md:mx-auto lg:mx-0 text-left lg:text-left pb-8 md:pb-12">
                       <p
                         className="text-xl md:text-2xl leading-snug m-0 pb-2 mx-0 md:mx-auto lg:mx-0 max-w-sm md:max-w-xl lg:max-w-sm"
                         id={styles.sub}
@@ -292,7 +291,7 @@ const Home: NextPage = () => {
                         reload.
                       </p>
                     </div>
-                    <div className="sm:max-w-[440px] mx-0 md:mx-auto lg:mx-0 lg:max-w-[500px] text-left md:text-center lg:text-left pb-8 md:pb-12">
+                    <div className="md:basis-1/2 grow mx-0 md:w-full lg:basis-full md:pl-4 lg:px-0 md:mx-auto lg:mx-0 text-left lg:text-left pb-8 md:pb-12">
                       <p
                         className="text-xl md:text-2xl leading-snug m-0 pb-2 mx-0 md:mx-auto lg:mx-0 max-w-sm md:max-w-xl lg:max-w-sm"
                         id={styles.sub}
@@ -306,7 +305,7 @@ const Home: NextPage = () => {
                         use your templates from any stack.
                       </p>
                     </div>
-                    <div className="sm:max-w-[440px] mx-0 md:mx-auto lg:mx-0 lg:max-w-[500px] text-left md:text-center lg:text-left pb-8 md:pb-12">
+                    <div className="md:basis-1/2 grow mx-0 md:w-full lg:basis-full md:pr-4 lg:px-0 md:mx-auto lg:mx-0 text-left lg:text-left pb-8 md:pb-12">
                       <p
                         className="text-xl md:text-2xl leading-snug m-0 pb-2 mx-0 md:mx-auto lg:mx-0 max-w-sm md:max-w-xl lg:max-w-sm"
                         id={styles.sub}
@@ -323,7 +322,7 @@ const Home: NextPage = () => {
                         good across clients.
                       </p>
                     </div>
-                    <div className="sm:max-w-[440px] mx-0 md:mx-auto lg:mx-0 lg:max-w-[500px] text-left md:text-center lg:text-left pb-8 md:pb-12">
+                    <div className="md:basis-1/2 grow mx-0 md:w-full lg:basis-full md:pl-4 lg:px-0 md:mx-auto lg:mx-0 text-left lg:text-left pb-8 md:pb-12">
                       <p
                         className="text-xl md:text-2xl leading-snug m-0 pb-2 mx-0 md:mx-auto lg:mx-0 max-w-sm md:max-w-xl lg:max-w-sm"
                         id={styles.sub}
@@ -338,11 +337,11 @@ const Home: NextPage = () => {
                       </p>
                     </div>
                   </div>
-                  <div className="mt-10 lg:mt-0 sm:mx-0 md:mx-auto lg:ml-6 lg:mr-0">
+                  <div className="mt-12 md:mt-20 lg:mt-0 sm:mx-0 md:mx-auto mb-11 sm:mb-16 lg:ml-8 lg:mr-0">
                     <Image
                       width="640"
-                      height="305"
-                      src="/live-reload@2x.gif"
+                      height="360"
+                      src="/live-reload-alt@2x.gif"
                       alt="Mailing live reload"
                     />
                   </div>
@@ -350,13 +349,45 @@ const Home: NextPage = () => {
               </div>
             </div>
           </div>
+          <div className="px-6 md:px-12 py-24 md:py-44">
+            <div className="max-w-5xl mx-auto">
+              <div className="flex flex-col lg:flex-row justify-between md:items-center">
+                <div className="mt-10 lg:mt-0 sm:mx-0 md:mx-auto lg:mr-28 lg:ml-0">
+                  <Image
+                    width="400"
+                    height="387"
+                    src="/opensource@2x.png"
+                    alt="Mailing open source"
+                  />
+                </div>
+                <div className="max-w-xl text-left md:text-center lg:text-left">
+                  <h1 className="text-5xl md:text-6xl mt-8 lg:mt-0 max-w-sm md:max-w-lg text-left md:text-center lg:text-left md:mx-auto">
+                    Transparent & open source
+                  </h1>
+                  <p className="leading-snug m-0 py-8 md:py-10 mx-0 md:mx-auto lg:mx-0 md:max-w-[470px]">
+                    Mailing is an open source email development and analytics
+                    tool. Our source code is public on GitHub so anyone can read
+                    and review it. We want it to outlast us and enthusiastically
+                    welcome feedback and contributions from the community.
+                  </p>
+                  <a
+                    className="text-black leading-none px-4 h-9 inline-flex items-center rounded-2xl border-2 border-black hover:underline"
+                    href="https://github.com/sofn-xyz/mailing"
+                    target="blank"
+                  >
+                    View on GitHub
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
         </main>
         <footer>
-          <div className="py-6 text-center">
+          <div className="bg-neutral-900 py-6 text-center">
             <Image
               width="25.6"
               height="32"
-              src="/mailing-icon.svg"
+              src="/mailing-icon-white.svg"
               alt="Mailing icon"
             />
           </div>
