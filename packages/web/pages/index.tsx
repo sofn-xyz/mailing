@@ -104,10 +104,10 @@ const Home: NextPage = () => {
                     Build emails in React, send from anywhere
                   </h1>
                   <p
-                    className="text-2xl leading-snug m-0 pt-4 pb-8 mx-0 md:mx-auto lg:mx-0 max-w-sm md:max-w-xl lg:max-w-sm"
+                    className="text-2xl leading-snug m-0 pt-4 pb-8 mx-0 md:mx-auto lg:mx-0"
                     id={styles.sub}
                   >
-                    An open source email development and analytics tool
+                    An open source email development tool
                   </p>
                   <div id={styles.cta}>
                     <a
@@ -164,6 +164,7 @@ const Home: NextPage = () => {
                           className="text-xs leading-none hover:underline"
                           href="https://twitter.com/rauchg"
                           target="blank"
+                          rel="noopener"
                         >
                           @rauchg
                         </a>
@@ -353,7 +354,7 @@ const Home: NextPage = () => {
                       <p className="leading-snug">
                         Mailing combines the flexibility of React with the
                         efficiency of{" "}
-                        <a href="http://mjml.io" target="blank">
+                        <a href="http://mjml.io" target="blank" rel="noopener">
                           MJML
                         </a>
                         , so that it’s actually easy to make emails that look
@@ -371,7 +372,9 @@ const Home: NextPage = () => {
                         Deploy the mailing preview server to share links with
                         your team and clients. Easy self-hosting means that
                         you’ll always have access and ownership of your precious
-                        data.
+                        data.{" "}
+                        <a href="https://demo.mailing.run">Here’s a demo</a>{" "}
+                        with the default templates.
                       </p>
                     </div>
                   </div>
