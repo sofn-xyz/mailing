@@ -46,6 +46,7 @@
     "@tailwindcss/line-clamp": "^0.4.2",
     "@types/fs-extra": "^9.0.13",
     "@types/html-minifier-terser": "^6.1.0",
+    "@types/jsdom": "^20.0.0",
     "@types/lodash": "^4.14.184",
     "@types/mjml": "^4.7.0",
     "@types/mjml-react": "^2.0.4",
