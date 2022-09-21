@@ -5,6 +5,7 @@ import { defaults } from "../util/config";
 import { buildHandler } from "../util/buildHandler";
 import { execSync } from "child_process";
 import { resolve } from "path";
+import * as prettier from "prettier";
 import assert from "node:assert";
 
 export type DeployArgs = ArgumentsCamelCase<{
@@ -33,7 +34,7 @@ const VERCEL_CONFIG = {
 export const handler = buildHandler(
   async (argv: DeployArgs) => {
     let exitCode = 0;
-    log("Deploying your mailing preview server to vercel...");
+    log("deploying your mailing preview server to vercel");
 
     // write vercel config if it's not there
     // don't overwrite so users can customize
@@ -41,8 +42,11 @@ export const handler = buildHandler(
       log(
         `writing maililng.vercel.json config file to ${VERCEL_CONFIG_PATH}...`
       );
-      writeFileSync(resolve(VERCEL_CONFIG_PATH), JSON.stringify(VERCEL_CONFIG));
-      logPlain("done");
+      const prettyConfig = prettier.format(JSON.stringify(VERCEL_CONFIG), {
+        parser: "json",
+        printWidth: 0,
+      });
+      writeFileSync(resolve(VERCEL_CONFIG_PATH), prettyConfig);
     }
 
     try {
@@ -58,7 +62,7 @@ export const handler = buildHandler(
 
     if (exitCode) {
       error(
-        "Please upgrade your vercel CLI to version 28+ https://vercel.com/docs/cli#updating-vercel-cli"
+        "please upgrade your vercel CLI to version 28+ https://vercel.com/docs/cli#updating-vercel-cli"
       );
       process.exit(exitCode);
     }
