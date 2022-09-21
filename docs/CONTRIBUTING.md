@@ -43,12 +43,18 @@ For development, you may want to have a demo next app that pulls in your changes
 - Start a mailing preview server on localhost:3883
 - cd into packages/cli and run `yarn cypress run`
 
-### Cypress smoke tests
+## Smoke tests
+The directory `scripts/e2e_test` contains smoke tests targeting supported frameworks that should be run before every public npm release. Each test uses the `yarn create` command to create new projects from their `create-*` starter kits and then runs the cypress cli tests contained in `packages/cli/cypress` and the jest tests contained in `scripts/e2e_test/jest_tests`. 
 
-The directory `scripts/e2e_test` contains smoke tests targeting supported frameworks that should be run before every public npm release. Each test uses the `yarn create` command to create new projects from their `create-*` starter kits and then runs the cypress cli tests contained in `packages/cli/cypress`. The frameworks currently covered by the tests are:
-
-- Next.js (typescript)
-- Next.js (javascript)
+The frameworks currently covered by the tests are:
+- standalone (no framework)
+- turbo (Turbo monorepo)
+- next_ts (Next.js with Typescript)
+- next_js (Next.js without Typescript)
+- redwood_ts (Redwood with Typescript)
+- redwood_js (Redwood without Typescript)
+- remix_ts (Remix with Typescript)
+- remid_js (Remix without Typescript)
 
 **Initial test setup**
 
@@ -57,7 +63,7 @@ The directory `scripts/e2e_test` contains smoke tests targeting supported framew
 
 **Run the smoke tests**
 
-- In the directory `scripts/e2e_test`, run `bundle exec ruby e2e_test.rb`
+- In the project root, run `yarn e2e` to run the full smoke test suite, including cypress and jest tests.
 
 This will instantiate each framework, add mailing with yalc, and then run the cypress tests contained in `packages/cli/cypress` and the jest tests contained in `scripts/e2e_test/jest_tests`.
 
@@ -67,6 +73,9 @@ The script supports some options for running:
 - `--skip-build` to skip the yarn build part of the script, useful when debugging something unrelated to the build
 - `--rerun` to skip the framework install part of the script, useful when debugging something in your cypress tests unrelated to the build or the framework install. This will use the framework installs that are present in the runs/latest directory, i.e. the assumption is you've run a test against some framework(s) and you now want to re-running them after adjusting your cypress tests.
 
+** Embedded jest tests **
+The jest tests in `scripts/e2e_test/jest_tests` are copied into the directory where the framework is installed and run.  Before testing them in the framework install context, you will want to make sure they pass on the latest build by running `yarn build` and then `yarn e2e:jest` in the mailing project root.
+
 **Cache the framework installs for faster runs**
 
-- In the directory `scripts/e2e_test`, run `bundle exec ruby e2e_test.rb --save-cache --skip-build` to save each framework install (before mailing is added) to the `cache` directory. Subsequent test runs will use the cache instead of running `yarn create` and `yarn install`, which will speed things up 🏎
+- Use the `--save-cache` flag to save each framework install (before mailing is added) to the `cache` directory. Subsequent test runs will use the cache instead of running `yarn create` and `yarn install`, which will speed things up 🏎  If you need to reset the cache, e.g. if you want to test a newer version of the framework or if the framework install process changes, you can delete the cache directory or the subdirectory containing the specific framework you are targeting.
