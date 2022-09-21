@@ -7,8 +7,19 @@ import { useInView } from "react-intersection-observer";
 import styles from "../styles/Home.module.css";
 import { useEffect, useState } from "react";
 
+const IN_VIEW_OPTIONS = {
+  threshold: 0.5,
+  triggerOnce: true,
+  fallbackInView: true,
+};
+
 const Home: NextPage = () => {
-  const [reloadImageRef, reloadImageInView] = useInView();
+  const [osImageRef, osImageInView] = useInView(IN_VIEW_OPTIONS);
+  const [reloadImageRef, reloadImageInView] = useInView(IN_VIEW_OPTIONS);
+  const [testimonialsRef, testimonialsInView] = useInView({
+    ...IN_VIEW_OPTIONS,
+    threshold: 0.2,
+  });
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -123,7 +134,16 @@ const Home: NextPage = () => {
               </div>
             </div>
           </div>
-          <div className="px-6 md:px-12 pt-16 sm:pt-32 pb-16 sm:pb-32">
+          <div
+            ref={testimonialsRef}
+            className={cx(
+              "px-6 md:px-12 pt-16 sm:pt-32 pb-16 sm:pb-32 transition-all duration-700",
+              {
+                "opacity-0 translate-y-12": mounted && !testimonialsInView,
+                "opacity-1 translate-y-0": testimonialsInView,
+              }
+            )}
+          >
             <h2 className="text-left sm:text-center text-4xl sm:text-5xl mb-8 sm:mb-16">
               Kind words from the internet
             </h2>
@@ -359,10 +379,11 @@ const Home: NextPage = () => {
                   <div
                     ref={reloadImageRef}
                     className={cx(
-                      "mt-12 md:mt-20 lg:mt-0 sm:mx-0 md:mx-auto mb-11 sm:mb-16 lg:ml-8 lg:mr-0 transition-opacity duration-500",
+                      "mt-12 md:mt-20 lg:mt-0 sm:mx-0 md:mx-auto mb-11 sm:mb-16 lg:ml-8 lg:mr-0 transition-all duration-700",
                       {
-                        "opacity-0": mounted && !reloadImageInView,
-                        "opacity-1": reloadImageInView,
+                        "opacity-0 scale-95 translate-x-8":
+                          mounted && !reloadImageInView,
+                        "opacity-1 scale-100 translate-x-0": reloadImageInView,
                       }
                     )}
                   >
@@ -380,7 +401,16 @@ const Home: NextPage = () => {
           <div className="px-6 md:px-12 py-24 md:py-44">
             <div className="max-w-5xl mx-auto">
               <div className="flex flex-col lg:flex-row justify-between md:items-center">
-                <div className="mt-10 lg:mt-0 sm:mx-0 md:mx-auto lg:mr-28 lg:ml-0">
+                <div
+                  ref={osImageRef}
+                  className={cx(
+                    "mt-10 lg:mt-0 sm:mx-0 md:mx-auto lg:mr-28 lg:ml-0 transition-all duration-700",
+                    {
+                      "opacity-0": mounted && !osImageInView,
+                      "opacity-1": osImageInView,
+                    }
+                  )}
+                >
                   <Image
                     width="400"
                     height="387"
