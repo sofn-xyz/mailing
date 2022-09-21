@@ -43,6 +43,9 @@ For development, you may want to have a demo next app that pulls in your changes
 - Start a mailing preview server on localhost:3883
 - cd into packages/cli and run `yarn cypress run`
 
+### Run embedded jest tests for the preview server
+During the smoke test process described below, the jest tests in `scripts/e2e_test/jest_tests` are copied into the directory where each target framework is installed and run.  Before testing them in the framework install context, however, you will want to make sure they pass on the latest build by running `yarn build` and then `yarn e2e:jest` in the mailing project root.
+
 ## Smoke tests
 The directory `scripts/e2e_test` contains smoke tests targeting supported frameworks that should be run before every public npm release. Each test uses the `yarn create` command to create new projects from their `create-*` starter kits and then runs the cypress cli tests contained in `packages/cli/cypress` and the jest tests contained in `scripts/e2e_test/jest_tests`. 
 
@@ -72,9 +75,6 @@ The script supports some options for running:
 - `--only=redwood_ts` to run the tests only on the specified framework. See TestRunner::E2E_CONFIG for a list of frameworks that are currently supported.
 - `--skip-build` to skip the yarn build part of the script, useful when debugging something unrelated to the build
 - `--rerun` to skip the framework install part of the script, useful when debugging something in your cypress tests unrelated to the build or the framework install. This will use the framework installs that are present in the runs/latest directory, i.e. the assumption is you've run a test against some framework(s) and you now want to re-running them after adjusting your cypress tests.
-
-** Embedded jest tests **
-The jest tests in `scripts/e2e_test/jest_tests` are copied into the directory where the framework is installed and run.  Before testing them in the framework install context, you will want to make sure they pass on the latest build by running `yarn build` and then `yarn e2e:jest` in the mailing project root.
 
 **Cache the framework installs for faster runs**
 
