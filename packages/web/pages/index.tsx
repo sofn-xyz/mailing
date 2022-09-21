@@ -1,9 +1,20 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
+import cx from "classnames";
+import { useInView } from "react-intersection-observer";
+
 import styles from "../styles/Home.module.css";
+import { useEffect, useState } from "react";
 
 const Home: NextPage = () => {
+  const [reloadImageRef, reloadImageInView] = useInView();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  });
+
   return (
     <>
       <div className="w-full">
@@ -337,7 +348,16 @@ const Home: NextPage = () => {
                       </p>
                     </div>
                   </div>
-                  <div className="mt-12 md:mt-20 lg:mt-0 sm:mx-0 md:mx-auto mb-11 sm:mb-16 lg:ml-8 lg:mr-0">
+                  <div
+                    ref={reloadImageRef}
+                    className={cx(
+                      "mt-12 md:mt-20 lg:mt-0 sm:mx-0 md:mx-auto mb-11 sm:mb-16 lg:ml-8 lg:mr-0 transition-opacity duration-500",
+                      {
+                        "opacity-0": mounted && !reloadImageInView,
+                        "opacity-1": reloadImageInView,
+                      }
+                    )}
+                  >
                     <Image
                       width="640"
                       height="360"
