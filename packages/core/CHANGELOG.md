@@ -1,5 +1,11 @@
 # mailing-core
 
+## 0.8.1
+
+### Patch Changes
+
+- d665b9c: bugfix for mailing server build
+
 ## 0.8.0
 
 ### Minor Changes

@@ -1,5 +1,11 @@
 # web
 
+## 0.4.1
+
+### Patch Changes
+
+- d665b9c: bugfix for mailing server build
+
 ## 0.4.0
 
 ### Minor Changes
