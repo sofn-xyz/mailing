@@ -86,7 +86,10 @@ const Home: NextPage = () => {
               </div>
               <div className="flex flex-col lg:flex-row justify-between md:items-center pt-6 pb-12">
                 <div className="lg:max-w-[540px] text-left md:text-center lg:text-left">
-                  <h1 className="text-5xl md:text-6xl max-w-lg md:max-w-2xl text-left md:text-center lg:text-left md:mx-auto">
+                  <h1
+                    id={styles.headline}
+                    className="text-5xl md:text-6xl max-w-lg md:max-w-2xl text-left md:text-center lg:text-left md:mx-auto"
+                  >
                     Build emails in React, send from anywhere
                   </h1>
                   <p
@@ -95,15 +98,20 @@ const Home: NextPage = () => {
                   >
                     An open source email development and analytics tool
                   </p>
-                  <a
-                    className="bg-blue-400 text-black text-xl leading-none px-8 h-16 inline-flex items-center rounded-2xl hover:underline mx-auto"
-                    href="https://github.com/sofn-xyz/mailing"
-                    target="blank"
-                  >
-                    Get Started on GitHub
-                  </a>
+                  <div id={styles.cta}>
+                    <a
+                      className="bg-blue-400 text-black text-xl leading-none px-8 h-16 inline-flex items-center rounded-2xl hover:underline mx-auto"
+                      href="https://github.com/sofn-xyz/mailing"
+                      target="blank"
+                    >
+                      Get Started on GitHub
+                    </a>
+                  </div>
                 </div>
-                <div className="hidden md:block mt-10 lg:mt-0 sm:mx-0 md:mx-auto lg:ml-6 lg:mr-0">
+                <div
+                  className="hidden md:block mt-10 lg:mt-0 sm:mx-0 md:mx-auto lg:ml-6 lg:mr-0"
+                  id={styles.img}
+                >
                   <Image
                     className="rounded-2xl"
                     width="640"
