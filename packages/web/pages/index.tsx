@@ -116,7 +116,7 @@ const Home: NextPage = () => {
                     className="rounded-2xl"
                     width="640"
                     height="427"
-                    src="/view-mode@2x.gif"
+                    src="/view-mode-slow@2x.gif"
                     alt="Mailing view modes"
                   />
                 </div>
