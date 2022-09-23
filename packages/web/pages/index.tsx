@@ -24,7 +24,7 @@ const Home: NextPage = () => {
 
   useEffect(() => {
     setMounted(true);
-  });
+  }, []);
 
   return (
     <>
@@ -120,16 +120,34 @@ const Home: NextPage = () => {
                   </div>
                 </div>
                 <div
-                  className="hidden md:block mt-10 lg:mt-0 sm:mx-0 md:mx-auto lg:ml-6 lg:mr-0"
+                  className="relative hidden md:block mt-10 lg:mt-0 sm:mx-0 md:mx-auto lg:ml-6 lg:mr-0"
                   id={styles.img}
                 >
                   <Image
                     className="rounded-2xl"
                     width="640"
                     height="427"
-                    src="/view-mode-slow@2x.gif"
-                    alt="Mailing view modes"
+                    src="/view-mode-01@2x.jpg"
+                    alt="Mailing view mode desktop"
                   />
+                  <div className={`${styles.img1} absolute top-0`}>
+                    <Image
+                      className="rounded-2xl"
+                      width="640"
+                      height="427"
+                      src="/view-mode-02@2x.jpg"
+                      alt="Mailing view mode mobile"
+                    />
+                  </div>
+                  <div className={`${styles.img2} absolute top-0`}>
+                    <Image
+                      className="rounded-2xl"
+                      width="640"
+                      height="427"
+                      src="/view-mode-03@2x.jpg"
+                      alt="Mailing view mode HTML"
+                    />
+                  </div>
                 </div>
               </div>
             </div>

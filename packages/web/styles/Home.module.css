@@ -51,7 +51,6 @@
   animation-delay: 1.8s;
   opacity: 0;
   animation-fill-mode: forwards;
-  opacity: 0;
 }
 
 @keyframes ctaEnter {
@@ -69,11 +68,9 @@
 }
 
 #img {
-  animation: imgEnter 1.4s cubic-bezier(0.4, 0, 0.6, 1);
-  animation-delay: 3s;
+  animation: imgEnter 1s cubic-bezier(0.4, 0, 0.6, 1);
   opacity: 0;
   animation-fill-mode: forwards;
-  opacity: 0;
 }
 
 @keyframes imgEnter {
@@ -87,5 +84,38 @@
   100% {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+.img1,
+.img2,
+.img3 {
+  opacity: 0;
+  animation: img12Enter 9s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.img1 {
+  animation-delay: 3s;
+}
+
+.img2 {
+  animation-delay: 6s;
+}
+
+@keyframes img12Enter {
+  0% {
+    opacity: 0;
+  }
+  4% {
+    opacity: 1;
+  }
+  33.33% {
+    opacity: 1;
+  }
+  37.33% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
   }
 }
