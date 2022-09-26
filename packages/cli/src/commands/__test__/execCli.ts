@@ -18,9 +18,11 @@ export async function execCli(command: string, opts?: { debug: boolean }) {
     child.on("error", reject);
     child.on("exit", (code) => {
       if (code) {
-        console.log(out);
-        console.error(err);
-        reject(new Error(`${command} exited with code ${code}`));
+        if (opts?.debug) {
+          console.log(out);
+          console.error(err);
+        }
+        reject(new Error(err));
       }
       resolve(out);
     });
