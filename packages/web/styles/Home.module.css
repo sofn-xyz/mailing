@@ -2,6 +2,7 @@
   background: url(/index-bg@2x.jpg);
   background-position: center right;
   background-size: cover;
+  min-height: calc(100vh - 150px);
 }
 
 #headline {
