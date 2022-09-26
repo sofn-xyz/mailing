@@ -234,7 +234,7 @@ With the REST API, you can use mailing for email templating even if most of your
 
 <br/>
 
-## ●&nbsp;&nbsp;&nbsp;Telemetry
+## ●&nbsp;&nbsp;&nbsp;Deployment
 
 The mailing preview server has a super power: it’s easy to deploy a fast production version when you want to share templates with your team or clients. You can also hit the REST API on your deployed mailing server to generate HTML from your templates.
 
