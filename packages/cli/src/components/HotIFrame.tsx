@@ -54,7 +54,6 @@ const HotIFrame: React.FC<HotIFrameProps> = ({
       <style jsx>{`
         .frame {
           margin: auto;
-          background: white;
         }
         .mobile.frame {
           padding: 64px 16px 74px;
