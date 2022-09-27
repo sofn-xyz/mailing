@@ -1,4 +1,4 @@
-import { MjmlButton } from "@faire/mjml-react";
+import { MjmlButton } from "mjml-react";
 import { black, gold, grayLight } from "./theme";
 import { leadingTight, textBase, borderBase } from "./theme";
 

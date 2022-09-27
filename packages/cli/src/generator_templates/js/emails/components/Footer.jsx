@@ -1,4 +1,4 @@
-import { MjmlSection, MjmlColumn, MjmlText } from "@faire/mjml-react";
+import { MjmlSection, MjmlColumn, MjmlText } from "mjml-react";
 import { grayDark, textSm } from "./theme";
 
 export default function Footer() {

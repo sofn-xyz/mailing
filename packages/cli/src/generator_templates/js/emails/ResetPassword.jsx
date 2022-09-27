@@ -15,7 +15,7 @@ import {
   MjmlText,
   MjmlSpacer,
   MjmlDivider,
-} from "@faire/mjml-react";
+} from "mjml-react";
 
 const ResetPassword = ({ name, body, ctaText }) => {
   return (

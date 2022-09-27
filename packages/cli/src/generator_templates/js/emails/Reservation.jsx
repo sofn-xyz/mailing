@@ -17,7 +17,7 @@ import {
   MjmlText,
   MjmlSpacer,
   MjmlDivider,
-} from "@faire/mjml-react";
+} from "mjml-react";
 
 const Reservation = ({ headline, body, bulletedList, ctaText }) => {
   return (
