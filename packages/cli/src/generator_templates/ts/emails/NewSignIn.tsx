@@ -17,7 +17,7 @@ import {
   MjmlText,
   MjmlSpacer,
   MjmlDivider,
-} from "@faire/mjml-react";
+} from "mjml-react";
 
 type NewSignInProps = {
   name: string;

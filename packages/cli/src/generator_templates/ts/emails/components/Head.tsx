@@ -6,7 +6,7 @@ import {
   MjmlAll,
   MjmlStyle,
   MjmlRaw,
-} from "@faire/mjml-react";
+} from "mjml-react";
 import { black, grayDark } from "./theme";
 
 type HeadProps = { children?: ReactElement };

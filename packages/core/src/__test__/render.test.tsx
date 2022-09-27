@@ -1,5 +1,5 @@
 import { render } from "../index";
-import { Mjml, MjmlBody, MjmlRaw } from "@faire/mjml-react";
+import { Mjml, MjmlBody, MjmlRaw } from "mjml-react";
 
 describe("index render", () => {
   it("takes an MJML react component and renders HTML", () => {
