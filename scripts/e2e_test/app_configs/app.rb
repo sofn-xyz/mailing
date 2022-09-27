@@ -3,7 +3,7 @@ require 'net/http'
 class App
   CACHE_DIR = File.expand_path(__dir__ + '/../cache')
 
-  attr_reader :io
+  attr_reader :io, :root_dir
 
   def initialize(name, root_dir, opts)
     @name = name
@@ -18,6 +18,7 @@ class App
     use_cache do
       write_dot_env!
       yarn_create!
+      yarn_add_jest_dependencies!
       verify_package_json_exists!
     end
 
@@ -80,6 +81,13 @@ private
 
     Dir.chdir(@root_dir) do
       in_subdir(yalc_command)
+    end
+  end
+
+  def yarn_add_jest_dependencies!
+    puts "yarn add'ing dependencies required for jest tests"
+    Dir.chdir(@root_dir) do
+      system_quiet("yarn add --dev jest @babel/preset-env")
     end
   end
   

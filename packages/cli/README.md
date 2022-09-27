@@ -64,18 +64,23 @@ npm install --save react react-dom
 
 ```
 emails
-├── TextEmail.tsx // a simple example email template
-├── Welcome.tsx // a complicated example email template
+├── AccountCreated.tsx
+├── NewSignIn.tsx
+├── Reservation.tsx
+├── ResetPassword.tsx
 ├── components // shared components go in here
 │   ├── BulletedList.tsx
+│   ├── ButtonPrimary.tsx
 │   ├── Footer.tsx
 │   ├── Head.tsx
 │   ├── Header.tsx
 │   └── theme.ts
 ├── index.ts // this exports sendMail and is where your SMTP config goes
 └── previews // use previews to develop and check templates
-    ├── TextEmail.tsx
-    └── Welcome.tsx
+    ├── AccountCreated.tsx
+    ├── NewSignIn.tsx
+    ├── Reservation.tsx
+    └── ResetPassword.tsx
 ```
 
 3. <a id="configure-transport"></a>Configure your email transport and `defaultFrom` in `emails/index.ts`. It defaults to nodemailer's SMTP transport, but you can read about others [here](https://nodemailer.com/transports/).
@@ -97,14 +102,14 @@ const transport = nodemailer.createTransport({
 
 ```tsx
 import { sendMail } from "emails";
-import Welcome from "emails/Welcome";
+import AccountCreated from "emails/AccountCreated";
 
 sendMail({
   subject: "My First Email",
   to: "tester@example.com",
   cc: "tester+cc@example.com",
   bcc: ["tester+bcc@example.com", "tester+bcc2@example.com"],
-  component: <Welcome firstName="Amelita" />,
+  component: <AccountCreated firstName="Amelita" />,
 });
 ```
 
@@ -114,49 +119,29 @@ sendMail({
 
 Mailing includes a development mode for working on your emails. Running `mailing` in dev will boot the preview server on localhost:3883 and show you all previews in `emails/previews`. The previews live reload when files in the emails directory change. Previews are just functions that return one of your emails loaded up with props. We recommend grouping all previews for the same email template in a file at `emails/previews/TemplateName.tsx`.
 
-For example, here's `emails/previews/Welcome.tsx`:
+For example, here's `emails/previews/AccountCreated.tsx`:
 
 ```tsx
-import Welcome from "../Welcome";
+import AccountCreated from "../AccountCreated";
 
-export function toAmelita() {
-  return <Welcome name="Amelita" />;
+export function accountCreated() {
+  return <AccountCreated name="Amelita" />;
 }
 ```
 
-It will show up in the index:
+On the left, you'll see a list of all of your emails. On the right, you'll see an individual email preview with a mobile/desktop/HTML toggle and live reload as you edit:
 
-<img width="600" alt="Mailing index" src="https://user-images.githubusercontent.com/609038/183299565-184b3919-6448-40e9-b585-c39a150f370d.jpg">
+<img width="600" alt="Mailing desktop preview" src="https://user-images.githubusercontent.com/609038/188324943-729009f0-c6f2-45a5-87b7-ae6338d7c45f.jpg">
 
-Clicking through shows you the email with a mobile/desktop toggle and live reload as you edit:
+When your email is nice, send it to yourself or your QA tool of choice for final testing (we like [Litmus](<[url](https://www.litmus.com)>)):
 
-<img width="600" alt="Mailing desktop preview" src="https://user-images.githubusercontent.com/609038/183301497-4f0cd257-bb49-44c0-8106-2e717c430cb7.jpg">
-
-When it's nice, send it to yourself or your QA tool of choice for final testing (we like [Litmus](<[url](https://www.litmus.com)>)):
-
-<img width="600" alt="Mailing mobile preview" src="https://user-images.githubusercontent.com/609038/183301531-0b111b5b-10d7-4dc3-b02d-814cd35fd2d5.jpg">
+<img width="600" alt="Mailing mobile preview" src="https://user-images.githubusercontent.com/609038/188352419-8e1be23a-fa64-4e61-9e36-ecac8d882959.jpg">
 
 <br/>
 
 ## ●&nbsp;&nbsp;Templates
 
-We ship with two templates to help you get started. We recommend using these as starting points and modifying them to fit your use case.
-
-<br/>
-
-**Welcome Template** [(link)](https://demo.mailing.run/previews/Welcome/toAmelita)
-
-This template showcases a handful of MJML and Mailing features, including a responsive hero image, bulleted list, and custom Google font with fallbacks.
-
-<img width="600" alt="Mailing Welcome email template" src="https://user-images.githubusercontent.com/609038/183301545-9aa2caba-0a5c-4d06-b5e3-bd515adc0110.jpg">
-
-<br/>
-
-**Transactional Template** [(link)](https://demo.mailing.run/previews/TextEmail/newSignIn)
-
-This is a simpler template for text-based transactional emails.
-
-<img width="600" alt="Mailing text email template" src="https://user-images.githubusercontent.com/609038/183301563-893a99f9-2ac3-4da0-af7d-ef5003c73383.jpg">
+We ship with a few templates to help you get started. These get added to your emails directory upon initialization with `mailing init`. We recommend using these as starting points and modifying them to fit your use case. Check them out [here](https://demo.mailing.run).
 
 <br/>
 
@@ -241,11 +226,11 @@ Append --help to your CLI command for a full list of supported options. Any of t
 
 With the REST API, you can use mailing for email templating even if most of your app is not written in TypeScript or JavaScript.
 
-`GET /api/render` takes a template name and props and returns your rendered HTML ready to be sent. [Example](https://demo.mailing.run/api/render?templateName=Welcome&props=%7B%22name%22%3A%22peter%22%7D)
+`GET /api/render` takes a template name and props and returns your rendered HTML ready to be sent. [Example](https://demo.mailing.run/api/render?templateName=AccountCreated&props=%7B%22name%22%3A%22peter%22%7D)
 
 `GET /api/previews` returns the list of previews. [Example](https://demo.mailing.run/api/previews)
 
-`GET /api/previews/[previewClass]/[previewFunction]` returns the rendered preview. [Example](https://demo.mailing.run/api/previews)
+`GET /api/previews/[previewClass]/[previewFunction]` returns the rendered preview and data for `/previews/[previewClass]/[previewFunction]`. [Example](https://demo.mailing.run/api/previews)
 
 <br/>
 
@@ -259,55 +244,4 @@ To help understand how people are using mailing so that we can prioritize effort
 
 Want to improve Mailing? Incredible. Try it out, file an issue or open a PR!
 
-### Setup
-
-```zsh
-git clone git@github.com:sofn-xyz/mailing.git
-cd mailing
-yarn
-yarn dev
-```
-
-`yarn dev` starts the cli in dev mode
-
-### Develop using a demo next app
-
-For development, you may want to have a demo next app that pulls in your changes. We've had success using yalc[https://github.com/wclr/yalc] and the following flow:
-
-- Register `mailing` as a local package with `yalc`: in the `packages/cli` directory, run `yalc add`.
-- Create a new next app in your projects directory by running `yarn create next-app --typescript` for a typescript app OR `yarn create next-app` for a js app
-- In the next app, run `yalc add mailing`, this creates `node_modules/mailing` and `node_modules/.bin/mailing`. (Note: `yarn link` does not add the bin file, which is why `yalc` is prefered)
-- Make your changes in `mailing`
-- Run `yarn build` in the `mailing` root directory to create new `dist` files
-- Run `yalc push` in the `mailing` root directory to both publish your changes (`yalc publish`) and pull them in to your next app (`yalc update`)
-
-### Run cypress tests for the preview server
-
-- Start a mailing preview server on localhost:3883
-- cd into packages/cli and run `yarn cypress run`
-
-### Cypress smoke tests
-
-The directory `scripts/e2e_test` contains smoke tests targeting supported frameworks that should be run before every public npm release. Each test uses the `yarn create` command to create new projects from their `create-*` starter kits and then runs the cypress cli tests contained in `packages/cli/cypress`. The frameworks currently covered by the tests are:
-
-- Next.js (typescript)
-- Next.js (javascript)
-
-**Initial test setup**
-
-- In the project root, run `asdf install` to install ruby 3.1.2
-- In the directory `scripts/e2e_test`, run `bundle install` to install the required ruby gems
-
-**Run the smoke tests**
-
-- In the directory `scripts/e2e_test`, run `bundle exec ruby e2e_test.rb`
-
-The script supports some options for running:
-
-- `--only=redwood_ts` to run the tests only on the specified framework
-- `--skip-build` to skip the yarn build part of the script, useful when debugging something unrelated to the build
-- `--rerun` to skip the framework install part of the script, useful when debugging something in your cypress tests unrelated to the build or the framework install. This will use the framework installs that are present in the runs/latest directory, i.e. the assumption is you've run a test against some framework(s) and you now want to re-running them after adjusting your cypress tests.
-
-**Cache the framework installs for faster runs**
-
-- In the directory `scripts/e2e_test`, run `bundle exec ruby e2e_test.rb --save-cache --skip-build` to save each framework install (before mailing is added) to the `cache` directory. Subsequent test runs will use the cache instead of running `yarn create` and `yarn install`, which will speed things up 🏎
+Check the [CONTRIBUTING.md](https://github.com/sofn-xyz/mailing/blob/main/docs/CONTRIBUTING.md) for more info.

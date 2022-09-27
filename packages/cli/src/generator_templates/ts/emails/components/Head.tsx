@@ -21,9 +21,12 @@ const Head: React.FC<HeadProps> = ({ children }) => {
         </MjmlRaw>
         <MjmlFont
           name="Inter"
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;900"
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700"
         />
         <MjmlStyle>{`
+        strong {
+          font-weight: 700;
+        }
         .smooth {
           -webkit-font-smoothing: antialiased;
         }

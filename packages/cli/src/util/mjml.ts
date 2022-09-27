@@ -2,13 +2,10 @@ import { JSXElementConstructor, ReactElement } from "react";
 import { render as mjRender, Mjml2HtmlOptions } from "mjml-react";
 
 export function render(
-  component: ReactElement<any, string | JSXElementConstructor<any>>,
-  options: {} = {}
+  component: ReactElement<any, string | JSXElementConstructor<any>>
 ) {
-  const mjmlOptions: Mjml2HtmlOptions = {
+  return mjRender(component, {
     validationLevel: "soft",
-    ...options,
-  };
-
-  return mjRender(component, mjmlOptions);
+    minify: undefined,
+  });
 }

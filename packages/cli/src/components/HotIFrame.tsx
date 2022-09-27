@@ -1,3 +1,4 @@
+import cx from "classnames";
 import usePreviewHotkeys from "./hooks/usePreviewHotkeys";
 
 type HotIFrameProps = {
@@ -11,44 +12,68 @@ const HotIFrame: React.FC<HotIFrameProps> = ({
   setViewMode,
   srcDoc,
 }) => {
-  const { iframeRef, textareaRef } = usePreviewHotkeys({ setViewMode });
+  const { iframeRef, fullScreen } = usePreviewHotkeys({
+    setViewMode,
+  });
 
   return (
     <>
       {viewMode === "html" ? (
         <textarea
-          className="code-container mono"
+          className={cx("code-container mono text-black", {
+            "fixed top-0 left-0 right-0 bottom-0 z-50 h-full": fullScreen,
+            "h-[calc(100vh-53px)]": !fullScreen,
+          })}
           readOnly
           value={srcDoc}
-          ref={textareaRef}
         ></textarea>
       ) : (
-        <div className={`frame ${viewMode === "mobile" ? " mobile" : ""}`}>
-          <iframe srcDoc={srcDoc} ref={iframeRef} />
+        <div
+          className={cx({
+            "fixed top-0 left-0 right-0 bottom-0 z-50 h-full bg-black":
+              fullScreen,
+          })}
+        >
+          <div
+            className={cx("frame", {
+              mobile: viewMode === "mobile",
+            })}
+          >
+            <iframe
+              className={cx("bg-neutral-50", {
+                "fixed top-0 left-0 right-0 bottom-0 z-50 h-full":
+                  fullScreen && viewMode !== "mobile",
+                "h-[calc(100vh-53px)]": !fullScreen,
+              })}
+              srcDoc={srcDoc}
+              ref={iframeRef}
+            />
+          </div>
         </div>
       )}
       <style jsx>{`
         .frame {
           margin: auto;
-          display: block;
+          background: white;
         }
         .mobile.frame {
           padding: 64px 16px 74px;
-          max-width: 324px;
+          max-width: 352px;
           border-radius: 32px;
           margin: 64px auto;
+          background-color: #252525;
         }
         .mobile iframe {
           height: 568px;
           max-width: 320px;
+          background-color: white;
         }
         iframe {
+          vertical-align: top;
           width: 100%;
           border: none;
-          height: calc(100vh - 65px);
         }
-        .mobile,
-        .mobile iframe {
+        .mobile {
           border: 1px dotted #333;
         }
         .code-container {
@@ -56,7 +81,6 @@ const HotIFrame: React.FC<HotIFrameProps> = ({
           white-space: pre-wrap;
           padding: 16px;
           outline: none;
-          height: calc(100vh - 65px);
           width: 100%;
           resize: none;
         }

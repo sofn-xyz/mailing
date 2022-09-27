@@ -1,5 +1,22 @@
 # web
 
+## 0.4.1
+
+### Patch Changes
+
+- d665b9c: bugfix for mailing server build
+
+## 0.4.0
+
+### Minor Changes
+
+- 6e8ac93: New Immersion UI
+
+  - Navigate through template quickly
+  - See what preview text might look like in an email client
+  - New default templates set a better example for making focused templates vs catch-alls like the deprecated TextEmail
+  - Command+"." hotkey for chrome-less viewing
+
 ## 0.3.8
 
 ### Patch Changes

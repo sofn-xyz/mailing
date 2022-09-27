@@ -24,6 +24,7 @@ class TestRunner
   CLI_ROOT = File.join(PROJECT_ROOT, 'packages/cli')
   CORE_ROOT = File.join(PROJECT_ROOT, 'packages/core')
   CYPRESS_DIR = File.join(PROJECT_ROOT, 'packages/cli/cypress')
+  JEST_TESTS_DIR = File.join(PROJECT_ROOT, 'scripts/e2e_test/jest_tests')
   RUNS_DIR = File.expand_path(TEST_ROOT + '/runs')
 
   E2E_CONFIG = {
@@ -87,12 +88,14 @@ class TestRunner
         tmp_dir_name = File.join(runs_dir_name, config_name.to_s)
 
         app = klass.new(tmp_dir_name, save_cache: opt?('save-cache'))
+        @root_dir = app.root_dir
         app.setup! unless opt?('rerun')
         
         app.run_mailing!
         @io = app.io
 
         run_cypress_tests
+        run_jest_tests
       ensure
         cleanup_io_and_subprocess
       end
@@ -146,6 +149,17 @@ private
     announce! "Running cypress tests for #{@config_name}", "🏃"
     Dir.chdir(CYPRESS_DIR) do
       system("yarn cypress run")
+    end
+  end
+  
+  def run_jest_tests
+    announce! "Running jest tests for #{@config_name}", "🃏"
+    Dir.chdir(@root_dir) do
+      # copy jest_tests directory and jest.config.js
+      FileUtils.cp_r(JEST_TESTS_DIR, "./jest_tests")
+
+      # run yarn jest --rootDir=jest_tests
+      system("yarn jest --rootDir=jest_tests -c jest_tests/jest.config.js")
     end
   end
 

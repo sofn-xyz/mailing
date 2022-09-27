@@ -1,6 +1,6 @@
 {
   "name": "web",
-  "version": "0.3.8",
+  "version": "0.4.1",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -15,7 +15,7 @@
     "@next/mdx": "^12.2.3",
     "@prisma/client": "^4.2.0",
     "classnames": "^2.3.2",
-    "next": "12.2.5",
+    "next": "12.3.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-intersection-observer": "^9.4.0"
