@@ -10,7 +10,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
+model NewsletterSubscriber {
   id        String   @id @default(cuid())
   createdAt DateTime @default(now())
   email     String   @unique
