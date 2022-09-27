@@ -16,3 +16,20 @@ model NewsletterSubscriber {
   email     String   @unique
   ip        String
 }
+
+model User {
+  id             String       @id @default(cuid())
+  email          String       @unique
+  createdAt      DateTime     @default(now())
+  password       String
+  Organization   Organization @relation(fields: [organizationId], references: [id])
+  organizationId String
+
+  @@index([organizationId])
+}
+
+model Organization {
+  id   String @id @default(cuid())
+  name String
+  User User[]
+}
