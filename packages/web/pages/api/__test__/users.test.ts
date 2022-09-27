@@ -33,7 +33,7 @@ describe("users api", () => {
     });
 
     it("handles existing users", async () => {
-      prismaMock.user.findFirst.mockReturnValue({} as any);
+      prismaMock.newsletterSubscriber.findFirst.mockReturnValue({} as any);
       const { req, res } = mockRequestResponse("POST");
       req.body = { email: "hello@example.com" };
       await handler(req, res);

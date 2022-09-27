@@ -5,7 +5,7 @@ type Data = {
   error?: string;
 };
 
-export default async (req: NextApiRequest, res: NextApiResponse<Data>) => {
+const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   if (req.method !== "POST") return res.status(404).end();
 
   const email = req.body?.email;
@@ -13,12 +13,14 @@ export default async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     return res.status(403).json({ error: "email not provided" });
   }
 
-  let user = await prisma.user.findFirst({ where: { email } });
-  if (user) {
+  let newsletterSubscriber = await prisma.newsletterSubscriber.findFirst({
+    where: { email },
+  });
+  if (newsletterSubscriber) {
     return res.status(200).end();
   }
 
-  await prisma.user.create({
+  await prisma.newsletterSubscriber.create({
     data: {
       email,
       ip:
@@ -30,3 +32,5 @@ export default async (req: NextApiRequest, res: NextApiResponse<Data>) => {
 
   res.status(201).end();
 };
+
+export default handler;
