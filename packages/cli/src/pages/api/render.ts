@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { render } from "mailing-core";
-import { MjmlError } from "mjml-react";
+import { MjmlError } from "@faire/mjml-react";
 import { templates } from "../../moduleManifest";
 
 type Data = {

@@ -10,10 +10,10 @@
     "url": "git+https://github.com/sofn-xyz/mailing.git"
   },
   "dependencies": {
+    "@faire/mjml-react": "^2.1.2",
     "chalk": "^4.1.2",
     "fs-extra": "^10.1.0",
     "mjml": "^4.12.0",
-    "mjml-react": "^2.0.7",
     "node-fetch": "^2.6.7",
     "open": "^8.4.0",
     "posthog-node": "^2.0.2"
