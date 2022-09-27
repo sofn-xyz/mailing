@@ -71,7 +71,7 @@ export const handler = buildHandler(
         if (email?.length > 0) {
           log("great, talk soon");
           try {
-            fetch(`${getMailingAPIBaseURL()}/api/users`, {
+            fetch(`${getMailingAPIBaseURL()}/api/newsletterSubscribers`, {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({ email }),

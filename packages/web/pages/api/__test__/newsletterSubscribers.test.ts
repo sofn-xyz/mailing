@@ -2,7 +2,7 @@ import { prismaMock } from "../../../prisma/__mocks__";
 global.prisma = prismaMock as unknown as PrismaClient;
 
 import { NextApiRequest, NextApiResponse } from "next";
-import handler from "../users";
+import handler from "../newsletterSubscribers";
 import { PrismaClient } from "@prisma/client";
 
 function mockRequestResponse(method: string) {
