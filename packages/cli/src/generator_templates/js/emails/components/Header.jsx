@@ -1,4 +1,4 @@
-import { MjmlSection, MjmlColumn, MjmlImage } from "mjml-react";
+import { MjmlSection, MjmlColumn, MjmlImage } from "@faire/mjml-react";
 
 const Header = ({ loose }) => {
   return (

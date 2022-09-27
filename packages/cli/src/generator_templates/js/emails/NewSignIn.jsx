@@ -17,7 +17,7 @@ import {
   MjmlText,
   MjmlSpacer,
   MjmlDivider,
-} from "mjml-react";
+} from "@faire/mjml-react";
 
 const NewSignIn = ({ name, headline, body, bulletedList }) => {
   return (

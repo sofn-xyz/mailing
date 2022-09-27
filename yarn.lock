@@ -1502,6 +1502,14 @@
     minimatch "^3.1.2"
     strip-json-comments "^3.1.1"
 
+"@faire/mjml-react@^2.1.2":
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/@faire/mjml-react/-/mjml-react-2.1.2.tgz#8c7bee2ff565e6d09e3b1b04c9c0bc977539de06"
+  integrity sha512-1kQgty0Lbj4uJnHllB/ZK5ajZAeh4LR/ncaIdoVIickQEkdpZ9fknGIEyvqppjwWyK2m3GH/c3BDlgP4BlJiKA==
+  dependencies:
+    color "^3.1.3"
+    react-reconciler "^0.26.1"
+
 "@hapi/hoek@^9.0.0":
   version "9.3.0"
   resolved "https://registry.npmjs.org/@hapi/hoek/-/hoek-9.3.0.tgz"
@@ -2513,13 +2521,6 @@
   resolved "https://registry.npmjs.org/@types/mjml-core/-/mjml-core-4.7.1.tgz"
   integrity sha512-k5IRafi93tyZBGF+0BTrcBDvG47OueI+Q7TC4V4UjGQn0AMVvL3Y+S26QF/UHMmMJW5r1hxLyv3StX2/+FatFg==
 
-"@types/mjml-react@^2.0.4":
-  version "2.0.4"
-  resolved "https://registry.npmjs.org/@types/mjml-react/-/mjml-react-2.0.4.tgz"
-  integrity sha512-3Vd54OGP0iBxv38Q0HzTp4QnmycqxJZPZ2PLGqbPyPsUzmbv9v2aEGmL/SDuR3bwW6Wln7Y92Bn6MPniwDHAEw==
-  dependencies:
-    "@types/react" "*"
-
 "@types/mjml@^4.7.0":
   version "4.7.0"
   resolved "https://registry.npmjs.org/@types/mjml/-/mjml-4.7.0.tgz"
@@ -3115,14 +3116,6 @@ babel-preset-jest@^29.0.2:
     babel-plugin-jest-hoist "^29.0.2"
     babel-preset-current-node-syntax "^1.0.0"
 
-babel-runtime@~6.25.0:
-  version "6.25.0"
-  resolved "https://registry.npmjs.org/babel-runtime/-/babel-runtime-6.25.0.tgz"
-  integrity sha1-M7mOql1IK7AajRqmtDetKwGuxBw=
-  dependencies:
-    core-js "^2.4.0"
-    regenerator-runtime "^0.10.0"
-
 bail@^2.0.0:
   version "2.0.2"
   resolved "https://registry.npmjs.org/bail/-/bail-2.0.2.tgz"
@@ -3695,11 +3688,6 @@ core-js-pure@^3.20.2:
   version "3.24.0"
   resolved "https://registry.npmjs.org/core-js-pure/-/core-js-pure-3.24.0.tgz"
   integrity sha512-uzMmW8cRh7uYw4JQtzqvGWRyC2T5+4zipQLQdi2FmiRqP83k3d6F3stv2iAlNhOs6cXN401FCD5TL0vvleuHgA==
-
-core-js@^2.4.0:
-  version "2.6.12"
-  resolved "https://registry.npmjs.org/core-js/-/core-js-2.6.12.tgz"
-  integrity sha512-Kb2wC0fvsWfQrgk8HU5lW6U/Lcs8+9aaYcy4ZFc6DDlo4nZ7n70dEgE5rtR0oG6ufKDUnrwfWL1mXR5ljDatrQ==
 
 core-util-is@1.0.2:
   version "1.0.2"
@@ -7426,16 +7414,6 @@ mjml-raw@4.12.0:
     lodash "^4.17.21"
     mjml-core "4.12.0"
 
-mjml-react@^2.0.7:
-  version "2.0.7"
-  resolved "https://registry.npmjs.org/mjml-react/-/mjml-react-2.0.7.tgz"
-  integrity sha512-253MtaC1PhB68+4DQ4TZ0vEwdOngwZ0aNgynoR7J0jc97gRObCq+aug+MPMIvgpWOgBt2nObcRPmpSjTKFiLSg==
-  dependencies:
-    "@babel/runtime" "^7.14.6"
-    babel-runtime "~6.25.0"
-    color "^3.1.3"
-    react-reconciler "^0.26.1"
-
 mjml-section@4.12.0:
   version "4.12.0"
   resolved "https://registry.npmjs.org/mjml-section/-/mjml-section-4.12.0.tgz"
@@ -8416,11 +8394,6 @@ regenerate@^1.4.2:
   version "1.4.2"
   resolved "https://registry.npmjs.org/regenerate/-/regenerate-1.4.2.tgz"
   integrity sha512-zrceR/XhGYU/d/opr2EKO7aRHUeiBI8qjtfHqADTwZd6Szfy16la6kqD0MIUs5z5hx6AaKa+PixpPrR289+I0A==
-
-regenerator-runtime@^0.10.0:
-  version "0.10.5"
-  resolved "https://registry.npmjs.org/regenerator-runtime/-/regenerator-runtime-0.10.5.tgz"
-  integrity sha1-M2w+/BIgrc7dosn6tntaeVWjNlg=
 
 regenerator-runtime@^0.13.4:
   version "0.13.9"

@@ -9,7 +9,7 @@ import {
   MjmlText,
   MjmlImage,
   MjmlSpacer,
-} from "mjml-react";
+} from "@faire/mjml-react";
 import ButtonPrimary from "./components/ButtonPrimary";
 import {
   leadingTight,
