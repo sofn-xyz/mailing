@@ -1,6 +1,6 @@
 ## Deploying the preview server
 
-The mailing preview server has a super power: it’s easy to deploy a fast production version when you want to share templates with your team or clients. You can also hit the REST API on your deployed mailing server to generate HTML from your templates.
+The mailing preview server has a super power: it’s easy to deploy a fast production version when you want to share templates with your team or clients. You can also hit [the REST API](https://github.com/sofn-xyz/mailing#rest-api) on your deployed mailing server to generate HTML from your templates.
 
 ### Vercel
 
