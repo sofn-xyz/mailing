@@ -5,7 +5,7 @@ import {
   MjmlAll,
   MjmlStyle,
   MjmlRaw,
-} from "mjml-react";
+} from "@faire/mjml-react";
 import { black, grayDark } from "./theme";
 
 const Head = ({ children }) => {

@@ -13,7 +13,7 @@ import {
   MjmlText,
   MjmlSpacer,
   MjmlDivider,
-} from "mjml-react";
+} from "@faire/mjml-react";
 
 type ResetPasswordProps = {
   name: string;

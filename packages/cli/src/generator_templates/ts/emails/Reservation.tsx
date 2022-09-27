@@ -18,7 +18,7 @@ import {
   MjmlText,
   MjmlSpacer,
   MjmlDivider,
-} from "mjml-react";
+} from "@faire/mjml-react";
 
 type ReservationProps = {
   headline: string;

@@ -7,7 +7,7 @@ import {
   ComponentMail,
   BuildSendMailOptions,
 } from "..";
-import { Mjml, MjmlBody, MjmlRaw, MjmlText } from "mjml-react";
+import { Mjml, MjmlBody, MjmlRaw, MjmlText } from "@faire/mjml-react";
 import * as log from "../util/log";
 
 describe("index", () => {
