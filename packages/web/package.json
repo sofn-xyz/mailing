@@ -14,11 +14,13 @@
     "@mdx-js/react": "2.1.2",
     "@next/mdx": "^12.2.3",
     "@prisma/client": "^4.2.0",
+    "bcrypt": "^5.0.1",
     "next": "12.3.0",
     "react": "18.2.0",
     "react-dom": "18.2.0"
   },
   "devDependencies": {
+    "@types/bcrypt": "^5.0.0",
     "@types/node": "^18.6.3",
     "@types/react": "^18.0.15",
     "@types/react-dom": "^18.0.6",
