@@ -27,6 +27,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   const email = req.body.email;
   const plainTextPassword = req.body.password;
 
+  // TODO: Verify password meets some criteria of length etc.
+
   const salt = await genSalt(10);
   const hashedPassword = await hash(plainTextPassword, salt);
 

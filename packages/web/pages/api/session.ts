@@ -1,30 +1,44 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { compare } from "bcrypt";
+import { withIronSessionApiRoute } from "iron-session/next";
 
 type Data = {
   error?: string;
 };
 
-const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
-  if (req.method !== "POST") return res.status(404).end();
+const handler = withIronSessionApiRoute(
+  async function (req: NextApiRequest, res: NextApiResponse<Data>) {
+    if (req.method !== "POST") return res.status(404).end();
 
-  const email = req.body.email;
-  const plainTextPassword = req.body.password;
+    const email = req.body.email;
+    const plainTextPassword = req.body.password;
 
-  const user = await prisma.user.findFirst({
-    where: { email },
-  });
+    const user = await prisma.user.findFirst({
+      where: { email },
+    });
 
-  if (!user)
-    return res.status(400).json({ error: "no user exists with that email" });
+    if (!user)
+      return res.status(400).json({ error: "no user exists with that email" });
 
-  const authenticated = await compare(plainTextPassword, user.password);
+    const authenticated = await compare(plainTextPassword, user.password);
 
-  if (authenticated) {
-    res.status(201);
-  } else {
-    res.status(401).json({ errors: "invalid password" });
+    if (authenticated) {
+      req.session.user = user;
+      await req.session.save();
+
+      res.status(201);
+    } else {
+      res.status(401).json({ error: "invalid password" });
+    }
+  },
+  {
+    cookieName: "mailing",
+    password: process.env.SESSION_PASSWORD,
+    // secure: true should be used in production (HTTPS) but can't be used in development (HTTP)
+    cookieOptions: {
+      secure: process.env.NODE_ENV === "production",
+    },
   }
-};
+);
 
 export default handler;
