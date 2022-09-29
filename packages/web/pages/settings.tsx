@@ -23,14 +23,20 @@ export const getServerSideProps = withSession(
   }
 );
 
-const Analytics: NextPage = (
+const Settings: NextPage = (
   props: InferGetServerSidePropsType<typeof getServerSideProps>
 ) => {
   return (
     <>
-      <h1>Analytics - hi {props.user?.email}</h1>
+      <h1>Settings</h1>
+      <p>Welcome back {props.user?.email}</p>
+
+      <h2>API Keys</h2>
+      <ul>
+        <li>API Key 1</li>
+      </ul>
     </>
   );
 };
 
-export default Analytics;
+export default Settings;
