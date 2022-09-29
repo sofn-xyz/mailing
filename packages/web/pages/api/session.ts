@@ -44,6 +44,7 @@ const handler = withIronSessionApiRoute(
     cookieOptions: {
       secure: process.env.NODE_ENV === "production",
     },
+    ttl: 0,
   }
 );
 
