@@ -4,9 +4,7 @@ The mailing preview server has a super power: it’s easy to deploy a fast produ
 
 ### Vercel
 
-#### UI
-
-The easiest way to deploy your preview server is via Vercel. Under the hood, mailing is a Next.js application and Vercel is great at hosting these. Configuring your deployment this way will also give you easy previews on PRs and automatic deployments from your main branch.
+The easiest way to deploy your preview server is via Vercel's UI. Under the hood, mailing is a Next.js application and Vercel is great at hosting these. Configuring your deployment this way will also give you easy previews on PRs and automatic deployments from your main branch.
 
 1. Create a new project on [vercel.com](https://vercel.com/)
 2. Connect it to your git repository
