@@ -1,8 +1,8 @@
-import { withIronSessionSsr } from "iron-session/next";
+import { withSession } from "../util";
 import { NextPage } from "next";
 import { InferGetServerSidePropsType } from "next";
 
-export const getServerSideProps = withIronSessionSsr(
+export const getServerSideProps = withSession(
   async function getServerSideProps({ req }) {
     const user = req.session.user;
 
@@ -19,15 +19,6 @@ export const getServerSideProps = withIronSessionSsr(
         user: req.session.user,
       },
     };
-  },
-  {
-    cookieName: "mailing",
-    password: process.env.SESSION_PASSWORD,
-    // secure: true should be used in production (HTTPS) but can't be used in development (HTTP)
-    cookieOptions: {
-      secure: process.env.NODE_ENV === "production",
-    },
-    ttl: 0,
   }
 );
 
