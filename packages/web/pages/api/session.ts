@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { compare } from "bcrypt";
 import * as EmailValidator from "email-validator";
+import prisma from "../../prisma";
 
 import { withIronSessionApiRoute } from "iron-session/next";
 
@@ -31,7 +32,7 @@ const handler = withIronSessionApiRoute(
       req.session.user = user;
       await req.session.save();
 
-      res.status(201);
+      res.status(201).end();
     } else {
       res.status(401).json({ error: "invalid password" });
     }

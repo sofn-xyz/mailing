@@ -1,10 +1,29 @@
 import type { NextPage } from "next";
+import { useCallback, useRef } from "react";
 
 function onSubmit(e: React.FormEvent<HTMLFormElement>) {
   e.preventDefault();
 }
 
 const Signup: NextPage = () => {
+  const emailRef = useRef(null);
+  const passwordRef = useRef(null);
+
+  const onSubmit = useCallback(async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    await fetch("/api/users", {
+      method: "POST",
+      body: JSON.stringify({
+        email: emailRef.current.value,
+        password: passwordRef.current.value,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  }, []);
+
   return (
     <>
       <div>
@@ -33,6 +52,7 @@ const Signup: NextPage = () => {
                     id="email"
                     className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm py-[8px] px-[12px]"
                     placeholder="you@email.com"
+                    ref={emailRef}
                   />
                 </div>
                 <div className="mt-[12px]">
@@ -47,6 +67,7 @@ const Signup: NextPage = () => {
                     name="password"
                     id="password"
                     className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm py-[8px] px-[12px]"
+                    ref={passwordRef}
                   />
                 </div>
                 <div className="mt-[12px]">
