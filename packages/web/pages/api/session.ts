@@ -1,5 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { compare } from "bcrypt";
+import * as EmailValidator from "email-validator";
+
 import { withIronSessionApiRoute } from "iron-session/next";
 
 type Data = {
@@ -12,6 +14,9 @@ const handler = withIronSessionApiRoute(
 
     const email = req.body.email;
     const plainTextPassword = req.body.password;
+
+    if (!EmailValidator.validate(email))
+      return res.status(400).json({ error: "email is invalid" });
 
     const user = await prisma.user.findFirst({
       where: { email },
