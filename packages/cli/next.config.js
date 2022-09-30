@@ -2,4 +2,13 @@ module.exports = {
   eslint: {
     ignoreDuringBuilds: !process.env.MM_DEV,
   },
+  async redirects() {
+    return [
+      {
+        source: "/login",
+        destination: `https://github.com/login/oauth/authorize?client_id=${process.env.GITHUB_OAUTH_CLIENT_ID}&scope=user`,
+        permanent: true,
+      },
+    ];
+  },
 };
