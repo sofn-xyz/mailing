@@ -64,6 +64,7 @@
     "esbuild": "^0.15.5",
     "fs-extra": "^10.1.0",
     "html-minifier-terser": "^7.0.0",
+    "iron-session": "^6.2.1",
     "jsdom": "^20.0.0",
     "lodash": "^4.17.21",
     "mailing-core": "^0.8.2",
