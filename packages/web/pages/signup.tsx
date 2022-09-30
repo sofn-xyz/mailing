@@ -1,3 +1,4 @@
+import FormError from "../components/FormError";
 import type { NextPage } from "next";
 import { useCallback, useRef, useState } from "react";
 
@@ -45,9 +46,7 @@ const Signup: NextPage = () => {
                 Signup
               </h1>
 
-              <div className="bg-red-300 col-span-3 rounded-md py-[8px] px-[12px]">
-                {errors}
-              </div>
+              <FormError>{errors}</FormError>
 
               <form
                 action="/api/users"

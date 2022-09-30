@@ -1,14 +1,16 @@
+import FormError from "../components/FormError";
 import type { NextPage } from "next";
-import { useCallback, useRef } from "react";
+import { useCallback, useRef, useState } from "react";
 
 const Login: NextPage = () => {
+  const [errors, setErrors] = useState();
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
 
   const onSubmit = useCallback(async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    await fetch("/api/session", {
+    const response = await fetch("/api/session", {
       method: "POST",
       body: JSON.stringify({
         email: emailRef.current.value,
@@ -18,6 +20,13 @@ const Login: NextPage = () => {
         "Content-Type": "application/json",
       },
     });
+
+    if (201 === response.status) {
+      // success!
+    } else {
+      const json = await response.json();
+      setErrors(json.error);
+    }
   }, []);
 
   return (
@@ -29,6 +38,9 @@ const Login: NextPage = () => {
               <h1 className="col-span-3 text-4xl sm:text-7xl 2xl:text-8xl m-0">
                 Login
               </h1>
+
+              <FormError>{errors}</FormError>
+
               <form
                 action="/api/session"
                 method="POST"
