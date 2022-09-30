@@ -1,7 +1,7 @@
 import type { NextPage } from "next";
 import { useCallback, useRef } from "react";
 
-const Signup: NextPage = () => {
+const Login: NextPage = () => {
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
 
@@ -80,4 +80,4 @@ const Signup: NextPage = () => {
   );
 };
 
-export default Signup;
+export default Login;
