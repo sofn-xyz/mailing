@@ -12,6 +12,9 @@ module.exports = {
           300: "#dce7ff",
           400: "#a1bfff",
         },
+        green: {
+          50: "#f1fcef",
+        },
       },
       fontSize: {
         "6xl": "64px",

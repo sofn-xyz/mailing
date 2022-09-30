@@ -15,6 +15,7 @@ const IN_VIEW_OPTIONS = {
 
 const Home: NextPage = () => {
   const [osImageRef, osImageInView] = useInView(IN_VIEW_OPTIONS);
+  const [localhostImageRef, localhostImageInView] = useInView(IN_VIEW_OPTIONS);
   const [reloadImageRef, reloadImageInView] = useInView(IN_VIEW_OPTIONS);
   const [testimonialsRef, testimonialsInView] = useInView({
     ...IN_VIEW_OPTIONS,
@@ -152,6 +153,138 @@ const Home: NextPage = () => {
               </div>
             </div>
           </div>
+          <div className="py-24 md:py-44">
+            <div className="px-6 md:px-12">
+              <div className="max-w-screen-xl mx-auto">
+                <h1 className="text-5xl md:text-6xl md:mx-auto lg:mx-0 max-w-lg md:max-w-3xl text-left md:text-center lg:text-left lg:mb-24">
+                  A modern stack for rapid email development
+                </h1>
+                <div className="flex flex-col-reverse lg:flex-row justify-between md:items-center">
+                  <div className="flex flex-row flex-wrap items-stretch justify-items-stretch lg:max-w-[500px]">
+                    <div className="md:basis-1/2 grow mx-0 md:w-full lg:basis-full md:pr-2 lg:px-0 md:mx-auto lg:mx-0 text-left md:text-center lg:text-left pb-8 md:pb-12">
+                      <p className="text-xl md:text-2xl leading-snug m-0 pb-2 mx-0 md:mx-auto lg:mx-0 max-w-sm md:max-w-xl lg:max-w-sm">
+                        ●&nbsp;&nbsp;Super fast development
+                      </p>
+                      <p className="leading-snug">
+                        Mailing installs in your node app so it’s easy to import
+                        your existing styles. And, you’ll save a ton of
+                        development time with the preview server and live
+                        reload.
+                      </p>
+                    </div>
+                    <div className="md:basis-1/2 grow mx-0 md:w-full lg:basis-full md:pl-2 lg:px-0 md:mx-auto lg:mx-0 text-left md:text-center lg:text-left pb-8 md:pb-12">
+                      <p className="text-xl md:text-2xl leading-snug m-0 pb-2 mx-0 md:mx-auto lg:mx-0 max-w-sm md:max-w-xl lg:max-w-sm">
+                        ●&nbsp;&nbsp;Templates in your codebase
+                      </p>
+                      <p className="leading-snug">
+                        Use Mailing as a library to send emails directly from JS
+                        frameworks (Next.js, RedwoodJS, Remix). There’s also a
+                        REST API so you can use your templates from any stack.
+                      </p>
+                    </div>
+                    <div className="md:basis-1/2 grow mx-0 md:max-w-[450px] lg:basis-full md:px-0 md:mx-auto lg:mx-0 text-left md:text-center lg:text-left pb-8 md:pb-12">
+                      <p className="text-xl md:text-2xl leading-snug m-0 pb-2 mx-0 md:mx-auto lg:mx-0 max-w-sm md:max-w-xl lg:max-w-sm">
+                        ●&nbsp;&nbsp;Highly compatible emails
+                      </p>
+                      <p className="leading-snug">
+                        Mailing combines the flexibility of React with the
+                        efficiency of{" "}
+                        <a href="http://mjml.io" target="blank" rel="noopener">
+                          MJML
+                        </a>
+                        , so that it’s actually easy to make emails that look
+                        good across clients.
+                      </p>
+                    </div>
+                  </div>
+                  <div
+                    ref={reloadImageRef}
+                    className={cx(
+                      "mt-12 md:mt-20 lg:mt-0 sm:mx-0 md:mx-auto mb-10 md:mb-16 lg:ml-8 lg:mr-0 transition-all duration-700",
+                      {
+                        "opacity-0 scale-95 translate-x-8":
+                          mounted && !reloadImageInView,
+                        "opacity-1 scale-100 translate-x-0": reloadImageInView,
+                      }
+                    )}
+                  >
+                    <Image
+                      width="640"
+                      height="360"
+                      src="/live-reload-alt@2x.gif"
+                      alt="Mailing live reload"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="bg-blue-300 py-24 md:py-44">
+            <div className="px-6 md:px-12">
+              <div className="mx-auto">
+                <h1 className="text-5xl md:text-6xl md:mx-auto lg:mx-0 text-left md:text-center">
+                  Not just localhost
+                </h1>
+                <div
+                  ref={localhostImageRef}
+                  className={cx(
+                    "pt-14 md:pt-20 sm:mx-0 md:mx-auto mb-12 md:mb-20 md:px-0 text-center transition-all duration-700",
+                    {
+                      "opacity-0": mounted && !localhostImageInView,
+                      "opacity-1": localhostImageInView,
+                    }
+                  )}
+                >
+                  <Image
+                    width="720"
+                    height="405"
+                    src="/expanded-view@2x.jpg"
+                    className="rounded-2xl"
+                    alt="Mailing expanded view"
+                  />
+                </div>
+
+                <div className="flex flex-row flex-wrap items-stretch justify-items-stretch w-full justify-center">
+                  <div className="md:basis-1/2 grow mx-0 pr-0 lg:pr-4 md:mx-auto lg:mx-0 text-left md:text-center md:max-w-[420px] pb-8 md:pb-12">
+                    <p className="text-xl md:text-2xl leading-snug m-0 pb-2 mx-0 md:mx-auto lg:mx-0 max-w-sm]">
+                      ●&nbsp;&nbsp;Share your previews
+                    </p>
+                    <p className="leading-snug">
+                      Deploy your mailing preview server to share links with
+                      your team and clients at your domain.
+                    </p>
+                  </div>
+                  <div className="md:basis-1/2 grow mx-0 md:mx-auto lg:mx-0 text-left md:pl-4 md:text-center md:max-w-[420px] pb-8 md:pb-12">
+                    <p className="text-xl md:text-2xl leading-snug m-0 pb-2 mx-0 md:mx-auto lg:mx-0 max-w-sm]">
+                      ●&nbsp;&nbsp;Render via API
+                    </p>
+                    <p className="leading-snug ">
+                      Use the preview server’s REST API to render and send
+                      templates from any environment – not just Node apps.
+                    </p>
+                  </div>
+                  <div className="md:basis-1/2 grow mx-0 pl-0 lg:pl-4 md:mx-auto lg:mx-0 text-left md:text-center md:max-w-[420px] pb-8 md:pb-12">
+                    <p className="text-xl md:text-2xl leading-snug m-0 pb-2 mx-0 md:mx-auto lg:mx-0 max-w-sm]">
+                      ●&nbsp;&nbsp;Deploy anywhere
+                    </p>
+                    <p className="leading-snug">
+                      Deploy to Vercel in a few clicks or use the mailing CLI to
+                      output a Next.js app that you can host anywhere.
+                    </p>
+                  </div>
+                </div>
+                <div className="text-left md:text-center mt-2 md:mt-8">
+                  <a
+                    className="text-black text-xl leading-none px-4 h-9 inline-flex items-center rounded-2xl border-2 border-black hover:underline"
+                    href="https://github.com/sofn-xyz/mailing/blob/main/docs/DEPLOY.md"
+                    target="blank"
+                  >
+                    Learn More about Deployment
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
           <div
             ref={testimonialsRef}
             className={cx(
@@ -162,7 +295,7 @@ const Home: NextPage = () => {
               }
             )}
           >
-            <h2 className="text-left sm:text-center text-4xl sm:text-5xl mb-8 sm:mb-16">
+            <h2 className="text-left sm:text-center text-5xl mb-12 sm:mb-16">
               Kind words from the internet
             </h2>
             <div className="max-w-[1032px] mx-auto flex flex-row flex-wrap items-stretch justify-items-stretch">
@@ -327,98 +460,7 @@ const Home: NextPage = () => {
               </div>
             </div>
           </div>
-          <div className="bg-blue-300 py-24 md:py-44">
-            <div className="px-6 md:px-12">
-              <div className="max-w-screen-xl mx-auto">
-                <h1 className="text-5xl md:text-6xl md:mx-auto lg:mx-0 max-w-lg md:max-w-3xl text-left md:text-center lg:text-left lg:mb-24">
-                  A modern stack for rapid email development
-                </h1>
-                <div className="flex flex-col-reverse lg:flex-row justify-between md:items-center">
-                  <div className="flex flex-row flex-wrap items-stretch justify-items-stretch lg:max-w-[500px]">
-                    <div className="md:basis-1/2 grow mx-0 md:w-full lg:basis-full md:pr-4 lg:px-0 md:mx-auto lg:mx-0 text-left lg:text-left pb-8 md:pb-12">
-                      <p
-                        className="text-xl md:text-2xl leading-snug m-0 pb-2 mx-0 md:mx-auto lg:mx-0 max-w-sm md:max-w-xl lg:max-w-sm"
-                        id={styles.sub}
-                      >
-                        ●&nbsp;&nbsp;Super fast development
-                      </p>
-                      <p className="leading-snug">
-                        Mailing installs in your node app so it’s easy to import
-                        your existing styles. And, you’ll save a ton of
-                        development time with the preview server and live
-                        reload.
-                      </p>
-                    </div>
-                    <div className="md:basis-1/2 grow mx-0 md:w-full lg:basis-full md:pl-4 lg:px-0 md:mx-auto lg:mx-0 text-left lg:text-left pb-8 md:pb-12">
-                      <p
-                        className="text-xl md:text-2xl leading-snug m-0 pb-2 mx-0 md:mx-auto lg:mx-0 max-w-sm md:max-w-xl lg:max-w-sm"
-                        id={styles.sub}
-                      >
-                        ●&nbsp;&nbsp;Templates in your codebase
-                      </p>
-                      <p className="leading-snug">
-                        Use Mailing as a library to send emails directly from JS
-                        frameworks (Next.js, RedwoodJS, Remix). There’s also a
-                        REST API so you can use your templates from any stack.
-                      </p>
-                    </div>
-                    <div className="md:basis-1/2 grow mx-0 md:w-full lg:basis-full md:pr-4 lg:px-0 md:mx-auto lg:mx-0 text-left lg:text-left pb-8 md:pb-12">
-                      <p
-                        className="text-xl md:text-2xl leading-snug m-0 pb-2 mx-0 md:mx-auto lg:mx-0 max-w-sm md:max-w-xl lg:max-w-sm"
-                        id={styles.sub}
-                      >
-                        ●&nbsp;&nbsp;Highly compatible emails
-                      </p>
-                      <p className="leading-snug">
-                        Mailing combines the flexibility of React with the
-                        efficiency of{" "}
-                        <a href="http://mjml.io" target="blank" rel="noopener">
-                          MJML
-                        </a>
-                        , so that it’s actually easy to make emails that look
-                        good across clients.
-                      </p>
-                    </div>
-                    <div className="md:basis-1/2 grow mx-0 md:w-full lg:basis-full md:pl-4 lg:px-0 md:mx-auto lg:mx-0 text-left lg:text-left pb-8 md:pb-12">
-                      <p
-                        className="text-xl md:text-2xl leading-snug m-0 pb-2 mx-0 md:mx-auto lg:mx-0 max-w-sm md:max-w-xl lg:max-w-sm"
-                        id={styles.sub}
-                      >
-                        ●&nbsp;&nbsp;Serverless self-hosting
-                      </p>
-                      <p className="leading-snug">
-                        Deploy the mailing preview server to share links with
-                        your team and clients. Easy self-hosting means that
-                        you’ll always have access and ownership of your precious
-                        data.{" "}
-                        <a href="https://demo.mailing.run">Here’s a demo</a>{" "}
-                        with the default templates.
-                      </p>
-                    </div>
-                  </div>
-                  <div
-                    ref={reloadImageRef}
-                    className={cx(
-                      "mt-12 md:mt-20 lg:mt-0 sm:mx-0 md:mx-auto mb-11 sm:mb-16 lg:ml-8 lg:mr-0 transition-all duration-700",
-                      {
-                        "opacity-0 scale-95 translate-x-8":
-                          mounted && !reloadImageInView,
-                        "opacity-1 scale-100 translate-x-0": reloadImageInView,
-                      }
-                    )}
-                  >
-                    <Image
-                      width="640"
-                      height="360"
-                      src="/live-reload-alt@2x.gif"
-                      alt="Mailing live reload"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="px-6 md:px-12 py-24 md:py-44">
+          <div className="bg-green-50 px-6 md:px-12 py-24 md:py-44">
             <div className="max-w-5xl mx-auto">
               <div className="flex flex-col lg:flex-row justify-between md:items-center">
                 <div
@@ -449,7 +491,7 @@ const Home: NextPage = () => {
                     feedback and contributions from the community.
                   </p>
                   <a
-                    className="text-black leading-none px-4 h-9 inline-flex items-center rounded-2xl border-2 border-black hover:underline"
+                    className="text-black text-xl leading-none px-4 h-9 inline-flex items-center rounded-2xl border-2 border-black hover:underline"
                     href="https://github.com/sofn-xyz/mailing"
                     target="blank"
                   >
