@@ -1,4 +1,4 @@
-import { withSessionAPIRoute } from "../../../util";
+import { withSessionAPIRoute } from "../../../util/session";
 import { NextApiRequest, NextApiResponse } from "next";
 import prisma from "../../../prisma";
 

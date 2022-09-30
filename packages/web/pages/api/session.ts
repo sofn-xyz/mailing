@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { withSessionAPIRoute } from "../../util";
+import { withSessionAPIRoute } from "../../util/session";
 import * as EmailValidator from "email-validator";
 import { compare } from "bcrypt";
 import prisma from "../../prisma";
