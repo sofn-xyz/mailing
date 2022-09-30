@@ -1,4 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
+import * as EmailValidator from "email-validator";
 import { genSalt, hash } from "bcrypt";
 import { randomBytes } from "crypto";
 
@@ -33,6 +34,7 @@ async function createPlaceholderOrganization(hashedClientSecret: string) {
 
 const ERRORS = {
   userExists: "a user with that email already exists",
+  passwordMinLength: "password should be at least 8 characters",
   unknown: "an unknown error occurred",
 };
 
@@ -45,7 +47,12 @@ const handler = async (
   const email = req.body.email;
   const plainTextPassword = req.body.password;
 
-  // TODO: Verify password meets some criteria of length etc.
+  // validations
+  if (!EmailValidator.validate(email))
+    return res.status(400).json({ error: "email is invalid" });
+
+  if (plainTextPassword?.length < 8)
+    return res.status(400).json({ error: ERRORS.passwordMinLength });
 
   const salt = await genSalt(10);
   const hashedPassword = await hash(plainTextPassword, salt);

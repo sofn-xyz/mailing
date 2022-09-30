@@ -13,11 +13,14 @@ const Signup: NextPage = () => {
   const onSubmit = useCallback(async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    const email = emailRef.current.value;
+    const password = passwordRef.current.value;
+
     const response = await fetch("/api/users", {
       method: "POST",
       body: JSON.stringify({
-        email: emailRef.current.value,
-        password: passwordRef.current.value,
+        email,
+        password,
       }),
       headers: {
         "Content-Type": "application/json",
@@ -27,7 +30,8 @@ const Signup: NextPage = () => {
     if (201 === response.status) {
       // success!
     } else {
-      setErrors(await response.json());
+      const json = await response.json();
+      setErrors(json.error);
     }
   }, []);
 
@@ -41,7 +45,9 @@ const Signup: NextPage = () => {
                 Signup
               </h1>
 
-              <div className="bg-red-600 col-span-3">{errors}</div>
+              <div className="bg-red-300 col-span-3 rounded-md py-[8px] px-[12px]">
+                {errors}
+              </div>
 
               <form
                 action="/api/users"
