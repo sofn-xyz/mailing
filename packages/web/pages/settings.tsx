@@ -1,6 +1,7 @@
 import { withSession } from "../util";
 import { NextPage } from "next";
 import { InferGetServerSidePropsType } from "next";
+import { useState } from "react";
 
 type ApiKey = {
   id: string;
@@ -36,15 +37,21 @@ export const getServerSideProps = withSession(async function ({ req }) {
 });
 
 const Settings: NextPage = (props: { user: User; apiKeys: ApiKey[] }) => {
-  const apiKeys = props.apiKeys;
+  const [apiKeys, setApiKeys] = useState(props.apiKeys);
 
   const createApiKey = async () => {
-    await fetch("/api/apiKeys", {
+    const response = await fetch("/api/apiKeys", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
     });
+
+    const apiKey = await response.json();
+
+    console.log(apiKey);
+
+    setApiKeys(apiKeys.concat(apiKey));
   };
 
   return (
