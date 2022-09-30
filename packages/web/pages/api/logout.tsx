@@ -1,6 +1,9 @@
 import { withSessionAPIRoute } from "../../util";
-import { NextPage } from "next";
-import { InferGetServerSidePropsType } from "next";
+import { NextApiRequest, NextApiResponse } from "next";
+
+type Data = {
+  ok?: boolean;
+};
 
 const Logout = withSessionAPIRoute(async function (
   req: NextApiRequest,

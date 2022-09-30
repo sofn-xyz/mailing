@@ -26,7 +26,18 @@ model User {
 }
 
 model Organization {
-  id   String @id @default(cuid())
-  name String
-  User User[]
+  id     String   @id @default(cuid())
+  name   String
+  User   User[]
+  ApiKey ApiKey[]
+}
+
+model ApiKey {
+  id             String       @id @default(cuid())
+  createdAt      DateTime     @default(now())
+  active         Boolean      @default(true)
+  organizationId String
+  Organization   Organization @relation(fields: [organizationId], references: [id])
+
+  @@index([organizationId])
 }
