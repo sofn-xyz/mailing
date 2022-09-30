@@ -1,18 +1,19 @@
 import type { NextPage } from "next";
-import { useCallback, useRef } from "react";
+import { useCallback, useRef, useState } from "react";
 
 function onSubmit(e: React.FormEvent<HTMLFormElement>) {
   e.preventDefault();
 }
 
 const Signup: NextPage = () => {
+  const [errors, setErrors] = useState();
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
 
   const onSubmit = useCallback(async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    await fetch("/api/users", {
+    const response = await fetch("/api/users", {
       method: "POST",
       body: JSON.stringify({
         email: emailRef.current.value,
@@ -22,6 +23,12 @@ const Signup: NextPage = () => {
         "Content-Type": "application/json",
       },
     });
+
+    if (201 === response.status) {
+      // success!
+    } else {
+      setErrors(await response.json());
+    }
   }, []);
 
   return (
@@ -33,6 +40,9 @@ const Signup: NextPage = () => {
               <h1 className="col-span-3 text-4xl sm:text-7xl 2xl:text-8xl m-0">
                 Signup
               </h1>
+
+              <div className="bg-red-600 col-span-3">{errors}</div>
+
               <form
                 action="/api/users"
                 method="POST"
