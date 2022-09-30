@@ -15,21 +15,24 @@ model NewsletterSubscriber {
 }
 
 model User {
-  id             String       @id @default(cuid())
-  email          String       @unique
-  createdAt      DateTime     @default(now())
-  password       String
-  organizationId String
-  Organization   Organization @relation(fields: [organizationId], references: [id])
+  id        String   @id @default(cuid())
+  email     String   @unique
+  createdAt DateTime @default(now())
+  password  String
+
+  organizationId   String
+  Organization     Organization       @relation(fields: [organizationId], references: [id])
+  OauthAccessToken OauthAccessToken[]
 
   @@index([organizationId])
 }
 
 model Organization {
-  id     String   @id @default(cuid())
-  name   String
-  User   User[]
-  ApiKey ApiKey[]
+  id           String   @id @default(cuid())
+  name         String
+  User         User[]
+  ApiKey       ApiKey[]
+  clientSecret String
 }
 
 model ApiKey {
@@ -40,4 +43,15 @@ model ApiKey {
   Organization   Organization @relation(fields: [organizationId], references: [id])
 
   @@index([organizationId])
+}
+
+model OauthAccessToken {
+  id        String   @id @default(dbgenerated())
+  token     String   @unique
+  createdAt DateTime @default(now()) @db.Timestamptz(6)
+  updatedAt DateTime @default(now()) @updatedAt @db.Timestamptz(6)
+  userId    String
+  User      User     @relation(fields: [userId], references: [id])
+
+  @@index([userId])
 }

@@ -1,17 +1,32 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { genSalt, hash } from "bcrypt";
+import { randomBytes } from "crypto";
 
 import prisma from "../../prisma";
 import { Prisma } from "@prisma/client";
 
-type Data = {
-  error?: string;
+type DataError = {
+  error: string;
 };
 
-async function createPlaceholderOrganization() {
+type DataSuccess = {
+  clientId: string;
+  clientSecret: string;
+};
+
+type ResponseData = DataSuccess | DataError;
+
+// https://www.oauth.com/oauth2-servers/client-registration/client-id-secret/
+
+function generateClientSecret() {
+  return randomBytes(32).toString("hex");
+}
+
+async function createPlaceholderOrganization(hashedClientSecret: string) {
   return await prisma.organization.create({
     data: {
       name: "My organization",
+      clientSecret: hashedClientSecret,
     },
   });
 }
@@ -21,7 +36,10 @@ const ERRORS = {
   unknown: "an unknown error occurred",
 };
 
-const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
+const handler = async (
+  req: NextApiRequest,
+  res: NextApiResponse<ResponseData>
+) => {
   if (req.method !== "POST") return res.status(404).end();
 
   const email = req.body.email;
@@ -38,8 +56,18 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
 
   if (user) return res.status(400).json({ error: ERRORS.userExists });
 
-  const organization = await createPlaceholderOrganization();
+  /* Create the organization
+   */
+  // generate client secret
+  const clientSecret = generateClientSecret();
+  const clientSecretSalt = await genSalt(10);
+  const hashedClientSecret = await hash(clientSecret, clientSecretSalt);
 
+  // create organization in db
+  const organization = await createPlaceholderOrganization(hashedClientSecret);
+
+  /* Create the user
+   */
   try {
     await prisma.user.create({
       data: {
@@ -59,7 +87,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     }
   }
 
-  res.status(201).end();
+  res.status(201).json({ clientId: organization.id, clientSecret });
 };
 
 export default handler;

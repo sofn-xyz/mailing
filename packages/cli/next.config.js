@@ -6,7 +6,7 @@ module.exports = {
     return [
       {
         source: "/login",
-        destination: `https://github.com/login/oauth/authorize?client_id=${process.env.GITHUB_OAUTH_CLIENT_ID}&scope=user`,
+        destination: `http://localhost:3000/login/oauth/authorize?client_id=${process.env.MAILING_OAUTH_CLIENT_ID}&scope=user`,
         permanent: true,
       },
     ];
