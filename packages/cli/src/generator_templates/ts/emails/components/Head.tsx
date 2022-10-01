@@ -52,6 +52,9 @@ const Head: React.FC<HeadProps> = ({ children }) => {
           }
         }
         @media (prefers-color-scheme: dark) {
+          body {
+            background: ${black};
+          }
           .logo > * {
             filter: invert(1) !important;
           }

@@ -1,5 +1,11 @@
 # mailing-core
 
+## 0.8.2
+
+### Patch Changes
+
+- 689cada: Now you can deploy your mailing project to production by running `mailing deploy`. Also fixes a setting for darkmode
+
 ## 0.8.1
 
 ### Patch Changes
