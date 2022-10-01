@@ -1,4 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
+import prisma from "../../../../prisma/index";
+import { host } from "../../../util/mailingApi";
 
 const throwError = (error) => {
   throw new Error(JSON.stringify(error));
@@ -28,7 +30,7 @@ const requestGithubUserAccount = (token) =>
     .then(toJSON)
     .catch(throwError);
 
-const authorizeWithGithub = async (credentials) => {
+const authorizeWithMailing = async (credentials) => {
   const response = await requestGithubToken(credentials);
 
   if (response.status !== 200) {
@@ -55,11 +57,30 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const code = req.query.code;
+  let code = req.query.code;
 
-  let opts = await authorizeWithGithub({
-    client_id: process.env.GITHUB_OAUTH_CLIENT_ID,
-    client_secret: process.env.GITHUB_OAUTH_CLIENT_SECRET,
+  // check db Config table for client_id, client_secret
+  // if not, use code to fetch client_id, client_secret from mailing.run, write to DB
+  // fetch includes new code
+  let org = await prisma.Organization.findFirst();
+  if (!org) {
+    const response = await fetch(`${host}/api/oauth/client`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const json = await response.json();
+    code = json.code;
+    org = {
+      id: json.clientId,
+      clientSecret: json.clientSecret,
+    };
+    await prisma.Organization.create({ data: org });
+  }
+
+  let opts = await authorizeWithMailing({
+    client_id: org.id,
+    client_secret: org.clientSecret,
     code,
   });
 

@@ -10,7 +10,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Config {
-  id    String @id
-  value String
+model Organization {
+  id           String @id
+  clientSecret String
 }

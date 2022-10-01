@@ -37,7 +37,7 @@ const Header: React.FC<HeaderProps> = ({
       document.location.protocol +
         "//" +
         document.location.host +
-        "/api/oauth/postSignup"
+        "/api/oauth/callback"
     );
     setSignupUrl(`${mailingHost}/signup?redirectTo=${redirectTo}`);
   }, []);
