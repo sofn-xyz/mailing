@@ -2,13 +2,13 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import prisma from "../../../../prisma/index";
 import { host } from "../../../util/mailingApi";
 
-const throwError = (error) => {
-  throw new Error(JSON.stringify(error));
+type Cred = {
+  client_id?: string;
+  client_secret?: string;
+  code?: string;
 };
 
-const toJSON = (res) => res.json();
-
-const requestGithubToken = async (credentials) => {
+const requestGithubToken = async (credentials: Cred) => {
   console.log("credentials are", credentials);
 
   return fetch("https://github.com/login/oauth/access_token", {
@@ -21,16 +21,14 @@ const requestGithubToken = async (credentials) => {
   });
 };
 
-const requestGithubUserAccount = (token) =>
+const requestGithubUserAccount = (token: string) =>
   fetch(`https://api.github.com/user`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
-  })
-    .then(toJSON)
-    .catch(throwError);
+  });
 
-const authorizeWithMailing = async (credentials) => {
+const authorizeWithMailing = async (credentials: Cred) => {
   const response = await requestGithubToken(credentials);
 
   if (response.status !== 200) {
@@ -57,12 +55,12 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  let code = req.query.code;
+  let code = req.query.code as string | undefined;
 
   // check db Config table for client_id, client_secret
   // if not, use code to fetch client_id, client_secret from mailing.run, write to DB
   // fetch includes new code
-  let org = await prisma.Organization.findFirst();
+  let org = await prisma.organization.findFirst();
   if (!org) {
     const response = await fetch(`${host}/api/oauth/client`, {
       headers: {
@@ -75,7 +73,7 @@ export default async function handler(
       id: json.clientId,
       clientSecret: json.clientSecret,
     };
-    await prisma.Organization.create({ data: org });
+    await prisma.organization.create({ data: org });
   }
 
   let opts = await authorizeWithMailing({

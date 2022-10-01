@@ -1,11 +1,11 @@
-import { withSessionAPIRoute } from "../../util/session";
+import { withSessionRoute } from "../../util/session";
 import { NextApiRequest, NextApiResponse } from "next";
 
 type Data = {
   ok?: boolean;
 };
 
-const Logout = withSessionAPIRoute(async function (
+const Logout = withSessionRoute(async function (
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {

@@ -1,8 +1,8 @@
-import { withSession } from "../util/session";
+import { withSessionSsr } from "../util/session";
 import { NextPage } from "next";
 import { InferGetServerSidePropsType } from "next";
 
-export const getServerSideProps = withSession(
+export const getServerSideProps = withSessionSsr<{ user: any }>(
   async function getServerSideProps({ req }) {
     const user = req.session.user;
 
@@ -23,9 +23,9 @@ export const getServerSideProps = withSession(
   }
 );
 
-const Analytics: NextPage = (
-  props: InferGetServerSidePropsType<typeof getServerSideProps>
-) => {
+const Analytics: NextPage<
+  InferGetServerSidePropsType<typeof getServerSideProps>
+> = (props) => {
   return (
     <>
       <h1>Analytics - hi {props.user?.email}</h1>
