@@ -29,7 +29,7 @@ const Home: NextPage = () => {
 
   return (
     <>
-      <div className="w-full">
+      <div className="w-full dark:text-white">
         <Head>
           <title>Mailing – Build emails in React, send from anywhere</title>
           <meta property="og:title" content="Mailing" />
@@ -59,7 +59,9 @@ const Home: NextPage = () => {
           <link rel="icon" href="/favicon.ico" />
         </Head>
         <main>
-          <div className={`${styles.heroContainer} px-6 md:px-12 pt-16 pb-44`}>
+          <div
+            className={`${styles.heroContainer} bg-[linear-gradient(#999,#999),url('/index-bg@2x.jpg')] px-6 md:px-12 pt-16 pb-44 bg-blend-difference`}
+          >
             <div className="max-w-screen-xl mx-auto">
               <div className="flex justify-between items-top pb-32">
                 <div className="brand">
@@ -69,6 +71,7 @@ const Home: NextPage = () => {
                       height="32"
                       src="/mailing-logo.svg"
                       alt="Mailing logo"
+                      className="dark:invert"
                     />
                   </span>
                   <span className="sm:hidden">
@@ -77,6 +80,7 @@ const Home: NextPage = () => {
                       height="32"
                       src="/mailing-icon.svg"
                       alt="Mailing icon"
+                      className="dark:invert"
                     />
                   </span>
                 </div>
@@ -88,7 +92,7 @@ const Home: NextPage = () => {
                     Demo
                   </a>
                   <a
-                    className="text-black  leading-none ml-4 px-4 h-9 inline-flex items-center rounded-2xl border-2 border-black hover:underline"
+                    className="text-black dark:text-white leading-none ml-4 px-4 h-9 inline-flex items-center rounded-2xl border-2 border-black dark:border-white hover:underline"
                     href="https://github.com/sofn-xyz/mailing"
                     target="blank"
                   >
@@ -153,7 +157,7 @@ const Home: NextPage = () => {
               </div>
             </div>
           </div>
-          <div className="py-24 md:py-44">
+          <div className="py-24 md:py-44  dark:bg-neutral-500">
             <div className="px-6 md:px-12">
               <div className="max-w-screen-xl mx-auto">
                 <h1 className="text-5xl md:text-6xl md:mx-auto lg:mx-0 max-w-lg md:max-w-3xl text-left md:text-center lg:text-left lg:mb-24">
@@ -219,7 +223,7 @@ const Home: NextPage = () => {
               </div>
             </div>
           </div>
-          <div className="bg-blue-300 py-24 md:py-44">
+          <div className="bg-blue-300 py-24 md:py-44 dark:bg-black">
             <div className="px-6 md:px-12">
               <div className="mx-auto">
                 <h1 className="text-5xl md:text-6xl md:mx-auto lg:mx-0 text-left md:text-center">
@@ -235,13 +239,14 @@ const Home: NextPage = () => {
                     }
                   )}
                 >
-                  <Image
-                    width="720"
-                    height="405"
-                    src="/expanded-view@2x.jpg"
-                    className="rounded-2xl"
-                    alt="Mailing expanded view"
-                  />
+                  <span className="border-4 border-solid border-neutral-800 rounded-3xl inline-flex overflow-clip">
+                    <Image
+                      width="720"
+                      height="405"
+                      src="/expanded-view@2x.jpg"
+                      alt="Mailing expanded view"
+                    />
+                  </span>
                 </div>
 
                 <div className="flex flex-row flex-wrap items-stretch justify-items-stretch w-full justify-center">
@@ -275,7 +280,7 @@ const Home: NextPage = () => {
                 </div>
                 <div className="text-left md:text-center mt-2 md:mt-8">
                   <a
-                    className="text-black text-xl leading-none px-4 h-9 inline-flex items-center rounded-2xl border-2 border-black hover:underline"
+                    className="text-black dark:text-white text-xl leading-none px-4 h-9 inline-flex items-center rounded-2xl border-2 border-black dark:border-white hover:underline"
                     href="https://github.com/sofn-xyz/mailing/blob/main/docs/DEPLOY.md"
                     target="blank"
                   >
@@ -285,182 +290,187 @@ const Home: NextPage = () => {
               </div>
             </div>
           </div>
-          <div
-            ref={testimonialsRef}
-            className={cx(
-              "px-6 md:px-12 pt-16 sm:pt-32 pb-16 sm:pb-32 transition-all duration-700",
-              {
-                "opacity-0 translate-y-12": mounted && !testimonialsInView,
-                "opacity-1 translate-y-0": testimonialsInView,
-              }
-            )}
-          >
-            <h2 className="text-left sm:text-center text-5xl mb-12 sm:mb-16">
-              Kind words from the internet
-            </h2>
-            <div className="max-w-[1032px] mx-auto flex flex-row flex-wrap items-stretch justify-items-stretch">
-              <div className="md:basis-1/2 grow pb-3 sm:pb-6">
-                <div className="border border-black border-dotted rounded-2xl md:mr-3 p-8 h-full">
-                  <div className="flex justify-between items-center">
-                    <div className="flex justify-between items-top">
-                      <Image
-                        width="48"
-                        height="48"
-                        src="/testimonial-gr@2x.png"
-                        alt="Guillermo Rauch"
-                      />
-                      <div className="ml-3 inline-block place-content-center">
-                        <div className="pt-1 -mb-2">Guillermo Rauch</div>
-                        <a
-                          className="text-xs leading-none hover:underline"
-                          href="https://twitter.com/rauchg"
-                          target="blank"
-                          rel="noopener"
-                        >
-                          @rauchg
-                        </a>
+          <div className="dark:bg-neutral-500">
+            <div
+              ref={testimonialsRef}
+              className={cx(
+                "px-6 md:px-12 pt-16 sm:pt-32 pb-16 sm:pb-32 transition-all duration-700",
+                {
+                  "opacity-0 translate-y-12": mounted && !testimonialsInView,
+                  "opacity-1 translate-y-0": testimonialsInView,
+                }
+              )}
+            >
+              <h2 className="text-left sm:text-center text-5xl mb-12 sm:mb-16">
+                Kind words from the internet
+              </h2>
+              <div className="max-w-[1032px] mx-auto flex flex-row flex-wrap items-stretch justify-items-stretch">
+                <div className="md:basis-1/2 grow pb-3 sm:pb-6">
+                  <div className="border border-black border-dotted rounded-2xl md:mr-3 p-8 h-full">
+                    <div className="flex justify-between items-center">
+                      <div className="flex justify-between items-top">
+                        <Image
+                          width="48"
+                          height="48"
+                          src="/testimonial-gr@2x.png"
+                          alt="Guillermo Rauch"
+                        />
+                        <div className="ml-3 inline-block place-content-center">
+                          <div className="pt-1 -mb-2">Guillermo Rauch</div>
+                          <a
+                            className="text-xs leading-none hover:underline"
+                            href="https://twitter.com/rauchg"
+                            target="blank"
+                            rel="noopener"
+                          >
+                            @rauchg
+                          </a>
+                        </div>
                       </div>
+                      <a
+                        href="https://twitter.com/rauchg/status/1556013344082894848"
+                        target="blank"
+                      >
+                        <Image
+                          width="20"
+                          height="20"
+                          src="/icon-twitter.svg"
+                          alt="Twitter icon"
+                        />
+                      </a>
                     </div>
-                    <a
-                      href="https://twitter.com/rauchg/status/1556013344082894848"
-                      target="blank"
-                    >
-                      <Image
-                        width="20"
-                        height="20"
-                        src="/icon-twitter.svg"
-                        alt="Twitter icon"
-                      />
-                    </a>
+                    <p className="leading-snug mt-4">
+                      This is sublime. Action Mailer-inspired, @nextjs
+                      compatible email system. Send emails built with @reactjs
+                      components.
+                      <br />
+                      <br />
+                      https://mailing.run
+                    </p>
                   </div>
-                  <p className="leading-snug mt-4">
-                    This is sublime. Action Mailer-inspired, @nextjs compatible
-                    email system. Send emails built with @reactjs components.
-                    <br />
-                    <br />
-                    https://mailing.run
-                  </p>
                 </div>
-              </div>
-              <div className="md:basis-1/2 grow pb-3 sm:pb-6">
-                <div className="border border-black border-dotted rounded-2xl md:ml-3 p-8 h-full">
-                  <div className="flex justify-between items-center">
-                    <div className="flex justify-between items-top">
-                      <Image
-                        width="48"
-                        height="48"
-                        src="/testimonial-cv@2x.png"
-                        alt="Cymen Vig"
-                      />
-                      <div className="ml-3 inline-block place-content-center">
-                        <div className="pt-1 -mb-2">Cymen Vig</div>
-                        <a
-                          className="text-xs leading-none hover:underline"
-                          href="https://github.com/cymen"
-                          target="blank"
-                        >
-                          @cymen
-                        </a>
+                <div className="md:basis-1/2 grow pb-3 sm:pb-6">
+                  <div className="border border-black border-dotted rounded-2xl md:ml-3 p-8 h-full">
+                    <div className="flex justify-between items-center">
+                      <div className="flex justify-between items-top">
+                        <Image
+                          width="48"
+                          height="48"
+                          src="/testimonial-cv@2x.png"
+                          alt="Cymen Vig"
+                        />
+                        <div className="ml-3 inline-block place-content-center">
+                          <div className="pt-1 -mb-2">Cymen Vig</div>
+                          <a
+                            className="text-xs leading-none hover:underline"
+                            href="https://github.com/cymen"
+                            target="blank"
+                          >
+                            @cymen
+                          </a>
+                        </div>
                       </div>
+                      <a
+                        href="https://github.com/sofn-xyz/mailing/issues/89#issuecomment-1206689044"
+                        target="blank"
+                      >
+                        <Image
+                          width="20"
+                          height="20"
+                          src="/icon-gh@2x.png"
+                          alt="GitHub icon"
+                        />
+                      </a>
                     </div>
-                    <a
-                      href="https://github.com/sofn-xyz/mailing/issues/89#issuecomment-1206689044"
-                      target="blank"
-                    >
-                      <Image
-                        width="20"
-                        height="20"
-                        src="/icon-gh@2x.png"
-                        alt="GitHub icon"
-                      />
-                    </a>
+                    <p className="leading-snug mt-4">
+                      Really happy to find mailing – thank you for sharing it. I
+                      was already using MJML but it didn’t fit well in my
+                      workflow. I’m excited to be able to use all of that and
+                      have the excellent preview capabilities of mailing!
+                    </p>
                   </div>
-                  <p className="leading-snug mt-4">
-                    Really happy to find mailing – thank you for sharing it. I
-                    was already using MJML but it didn’t fit well in my
-                    workflow. I’m excited to be able to use all of that and have
-                    the excellent preview capabilities of mailing!
-                  </p>
                 </div>
-              </div>
-              <div className="md:basis-1/2 grow pb-3 sm:pb-6">
-                <div className="border border-black border-dotted rounded-2xl md:mr-3 p-8 h-full">
-                  <div className="flex justify-between items-center">
-                    <div className="flex justify-between items-top">
-                      <Image
-                        width="48"
-                        height="48"
-                        src="/testimonial-email@2x.png"
-                        alt="Email icon"
-                      />
-                      <div className="ml-3 inline-block place-content-center">
-                        <div className="pt-1 -mb-2">Johan</div>
-                        <span className="text-xs leading-none ">via email</span>
+                <div className="md:basis-1/2 grow pb-3 sm:pb-6">
+                  <div className="border border-black border-dotted rounded-2xl md:mr-3 p-8 h-full">
+                    <div className="flex justify-between items-center">
+                      <div className="flex justify-between items-top">
+                        <Image
+                          width="48"
+                          height="48"
+                          src="/testimonial-email@2x.png"
+                          alt="Email icon"
+                        />
+                        <div className="ml-3 inline-block place-content-center">
+                          <div className="pt-1 -mb-2">Johan</div>
+                          <span className="text-xs leading-none ">
+                            via email
+                          </span>
+                        </div>
                       </div>
                     </div>
+                    <p className="leading-snug mt-4">
+                      Again, thanks for the beautiful development experience
+                      mailing brings.
+                    </p>
                   </div>
-                  <p className="leading-snug mt-4">
-                    Again, thanks for the beautiful development experience
-                    mailing brings.
-                  </p>
                 </div>
-              </div>
-              <div className="md:basis-1/2 grow pb-3 sm:pb-6">
-                <div className="border border-black border-dotted rounded-2xl md:ml-3 p-8 h-full">
-                  <div className="flex justify-between items-center">
-                    <div className="flex justify-between items-top">
-                      <Image
-                        width="48"
-                        height="48"
-                        src="/testimonial-wv@2x.png"
-                        alt="Will Viles"
-                      />
-                      <div className="ml-3 inline-block place-content-center">
-                        <div className="pt-1 -mb-2">Will Viles</div>
-                        <a
-                          className="text-xs leading-none hover:underline"
-                          href="https://github.com/willviles"
-                          target="blank"
-                        >
-                          @willviles
-                        </a>
+                <div className="md:basis-1/2 grow pb-3 sm:pb-6">
+                  <div className="border border-black border-dotted rounded-2xl md:ml-3 p-8 h-full">
+                    <div className="flex justify-between items-center">
+                      <div className="flex justify-between items-top">
+                        <Image
+                          width="48"
+                          height="48"
+                          src="/testimonial-wv@2x.png"
+                          alt="Will Viles"
+                        />
+                        <div className="ml-3 inline-block place-content-center">
+                          <div className="pt-1 -mb-2">Will Viles</div>
+                          <a
+                            className="text-xs leading-none hover:underline"
+                            href="https://github.com/willviles"
+                            target="blank"
+                          >
+                            @willviles
+                          </a>
+                        </div>
                       </div>
+                      <a
+                        href="https://github.com/sofn-xyz/mailing/issues/163#issuecomment-1241643724"
+                        target="blank"
+                      >
+                        <Image
+                          width="20"
+                          height="20"
+                          src="/icon-gh@2x.png"
+                          alt="GitHub icon"
+                        />
+                      </a>
                     </div>
-                    <a
-                      href="https://github.com/sofn-xyz/mailing/issues/163#issuecomment-1241643724"
-                      target="blank"
-                    >
-                      <Image
-                        width="20"
-                        height="20"
-                        src="/icon-gh@2x.png"
-                        alt="GitHub icon"
-                      />
-                    </a>
+                    <p className="leading-snug mt-4">
+                      Wow, you guys are fast! Thank you{" "}
+                      <a
+                        href="https:://github.com/alexfarril"
+                        target="blank"
+                        className="hover:underline"
+                      >
+                        @alexfarrill
+                      </a>{" "}
+                      <a
+                        href="https://github.com/psugihara"
+                        target="blank"
+                        className="hover:underline"
+                      >
+                        @psugihara
+                      </a>{" "}
+                      for such a speedy fix 👍
+                    </p>
                   </div>
-                  <p className="leading-snug mt-4">
-                    Wow, you guys are fast! Thank you{" "}
-                    <a
-                      href="https:://github.com/alexfarril"
-                      target="blank"
-                      className="hover:underline"
-                    >
-                      @alexfarrill
-                    </a>{" "}
-                    <a
-                      href="https://github.com/psugihara"
-                      target="blank"
-                      className="hover:underline"
-                    >
-                      @psugihara
-                    </a>{" "}
-                    for such a speedy fix 👍
-                  </p>
                 </div>
               </div>
             </div>
           </div>
-          <div className="bg-green-50 px-6 md:px-12 py-24 md:py-44">
+          <div className="bg-green-50 px-6 md:px-12 py-24 md:py-44 dark:bg-black">
             <div className="max-w-5xl mx-auto">
               <div className="flex flex-col lg:flex-row justify-between md:items-center">
                 <div
@@ -503,7 +513,7 @@ const Home: NextPage = () => {
           </div>
         </main>
         <footer>
-          <div className="bg-neutral-900 py-6 text-center">
+          <div className="bg-black py-6 text-center">
             <Image
               width="25.6"
               height="32"
