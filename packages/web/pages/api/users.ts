@@ -12,7 +12,7 @@ type DataError = {
 
 type DataSuccess = {
   clientId: string;
-  clientSecret: string;
+  code: string;
 };
 
 type ResponseData = DataSuccess | DataError;
@@ -23,11 +23,10 @@ function generateClientSecret() {
   return randomBytes(32).toString("hex");
 }
 
-async function createPlaceholderOrganization(hashedClientSecret: string) {
+async function createPlaceholderOrganization() {
   return await prisma.organization.create({
     data: {
       name: "My organization",
-      clientSecret: hashedClientSecret,
     },
   });
 }
@@ -57,26 +56,19 @@ const handler = async (
   const salt = await genSalt(10);
   const hashedPassword = await hash(plainTextPassword, salt);
 
-  const user = await prisma.user.findFirst({
+  let user = await prisma.user.findFirst({
     where: { email },
   });
 
   if (user) return res.status(400).json({ error: ERRORS.userExists });
 
-  /* Create the organization
-   */
-  // generate client secret
-  const clientSecret = generateClientSecret();
-  const clientSecretSalt = await genSalt(10);
-  const hashedClientSecret = await hash(clientSecret, clientSecretSalt);
-
   // create organization in db
-  const organization = await createPlaceholderOrganization(hashedClientSecret);
+  const organization = await createPlaceholderOrganization();
 
   /* Create the user
    */
   try {
-    await prisma.user.create({
+    user = await prisma.user.create({
       data: {
         email,
         password: hashedPassword,
@@ -94,7 +86,24 @@ const handler = async (
     }
   }
 
-  res.status(201).json({ clientId: organization.id, clientSecret });
+  if (!user) {
+    console.error("user null");
+    return res.status(500).json({ error: ERRORS.unknown });
+  }
+
+  // Create the auth code
+  const code = randomBytes(32).toString("hex");
+  const codeSalt = await genSalt(10);
+  const hashedCode = await hash(code, codeSalt);
+  await prisma.oauthAuthorizationCode.create({
+    data: {
+      code: hashedCode,
+      userId: "ok",
+      expiresAt: new Date(Date.now() + 15 * 60 * 1000),
+    },
+  });
+
+  res.status(201).json({ clientId: organization.id, code: hashedCode });
 };
 
 export default handler;

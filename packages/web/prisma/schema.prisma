@@ -20,19 +20,21 @@ model User {
   createdAt DateTime @default(now())
   password  String
 
-  organizationId   String
-  Organization     Organization       @relation(fields: [organizationId], references: [id])
-  OauthAccessToken OauthAccessToken[]
+  organizationId         String
+  Organization           Organization             @relation(fields: [organizationId], references: [id])
+  OauthAccessToken       OauthAccessToken[]
+  OauthAuthorizationCode OauthAuthorizationCode[]
 
   @@index([organizationId])
 }
 
 model Organization {
-  id           String   @id @default(cuid())
-  name         String
-  User         User[]
-  ApiKey       ApiKey[]
-  clientSecret String
+  id                     String                   @id @default(cuid())
+  name                   String
+  User                   User[]
+  ApiKey                 ApiKey[]
+  clientSecret           String?
+  OauthAuthorizationCode OauthAuthorizationCode[]
 }
 
 model ApiKey {
@@ -46,12 +48,27 @@ model ApiKey {
 }
 
 model OauthAccessToken {
-  id        String   @id @default(dbgenerated())
+  id        String   @id @default(cuid())
   token     String   @unique
   createdAt DateTime @default(now()) @db.Timestamptz(6)
   updatedAt DateTime @default(now()) @updatedAt @db.Timestamptz(6)
   userId    String
   User      User     @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+}
+
+model OauthAuthorizationCode {
+  id        String   @id @default(cuid())
+  code      String
+  createdAt DateTime @default(now()) @db.Timestamptz(6)
+  expiresAt DateTime @default(now()) @db.Timestamptz(6)
+
+  userId String
+  User   User   @relation(fields: [userId], references: [id])
+
+  organizationId String
+  Organization   Organization @relation(fields: [organizationId], references: [id])
 
   @@index([userId])
 }

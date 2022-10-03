@@ -10,7 +10,8 @@ import { ParsedUrlQuery } from "querystring";
 declare module "iron-session" {
   interface IronSessionData {
     user?: {
-      id: number;
+      id: string;
+      accessToken: string;
     };
   }
 }
