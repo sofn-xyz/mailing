@@ -3,9 +3,7 @@ import {
   GetServerSidePropsContext,
   GetServerSidePropsResult,
   NextApiHandler,
-  PreviewData,
 } from "next";
-import { ParsedUrlQuery } from "querystring";
 
 declare module "iron-session" {
   interface IronSessionData {

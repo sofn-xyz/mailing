@@ -1,11 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import * as EmailValidator from "email-validator";
 import { genSalt, hash, compare } from "bcrypt";
 import { randomBytes } from "crypto";
 
 import prisma from "../../../prisma";
-import { Prisma } from "@prisma/client";
-import { withSessionAPIRoute } from "../../../util/session";
 
 type DataError = {
   error: string;
@@ -15,6 +12,7 @@ type DataSuccess = {
   clientId: string;
   clientSecret: string;
   accessToken: string;
+  userId: string;
 };
 
 type ResponseData = DataSuccess | DataError;
@@ -29,30 +27,19 @@ const handler = async (
   req: NextApiRequest,
   res: NextApiResponse<ResponseData>
 ) => {
-  const { code, organizationId, userId } = req.query;
+  const { code } = req.query;
 
-  if (
-    typeof code !== "string" ||
-    typeof organizationId !== "string" ||
-    typeof userId !== "string"
-  ) {
-    return res.status(403).end("code, organizationId, userId required");
-  }
+  if (typeof code !== "string") return res.status(403).end("code required");
 
   const authCode = await prisma.oauthAuthorizationCode.findFirstOrThrow({
-    where: { organizationId, userId },
+    where: { code },
     orderBy: { createdAt: "desc" },
   });
   await prisma.oauthAuthorizationCode.deleteMany({
-    where: { organizationId, userId },
+    where: { organizationId: authCode.organizationId, userId: authCode.userId },
   });
   if (authCode.expiresAt.getTime() < Date.now()) {
     return res.status(401).end("authCode expired");
-  }
-
-  const authenticated = await compare(code, authCode.code);
-  if (!authenticated) {
-    return res.status(401).end("bad code");
   }
 
   const org = await prisma.organization.findFirst({
@@ -75,7 +62,7 @@ const handler = async (
   await prisma.oauthAccessToken.create({
     data: {
       token: hashedToken,
-      userId: userId,
+      userId: authCode.userId,
     },
   });
 
@@ -83,6 +70,7 @@ const handler = async (
     clientId: authCode.organizationId,
     clientSecret,
     accessToken: token,
+    userId: authCode.userId,
   });
 };
 

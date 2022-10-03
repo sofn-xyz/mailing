@@ -11,18 +11,12 @@ type DataError = {
 };
 
 type DataSuccess = {
-  clientId: string;
-  userId: string;
   code: string;
 };
 
 type ResponseData = DataSuccess | DataError;
 
-// https://www.oauth.com/oauth2-servers/client-registration/client-id-secret/
-
-function generateClientSecret() {
-  return randomBytes(32).toString("hex");
-}
+const MINS_VALID = 10;
 
 async function createPlaceholderOrganization() {
   return await prisma.organization.create({
@@ -93,21 +87,17 @@ const handler = async (
   }
 
   // Create the auth code
-  const code = randomBytes(32).toString("hex");
-  const codeSalt = await genSalt(10);
-  const hashedCode = await hash(code, codeSalt);
+  const code = randomBytes(10).toString("hex");
   await prisma.oauthAuthorizationCode.create({
     data: {
-      code: hashedCode,
+      code,
       userId: user.id,
       organizationId: organization.id,
-      expiresAt: new Date(Date.now() + 15 * 60 * 1000),
+      expiresAt: new Date(Date.now() + MINS_VALID * 60 * 1000),
     },
   });
 
-  res
-    .status(201)
-    .json({ clientId: organization.id, userId: user.id, code: hashedCode });
+  res.status(201).json({ code });
 };
 
 export default handler;

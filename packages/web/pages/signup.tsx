@@ -12,33 +12,37 @@ const Signup: NextPage = () => {
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
   const router = useRouter();
+  const { redirectTo } = router.query;
 
-  const onSubmit = useCallback(async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const onSubmit = useCallback(
+    async (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
 
-    const email = emailRef.current.value;
-    const password = passwordRef.current.value;
+      const email = emailRef.current.value;
+      const password = passwordRef.current.value;
 
-    const response = await fetch("/api/users", {
-      method: "POST",
-      body: JSON.stringify({
-        email,
-        password,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+      const response = await fetch("/api/users", {
+        method: "POST",
+        body: JSON.stringify({
+          email,
+          password,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
-    if (201 === response.status) {
-      // success!
-      const { code, userId, clientId } = await response.json();
-      window.location.href = `${router.query.redirectTo}?code=${code}&userId=${userId}&organizationId=${clientId}`;
-    } else {
-      const json = await response.json();
-      setErrors(json.error);
-    }
-  }, []);
+      if (201 === response.status) {
+        // success!
+        const { code } = await response.json();
+        window.location.href = `${redirectTo}?code=${code}`;
+      } else {
+        const json = await response.json();
+        setErrors(json.error);
+      }
+    },
+    [redirectTo]
+  );
 
   return (
     <>
