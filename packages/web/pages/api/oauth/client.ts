@@ -46,7 +46,7 @@ const handler = async (
   await prisma.oauthAuthorizationCode.deleteMany({
     where: { organizationId, userId },
   });
-  if (authCode.expiresAt.getTime() > Date.now()) {
+  if (authCode.expiresAt.getTime() < Date.now()) {
     return res.status(401).end("authCode expired");
   }
 

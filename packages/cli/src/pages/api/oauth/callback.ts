@@ -31,6 +31,7 @@ export default async function handler(
     }
   );
   if (response.status !== 201) {
+    console.error("response", response.status, await response.text());
     throw new Error("error fetching access token from web");
   }
   const json = await response.json();

@@ -12,6 +12,7 @@ type DataError = {
 
 type DataSuccess = {
   clientId: string;
+  userId: string;
   code: string;
 };
 
@@ -98,12 +99,15 @@ const handler = async (
   await prisma.oauthAuthorizationCode.create({
     data: {
       code: hashedCode,
-      userId: "ok",
+      userId: user.id,
+      organizationId: organization.id,
       expiresAt: new Date(Date.now() + 15 * 60 * 1000),
     },
   });
 
-  res.status(201).json({ clientId: organization.id, code: hashedCode });
+  res
+    .status(201)
+    .json({ clientId: organization.id, userId: user.id, code: hashedCode });
 };
 
 export default handler;

@@ -1,6 +1,7 @@
 import FormError from "../components/FormError";
 import type { NextPage } from "next";
 import { useCallback, useRef, useState } from "react";
+import { useRouter } from "next/router";
 
 function onSubmit(e: React.FormEvent<HTMLFormElement>) {
   e.preventDefault();
@@ -10,6 +11,7 @@ const Signup: NextPage = () => {
   const [errors, setErrors] = useState();
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
+  const router = useRouter();
 
   const onSubmit = useCallback(async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -30,6 +32,8 @@ const Signup: NextPage = () => {
 
     if (201 === response.status) {
       // success!
+      const { code, userId, clientId } = await response.json();
+      window.location.href = `${router.query.redirectTo}?code=${code}&userId=${userId}&organizationId=${clientId}`;
     } else {
       const json = await response.json();
       setErrors(json.error);
