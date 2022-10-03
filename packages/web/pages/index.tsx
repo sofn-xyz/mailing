@@ -60,7 +60,7 @@ const Home: NextPage = () => {
         </Head>
         <main>
           <div
-            className={`${styles.heroContainer} bg-[linear-gradient(#999,#999),url('/index-bg@2x.jpg')] px-6 md:px-12 pt-16 pb-44 bg-blend-difference`}
+            className={`${styles.heroContainer} bg-[url('/index-bg@2x.jpg')] dark:bg-[url('/hero-bg_dark@2x.jpg')] px-6 md:px-12 pt-16 pb-44`}
           >
             <div className="max-w-screen-xl mx-auto">
               <div className="flex justify-between items-top pb-32">
@@ -157,7 +157,7 @@ const Home: NextPage = () => {
               </div>
             </div>
           </div>
-          <div className="py-24 md:py-44  dark:bg-neutral-500">
+          <div className="py-24 md:py-44  dark:bg-neutral-900 -mt-px">
             <div className="px-6 md:px-12">
               <div className="max-w-screen-xl mx-auto">
                 <h1 className="text-5xl md:text-6xl md:mx-auto lg:mx-0 max-w-lg md:max-w-3xl text-left md:text-center lg:text-left lg:mb-24">
@@ -223,7 +223,7 @@ const Home: NextPage = () => {
               </div>
             </div>
           </div>
-          <div className="bg-blue-300 py-24 md:py-44 dark:bg-black">
+          <div className="bg-blue-300 py-24 md:py-44 dark:bg-[url('/local-bg_dark@2x.jpg')] bg-cover">
             <div className="px-6 md:px-12">
               <div className="mx-auto">
                 <h1 className="text-5xl md:text-6xl md:mx-auto lg:mx-0 text-left md:text-center">
@@ -250,7 +250,7 @@ const Home: NextPage = () => {
                 </div>
 
                 <div className="flex flex-row flex-wrap items-stretch justify-items-stretch w-full justify-center">
-                  <div className="md:basis-1/2 grow mx-0 pr-0 lg:pr-4 md:mx-auto lg:mx-0 text-left md:text-center md:max-w-[420px] pb-8 md:pb-12">
+                  <div className="md:basis-1/2 grow mx-0 pr-0 lg:px-2 md:mx-auto lg:mx-0 text-left md:text-center md:max-w-[420px] pb-8 md:pb-12">
                     <p className="text-xl md:text-2xl leading-snug m-0 pb-2 mx-0 md:mx-auto lg:mx-0 max-w-sm]">
                       ●&nbsp;&nbsp;Share your previews
                     </p>
@@ -259,16 +259,16 @@ const Home: NextPage = () => {
                       your team and clients at your domain.
                     </p>
                   </div>
-                  <div className="md:basis-1/2 grow mx-0 md:mx-auto lg:mx-0 text-left md:pl-4 md:text-center md:max-w-[420px] pb-8 md:pb-12">
+                  <div className="md:basis-1/2 grow mx-0 md:mx-auto lg:mx-0 text-left lg:px-2 md:text-center md:max-w-[420px] pb-8 md:pb-12">
                     <p className="text-xl md:text-2xl leading-snug m-0 pb-2 mx-0 md:mx-auto lg:mx-0 max-w-sm]">
                       ●&nbsp;&nbsp;Render via API
                     </p>
-                    <p className="leading-snug ">
+                    <p className="leading-snug">
                       Use the preview server’s REST API to render and send
                       templates from any environment – not just Node apps.
                     </p>
                   </div>
-                  <div className="md:basis-1/2 grow mx-0 pl-0 lg:pl-4 md:mx-auto lg:mx-0 text-left md:text-center md:max-w-[420px] pb-8 md:pb-12">
+                  <div className="md:basis-1/2 grow mx-0 pl-0 lg:px-2 md:mx-auto lg:mx-0 text-left md:text-center md:max-w-[420px] pb-8 md:pb-12">
                     <p className="text-xl md:text-2xl leading-snug m-0 pb-2 mx-0 md:mx-auto lg:mx-0 max-w-sm]">
                       ●&nbsp;&nbsp;Deploy anywhere
                     </p>
@@ -290,7 +290,7 @@ const Home: NextPage = () => {
               </div>
             </div>
           </div>
-          <div className="dark:bg-neutral-500">
+          <div className="dark:bg-neutral-900">
             <div
               ref={testimonialsRef}
               className={cx(
@@ -306,7 +306,7 @@ const Home: NextPage = () => {
               </h2>
               <div className="max-w-[1032px] mx-auto flex flex-row flex-wrap items-stretch justify-items-stretch">
                 <div className="md:basis-1/2 grow pb-3 sm:pb-6">
-                  <div className="border border-black border-dotted rounded-2xl md:mr-3 p-8 h-full">
+                  <div className="border border-black dark:border-neutral-700 border-dotted rounded-2xl md:mr-3 p-8 h-full">
                     <div className="flex justify-between items-center">
                       <div className="flex justify-between items-top">
                         <Image
@@ -330,6 +330,7 @@ const Home: NextPage = () => {
                       <a
                         href="https://twitter.com/rauchg/status/1556013344082894848"
                         target="blank"
+                        className="dark:invert dark:opacity-75"
                       >
                         <Image
                           width="20"
@@ -350,7 +351,7 @@ const Home: NextPage = () => {
                   </div>
                 </div>
                 <div className="md:basis-1/2 grow pb-3 sm:pb-6">
-                  <div className="border border-black border-dotted rounded-2xl md:ml-3 p-8 h-full">
+                  <div className="border border-black dark:border-neutral-700 border-dotted rounded-2xl md:ml-3 p-8 h-full">
                     <div className="flex justify-between items-center">
                       <div className="flex justify-between items-top">
                         <Image
@@ -362,7 +363,7 @@ const Home: NextPage = () => {
                         <div className="ml-3 inline-block place-content-center">
                           <div className="pt-1 -mb-2">Cymen Vig</div>
                           <a
-                            className="text-xs leading-none hover:underline"
+                            className="text-xs leading-none hover:underline "
                             href="https://github.com/cymen"
                             target="blank"
                           >
@@ -373,6 +374,7 @@ const Home: NextPage = () => {
                       <a
                         href="https://github.com/sofn-xyz/mailing/issues/89#issuecomment-1206689044"
                         target="blank"
+                        className="dark:invert dark:opacity-75"
                       >
                         <Image
                           width="20"
@@ -391,7 +393,7 @@ const Home: NextPage = () => {
                   </div>
                 </div>
                 <div className="md:basis-1/2 grow pb-3 sm:pb-6">
-                  <div className="border border-black border-dotted rounded-2xl md:mr-3 p-8 h-full">
+                  <div className="border border-black dark:border-neutral-700 border-dotted rounded-2xl md:mr-3 p-8 h-full">
                     <div className="flex justify-between items-center">
                       <div className="flex justify-between items-top">
                         <Image
@@ -415,7 +417,7 @@ const Home: NextPage = () => {
                   </div>
                 </div>
                 <div className="md:basis-1/2 grow pb-3 sm:pb-6">
-                  <div className="border border-black border-dotted rounded-2xl md:ml-3 p-8 h-full">
+                  <div className="border border-black dark:border-neutral-700 border-dotted rounded-2xl md:ml-3 p-8 h-full">
                     <div className="flex justify-between items-center">
                       <div className="flex justify-between items-top">
                         <Image
@@ -438,6 +440,7 @@ const Home: NextPage = () => {
                       <a
                         href="https://github.com/sofn-xyz/mailing/issues/163#issuecomment-1241643724"
                         target="blank"
+                        className="dark:invert dark:opacity-75"
                       >
                         <Image
                           width="20"
@@ -470,13 +473,13 @@ const Home: NextPage = () => {
               </div>
             </div>
           </div>
-          <div className="bg-green-50 px-6 md:px-12 py-24 md:py-44 dark:bg-black">
+          <div className="bg-green-50 px-6 md:px-12 py-24 md:py-44 dark:bg-[url('/local-bg_dark@2x.jpg')] bg-cover">
             <div className="max-w-5xl mx-auto">
               <div className="flex flex-col lg:flex-row justify-between md:items-center">
                 <div
                   ref={osImageRef}
                   className={cx(
-                    "mt-10 lg:mt-0 sm:mx-0 md:mx-auto lg:mr-28 lg:ml-0 transition-all duration-700",
+                    "dark:hidden block mt-10 lg:mt-0 sm:mx-0 md:mx-auto lg:mr-28 lg:ml-0 transition-all duration-700",
                     {
                       "opacity-0": mounted && !osImageInView,
                       "opacity-1": osImageInView,
@@ -487,6 +490,23 @@ const Home: NextPage = () => {
                     width="400"
                     height="387"
                     src="/opensource@2x.png"
+                    alt="Mailing open source"
+                  />
+                </div>
+                <div
+                  ref={osImageRef}
+                  className={cx(
+                    "hidden dark:block mt-10 lg:mt-0 sm:mx-0 md:mx-auto lg:mr-28 lg:ml-0 transition-all duration-700",
+                    {
+                      "opacity-0": mounted && !osImageInView,
+                      "opacity-1": osImageInView,
+                    }
+                  )}
+                >
+                  <Image
+                    width="400"
+                    height="387"
+                    src="/os_dark@2x.png"
                     alt="Mailing open source"
                   />
                 </div>
@@ -501,7 +521,7 @@ const Home: NextPage = () => {
                     feedback and contributions from the community.
                   </p>
                   <a
-                    className="text-black text-xl leading-none px-4 h-9 inline-flex items-center rounded-2xl border-2 border-black hover:underline"
+                    className="text-black dark:text-white text-xl leading-none px-4 h-9 inline-flex items-center rounded-2xl border-2 border-black dark:border-white hover:underline"
                     href="https://github.com/sofn-xyz/mailing"
                     target="blank"
                   >
@@ -513,12 +533,13 @@ const Home: NextPage = () => {
           </div>
         </main>
         <footer>
-          <div className="bg-black py-6 text-center">
+          <div className="bg-neutral-900 py-6 text-center">
             <Image
-              width="25.6"
-              height="32"
+              width="19.2"
+              height="24"
               src="/mailing-icon-white.svg"
               alt="Mailing icon"
+              className="dark:opacity-75"
             />
           </div>
         </footer>

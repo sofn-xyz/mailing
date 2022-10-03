@@ -1,7 +1,7 @@
 .heroContainer {
   background-position: center right;
   background-size: cover;
-  min-height: calc(100vh - 150px);
+  /* min-height: calc(100vh - 150px); */
 }
 
 #headline {
@@ -119,3 +119,15 @@
     opacity: 0;
   }
 }
+
+@media (prefers-color-scheme: dark) {
+  .heroContainer {
+    background-position: center left;
+  }
+}
+
+/* @media (min-height: 360px) {
+  .heroContainer {
+    background-position: center left;
+  }
+} */
