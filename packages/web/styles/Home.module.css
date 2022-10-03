@@ -1,7 +1,6 @@
 .heroContainer {
   background-position: center right;
   background-size: cover;
-  /* min-height: calc(100vh - 150px); */
 }
 
 #headline {
@@ -126,8 +125,15 @@
   }
 }
 
-/* @media (min-height: 360px) {
+@media (min-height: 1200px) {
   .heroContainer {
-    background-position: center left;
+    min-height: calc(100vh - 420px);
   }
-} */
+  #headline,
+  #img,
+  .img1,
+  .img2,
+  .img3 {
+    padding-top: 64px;
+  }
+}
