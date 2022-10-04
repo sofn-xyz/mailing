@@ -1,17 +1,18 @@
+import { compare } from "bcrypt";
 import { NextApiRequest, NextApiResponse } from "next";
+import { Prisma } from "@prisma/client";
 
 type ResponseData = {
-  id: string;
-  email: string;
-  authorizations: { analytics: boolean };
+  user: any;
 };
 
-async function authenticateOauthUser(req: NextApiRequest) {
-  const token = req.headers["Authorization"];
-
-  // TODO: parse it out of string with "Bearer: " prefix
-
-  const userId = req.query.id as string;
+async function validateUserOauth(
+  userId: string,
+  authHeader: string
+): Promise<boolean> {
+  const parsedAuthHeader = authHeader.match(/^bearer: (.*)/i);
+  if (null === parsedAuthHeader) return false;
+  const token = parsedAuthHeader[1];
 
   const oauthAccessTokens = await prisma.oauthAccessToken.findMany({
     where: {
@@ -19,23 +20,34 @@ async function authenticateOauthUser(req: NextApiRequest) {
     },
   });
 
-  if (some(oauthAccessTokens, (dbToken) => {
-    // bcrypt validate dbToken
-  }))
+  const authenticated = oauthAccessTokens.some(
+    async (oauthAccessToken) => await compare(token, oauthAccessToken.token)
+  );
+
+  return authenticated;
 }
 
-const handler = (req: NextApiRequest, res: NextApiResponse<ResponseData>) => {
-  const user = authenticateOauthUser(req);
+const handler = async (
+  req: NextApiRequest,
+  res: NextApiResponse<ResponseData>
+) => {
+  const userId = req.query.id as string;
+  const authHeader = req.headers["Authorization"];
 
-  if (!user) req;
+  if (typeof authHeader !== "string")
+    throw new Error("expected Authorization header to be a string");
 
-  return {
-    id: "userid",
-    email: "alex.farrill@gmail.com",
-    authorizations: {
-      analytics: true,
-    },
-  };
+  const authenticated = await validateUserOauth(userId, authHeader);
+
+  let user;
+
+  if (authenticated) {
+    user = prisma.user.findFirst({ where: { id: userId } });
+  } else {
+    return res.status(401).end();
+  }
+
+  res.status(200).json(user);
 };
 
 export default handler;
