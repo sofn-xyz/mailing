@@ -9,7 +9,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<{}>) => {
   }
 
   try {
-    prisma.apiKey.findFirst({
+    await prisma.apiKey.findFirstOrThrow({
       where: {
         id: apiKey as string,
         active: true,
@@ -18,7 +18,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<{}>) => {
 
     res.setHeader("Cache-Control", "s-maxage=30").status(200).end();
   } catch {
-    res.status(401).end();
+    res.status(401).end("API key is not valid");
   }
 };
 
