@@ -16,7 +16,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<{}>) => {
       },
     });
 
-    res.status(200).end();
+    res.setHeader("Cache-Control", "s-maxage=30").status(200).end();
   } catch {
     res.status(401).end();
   }
