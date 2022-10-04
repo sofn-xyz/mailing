@@ -50,8 +50,6 @@ const Settings: NextPage = (props: { user: User; apiKeys: ApiKey[] }) => {
 
     const apiKey = await response.json();
 
-    console.log(apiKey);
-
     setApiKeys(apiKeys.concat(apiKey));
   };
 

@@ -27,8 +27,26 @@ function renderTemplate(
   return render(React.createElement(Template as any, props as any));
 }
 
-export default function handler(req: NextApiRequest, res: NextApiResponse) {
+async function validApiKey(apiKey: string) {
+  const host = process.env.MM_DEV
+    ? "localhost:3000"
+    : "https://www.mailing.run";
+  const response = await fetch(`${host}/api/apiKeys/validate?apiKey=${apiKey}`);
+
+  return 200 === response.status;
+}
+
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
   if (req.method !== "POST") return res.status(404).end();
+
+  if (!(await validApiKey(req.headers["X-API-Key"])))
+    return res.status(401).json({
+      error:
+        "please use a valid API key or create one at https://www.mailing.run/settings",
+    });
 
   const { templateName, props } = req.query;
 
