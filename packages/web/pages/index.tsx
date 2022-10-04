@@ -250,7 +250,7 @@ const Home: NextPage = () => {
                 </div>
 
                 <div className="flex flex-row flex-wrap items-stretch justify-items-stretch w-full justify-center">
-                  <div className="md:basis-1/2 grow mx-0 pr-0 lg:px-2 md:mx-auto lg:mx-0 text-left md:text-center md:max-w-[420px] pb-8 md:pb-12">
+                  <div className="md:basis-1/2 grow mx-0 pr-0 lg:px-3 md:mx-auto lg:mx-0 text-left md:text-center md:max-w-[430px] pb-8 md:pb-12">
                     <p className="text-xl md:text-2xl leading-snug m-0 pb-2 mx-0 md:mx-auto lg:mx-0 max-w-sm]">
                       ●&nbsp;&nbsp;Share your previews
                     </p>
@@ -259,7 +259,7 @@ const Home: NextPage = () => {
                       your team and clients at your domain.
                     </p>
                   </div>
-                  <div className="md:basis-1/2 grow mx-0 md:mx-auto lg:mx-0 text-left lg:px-2 md:text-center md:max-w-[420px] pb-8 md:pb-12">
+                  <div className="md:basis-1/2 grow mx-0 md:mx-auto lg:mx-0 text-left lg:px-3 md:text-center md:max-w-[430px] pb-8 md:pb-12">
                     <p className="text-xl md:text-2xl leading-snug m-0 pb-2 mx-0 md:mx-auto lg:mx-0 max-w-sm]">
                       ●&nbsp;&nbsp;Render via API
                     </p>
@@ -268,7 +268,7 @@ const Home: NextPage = () => {
                       templates from any environment – not just Node apps.
                     </p>
                   </div>
-                  <div className="md:basis-1/2 grow mx-0 pl-0 lg:px-2 md:mx-auto lg:mx-0 text-left md:text-center md:max-w-[420px] pb-8 md:pb-12">
+                  <div className="md:basis-1/2 grow mx-0 pl-0 lg:px-3 md:mx-auto lg:mx-0 text-left md:text-center md:max-w-[430px] pb-8 md:pb-12">
                     <p className="text-xl md:text-2xl leading-snug m-0 pb-2 mx-0 md:mx-auto lg:mx-0 max-w-sm]">
                       ●&nbsp;&nbsp;Deploy anywhere
                     </p>
