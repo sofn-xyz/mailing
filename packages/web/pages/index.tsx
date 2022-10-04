@@ -239,7 +239,7 @@ const Home: NextPage = () => {
                     }
                   )}
                 >
-                  <span className="border-4 border-solid border-neutral-800 rounded-3xl inline-flex overflow-clip">
+                  <span className="border-4 border-solid border-neutral-800 rounded-3xl inline-flex overflow-hidden">
                     <Image
                       width="720"
                       height="405"
