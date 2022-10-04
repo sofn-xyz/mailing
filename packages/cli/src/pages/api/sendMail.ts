@@ -30,7 +30,7 @@ async function validApiKey(apiKey: string) {
   const host = process.env.MM_DEV
     ? "localhost:3000"
     : "https://www.mailing.run";
-  const response = await fetch(`${host}/api/apiKeys/validate?apiKey=${apiKey}`);
+  const response = await fetch(`${host}/api/apiKeys/${apiKey}/validate`);
 
   return 200 === response.status;
 }

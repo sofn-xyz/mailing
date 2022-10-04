@@ -1,0 +1,25 @@
+import { NextApiRequest, NextApiResponse } from "next";
+import prisma from "../../../../prisma";
+
+const handler = async (req: NextApiRequest, res: NextApiResponse<{}>) => {
+  const apiKey = req.query.apiKey;
+
+  if (typeof apiKey !== "string") {
+    res.status(422).end("expected apiKey to be a string");
+  }
+
+  try {
+    prisma.apiKey.findFirst({
+      where: {
+        id: apiKey as string,
+        active: true,
+      },
+    });
+
+    res.status(200).end();
+  } catch {
+    res.status(401).end();
+  }
+};
+
+export default handler;

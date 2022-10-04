@@ -33,9 +33,7 @@ const ApiKeys = withSessionAPIRoute(async function (
     });
 
     res.status(201).json({
-      apiKey: {
-        key: apiKey.id,
-      },
+      apiKey,
     });
   } else if ("GET" === req.method) {
     // list APIKeys
