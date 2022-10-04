@@ -2,6 +2,7 @@ import { withSession } from "../util/session";
 import { NextPage } from "next";
 import { InferGetServerSidePropsType } from "next";
 import { useState } from "react";
+import prisma from "../prisma";
 
 type ApiKey = {
   id: string;
@@ -17,7 +18,7 @@ export const getServerSideProps = withSession(async function ({ req }) {
   if (!user) {
     return {
       redirect: {
-        destination: "/",
+        destination: "/login",
         permanent: false,
       },
     };
