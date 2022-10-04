@@ -86,7 +86,7 @@ const Home: NextPage = () => {
                 </div>
                 <div>
                   <a
-                    className="hover:bg-yellow text-base leading-none inline-block"
+                    className="hover:underline text-base leading-none inline-block"
                     href="https://demo.mailing.run"
                   >
                     Demo
