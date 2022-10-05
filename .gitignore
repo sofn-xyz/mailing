@@ -118,3 +118,7 @@ scripts/e2e_test/cache
 
 # Mac
 *.DS_Store
+
+# Prisma clients
+packages/web/prisma/generated
+packages/cli/prisma/generated
