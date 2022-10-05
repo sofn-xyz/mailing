@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "cd packages/cli && rm -rf .mailing && src/dev.js",
+    "dev": "cd packages/cli && yarn dev",
     "dev:js": "yarn link:emails:js && yarn dev",
     "dev:init": "cd packages/cli && rm -rf previews_html; rm -rf .mailing emails mailing.config.json; src/dev.js",
     "dev:export-previews": "yarn link:emails; cd packages/cli && rm -rf .mailing && src/dev.js export-previews",
@@ -16,7 +16,7 @@
     "test:watch": "yarn jest --watch",
     "test:next-cli": "NEXT_CLI_TESTS=1 jest",
     "ci": "start-test ci:cli :3883 ci:web :3000 test",
-    "ci:cli": "cd packages/cli && rm -rf .mailing && src/dev.js --quiet",
+    "ci:cli": "yarn dev",
     "ci:web": "cd packages/web && yarn dev",
     "prepublish": "yarn build",
     "watch": "preconstruct watch",
