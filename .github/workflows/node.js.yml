@@ -15,14 +15,29 @@ jobs:
         node-version: [16.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
+    services:
+      # Label used to access the service container
+      postgres:
+        # Docker Hub image
+        image: postgres
+        # Provide the password for postgres
+        env:
+          POSTGRES_PASSWORD: postgres
+        # Set health checks to wait until postgres has started
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          # Maps tcp port 5432 on service container to the host
+          - 5432:5432
+
     env:
-      DATABASE_URL: postgresql://${USER}@localhost:5432/mailing_cli
-      WEB_DATABASE_URL: postgresql://${USER}@localhost:5432/mailing
+      DATABASE_URL: postgresql://postgres:postgres@localhost:5432/mailing_cli
+      WEB_DATABASE_URL: postgresql://postgres:postgres@localhost:5432/mailing
 
     steps:
-      - uses: ankane/setup-postgres@v1
-        with:
-          postgres-version: 14
       - uses: actions/checkout@v3
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
