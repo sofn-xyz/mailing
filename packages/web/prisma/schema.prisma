@@ -4,7 +4,8 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  // not DATABASE_URL so that web+cli can run on the same machine easily
+  url      = env("WEB_DATABASE_URL")
 }
 
 model NewsletterSubscriber {
