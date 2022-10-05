@@ -16,8 +16,8 @@ jobs:
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     env:
-      DATABASE_URL: postgresql://localhost:5432/mailing_cli
-      WEB_DATABASE_URL: postgresql://localhost:5432/mailing
+      DATABASE_URL: postgresql://postgres@localhost:5432/mailing_cli
+      WEB_DATABASE_URL: postgresql://postgres@localhost:5432/mailing
 
     steps:
       - uses: ankane/setup-postgres@v1
