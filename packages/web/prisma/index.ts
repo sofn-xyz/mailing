@@ -1,7 +1,12 @@
 import { PrismaClient } from "./generated/client";
 
-const prisma = global.prisma || new PrismaClient();
+declare global {
+  // eslint-disable-next-line no-var
+  var prismaWeb: PrismaClient | undefined;
+}
 
-if (process.env.NODE_ENV === "development") global.prisma = prisma;
+const prisma = global.prismaWeb || new PrismaClient();
+
+if (process.env.NODE_ENV === "development") global.prismaWeb = prisma;
 
 export default prisma;

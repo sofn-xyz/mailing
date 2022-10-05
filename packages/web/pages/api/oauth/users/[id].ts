@@ -1,6 +1,7 @@
 import { compare } from "bcrypt";
 import { NextApiRequest, NextApiResponse } from "next";
-import { Prisma } from "@prisma/client";
+
+import prisma from "../../../../prisma";
 
 type ResponseData = {
   user: any;

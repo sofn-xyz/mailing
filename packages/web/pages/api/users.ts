@@ -4,7 +4,7 @@ import { genSalt, hash } from "bcrypt";
 import { randomBytes } from "crypto";
 
 import prisma from "../../prisma";
-import { Prisma } from "@prisma/client";
+import { Prisma } from "../../prisma/generated/client";
 
 type DataError = {
   error: string;
