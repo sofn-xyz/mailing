@@ -26,8 +26,15 @@ function mockReadJSONSyncToThrowErrno() {
 }
 
 describe("setup", () => {
+  const MM_DEV_OG = process.env.MM_DEV;
+
   beforeEach(() => {
     jest.restoreAllMocks();
+    delete process.env.MM_DEV;
+  });
+
+  afterEach(() => {
+    process.env.MM_DEV = MM_DEV_OG;
   });
 
   describe("packageJsonVersionsMatch", () => {
