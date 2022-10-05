@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient } from "./generated/client";
 
 declare global {
   var prisma: PrismaClient<any>;
