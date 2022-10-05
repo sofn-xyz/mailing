@@ -10,7 +10,11 @@ class RemixTsApp < App
 private
   def yarn_create!
     Dir.chdir(@root_dir) do
+      # install with the "remix" template
       system_quiet("yarn create remix . --template=remix --typescript --install")
+
+      ## variation: indie-stack is a different remix template that people use
+      # system_quiet("yarn create remix . --template=remix-run/indie-stack --typescript --install")
 
       # yarn add peer dependencies
       system_quiet("yarn add next react react-dom")
