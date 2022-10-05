@@ -34,6 +34,7 @@ jobs:
           - 5432:5432
 
     env:
+      MM_DEV: 1
       DATABASE_URL: postgresql://postgres:postgres@localhost:5432/mailing_cli
       WEB_DATABASE_URL: postgresql://postgres:postgres@localhost:5432/mailing
 
