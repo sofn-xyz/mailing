@@ -1,3 +1,4 @@
+import { Prisma } from "@prisma/client";
 import { compare } from "bcrypt";
 import { NextApiRequest, NextApiResponse } from "next";
 
@@ -7,10 +8,10 @@ type ResponseData = {
   user: any;
 };
 
-async function validateUserOauth(
+async function validOauthUser(
   userId: string,
   authHeader: string
-): Promise<boolean> {
+): Promise<false | Prisma.UserSelect> {
   const parsedAuthHeader = authHeader.match(/^bearer: (.*)/i);
   if (null === parsedAuthHeader) return false;
   const token = parsedAuthHeader[1];
@@ -25,7 +26,11 @@ async function validateUserOauth(
     async (oauthAccessToken) => await compare(token, oauthAccessToken.token)
   );
 
-  return authenticated;
+  if (authenticated) {
+    return prisma.user.findFirst({ where: { id: userId } });
+  } else {
+    return false;
+  }
 }
 
 const handler = async (
@@ -38,17 +43,13 @@ const handler = async (
   if (typeof authHeader !== "string")
     throw new Error("expected Authorization header to be a string");
 
-  const authenticated = await validateUserOauth(userId, authHeader);
+  const user = await validOauthUser(userId, authHeader);
 
-  let user;
-
-  if (authenticated) {
-    user = prisma.user.findFirst({ where: { id: userId } });
+  if (user) {
+    res.status(200).json({ user });
   } else {
     return res.status(401).end();
   }
-
-  res.status(200).json(user);
 };
 
 export default handler;
