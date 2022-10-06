@@ -27,7 +27,7 @@ async function validOauthUser(
   );
 
   if (authenticated) {
-    return prisma.user.findFirst({ where: { id: userId } });
+    return await prisma.user.findFirst({ where: { id: userId } });
   } else {
     return false;
   }
