@@ -1,4 +1,4 @@
-import { Prisma } from "@prisma/client";
+import { User } from "../../../../prisma/generated/client";
 import { compare } from "bcrypt";
 import { NextApiRequest, NextApiResponse } from "next";
 
@@ -11,7 +11,7 @@ type ResponseData = {
 async function validOauthUser(
   userId: string,
   authHeader: string
-): Promise<false | Prisma.UserSelect> {
+): Promise<false | User> {
   const parsedAuthHeader = authHeader.match(/^bearer: (.*)/i);
   if (null === parsedAuthHeader) return false;
   const token = parsedAuthHeader[1];
