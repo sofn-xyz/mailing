@@ -11,7 +11,7 @@ import type { PreviewIndexResponseBody } from "../../pages/api/previews";
 type IndexPaneProps = {
   previews?: PreviewIndexResponseBody["previews"];
   previewText?: PreviewIndexResponseBody["previewText"];
-  setHamburgerOpen: Function;
+  setHamburgerOpen?: Function;
 };
 
 const IndexPane: React.FC<IndexPaneProps> = ({

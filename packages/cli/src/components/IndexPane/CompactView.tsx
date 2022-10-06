@@ -8,7 +8,7 @@ type CompactViewProps = {
   cursor: number;
   navigate: (nextCursor: number | ((current: number) => number)) => void;
   setCollapse: (cursor: number, collapse: boolean) => void;
-  setHamburgerOpen: Function;
+  setHamburgerOpen?: Function;
 };
 
 const CompactView: React.FC<CompactViewProps> = ({
@@ -22,7 +22,9 @@ const CompactView: React.FC<CompactViewProps> = ({
     (i: number, collapsed: boolean) => (e: React.MouseEvent<HTMLDivElement>) => {
       setCollapse(i, !collapsed);
       navigate(i);
-      setHamburgerOpen(false);
+      if (typeof setHamburgerOpen == "function") {
+        setHamburgerOpen(false);
+      }
     },
     [navigate, setCollapse, setHamburgerOpen]
   );
