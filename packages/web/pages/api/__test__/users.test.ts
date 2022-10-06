@@ -34,14 +34,5 @@ describe("users", () => {
       expect(response.status).toBe(201);
       expect((await response.json()).code).toMatch(/[0-9a-zA-Z]+/);
     });
-
-    it("creates a user", async () => {
-      const response = await constructFetch({
-        email: `ok${Math.random()}@ok.com`,
-        password: "okokokokokokokok",
-      });
-      expect(response.status).toBe(201);
-      expect((await response.json()).code).toMatch(/[0-9a-zA-Z]+/);
-    });
   });
 });

@@ -15,7 +15,7 @@
     "test": "yarn link:emails; jest && yarn test:next-cli",
     "test:watch": "yarn jest --watch",
     "test:next-cli": "NEXT_CLI_TESTS=1 jest",
-    "ci": "start-test ci:cli :3883 ci:web :3000 test",
+    "ci": "DATABASE_URL=$DATABASE_URL_TEST DATABASE_URL_WEB=$DATABASE_URL_WEB_TEST start-test ci:cli :3883 ci:web :3000 test",
     "ci:cli": "yarn dev",
     "ci:web": "cd packages/web && yarn dev",
     "prepublish": "yarn build",
