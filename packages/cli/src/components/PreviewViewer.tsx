@@ -85,7 +85,11 @@ const PreviewViewer: React.FC<PreviewViewerProps> = ({ initialData }) => {
             }
           )}
         >
-          <IndexPane previews={previews} previewText={data?.previewText} />
+          <IndexPane
+            previews={previews}
+            previewText={data?.previewText}
+            setHamburgerOpen={setHamburgerOpen}
+          />
         </div>
         <div className="right-pane sm:left-[300px] sm:w-[calc(100vw-300px)]">
           {!!preview?.errors?.length && <MjmlErrors errors={preview?.errors} />}

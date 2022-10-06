@@ -1,17 +1,13 @@
-import { ReactElement } from "react";
-import IconCode from "./icons/IconCode";
-import IconMobile from "./icons/IconMobile";
-import IconDesktop from "./icons/IconDesktop";
 import Image from "next/image";
 import cx from "classnames";
 
-type HeaderProps = {
+type MobileHeaderProps = {
   title: string;
   hamburgerOpen: boolean;
   setHamburgerOpen: (open: boolean) => void;
 };
 
-const Header: React.FC<HeaderProps> = ({
+const MobileHeader: React.FC<MobileHeaderProps> = ({
   title,
   hamburgerOpen,
   setHamburgerOpen,
@@ -74,4 +70,4 @@ const Header: React.FC<HeaderProps> = ({
   );
 };
 
-export default Header;
+export default MobileHeader;

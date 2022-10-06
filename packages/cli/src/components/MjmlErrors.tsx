@@ -5,7 +5,7 @@ type MjmlErrorsProps = {
 const MjmlErrors: React.FC<MjmlErrorsProps> = ({ errors }) => {
   return (
     <>
-      <div className="mjmlErrors">
+      <div className="bg-red font-white p-24">
         <h1>MJML Errors</h1>
         <div>
           Please resolve the following MJML errors in your email before
@@ -17,13 +17,6 @@ const MjmlErrors: React.FC<MjmlErrorsProps> = ({ errors }) => {
           ))}
         </ul>
       </div>
-      <style jsx>{`
-        .mjmlErrors {
-          padding: 100px;
-          background: red;
-          color: white;
-        }
-      `}</style>
     </>
   );
 };
