@@ -16,6 +16,9 @@ declare module "iron-session" {
 
 const password = process.env.MAILING_SESSION_PASSWORD as string;
 
+if (!password)
+  throw new Error("process.env.MAILING_SESSION_PASSWORD must be set");
+
 const ironSessionConfig = {
   cookieName: "mailing",
   password,

@@ -2,6 +2,9 @@ import { withIronSessionApiRoute, withIronSessionSsr } from "iron-session/next";
 
 const password = process.env.MAILING_WEB_SESSION_PASSWORD;
 
+if (!password)
+  throw new Error("process.env.MAILING_WEB_SESSION_PASSWORD must be set");
+
 const ironSessionConfig = {
   cookieName: "mailing_web",
   password,
