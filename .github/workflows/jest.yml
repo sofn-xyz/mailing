@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [18]
+        node-version: [16, 18]
     steps:
       - uses: actions/checkout@v3
       - name: Use Node.js ${{ matrix.node-version }}
@@ -18,9 +18,6 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'yarn'
-      # Note: Installing yarn is only required to run workflows using nektos/act
-      - name: Setup yarn
-        run: npm install -g yarn
       - name: Install dependencies
         run: yarn
       - name: Build the app
