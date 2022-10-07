@@ -24,3 +24,4 @@ jobs:
         with:
           build: yarn build
           start: cypress start
+          working-directory: packages/cli
