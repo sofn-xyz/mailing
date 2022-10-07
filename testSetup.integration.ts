@@ -1,4 +1,7 @@
-import { truncateCliDatabase, truncateWebDatabase } from "./e2eUtil";
+import {
+  truncateCliDatabase,
+  truncateWebDatabase,
+} from "./testUtilIntegration";
 import chalk from "chalk";
 
 if (!process.env.MAILING_CI) {
