@@ -35,8 +35,8 @@ jobs:
 
     env:
       MM_DEV: 1
-      DATABASE_URL: postgresql://postgres:postgres@localhost:5432/mailing_cli
-      WEB_DATABASE_URL: postgresql://postgres:postgres@localhost:5432/mailing
+      DATABASE_URL_TEST: postgresql://postgres:postgres@localhost:5432/mailing_cli_test
+      WEB_DATABASE_URL_TEST: postgresql://postgres:postgres@localhost:5432/mailing_test
 
     steps:
       - uses: actions/checkout@v3
