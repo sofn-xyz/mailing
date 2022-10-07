@@ -1,31 +1,16 @@
-import { execSync } from "child_process";
+import { truncateCliDatabase, truncateWebDatabase } from "./testUtil";
 
-const WEB_TABLE_NAMES = [
-  "NewsletterSubscriber",
-  "Organization",
-  "User",
-  "ApiKey",
-  "OauthAccessToken",
-  "OauthAuthorizationCode",
-];
-
-const TABLE_NAMES = ["Organization"];
+if (
+  !process.env.DATABASE_URL?.match(/test$/) ||
+  !process.env.WEB_DATABASE_URL?.match(/test$/)
+)
+  throw new Error(
+    `refusing to run against non-test databases process.env.DATABASE_URL: ${process.env.DATABASE_URL} process.env.WEB_DATABASE_URL: ${process.env.WEB_DATABASE_URL}`
+  );
 
 beforeAll(() => {
-  const truncateSql = TABLE_NAMES.map(
-    (tableName) => `TRUNCATE TABLE "${tableName}" CASCADE;`
-  ).join(" ");
-  execSync(`echo '${truncateSql}' | psql ${process.env.DATABASE_URL_TEST}`, {
-    stdio: "ignore",
-  });
-
-  const webTruncateSql = WEB_TABLE_NAMES.map(
-    (tableName) => `TRUNCATE TABLE "${tableName}" CASCADE;`
-  ).join(" ");
-  execSync(
-    `echo '${webTruncateSql}' | psql ${process.env.WEB_DATABASE_URL_TEST}`,
-    { stdio: "ignore" }
-  );
+  truncateCliDatabase();
+  truncateWebDatabase();
 });
 
 afterEach(() => {
