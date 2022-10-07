@@ -25,4 +25,4 @@ jobs:
         uses: cypress-io/github-action@v4
         with:
           install: false
-          working-directory: packages/gcli
+          working-directory: packages/cli
