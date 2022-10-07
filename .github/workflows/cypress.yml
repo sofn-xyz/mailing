@@ -26,3 +26,4 @@ jobs:
         with:
           install: false
           working-directory: packages/cli
+          browser: chrome
