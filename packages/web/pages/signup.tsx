@@ -12,7 +12,11 @@ const Signup: NextPage = () => {
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
   const router = useRouter();
-  const { redirectTo } = router.query;
+
+  // client should provide the url to the installed cli's /api/oauth/callback route
+  // otherwise take them to /settings for now
+  let { redirectTo } = router.query;
+  redirectTo = redirectTo || "/settings";
 
   const onSubmit = useCallback(
     async (e: React.FormEvent<HTMLFormElement>) => {
