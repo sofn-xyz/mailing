@@ -1,17 +1,26 @@
 name: Cypress Tests
 
-on: [push]
+on:
+  push:
 
 jobs:
-  cypress-run:
+  cypress:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      # Install NPM dependencies, cache them correctly
-      # and run all Cypress tests
+      - name: Use Node.js 18.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'yarn'
+      # Note: Installing yarn is only required to run workflows using nektos/act
+      - name: Setup yarn
+        run: npm install -g yarn
+      - name: Install dependencies
+        run: yarn
       - name: Cypress run
         uses: cypress-io/github-action@v4
         with:
-          build: npm run build
-          start: npm start
+          build: yarn build
+          start: cypress start
