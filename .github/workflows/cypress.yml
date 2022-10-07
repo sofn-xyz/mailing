@@ -13,7 +13,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18
-          cache: 'yarn'
+          cache: "yarn"
       # Note: Installing yarn is only required to run workflows using nektos/act
       - name: Setup yarn
         run: npm install -g yarn
@@ -23,6 +23,8 @@ jobs:
         run: yarn build
       - name: Cypress run
         uses: cypress-io/github-action@v4
+        env:
+          DEBUG: "@cypress/github-action"
         with:
           install: false
           working-directory: packages/cli
