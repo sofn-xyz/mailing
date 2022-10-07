@@ -52,6 +52,7 @@ if (process.env.NEXT_CLI_TESTS) {
       "<rootDir>/.mailing/",
       "tmp-testMailQueue.json",
     ],
+    testMatch: ["<rootDir>/packages/**/__test__/**/*.test.[jt]s?(x)"],
   };
 }
 
