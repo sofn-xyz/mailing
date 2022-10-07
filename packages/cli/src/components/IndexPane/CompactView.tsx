@@ -8,6 +8,7 @@ type CompactViewProps = {
   cursor: number;
   navigate: (nextCursor: number | ((current: number) => number)) => void;
   setCollapse: (cursor: number, collapse: boolean) => void;
+  setHamburgerOpen?: (open: boolean) => void;
 };
 
 const CompactView: React.FC<CompactViewProps> = ({
@@ -15,13 +16,17 @@ const CompactView: React.FC<CompactViewProps> = ({
   cursor,
   navigate,
   setCollapse,
+  setHamburgerOpen,
 }) => {
   const handleClick = useCallback(
     (i: number, collapsed: boolean) => (e: React.MouseEvent<HTMLDivElement>) => {
       setCollapse(i, !collapsed);
       navigate(i);
+      if (typeof setHamburgerOpen == "function") {
+        setHamburgerOpen(false);
+      }
     },
-    [navigate, setCollapse]
+    [navigate, setCollapse, setHamburgerOpen]
   );
 
   let collapseLevel = 999;
