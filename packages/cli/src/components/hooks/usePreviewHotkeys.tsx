@@ -61,7 +61,7 @@ export default function usePreviewHotkeys({ setViewMode }: Options) {
           break;
       }
     },
-    [router, setViewMode]
+    [setViewMode]
   );
   useHotkeys(Object.values(hotkeysMap), handleKey);
 
