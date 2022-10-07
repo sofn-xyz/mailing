@@ -37,6 +37,8 @@ jobs:
       MM_DEV: 1
       DATABASE_URL_TEST: postgresql://postgres:postgres@localhost:5432/mailing_cli_test
       WEB_DATABASE_URL_TEST: postgresql://postgres:postgres@localhost:5432/mailing_test
+      MAILING_WEB_SESSION_PASSWORD: test-YEAed65EasPz7zbGF4fuoMTDka7C
+      MAILING_SESSION_PASSWORD: test-5toTch6whgDvErN1nPg0hbDq6Do6
 
     steps:
       - uses: actions/checkout@v3
