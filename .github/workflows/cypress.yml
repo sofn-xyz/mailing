@@ -27,6 +27,6 @@ jobs:
           DEBUG: "@cypress/github-action"
         with:
           install: false
-          start: rm -rf .mailing && src/dev.js
+          start: rm -rf .mailing && src/dev.js --quiet
           working-directory: packages/cli
           browser: chrome
