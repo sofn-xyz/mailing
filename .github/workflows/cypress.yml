@@ -23,4 +23,5 @@ jobs:
         uses: cypress-io/github-action@v4
         with:
           build: yarn build
-          start: cd packages/cli && yarn cypress run
+          start: yarn cypress run
+          working-directory: cli
