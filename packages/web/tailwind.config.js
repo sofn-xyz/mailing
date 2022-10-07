@@ -1,9 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 
-const baseConfig = require("../../tailwind.config.cjs");
-
 module.exports = {
-  ...{ baseConfig },
+  presets: [require("../tailwind.config.cjs")],
   content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx}",
