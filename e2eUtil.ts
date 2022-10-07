@@ -6,6 +6,10 @@ const { DEBUG } = process.env;
 
 const PREFIX = "mailing tests";
 
+export function error(message?: any, ...optionalParams: any[]) {
+  console.error(chalk.red(PREFIX), message, ...optionalParams);
+}
+
 export function debug(message?: any, ...optionalParams: any[]) {
   if (DEBUG)
     console.info(chalk.yellowBright(PREFIX), message, ...optionalParams);

@@ -50,3 +50,4 @@ jobs:
       - run: yarn
       - run: yarn build
       - run: yarn ci
+      - run: yarn ci:e2e

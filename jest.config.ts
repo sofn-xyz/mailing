@@ -55,8 +55,4 @@ if (process.env.NEXT_CLI_TESTS) {
   };
 }
 
-// Point to the correct DB in dev
-process.env.DATABASE_URL = process.env.DATABASE_URL_TEST;
-process.env.WEB_DATABASE_URL = process.env.WEB_DATABASE_URL_TEST;
-
 export default config;
