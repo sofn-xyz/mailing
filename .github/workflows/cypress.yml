@@ -1,0 +1,29 @@
+name: Cypress Tests
+
+on:
+  push:
+
+jobs:
+  cypress:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Use Node.js 18.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: "yarn"
+      - name: Install dependencies
+        run: yarn
+      - name: Build the app
+        run: yarn build
+      - name: Cypress run
+        uses: cypress-io/github-action@v4
+        env:
+          DEBUG: "@cypress/github-action"
+        with:
+          install: false
+          start: yarn ci:server
+          working-directory: packages/cli
+          browser: chrome
