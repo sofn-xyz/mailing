@@ -1,4 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
+import { error } from "../../../util/log";
 
 type ResponseData = {
   error?: string;
@@ -8,7 +9,7 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ResponseData>
 ) {
-  if (req.method != "GET") {
+  if (req.method !== "GET") {
     return res.status(405).json({ error: "Method not allowed" });
   }
 
@@ -26,6 +27,7 @@ export default async function handler(
       res.status(406).json({ error: "Missing required parameters: url" });
     }
   } catch (err) {
+    error(err);
     res.status(500).send({ error: "Failed to fetch data" });
   }
 }
