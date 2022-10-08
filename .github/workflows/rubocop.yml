@@ -13,6 +13,7 @@ jobs:
         with:
           ruby-version: 3.1.2
           bundler-cache: true
+          working-directory: scripts/e2e_test
       - name: Run rubocop
         run: bundle exec rubocop
 
