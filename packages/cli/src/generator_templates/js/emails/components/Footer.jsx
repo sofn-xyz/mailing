@@ -11,7 +11,7 @@ export default function Footer() {
           fontSize={textSm}
           color={grayDark}
         >
-          © 2022 BookBook&nbsp;&nbsp;·&nbsp;&nbsp;
+          © {new Date().getFullYear()} BookBook&nbsp;&nbsp;·&nbsp;&nbsp;
           <a href="#" target="_blank">
             Unsubscribe
           </a>
