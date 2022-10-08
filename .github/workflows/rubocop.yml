@@ -1,0 +1,16 @@
+name: Rubocop
+on:
+  push:
+jobs:
+  rubocop:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: scripts/e2e_test
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install dependencies
+        run: bundle install
+      - name: Run rubocop
+        run: bundle exec rubocop
+

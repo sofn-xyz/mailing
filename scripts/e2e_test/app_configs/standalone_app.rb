@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative '../helpers/test_runner_utils'
 
 class StandaloneApp < App
@@ -7,13 +9,14 @@ class StandaloneApp < App
     super('standalone', root_dir, *args)
   end
 
-private
+  private
+
   def yarn_create!
     Dir.chdir(@root_dir) do
-      system_quiet("yarn init --yes")
+      system_quiet('yarn init --yes')
 
       # yarn add peer dependencies
-      system_quiet("yarn add next react react-dom")
+      system_quiet('yarn add next react react-dom')
     end
   end
 end

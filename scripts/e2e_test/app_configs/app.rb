@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 require 'net/http'
 
 class App
-  CACHE_DIR = File.expand_path(__dir__ + '/../cache')
+  CACHE_DIR = File.expand_path("#{__dir__}/../cache")
 
   attr_reader :io, :root_dir
 
@@ -12,7 +14,7 @@ class App
   end
 
   def setup!
-    announce! "Creating new #{@name} app in #{@root_dir}", "⚙️"
+    announce! "Creating new #{@name} app in #{@root_dir}", '⚙️'
     FileUtils.mkdir_p(@root_dir)
 
     use_cache do
@@ -27,8 +29,8 @@ class App
   end
 
   def run_mailing!
-    puts "Running mailing"
-    mailing_command = ->{ IO.popen("MM_E2E=1 npx mailing --quiet") }
+    puts 'Running mailing'
+    mailing_command = -> { IO.popen('MM_E2E=1 npx mailing --quiet') }
 
     Dir.chdir(@root_dir) do
       @io = in_subdir(mailing_command)
@@ -39,7 +41,8 @@ class App
     wait_for_previews_json!
   end
 
-private
+  private
+
   def in_subdir(lam)
     if @sub_dir
       Dir.chdir(@sub_dir) do
@@ -54,7 +57,7 @@ private
     framework_cache_dir = File.join(CACHE_DIR, @name)
     if Dir.exist?(framework_cache_dir)
       puts "Using cached #{@name}..."
-      FileUtils.cp_r(framework_cache_dir + '/.', @root_dir)
+      FileUtils.cp_r("#{framework_cache_dir}/.", @root_dir)
     else
       block.call
 
@@ -70,14 +73,14 @@ private
   end
 
   def verify_package_json_exists!
-    fail "missing package.json in #{@root_dir}" unless File.exist?(File.join(@root_dir, "package.json"))
+    raise "missing package.json in #{@root_dir}" unless File.exist?(File.join(@root_dir, 'package.json'))
   end
 
   ## yalc add mailing and mailing-cor to the project
   def yalc_add_packages!
-    puts "Adding mailing and mailing-core via yalc"
+    puts 'Adding mailing and mailing-core via yalc'
 
-    yalc_command = ->{ system_quiet("npx yalc add --dev mailing mailing-core") }
+    yalc_command = -> { system_quiet('npx yalc add --dev mailing mailing-core') }
 
     Dir.chdir(@root_dir) do
       in_subdir(yalc_command)
@@ -87,17 +90,17 @@ private
   def yarn_add_jest_dependencies!
     puts "yarn add'ing dependencies required for jest tests"
     Dir.chdir(@root_dir) do
-      system_quiet("yarn add --dev jest @babel/preset-env")
+      system_quiet('yarn add --dev jest @babel/preset-env')
     end
   end
-  
+
   def yarn!
-    puts "Running yarn"
+    puts 'Running yarn'
     Dir.chdir(@root_dir) do
-      system_quiet("yarn")
+      system_quiet('yarn')
     end
   end
-  
+
   def wait_for_preview_server!
     @io.select do |line|
       break if line =~ %r{mailing running preview at http://localhost:3883/}
@@ -112,6 +115,6 @@ private
 
     uri = URI('http://localhost:3883/api/previews')
     res = Net::HTTP.get_response(uri)
-    fail "HTTP Get #{uri} did not succeed" unless '200' == res.code
+    raise "HTTP Get #{uri} did not succeed" unless res.code == '200'
   end
 end
