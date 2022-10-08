@@ -23,4 +23,7 @@ jobs:
       - name: Build the app
         run: yarn build
       - name: Run CI tests
-        run: yarn ci
+        run: yarn ci:test
+      - name: Run CI Next.js tests
+        run: yarn ci:test:next
+        
