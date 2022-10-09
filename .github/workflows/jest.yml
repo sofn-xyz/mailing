@@ -50,4 +50,4 @@ jobs:
       - name: Run CI Next.js tests
         run: yarn ci:test:next
       - name: Run CI Integration tests
-        run: yarn ci:integration
+        run: yarn ci:test:integration
