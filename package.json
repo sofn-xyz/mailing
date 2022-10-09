@@ -24,10 +24,9 @@
     "ci:test:next": "start-server-and-test ci:server http://localhost:3883 test:next",
     "ci:server": "cd packages/cli && rm -rf .mailing && src/dev.js --quiet",
     "prepublish": "yarn build",
-    "postinstall": "husky install",
+    "postinstall": "husky install && preconstruct dev",
     "watch": "preconstruct watch",
     "release": "yarn build && ./scripts/prepare-release && yarn changeset publish",
-    "postinstall": "preconstruct dev",
     "e2e": "cd scripts/e2e_test/ && bundle && bundle exec ruby e2e_test.rb",
     "e2e:jest": "yarn jest --rootDir=scripts/e2e_test/jest_tests -c scripts/e2e_test/jest_tests/jest.config.js"
   },
