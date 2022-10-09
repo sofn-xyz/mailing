@@ -1,6 +1,11 @@
 AllCops:
   NewCops: enable
 
+AllCops:
+  Exclude:
+    - 'node_modules/**/*'
+    - 'vendor/**/*'
+    
 Metrics/AbcSize:
   Max: 50
 
