@@ -13,7 +13,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     return res.status(403).json({ error: "email not provided" });
   }
 
-  let newsletterSubscriber = await prisma.newsletterSubscriber.findFirst({
+  const newsletterSubscriber = await prisma.newsletterSubscriber.findFirst({
     where: { email },
   });
   if (newsletterSubscriber) {

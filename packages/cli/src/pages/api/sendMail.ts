@@ -92,7 +92,7 @@ export default async function handler(
       .json({ error: "props could not be parsed from querystring" } as Data);
   }
 
-  const { error, mjmlErrors, html } = renderTemplate(
+  const { error, html } = renderTemplate(
     templateName.replace(/\.[jt]sx?$/, ""),
     parsedProps
   );

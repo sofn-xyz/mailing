@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { genSalt, hash, compare } from "bcrypt";
+import { genSalt, hash } from "bcrypt";
 import { randomBytes } from "crypto";
 
 import prisma from "../../../prisma";
@@ -17,11 +17,11 @@ type DataSuccess = {
 
 type ResponseData = DataSuccess | DataError;
 
-const ERRORS = {
-  userExists: "a user with that email already exists",
-  passwordMinLength: "password should be at least 8 characters",
-  unknown: "an unknown error occurred",
-};
+// const ERRORS = {
+//   userExists: "a user with that email already exists",
+//   passwordMinLength: "password should be at least 8 characters",
+//   unknown: "an unknown error occurred",
+// };
 
 const handler = async (
   req: NextApiRequest,

@@ -1,6 +1,5 @@
 import { withSession } from "../util/session";
 import { NextPage } from "next";
-import { InferGetServerSidePropsType } from "next";
 import { useState } from "react";
 import prisma from "../prisma";
 

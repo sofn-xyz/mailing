@@ -3,10 +3,6 @@ import type { NextPage } from "next";
 import { useCallback, useRef, useState } from "react";
 import { useRouter } from "next/router";
 
-function onSubmit(e: React.FormEvent<HTMLFormElement>) {
-  e.preventDefault();
-}
-
 const Signup: NextPage = () => {
   const [errors, setErrors] = useState();
   const emailRef = useRef(null);

@@ -4,13 +4,11 @@ import type { AbortSignal } from "node-fetch/externals";
 import prisma from "../../../../../prisma";
 
 describe("validate", () => {
-  let start: number;
   const controller = new AbortController();
   const signal = controller.signal as AbortSignal;
 
   beforeEach(() => {
     jest.useRealTimers();
-    start = Date.now();
   });
   afterEach(() => {
     jest.clearAllTimers();

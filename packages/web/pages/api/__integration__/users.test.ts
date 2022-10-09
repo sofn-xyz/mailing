@@ -45,11 +45,8 @@ async function apiLogin(email: string, password: string) {
 }
 
 describe("users", () => {
-  let start: number;
-
   beforeEach(() => {
     jest.useRealTimers();
-    start = Date.now();
   });
 
   afterEach(() => {

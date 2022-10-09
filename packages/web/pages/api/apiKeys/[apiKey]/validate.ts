@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import prisma from "../../../../prisma";
 
-const handler = async (req: NextApiRequest, res: NextApiResponse<{}>) => {
+const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const apiKey = req.query.apiKey;
 
   if (typeof apiKey !== "string") {
