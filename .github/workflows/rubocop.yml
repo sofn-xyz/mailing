@@ -4,16 +4,12 @@ on:
 jobs:
   rubocop:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: scripts/e2e_test
     steps:
       - uses: actions/checkout@v3
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: 3.1.2
           bundler-cache: true
-          working-directory: scripts/e2e_test
       - name: Run rubocop
         run: bundle exec rubocop
 
