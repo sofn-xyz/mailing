@@ -7,9 +7,7 @@ type HamburgerContextProps = {
 
 export const HamburgerContext = createContext<HamburgerContextProps>({
   hamburgerOpen: false,
-  setHamburgerOpen: () => {
-    // do nothing
-  },
+  setHamburgerOpen: () => {},
 });
 
 type HamburgerProviderProps = {
