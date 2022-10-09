@@ -33,13 +33,11 @@ describe("postHog", () => {
   });
 
   it("should call capture on the postHog client - with config.anonymousId if options.distinctId is blank", () => {
-    const spy = jest
-      .spyOn(moduleManifestUtil, "getConfig")
-      .mockImplementation(() => {
-        return {
-          anonymousId: "config-xyz",
-        };
-      });
+    jest.spyOn(moduleManifestUtil, "getConfig").mockImplementation(() => {
+      return {
+        anonymousId: "config-xyz",
+      };
+    });
 
     jest
       .spyOn(postHogClient, "postHogClient")

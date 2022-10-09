@@ -87,9 +87,7 @@ emails
   });
 
   it("skips the emails directory if it already exists", async () => {
-    const spy = jest
-      .spyOn(fsExtra, "existsSync")
-      .mockImplementation(() => true);
+    jest.spyOn(fsExtra, "existsSync").mockImplementation(() => true);
     expect(fsExtra.existsSync("nothing")).toBe(true);
     await handler({
       emailsDir: "./emails",

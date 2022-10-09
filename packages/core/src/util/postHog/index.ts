@@ -1,6 +1,6 @@
 import { debug } from "../log";
 
-import { postHogClient, getPostHogClient } from "./client";
+import { postHogClient } from "./client";
 
 // ** modified from posthog-node
 interface IdentifyMessageV1 {

@@ -20,7 +20,7 @@ function mockPackageJsonVersionToMatch() {
 
 function mockReadJSONSyncToThrowErrno() {
   const fileNotFoundError = { code: "ENOENT" };
-  jest.spyOn(fsExtra, "readJSONSync").mockImplementation((path) => {
+  jest.spyOn(fsExtra, "readJSONSync").mockImplementation((_path) => {
     throw fileNotFoundError;
   });
 }

@@ -29,6 +29,6 @@ export async function execCli(command: string, opts?: { debug: boolean }) {
   });
 }
 
-export function execCliChild(command: string, opts?: { debug: boolean }) {
+export function execCliChild(command: string, _opts?: { debug: boolean }) {
   return exec(`FORCE_COLOR=0 ${__dirname}/../../dev.js ${command}`);
 }

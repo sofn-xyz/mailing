@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 export default function registerRequireHooks() {
   if (process.env.MM_DEV) return;
   require("@swc/register")({

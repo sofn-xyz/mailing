@@ -2,4 +2,5 @@ afterEach(() => {
   jest.resetAllMocks();
 });
 
-export default {};
+const testSetup = {};
+export default testSetup;

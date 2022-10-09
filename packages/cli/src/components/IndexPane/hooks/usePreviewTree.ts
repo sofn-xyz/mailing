@@ -1,6 +1,6 @@
 import { debounce, flatten } from "lodash";
 import { NextRouter, useRouter } from "next/router";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 export type TreeRoute = {
   collapsed: boolean;
