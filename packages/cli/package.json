@@ -27,9 +27,6 @@
     "public",
     "dist"
   ],
-  "scripts": {
-    "dev": "rm -rf .mailing && yarn prisma migrate dev && src/dev.js --quiet"
-  },
   "description": "Fun email development environment",
   "devDependencies": {
     "@next/eslint-plugin-next": "^12.2.0",
@@ -91,6 +88,7 @@
     "yargs": "^17.5.1"
   },
   "scripts": {
+    "dev": "rm -rf .mailing && yarn prisma migrate dev && src/dev.js --quiet",
     "ci:server:nohup": "rm -rf .mailing && nohup src/dev.js --quiet > /dev/null 2>&1 &"
   },
   "keywords": [
