@@ -1,10 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { error } from "../../../../util/log";
 import { render } from "../../../../util/mjml";
-import {
-  getPreviewComponent,
-  previewTree,
-} from "../../../../util/moduleManifestUtil";
+import { getPreviewComponent } from "../../../../util/moduleManifestUtil";
 
 type Data = {
   name: string;

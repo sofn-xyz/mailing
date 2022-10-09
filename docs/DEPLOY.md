@@ -15,11 +15,10 @@ Here’s a working Vercel configuration:
 
 <img width="793" alt="Screen Shot 2022-09-26 at 11 57 06 AM" src="https://user-images.githubusercontent.com/282016/192357879-a19ec556-00c3-49b6-883c-6ae55e8eff7f.png">
 
-
 #### CLI
 
 Alternatively, `mailing deploy` deploys your server to Vercel via their interactive CLI.
 
 ### Other hosts
 
-If you want to deploy somewhere else, you can use `mailing server build` to build the production next app and `mailing server start` to boot it on localhost. The first command runs `next build .mailing` and the second command runs `next start .mailing`. 
+If you want to deploy somewhere else, you can use `mailing server build` to build the production next app and `mailing server start` to boot it on localhost. The first command runs `next build .mailing` and the second command runs `next start .mailing`.

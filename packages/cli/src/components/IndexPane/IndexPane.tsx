@@ -37,7 +37,7 @@ const IndexPane: React.FC<IndexPaneProps> = ({ previews, previewText }) => {
     }
   );
 
-  const handleToggle = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleToggle = (_e: ChangeEvent<HTMLInputElement>) => {
     setCompact((current) => !current);
   };
 

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 import { resolve } from "path";
 import { outputFile, readdirSync } from "fs-extra";
 import { ArgumentsCamelCase } from "yargs";
@@ -65,7 +66,12 @@ export const handler = buildHandler(
       return;
     }
 
-    const previewsPath = getPreviewsDirectory(argv.emailsDir!);
+    if (undefined === argv.emailsDir) {
+      error("please specific an emailsDir like --emailsDir ./emails");
+      return;
+    }
+
+    const previewsPath = getPreviewsDirectory(argv.emailsDir);
     if (!previewsPath) {
       error(
         "Could not find emails directory. Have you initialized the project with `mailing init`?"

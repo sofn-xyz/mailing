@@ -31,6 +31,7 @@
   "devDependencies": {
     "@next/eslint-plugin-next": "^12.2.0",
     "@testing-library/react": "^13.4.0",
+    "node-mocks-http": "^1.11.0",
     "cypress": "^10.3.1"
   },
   "peerDependencies": {
@@ -84,7 +85,7 @@
     "yargs": "^17.5.1"
   },
   "scripts": {
-    "ci:server": "rm -rf .mailing && nohup src/dev.js --quiet > /dev/null 2>&1 &"
+    "ci:server:nohup": "rm -rf .mailing && nohup src/dev.js --quiet > /dev/null 2>&1 &"
   },
   "keywords": [
     "email",

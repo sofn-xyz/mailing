@@ -27,7 +27,7 @@ const NewSignIn = ({ name, headline, body, bulletedList }) => {
         <Header />
         <MjmlSection padding="0 24px" cssClass="smooth">
           <MjmlColumn>
-          <MjmlDivider
+            <MjmlDivider
               borderColor="#666"
               borderStyle="dotted"
               borderWidth="1px"
@@ -55,9 +55,7 @@ const NewSignIn = ({ name, headline, body, bulletedList }) => {
               fontSize={textBase}
               lineHeight={leadingRelaxed}
             >
-              <>
-              {body}
-              </>
+              <>{body}</>
             </MjmlText>
             <MjmlSpacer height="16px" />
             {bulletedList}

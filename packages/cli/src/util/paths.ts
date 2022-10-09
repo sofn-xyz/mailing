@@ -1,4 +1,4 @@
-import { readFileSync, existsSync, readJSONSync } from "fs-extra";
+import { existsSync, readJSONSync } from "fs-extra";
 import { resolve } from "path";
 import { error } from "./log";
 

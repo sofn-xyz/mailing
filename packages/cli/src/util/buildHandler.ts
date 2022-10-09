@@ -30,7 +30,7 @@ export function buildHandler(
       if (!argv.emailsDir) throw new Error("emailsDir option is not set");
 
       setConfig({
-        emailsDir: argv.emailsDir!,
+        emailsDir: argv.emailsDir,
         port: argv.port,
         quiet: argv.quiet,
       });

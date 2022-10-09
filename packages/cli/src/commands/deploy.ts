@@ -1,6 +1,6 @@
 import { existsSync, writeFileSync } from "fs-extra";
 import { ArgumentsCamelCase } from "yargs";
-import { error, log, logPlain, debug } from "../util/log";
+import { error, log, debug } from "../util/log";
 import { defaults } from "../util/config";
 import { buildHandler } from "../util/buildHandler";
 import { execSync } from "child_process";
@@ -32,7 +32,7 @@ const VERCEL_CONFIG = {
 };
 
 export const handler = buildHandler(
-  async (argv: DeployArgs) => {
+  async (_argv: DeployArgs) => {
     let exitCode = 0;
     log("deploying your mailing preview server to vercel");
 

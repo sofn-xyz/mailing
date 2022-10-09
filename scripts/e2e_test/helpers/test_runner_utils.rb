@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module TestRunnerUtils
   ## Utility stuff
   #
@@ -8,7 +10,6 @@ module TestRunnerUtils
 
   def announce!(text, emoji)
     puts "\n" * 10
-    puts "#{emoji}  " * 10 + "\n" + text + "\n" + "#{emoji}  " * 10
+    puts "#{"#{emoji}  " * 10}\n#{text}\n#{"#{emoji}  " * 10}"
   end
-  
 end

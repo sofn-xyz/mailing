@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React from "react";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { render } from "mailing-core";
 import { MjmlError } from "mjml-react";

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative '../helpers/test_runner_utils'
 
 class NextJsApp < App
@@ -7,10 +9,11 @@ class NextJsApp < App
     super('next_js', root_dir, *args)
   end
 
-private
+  private
+
   def yarn_create!
     Dir.chdir(@root_dir) do
-      system_quiet("yarn create next-app .")
+      system_quiet('yarn create next-app .')
     end
   end
 end
