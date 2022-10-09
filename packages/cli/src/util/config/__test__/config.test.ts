@@ -30,11 +30,11 @@ describe("writeDefaultConfigFile", () => {
 
   it("writes mailing.config.json if it doesn't exist", () => {
     const defaultJsonString = `{
-    "typescript": true,
-    "emailsDir": "./emails",
-    "outDir": "./previews_html",
-    "anonymousId": "TEST_VALUE"
-  }
+  "typescript": true,
+  "emailsDir": "./emails",
+  "outDir": "./previews_html",
+  "anonymousId": "TEST_VALUE"
+}
 `;
 
     const mockWriteFileSync = jest
