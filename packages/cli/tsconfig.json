@@ -17,7 +17,8 @@
     "allowJs": true,
     "noEmit": true,
     "incremental": true,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "baseUrl": "./"
   },
   "$schema": "https://json.schemastore.org/tsconfig",
   "include": ["src/**/*"],

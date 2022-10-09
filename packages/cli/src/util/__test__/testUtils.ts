@@ -1,4 +1,4 @@
-import type { JSXElementConstructor, ReactElement } from "react";
+import type { ReactElement } from "react";
 import { render } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { UserEvent } from "@testing-library/user-event/dist/types/setup/setup";

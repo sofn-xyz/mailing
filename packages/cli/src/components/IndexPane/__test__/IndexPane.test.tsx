@@ -68,7 +68,7 @@ describe("IndexPane", () => {
     });
 
     it("collapses an item with a click", async () => {
-      const { findByRole, user, findByLabelText, findByText } = setup(
+      const { findByRole, user, findByLabelText } = setup(
         <IndexPane previews={previews} />
       );
       const item = await findByLabelText("Toggle /previews/AccountCreated");

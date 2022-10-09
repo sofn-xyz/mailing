@@ -11,14 +11,9 @@ import type { PreviewIndexResponseBody } from "../../pages/api/previews";
 type IndexPaneProps = {
   previews?: PreviewIndexResponseBody["previews"];
   previewText?: PreviewIndexResponseBody["previewText"];
-  setHamburgerOpen?: (open: boolean) => void;
 };
 
-const IndexPane: React.FC<IndexPaneProps> = ({
-  previews,
-  previewText,
-  setHamburgerOpen,
-}) => {
+const IndexPane: React.FC<IndexPaneProps> = ({ previews, previewText }) => {
   const [compact, setCompact] = useState(true);
   const { up, down, left, right, treeRoutes, cursor, navigate, setCollapse } =
     usePreviewTree(previews || [], { leavesOnly: !compact });
@@ -42,7 +37,7 @@ const IndexPane: React.FC<IndexPaneProps> = ({
     }
   );
 
-  const handleToggle = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleToggle = (_e: ChangeEvent<HTMLInputElement>) => {
     setCompact((current) => !current);
   };
 
@@ -52,7 +47,6 @@ const IndexPane: React.FC<IndexPaneProps> = ({
       cursor={cursor}
       navigate={navigate}
       setCollapse={setCollapse}
-      setHamburgerOpen={setHamburgerOpen}
     />
   ) : (
     <ClientView

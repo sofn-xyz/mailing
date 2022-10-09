@@ -56,6 +56,7 @@ describe("usePreviewTree", () => {
 
     act(result.current.right);
     expect(result.current.cursor).toBe(0);
+    expect(result.current.treeRoutes).toBeDefined();
     expect(result.current.treeRoutes![0].collapsed).toBe(false);
   });
 
