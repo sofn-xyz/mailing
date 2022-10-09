@@ -19,13 +19,14 @@ const CompactView: React.FC<CompactViewProps> = ({
   setHamburgerOpen,
 }) => {
   const handleClick = useCallback(
-    (i: number, collapsed: boolean) => (e: React.MouseEvent<HTMLDivElement>) => {
-      setCollapse(i, !collapsed);
-      navigate(i);
-      if (typeof setHamburgerOpen == "function") {
-        setHamburgerOpen(false);
-      }
-    },
+    (i: number, collapsed: boolean) =>
+      (_e: React.MouseEvent<HTMLDivElement>) => {
+        setCollapse(i, !collapsed);
+        navigate(i);
+        if (typeof setHamburgerOpen == "function") {
+          setHamburgerOpen(false);
+        }
+      },
     [navigate, setCollapse, setHamburgerOpen]
   );
 

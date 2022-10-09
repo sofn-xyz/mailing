@@ -1,5 +1,4 @@
 import { readFile, writeFile } from "fs-extra";
-import { template } from "lodash";
 import fetch, { Response } from "node-fetch";
 import type { AbortSignal } from "node-fetch/externals";
 import { resolve } from "path";

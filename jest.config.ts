@@ -1,4 +1,5 @@
 import type { Config } from "jest";
+import nextJest from "next/jest";
 
 let config: Config;
 
@@ -7,8 +8,6 @@ const shared = {
 };
 
 if (process.env.NEXT_CLI_TESTS) {
-  const nextJest = require("next/jest");
-
   const createJestConfig = nextJest({
     // Provide the path to your Next.js app to load next.config.js and .env files in your test environment
     dir: "./packages/cli",

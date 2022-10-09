@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 import { resolve } from "path";
 import { outputFile, readdirSync } from "fs-extra";
 import { ArgumentsCamelCase } from "yargs";

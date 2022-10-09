@@ -30,11 +30,11 @@ describe("writeDefaultConfigFile", () => {
 
   it("writes mailing.config.json if it doesn't exist", () => {
     const defaultJsonString = `{
-  \"typescript\": true,
-  \"emailsDir\": \"./emails\",
-  \"outDir\": \"./previews_html\",
-  \"anonymousId\": \"TEST_VALUE\"
-}
+    "typescript": true,
+    "emailsDir": "./emails",
+    "outDir": "./previews_html",
+    "anonymousId": "TEST_VALUE"
+  }
 `;
 
     const mockWriteFileSync = jest
@@ -62,7 +62,7 @@ describe("writeDefaultConfigFile", () => {
 
   it("does not write mailing.config.json if it exists and has anonymousId", () => {
     // config file exists
-    jest.spyOn(fsExtra, "existsSync").mockImplementation((path) => true);
+    jest.spyOn(fsExtra, "existsSync").mockImplementation((_path) => true);
 
     const mockReadJSON = jest
       .spyOn(fsExtra, "readJSONSync")
@@ -87,7 +87,7 @@ describe("writeDefaultConfigFile", () => {
     // config file exists
     const mockExistsSync = jest
       .spyOn(fsExtra, "existsSync")
-      .mockImplementation((path) => true);
+      .mockImplementation((_path) => true);
 
     const mockWriteFileSync = jest
       .spyOn(fsExtra, "writeFileSync")
@@ -112,7 +112,7 @@ describe("writeDefaultConfigFile", () => {
     // config file exists
     const mockExistsSync = jest
       .spyOn(fsExtra, "existsSync")
-      .mockImplementation((path) => true);
+      .mockImplementation((_path) => true);
 
     const mockWriteFileSync = jest
       .spyOn(fsExtra, "writeFileSync")

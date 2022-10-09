@@ -1,5 +1,5 @@
 import { ArgumentsCamelCase } from "yargs";
-import { defaults, setConfig } from "../util/config";
+import { defaults } from "../util/config";
 import { execSync } from "child_process";
 import { log } from "../util/log";
 import {

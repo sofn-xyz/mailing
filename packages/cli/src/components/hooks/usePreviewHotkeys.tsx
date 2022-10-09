@@ -1,5 +1,4 @@
 import React, { useCallback, useState } from "react";
-import { useRouter } from "next/router";
 import useHotkeys from "@reecelucas/react-use-hotkeys";
 
 type Options = {
@@ -22,7 +21,6 @@ const viewModeOrder: ViewMode[] = ["desktop", "mobile", "html"];
 // Listen for hotkeys on the document and the iframe's
 // document, so that they still work if iframe has focus.
 export default function usePreviewHotkeys({ setViewMode }: Options) {
-  const router = useRouter();
   const [fullScreen, setFullScreen] = useState(false);
 
   const handleKey = useCallback(
@@ -61,7 +59,7 @@ export default function usePreviewHotkeys({ setViewMode }: Options) {
           break;
       }
     },
-    [router, setViewMode]
+    [setViewMode]
   );
   useHotkeys(Object.values(hotkeysMap), handleKey);
 

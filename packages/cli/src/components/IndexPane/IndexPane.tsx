@@ -42,7 +42,7 @@ const IndexPane: React.FC<IndexPaneProps> = ({
     }
   );
 
-  const handleToggle = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleToggle = (_e: ChangeEvent<HTMLInputElement>) => {
     setCompact((current) => !current);
   };
 

@@ -1,9 +1,15 @@
 {
   "name": "mailing-monorepo",
+  "homepage": "https://github.com/sofn-xyz/mailing#readme",
   "version": "0.1.0",
   "private": true,
   "type": "module",
+  "license": "MIT",
+  "workspaces": [
+    "packages/*"
+  ],
   "scripts": {
+    "lint": "eslint .",
     "dev": "cd packages/cli && rm -rf .mailing && src/dev.js",
     "dev:js": "yarn link:emails:js && yarn dev",
     "dev:init": "cd packages/cli && rm -rf previews_html; rm -rf .mailing emails mailing.config.json; src/dev.js",
@@ -24,12 +30,10 @@
     "e2e": "cd scripts/e2e_test/ && bundle && bundle exec ruby e2e_test.rb",
     "e2e:jest": "yarn jest --rootDir=scripts/e2e_test/jest_tests -c scripts/e2e_test/jest_tests/jest.config.js"
   },
-  "license": "MIT",
-  "workspaces": [
-    "packages/*"
-  ],
-  "homepage": "https://github.com/sofn-xyz/mailing#readme",
   "devDependencies": {
+    "@babel/core": "^7.18.5",
+    "@babel/eslint-parser": "^7.19.1",
+    "@babel/preset-env": "^7.18.2",
     "@babel/preset-react": "^7.17.12",
     "@babel/preset-typescript": "^7.17.12",
     "@changesets/cli": "^2.23.0",
@@ -39,14 +43,19 @@
     "@types/jest": "^28.1.6",
     "@types/react": "^18.0.15",
     "@types/react-dom": "^18.0.6",
+    "@typescript-eslint/parser": "^5.39.0",
+    "@typescript-eslint/eslint-plugin": "^5.39.0",
+    "eslint": "8.20.0",
     "jest": "^29.0.3",
     "jest-environment-jsdom": "^29.0.3",
     "next-router-mock": "^0.7.4",
     "prettier": "^2.7.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "start-server-and-test": "^1.14.0",
     "ts-jest": "29",
-    "ts-node": "^10.9.1"
+    "ts-node": "^10.9.1",
+    "yalc": "^1.0.0-pre.53"
   },
   "preconstruct": {
     "packages": [
@@ -54,10 +63,5 @@
       "packages/core"
     ]
   },
-  "dependencies": {
-    "@babel/core": "^7.18.5",
-    "@babel/preset-env": "^7.18.2",
-    "start-server-and-test": "^1.14.0",
-    "yalc": "^1.0.0-pre.53"
-  }
+  "dependencies": {}
 }

@@ -3,7 +3,6 @@ import { error } from "../../../../util/log";
 import { render } from "../../../../util/mjml";
 import {
   getPreviewComponent,
-  previewTree,
 } from "../../../../util/moduleManifestUtil";
 
 type Data = {

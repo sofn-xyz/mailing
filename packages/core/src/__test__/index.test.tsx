@@ -1,5 +1,5 @@
 import nodemailer from "nodemailer";
-
+import React from "react";
 import {
   buildSendMail,
   getTestMailQueue,
@@ -7,7 +7,7 @@ import {
   ComponentMail,
   BuildSendMailOptions,
 } from "..";
-import { Mjml, MjmlBody, MjmlRaw, MjmlText } from "mjml-react";
+import { Mjml, MjmlBody, MjmlRaw } from "mjml-react";
 import * as log from "../util/log";
 
 describe("index", () => {
@@ -53,7 +53,7 @@ describe("index", () => {
 
     it("logs an error without a valid configPath but still sends", async () => {
       await clearTestMailQueue();
-      const debugSpy = jest.spyOn(log, "debug").mockImplementation(() => {});
+      const debugSpy = jest.spyOn(log, "debug").mockImplementation(jest.fn());
 
       const sendMail = buildSendMail({
         transport,

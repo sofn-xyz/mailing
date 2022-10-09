@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-function */ 
 import { buildHandler } from "../buildHandler";
 import { log } from "../log";
 import * as postHog from "../postHog";
