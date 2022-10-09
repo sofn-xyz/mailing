@@ -1,11 +1,11 @@
 AllCops:
   NewCops: enable
-
-AllCops:
   Exclude:
-    - 'node_modules/**/*'
     - 'vendor/**/*'
-    
+    - '**/vendor/**/*'
+    - 'node_modules/**/*'
+    - '**/node_modules/**/*'
+
 Metrics/AbcSize:
   Max: 50
 
