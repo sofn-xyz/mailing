@@ -24,6 +24,6 @@ jobs:
           DEBUG: "@cypress/github-action"
         with:
           install: false
-          start: yarn ci:server
+          start: yarn ci:server:nohup
           working-directory: packages/cli
           browser: chrome

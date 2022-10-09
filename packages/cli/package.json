@@ -85,7 +85,7 @@
     "yargs": "^17.5.1"
   },
   "scripts": {
-    "ci:server": "rm -rf .mailing && nohup src/dev.js --quiet > /dev/null 2>&1 &"
+    "ci:server:nohup": "rm -rf .mailing && nohup src/dev.js --quiet > /dev/null 2>&1 &"
   },
   "keywords": [
     "email",
