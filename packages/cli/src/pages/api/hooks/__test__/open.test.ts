@@ -28,7 +28,7 @@ describe("/api/hooks/open", () => {
         },
       });
 
-      const returnValue = await handleOpen(req, res);
+      await handleOpen(req, res);
       expect(res.statusCode).toBe(200);
     });
   });

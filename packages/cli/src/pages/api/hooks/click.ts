@@ -14,7 +14,7 @@ export default async function handler(
   }
 
   try {
-    const { url, email, sendId } = req.query;
+    const { url } = req.query;
 
     let decodedUrl;
     if (typeof url == "string") {

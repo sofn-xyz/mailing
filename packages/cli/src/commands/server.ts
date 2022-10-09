@@ -43,9 +43,11 @@ export const handler = buildHandler(
   async (argv: ServerArguments) => {
     if (undefined === argv.port) throw new Error("port option is not set");
     if (undefined === argv.quiet) throw new Error("quiet option is not set");
+    if (undefined === argv.emailsDir)
+      throw new Error("qemailsDir option is not set");
 
     await bootstrapMailingDir();
-    await linkEmailsDirectory(argv.emailsDir!);
+    await linkEmailsDirectory(argv.emailsDir);
 
     if (argv.subcommand !== "start") {
       log("building .mailing...");
