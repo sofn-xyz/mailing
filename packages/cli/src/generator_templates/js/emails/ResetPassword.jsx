@@ -2,10 +2,7 @@ import Head from "./components/Head";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import ButtonPrimary from "./components/ButtonPrimary";
-import {
-  leadingRelaxed,
-  textBase,
-} from "./components/theme";
+import { leadingRelaxed, textBase } from "./components/theme";
 
 import {
   Mjml,
@@ -25,7 +22,7 @@ const ResetPassword = ({ name, body, ctaText }) => {
         <Header />
         <MjmlSection padding="0 24px" cssClass="smooth">
           <MjmlColumn>
-          <MjmlDivider
+            <MjmlDivider
               borderColor="#666"
               borderStyle="dotted"
               borderWidth="1px"
@@ -45,13 +42,11 @@ const ResetPassword = ({ name, body, ctaText }) => {
               fontSize={textBase}
               lineHeight={leadingRelaxed}
             >
-              <>
-              {body}
-              </>
+              <>{body}</>
             </MjmlText>
             <MjmlSpacer height="24px" />
-              <ButtonPrimary link={"#"} uiText={ctaText} />
-              <MjmlSpacer height="8px" />
+            <ButtonPrimary link={"#"} uiText={ctaText} />
+            <MjmlSpacer height="8px" />
             <MjmlText
               padding="16px 0"
               fontSize={textBase}

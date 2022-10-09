@@ -1,4 +1,4 @@
-import type { AppProps } from 'next/app'
+import type { AppProps } from "next/app";
 import { MDXProvider } from "@mdx-js/react";
 
 import "../styles/globals.css";

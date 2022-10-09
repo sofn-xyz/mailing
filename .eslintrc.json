@@ -2,6 +2,7 @@
   "root": true,
   "parser": "@babel/eslint-parser",
   "plugins": ["react", "react-hooks"],
+  "extends": "next/core-web-vitals",
   "env": {
     "browser": true,
     "commonjs": true,
@@ -54,6 +55,7 @@
     }
   ],
   "rules": {
-    "semi": "off"
+    "semi": "off",
+    "@next/next/google-font-display": "off"
   }
 }
