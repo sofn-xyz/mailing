@@ -1,14 +1,14 @@
 import cx from "classnames";
-import { useCallback } from "react";
+import { useCallback, useContext } from "react";
 
 import type { TreeRoute } from "./hooks/usePreviewTree";
+import { HamburgerContext } from "../HamburgerContext";
 
 type CompactViewProps = {
   treeRoutes?: TreeRoute[];
   cursor: number;
   navigate: (nextCursor: number | ((current: number) => number)) => void;
   setCollapse: (cursor: number, collapse: boolean) => void;
-  setHamburgerOpen?: (open: boolean) => void;
 };
 
 const CompactView: React.FC<CompactViewProps> = ({
@@ -16,8 +16,9 @@ const CompactView: React.FC<CompactViewProps> = ({
   cursor,
   navigate,
   setCollapse,
-  setHamburgerOpen,
 }) => {
+  const { setHamburgerOpen } = useContext(HamburgerContext);
+
   const handleClick = useCallback(
     (i: number, collapsed: boolean) =>
       (_e: React.MouseEvent<HTMLDivElement>) => {
@@ -74,8 +75,7 @@ const CompactView: React.FC<CompactViewProps> = ({
                     {
                       "stroke-black": i === cursor,
                       "stroke-white": i !== cursor,
-                      "collapsed -rotate-90 relative -top-[1px]":
-                        route.collapsed,
+                      "collapsed -rotate-90 relative -top-px": route.collapsed,
                     }
                   )}
                 >

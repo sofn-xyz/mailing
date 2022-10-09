@@ -1,12 +1,11 @@
 import type { AppProps } from "next/app";
+import { HamburgerProvider } from "../components/HamburgerContext";
 import "../styles/globals.css";
 
-export default function MyApp({ Component, pageProps }: AppProps) {
+export default function Mailing({ Component, pageProps }: AppProps) {
   return (
-    <>
-      <div className="bg-orange">
-        <Component {...pageProps} />
-      </div>
-    </>
+    <HamburgerProvider>
+      <Component {...pageProps} />;
+    </HamburgerProvider>
   );
 }
