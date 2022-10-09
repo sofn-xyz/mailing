@@ -1,4 +1,4 @@
 {
-  "*.{js|jsx|ts|tsx}": "eslint --fix",
+  "*.js|jsx|ts|tsx": "eslint --fix",
   "*.rb": "rubocop --autocorrect"
 }
