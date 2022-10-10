@@ -1,17 +1,15 @@
+import { useContext } from "react";
 import Image from "next/image";
 import cx from "classnames";
 
+import { HamburgerContext } from "./HamburgerContext";
 type MobileHeaderProps = {
   title: string;
-  hamburgerOpen: boolean;
-  setHamburgerOpen: (open: boolean) => void;
 };
 
-const MobileHeader: React.FC<MobileHeaderProps> = ({
-  title,
-  hamburgerOpen,
-  setHamburgerOpen,
-}) => {
+const MobileHeader: React.FC<MobileHeaderProps> = ({ title }) => {
+  const { hamburgerOpen, setHamburgerOpen } = useContext(HamburgerContext);
+
   return (
     <div className="header">
       <Image

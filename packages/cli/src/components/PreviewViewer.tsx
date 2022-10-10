@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, useContext } from "react";
 import cx from "classnames";
 
 import Header from "./Header";
@@ -9,6 +9,7 @@ import useLiveReload from "./hooks/useLiveReload";
 import IndexPane from "./IndexPane/IndexPane";
 import CircleLoader from "./CircleLoader";
 import usePreviewPath from "./hooks/usePreviewPath";
+import { HamburgerContext } from "./HamburgerContext";
 
 import type { PreviewIndexResponseBody } from "../pages/api/previews";
 import MobileHeader from "./MobileHeader";
@@ -35,7 +36,7 @@ const PreviewViewer: React.FC<PreviewViewerProps> = ({ initialData }) => {
   const [viewMode, setViewMode] = useState<ViewMode>("desktop");
   const [data, setData] = useState<Data>(initialData);
   const [fetching, setFetching] = useState(false);
-  const [hamburgerOpen, setHamburgerOpen] = useState(false);
+  const { hamburgerOpen } = useContext(HamburgerContext);
 
   const fetchPreviews = useCallback(async () => {
     const json = (await fetchJson("/api/previews")) as PreviewIndexResponseBody;
@@ -85,20 +86,12 @@ const PreviewViewer: React.FC<PreviewViewerProps> = ({ initialData }) => {
             }
           )}
         >
-          <IndexPane
-            previews={previews}
-            previewText={data?.previewText}
-            setHamburgerOpen={setHamburgerOpen}
-          />
+          <IndexPane previews={previews} previewText={data?.previewText} />
         </div>
         <div className="right-pane sm:left-[300px] sm:w-[calc(100vw-300px)]">
           {!!preview?.errors?.length && <MjmlErrors errors={preview?.errors} />}
           <div className="sm:hidden">
-            <MobileHeader
-              title={previewFunction || previewClass || "Emails"}
-              hamburgerOpen={hamburgerOpen}
-              setHamburgerOpen={setHamburgerOpen}
-            />
+            <MobileHeader title={previewFunction || previewClass || "Emails"} />
           </div>
           {preview?.html && !preview?.errors.length ? (
             <>
@@ -112,7 +105,7 @@ const PreviewViewer: React.FC<PreviewViewerProps> = ({ initialData }) => {
                   setViewMode={setViewMode}
                   helpContent={
                     <div
-                      className="text-xs  w-[190px] space-y-2"
+                      className="text-xs w-[190px] space-y-2"
                       aria-label="hotkeys"
                     >
                       <div className="hotkey flex justify-between">

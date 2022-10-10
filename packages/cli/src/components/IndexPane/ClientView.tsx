@@ -31,8 +31,8 @@ const ClientView: React.FC<ClientViewProps> = ({
             aria-label={`${route.previewClass} - ${route.previewFunction}`}
             className={cx("rounded-2xl cursor-pointer", {
               "pl-1": route.level === 2,
-              "bg-blue text-black -mt-[1px] pt-[1px]": isCursor,
-              "hover:bg-neutral-900 hover:-mt-[1px] hover:pt-[1px]": !isCursor,
+              "bg-blue text-black -mt-px pt-px": isCursor,
+              "hover:bg-neutral-900 hover:-mt-px hover:pt-px": !isCursor,
             })}
             onClick={() => navigate(i)}
           >
@@ -43,7 +43,7 @@ const ClientView: React.FC<ClientViewProps> = ({
               })}
             >
               <div className="font-bold">{route.previewClass}</div>
-              <div className="pb-[1px]">{route.previewFunction}</div>
+              <div className="pb-px">{route.previewFunction}</div>
               <div
                 className={cx("line-clamp-2 leading-tight", {
                   "text-gray-300": !isCursor,

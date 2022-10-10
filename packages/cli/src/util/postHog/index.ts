@@ -47,10 +47,6 @@ export function capture(options: EventMessageV1) {
   return postHogClient()?.capture(captureOpts);
 }
 
-function sleep(ms: number) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
-
 export async function shutdown() {
   const client = getPostHogClient();
   if (client) {

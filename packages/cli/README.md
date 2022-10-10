@@ -5,7 +5,6 @@
 [![Featured on Openbase](https://badges.openbase.com/js/featured/mailing.svg?token=A6xfdFmUU161m5Jns1Aqf4SwwIMSQBipWCm7HCdl1wc=)](https://openbase.com/js/mailing?utm_source=embedded&utm_medium=badge&utm_campaign=rate-badge)
 [![](https://dcbadge.vercel.app/api/server/fdSzmY46wY?style=flat)](https://discord.gg/fdSzmY46wY)
 
-
 <h2>●&nbsp;&nbsp;Build, test, send emails with React</h2>
 
 - Email templates with React components

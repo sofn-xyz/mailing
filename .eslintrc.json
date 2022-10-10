@@ -1,5 +1,65 @@
 {
+  "root": true,
+  "parser": "@babel/eslint-parser",
+  "plugins": ["react", "react-hooks"],
+  "extends": "next/core-web-vitals",
+  "env": {
+    "browser": true,
+    "commonjs": true,
+    "es6": true,
+    "node": true
+  },
+  "globals": {
+    "prisma": true
+  },
+  "parserOptions": {
+    "requireConfigFile": false,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "babelOptions": {
+      "presets": ["next/babel"],
+      "caller": {
+        // Eslint supports top level await when a parser for it is included. We enable the parser by default for Babel.
+        "supportsTopLevelAwait": true
+      }
+    }
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  },
+  "overrides": [
+    {
+      "files": ["**/*.ts", "**/*.tsx"],
+      "parser": "@typescript-eslint/parser",
+      "plugins": ["@typescript-eslint"],
+      "extends": [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/recommended"
+      ],
+      "rules": {
+        "no-unused-vars": "off",
+        "@typescript-eslint/no-explicit-any": "off",
+        "@typescript-eslint/no-unused-vars": [
+          "error",
+          {
+            "argsIgnorePattern": "^_",
+            "varsIgnorePattern": "^_",
+            "caughtErrorsIgnorePattern": "^_"
+          }
+        ],
+        "@typescript-eslint/no-empty-function": [
+          "error",
+          { "allow": ["arrowFunctions"] }
+        ]
+      }
+    }
+  ],
   "rules": {
-    "semi": "off"
+    "semi": "off",
+    "@next/next/google-font-display": "off"
   }
 }

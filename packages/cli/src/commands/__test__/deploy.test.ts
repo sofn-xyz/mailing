@@ -1,7 +1,3 @@
-import prompts from "prompts";
-import fsExtra, { removeSync } from "fs-extra";
-import { handler, InitArguments } from "../init";
-import { log } from "../../util/log";
 import { execCli } from "./execCli";
 
 jest.mock("../../util/log");

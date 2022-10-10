@@ -44,12 +44,15 @@ For development, you may want to have a demo next app that pulls in your changes
 - cd into packages/cli and run `yarn cypress run`
 
 ### Run embedded jest tests for the preview server
-During the smoke test process described below, the jest tests in `scripts/e2e_test/jest_tests` are copied into the directory where each target framework is installed and run.  Before testing them in the framework install context, however, you will want to make sure they pass on the latest build by running `yarn build` and then `yarn e2e:jest` in the mailing project root.
+
+During the smoke test process described below, the jest tests in `scripts/e2e_test/jest_tests` are copied into the directory where each target framework is installed and run. Before testing them in the framework install context, however, you will want to make sure they pass on the latest build by running `yarn build` and then `yarn e2e:jest` in the mailing project root.
 
 ## Smoke tests
-The directory `scripts/e2e_test` contains smoke tests targeting supported frameworks that should be run before every public npm release. Each test uses the `yarn create` command to create new projects from their `create-*` starter kits and then runs the cypress cli tests contained in `packages/cli/cypress` and the jest tests contained in `scripts/e2e_test/jest_tests`. 
+
+The directory `scripts/e2e_test` contains smoke tests targeting supported frameworks that should be run before every public npm release. Each test uses the `yarn create` command to create new projects from their `create-*` starter kits and then runs the cypress cli tests contained in `packages/cli/cypress` and the jest tests contained in `scripts/e2e_test/jest_tests`.
 
 The frameworks currently covered by the tests are:
+
 - standalone (no framework)
 - turbo (Turbo monorepo)
 - next_ts (Next.js with Typescript)
@@ -78,4 +81,4 @@ The script supports some options for running:
 
 **Cache the framework installs for faster runs**
 
-- Use the `--save-cache` flag to save each framework install (before mailing is added) to the `cache` directory. Subsequent test runs will use the cache instead of running `yarn create` and `yarn install`, which will speed things up 🏎  If you need to reset the cache, e.g. if you want to test a newer version of the framework or if the framework install process changes, you can delete the cache directory or the subdirectory containing the specific framework you are targeting.
+- Use the `--save-cache` flag to save each framework install (before mailing is added) to the `cache` directory. Subsequent test runs will use the cache instead of running `yarn create` and `yarn install`, which will speed things up 🏎 If you need to reset the cache, e.g. if you want to test a newer version of the framework or if the framework install process changes, you can delete the cache directory or the subdirectory containing the specific framework you are targeting.
