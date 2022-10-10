@@ -25,5 +25,9 @@ jobs:
         with:
           node-version: 18
           cache: "yarn"
+      - name: Install dependencies
+        run: yarn
+      - name: Build the app
+        run: yarn build
       - name: Run ${{ matrix.e2e-config }} tests
         run: yarn test:e2e --only ${{ matrix.e2e-config }}
