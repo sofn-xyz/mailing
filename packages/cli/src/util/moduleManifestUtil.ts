@@ -16,7 +16,7 @@ export function getPreviewComponent(name: string, functionName: string) {
   const previewModule: {
     [key: string]: () => ReactElement;
   } = previews[name as keyof typeof previews] as any;
-  return previewModule[functionName]();
+  return previewModule?.[functionName]();
 }
 
 export function getConfig(): MailingConfig {

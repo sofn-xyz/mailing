@@ -143,3 +143,8 @@ export function getConfig(): Config {
   }
   return config;
 }
+
+// This method is useful in cases that config may not be set (like logging on the front-end).
+export function getQuiet(): boolean {
+  return !!config?.quiet;
+}
