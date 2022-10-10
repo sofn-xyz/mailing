@@ -1,8 +1,6 @@
-import React, { ReactElement } from "react";
+import React from "react";
 
-type ButtonProps = {};
-
-const Button: React.FC<ButtonProps> = () => {
+const Button: React.FC = () => {
   return <button>Click Me</button>;
 };
 

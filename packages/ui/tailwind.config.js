@@ -3,9 +3,7 @@
 const path = require("path");
 
 module.exports = {
-  content: [
-    path.join(__dirname, "./src/components/**/*.{ts,tsx}"),
-  ],
+  content: [path.join(__dirname, "./src/components/**/*.{ts,tsx}")],
   theme: {
     extend: {
       colors: {
