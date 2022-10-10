@@ -203,7 +203,7 @@ class TestRunner
     dirs_to_cleanup = Array(Dir.glob("#{RUNS_DIR}/*")).sort do |a, b|
                         b <=> a
                       end.grep_v(/latest/)[NUM_RUNS_TO_KEEP..]
-    dirs_to_cleanup.each do |dir|
+    dirs_to_cleanup&.each do |dir|
       puts "Cleaning up #{dir}"
       spawn("rm -rf #{dir}")
     end
