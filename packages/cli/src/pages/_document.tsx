@@ -4,7 +4,6 @@ export default function Document() {
   return (
     <Html>
       <Head>
-        <title>Mailing</title>
         <meta property="og:title" content="Mailing" />
         <meta
           name="description"
