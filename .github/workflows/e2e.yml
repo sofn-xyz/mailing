@@ -21,5 +21,9 @@ jobs:
         with:
           ruby-version: 3.1.2
           bundler-cache: true
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: "yarn"
       - name: Run ${{ matrix.e2e-config }} tests
         run: yarn test:e2e --only ${{ matrix.e2e-config }}
