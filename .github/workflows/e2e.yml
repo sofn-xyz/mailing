@@ -1,0 +1,25 @@
+name: E2E Tests
+on:
+  push:
+jobs:
+  e2e:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        e2e-config:
+          - next_js
+          - next_ts
+          - redwood_js
+          - redwood_ts
+          - remix_js
+          - remix_ts
+          - standalone_app
+          - turbo_app
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.1.2
+          bundler-cache: true
+      - name: Run ${{ matrix.e2e-config }} tests
+        run: yarn test:e2e --only ${{ matrix.e2e-config }}
