@@ -12,7 +12,7 @@ class Mailing implements IAnalyticsProvider {
     this.#track(event, properties);
   }
 
-  async #track(event: string, properties: Record<string, unknown>) {
+  #track(event: string, properties: Record<string, unknown>) {
     fetch(Mailing.baseUrl + "/api/track", {
       method: "POST",
       headers: {

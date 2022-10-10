@@ -1,4 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
+import Analytics from "../../../util/analytics";
 import { error } from "../../../util/log";
 
 type ResponseData = {
@@ -14,7 +15,7 @@ export default async function handler(
   }
 
   try {
-    const { url } = req.query;
+    const { url, email, sendId } = req.query;
 
     let decodedUrl;
     if (typeof url == "string") {
@@ -22,6 +23,7 @@ export default async function handler(
     }
 
     if (decodedUrl) {
+      Analytics.track("email.click", { url: decodedUrl, email, sendId });
       res.redirect(307, decodedUrl);
     } else {
       res.status(406).json({ error: "Missing required parameters: url" });

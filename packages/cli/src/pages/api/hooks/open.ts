@@ -1,4 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
+import Analytics from "../../../util/analytics";
 
 export default async function handler(
   req: NextApiRequest,
@@ -9,5 +10,6 @@ export default async function handler(
   }
   const { email, sendId } = req.query;
 
+  Analytics.track("email.open", { email: email, sendId: sendId });
   res.status(200).json({ email, sendId });
 }

@@ -12,7 +12,7 @@ class Posthog implements IAnalyticsProvider {
     this.#capture(event, properties);
   }
 
-  async #capture(event: string, properties: Record<string, unknown>) {
+  #capture(event: string, properties: Record<string, unknown>) {
     // Do something
     fetch(Posthog.baseUrl + "/capture/", {
       method: "POST",

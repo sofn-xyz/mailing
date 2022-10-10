@@ -7,12 +7,12 @@ describe("analytics", () => {
   const OLD_ENV = process.env;
 
   beforeEach(() => {
-    jest.resetModules(); // Most important - it clears the cache
-    process.env = { ...OLD_ENV }; // Make a copy
+    jest.resetModules();
+    process.env = { ...OLD_ENV };
   });
 
   afterAll(() => {
-    process.env = OLD_ENV; // Restore old environment
+    process.env = OLD_ENV;
   });
 
   describe("#track", () => {
