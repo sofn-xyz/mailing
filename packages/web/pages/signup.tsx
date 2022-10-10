@@ -9,10 +9,7 @@ const Signup: NextPage = () => {
   const passwordRef = useRef(null);
   const router = useRouter();
 
-  // client should provide the url to the installed cli's /api/oauth/callback route
-  // otherwise take them to /settings for now
-  let { redirectTo } = router.query;
-  redirectTo = redirectTo || "/settings";
+  const redirectTo = "/settings";
 
   const onSubmit = useCallback(
     async (e: React.FormEvent<HTMLFormElement>) => {
