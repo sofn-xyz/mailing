@@ -17,21 +17,18 @@ model User {
   createdAt DateTime @default(now())
   password  String
 
-  organizationId         String
-  Organization           Organization             @relation(fields: [organizationId], references: [id])
-  OauthAccessToken       OauthAccessToken[]
-  OauthAuthorizationCode OauthAuthorizationCode[]
+  organizationId String
+  Organization   Organization @relation(fields: [organizationId], references: [id])
 
   @@index([organizationId])
 }
 
 model Organization {
-  id                     String                   @id @default(cuid())
-  name                   String
-  User                   User[]
-  ApiKey                 ApiKey[]
-  clientSecret           String?
-  OauthAuthorizationCode OauthAuthorizationCode[]
+  id           String   @id @default(cuid())
+  name         String
+  User         User[]
+  ApiKey       ApiKey[]
+  clientSecret String?
 }
 
 model ApiKey {
