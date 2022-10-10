@@ -13,8 +13,8 @@ jobs:
           - redwood_ts
           - remix_js
           - remix_ts
-          - standalone_app
-          - turbo_app
+          - standalone
+          - turbo
     steps:
       - uses: actions/checkout@v3
       - uses: ruby/setup-ruby@v1
