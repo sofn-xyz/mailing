@@ -15,7 +15,7 @@ class Axiom implements IAnalyticsProvider {
   }
 
   #ingest(event: string, properties: Record<string, unknown>) {
-    fetch(Axiom.baseUrl + "/api/v1/ingest", {
+    fetch(Axiom.baseUrl + "/api/v1/datasets/" + this.datasetName + "/ingest", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

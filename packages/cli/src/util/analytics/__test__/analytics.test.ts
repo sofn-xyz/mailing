@@ -43,7 +43,7 @@ describe("analytics", () => {
 
       // Axiom call
       expect(fetch).toHaveBeenCalledWith(
-        "https://cloud.axiom.co/api/v1/ingest",
+        "https://cloud.axiom.co/api/v1/datasets/axiomDatasetName/ingest",
         {
           method: "POST",
           headers: {

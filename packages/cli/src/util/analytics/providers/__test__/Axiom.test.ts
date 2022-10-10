@@ -14,7 +14,7 @@ describe("Axiom", () => {
       axiom.track("test.event", { foo: "bar" });
       expect(fetch).toHaveBeenCalledTimes(1);
       expect(fetch).toHaveBeenCalledWith(
-        "https://cloud.axiom.co/api/v1/ingest",
+        "https://cloud.axiom.co/api/v1/datasets/datasetName/ingest",
         {
           method: "POST",
           headers: {
