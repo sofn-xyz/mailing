@@ -29,7 +29,9 @@ function getPreviewFunction(
 ): [string, string] {
   let text = "";
   try {
-    const { html } = render(getPreviewComponent(previewClass, name));
+    const component = getPreviewComponent(previewClass, name);
+    if (!component) throw new Error(`${previewClass}#${name} not found`);
+    const { html } = render(component);
     // slice out the body to minimize funky head parsing
     const body = /<body[^>]*>((.|[\n\r])*)<\/body>/im.exec(html);
     if (body && body[1]) {

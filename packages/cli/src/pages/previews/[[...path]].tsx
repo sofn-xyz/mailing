@@ -10,6 +10,7 @@ import PreviewViewer, {
 } from "../../components/PreviewViewer";
 import { flatten } from "lodash";
 import { render } from "../../util/mjml";
+import { log } from "src/util/log";
 
 type Params = { path: string[] };
 
@@ -42,6 +43,17 @@ export const getStaticProps: GetStaticProps = async (context) => {
   let preview = null;
   if (previewClass && previewFunction) {
     const component = getPreviewComponent(previewClass, previewFunction);
+    if (!component) {
+      log(
+        `${previewClass} or ${previewFunction} not found, redirecting to home`
+      );
+      return {
+        redirect: {
+          destination: "/",
+          permanent: false,
+        },
+      };
+    }
     preview = render(component);
   }
 

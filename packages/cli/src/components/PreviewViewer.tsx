@@ -28,7 +28,7 @@ async function fetchJson(url: string) {
   const response = await fetch(url, {
     headers: { "Content-Type": "application/json" },
   });
-  return await response.json();
+  return response.status === 200 ? response.json() : {};
 }
 
 const PreviewViewer: React.FC<PreviewViewerProps> = ({ initialData }) => {
