@@ -133,7 +133,7 @@ type Config = {
 
 let config: Config | undefined;
 
-export function setConfig(newConfig: Config) {
+export function setConfig(newConfig: typeof config) {
   config = newConfig;
 }
 
