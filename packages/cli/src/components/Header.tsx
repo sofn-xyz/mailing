@@ -28,23 +28,8 @@ const Header: React.FC<HeaderProps> = ({
   setViewMode,
   helpContent,
 }) => {
-  const [signupUrl, setSignupUrl] = useState("");
-  useEffect(() => {
-    const mailingHost = /localhost/.test(document.location.host)
-      ? "http://localhost:3000"
-      : "https://www.mailing.run";
-    const redirectTo = encodeURIComponent(
-      document.location.protocol +
-        "//" +
-        document.location.host +
-        "/api/oauth/callback"
-    );
-    setSignupUrl(`${mailingHost}/signup?redirectTo=${redirectTo}`);
-  }, []);
-
   return (
     <div className="header">
-      <div className="path">{signupUrl && <a href={signupUrl}>Signup</a>}</div>
       <div className="segmented-control-container">
         <div className="segmented-control">
           <button
