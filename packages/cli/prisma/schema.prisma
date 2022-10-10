@@ -11,7 +11,35 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  createdAt DateTime @default(now())
+  password  String
+
+  organizationId         String
+  Organization           Organization             @relation(fields: [organizationId], references: [id])
+  OauthAccessToken       OauthAccessToken[]
+  OauthAuthorizationCode OauthAuthorizationCode[]
+
+  @@index([organizationId])
+}
+
 model Organization {
-  id           String @id
-  clientSecret String
+  id                     String                   @id @default(cuid())
+  name                   String
+  User                   User[]
+  ApiKey                 ApiKey[]
+  clientSecret           String?
+  OauthAuthorizationCode OauthAuthorizationCode[]
+}
+
+model ApiKey {
+  id             String       @id @default(cuid())
+  createdAt      DateTime     @default(now())
+  active         Boolean      @default(true)
+  organizationId String
+  Organization   Organization @relation(fields: [organizationId], references: [id])
+
+  @@index([organizationId])
 }
