@@ -112,7 +112,7 @@ class App
     loop do
       begin
         res = Net::HTTP.get_response(uri)
-        break if res.code == "200"
+        break if res.code == '200'
         raise "HTTP Get #{uri} did not succeed after #{tries} tries, status code was #{res.code}" if tries > 10
       rescue Errno::ECONNREFUSED
         raise "HTTP Get #{uri} did not succeed after #{tries} tries" if tries > 10
