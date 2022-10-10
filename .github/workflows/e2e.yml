@@ -30,4 +30,4 @@ jobs:
       - name: Build the app
         run: yarn build
       - name: Run ${{ matrix.e2e-config }} tests
-        run: yarn test:e2e --only ${{ matrix.e2e-config }}
+        run: yarn test:e2e --only=${{ matrix.e2e-config }}
