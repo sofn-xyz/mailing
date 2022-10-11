@@ -4,8 +4,8 @@ import FormError from "./components/FormError";
 
 const Login: NextPage = () => {
   const [errors, setErrors] = useState();
-  const emailRef = useRef(null);
-  const passwordRef = useRef(null);
+  const emailRef = useRef<HTMLInputElement>(null);
+  const passwordRef = useRef<HTMLInputElement>(null);
 
   const onSubmit = useCallback(async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -13,8 +13,8 @@ const Login: NextPage = () => {
     const response = await fetch("/api/session", {
       method: "POST",
       body: JSON.stringify({
-        email: emailRef.current.value,
-        password: passwordRef.current.value,
+        email: emailRef.current?.value,
+        password: passwordRef.current?.value,
       }),
       headers: {
         "Content-Type": "application/json",
