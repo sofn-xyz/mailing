@@ -161,7 +161,7 @@ class TestRunner
       FileUtils.cp_r(JEST_TESTS_DIR, './jest_tests')
 
       # run yarn jest --rootDir=jest_tests
-      system('yarn jest --rootDir=jest_tests -c jest_tests/jest.config.js')
+      system('yarn jest --rootDir=jest_tests -c jest_tests/jest.config.js --detectOpenHandles --forceExit')
     end
   end
 
