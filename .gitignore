@@ -116,6 +116,7 @@ emails
 
 scripts/e2e_test/runs
 scripts/e2e_test/cache
+tmp
 
 # Mac
 *.DS_Store

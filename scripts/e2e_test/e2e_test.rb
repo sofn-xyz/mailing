@@ -21,7 +21,7 @@ class TestRunner
 
   NUM_RUNS_TO_KEEP = 5
   PROJECT_ROOT = File.expand_path("#{__dir__}/../..")
-  TEST_ROOT = File.expand_path("#{PROJECT_ROOT}/../mailing_e2e_tests")
+  TEST_ROOT = File.expand_path("#{PROJECT_ROOT}/tmp/e2e_test")
   CLI_ROOT = File.join(PROJECT_ROOT, 'packages/cli')
   CORE_ROOT = File.join(PROJECT_ROOT, 'packages/core')
   CYPRESS_DIR = File.join(PROJECT_ROOT, 'packages/cli/cypress')
