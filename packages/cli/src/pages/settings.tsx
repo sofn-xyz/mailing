@@ -1,15 +1,7 @@
 import { withSession } from "../util/session";
-import { NextPage } from "next";
 import { useState } from "react";
 import prisma from "../../prisma";
-
-type ApiKey = {
-  id: string;
-};
-
-type User = {
-  email: string;
-};
+import { ApiKey, User } from "prisma/generated/client";
 
 export const getServerSideProps = withSession(async function ({ req }) {
   const user = req.session.user;
@@ -36,7 +28,7 @@ export const getServerSideProps = withSession(async function ({ req }) {
   };
 });
 
-const Settings: NextPage = (props: { user: User; apiKeys: ApiKey[] }) => {
+function Settings(props: { user: User; apiKeys: ApiKey[] }) {
   const [apiKeys, setApiKeys] = useState(props.apiKeys);
 
   const createApiKey = async () => {
@@ -52,11 +44,19 @@ const Settings: NextPage = (props: { user: User; apiKeys: ApiKey[] }) => {
     setApiKeys(apiKeys.concat(json.apiKey));
   };
 
+  const deleteApiKey = (apiKey: string) => {
+    return () => {
+      console.log(apiKey);
+      // fetch delete api with apiKey;
+      // setApiKeys
+    };
+  };
+
   return (
     <>
       <div>
         <div className="w-full h-full">
-          <main className="max-w-5xl mx-auto pt-20 sm:pt-24 lg:pt-32">
+          <main className="max-w-3xl mx-auto pt-20 sm:pt-24 lg:pt-32">
             <div className="grid grid-cols-3 gap-3">
               <h1 className="col-span-3 text-4xl sm:text-7xl 2xl:text-8xl m-0">
                 Settings
@@ -64,14 +64,47 @@ const Settings: NextPage = (props: { user: User; apiKeys: ApiKey[] }) => {
 
               <div className="col-span-3">
                 <p>Welcome back {props.user?.email}</p>
+              </div>
 
-                <h2>API Keys</h2>
-                <button onClick={createApiKey}>Create</button>
-                <ul>
-                  {apiKeys.map((apiKey) => (
-                    <li key={`apikey${apiKey.id}`}>API Key {apiKey.id}</li>
-                  ))}
-                </ul>
+              <div className="mt-16 col-span-3"></div>
+              <h2 className="col-span-2 text-3xl">API Keys</h2>
+              <div className="col-span-1 text-right">
+                <button
+                  onClick={createApiKey}
+                  className="text-sm text-mint border-mint-50 border-[1px] rounded-lg p-[13px]"
+                >
+                  New API Key
+                </button>
+              </div>
+              <div className="col-span-3">
+                <table className="table-auto w-full">
+                  <thead className="text-xs uppercase text-gray-500 border-t-[1px] border-slate-300">
+                    <tr>
+                      <td>API Key</td>
+                      <td>Date Added</td>
+                      <td></td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {apiKeys.map((apiKey) => (
+                      <tr
+                        key={`apikey${apiKey.id}`}
+                        className="divide-y-1 divide-[#555]"
+                      >
+                        <td className="py-[7px]">{apiKey.id}</td>
+                        <td>{apiKey.createdAt?.toString()}</td>
+                        <td>
+                          <a
+                            className="text-sm text-light-red cursor-pointer"
+                            onClick={deleteApiKey(apiKey.id)}
+                          >
+                            Delete
+                          </a>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
               </div>
             </div>
           </main>
@@ -79,6 +112,6 @@ const Settings: NextPage = (props: { user: User; apiKeys: ApiKey[] }) => {
       </div>
     </>
   );
-};
+}
 
 export default Settings;
