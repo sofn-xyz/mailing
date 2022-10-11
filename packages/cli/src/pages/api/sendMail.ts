@@ -29,9 +29,7 @@ function renderTemplate(
 async function validApiKey(apiKey: string | string[] | undefined) {
   if (!apiKey) return false;
 
-  const host = process.env.MM_DEV
-    ? "localhost:3000"
-    : "https://www.mailing.run";
+  const host = process.env.MM_DEV ? "http://localhost:3883" : "yourInstallUrl";
   const response = await fetch(`${host}/api/apiKeys/${apiKey}/validate`);
 
   return 200 === response.status;
@@ -60,8 +58,7 @@ export default async function handler(
 
   if (!(await validApiKey(req.headers && req.headers["x-api-key"])))
     return res.status(401).json({
-      error:
-        "please use a valid API key or create one at https://www.mailing.run/settings",
+      error: "invalid API key",
     });
 
   // validate to, cc, bcc name
