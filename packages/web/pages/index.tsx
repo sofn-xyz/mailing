@@ -479,36 +479,29 @@ const Home: NextPage = () => {
                 <div
                   ref={osImageRef}
                   className={cx(
-                    "dark:hidden block mt-10 lg:mt-0 sm:mx-0 md:mx-auto lg:mr-28 lg:ml-0 transition-all duration-700",
+                    "block mt-10 lg:mt-0 sm:mx-0 md:mx-auto lg:mr-28 lg:ml-0 transition-all duration-700",
                     {
                       "opacity-0": mounted && !osImageInView,
                       "opacity-1": osImageInView,
                     }
                   )}
                 >
-                  <Image
-                    width="400"
-                    height="387"
-                    src="/opensource@2x.png"
-                    alt="Mailing open source"
-                  />
-                </div>
-                <div
-                  ref={osImageRef}
-                  className={cx(
-                    "hidden dark:block mt-10 lg:mt-0 sm:mx-0 md:mx-auto lg:mr-28 lg:ml-0 transition-all duration-700",
-                    {
-                      "opacity-0": mounted && !osImageInView,
-                      "opacity-1": osImageInView,
-                    }
-                  )}
-                >
-                  <Image
-                    width="400"
-                    height="387"
-                    src="/os_dark@2x.png"
-                    alt="Mailing open source"
-                  />
+                  <span className="hidden dark:block">
+                    <Image
+                      width="400"
+                      height="387"
+                      src="/os_dark@2x.png"
+                      alt="Mailing open source"
+                    />
+                  </span>
+                  <span className="dark:hidden">
+                    <Image
+                      width="400"
+                      height="387"
+                      src="/opensource@2x.png"
+                      alt="Mailing open source"
+                    />
+                  </span>
                 </div>
                 <div className="max-w-xl text-left md:text-center lg:text-left">
                   <h1 className="text-5xl md:text-6xl mt-8 lg:mt-0 max-w-sm md:max-w-lg text-left md:text-center lg:text-left md:mx-auto">
