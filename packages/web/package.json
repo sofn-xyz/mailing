@@ -18,10 +18,11 @@
     "email-validator": "^2.0.4",
     "iron-session": "^6.2.1",
     "classnames": "^2.3.2",
-    "next": "12.3.0",
+    "next": "^12.3.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-intersection-observer": "^9.4.0"
+    "react-intersection-observer": "^9.4.0",
+    "typescript": "4.8.4"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",

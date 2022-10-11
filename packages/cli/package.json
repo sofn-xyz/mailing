@@ -31,8 +31,8 @@
   "devDependencies": {
     "@next/eslint-plugin-next": "^12.2.0",
     "@testing-library/react": "^13.4.0",
-    "node-mocks-http": "^1.11.0",
-    "cypress": "^10.3.1"
+    "cypress": "^10.3.1",
+    "node-mocks-http": "^1.11.0"
   },
   "peerDependencies": {
     "next": "^12.0.0",
@@ -73,7 +73,7 @@
     "mjml": "^4.12.0",
     "mjml-react": "^2.0.7",
     "node-fetch": "^2.6.7",
-    "nodemailer": "^6.7.5",
+    "nodemailer": "6.8.0",
     "open": "^8.4.0",
     "postcss": "^8.4.16",
     "posthog-node": "^2.0.2",
@@ -83,7 +83,7 @@
     "react-tiny-popover": "^7.1.0",
     "tailwindcss": "^3.1.8",
     "tree-node-cli": "^1.5.2",
-    "typescript": "^4.7.4",
+    "typescript": "4.8.4",
     "uglify-js": "^3.15.4",
     "yargs": "^17.5.1"
   },
