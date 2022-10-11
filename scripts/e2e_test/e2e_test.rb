@@ -98,8 +98,10 @@ class TestRunner
         app.run_mailing!
         @io = app.io
 
-        run_jest_tests
-        run_cypress_tests
+        jest_status = run_jest_tests
+        puts "JEST status: #{jest_status}"
+        cypress_status = run_cypress_tests
+        pust "CYPRESS status: #{cypress_status}"
       ensure
         cleanup_io_and_subprocess
       end
