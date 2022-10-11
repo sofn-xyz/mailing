@@ -98,8 +98,8 @@ class TestRunner
         app.run_mailing!
         @io = app.io
 
-        run_cypress_tests
         run_jest_tests
+        run_cypress_tests
       ensure
         cleanup_io_and_subprocess
       end

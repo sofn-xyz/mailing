@@ -8,12 +8,12 @@ jobs:
     strategy:
       matrix:
         e2e-config:
-          - standalone
-          - turbo
+          # - standalone
+          # - turbo
           - next_js
           - next_ts
-          - remix_js
-          - remix_ts
+          # - remix_js
+          # - remix_ts
           # - redwood_js
           # - redwood_ts
     steps:
