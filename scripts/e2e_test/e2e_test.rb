@@ -99,7 +99,7 @@ class TestRunner
         @io = app.io
 
         run_jest_tests
-        run_cypress_tests
+        # run_cypress_tests
       ensure
         cleanup_io_and_subprocess
       end
