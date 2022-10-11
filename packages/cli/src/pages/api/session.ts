@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { withSessionAPIRoute } from "../../util/session";
 import * as EmailValidator from "email-validator";
 import { compare } from "bcrypt";
-import prisma from "../../prisma";
+import prisma from "../../../prisma";
 
 type Data = {
   error?: string;

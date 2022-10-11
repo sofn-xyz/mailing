@@ -88,7 +88,7 @@
     "yargs": "^17.5.1"
   },
   "scripts": {
-    "dev": "rm -rf .mailing && yarn prisma migrate dev && src/dev.js --quiet",
+    "dev": "rm -rf .mailing && yarn prisma migrate dev && src/dev.js",
     "ci:server:nohup": "rm -rf .mailing && nohup src/dev.js --quiet > /dev/null 2>&1 &"
   },
   "keywords": [

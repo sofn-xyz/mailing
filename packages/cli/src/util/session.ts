@@ -29,7 +29,7 @@ const ironSessionConfig = {
   ttl: 0,
 };
 
-export function withSessionRoute(handler: NextApiHandler) {
+export function withSessionAPIRoute(handler: NextApiHandler) {
   return withIronSessionApiRoute(handler, ironSessionConfig);
 }
 

@@ -16,13 +16,9 @@ const ironSessionConfig = {
 };
 
 export function withSessionAPIRoute(fn) {
-  if ("string" !== typeof password)
-    throw new Error("process.env.MAILING_WEB_SESSION_PASSWORD is missing");
   return withIronSessionApiRoute(fn, ironSessionConfig);
 }
 
 export function withSession(fn) {
-  if ("string" !== typeof password)
-    throw new Error("process.env.MAILING_WEB_SESSION_PASSWORD is missing");
   return withIronSessionSsr(fn, ironSessionConfig);
 }
