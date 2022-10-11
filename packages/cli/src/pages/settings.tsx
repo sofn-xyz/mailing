@@ -1,7 +1,7 @@
 import { withSession } from "../util/session";
 import { NextPage } from "next";
 import { useState } from "react";
-import prisma from "../prisma";
+import prisma from "../../prisma";
 
 type ApiKey = {
   id: string;

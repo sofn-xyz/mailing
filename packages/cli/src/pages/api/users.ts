@@ -3,8 +3,8 @@ import * as EmailValidator from "email-validator";
 import { genSalt, hash } from "bcrypt";
 import { randomBytes } from "crypto";
 
-import prisma from "../../prisma";
-import { Prisma } from "../../prisma/generated/client";
+import prisma from "../../../prisma";
+import { Prisma } from "../../../prisma/generated/client";
 
 type DataError = {
   error: string;
@@ -86,18 +86,7 @@ const handler = async (
     return res.status(500).json({ error: ERRORS.unknown });
   }
 
-  // Create the auth code
-  const code = randomBytes(10).toString("hex");
-  await prisma.oauthAuthorizationCode.create({
-    data: {
-      code,
-      userId: user.id,
-      organizationId: organization.id,
-      expiresAt: new Date(Date.now() + MINS_VALID * 60 * 1000),
-    },
-  });
-
-  res.status(201).json({ code });
+  res.status(201).end();
 };
 
 export default handler;

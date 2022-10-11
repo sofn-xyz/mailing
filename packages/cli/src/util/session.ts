@@ -42,3 +42,7 @@ export function withSessionSsr<
 ) {
   return withIronSessionSsr(handler, ironSessionConfig);
 }
+
+export function withSession(fn: any) {
+  return withIronSessionSsr(fn, ironSessionConfig);
+}
