@@ -5,6 +5,9 @@ import {
   defaults,
   looksLikeTypescriptProject,
   writeDefaultConfigFile,
+  setConfig,
+  getConfig,
+  getQuiet,
 } from "..";
 
 jest.mock("../../log");
@@ -149,5 +152,22 @@ describe("writeDefaultConfigFile", () => {
     expect(mockReadJSONWithBlankString).toHaveBeenCalled();
     expect(mockWriteFileSync).not.toHaveBeenCalled();
     expect(log).not.toHaveBeenCalled();
+  });
+
+  describe("getQuiet", () => {
+    it("works if config is defined", () => {
+      setConfig(undefined);
+      expect(getConfig).toThrow();
+      setConfig({ quiet: true, port: 3456, emailsDir: "emails" });
+      expect(getConfig).not.toThrow();
+      expect(getQuiet()).toBe(true);
+      setConfig({ quiet: false, port: 3456, emailsDir: "emails" });
+      expect(getQuiet()).toBe(false);
+    });
+    it("works even if config is undefined", () => {
+      setConfig(undefined);
+      expect(getConfig).toThrow();
+      expect(getQuiet()).toBe(false);
+    });
   });
 });

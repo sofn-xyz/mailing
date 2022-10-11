@@ -37,7 +37,6 @@ class App
     end
 
     # wait for the preview server to start
-    wait_for_preview_server!
     wait_for_previews_json!
   end
 
@@ -101,12 +100,6 @@ class App
     end
   end
 
-  def wait_for_preview_server!
-    @io.select do |line|
-      break if line =~ %r{mailing running preview at http://localhost:3883/}
-    end
-  end
-
   def wait_for_previews_json!
     # N.B. currently takes about 4 seconds for to load the preview json the first time in a Next.js js (non-ts) app,
     # which causes the cypress tests to falsely fail (blank page while previews.json is loading).
@@ -114,7 +107,19 @@ class App
     # see: https://github.com/sofn-xyz/mailing/issues/102
 
     uri = URI('http://localhost:3883/api/previews')
-    res = Net::HTTP.get_response(uri)
-    raise "HTTP Get #{uri} did not succeed" unless res.code == '200'
+    tries = 0
+
+    loop do
+      begin
+        res = Net::HTTP.get_response(uri)
+        break if res.code == '200'
+        raise "HTTP Get #{uri} did not succeed after #{tries} tries, status code was #{res.code}" if tries > 10
+      rescue Errno::ECONNREFUSED
+        raise "HTTP Get #{uri} did not succeed after #{tries} tries" if tries > 10
+      end
+
+      tries += 1
+      sleep 1
+    end
   end
 end

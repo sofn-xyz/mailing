@@ -1,4 +1,4 @@
-import { ReactElement } from "react";
+import { JSXElementConstructor, ReactElement } from "react";
 import { previews, config } from "../moduleManifest";
 
 export function previewTree(): [string, string[]][] {
@@ -12,11 +12,16 @@ export function getPreviewModule(name: string) {
   return previews[name as keyof typeof previews];
 }
 
-export function getPreviewComponent(name: string, functionName: string) {
-  const previewModule: {
-    [key: string]: () => ReactElement;
-  } = previews[name as keyof typeof previews] as any;
-  return previewModule[functionName]();
+export function getPreviewComponent(
+  name: string,
+  functionName: string
+): ReactElement<any, string | JSXElementConstructor<any>> | undefined {
+  const previewModule:
+    | {
+        [key: string]: () => ReactElement | undefined;
+      }
+    | undefined = previews[name as keyof typeof previews] as any;
+  return previewModule?.[functionName]?.();
 }
 
 export function getConfig(): MailingConfig {
