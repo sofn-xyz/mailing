@@ -1,6 +1,17 @@
 import FormError from "./components/FormError";
-import type { NextPage } from "next";
+import type { GetStaticProps, NextPage } from "next";
 import { useCallback, useRef, useState } from "react";
+import prisma from "../../prisma";
+
+export const getServerSideProps: GetStaticProps = async () => {
+  const user = await prisma.User.findFirst();
+
+  return user
+    ? {
+        notFound: true,
+      }
+    : { props: {} };
+};
 
 const Signup: NextPage = () => {
   const [errors, setErrors] = useState();
@@ -12,8 +23,8 @@ const Signup: NextPage = () => {
     async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
 
-      const email = emailRef?.current?.value;
-      const password = passwordRef?.current?.value;
+      const email = emailRef.current.value;
+      const password = passwordRef.current.value;
 
       const response = await fetch("/api/users", {
         method: "POST",
