@@ -1,4 +1,4 @@
-import FormError from "../components/FormError";
+import FormError from "./components/FormError";
 import type { NextPage } from "next";
 import { useCallback, useRef, useState } from "react";
 
@@ -6,13 +6,14 @@ const Signup: NextPage = () => {
   const [errors, setErrors] = useState();
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
+  const redirectTo = "/settings";
 
   const onSubmit = useCallback(
     async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
 
-      const email = emailRef.current.value;
-      const password = passwordRef.current.value;
+      const email = emailRef?.current?.value;
+      const password = passwordRef?.current?.value;
 
       const response = await fetch("/api/users", {
         method: "POST",
@@ -27,7 +28,7 @@ const Signup: NextPage = () => {
 
       if (201 === response.status) {
         // success!
-        window.location.href = "/settings";
+        window.location.href = redirectTo;
       } else {
         const json = await response.json();
         setErrors(json.error);

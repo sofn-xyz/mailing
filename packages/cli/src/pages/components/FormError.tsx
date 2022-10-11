@@ -1,4 +1,6 @@
-export default function FormError(props) {
+import { ReactNode } from "react";
+
+export default function FormError(props: { children?: ReactNode }) {
   if (!props.children) return;
 
   return (
