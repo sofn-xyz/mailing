@@ -1,6 +1,6 @@
 import { withSessionAPIRoute } from "../../../util/session";
 import { NextApiRequest, NextApiResponse } from "next";
-import prisma from "../../../prisma";
+import prisma from "../../../../prisma";
 
 type ApiKey = {
   id: string;

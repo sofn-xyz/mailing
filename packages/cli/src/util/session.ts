@@ -4,13 +4,11 @@ import {
   GetServerSidePropsResult,
   NextApiHandler,
 } from "next";
+import { User } from "prisma/generated/client";
 
 declare module "iron-session" {
   interface IronSessionData {
-    user?: {
-      id: string;
-      accessToken: string;
-    };
+    user?: User;
   }
 }
 
