@@ -39,7 +39,7 @@ const ApiKeys = withSessionAPIRoute(async function (
     // list APIKeys
 
     const apiKeys = await prisma.apiKey.findMany({
-      where: { organizationId: user.organizationId },
+      where: { organizationId: user.organizationId, active: true },
       select: { id: true },
     });
 
