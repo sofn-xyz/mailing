@@ -16,19 +16,12 @@ export function debug(message?: any, ...optionalParams: any[]) {
 }
 
 // database cleaning
-const WEB_TABLE_NAMES = [
-  "NewsletterSubscriber",
-  "Organization",
-  "User",
-  "ApiKey",
-  "OauthAccessToken",
-  "OauthAuthorizationCode",
-];
+const WEB_TABLE_NAMES = ["NewsletterSubscriber"];
 
-const TABLE_NAMES = ["Organization"];
+const CLI_TABLE_NAMES = ["ApiKey", "Organization", "User"];
 
 export function truncateCliDatabase() {
-  const truncateSql = TABLE_NAMES.map(
+  const truncateSql = CLI_TABLE_NAMES.map(
     (tableName) => `TRUNCATE TABLE "${tableName}" CASCADE;`
   ).join(" ");
   debug("Running TRUNCATE on ", process.env.DATABASE_URL_TEST);
