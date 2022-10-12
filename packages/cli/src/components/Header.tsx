@@ -1,4 +1,4 @@
-import { ReactElement, useEffect, useState } from "react";
+import { ReactElement } from "react";
 import IconCode from "./icons/IconCode";
 import IconMobile from "./icons/IconMobile";
 import IconDesktop from "./icons/IconDesktop";
