@@ -21,7 +21,7 @@
     "baseUrl": "./"
   },
   "$schema": "https://json.schemastore.org/tsconfig",
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "prisma/**/*"],
   "exclude": [
     "src/emails/**/*",
     "dist/**/*",

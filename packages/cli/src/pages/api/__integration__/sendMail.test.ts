@@ -12,16 +12,18 @@ describe("sendMail", () => {
     const apiKeysResponse = await apiGetApiKeys();
 
     const apiKeys = (await apiKeysResponse.json()).apiKeys;
-
     expect(apiKeys.length).toBe(1);
-
-    const apiKey = apiKeys[0];
+    const apiKey = apiKeys[0].id;
 
     const sendMailResponse = await fetch(cliUrl("/api/sendMail"), {
       method: "POST",
       body: JSON.stringify({
         email,
         password,
+        subject: "hello",
+        to: "peter+sendMailAPI@campsh.com",
+        templateName: "AccountCreated",
+        props: { name: "Peter" },
       }),
       headers: {
         "Content-Type": "application/json",
@@ -29,7 +31,6 @@ describe("sendMail", () => {
       },
     });
 
-    console.log(await sendMailResponse.json());
     expect(sendMailResponse.status).toBe(200);
   });
 });

@@ -72,6 +72,11 @@ export default async function handler(
       .json({ error: "to, cc, or bcc must be specified" } as Data);
   }
 
+  // validate subject
+  if (typeof subject !== "string") {
+    return res.status(403).json({ error: "subject must be specified" } as Data);
+  }
+
   // validate template name
   if (typeof templateName !== "string") {
     return res
@@ -79,26 +84,16 @@ export default async function handler(
       .json({ error: "templateName must be specified" } as Data);
   }
 
-  // parse props
-  let parsedProps = {};
-  try {
-    parsedProps = JSON.parse(decodeURIComponent(props as string));
-  } catch {
-    return res
-      .status(403)
-      .json({ error: "props could not be parsed from querystring" } as Data);
-  }
-
   const { error, html } = renderTemplate(
     templateName.replace(/\.[jt]sx?$/, ""),
-    parsedProps
+    props
   );
 
   if (error) {
     return res.status(404).json({ error } as Data);
   }
 
-  sendMail({
+  const sendMailResult = await sendMail({
     html,
     to,
     cc,
@@ -112,5 +107,5 @@ export default async function handler(
     references,
   });
 
-  res.status(200).end();
+  res.status(200).json(sendMailResult || {});
 }
