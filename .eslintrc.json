@@ -60,6 +60,14 @@
   ],
   "rules": {
     "semi": "off",
-    "@next/next/google-font-display": "off"
+    "@next/next/google-font-display": "off",
+    "react/no-unknown-property": [
+      2,
+      {
+        "ignore": [
+          "jsx"
+        ]
+      }
+    ]
   }
 }
