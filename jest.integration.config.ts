@@ -15,8 +15,8 @@ const config: Config = {
     "scripts",
     "<rootDir>/emails/",
     "<rootDir>/.mailing/",
-    "<rootDir>/packages/cli/.mailing/",
-    "<rootDir>/packages/cli/src/pages",
+    "<rootDir>/packages/cli/.mailing",
+    "<rootDir>/packages/cli/src/pages/.*/__test__",
     "<rootDir>/packages/cli/src/components",
   ],
   watchPathIgnorePatterns: [

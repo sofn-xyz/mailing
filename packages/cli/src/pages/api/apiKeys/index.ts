@@ -17,6 +17,7 @@ const ApiKeys = withSessionAPIRoute(async function (
   res: NextApiResponse<Data>
 ) {
   const user = req.session.user;
+  console.log("HI FROM APIKEYS", user);
 
   // require login
   if (!user) {
