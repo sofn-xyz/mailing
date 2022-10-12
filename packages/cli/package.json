@@ -32,6 +32,7 @@
     "@next/eslint-plugin-next": "^12.2.0",
     "@testing-library/react": "^13.4.0",
     "cypress": "^10.3.1",
+    "fetch-cookie": "^2.1.0",
     "node-mocks-http": "^1.11.0"
   },
   "peerDependencies": {

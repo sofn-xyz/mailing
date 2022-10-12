@@ -92,6 +92,9 @@ const handler = async (
     return res.status(500).json({ error: ERRORS.unknown });
   }
 
+  // make an api key for you to use
+  await prisma.apiKey.create({ data: { organizationId: organization.id } });
+
   res.status(201).end();
 };
 

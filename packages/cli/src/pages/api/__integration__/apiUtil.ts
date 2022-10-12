@@ -1,4 +1,7 @@
-import fetch from "node-fetch";
+import nodeFetch from "node-fetch";
+import fetchCookie from "fetch-cookie";
+
+const fetch = fetchCookie(nodeFetch);
 const controller = new AbortController();
 import type { AbortSignal } from "node-fetch/externals";
 const signal = controller.signal as AbortSignal;

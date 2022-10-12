@@ -1,29 +1,35 @@
-// import { apiCreateUser, apiGetApiKeys, apiLogin, cliUrl } from "./apiUtil";
-// import fetch from "node-fetch";
-// import prisma from "../../../../prisma";
-// import ApiKeys from "../apiKeys";
+import { apiCreateUser, apiGetApiKeys, apiLogin, cliUrl } from "./apiUtil";
+import nodeFetch from "node-fetch";
+import fetchCookie from "fetch-cookie";
 
-// describe("sendMail", () => {
-//   it("should work", async () => {
-//     const { email, password } = await apiCreateUser();
-//     const response = await apiLogin(email, password);
+const fetch = fetchCookie(nodeFetch);
 
-//     console.log(response.headers);
+describe("sendMail", () => {
+  it("should work", async () => {
+    const { email, password } = await apiCreateUser();
+    await apiLogin(email, password);
 
-//     const apiKeys = await apiGetApiKeys();
+    const apiKeysResponse = await apiGetApiKeys();
 
-//     console.log(apiKeys);
+    const apiKeys = (await apiKeysResponse.json()).apiKeys;
 
-//     // fetch(cliUrl("/api/sendMail"), {
-//     //   method: "POST",
-//     //   body: JSON.stringify({
-//     //     email,
-//     //     password,
-//     //   }),
-//     //   headers: {
-//     //     "Content-Type": "application/json",
-//     //     "X-API-Key": apiKey,
-//     //   },
-//     // });
-//   });
-// });
+    expect(apiKeys.length).toBe(1);
+
+    const apiKey = apiKeys[0];
+
+    const sendMailResponse = await fetch(cliUrl("/api/sendMail"), {
+      method: "POST",
+      body: JSON.stringify({
+        email,
+        password,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+        "X-API-Key": apiKey,
+      },
+    });
+
+    console.log(await sendMailResponse.json());
+    expect(sendMailResponse.status).toBe(200);
+  });
+});
