@@ -10,6 +10,24 @@ export function cliUrl(path: string) {
   return "http://localhost:3883" + path;
 }
 
+export async function apiSendMail(apiKey: string) {
+  return await fetch(cliUrl("/api/sendMail"), {
+    method: "POST",
+    body: JSON.stringify({
+      email,
+      password,
+      subject: "hello",
+      to: "peter+sendMailAPI@campsh.com",
+      templateName: "AccountCreated",
+      props: { name: "Peter" },
+    }),
+    headers: {
+      "Content-Type": "application/json",
+      "X-API-Key": apiKey,
+    },
+  });
+}
+
 export async function apiGetApiKeys() {
   const response = await fetch(cliUrl("/api/apiKeys"), {
     method: "GET",
