@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 ## Utility stuff
-module TestRunnerUtils
+module SystemUtils
   def system_quiet(cmd)
     system("#{cmd} > /dev/null")
   end

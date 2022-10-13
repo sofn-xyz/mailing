@@ -7,15 +7,14 @@ require 'socket'
 
 require_relative 'helpers/test_runner_utils'
 require_relative 'helpers/opts_parser'
-require_relative 'app_configs/app'
-require_relative 'app_configs/next_ts_app'
-require_relative 'app_configs/next_js_app'
-require_relative 'app_configs/redwood_ts_app'
-require_relative 'app_configs/redwood_js_app'
-require_relative 'app_configs/remix_ts_app'
-require_relative 'app_configs/remix_js_app'
-require_relative 'app_configs/standalone_app'
-require_relative 'app_configs/turbo_app'
+require_relative 'app/next_ts'
+require_relative 'app/next_js'
+require_relative 'app/redwood_ts'
+require_relative 'app/redwood_js'
+require_relative 'app/remix_ts'
+require_relative 'app/remix_js'
+require_relative 'app/standalone'
+require_relative 'app/turbo'
 
 class TestRunner
   include TestRunnerUtils
@@ -54,7 +53,7 @@ class TestRunner
     build_mailing
   end
 
-  # @return [App] 
+  # @return [App]
   def build_app(app_name)
     klass = E2E_CONFIG[app_name.to_sym]
     tmp_dir_name = File.join(@current_dir, app_name.to_s)
