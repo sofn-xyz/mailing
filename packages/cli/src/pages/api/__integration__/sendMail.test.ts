@@ -2,7 +2,13 @@ import { apiCreateUser, apiGetApiKeys, apiLogin, apiSendMail } from "./apiUtil";
 
 describe("sendMail", () => {
   it("should work", async () => {
-    const { email, password } = await apiCreateUser();
+    const {
+      email,
+      password,
+      response: apiCreateUserResponse,
+    } = await apiCreateUser();
+    expect(apiCreateUserResponse.status).toBe(201);
+
     await apiLogin(email, password);
 
     const apiKeysResponse = await apiGetApiKeys();

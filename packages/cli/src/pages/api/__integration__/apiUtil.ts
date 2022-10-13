@@ -39,9 +39,9 @@ export async function apiGetApiKeys() {
   return response;
 }
 
-export async function apiCreateUser() {
-  const email = `ok${Math.random()}@ok.com`;
-  const password = "okokokokokokokok";
+export async function apiCreateUser(email?: string, password?: string) {
+  email = undefined === email ? `ok${Math.random()}@ok.com` : email;
+  password = undefined === password ? "okokokokokokokok" : password;
 
   const response = await fetch(cliUrl("/api/users"), {
     method: "POST",
@@ -54,9 +54,8 @@ export async function apiCreateUser() {
     },
     signal,
   });
-  expect(response.status).toBe(201);
 
-  return { email, password };
+  return { email, password, response };
 }
 export async function apiLogin(email: string, password: string) {
   const response = await fetch(cliUrl("/api/session"), {
