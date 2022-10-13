@@ -44,6 +44,12 @@ export const builder = {
     description: "quiet mode (don't prompt or open browser after starting)",
     boolean: true,
   },
+  "super-quiet": {
+    default: defaults().superQuiet,
+    demandOption: true,
+    description: "super quiet mode (don't start server after init)",
+    boolean: true,
+  },
 };
 
 export const handler = buildHandler(
@@ -62,7 +68,7 @@ export const handler = buildHandler(
       };
       await generateEmailsDirectory(options);
 
-      if (!argv.quiet) {
+      if (!(argv.quiet || argv.superQuiet)) {
         const emailResponse = await prompts({
           type: "text",
           name: "email",
@@ -87,16 +93,18 @@ export const handler = buildHandler(
       }
     }
 
-    const previewHandlerArgv: PreviewArgs = {
-      port: argv.port,
-      quiet: argv.quiet,
-      emailsDir: argv.emailsDir,
-      anonymousId: argv.anonymousId,
-      $0: argv.$0,
-      _: argv._,
-    };
+    if (!argv.superQuiet) {
+      const previewHandlerArgv: PreviewArgs = {
+        port: argv.port,
+        quiet: argv.quiet,
+        emailsDir: argv.emailsDir,
+        anonymousId: argv.anonymousId,
+        $0: argv.$0,
+        _: argv._,
+      };
 
-    previewHandler(previewHandlerArgv);
+      previewHandler(previewHandlerArgv);
+    }
   },
   {
     captureOptions: () => {

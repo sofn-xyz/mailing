@@ -95,13 +95,16 @@ class TestRunner
         @root_dir = app.root_dir
         app.setup! unless opt?('rerun')
 
-        app.run_mailing!
-        @io = app.io
+        Dir.chdir(@root_dir) do
+          system('MM_E2E=1 npx mailing --super-quiet')
+        end
+        # app.run_mailing!
+        # @io = app.io
 
-        run_cypress_tests
+        # run_cypress_tests
         run_jest_tests
-      ensure
-        cleanup_io_and_subprocess
+        # ensure
+        # cleanup_io_and_subprocess
       end
     end
 
