@@ -114,6 +114,10 @@ emails
 !packages/cli/src/generator_templates/ts/emails/
 !packages/cli/src/generator_templates/js/emails/
 
+e2e/lib
+e2e/runs
+e2e/cache
+e2e/tmp
 scripts/e2e_test/runs
 scripts/e2e_test/cache
 tmp
