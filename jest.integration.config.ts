@@ -2,7 +2,7 @@ import type { Config } from "jest";
 
 const config: Config = {
   setupFilesAfterEnv: ["<rootDir>/testSetup.integration.ts"],
-  testMatch: ["<rootDir>/packages/**/__integration__/**/*.[jt]s?(x)"],
+  testMatch: ["<rootDir>/packages/**/__integration__/**/*.test.[jt]s?(x)"],
   preset: "ts-jest",
   testEnvironment: "node",
   // TODO: keep testTimeout low and use jest.setTimeout for long ones
