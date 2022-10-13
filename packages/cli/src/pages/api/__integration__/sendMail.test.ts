@@ -1,4 +1,9 @@
-import { apiCreateUser, apiGetApiKeys, apiLogin, apiSendMail } from "./apiUtil";
+import {
+  apiCreateUser,
+  apiGetApiKeys,
+  apiLogin,
+  apiSendMail,
+} from "../apiIntegrationTestUtil";
 
 describe("sendMail", () => {
   it("should work", async () => {

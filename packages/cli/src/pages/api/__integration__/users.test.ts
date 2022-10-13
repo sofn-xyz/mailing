@@ -1,4 +1,4 @@
-import { apiCreateUser, apiLogin } from "./apiUtil";
+import { apiCreateUser, apiLogin } from "../apiIntegrationTestUtil";
 
 describe("users", () => {
   beforeEach(() => {

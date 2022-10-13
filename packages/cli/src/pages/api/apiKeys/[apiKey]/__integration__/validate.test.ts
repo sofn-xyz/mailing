@@ -1,3 +1,4 @@
+import { cliUrl } from "../../../apiIntegrationTestUtil";
 import fetch from "node-fetch";
 import type { AbortSignal } from "node-fetch/externals";
 
@@ -7,7 +8,7 @@ describe("validate", () => {
   const controller = new AbortController();
   const signal = controller.signal as AbortSignal;
 
-  beforeEach(() => {
+  beforeEach(async () => {
     jest.useRealTimers();
   });
   afterEach(() => {
@@ -15,14 +16,14 @@ describe("validate", () => {
   });
 
   function constructFetch(apiKey: string) {
-    return fetch(`http://localhost:3000/api/apiKeys/${apiKey}/validate`, {
+    return fetch(cliUrl(`/api/apiKeys/${apiKey}/validate`), {
       headers: { "Content-Type": "application/json" },
       signal,
     });
   }
 
   it("errors with invalid API key", async () => {
-    const response = await constructFetch("m");
+    const response = await constructFetch("my-invalid-api-key");
     expect(response.status).toBe(401);
   });
 
