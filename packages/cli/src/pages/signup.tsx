@@ -15,16 +15,16 @@ export const getServerSideProps: GetStaticProps = async () => {
 
 const Signup: NextPage = () => {
   const [errors, setErrors] = useState();
-  const emailRef = useRef(null);
-  const passwordRef = useRef(null);
+  const emailRef = useRef<HTMLInputElement>(null);
+  const passwordRef = useRef<HTMLInputElement>(null);
   const redirectTo = "/settings";
 
   const onSubmit = useCallback(
     async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
 
-      const email = emailRef.current.value;
-      const password = passwordRef.current.value;
+      const email = emailRef.current?.value;
+      const password = passwordRef.current?.value;
 
       const response = await fetch("/api/users", {
         method: "POST",
