@@ -1,7 +1,7 @@
 import fetch from "node-fetch";
 import type { AbortSignal } from "node-fetch/externals";
 
-import prisma from "../../../../../prisma";
+import prisma from "../../../../../../prisma";
 
 describe("validate", () => {
   const controller = new AbortController();
