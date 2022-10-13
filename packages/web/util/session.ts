@@ -2,8 +2,10 @@ import { withIronSessionApiRoute, withIronSessionSsr } from "iron-session/next";
 
 const password = process.env.MAILING_WEB_SESSION_PASSWORD;
 
-if (!password)
-  throw new Error("process.env.MAILING_WEB_SESSION_PASSWORD must be set");
+function validateSessionSetup() {
+  if (!password)
+    throw new Error("process.env.MAILING_WEB_SESSION_PASSWORD must be set");
+}
 
 const ironSessionConfig = {
   cookieName: "mailing_web",
@@ -16,9 +18,11 @@ const ironSessionConfig = {
 };
 
 export function withSessionAPIRoute(fn) {
+  validateSessionSetup();
   return withIronSessionApiRoute(fn, ironSessionConfig);
 }
 
 export function withSession(fn) {
+  validateSessionSetup();
   return withIronSessionSsr(fn, ironSessionConfig);
 }

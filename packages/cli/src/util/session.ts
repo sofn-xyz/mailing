@@ -12,10 +12,12 @@ declare module "iron-session" {
   }
 }
 
-const password = process.env.MAILING_SESSION_PASSWORD as string;
+const password = process.env.MAILING_SESSION_PASSWORD;
 
-if (!password)
-  throw new Error("process.env.MAILING_SESSION_PASSWORD must be set");
+function validateSessionSetup() {
+  if (!password)
+    throw new Error("process.env.MAILING_SESSION_PASSWORD must be set");
+}
 
 const ironSessionConfig = {
   cookieName: "mailing",
@@ -28,6 +30,7 @@ const ironSessionConfig = {
 };
 
 export function withSessionAPIRoute(handler: NextApiHandler) {
+  validateSessionSetup();
   return withIronSessionApiRoute(handler, ironSessionConfig);
 }
 
@@ -38,9 +41,11 @@ export function withSessionSsr<
     context: GetServerSidePropsContext
   ) => GetServerSidePropsResult<P> | Promise<GetServerSidePropsResult<P>>
 ) {
+  validateSessionSetup();
   return withIronSessionSsr(handler, ironSessionConfig);
 }
 
 export function withSession(fn: any) {
+  validateSessionSetup();
   return withIronSessionSsr(fn, ironSessionConfig);
 }
