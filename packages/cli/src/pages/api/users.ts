@@ -28,6 +28,7 @@ const ERRORS = {
   userExists: "mailing only supports one user for now",
   passwordMinLength: "password should be at least 8 characters",
   unknown: "an unknown error occurred",
+  emailInvalid: "email is invalid",
 };
 
 const handler = async (
@@ -47,7 +48,7 @@ const handler = async (
 
   // validations
   if (!EmailValidator.validate(email))
-    return res.status(400).json({ error: "email is invalid" });
+    return res.status(400).json({ error: ERRORS.emailInvalid });
 
   if (plainTextPassword?.length < 8)
     return res.status(400).json({ error: ERRORS.passwordMinLength });

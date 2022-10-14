@@ -1,4 +1,5 @@
 import { apiCreateUser, apiLoginAs } from "../apiIntegrationTestUtil";
+import prisma from "../../../../prisma";
 
 describe("users", () => {
   beforeEach(() => {
@@ -29,9 +30,29 @@ describe("users", () => {
     });
 
     describe("failure states", () => {
+      beforeEach(async () => {
+        await prisma.user.deleteMany({});
+      });
       it("doesn't create a user with an invalid email address", async () => {
         const { response } = await apiCreateUser("invalid");
         expect(response.status).toBe(400);
+        const data = await response.json();
+        expect(data.error).toBe("email is invalid");
+      });
+
+      it("only supports one user for now", async () => {
+        await apiCreateUser();
+        const { response } = await apiCreateUser();
+        expect(response.status).toBe(400);
+        const data = await response.json();
+        expect(data.error).toBe("mailing only supports one user for now");
+      });
+
+      it("require minimum password length", async () => {
+        const { response } = await apiCreateUser("ok@ok.com", "pass");
+        expect(response.status).toBe(400);
+        const data = await response.json();
+        expect(data.error).toBe("password should be at least 8 characters");
       });
     });
   });
