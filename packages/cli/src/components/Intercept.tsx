@@ -15,7 +15,7 @@ function recipientCount(emailOrList?: string | string[]) {
   else return emailOrList.length;
 }
 
-const Intercept: React.FC<InterceptProps> = ({ id, data }) => {
+const Intercept: React.FC<InterceptProps> = ({ data }) => {
   const [viewMode, setViewMode] = useState<ViewMode>("desktop");
   const [forceDeliverSuccess, setForceDeliverSuccess] = useState(false);
   const handleForceDeliver = useCallback(async () => {
