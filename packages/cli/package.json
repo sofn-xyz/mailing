@@ -24,6 +24,7 @@
     "tailwind.config.js",
     "postcss.config.js",
     "tsconfig.json",
+    "prisma",
     "public",
     "dist"
   ],
