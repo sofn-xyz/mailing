@@ -24,7 +24,7 @@ module App
       use_cache do
         write_dot_env!
         yarn_create!
-        yarn_add_jest_dependencies!
+        yarn_add_test_dependencies!
         verify_package_json_exists!
       end
 
@@ -41,12 +41,11 @@ module App
 
         Dir.chdir(@root_dir) do
           io = in_subdir(mailing_command)
+          # wait for the preview server to start
+          wait_for_previews_json!
+          # run commands in the app dir
+          yield
         end
-
-        # wait for the preview server to start
-        wait_for_previews_json!
-
-        yield
       ensure
         # Cleanup IO And Subprocesses
         raise 'No subprocess found to cleanup' unless io
@@ -105,10 +104,10 @@ module App
       end
     end
 
-    def yarn_add_jest_dependencies!
-      puts "yarn add'ing dependencies required for jest tests"
+    def yarn_add_test_dependencies!
+      puts "yarn add'ing dependencies required for  tests"
       Dir.chdir(@root_dir) do
-        system_quiet('yarn add --dev jest @babel/preset-env')
+        system_quiet('yarn add --dev jest @babel/preset-env cypress')
       end
     end
 

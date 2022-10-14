@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require_relative '../helpers/system_utils'
-require_relative '../config'
+require_relative 'helpers/system_utils'
+require_relative 'config'
 
 class Mailing
   extend SystemUtils

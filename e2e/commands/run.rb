@@ -21,15 +21,11 @@ module Commands
       app.run_mailing do
         # Run Cypress Tests
         announce! "Running cypress tests for #{app_name}", '🏃'
-        Dir.chdir(Config::CYPRESS_DIR) do
-          system('yarn cypress run')
-        end
+        system('yarn cypress run')
 
         # Run Jest Tests
         announce! "Running jest tests for #{app_name}", '🃏'
-        Dir.chdir(app.root_dir) do
-          system('yarn jest --rootDir=jest_tests -c jest_tests/jest.config.js')
-        end
+        system('yarn jest --rootDir=jest_tests -c jest_tests/jest.config.js')
       end
     end
   end

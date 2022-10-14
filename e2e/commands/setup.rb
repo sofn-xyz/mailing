@@ -5,7 +5,7 @@ require 'tmpdir'
 require 'json'
 
 require_relative '../config'
-require_relative '../lib/mailing'
+require_relative '../mailing'
 
 module Commands
   class Setup
@@ -31,12 +31,14 @@ module Commands
       @app = App.from_name(app_name).new(@app_dir, save_cache: opts['save-cache'])
       @app.setup! unless opts['rerun']
 
-      # copy jest tests into app
+      # Copy test files into app
+      puts 'Copying Jest Tests into App'
+      ::FileUtils.cp_r("#{Config::APP_TESTS_DIR}/.", @app.root_dir)
+
+      # Initialize the mailing app
       Dir.chdir(@app.root_dir) do
         puts 'Initializing Mailing'
         system('MM_E2E=1 npx mailing --quiet --scaffold-only')
-        puts 'Copying Jest Tests into App'
-        ::FileUtils.cp_r(Config::JEST_TESTS_DIR, './jest_tests')
       end
     end
 
@@ -65,7 +67,6 @@ module Commands
       unless File.exist?(package_json_file) && JSON.parse(File.read(package_json_file))['name'] == 'mailing-monorepo'
         raise "Check that PROJECT_ROOT is the project root: #{Config::PROJECT_ROOT}"
       end
-      raise "Check that CYPRESS_DIR exists: #{Config::CYPRESS_DIR}" unless Dir.exist?(Config::CYPRESS_DIR)
 
       if rerun
         current_dir = File.join(Config::RUNS_DIR, 'latest')
