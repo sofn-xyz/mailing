@@ -27,6 +27,9 @@ module Commands
         File.join(run_dir, app_name.to_s), save_cache: opts['save-cache']
       )
       @app.setup! unless opts['rerun']
+
+      # Give CI a common place to find the app's root directory
+      ::FileUtils.ln_s @app.install_dir, File.join(Config::TEST_ROOT, 'ci') if ENV['CI']
     end
 
     private

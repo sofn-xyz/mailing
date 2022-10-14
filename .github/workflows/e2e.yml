@@ -32,7 +32,7 @@ jobs:
         run: bundle exec ruby e2e/cli.rb setup --app=${{ matrix.e2e-config }}
       - name: Run ${{ matrix.e2e-config }} jest tests
         run: yarn jest
-        working-directory: /tmp/mailing_e2e/runs/latest/${{ matrix.e2e-config }}
+        working-directory: /tmp/mailing_e2e/ci
       - name: Run ${{ matrix.e2e-configg }} cypress tests
         uses: cypress-io/github-action@v4
         env:
@@ -40,5 +40,5 @@ jobs:
         with:
           install: false
           start: yarn ci:mailing:nohup
-          working-directory: /tmp/mailing_e2e/runs/latest/${{ matrix.e2e-config }}
+          working-directory: /tmp/mailing_e2e/ci
           browser: chrome
