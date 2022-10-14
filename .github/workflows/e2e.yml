@@ -28,7 +28,16 @@ jobs:
           cache: "yarn"
       - name: Install dependencies
         run: yarn
-      - name: Build the app
-        run: yarn build
-      - name: Run ${{ matrix.e2e-config }} tests
-        run: yarn ci:test:e2e:build --only=${{ matrix.e2e-config }}
+      - name: Setup ${{ matrix.e2e-config }} app
+        run: bundle exec ruby e2e/cli.rb setup --app=${{ matrix.e2e-config }}
+      - name: Run ${{ matrix.e2e-config }} jest tests
+        run: cd /tmp/mailing_e2e/runs/latest/${{ matrix.e2e-config }} && yarn jest --rootDir=jest_tests -c jest_tests/jest.config.js
+      - name: Run ${{ matrix.e2e-config }} cypress tests
+        uses: cypress-io/github-action@v4
+        env:
+          DEBUG: "@cypress/github-action"
+        with:
+          install: false
+          start: yarn ci:server:nohup
+          working-directory: packages/cli
+          browser: chrome

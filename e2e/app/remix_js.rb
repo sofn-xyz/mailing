@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative 'base'
+
 module App
   class RemixJs < Base
     def initialize(root_dir, *args)

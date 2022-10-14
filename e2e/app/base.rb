@@ -1,15 +1,15 @@
 # frozen_string_literal: true
 
 require 'net/http'
+require 'fileutils'
 require_relative '../helpers/system_utils'
+require_relative '../config'
 
 module App
   class Base
-    include TestRunnerUtils
+    include SystemUtils
 
-    CACHE_DIR = File.expand_path("#{__dir__}/../cache")
-
-    attr_reader :io, :root_dir
+    attr_reader :root_dir
 
     def initialize(name, root_dir, opts)
       @name = name
@@ -19,7 +19,7 @@ module App
 
     def setup!
       announce! "Creating new #{@name} app in #{@root_dir}", '⚙️'
-      FileUtils.mkdir_p(@root_dir)
+      ::FileUtils.mkdir_p(@root_dir)
 
       use_cache do
         write_dot_env!
@@ -33,12 +33,14 @@ module App
     end
 
     def run_mailing
+      io = nil
+
       begin
         puts 'Running mailing'
         mailing_command = -> { IO.popen('MM_E2E=1 npx mailing --quiet') }
 
         Dir.chdir(@root_dir) do
-          @io = in_subdir(mailing_command)
+          io = in_subdir(mailing_command)
         end
 
         # wait for the preview server to start
@@ -47,12 +49,13 @@ module App
         yield
       ensure
         # Cleanup IO And Subprocesses
-        raise 'No subprocess found to cleanup' unless @io
+        raise 'No subprocess found to cleanup' unless io
+
         # kill the subprocess
-        Process.kill 'INT', @io.pid
+        Process.kill 'INT', io.pid
         # close the io
-        @io.close
-        @io = nil
+        io.close
+        io = nil
       end
     end
 
@@ -69,16 +72,16 @@ module App
     end
 
     def use_cache(&block)
-      framework_cache_dir = File.join(CACHE_DIR, @name)
+      framework_cache_dir = File.join(Config::CACHE_DIR, @name)
       if Dir.exist?(framework_cache_dir)
         puts "Using cached #{@name}..."
-        FileUtils.cp_r("#{framework_cache_dir}/.", @root_dir)
+        ::FileUtils.cp_r("#{framework_cache_dir}/.", @root_dir)
       else
         block.call
 
         if @save_cache
           verify_package_json_exists!
-          FileUtils.cp_r(@root_dir, File.join(CACHE_DIR, @name))
+          ::FileUtils.cp_r(@root_dir, File.join(Config::CACHE_DIR, @name))
         end
       end
     end

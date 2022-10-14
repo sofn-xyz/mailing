@@ -20,7 +20,7 @@
     "build": "preconstruct build",
     "test": "yarn link:emails; yarn jest",
     "test:next": "yarn link:emails; yarn jest -c jest.next.config.ts",
-    "test:e2e": "bundle && bundle exec ruby e2e/run.rb",
+    "test:e2e": "bundle && bundle exec ruby e2e/cli.rb run-all",
     "ci:test": "start-server-and-test ci:server http://localhost:3883 test",
     "ci:test:next": "start-server-and-test ci:server http://localhost:3883 test:next",
     "ci:test:e2e:build": "bundle && bundle exec ruby e2e/build.rb",
@@ -28,8 +28,7 @@
     "prepublish": "yarn build",
     "postinstall": "husky install && preconstruct dev",
     "watch": "preconstruct watch",
-    "release": "yarn build && ./scripts/prepare-release && yarn changeset publish",
-    "e2e:jest": "yarn jest --rootDir=e2e/jest_tests -c e2e/jest_tests/jest.config.js"
+    "release": "yarn build && ./scripts/prepare-release && yarn changeset publish"
   },
   "devDependencies": {
     "@babel/core": "^7.18.5",
