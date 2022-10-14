@@ -24,4 +24,4 @@ cd packages/web
 npx prisma migrate dev
 ```
 
-In prod, we set DATABASE_URL to a postgres db on neon.tech.
+In prod, we set MAILING_DATABASE_URL to a postgres db on neon.tech.

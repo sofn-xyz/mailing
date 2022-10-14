@@ -5,6 +5,8 @@ const config: Config = {
   testMatch: ["<rootDir>/packages/**/__integration__/**/*.test.[jt]s?(x)"],
   preset: "ts-jest",
   testEnvironment: "node",
+  maxConcurrency: 1,
+  maxWorkers: 1,
   // TODO: keep testTimeout low and use jest.setTimeout for long ones
   testTimeout: 60000,
   transform: {
@@ -29,7 +31,7 @@ const config: Config = {
 };
 
 // Point to the correct DB in dev
-process.env.DATABASE_URL = process.env.DATABASE_URL_TEST;
+process.env.MAILING_DATABASE_URL = process.env.MAILING_DATABASE_URL_TEST;
 process.env.WEB_DATABASE_URL = process.env.WEB_DATABASE_URL_TEST;
 
 export default config;

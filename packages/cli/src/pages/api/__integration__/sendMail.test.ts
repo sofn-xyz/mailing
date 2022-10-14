@@ -1,7 +1,7 @@
 import {
   apiCreateUser,
   apiGetApiKeys,
-  apiLogin,
+  apiLoginAs,
   apiSendMail,
 } from "../apiIntegrationTestUtil";
 
@@ -14,7 +14,7 @@ describe("sendMail", () => {
     } = await apiCreateUser();
     expect(apiCreateUserResponse.status).toBe(201);
 
-    await apiLogin(email, password);
+    await apiLoginAs(email, password);
 
     const apiKeysResponse = await apiGetApiKeys();
 

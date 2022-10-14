@@ -17,7 +17,7 @@ export function debug(message?: any, ...optionalParams: any[]) {
 }
 
 export async function truncateCliDatabase() {
-  debug("Running TRUNCATE on ", process.env.DATABASE_URL_TEST);
+  debug("Running TRUNCATE on ", process.env.MAILING_DATABASE_URL_TEST);
 
   await cliPrisma.apiKey.deleteMany({});
   await cliPrisma.user.deleteMany({});
