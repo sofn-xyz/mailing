@@ -10,7 +10,7 @@ export function cliUrl(path: string) {
   return "http://localhost:3883" + path;
 }
 
-export async function apiFetch(url: string, data: any) {
+export async function apiFetch(url: string, data: any = {}) {
   const defaultData = {
     headers: {
       "Content-Type": "application/json",
@@ -68,7 +68,8 @@ export async function apiCreateUser(email?: string, password?: string) {
 
   return { email, password, response };
 }
-export async function apiLogin(email: string, password: string) {
+
+export async function apiLoginAs(email: string, password: string) {
   const response = await fetch(cliUrl("/api/session"), {
     method: "POST",
     body: JSON.stringify({
@@ -84,4 +85,14 @@ export async function apiLogin(email: string, password: string) {
   expect(response.status).toBe(201);
 
   return response;
+}
+
+export async function apiLogin() {
+  const apiCreateUserReturn = await apiCreateUser();
+  expect(apiCreateUserReturn.response.status).toBe(201);
+
+  const { email, password } = apiCreateUserReturn;
+
+  const apiLoginResponse = await apiLoginAs(email, password);
+  expect(apiLoginResponse.status).toBe(201);
 }
