@@ -21,6 +21,7 @@ describe("writeDefaultConfigFile", () => {
       outDir: "./previews_html",
       port: 3883,
       quiet: false,
+      scaffoldOnly: false,
       typescript: true,
     };
 
