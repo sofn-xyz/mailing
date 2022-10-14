@@ -4,9 +4,9 @@ import { useCallback, useRef, useState } from "react";
 import prisma from "../../prisma";
 
 export const getServerSideProps: GetStaticProps = async () => {
-  const user = await prisma.User.findFirst();
+  const userCount = await prisma.user.count();
 
-  return user
+  return userCount
     ? {
         notFound: true,
       }
