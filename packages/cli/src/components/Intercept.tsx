@@ -52,7 +52,7 @@ const Intercept: React.FC<InterceptProps> = ({ data }) => {
           </div>
         }
       />
-      <div className="container flex m-auto hover:self-end align-baseline justify-between">
+      <div className="container m-auto hover:self-end justify-between items-center hidden md:flex">
         <div>
           <div>Subject: {data.subject ? `"${data.subject}"` : "MISSING"}</div>
           {data.to && <div>To: {data.to}</div>}
@@ -60,12 +60,16 @@ const Intercept: React.FC<InterceptProps> = ({ data }) => {
           {data.cc && <div>CC: {data.cc}</div>}
           {data.bcc && <div>BCC: {data.bcc}</div>}
         </div>
-        <div className="bg-gray-800 px-4 py-6 rounded-xl flex justify-between align-middle">
-          <div className="max-w-[300px] px-4 border-gray-500 border-r">
-            This email was intercepted by Mailing because it was sent with
-            NODE_ENV=development.
+        <div className="bg-gray-800 px-7 py-2 rounded-xl flex justify-between items-center text-sm">
+          <div>
+            This email was intercepted by Mailing because
+            <br />
+            it was sent with NODE_ENV=development.
           </div>
-          <div className="px-4">Force deliver</div>
+          <div className="border-gray-500 pl-7 border-r h-[68px] border-dotted"></div>
+          <button className="pl-7 pr-5 py-4 bg-none font-bold">
+            Force Deliver
+          </button>
         </div>
       </div>
       {data.html && (
@@ -80,7 +84,7 @@ const Intercept: React.FC<InterceptProps> = ({ data }) => {
           border-bottom: dotted 1px #333;
           padding: 16px 24px;
           font-size: 12px;
-          line-height: 120%;
+          line-height: 140%;
         }
         .character {
           text-transform: uppercase;
