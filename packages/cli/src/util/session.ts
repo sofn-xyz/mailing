@@ -13,9 +13,11 @@ declare module "iron-session" {
 }
 
 function sessionPassword() {
-  if (!process.env.MAILING_SESSION_PASSWORD)
+  if (process.env.MAILING_DATABASE_URL && !process.env.MAILING_SESSION_PASSWORD)
     throw new Error("process.env.MAILING_SESSION_PASSWORD must be set");
-  return process.env.MAILING_SESSION_PASSWORD;
+  return (
+    process.env.MAILING_SESSION_PASSWORD || "unused_no_db_session_password123"
+  );
 }
 
 const ironSessionConfig = {
