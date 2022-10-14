@@ -3,7 +3,7 @@ import {
   apiGetApiKeys,
   apiLoginAs,
   apiSendMail,
-} from "../apiIntegrationTestUtil";
+} from "./apiIntegrationTestUtil";
 
 describe("sendMail", () => {
   it("should work", async () => {

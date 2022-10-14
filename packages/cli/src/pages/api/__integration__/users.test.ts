@@ -1,4 +1,4 @@
-import { apiCreateUser, apiLoginAs } from "../apiIntegrationTestUtil";
+import { apiCreateUser, apiLoginAs } from "./apiIntegrationTestUtil";
 import prisma from "../../../../prisma";
 
 describe("users", () => {

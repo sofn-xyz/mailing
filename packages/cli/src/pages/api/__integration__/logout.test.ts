@@ -1,4 +1,4 @@
-import { apiFetch, apiLogin } from "../apiIntegrationTestUtil";
+import { apiFetch, apiLogin } from "./apiIntegrationTestUtil";
 
 describe("logout", () => {
   describe("logged out", () => {
