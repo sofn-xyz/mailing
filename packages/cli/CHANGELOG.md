@@ -1,5 +1,13 @@
 # mailing
 
+## 0.8.3
+
+### Patch Changes
+
+- 815ae3d: bugfix for issues with changing preview names #237
+- Updated dependencies [815ae3d]
+  - mailing-core@0.8.3
+
 ## 0.8.2
 
 ### Patch Changes

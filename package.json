@@ -37,7 +37,7 @@
     "@babel/preset-react": "^7.17.12",
     "@babel/preset-typescript": "^7.17.12",
     "@changesets/cli": "^2.23.0",
-    "@preconstruct/cli": "^2.2.1",
+    "@preconstruct/cli": "^2.2.2",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^14.4.3",
     "@types/jest": "^28.1.6",
