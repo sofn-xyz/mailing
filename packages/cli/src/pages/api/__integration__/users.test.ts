@@ -1,4 +1,4 @@
-import { apiCreateUser, apiLogin } from "../apiIntegrationTestUtil";
+import { apiCreateUser, apiLoginAs } from "../apiIntegrationTestUtil";
 
 describe("users", () => {
   beforeEach(() => {
@@ -24,7 +24,7 @@ describe("users", () => {
       it("can login after creating a user", async () => {
         const { email, password } = apiCreateUserReturn;
 
-        await apiLogin(email, password);
+        await apiLoginAs(email, password);
       });
     });
 
