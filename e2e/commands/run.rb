@@ -25,7 +25,7 @@ module Commands
 
         # Run Jest Tests
         announce! "Running jest tests for #{app_name}", '🃏'
-        system('yarn jest --rootDir=jest_tests -c jest_tests/jest.config.js')
+        system('yarn jest')
       end
     end
   end

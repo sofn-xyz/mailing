@@ -2,6 +2,7 @@
 
 require 'net/http'
 require 'fileutils'
+require 'json'
 require_relative '../helpers/system_utils'
 require_relative '../config'
 
@@ -22,10 +23,10 @@ module App
       ::FileUtils.mkdir_p(@root_dir)
 
       use_cache do
-        write_dot_env!
         yarn_create!
         yarn_add_test_dependencies!
         verify_package_json_exists!
+        add_ci_scripts!
       end
 
       yalc_add_packages!
@@ -85,10 +86,6 @@ module App
       end
     end
 
-    def write_dot_env!
-      system_quiet('echo "MM_E2E=1" > .env')
-    end
-
     def verify_package_json_exists!
       raise "missing package.json in #{@root_dir}" unless File.exist?(File.join(@root_dir, 'package.json'))
     end
@@ -115,6 +112,14 @@ module App
       puts 'Running yarn'
       Dir.chdir(@root_dir) do
         system_quiet('yarn')
+      end
+    end
+
+    def add_ci_scripts!
+      Dir.chdir(@root_dir) do
+        package_json = JSON.parse(File.read('package.json'))
+        package_json['scripts']['ci:mailing:nohup'] = 'MM_E2E=1 nohup npx mailing --quiet 2>&1 &'
+        File.write('package.json', JSON.pretty_generate(package_json))
       end
     end
 

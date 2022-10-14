@@ -1,0 +1,8 @@
+{
+  "clearMocks": true,
+  "transform": {
+    "^.+\\.(js)$": "babel-jest"
+  },
+  "testTimeout": 60000,
+  "testMatch": ["<rootDir>/jest/**/*.test.[jt]s?(x)"]
+}
