@@ -13,7 +13,6 @@ CREATE TABLE "User" (
 CREATE TABLE "Organization" (
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
-    "clientSecret" TEXT,
 
     CONSTRAINT "Organization_pkey" PRIMARY KEY ("id")
 );
