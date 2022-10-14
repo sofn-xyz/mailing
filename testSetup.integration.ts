@@ -20,9 +20,9 @@ if (
     `refusing to run against non-test databases process.env.DATABASE_URL: ${process.env.DATABASE_URL} process.env.WEB_DATABASE_URL: ${process.env.WEB_DATABASE_URL}`
   );
 
-beforeAll(() => {
-  truncateCliDatabase();
-  truncateWebDatabase();
+beforeAll(async () => {
+  await truncateCliDatabase();
+  await truncateWebDatabase();
 });
 
 afterEach(() => {

@@ -11,14 +11,18 @@ describe("users", () => {
 
   describe("create", () => {
     describe("success states", () => {
+      let apiCreateUserReturn: any;
+
+      beforeAll(async () => {
+        apiCreateUserReturn = await apiCreateUser();
+      });
+
       it("creates a user", async () => {
-        const { response } = await apiCreateUser();
-        expect(response.status).toBe(201);
+        expect(apiCreateUserReturn.response.status).toBe(201);
       });
 
       it("can login after creating a user", async () => {
-        const { email, password, response } = await apiCreateUser();
-        expect(response.status).toBe(201);
+        const { email, password } = apiCreateUserReturn;
 
         await apiLogin(email, password);
       });
