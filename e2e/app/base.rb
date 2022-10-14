@@ -118,7 +118,7 @@ module App
     def add_ci_scripts!
       Dir.chdir(@root_dir) do
         package_json = JSON.parse(File.read('package.json'))
-        package_json['scripts'] ||= []
+        package_json['scripts'] ||= {}
         package_json['scripts']['ci:mailing:nohup'] = 'MM_E2E=1 nohup npx mailing --quiet 2>&1 &'
         File.write('package.json', JSON.pretty_generate(package_json))
       end
