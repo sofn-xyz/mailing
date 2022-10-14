@@ -9,7 +9,7 @@ jobs:
       matrix:
         e2e-config:
           - standalone
-          - turbo
+          # - turbo
           - next_js
           - next_ts
           - remix_js
@@ -33,7 +33,7 @@ jobs:
       - name: Run ${{ matrix.e2e-config }} jest tests
         run: yarn jest
         working-directory: /tmp/mailing_e2e/ci
-      - name: Run ${{ matrix.e2e-configg }} cypress tests
+      - name: Run ${{ matrix.e2e-config }} cypress tests
         uses: cypress-io/github-action@v4
         env:
           DEBUG: "@cypress/github-action"
