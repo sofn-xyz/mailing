@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import * as EmailValidator from "email-validator";
+import { validate } from "email-validator";
 import { genSalt, hash } from "bcrypt";
 
 import prisma from "../../../prisma";
@@ -47,7 +47,7 @@ const handler = async (
   const plainTextPassword = req.body.password;
 
   // validations
-  if (!EmailValidator.validate(email))
+  if (!validate(email))
     return res.status(400).json({ error: ERRORS.emailInvalid });
 
   if (plainTextPassword?.length < 8)

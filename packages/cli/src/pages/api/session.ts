@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { withSessionAPIRoute } from "../../util/session";
-import * as EmailValidator from "email-validator";
+import { validate } from "email-validator";
 import { compare } from "bcrypt";
 import prisma from "../../../prisma";
 
@@ -17,7 +17,7 @@ const handler = withSessionAPIRoute(async function (
   const email = req.body.email;
   const plainTextPassword = req.body.password;
 
-  if (!EmailValidator.validate(email))
+  if (!validate(email))
     return res.status(400).json({ error: "email is invalid" });
 
   const user = await prisma.user.findFirst({
