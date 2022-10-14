@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
+import cx from "classnames";
+
 import { hotkeysMap } from "./hooks/usePreviewHotkeys";
 import Header from "./Header";
 import HotIFrame from "./HotIFrame";
@@ -7,8 +9,36 @@ type InterceptProps = {
   data?: Intercept;
 };
 
-const Intercept: React.FC<InterceptProps> = ({ data }) => {
+function recipientCount(emailOrList?: string | string[]) {
+  if (!emailOrList) return 0;
+  else if (typeof emailOrList === "string") return 1;
+  else return emailOrList.length;
+}
+
+const Intercept: React.FC<InterceptProps> = ({ id, data }) => {
   const [viewMode, setViewMode] = useState<ViewMode>("desktop");
+  const [forceDeliverSuccess, setForceDeliverSuccess] = useState(false);
+  const handleForceDeliver = useCallback(async () => {
+    if (!data) return;
+    const { to, cc, bcc } = data;
+    const numRecipients =
+      recipientCount(to) + recipientCount(cc) + recipientCount(bcc);
+    const people = numRecipients === 1 ? "person" : "people";
+    const confirmed = confirm(
+      `This email will be sent to ${numRecipients.toLocaleString()} ${people}.\nAre you sure you want to deliver?`
+    );
+    if (!confirmed) return;
+    const res = await fetch(`/api/intercepts/${id}/forceDeliver`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+    });
+    if (res.status !== 200) {
+      alert(`${res.status} ${res.statusText} ${await res.text()}`);
+      return;
+    }
+    setForceDeliverSuccess(true);
+  }, [data?.id]);
+
   if (!data) {
     return <></>; // loading, should be quick bc everything is local
   }
@@ -67,8 +97,13 @@ const Intercept: React.FC<InterceptProps> = ({ data }) => {
             it was sent with NODE_ENV=development.
           </div>
           <div className="border-gray-500 pl-7 border-r h-[68px] border-dotted"></div>
-          <button className="pl-7 pr-5 py-4 bg-none font-bold">
-            Force Deliver
+          <button
+            className={cx("pl-7 pr-5 py-4 bg-none font-bold", {
+              disabled: forceDeliverSuccess,
+            })}
+            onClick={handleForceDeliver}
+          >
+            {forceDeliverSuccess ? "Force delivered" : "Force Deliver"}
           </button>
         </div>
       </div>
