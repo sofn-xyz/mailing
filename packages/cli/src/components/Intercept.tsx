@@ -28,7 +28,7 @@ const Intercept: React.FC<InterceptProps> = ({ data }) => {
       `This email will be sent to ${numRecipients.toLocaleString()} ${people}.\nAre you sure you want to deliver?`
     );
     if (!confirmed) return;
-    const res = await fetch(`/api/intercepts/${id}/forceDeliver`, {
+    const res = await fetch(`/api/intercepts/${data.id}/forceDeliver`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
     });

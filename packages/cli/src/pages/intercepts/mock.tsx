@@ -2,6 +2,7 @@ import Intercept from "../../components/Intercept";
 
 const ShowIntercept = () => {
   const data = {
+    id: "1",
     html: "<html><body><h1>Title</h1>hope it's not too strict</body></html>",
     to: "Jacob <william@oek.com>",
     from: "HelloFrank Support <support@hellofrank.cre>",
