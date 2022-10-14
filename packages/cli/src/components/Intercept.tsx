@@ -52,12 +52,21 @@ const Intercept: React.FC<InterceptProps> = ({ data }) => {
           </div>
         }
       />
-      <div className="container">
-        <div>Subject: {`"${data.subject}"`}</div>
-        <div>To: {data.to}</div>
-        <div>From: {data.from}</div>
-        <div>CC: {data.cc}</div>
-        <div>BCC: {data.bcc}</div>
+      <div className="container flex m-auto hover:self-end align-baseline justify-between">
+        <div>
+          <div>Subject: {data.subject ? `"${data.subject}"` : "MISSING"}</div>
+          {data.to && <div>To: {data.to}</div>}
+          <div>From: {data.from || "MISSING"}</div>
+          {data.cc && <div>CC: {data.cc}</div>}
+          {data.bcc && <div>BCC: {data.bcc}</div>}
+        </div>
+        <div className="bg-gray-800 px-4 py-6 rounded-xl flex justify-between align-middle">
+          <div className="max-w-[300px] px-4 border-gray-500 border-r">
+            This email was intercepted by Mailing because it was sent with
+            NODE_ENV=development.
+          </div>
+          <div className="px-4">Force deliver</div>
+        </div>
       </div>
       {data.html && (
         <HotIFrame
@@ -70,12 +79,8 @@ const Intercept: React.FC<InterceptProps> = ({ data }) => {
         .container {
           border-bottom: dotted 1px #333;
           padding: 16px 24px;
-          margin: auto;
           font-size: 12px;
           line-height: 120%;
-        }
-        .container > * {
-          margin: 4px 0;
         }
         .character {
           text-transform: uppercase;
