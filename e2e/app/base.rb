@@ -10,7 +10,7 @@ module App
   class Base
     include SystemUtils
 
-    attr_reader :root_dir
+    attr_reader :root_dir, :name
 
     def initialize(name, root_dir, opts)
       @name = name
@@ -18,19 +18,22 @@ module App
       @save_cache = opts[:save_cache]
     end
 
+    def install_dir
+      @root_dir
+    end
+
     def setup!
-      announce! "Creating new #{@name} app in #{@root_dir}", '⚙️'
-      ::FileUtils.mkdir_p(@root_dir)
+      announce! "Creating new #{name} app in #{@oot_dir}", '⚙️'
+      ::FileUtils.mkdir_p(root_dir)
 
-      use_cache do
-        yarn_create!
-        yarn_add_test_dependencies!
-        verify_package_json_exists!
-        add_ci_scripts!
-      end
-
+      yarn_create!
+      verify_package_json_exists!
+      yarn_add_test_dependencies!
+      add_yarn_ci_scripts!
       yalc_add_packages!
       yarn!
+      copy_ci_scripts!
+      intialize_mailing!
     end
 
     def run_mailing
@@ -38,10 +41,8 @@ module App
 
       begin
         puts 'Running mailing'
-        mailing_command = -> { IO.popen('MM_E2E=1 npx mailing --quiet') }
-
-        Dir.chdir(@root_dir) do
-          io = in_subdir(mailing_command)
+        Dir.chdir(install_dir) do
+          io = IO.popen('MM_E2E=1 npx mailing --quiet')
           # wait for the preview server to start
           wait_for_previews_json!
           # run commands in the app dir
@@ -61,67 +62,63 @@ module App
 
     private
 
-    def in_subdir(lam)
-      if @sub_dir
-        Dir.chdir(@sub_dir) do
-          lam.call
-        end
-      else
-        lam.call
-      end
-    end
-
-    def use_cache(&block)
-      framework_cache_dir = File.join(Config::CACHE_DIR, @name)
-      if Dir.exist?(framework_cache_dir)
-        puts "Using cached #{@name}..."
-        ::FileUtils.cp_r("#{framework_cache_dir}/.", @root_dir)
-      else
-        block.call
-
-        if @save_cache
-          verify_package_json_exists!
-          ::FileUtils.cp_r(@root_dir, File.join(Config::CACHE_DIR, @name))
-        end
-      end
+    def yarn_create!
+      raise 'Subclasses must implement this method'
     end
 
     def verify_package_json_exists!
-      raise "missing package.json in #{@root_dir}" unless File.exist?(File.join(@root_dir, 'package.json'))
+      raise "missing package.json in #{root_dir}" unless File.exist?(File.join(root_dir, 'package.json'))
     end
 
     ## yalc add mailing and mailing-cor to the project
     def yalc_add_packages!
       puts 'Adding mailing and mailing-core via yalc'
-
-      yalc_command = -> { system_quiet('npx yalc add --dev mailing mailing-core') }
-
-      Dir.chdir(@root_dir) do
-        in_subdir(yalc_command)
+      Dir.chdir(install_dir) do
+        system_quiet('npx yalc add --dev mailing mailing-core')
       end
     end
 
     def yarn_add_test_dependencies!
-      puts "yarn add'ing dependencies required for  tests"
-      Dir.chdir(@root_dir) do
+      puts "yarn add'ing dependencies required for tests"
+      Dir.chdir(install_dir) do
         system_quiet('yarn add --dev @babel/preset-env jest cypress')
       end
     end
 
     def yarn!
       puts 'Running yarn'
-      Dir.chdir(@root_dir) do
+      Dir.chdir(root_dir) do
+        system_quiet('yarn')
+      end
+
+      return if root_dir == install_dir
+
+      Dir.chdir(install_dir) do
         system_quiet('yarn')
       end
     end
 
-    def add_ci_scripts!
+    def add_yarn_ci_scripts!
       puts 'Adding CI scripts'
-      Dir.chdir(@root_dir) do
+      Dir.chdir(install_dir) do
         package_json = JSON.parse(File.read('package.json'))
         package_json['scripts'] ||= {}
         package_json['scripts']['ci:mailing:nohup'] = 'MM_E2E=1 nohup npx mailing --quiet 2>&1 &'
         File.write('package.json', JSON.pretty_generate(package_json))
+      end
+    end
+
+    # Copy test files into app
+    def copy_ci_scripts!
+      puts 'Copying test configs into App'
+      ::FileUtils.cp_r("#{Config::APP_TESTS_DIR}/.", install_dir)
+    end
+
+    # Initialize the mailing app
+    def intialize_mailing!
+      Dir.chdir(install_dir) do
+        puts 'Initializing Mailing'
+        system('MM_E2E=1 npx mailing --quiet --scaffold-only')
       end
     end
 

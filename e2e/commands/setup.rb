@@ -9,7 +9,7 @@ require_relative '../mailing'
 
 module Commands
   class Setup
-    attr_reader :app_dir, :app
+    attr_reader :app
 
     # @param [String] app_name
     def self.perform(app_name:, opts: {})
@@ -19,27 +19,14 @@ module Commands
     # @param [String] app_name
     # @returns [String] the path to the app's root directory
     def initialize(app_name:, opts: {})
-      working_dir = setup_environment(rerun: !opts['rerun'].nil?)
+      run_dir = setup_environment(rerun: !opts['rerun'].nil?)
 
-      unless opts['skip-build']
-        puts 'Builidng Mailing'
-        Mailing.build
-      end
+      Mailing.build unless opts['skip-build']
 
-      puts "Setting up #{app_name}"
-      @app_dir = File.join(working_dir, app_name.to_s)
-      @app = App.from_name(app_name).new(@app_dir, save_cache: opts['save-cache'])
+      @app = App.from_name(app_name).new(
+        File.join(run_dir, app_name.to_s), save_cache: opts['save-cache']
+      )
       @app.setup! unless opts['rerun']
-
-      # Copy test files into app
-      puts 'Copying Jest Tests into App'
-      ::FileUtils.cp_r("#{Config::APP_TESTS_DIR}/.", @app.root_dir)
-
-      # Initialize the mailing app
-      Dir.chdir(@app.root_dir) do
-        puts 'Initializing Mailing'
-        system('MM_E2E=1 npx mailing --quiet --scaffold-only')
-      end
     end
 
     private

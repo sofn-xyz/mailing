@@ -11,7 +11,7 @@ module App
     private
 
     def yarn_create!
-      Dir.chdir(@root_dir) do
+      Dir.chdir(root_dir) do
         system_quiet('yarn create redwood-app .')
 
         # yarn add peer dependencies

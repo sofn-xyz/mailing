@@ -11,7 +11,7 @@ module App
     private
 
     def yarn_create!
-      Dir.chdir(@root_dir) do
+      Dir.chdir(root_dir) do
         # install with the "remix" template
         system_quiet('yarn create remix . --template=remix --typescript --install')
 
