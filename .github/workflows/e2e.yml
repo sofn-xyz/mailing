@@ -9,13 +9,13 @@ jobs:
       matrix:
         e2e-config:
           - standalone
-          - turbo
+          # - turbo
           - next_js
           - next_ts
           - remix_js
           - remix_ts
           # - redwood_js
-          # - redwood_ts
+          - redwood_ts
     steps:
       - uses: actions/checkout@v3
       - uses: ruby/setup-ruby@v1

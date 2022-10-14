@@ -104,7 +104,7 @@ module App
     def yarn_add_test_dependencies!
       puts "yarn add'ing dependencies required for  tests"
       Dir.chdir(@root_dir) do
-        system_quiet('yarn add --dev jest @babel/preset-env cypress')
+        system_quiet('yarn add --dev @babel/preset-env jest cypress')
       end
     end
 
@@ -116,6 +116,7 @@ module App
     end
 
     def add_ci_scripts!
+      puts 'Adding CI scripts'
       Dir.chdir(@root_dir) do
         package_json = JSON.parse(File.read('package.json'))
         package_json['scripts'] ||= {}
