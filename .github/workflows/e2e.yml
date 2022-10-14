@@ -9,7 +9,7 @@ jobs:
       matrix:
         e2e-config:
           - standalone
-          # - turbo
+          - turbo
           - next_js
           - next_ts
           - remix_js
