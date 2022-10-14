@@ -10,12 +10,38 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        white: "#E4EBFA",
+        white: "#e4ebfa",
+        gray: {
+          300: "#ccc",
+          500: "#555",
+          600: "#444",
+          700: "#333",
+          800: "#222",
+        },
+        slate: {
+          400: "#bdc3cf",
+          500: "#7b7e85",
+        },
+        neutral: {
+          200: "#eee",
+          500: "#777",
+          600: "#666",
+          800: "#444",
+        },
         black: "#111",
-        blue: "#B8CEFF",
-        "gray-300": "#ccc",
-        "gray-600": "#444",
-        "gray-700": "#333",
+        "red-400": "#f59c9c",
+        "amber-200": "#fadf98",
+        green: {
+          50: "#f1fcef",
+          200: "#dbf7d7",
+          300: "#c3f2bc",
+        },
+        "emerald-700": "#728a6f",
+        blue: "#b8ceff",
+        blue: {
+          300: "#dce7ff",
+          400: "#a1bfff",
+        },
       },
     },
   },
