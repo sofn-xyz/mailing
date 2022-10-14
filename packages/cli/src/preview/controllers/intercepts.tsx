@@ -1,6 +1,7 @@
 import { IncomingMessage, ServerResponse } from "http";
 import { log } from "../../util/log";
 import { renderNotFound } from "./application";
+import { sendMail } from "../../moduleManifest";
 
 const cache: {
   [id: string]: Intercept;
@@ -30,7 +31,25 @@ export function showIntercept(req: IncomingMessage, res: ServerResponse) {
   if (data) {
     res.setHeader("Content-Type", "application/json");
     res.writeHead(200);
-    res.end(JSON.stringify(data));
+    const intercept: Intercept = { ...data };
+    res.end(JSON.stringify(intercept));
+  } else {
+    renderNotFound(res);
+  }
+}
+
+export function sendIntercept(req: IncomingMessage, res: ServerResponse) {
+  const parts = req.url?.split("/");
+  const id = parts ? parts[parts.length - 1].split(".")[0] : "";
+  const data = cache[id];
+
+  if (data) {
+    // force deliver
+    sendMail({ ...data, dangerouslyForceDeliver: true });
+
+    res.setHeader("Content-Type", "application/json");
+    res.writeHead(200);
+    res.end();
   } else {
     renderNotFound(res);
   }
