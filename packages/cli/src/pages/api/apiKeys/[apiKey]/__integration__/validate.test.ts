@@ -1,4 +1,4 @@
-import { cliUrl } from "../../../__integration__/apiIntegrationTestUtil";
+import { cliUrl } from "../../../__integration__/util";
 import fetch from "node-fetch";
 import type { AbortSignal } from "node-fetch/externals";
 

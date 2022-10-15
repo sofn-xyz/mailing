@@ -1,7 +1,5 @@
-import {
-  apiFetch,
-  apiLogin,
-} from "../../__integration__/apiIntegrationTestUtil";
+import { apiLogin } from "../../__integration__/util/login";
+import { apiFetch } from "../../__integration__/util";
 
 describe("api/apiKeys", () => {
   describe("logged out", () => {
