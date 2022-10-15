@@ -1,8 +1,12 @@
+import { debug } from "../util/log";
+
 import { withIronSessionApiRoute, withIronSessionSsr } from "iron-session/next";
 import {
   GetServerSidePropsContext,
   GetServerSidePropsResult,
   NextApiHandler,
+  NextApiRequest,
+  NextApiResponse,
 } from "next";
 import { User } from "prisma/generated/client";
 
@@ -12,26 +16,33 @@ declare module "iron-session" {
   }
 }
 
-function sessionPassword() {
-  if (process.env.MAILING_DATABASE_URL && !process.env.MAILING_SESSION_PASSWORD)
-    throw new Error("process.env.MAILING_SESSION_PASSWORD must be set");
-  return (
-    process.env.MAILING_SESSION_PASSWORD || "unused_no_db_session_password123"
-  );
+function ironSessionConfig(password: string) {
+  return {
+    cookieName: "mailing",
+    password,
+    // secure: true should be used in production (HTTPS) but can't be used in development (HTTP)
+    cookieOptions: {
+      secure: process.env.NODE_ENV === "production",
+    },
+    ttl: 0,
+  };
 }
 
-const ironSessionConfig = {
-  cookieName: "mailing",
-  password: sessionPassword(),
-  // secure: true should be used in production (HTTPS) but can't be used in development (HTTP)
-  cookieOptions: {
-    secure: process.env.NODE_ENV === "production",
-  },
-  ttl: 0,
-};
-
 export function withSessionAPIRoute(handler: NextApiHandler) {
-  return withIronSessionApiRoute(handler, ironSessionConfig);
+  if (process.env.MAILING_SESSION_PASSWORD) {
+    return withIronSessionApiRoute(
+      handler,
+      ironSessionConfig(process.env.MAILING_SESSION_PASSWORD)
+    );
+  } else {
+    // 404
+    return function (req: NextApiRequest, res: NextApiResponse<void>) {
+      debug(
+        "process.env.MAILING_SESSION_PASSWORD was falsy so not using iron-session"
+      );
+      res.status(404).end();
+    };
+  }
 }
 
 export function withSessionSsr<
@@ -41,9 +52,18 @@ export function withSessionSsr<
     context: GetServerSidePropsContext
   ) => GetServerSidePropsResult<P> | Promise<GetServerSidePropsResult<P>>
 ) {
-  return withIronSessionSsr(handler, ironSessionConfig);
-}
-
-export function withSession(fn: any) {
-  return withIronSessionSsr(fn, ironSessionConfig);
+  if (process.env.MAILING_SESSION_PASSWORD) {
+    return withIronSessionSsr(
+      handler,
+      ironSessionConfig(process.env.MAILING_SESSION_PASSWORD)
+    );
+  } else {
+    // 404
+    return async function getServerSideProps() {
+      debug(
+        "process.env.MAILING_SESSION_PASSWORD was falsy so not using iron-session"
+      );
+      return { notFound: true };
+    };
+  }
 }
