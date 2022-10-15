@@ -25,9 +25,9 @@ module.exports = {
       blue: "#b8ceff",
       "blue-300": "#dce7ff",
       "blue-400": "#a1bfff",
-      fontSize: {
-        "6xl": "64px",
-      },
+    },
+    fontSize: {
+      "6xl": "64px",
     },
   },
 };
