@@ -7,6 +7,12 @@ const cache: {
   [id: string]: Intercept;
 } = {};
 
+function getData(req: IncomingMessage) {
+  const parts = req.url?.split("/");
+  const id = parts ? parts[parts.length - 1].split(".")[0] : "";
+  return cache[id];
+}
+
 export function createIntercept(req: IncomingMessage, res: ServerResponse) {
   let body = "";
   req.on("data", function onData(data) {
@@ -24,9 +30,7 @@ export function createIntercept(req: IncomingMessage, res: ServerResponse) {
 }
 
 export function showIntercept(req: IncomingMessage, res: ServerResponse) {
-  const parts = req.url?.split("/");
-  const id = parts ? parts[parts.length - 1].split(".")[0] : "";
-  const data = cache[id];
+  const data = getData(req);
 
   if (data) {
     res.setHeader("Content-Type", "application/json");
@@ -39,12 +43,10 @@ export function showIntercept(req: IncomingMessage, res: ServerResponse) {
 }
 
 export function sendIntercept(req: IncomingMessage, res: ServerResponse) {
-  const parts = req.url?.split("/");
-  const id = parts ? parts[parts.length - 1].split(".")[0] : "";
-  const data = cache[id];
+  const data = getData(req);
 
   if (data) {
-    // force deliver
+    // force deliver, we don't want this one intercepted
     sendMail({ ...data, dangerouslyForceDeliver: true });
 
     res.setHeader("Content-Type", "application/json");
