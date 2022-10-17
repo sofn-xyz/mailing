@@ -1,4 +1,5 @@
 import prompts from "prompts";
+import fetch from "node-fetch";
 import { existsSync } from "fs-extra";
 import { ArgumentsCamelCase } from "yargs";
 import { error, log } from "../util/log";
@@ -84,7 +85,7 @@ export const handler = buildHandler(
           log("great, talk soon");
           try {
             const url = `${getMailingAPIBaseURL()}/api/newsletterSubscribers`;
-            console.log("fetching from", url);
+
             fetch(url, {
               method: "POST",
               headers: { "Content-Type": "application/json" },
