@@ -32,7 +32,7 @@ jobs:
       mysql:
         image: mysql:8
         env:
-          MYSQL_DATABASE: mailing_cli_test
+          MYSQL_DATABASE: test_db
           MYSQL_USER: user
           MYSQL_PASSWORD: password
           MYSQL_ROOT_PASSWORD: rootpassword
