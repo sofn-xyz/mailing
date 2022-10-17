@@ -16,12 +16,6 @@ const cache: {
   },
 };
 
-function getData(req: IncomingMessage) {
-  const parts = req.url?.split("/");
-  const id = parts ? parts[parts.length - 2] : "";
-  return cache[id];
-}
-
 export function createIntercept(req: IncomingMessage, res: ServerResponse) {
   let body = "";
   req.on("data", function onData(data) {
@@ -39,7 +33,9 @@ export function createIntercept(req: IncomingMessage, res: ServerResponse) {
 }
 
 export function showIntercept(req: IncomingMessage, res: ServerResponse) {
-  const data = getData(req);
+  const parts = req.url?.split("/");
+  const id = parts ? parts[parts.length - 1].split(".")[0] : "";
+  const data = cache[id];
 
   if (data) {
     res.setHeader("Content-Type", "application/json");
@@ -52,7 +48,9 @@ export function showIntercept(req: IncomingMessage, res: ServerResponse) {
 }
 
 export async function sendIntercept(req: IncomingMessage, res: ServerResponse) {
-  const data = getData(req);
+  const parts = req.url?.split("/");
+  const id = parts ? parts[parts.length - 2] : "";
+  const data = cache[id];
 
   if (data) {
     // force deliver, we don't want this one intercepted
