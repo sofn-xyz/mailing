@@ -111,7 +111,7 @@ module App
     # Copy test files into app
     def copy_ci_scripts!
       puts 'Copying test configs into App'
-      ::FileUtils.cp_r("#{Config::MAILING_TESTS_DIR}/.", install_dir)
+      ::FileUtils.cp_r(Config::MAILING_TESTS_DIR, install_dir)
     end
 
     # Initialize the mailing app
