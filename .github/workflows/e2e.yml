@@ -1,6 +1,8 @@
 name: E2E Tests
 on:
   push:
+env:
+  VERBOSE: true
 jobs:
   e2e:
     runs-on: ubuntu-latest
