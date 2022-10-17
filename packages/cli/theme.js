@@ -29,5 +29,14 @@ module.exports = {
     fontSize: {
       "6xl": "64px",
     },
+    animation: {
+      "delayed-fade": "delay-fade 1s ease",
+    },
+    keyframes: {
+      "delay-fade": {
+        "0%, 50%": { opacity: 0 },
+        "100%": { opacity: 1 },
+      },
+    },
   },
 };

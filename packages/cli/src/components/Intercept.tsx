@@ -89,7 +89,7 @@ const Intercept: React.FC<InterceptProps> = ({ data }) => {
           </div>
         }
       />
-      <div className="container m-auto hover:self-end justify-between items-center hidden md:flex">
+      <div className="container m-auto hover:self-end justify-between items-center flex">
         <div>
           <div>Subject: {data.subject ? `"${data.subject}"` : "MISSING"}</div>
           {data.to && <div>To: {data.to}</div>}
@@ -97,7 +97,7 @@ const Intercept: React.FC<InterceptProps> = ({ data }) => {
           {data.cc && <div>CC: {data.cc}</div>}
           {data.bcc && <div>BCC: {data.bcc}</div>}
         </div>
-        <div className="bg-gray-800 pl-6 pr-3 py-2 rounded-xl flex justify-between items-center text-sm">
+        <div className="bg-gray-800 pl-6 pr-3 py-2 rounded-xl justify-between items-center text-sm animate-delayed-fade hidden md:flex">
           <div>
             This email was intercepted by Mailing because
             <br />
@@ -107,13 +107,18 @@ const Intercept: React.FC<InterceptProps> = ({ data }) => {
           <button
             disabled={forceDeliverSuccess}
             className={cx("pl-7 pr-5 py-4 bg-none font-bold hover:underline", {
-              "text-green-400": forceDeliverSuccess,
+              "text-green-300": forceDeliverSuccess,
             })}
             onClick={handleForceDeliver}
           >
-            {forceDeliverSuccess
-              ? `Sent to ${numRecipients.toLocaleString()}`
-              : "Force Send"}
+            {forceDeliverSuccess ? (
+              <span>
+                <span className="pr-2">✓</span> Sent to{" "}
+                {numRecipients.toLocaleString()}
+              </span>
+            ) : (
+              "Force Send"
+            )}
           </button>
         </div>
       </div>
