@@ -24,6 +24,7 @@
   ],
   "exclude": [
     "packages/**/__test__/*",
+    "packages/**/__integration__/*",
     "packages/*/src/emails/**/*",
     "packages/*/dist/**/*",
     "packages/cli/src/generator_templates/**/*"

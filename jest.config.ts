@@ -25,6 +25,7 @@ const config: Config = {
     "<rootDir>/.mailing/",
     "tmp-testMailQueue.json",
   ],
+  testMatch: ["<rootDir>/packages/**/__test__/**/*.test.[jt]s?(x)"],
 };
 
 export default config;

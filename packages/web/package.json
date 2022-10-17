@@ -3,8 +3,9 @@
   "version": "0.4.4",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
+    "dev": "yarn prisma migrate dev && next dev",
+    "ci:server": "yarn prisma generate && yarn prisma migrate deploy && next dev",
+    "build": "yarn prisma generate && yarn prisma migrate deploy && next build",
     "start": "next start",
     "lint": "next lint",
     "type-check": "tsc"

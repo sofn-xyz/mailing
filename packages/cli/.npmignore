@@ -2,3 +2,4 @@
 node_modules
 .next
 __test__
+__integration__

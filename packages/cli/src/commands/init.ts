@@ -1,4 +1,5 @@
 import prompts from "prompts";
+import fetch from "node-fetch";
 import { existsSync } from "fs-extra";
 import { ArgumentsCamelCase } from "yargs";
 import { error, log } from "../util/log";
@@ -69,8 +70,8 @@ export const handler = buildHandler(
       await generateEmailsDirectory(options);
 
       if (argv.scaffoldOnly) {
-        return
-      } 
+        return;
+      }
 
       if (!argv.quiet) {
         const emailResponse = await prompts({
@@ -83,7 +84,9 @@ export const handler = buildHandler(
         if (email?.length > 0) {
           log("great, talk soon");
           try {
-            fetch(`${getMailingAPIBaseURL()}/api/users`, {
+            const url = `${getMailingAPIBaseURL()}/api/newsletterSubscribers`;
+
+            fetch(url, {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({ email }),

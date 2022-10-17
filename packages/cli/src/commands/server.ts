@@ -51,7 +51,18 @@ export const handler = buildHandler(
 
     if (argv.subcommand !== "start") {
       log("building .mailing...");
-      execSync("npx next build .mailing", { stdio: "inherit" });
+      execSync("cd .mailing && npx prisma generate", {
+        stdio: "inherit",
+      });
+
+      if (process.env.MAILING_DATABASE_URL)
+        execSync("cd .mailing && npx prisma migrate deploy", {
+          stdio: "inherit",
+        });
+
+      execSync("npx next build .mailing", {
+        stdio: "inherit",
+      });
     }
 
     if (argv.subcommand !== "build") {
