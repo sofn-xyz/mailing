@@ -44,6 +44,12 @@ export const builder = {
     description: "quiet mode (don't prompt or open browser after starting)",
     boolean: true,
   },
+  "scaffold-only": {
+    default: defaults().scaffoldOnly,
+    demandOption: true,
+    description: "don't start the preview server",
+    boolean: true,
+  },
 };
 
 export const handler = buildHandler(
@@ -61,6 +67,10 @@ export const handler = buildHandler(
         emailsDir: argv.emailsDir,
       };
       await generateEmailsDirectory(options);
+
+      if (argv.scaffoldOnly) {
+        return
+      } 
 
       if (!argv.quiet) {
         const emailResponse = await prompts({
