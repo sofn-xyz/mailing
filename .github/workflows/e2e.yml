@@ -13,7 +13,7 @@ jobs:
       matrix:
         e2e-config:
           - standalone
-          - turbo
+          # - turbo
           - next_js
           - next_ts
           - remix_js
@@ -46,4 +46,4 @@ jobs:
           start: yarn ci:mailing:nohup
           working-directory: /tmp/mailing_e2e/ci
           browser: chrome
-          project: ./mailing_tests
+          project: mailing_tests
