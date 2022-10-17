@@ -72,14 +72,14 @@ function Settings(props: { user: User; apiKeys: ApiKey[] }) {
               <div className="col-span-1 text-right">
                 <button
                   onClick={createApiKey}
-                  className="text-sm text-green-300 border-emerald-700 border-[1px] rounded-lg p-[13px]"
+                  className="text-sm text-green-300 border-emerald-700 border rounded-lg p-[13px]"
                 >
                   New API Key
                 </button>
               </div>
               <div className="col-span-3">
                 <table className="table-auto w-full">
-                  <thead className="text-xs uppercase text-gray-500 border-t-[1px] border-slate-300">
+                  <thead className="text-xs uppercase text-gray-500 border-t border-slate-300">
                     <tr>
                       <td>API Key</td>
                       <td>Date Added</td>
