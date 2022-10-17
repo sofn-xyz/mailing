@@ -8,7 +8,11 @@ module SystemUtils
   NUM_RUNS_TO_KEEP = 5
 
   def system_quiet(cmd)
-    system("#{cmd} > /dev/null")
+    if ENV['VERBOSE']
+      system(cmd)
+    else
+      system("#{cmd} > /dev/null")
+    end
   end
 
   def announce!(text, emoji)

@@ -29,7 +29,10 @@ module Commands
       @app.setup! unless opts['rerun']
 
       # Give CI a common place to find the app's root directory
-      ::FileUtils.ln_s @app.install_dir, File.join(Config::TEST_ROOT, 'ci') if ENV['CI']
+      return unless ENV['CI']
+
+      puts "Symlinked #{@app.install_dir} to #{File.join(Config::TEST_ROOT, 'ci')}"
+      ::FileUtils.ln_sf @app.install_dir, File.join(Config::TEST_ROOT, 'ci')
     end
 
     private

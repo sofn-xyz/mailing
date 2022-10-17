@@ -3,7 +3,7 @@
 class Config
   E2E_ROOT = File.expand_path(__dir__)
   CACHE_DIR = File.join(E2E_ROOT, 'cache')
-  APP_TESTS_DIR = File.join(E2E_ROOT, 'app_tests')
+  MAILING_TESTS_DIR = File.join(E2E_ROOT, 'mailing_tests')
 
   PROJECT_ROOT = File.expand_path("#{__dir__}/..")
   CLI_ROOT = File.join(PROJECT_ROOT, 'packages/cli')
