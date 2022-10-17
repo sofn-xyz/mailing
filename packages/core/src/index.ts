@@ -9,7 +9,7 @@ import { capture } from "./util/postHog";
 
 export type ComponentMail = SendMailOptions & {
   component?: ReactElement<any, string | JSXElementConstructor<any>>;
-  forceDeliver?: boolean;
+  dangerouslyForceDeliver?: boolean;
   forcePreview?: boolean;
 };
 export type BuildSendMailOptions = {
@@ -74,7 +74,7 @@ export function buildSendMail(options: BuildSendMailOptions) {
   return async function sendMail(mail: ComponentMail) {
     const forcePreview =
       mail.forcePreview ||
-      (process.env.NODE_ENV !== "production" && !mail.forceDeliver);
+      (process.env.NODE_ENV !== "production" && !mail.dangerouslyForceDeliver);
 
     if (!mail.html && typeof mail.component === "undefined")
       throw new Error("sendMail requires either html or a component");
@@ -95,11 +95,11 @@ export function buildSendMail(options: BuildSendMailOptions) {
       ...mail,
       html: html,
       component: undefined,
-      forceDeliver: undefined,
+      dangerouslyForceDeliver: undefined,
       forcePreview: undefined,
     };
     delete htmlMail.component;
-    delete htmlMail.forceDeliver;
+    delete htmlMail.dangerouslyForceDeliver;
     delete htmlMail.forcePreview;
 
     if (testMode) {

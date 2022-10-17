@@ -11,7 +11,7 @@ const config: Config = {
     "^.+\\.(js)$": "babel-jest",
   },
   testPathIgnorePatterns: [
-    "scripts",
+    "e2e",
     "<rootDir>/emails/",
     "<rootDir>/.mailing/",
     "<rootDir>/packages/cli/.mailing/",

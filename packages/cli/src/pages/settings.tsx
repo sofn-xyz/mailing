@@ -72,7 +72,7 @@ function Settings(props: { user: User; apiKeys: ApiKey[] }) {
               <div className="col-span-1 text-right">
                 <button
                   onClick={createApiKey}
-                  className="text-sm text-mint border-mint-50 border-[1px] rounded-lg p-[13px]"
+                  className="text-sm text-green-300 border-emerald-700 border-[1px] rounded-lg p-[13px]"
                 >
                   New API Key
                 </button>
@@ -96,7 +96,7 @@ function Settings(props: { user: User; apiKeys: ApiKey[] }) {
                         <td>{apiKey.createdAt?.toString()}</td>
                         <td>
                           <a
-                            className="text-sm text-light-red cursor-pointer"
+                            className="text-sm text-red-400 cursor-pointer"
                             onClick={deleteApiKey(apiKey.id)}
                           >
                             Delete

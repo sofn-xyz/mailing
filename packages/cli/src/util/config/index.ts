@@ -16,6 +16,7 @@ type ConfigDefaults = {
   outDir: string;
   port: number;
   quiet: boolean;
+  scaffoldOnly: boolean;
 };
 
 let DEFAULTS: ConfigDefaults | undefined;
@@ -29,6 +30,7 @@ export function defaults() {
       outDir: "./previews_html",
       port: 3883,
       quiet: false,
+      scaffoldOnly: false,
     };
   return DEFAULTS;
 }

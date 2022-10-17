@@ -54,6 +54,12 @@
         "@typescript-eslint/no-empty-function": [
           "error",
           { "allow": ["arrowFunctions"] }
+        ],
+        "react/no-unknown-property": [
+          2,
+          {
+            "ignore": ["jsx"]
+          }
         ]
       }
     }

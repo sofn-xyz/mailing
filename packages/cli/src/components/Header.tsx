@@ -58,7 +58,7 @@ const Header: React.FC<HeaderProps> = ({
           </button>
         </div>
       </div>
-      <div className="buttons-container">
+      <div className="buttons-container space-x-2">
         <Tooltip
           trigger={(show, setShow) => (
             <button
@@ -208,9 +208,6 @@ const Header: React.FC<HeaderProps> = ({
           align-items: center;
           justify-content: center;
           padding: 0;
-        }
-        .help {
-          margin: 0 8px 0 0;
         }
         @media (max-width: 768px) {
           .segmented-control-container,

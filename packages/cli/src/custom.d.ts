@@ -1,4 +1,5 @@
 type Intercept = {
+  id: string;
   html: string;
   to?: string | string[];
   from?: string;

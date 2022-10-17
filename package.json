@@ -28,12 +28,12 @@
     "ci:web": "cd packages/web && yarn ci:server",
     "unsafe:test:integration": "yarn link:emails && yarn jest -c jest.integration.config.ts",
     "unsafe:test:integration:watch": "yarn unsafe:test:integration --watch --runInBand",
+    "test:e2e": "bundle && bundle exec ruby e2e/cli.rb run-all",
+    "ci:test:e2e:build": "bundle && bundle exec ruby e2e/build.rb",
     "prepublish": "yarn build",
     "postinstall": "husky install && preconstruct dev",
     "watch": "preconstruct watch",
-    "release": "yarn build && ./scripts/prepare-release && yarn changeset publish",
-    "e2e": "cd scripts/e2e_test/ && bundle && bundle exec ruby e2e_test.rb",
-    "e2e:jest": "yarn jest --rootDir=scripts/e2e_test/jest_tests -c scripts/e2e_test/jest_tests/jest.config.js"
+    "release": "yarn build && ./scripts/prepare-release && yarn changeset publish"
   },
   "devDependencies": {
     "@babel/core": "^7.18.5",
