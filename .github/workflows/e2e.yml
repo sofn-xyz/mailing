@@ -3,6 +3,7 @@ on:
   push:
 env:
   VERBOSE: true
+  YARN_ENABLE_IMMUTABLE_INSTALLS: false
 jobs:
   e2e:
     runs-on: ubuntu-latest
