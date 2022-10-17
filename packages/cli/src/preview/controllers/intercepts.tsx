@@ -32,7 +32,7 @@ export function createIntercept(req: IncomingMessage, res: ServerResponse) {
 
   req.on("end", function onEnd() {
     const id = Date.now();
-    cache[id] = JSON.parse(body);
+    cache[id] = { ...JSON.parse(body), id };
     res.writeHead(201);
     res.end(JSON.stringify({ id }));
     log(`Cached intercept preview at /previews/${id}`);
