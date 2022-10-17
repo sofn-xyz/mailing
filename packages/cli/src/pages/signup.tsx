@@ -77,7 +77,7 @@ const Signup: NextPage = () => {
                     type="text"
                     name="email"
                     id="email"
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm py-[8px] px-[12px] text-black"
+                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm py-2 px-3 text-black"
                     placeholder="you@email.com"
                     ref={emailRef}
                   />
@@ -93,7 +93,7 @@ const Signup: NextPage = () => {
                     type="password"
                     name="password"
                     id="password"
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm py-[8px] px-[12px] text-black"
+                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm py-2 px-3 text-black"
                     ref={passwordRef}
                   />
                 </div>
