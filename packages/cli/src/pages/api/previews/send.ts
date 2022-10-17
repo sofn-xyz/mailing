@@ -32,7 +32,6 @@ export default async function showPreviewsIndex(
     html,
     component,
     to,
-    dangerouslyForceDeliver: true,
     subject,
   });
 
