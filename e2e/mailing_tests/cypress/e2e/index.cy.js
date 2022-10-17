@@ -1,5 +1,3 @@
-const { isBindingElement } = require("typescript");
-
 describe("index page tests", () => {
   beforeEach(() => {
     cy.visit("/");

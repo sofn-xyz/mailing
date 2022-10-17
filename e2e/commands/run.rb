@@ -18,14 +18,16 @@ module Commands
       config = Commands::Setup.perform(app_name: app_name, opts: opts)
       app = config.app
 
+      # Run Jest Tests
+      Dir.chdir(app.install_dir) do
+        announce! "Running jest tests for #{app_name}", '🃏'
+        system('yarn jest --rootDir=jest --config jest/jest.config.json')
+      end
+
       app.run_mailing do
         # Run Cypress Tests
         announce! "Running cypress tests for #{app_name}", '🏃'
         system('yarn cypress run')
-
-        # Run Jest Tests
-        announce! "Running jest tests for #{app_name}", '🃏'
-        system('yarn jest')
       end
     end
   end

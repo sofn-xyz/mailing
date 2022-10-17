@@ -23,7 +23,7 @@ module App
     end
 
     def setup!
-      announce! "Creating new #{name} app in #{@oot_dir}", '⚙️'
+      announce! "Creating new #{name} app in #{root_dir}", '⚙️'
       ::FileUtils.mkdir_p(root_dir)
 
       yarn_create!
@@ -111,7 +111,7 @@ module App
     # Copy test files into app
     def copy_ci_scripts!
       puts 'Copying test configs into App'
-      ::FileUtils.cp_r("#{Config::APP_TESTS_DIR}/.", install_dir)
+      ::FileUtils.cp_r("#{Config::MAILING_TESTS_DIR}/.", install_dir)
     end
 
     # Initialize the mailing app
