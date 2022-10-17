@@ -29,20 +29,9 @@ jobs:
         ports:
           # Maps tcp port 5432 on service container to the host
           - 5432:5432
-      mysql:
-        image: mysql:8
-        env:
-          MYSQL_DATABASE: mailing_cli_test
-          MYSQL_USER: user
-          MYSQL_PASSWORD: password
-          MYSQL_ROOT_PASSWORD: rootpassword
-        ports:
-          - 3306:3306
-        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
-
     env:
       MM_DEV: 1
-      MAILING_DATABASE_URL_TEST: mysql://user:password@localhost:3306/mailing_cli_test
+      MAILING_DATABASE_URL_TEST: postgresql://postgres:postgres@localhost:5432/mailing_cli_test
       WEB_DATABASE_URL_TEST: postgresql://postgres:postgres@localhost:5432/mailing_test
       MAILING_WEB_SESSION_PASSWORD: test-YEAed65EasPz7zbGF4fuoMTDka7C
       MAILING_SESSION_PASSWORD: test-5toTch6whgDvErN1nPg0hbDq6Do6
