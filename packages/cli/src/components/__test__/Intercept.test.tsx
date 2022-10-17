@@ -19,7 +19,7 @@ describe("Intercept", () => {
 
     it("count is correct", async () => {
       const { findByText, user } = setup(<Intercept data={data} />);
-      const button = await findByText("Force Deliver");
+      const button = await findByText("Force Send");
       await user.click(button);
       expect(confirmSpy).toHaveBeenCalledWith(
         "This email will be sent to 1 person.\nAre you sure you want to deliver?"
@@ -30,7 +30,7 @@ describe("Intercept", () => {
       const { findByText, user } = setup(
         <Intercept data={{ ...data, cc: ["james", "mark"] }} />
       );
-      const button = await findByText("Force Deliver");
+      const button = await findByText("Force Send");
       await user.click(button);
       expect(confirmSpy).toHaveBeenCalledWith(
         "This email will be sent to 3 people.\nAre you sure you want to deliver?"
@@ -41,7 +41,7 @@ describe("Intercept", () => {
       const { findByText, user } = setup(
         <Intercept data={{ ...data, bcc: ["jim@ok.com"] }} />
       );
-      const button = await findByText("Force Deliver");
+      const button = await findByText("Force Send");
       await user.click(button);
       expect(confirmSpy).toHaveBeenCalledWith(
         "This email will be sent to 2 people.\nAre you sure you want to deliver?"
