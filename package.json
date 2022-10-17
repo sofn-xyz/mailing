@@ -20,7 +20,7 @@
     "build": "preconstruct build",
     "test": "yarn link:emails; yarn jest",
     "test:next": "yarn link:emails; yarn jest -c jest.next.config.ts",
-    "ci:test": "MAILING_DATABASE_URL=$MAILING_DATABASE_URL_TEST start-server-and-test ci:cli :3883 test",
+    "ci:test": "MAILING_DATABASE_URL=$MAILING_DATABASE_URL_TEST start-test ci:cli :3883 ci:web :3000 test",
     "ci:test:next": "MAILING_DATABASE_URL=$MAILING_DATABASE_URL_TEST start-server-and-test ci:cli :3883 test:next",
     "ci:test:integration": "./scripts/assert-free-ports.sh; MAILING_CI=true MAILING_DATABASE_URL=$MAILING_DATABASE_URL_TEST WEB_DATABASE_URL=$WEB_DATABASE_URL_TEST start-test ci:cli :3883 ci:web :3000 unsafe:test:integration",
     "ci:test:integration:watch": "./scripts/assert-free-ports.sh; MAILING_CI=true MAILING_DATABASE_URL=$MAILING_DATABASE_URL_TEST WEB_DATABASE_URL=$WEB_DATABASE_URL_TEST start-test ci:cli :3883 ci:web :3000 unsafe:test:integration:watch",
