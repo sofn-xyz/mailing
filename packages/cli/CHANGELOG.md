@@ -1,5 +1,13 @@
 # mailing
 
+## 0.8.5
+
+### Patch Changes
+
+- 2d5a1c1: Add sendMail to the mailing cli
+- Updated dependencies [2d5a1c1]
+  - mailing-core@0.8.5
+
 ## 0.8.4
 
 ### Patch Changes

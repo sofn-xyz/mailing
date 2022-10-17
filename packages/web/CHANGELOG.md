@@ -1,5 +1,11 @@
 # web
 
+## 0.4.5
+
+### Patch Changes
+
+- 2d5a1c1: Add sendMail to the mailing cli
+
 ## 0.4.4
 
 ### Patch Changes
