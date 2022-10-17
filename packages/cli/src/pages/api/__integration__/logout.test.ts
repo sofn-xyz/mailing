@@ -8,7 +8,7 @@ describe("logout", () => {
       const { response: apiKeysResLoggedOut } = await apiGetApiKeys();
       expect(apiKeysResLoggedOut.status).toBe(404);
       const { response: logoutRes } = await apiLogout();
-      expect(logoutRes?.status).toBe(200);
+      expect(logoutRes.status).toBe(200);
     });
   });
 
@@ -18,7 +18,7 @@ describe("logout", () => {
       const { response: apiKeysRes } = await apiGetApiKeys();
       expect(apiKeysRes.status).toBe(200);
       const { response: logoutRes } = await apiLogout();
-      expect(logoutRes?.status).toBe(200);
+      expect(logoutRes.status).toBe(200);
       const { response: apiKeysResLoggedOut } = await apiGetApiKeys();
       expect(apiKeysResLoggedOut.status).toBe(404);
     });
