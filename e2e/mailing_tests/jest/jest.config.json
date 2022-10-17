@@ -4,5 +4,5 @@
     "^.+\\.(js)$": "babel-jest"
   },
   "testTimeout": 60000,
-  "testMatch": ["<rootDir>/**/*.test.[jt]s?(x)"]
+  "testMatch": ["<rootDir>/*.test.[jt]s?(x)"]
 }
