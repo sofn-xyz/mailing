@@ -5,11 +5,21 @@ import { sendMail } from "../../moduleManifest";
 
 const cache: {
   [id: string]: Intercept;
-} = {};
+} = {
+  mock: {
+    id: "mock",
+    html: "<html><body><h1>Title</h1>hope it's not too strict</body></html>",
+    to: "peter s. <peter+mailingtest@campsh.com>",
+    cc: "monica+mailingtest@campsh.com",
+    from: "peter+sendgrid@campsh.com",
+    subject: "A mocked test email",
+  },
+};
 
 function getData(req: IncomingMessage) {
   const parts = req.url?.split("/");
-  const id = parts ? parts[parts.length - 1].split(".")[0] : "";
+  const id = parts ? parts[parts.length - 2] : "";
+  console.log(":get", id);
   return cache[id];
 }
 
@@ -42,12 +52,12 @@ export function showIntercept(req: IncomingMessage, res: ServerResponse) {
   }
 }
 
-export function sendIntercept(req: IncomingMessage, res: ServerResponse) {
+export async function sendIntercept(req: IncomingMessage, res: ServerResponse) {
   const data = getData(req);
 
   if (data) {
     // force deliver, we don't want this one intercepted
-    sendMail({ ...data, dangerouslyForceDeliver: true });
+    await sendMail({ ...data, dangerouslyForceDeliver: true });
 
     res.setHeader("Content-Type", "application/json");
     res.writeHead(200);

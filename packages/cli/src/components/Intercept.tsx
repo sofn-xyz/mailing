@@ -18,6 +18,7 @@ function recipientCount(emailOrList?: string | string[]) {
 const Intercept: React.FC<InterceptProps> = ({ data }) => {
   const [viewMode, setViewMode] = useState<ViewMode>("desktop");
   const [forceDeliverSuccess, setForceDeliverSuccess] = useState(false);
+  const [numRecipients, setNumRecipients] = useState(0);
 
   const handleForceDeliver = useCallback(async () => {
     if (!data) return;
@@ -31,7 +32,7 @@ const Intercept: React.FC<InterceptProps> = ({ data }) => {
     );
     if (!confirmed) return;
 
-    const res = await fetch(`/api/intercepts/${data.id}/forceDeliver`, {
+    const res = await fetch(`/intercepts/${data.id}/forceDeliver.json`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
     });
@@ -40,6 +41,7 @@ const Intercept: React.FC<InterceptProps> = ({ data }) => {
       return;
     }
     setForceDeliverSuccess(true);
+    setNumRecipients(numRecipients);
   }, [data?.id]);
 
   if (!data) {
@@ -101,12 +103,15 @@ const Intercept: React.FC<InterceptProps> = ({ data }) => {
           </div>
           <div className="border-gray-500 pl-7 border-r h-[68px] border-dotted"></div>
           <button
-            className={cx("pl-7 pr-5 py-4 bg-none font-bold", {
-              disabled: forceDeliverSuccess,
+            disabled={forceDeliverSuccess}
+            className={cx("pl-7 pr-5 py-4 bg-none font-bold hover:underline", {
+              "text-green-400": forceDeliverSuccess,
             })}
             onClick={handleForceDeliver}
           >
-            {forceDeliverSuccess ? "Force delivered" : "Force Deliver"}
+            {forceDeliverSuccess
+              ? `Delivered to ${numRecipients.toLocaleString()}`
+              : "Force Deliver"}
           </button>
         </div>
       </div>
