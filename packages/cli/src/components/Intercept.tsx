@@ -97,7 +97,7 @@ const Intercept: React.FC<InterceptProps> = ({ data }) => {
           {data.cc && <div>CC: {data.cc}</div>}
           {data.bcc && <div>BCC: {data.bcc}</div>}
         </div>
-        <div className="bg-gray-800 px-7 py-2 rounded-xl flex justify-between items-center text-sm">
+        <div className="bg-gray-800 pl-6 pr-3 py-2 rounded-xl flex justify-between items-center text-sm">
           <div>
             This email was intercepted by Mailing because
             <br />
