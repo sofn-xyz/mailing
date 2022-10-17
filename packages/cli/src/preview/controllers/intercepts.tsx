@@ -19,7 +19,6 @@ const cache: {
 function getData(req: IncomingMessage) {
   const parts = req.url?.split("/");
   const id = parts ? parts[parts.length - 2] : "";
-  console.log(":get", id);
   return cache[id];
 }
 

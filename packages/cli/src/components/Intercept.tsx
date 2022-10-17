@@ -37,7 +37,9 @@ const Intercept: React.FC<InterceptProps> = ({ data }) => {
       headers: { "Content-Type": "application/json" },
     });
     if (res.status !== 200) {
-      alert(`${res.status} ${res.statusText} ${await res.text()}`);
+      alert(
+        `Error sending. Is your transport configured in buildSendMail? Check the server logs for more info.\nPlease open an issue on Github if you need help.`
+      );
       return;
     }
     setForceDeliverSuccess(true);
@@ -110,8 +112,8 @@ const Intercept: React.FC<InterceptProps> = ({ data }) => {
             onClick={handleForceDeliver}
           >
             {forceDeliverSuccess
-              ? `Delivered to ${numRecipients.toLocaleString()}`
-              : "Force Deliver"}
+              ? `Sent to ${numRecipients.toLocaleString()}`
+              : "Force Send"}
           </button>
         </div>
       </div>
