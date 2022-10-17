@@ -9,6 +9,7 @@ jobs:
   jest:
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         node-version: [16, 18]
     services:
