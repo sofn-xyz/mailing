@@ -2,13 +2,15 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
-  output   = "./generated/client"
+  provider        = "prisma-client-js"
+  previewFeatures = ["referentialIntegrity"]
+  output          = "./generated/client"
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("MAILING_DATABASE_URL")
+  provider             = "mysql"
+  url                  = env("MAILING_DATABASE_URL")
+  referentialIntegrity = "prisma"
 }
 
 model User {
