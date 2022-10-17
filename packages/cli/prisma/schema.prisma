@@ -1,0 +1,41 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "./generated/client"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("MAILING_DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  createdAt DateTime @default(now())
+  password  String
+
+  organizationId String
+  Organization   Organization @relation(fields: [organizationId], references: [id])
+
+  @@index([organizationId])
+}
+
+model Organization {
+  id     String   @id @default(cuid())
+  name   String
+  User   User[]
+  ApiKey ApiKey[]
+}
+
+model ApiKey {
+  id             String       @id @default(cuid())
+  createdAt      DateTime     @default(now())
+  active         Boolean      @default(true)
+  organizationId String
+  Organization   Organization @relation(fields: [organizationId], references: [id])
+
+  @@index([organizationId])
+}

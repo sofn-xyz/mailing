@@ -9,8 +9,32 @@ jobs:
   jest:
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         node-version: [16, 18]
+    services:
+      # Label used to access the service container
+      postgres:
+        # Docker Hub image
+        image: postgres
+        # Provide the password for postgres
+        env:
+          POSTGRES_PASSWORD: postgres
+        # Set health checks to wait until postgres has started
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          # Maps tcp port 5432 on service container to the host
+          - 5432:5432
+    env:
+      MM_DEV: 1
+      MAILING_DATABASE_URL_TEST: postgresql://postgres:postgres@localhost:5432/mailing_cli_test
+      WEB_DATABASE_URL_TEST: postgresql://postgres:postgres@localhost:5432/mailing_test
+      MAILING_WEB_SESSION_PASSWORD: test-YEAed65EasPz7zbGF4fuoMTDka7C
+      MAILING_SESSION_PASSWORD: test-5toTch6whgDvErN1nPg0hbDq6Do6
     steps:
       - uses: actions/checkout@v3
       - name: Use Node.js ${{ matrix.node-version }}
@@ -26,3 +50,5 @@ jobs:
         run: yarn ci:test
       - name: Run CI Next.js tests
         run: yarn ci:test:next
+      - name: Run CI Integration tests
+        run: yarn ci:test:integration
