@@ -1,5 +1,15 @@
 # mailing
 
+## 0.8.4
+
+### Patch Changes
+
+- 39262d1: bump nodemailer, typescript
+- add feature for force delivering an intercepted email
+- Updated dependencies [39262d1]
+- Updated dependencies
+  - mailing-core@0.8.4
+
 ## 0.8.3
 
 ### Patch Changes

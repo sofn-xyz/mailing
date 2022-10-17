@@ -1,5 +1,12 @@
 # web
 
+## 0.4.4
+
+### Patch Changes
+
+- 39262d1: bump nodemailer, typescript
+- add feature for force delivering an intercepted email
+
 ## 0.4.3
 
 ### Patch Changes
