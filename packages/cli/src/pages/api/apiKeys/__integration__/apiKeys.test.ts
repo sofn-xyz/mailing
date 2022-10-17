@@ -1,19 +1,18 @@
+import {
+  apiGetApiKeys,
+  apiCreateApiKey,
+} from "../../__integration__/util/apiKeys";
 import { apiLogin } from "../../__integration__/util/login";
-import { apiFetch } from "../../__integration__/util";
 
 describe("api/apiKeys", () => {
   describe("logged out", () => {
     it("GET apiKeys should 404", async () => {
-      const response = await apiFetch("/api/apiKeys");
-
+      const { response } = await apiGetApiKeys();
       expect(response.status).toBe(404);
     });
 
     it("POST apiKeys should 404", async () => {
-      const response = await apiFetch("/api/apiKeys", {
-        method: "POST",
-      });
-
+      const { response } = await apiCreateApiKey();
       expect(response.status).toBe(404);
     });
   });
@@ -24,24 +23,21 @@ describe("api/apiKeys", () => {
     });
 
     it("GET apiKeys should work", async () => {
-      const res = await apiFetch("/api/apiKeys");
-
-      expect(res.status).toBe(200);
-      const data = await res.json();
+      const { response } = await apiGetApiKeys();
+      expect(response.status).toBe(200);
+      const data = await response.json();
       expect(data.apiKeys.length).toBe(1);
     });
 
     it("POST apiKeys should work", async () => {
-      const res = await apiFetch("/api/apiKeys", {
-        method: "POST",
-      });
+      const { response: createResponse } = await apiCreateApiKey();
+      expect(createResponse.status).toBe(201);
+      const { response: getResponse } = await apiGetApiKeys();
+      expect(getResponse.status).toBe(200);
 
-      expect(res.status).toBe(201);
+      const data = await getResponse.json();
 
-      const getRes = await apiFetch("/api/apiKeys");
-
-      expect(getRes.status).toBe(200);
-      const data = await getRes.json();
+      // one is created by default when your user is created
       expect(data.apiKeys.length).toBe(2);
     });
   });

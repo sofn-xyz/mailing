@@ -1,5 +1,4 @@
-import { cliUrl } from ".";
-import { fetch } from "./createUser";
+import { cliUrl, fetch } from "./index";
 
 export async function apiSendMail(apiKey: string) {
   return await fetch(cliUrl("/api/sendMail"), {
