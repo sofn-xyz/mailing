@@ -4,7 +4,7 @@ import Intercept from "../../components/Intercept";
 
 const ShowIntercept = () => {
   const { query } = useRouter();
-  const [data, setData] = useState<Intercept>({ html: "" });
+  const [data, setData] = useState<Intercept>({ id: "-1", html: "" });
   const fetchData = useCallback(async () => {
     const res = await fetch(`/intercepts/${query.interceptId}.json`);
     setData(await res.json());
