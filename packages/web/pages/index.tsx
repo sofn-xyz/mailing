@@ -87,7 +87,7 @@ const Home: NextPage = () => {
                 <div>
                   <a
                     className="hover:underline mr-4 text-base leading-none inline-block"
-                    href="#"
+                    href="https://discord.gg/fdSzmY46wY"
                     target="blank"
                   >
                     Discord
@@ -675,17 +675,34 @@ const Home: NextPage = () => {
                     Transparent & open source
                   </h1>
                   <p className="leading-snug m-0 py-8 md:py-10 mx-0 md:mx-auto lg:mx-0 md:max-w-[470px]">
-                    Mailing is an open source email development tool. Our source
-                    code is public on GitHub so anyone can read and review it.
-                    We want it to outlast us and enthusiastically welcome
-                    feedback and contributions from the community.
+                    Mailing is an open source email development tool. Our{" "}
+                    <a
+                      href="https://discord.gg/fdSzmY46wY"
+                      target="blank"
+                      rel="noopener"
+                      className="hover:underline inline-block text-blue-600 dark:text-blue-400"
+                    >
+                      Discord
+                    </a>{" "}
+                    is public and source code is public on{" "}
+                    <a
+                      href="https://github.com/sofn-xyz/mailing"
+                      target="blank"
+                      rel="noopener"
+                      className="hover:underline inline-block text-blue-600 dark:text-blue-400"
+                    >
+                      GitHub
+                    </a>{" "}
+                    so anyone can read and review it. We want Mailing to outlast
+                    us and we love feedback and contributions from the
+                    community.
                   </p>
                   <a
                     className="text-black dark:text-white text-xl leading-none px-4 h-9 inline-flex items-center rounded-2xl border-2 border-black dark:border-white hover:underline"
-                    href="https://github.com/sofn-xyz/mailing"
+                    href="https://discord.gg/fdSzmY46wY"
                     target="blank"
                   >
-                    View on GitHub
+                    Join the Discord
                   </a>
                 </div>
               </div>
