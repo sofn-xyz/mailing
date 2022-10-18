@@ -44,7 +44,7 @@ const Intercept: React.FC<InterceptProps> = ({ data }) => {
     }
     setForceDeliverSuccess(true);
     setNumRecipients(numRecipients);
-  }, [data?.id]);
+  }, [data]);
 
   if (!data) {
     return <></>; // loading, should be quick bc everything is local

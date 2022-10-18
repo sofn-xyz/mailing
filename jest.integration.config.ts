@@ -28,6 +28,10 @@ const config: Config = {
     "<rootDir>/.mailing/",
     "tmp-testMailQueue.json",
   ],
+  modulePathIgnorePatterns: [
+    "<rootDir>/packages/.*/__mocks__/index.ts",
+    "<rootDir>/packages/.*/.mailing/*",
+  ],
 };
 
 // Point to the correct DB in dev

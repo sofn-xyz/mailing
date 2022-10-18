@@ -25,6 +25,10 @@ const config: Config = {
     "<rootDir>/.mailing/",
     "tmp-testMailQueue.json",
   ],
+  modulePathIgnorePatterns: [
+    "<rootDir>/packages/.*/__mocks__/index.ts",
+    "<rootDir>/packages/.*/.mailing/*",
+  ],
   testMatch: ["<rootDir>/packages/**/__test__/**/*.test.[jt]s?(x)"],
 };
 
