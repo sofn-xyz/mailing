@@ -9,21 +9,30 @@ interface SendMailFormData {
   };
 }
 
-export async function apiSendMail(apiKey: string) {
-  const instance = new ApiSendMail();
-  instance.fetchData.headers["X-API-Key"] = apiKey;
+export async function apiSendMail(apiKey?: string) {
+  const instance = new ApiSendMail(apiKey);
   return await instance.perform();
 }
 
 class ApiSendMail extends Api<SendMailFormData> {
   path = cliUrl("/api/sendMail");
 
-  fetchData = {
-    method: "POST",
-    headers: {
+  constructor(apiKey?: string) {
+    super();
+
+    const defaultHeaders = {
       "Content-Type": "application/json",
-    } as any,
-  };
+    };
+
+    const headers = apiKey
+      ? { ...defaultHeaders, "X-API-Key": apiKey }
+      : defaultHeaders;
+
+    this.fetchData = {
+      method: "POST",
+      headers,
+    };
+  }
 
   formData = {
     subject: "hello",

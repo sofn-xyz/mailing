@@ -27,8 +27,4 @@ export abstract class Api<TFormData = undefined> {
 
     return this;
   }
-
-  updateFormData(data: TFormData) {
-    this.formData = data;
-  }
 }

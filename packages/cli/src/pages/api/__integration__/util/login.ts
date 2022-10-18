@@ -8,7 +8,7 @@ interface LoginFormData {
 
 export async function apiLoginAs(email: string, password: string) {
   const instance = new ApiLogin();
-  instance.updateFormData({ email, password });
+  instance.formData = { email, password };
   return instance.perform();
 }
 
