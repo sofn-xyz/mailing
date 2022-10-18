@@ -28,8 +28,17 @@ function requireParam(
   res: ServerResponse
 ) {
   try {
-    const url = new URL(req.url!, `http://${req.headers.host}`);
-    return JSON.parse(url.searchParams.get(param)!);
+    if (!req.url) {
+      throw new Error("No URL");
+    }
+    const url = new URL(req.url, `http://${req.headers.host}`);
+
+    const paramFromSearch = url.searchParams.get(param);
+    if (!paramFromSearch) {
+      throw new Error(`Missing required param: ${param}`);
+    }
+
+    return JSON.parse(paramFromSearch);
   } catch (e) {
     const err = `error parsing ${param} from url`;
     error(err, e);
