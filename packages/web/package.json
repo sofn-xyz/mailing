@@ -1,6 +1,6 @@
 {
   "name": "web",
-  "version": "0.4.5",
+  "version": "0.4.6",
   "private": true,
   "scripts": {
     "dev": "yarn prisma migrate dev && next dev",
