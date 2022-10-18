@@ -6,10 +6,6 @@ export function cliUrl(path: string) {
   return "http://localhost:3883" + path;
 }
 
-export interface ApiHeaders {
-  [key: string]: any;
-}
-
 export abstract class Api<TFormData = undefined> {
   abstract path: string;
   formData?: TFormData;
@@ -19,7 +15,7 @@ export abstract class Api<TFormData = undefined> {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-    } as ApiHeaders,
+    },
   };
 
   async perform() {
