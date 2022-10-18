@@ -54,12 +54,34 @@
         "@typescript-eslint/no-empty-function": [
           "error",
           { "allow": ["arrowFunctions"] }
+        ],
+        "react/no-unknown-property": [
+          2,
+          {
+            "ignore": ["jsx"]
+          }
         ]
       }
     }
   ],
   "rules": {
     "semi": "off",
-    "@next/next/google-font-display": "off"
+    "@next/next/google-font-display": "off",
+    "@next/next/no-html-link-for-pages": [
+      "error",
+      ["packages/cli/pages", "packages/web/pages"]
+    ],
+    "import/no-anonymous-default-export": [
+      "error",
+      {
+        "allowObject": true
+      }
+    ],
+    "react/no-unknown-property": [
+      2,
+      {
+        "ignore": ["jsx"]
+      }
+    ]
   }
 }

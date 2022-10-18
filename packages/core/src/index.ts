@@ -9,7 +9,7 @@ import { capture } from "./util/postHog";
 
 export type ComponentMail = SendMailOptions & {
   component?: ReactElement<any, string | JSXElementConstructor<any>>;
-  forceDeliver?: boolean;
+  dangerouslyForceDeliver?: boolean;
   forcePreview?: boolean;
 };
 export type BuildSendMailOptions = {
@@ -23,10 +23,6 @@ export type BuildSendMailOptions = {
 const TMP_TEST_FILE = "tmp-testMailQueue.json";
 
 export async function getTestMailQueue() {
-  if (!(process.env.TEST || process.env.NODE_ENV === "test")) {
-    throw new Error("tried to get test mail queue not in test mode");
-  }
-
   try {
     const queue = await fs.readFile(TMP_TEST_FILE);
     return JSON.parse(queue.toString());
@@ -41,7 +37,7 @@ export async function clearTestMailQueue() {
   }
 
   try {
-    await fs.unlinkSync(TMP_TEST_FILE);
+    fs.unlinkSync(TMP_TEST_FILE);
   } catch (e: any) {
     if (e.code === "ENOENT") return; // file does not exist
     throw e;
@@ -49,7 +45,10 @@ export async function clearTestMailQueue() {
 }
 
 export function buildSendMail(options: BuildSendMailOptions) {
-  const testMode = process.env.TEST || process.env.NODE_ENV === "test";
+  const testMode =
+    process.env.TEST ||
+    process.env.NODE_ENV === "test" ||
+    process.env.MAILING_CI;
 
   if (!options?.transport) {
     throw new Error("buildSendMail options are missing transport");
@@ -75,7 +74,7 @@ export function buildSendMail(options: BuildSendMailOptions) {
   return async function sendMail(mail: ComponentMail) {
     const forcePreview =
       mail.forcePreview ||
-      (process.env.NODE_ENV !== "production" && !mail.forceDeliver);
+      (process.env.NODE_ENV !== "production" && !mail.dangerouslyForceDeliver);
 
     if (!mail.html && typeof mail.component === "undefined")
       throw new Error("sendMail requires either html or a component");
@@ -96,11 +95,11 @@ export function buildSendMail(options: BuildSendMailOptions) {
       ...mail,
       html: html,
       component: undefined,
-      forceDeliver: undefined,
+      dangerouslyForceDeliver: undefined,
       forcePreview: undefined,
     };
     delete htmlMail.component;
-    delete htmlMail.forceDeliver;
+    delete htmlMail.dangerouslyForceDeliver;
     delete htmlMail.forcePreview;
 
     if (testMode) {

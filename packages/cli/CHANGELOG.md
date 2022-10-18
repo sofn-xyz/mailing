@@ -1,5 +1,31 @@
 # mailing
 
+## 0.8.5
+
+### Patch Changes
+
+- 2d5a1c1: Add sendMail to the mailing cli
+- Updated dependencies [2d5a1c1]
+  - mailing-core@0.8.5
+
+## 0.8.4
+
+### Patch Changes
+
+- 39262d1: bump nodemailer, typescript
+- add feature for force delivering an intercepted email
+- Updated dependencies [39262d1]
+- Updated dependencies
+  - mailing-core@0.8.4
+
+## 0.8.3
+
+### Patch Changes
+
+- 815ae3d: bugfix for issues with changing preview names #237
+- Updated dependencies [815ae3d]
+  - mailing-core@0.8.3
+
 ## 0.8.2
 
 ### Patch Changes

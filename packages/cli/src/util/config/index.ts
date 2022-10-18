@@ -16,6 +16,7 @@ type ConfigDefaults = {
   outDir: string;
   port: number;
   quiet: boolean;
+  scaffoldOnly: boolean;
 };
 
 let DEFAULTS: ConfigDefaults | undefined;
@@ -29,6 +30,7 @@ export function defaults() {
       outDir: "./previews_html",
       port: 3883,
       quiet: false,
+      scaffoldOnly: false,
     };
   return DEFAULTS;
 }
@@ -133,7 +135,7 @@ type Config = {
 
 let config: Config | undefined;
 
-export function setConfig(newConfig: Config) {
+export function setConfig(newConfig: typeof config) {
   config = newConfig;
 }
 
@@ -142,4 +144,9 @@ export function getConfig(): Config {
     throw new Error("config is undefined");
   }
   return config;
+}
+
+// This method is useful in cases that config may not be set (like logging on the front-end).
+export function getQuiet(): boolean {
+  return !!config?.quiet;
 }

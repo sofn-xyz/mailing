@@ -28,7 +28,7 @@ async function fetchJson(url: string) {
   const response = await fetch(url, {
     headers: { "Content-Type": "application/json" },
   });
-  return await response.json();
+  return response.status === 200 ? response.json() : {};
 }
 
 const PreviewViewer: React.FC<PreviewViewerProps> = ({ initialData }) => {
@@ -88,7 +88,7 @@ const PreviewViewer: React.FC<PreviewViewerProps> = ({ initialData }) => {
         >
           <IndexPane previews={previews} previewText={data?.previewText} />
         </div>
-        <div className="right-pane sm:left-[300px] sm:w-[calc(100vw-300px)]">
+        <div className="right-pane sm:left-[300px] sm:w-[calc(100vw-300px)] sm:h-[calc(100vh-52px)]">
           {!!preview?.errors?.length && <MjmlErrors errors={preview?.errors} />}
           <div className="sm:hidden">
             <MobileHeader title={previewFunction || previewClass || "Emails"} />

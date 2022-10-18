@@ -1,0 +1,49 @@
+name: E2E Tests
+on:
+  push:
+env:
+  VERBOSE: true
+  YARN_ENABLE_IMMUTABLE_INSTALLS: false
+jobs:
+  e2e:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        e2e-config:
+          - standalone
+          # - turbo
+          - next_js
+          - next_ts
+          - remix_js
+          - remix_ts
+          - redwood_js
+          - redwood_ts
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.1.2
+          bundler-cache: true
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: "yarn"
+      - name: Install dependencies
+        run: yarn
+      - name: Setup ${{ matrix.e2e-config }} app
+        run: bundle exec ruby e2e/cli.rb setup --app=${{ matrix.e2e-config }}
+      - name: Run ${{ matrix.e2e-config }} jest tests
+        run: yarn jest --rootDir=mailing_tests/jest --config mailing_tests/jest/jest.config.json
+        working-directory: /tmp/mailing_e2e/ci
+      - name: Run ${{ matrix.e2e-config }} cypress tests
+        uses: cypress-io/github-action@v4
+        env:
+          DEBUG: "@cypress/github-action"
+        with:
+          install: false
+          start: yarn ci:mailing:nohup
+          working-directory: /tmp/mailing_e2e/ci
+          browser: chrome
+          project: mailing_tests

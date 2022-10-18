@@ -10,6 +10,7 @@ import { getPreviewsDirectory } from "../../../util/paths";
 import { error, log, debug } from "../../../util/log";
 import {
   createIntercept,
+  sendIntercept,
   showIntercept,
 } from "../../../preview/controllers/intercepts";
 import registerRequireHooks from "../../util/registerRequireHooks";
@@ -109,6 +110,10 @@ export default async function startPreviewServer() {
           createIntercept(req, res);
         } else if (/^\/intercepts\/[a-zA-Z0-9]+\.json/.test(req.url)) {
           showIntercept(req, res);
+        } else if (
+          /^\/intercepts\/[a-zA-Z0-9]+\/forceDeliver.json/.test(req.url)
+        ) {
+          await sendIntercept(req, res);
         } else if (/^\/_+next/.test(req.url)) {
           noLog = true;
           await app.render(req, res, `${pathname}`, query);
@@ -126,7 +131,7 @@ export default async function startPreviewServer() {
     .listen(port, async () => {
       clearTimeout(loadLag);
       log(`running preview at ${currentUrl}`);
-      if (!quiet) await open(currentUrl);
+      if (!quiet && !process.env.MAILING_CI) await open(currentUrl);
     })
     .on("error", async function onServerError(e: NodeJS.ErrnoException) {
       if (e.code === "EADDRINUSE") {

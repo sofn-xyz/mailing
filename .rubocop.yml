@@ -1,10 +1,10 @@
 AllCops:
   NewCops: enable
   Exclude:
-    - 'vendor/**/*'
-    - '**/vendor/**/*'
-    - 'node_modules/**/*'
-    - '**/node_modules/**/*'
+    - "vendor/**/*"
+    - "**/vendor/**/*"
+    - "node_modules/**/*"
+    - "**/node_modules/**/*"
 
 Metrics/AbcSize:
   Max: 50
@@ -17,3 +17,9 @@ Metrics/ClassLength:
 
 Style/Documentation:
   Enabled: false
+
+Metrics/PerceivedComplexity:
+  Max: 10
+
+Metrics/CyclomaticComplexity:
+  Max: 10

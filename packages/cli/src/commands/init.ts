@@ -1,4 +1,5 @@
 import prompts from "prompts";
+import fetch from "node-fetch";
 import { existsSync } from "fs-extra";
 import { ArgumentsCamelCase } from "yargs";
 import { error, log } from "../util/log";
@@ -44,6 +45,12 @@ export const builder = {
     description: "quiet mode (don't prompt or open browser after starting)",
     boolean: true,
   },
+  "scaffold-only": {
+    default: defaults().scaffoldOnly,
+    demandOption: true,
+    description: "don't start the preview server",
+    boolean: true,
+  },
 };
 
 export const handler = buildHandler(
@@ -62,6 +69,10 @@ export const handler = buildHandler(
       };
       await generateEmailsDirectory(options);
 
+      if (argv.scaffoldOnly) {
+        return;
+      }
+
       if (!argv.quiet) {
         const emailResponse = await prompts({
           type: "text",
@@ -73,7 +84,9 @@ export const handler = buildHandler(
         if (email?.length > 0) {
           log("great, talk soon");
           try {
-            fetch(`${getMailingAPIBaseURL()}/api/users`, {
+            const url = `${getMailingAPIBaseURL()}/api/newsletterSubscribers`;
+
+            fetch(url, {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({ email }),

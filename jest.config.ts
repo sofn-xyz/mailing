@@ -11,7 +11,7 @@ const config: Config = {
     "^.+\\.(js)$": "babel-jest",
   },
   testPathIgnorePatterns: [
-    "scripts",
+    "e2e",
     "<rootDir>/emails/",
     "<rootDir>/.mailing/",
     "<rootDir>/packages/cli/.mailing/",
@@ -25,6 +25,11 @@ const config: Config = {
     "<rootDir>/.mailing/",
     "tmp-testMailQueue.json",
   ],
+  modulePathIgnorePatterns: [
+    "<rootDir>/packages/.*/__mocks__/index.ts",
+    "<rootDir>/packages/.*/.mailing/*",
+  ],
+  testMatch: ["<rootDir>/packages/**/__test__/**/*.test.[jt]s?(x)"],
 };
 
 export default config;

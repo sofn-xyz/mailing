@@ -1,5 +1,24 @@
 # web
 
+## 0.4.5
+
+### Patch Changes
+
+- 2d5a1c1: Add sendMail to the mailing cli
+
+## 0.4.4
+
+### Patch Changes
+
+- 39262d1: bump nodemailer, typescript
+- add feature for force delivering an intercepted email
+
+## 0.4.3
+
+### Patch Changes
+
+- 815ae3d: bugfix for issues with changing preview names #237
+
 ## 0.4.2
 
 ### Patch Changes

@@ -2,10 +2,10 @@ import Intercept from "../../components/Intercept";
 
 const ShowIntercept = () => {
   const data = {
+    id: "mock",
     html: "<html><body><h1>Title</h1>hope it's not too strict</body></html>",
-    to: "Jacob <william@oek.com>",
-    from: "HelloFrank Support <support@hellofrank.cre>",
-    cc: ["systemwin@hellofrank.cre", "jerome@powel.com"],
+    to: "peter s. <peter+test@campsh.com>",
+    from: "peter+sendgrid@campsh.com",
     subject: "A test email",
   };
 
