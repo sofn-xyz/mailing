@@ -700,6 +700,7 @@ const Home: NextPage = () => {
                   <a
                     className="text-black dark:text-white text-xl leading-none px-4 h-9 inline-flex items-center rounded-2xl border-2 border-black dark:border-white hover:underline"
                     href="https://discord.gg/fdSzmY46wY"
+                    rel="noopener"
                     target="blank"
                   >
                     Join the Discord
