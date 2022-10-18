@@ -18,7 +18,7 @@ describe("sendMail", () => {
     expect(apiKeys.length).toBe(1);
     const apiKey = apiKeys[0].id;
 
-    const sendMailResponse = await apiSendMail(apiKey);
+    const { response: sendMailResponse } = await apiSendMail(apiKey);
     expect(sendMailResponse.status).toBe(200);
   });
 });
