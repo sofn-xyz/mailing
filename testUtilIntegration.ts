@@ -36,6 +36,6 @@ export async function truncateDatabases() {
 
 export async function disconnectDatabases() {
   await Promise.all([cliPrisma.$disconnect(), webPrisma.$disconnect()]);
-  delete global.prismaCli;
-  delete global.prismaWeb;
+  delete global.prismaMailingCli;
+  delete global.prismaMailingWeb;
 }
