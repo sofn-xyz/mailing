@@ -1,4 +1,4 @@
-import { Api, cliUrl } from "./index";
+import { Api, cliUrl, ApiHeaders } from "./index";
 
 interface SendMailFormData {
   subject: string;
@@ -20,18 +20,14 @@ class ApiSendMail extends Api<SendMailFormData> {
   constructor(apiKey?: string) {
     super();
 
-    const defaultHeaders = {
-      "Content-Type": "application/json",
-    };
-
-    const headers = apiKey
-      ? { ...defaultHeaders, "X-API-Key": apiKey }
-      : defaultHeaders;
-
     this.fetchData = {
       method: "POST",
-      headers,
+      headers: {
+        "Content-Type": "application/json",
+      },
     };
+
+    if (apiKey) this.fetchData.headers["X-API-Key"] = apiKey;
   }
 
   formData = {
