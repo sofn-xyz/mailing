@@ -1,4 +1,4 @@
-import { Api, cliUrl, ApiHeaders } from "./index";
+import { Api, cliUrl } from "./index";
 
 interface SendMailFormData {
   subject: string;
