@@ -29,3 +29,13 @@ export async function truncateWebDatabase() {
 
   await webPrisma.newsletterSubscriber.deleteMany({});
 }
+
+export async function truncateDatabases() {
+  return Promise.all([truncateCliDatabase(), truncateWebDatabase()]);
+}
+
+export async function disconnectDatabases() {
+  await Promise.all([cliPrisma.$disconnect(), webPrisma.$disconnect()]);
+  delete global.prismaMailingCli;
+  delete global.prismaMailingWeb;
+}

@@ -1,7 +1,4 @@
-import {
-  truncateCliDatabase,
-  truncateWebDatabase,
-} from "./testUtilIntegration";
+import { disconnectDatabases, truncateDatabases } from "./testUtilIntegration";
 import chalk from "chalk";
 
 if (!process.env.MAILING_CI) {
@@ -21,8 +18,11 @@ if (
   );
 
 beforeAll(async () => {
-  await truncateCliDatabase();
-  await truncateWebDatabase();
+  await truncateDatabases();
+});
+
+afterAll(async () => {
+  await disconnectDatabases();
 });
 
 afterEach(() => {
