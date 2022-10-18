@@ -1,4 +1,4 @@
-import { cliUrl, fetch } from "./index";
+import { Api, cliUrl } from "./index";
 
 interface CreateUserFormData {
   email: string;
@@ -10,40 +10,11 @@ export async function apiCreateUser() {
   return instance.perform();
 }
 
-export class ApiCreateUser {
-  response?: Awaited<ReturnType<typeof fetch>>;
-  fetchData: any;
-  formData: CreateUserFormData;
+export class ApiCreateUser extends Api<CreateUserFormData> {
   path = cliUrl("/api/users");
 
-  defaultFormData = {
+  formData = {
     email: `ok${Math.random()}@ok.com`,
     password: "okokokokokokokok",
   };
-
-  defaultFetchData = {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  };
-
-  constructor() {
-    this.formData = this.defaultFormData;
-  }
-
-  async perform() {
-    this.fetchData = {
-      ...this.defaultFetchData,
-      body: JSON.stringify(this.formData),
-    };
-
-    this.response = await fetch(this.path, this.fetchData);
-
-    return this;
-  }
-
-  updateFormData(data: Partial<CreateUserFormData>) {
-    this.formData = { ...this.formData, ...data };
-  }
 }
