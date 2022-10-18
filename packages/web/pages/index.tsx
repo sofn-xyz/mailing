@@ -86,6 +86,13 @@ const Home: NextPage = () => {
                 </div>
                 <div>
                   <a
+                    className="hover:underline mr-4 text-base leading-none inline-block"
+                    href="https://discord.gg/fdSzmY46wY"
+                    target="blank"
+                  >
+                    Discord
+                  </a>
+                  <a
                     className="hover:underline text-base leading-none inline-block"
                     href="https://demo.mailing.run"
                   >
@@ -318,7 +325,7 @@ const Home: NextPage = () => {
                         <div className="ml-3 inline-block place-content-center">
                           <div className="pt-1 -mb-2">Guillermo Rauch</div>
                           <a
-                            className="text-xs leading-none hover:underline"
+                            className="text-xs leading-none hover:underline inline-block"
                             href="https://twitter.com/rauchg"
                             target="blank"
                             rel="noopener"
@@ -341,12 +348,169 @@ const Home: NextPage = () => {
                       </a>
                     </div>
                     <p className="leading-snug mt-4">
-                      This is sublime. Action Mailer-inspired, @nextjs
-                      compatible email system. Send emails built with @reactjs
+                      This is sublime.
+                      <br />
+                      <br /> Action Mailer-inspired,{" "}
+                      <a
+                        href="https://twitter.com/nextjs"
+                        target="blank"
+                        rel="noopener"
+                        className="hover:underline text-blue-600 dark:text-blue-400 inline-block"
+                      >
+                        @nextjs
+                      </a>{" "}
+                      compatible email system. Send emails built with{" "}
+                      <a
+                        href="https://twitter.com/reactjs"
+                        target="blank"
+                        rel="noopener"
+                        className="hover:underline inline-block text-blue-600 dark:text-blue-400"
+                      >
+                        @reactjs
+                      </a>{" "}
                       components.
                       <br />
                       <br />
-                      https://mailing.run
+                      <a
+                        href="https://mailing.run"
+                        target="blank"
+                        rel="noopener"
+                        className="hover:underline text-blue-600 dark:text-blue-400 inline-block"
+                      >
+                        mailing.run
+                      </a>
+                    </p>
+                  </div>
+                </div>
+                <div className="md:basis-1/2 grow pb-3 sm:pb-6">
+                  <div className="border border-black dark:border-neutral-700 border-dotted rounded-2xl md:ml-3 p-8 h-full">
+                    <div className="flex justify-between items-center">
+                      <div className="flex justify-between items-top">
+                        <Image
+                          width="48"
+                          height="48"
+                          src="/testimonial-st@2x.png"
+                          alt="Steven Tey"
+                        />
+                        <div className="ml-3 inline-block place-content-center">
+                          <div className="pt-1 -mb-2">Steven Tey</div>
+                          <a
+                            className="text-xs leading-none hover:underline inline-block"
+                            href="https://twitter.com/steventey"
+                            target="blank"
+                            rel="noopener"
+                          >
+                            @steventey
+                          </a>
+                        </div>
+                      </div>
+                      <a
+                        href="https://twitter.com/steventey/status/1579471673325408257"
+                        target="blank"
+                        className="dark:invert dark:opacity-75"
+                      >
+                        <Image
+                          width="20"
+                          height="20"
+                          src="/icon-twitter.svg"
+                          alt="Twitter icon"
+                        />
+                      </a>
+                    </div>
+                    <p className="leading-snug mt-4">
+                      Spent the weekend creating some transactional emails for{" "}
+                      <a
+                        href="https://twitter.com/dubdotsh"
+                        target="blank"
+                        rel="noopener"
+                        className="hover:underline inline-block text-blue-600 dark:text-blue-400"
+                      >
+                        @dubdotsh
+                      </a>{" "}
+                      with{" "}
+                      <a
+                        href="https://mailing.run"
+                        target="blank"
+                        rel="noopener"
+                        className="hover:underline inline-block text-blue-600 dark:text-blue-400"
+                      >
+                        mailing.run
+                      </a>{" "}
+                      – it’s a gamechanger 🤯
+                      <br />
+                      <br />✅ Develop & preview emails with{" "}
+                      <a
+                        href="https://twitter.com/nextjs"
+                        target="blank"
+                        rel="noopener"
+                        className="hover:underline text-blue-600 dark:text-blue-400 inline-block"
+                      >
+                        @nextjs’
+                      </a>{" "}
+                      fast refresh
+                      <br />
+                      ✅ Intercept emails & show a preview in localhost
+                      <br />✅ One-click deploy your email previews to
+                    </p>
+                  </div>
+                </div>
+                <div className="md:basis-1/2 grow pb-3 sm:pb-6">
+                  <div className="border border-black dark:border-neutral-700 border-dotted rounded-2xl md:mr-3 p-8 h-full">
+                    <div className="flex justify-between items-center">
+                      <div className="flex justify-between items-top">
+                        <Image
+                          width="48"
+                          height="48"
+                          src="/testimonial-sd@2x.png"
+                          alt="Sidi Dev"
+                        />
+                        <div className="ml-3 inline-block place-content-center">
+                          <div className="pt-1 -mb-2">Sidi Dev</div>
+                          <a
+                            className="text-xs leading-none hover:underline inline-block"
+                            href="https://twitter.com/@sidi_jeddou_dev"
+                            target="blank"
+                            rel="noopener"
+                          >
+                            @sidi_jeddou_dev
+                          </a>
+                        </div>
+                      </div>
+                      <a
+                        href="https://twitter.com/sidi_jeddou_dev/status/1579928272347230208"
+                        target="blank"
+                        className="dark:invert dark:opacity-75"
+                      >
+                        <Image
+                          width="20"
+                          height="20"
+                          src="/icon-twitter.svg"
+                          alt="Twitter icon"
+                        />
+                      </a>
+                    </div>
+                    <p className="leading-snug mt-4">
+                      After I checked out{" "}
+                      <a
+                        href="https://mailing.run"
+                        target="blank"
+                        rel="noopener"
+                        className="hover:underline inline-block text-blue-600 dark:text-blue-400"
+                      >
+                        mailing.run
+                      </a>{" "}
+                      I liked it so much, and the best thing is how to deploy it
+                      on vercel, I decided to use it to build a newsletter
+                      script for{" "}
+                      <a
+                        href="https://twitter.com/float_ui"
+                        target="blank"
+                        rel="noopener"
+                        className="hover:underline text-blue-600 dark:text-blue-400 inline-block"
+                      >
+                        @float_ui
+                      </a>{" "}
+                      😍
                     </p>
                   </div>
                 </div>
@@ -363,7 +527,7 @@ const Home: NextPage = () => {
                         <div className="ml-3 inline-block place-content-center">
                           <div className="pt-1 -mb-2">Cymen Vig</div>
                           <a
-                            className="text-xs leading-none hover:underline "
+                            className="text-xs leading-none hover:underline inline-block"
                             href="https://github.com/cymen"
                             target="blank"
                           >
@@ -429,9 +593,10 @@ const Home: NextPage = () => {
                         <div className="ml-3 inline-block place-content-center">
                           <div className="pt-1 -mb-2">Will Viles</div>
                           <a
-                            className="text-xs leading-none hover:underline"
+                            className="text-xs leading-none hover:underline inline-block"
                             href="https://github.com/willviles"
                             target="blank"
+                            rel="nooopener"
                           >
                             @willviles
                           </a>
@@ -455,14 +620,16 @@ const Home: NextPage = () => {
                       <a
                         href="https:://github.com/alexfarril"
                         target="blank"
-                        className="hover:underline"
+                        rel="noopener"
+                        className="hover:underline inline-block text-blue-600 dark:text-blue-400"
                       >
                         @alexfarrill
                       </a>{" "}
                       <a
                         href="https://github.com/psugihara"
                         target="blank"
-                        className="hover:underline"
+                        rel="noopener"
+                        className="hover:underline inline-block text-blue-600 dark:text-blue-400"
                       >
                         @psugihara
                       </a>{" "}
@@ -508,17 +675,35 @@ const Home: NextPage = () => {
                     Transparent & open source
                   </h1>
                   <p className="leading-snug m-0 py-8 md:py-10 mx-0 md:mx-auto lg:mx-0 md:max-w-[470px]">
-                    Mailing is an open source email development tool. Our source
-                    code is public on GitHub so anyone can read and review it.
-                    We want it to outlast us and enthusiastically welcome
-                    feedback and contributions from the community.
+                    Mailing is an open source email development tool. Our{" "}
+                    <a
+                      href="https://discord.gg/fdSzmY46wY"
+                      target="blank"
+                      rel="noopener"
+                      className="hover:underline inline-block text-blue-600 dark:text-blue-400"
+                    >
+                      Discord
+                    </a>{" "}
+                    is public and source code is public on{" "}
+                    <a
+                      href="https://github.com/sofn-xyz/mailing"
+                      target="blank"
+                      rel="noopener"
+                      className="hover:underline inline-block text-blue-600 dark:text-blue-400"
+                    >
+                      GitHub
+                    </a>{" "}
+                    so anyone can read and review it. We want Mailing to outlast
+                    us and we love feedback and contributions from the
+                    community.
                   </p>
                   <a
                     className="text-black dark:text-white text-xl leading-none px-4 h-9 inline-flex items-center rounded-2xl border-2 border-black dark:border-white hover:underline"
-                    href="https://github.com/sofn-xyz/mailing"
+                    href="https://discord.gg/fdSzmY46wY"
+                    rel="noopener"
                     target="blank"
                   >
-                    View on GitHub
+                    Join the Discord
                   </a>
                 </div>
               </div>
