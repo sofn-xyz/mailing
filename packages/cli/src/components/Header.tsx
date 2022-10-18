@@ -30,6 +30,7 @@ const Header: React.FC<HeaderProps> = ({
 }) => {
   return (
     <div className="header">
+      <div className="flex-1">{/* NECESSARY FOR LAYOUT */}</div>
       <div className="segmented-control-container">
         <div className="segmented-control">
           <button
@@ -143,8 +144,7 @@ const Header: React.FC<HeaderProps> = ({
           justify-content: right;
         }
         .buttons-container,
-        .segmented-control-container,
-        .path {
+        .segmented-control-container {
           flex: 1;
         }
         .index {
