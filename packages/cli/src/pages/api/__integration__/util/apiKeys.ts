@@ -1,4 +1,4 @@
-import { cliUrl, fetch } from "./index";
+import { Api, cliUrl } from "./index";
 
 export async function apiCreateApiKey() {
   const instance = new ApiPostApiKeys();
@@ -9,42 +9,17 @@ export async function apiGetApiKeys() {
   return instance.perform();
 }
 
-export class ApiGetApiKeys {
-  response?: Awaited<ReturnType<typeof fetch>>;
-  fetchData: any;
+export class ApiGetApiKeys extends Api {
   path = cliUrl("/api/apiKeys");
 
-  defaultFetchData = {
+  fetchData = {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
     },
   };
-
-  async perform() {
-    this.fetchData = {
-      ...this.defaultFetchData,
-    };
-
-    this.response = await fetch(this.path, this.fetchData);
-
-    return this;
-  }
 }
 
-export class ApiPostApiKeys {
-  response?: Awaited<ReturnType<typeof fetch>>;
-  fetchData = {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  };
+export class ApiPostApiKeys extends Api {
   path = cliUrl("/api/apiKeys");
-
-  async perform() {
-    this.response = await fetch(this.path, this.fetchData);
-
-    return this;
-  }
 }

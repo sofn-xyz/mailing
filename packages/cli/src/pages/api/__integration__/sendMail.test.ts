@@ -18,7 +18,17 @@ describe("sendMail", () => {
     expect(apiKeys.length).toBe(1);
     const apiKey = apiKeys[0].id;
 
-    const sendMailResponse = await apiSendMail(apiKey);
+    const { response: sendMailResponse } = await apiSendMail(apiKey);
     expect(sendMailResponse.status).toBe(200);
+
+    const { response: sendMailResponseWithBadApiKey } = await apiSendMail(
+      "fake"
+    );
+    expect(sendMailResponseWithBadApiKey.status).toBe(401);
+
+    const { response: sendMailResponseWithMissingApiKey } = await apiSendMail(
+      undefined
+    );
+    expect(sendMailResponseWithMissingApiKey.status).toBe(401);
   });
 });

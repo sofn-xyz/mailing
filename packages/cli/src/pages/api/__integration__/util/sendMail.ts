@@ -1,17 +1,39 @@
-import { cliUrl, fetch } from "./index";
+import { Api, cliUrl } from "./index";
 
-export async function apiSendMail(apiKey: string) {
-  return await fetch(cliUrl("/api/sendMail"), {
-    method: "POST",
-    body: JSON.stringify({
-      subject: "hello",
-      to: "peter+sendMailAPI@campsh.com",
-      templateName: "AccountCreated",
-      props: { name: "Peter" },
-    }),
-    headers: {
-      "Content-Type": "application/json",
-      "X-API-Key": apiKey,
-    },
-  });
+interface SendMailFormData {
+  subject: string;
+  to: string;
+  templateName: string;
+  props: {
+    name: string;
+  };
+}
+
+export async function apiSendMail(apiKey?: string) {
+  const instance = new ApiSendMail(apiKey);
+  return await instance.perform();
+}
+
+class ApiSendMail extends Api<SendMailFormData> {
+  path = cliUrl("/api/sendMail");
+
+  constructor(apiKey?: string) {
+    super();
+
+    this.fetchData = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+
+    if (apiKey) this.fetchData.headers["X-API-Key"] = apiKey;
+  }
+
+  formData = {
+    subject: "hello",
+    to: "peter+sendMailAPI@campsh.com",
+    templateName: "AccountCreated",
+    props: { name: "Peter" },
+  };
 }

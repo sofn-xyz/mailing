@@ -37,7 +37,7 @@ describe("users", () => {
 
       it("doesn't create a user with an invalid email address", async () => {
         const instance = new ApiCreateUser();
-        instance.updateFormData({ email: "invalid" });
+        instance.formData = { email: "invalid", password: "" };
 
         const { response } = await instance.perform();
         expect(response.status).toBe(400);
@@ -56,10 +56,10 @@ describe("users", () => {
 
       it("require minimum password length", async () => {
         const instance = new ApiCreateUser();
-        instance.updateFormData({
+        instance.formData = {
           email: "ok@ok.com",
           password: "pass",
-        });
+        };
 
         const { response } = await instance.perform();
         expect(response.status).toBe(400);
