@@ -12,7 +12,7 @@ export async function apiGetApiKeys() {
 export class ApiGetApiKeys extends Api {
   path = cliUrl("/api/apiKeys");
 
-  defaultFetchData = {
+  fetchData = {
     method: "GET",
     headers: {
       "Content-Type": "application/json",

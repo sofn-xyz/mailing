@@ -8,27 +8,17 @@ export function cliUrl(path: string) {
 
 export abstract class Api<TFormData = undefined> {
   abstract path: string;
-  formData: TFormData;
-  fetchData: any;
+  formData?: TFormData;
   response?: Awaited<ReturnType<typeof fetch>>;
 
-  defaultFetchData = {
+  fetchData: any = {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
   };
 
-  constructor(formData: TFormData) {
-    this.formData = { ...formData };
-  }
-
   async perform() {
-    console.log("this.formData in perform is", this.formData);
-    this.fetchData = {
-      ...this.defaultFetchData,
-    };
-
     if ("POST" === this.fetchData.method) {
       this.fetchData.body = JSON.stringify(this.formData);
     }
