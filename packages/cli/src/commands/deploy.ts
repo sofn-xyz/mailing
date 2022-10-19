@@ -6,7 +6,7 @@ import { buildHandler } from "../util/buildHandler";
 import { execSync } from "child_process";
 import { resolve } from "path";
 import * as prettier from "prettier";
-import assert from "node:assert";
+import { strict as assert } from "assert";
 
 export type DeployArgs = ArgumentsCamelCase<{
   emailsDir?: string;
