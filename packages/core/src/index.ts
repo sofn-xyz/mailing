@@ -110,7 +110,11 @@ export function buildSendMail(options: BuildSendMailOptions) {
     }
 
     if (forcePreview) {
-      log("💌 opening sendMail preview", mail);
+      const debugMail = {
+        ...mail,
+        html: "omitted",
+      };
+      log("💌 opening sendMail preview", debugMail);
       // create an intercept on the preview server
       // then open it in the browser
       const PREVIEW_SERVER_URL = "http://localhost:3883/intercepts";
