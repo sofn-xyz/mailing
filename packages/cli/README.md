@@ -118,7 +118,7 @@ sendMail({
 
 ## ●&nbsp;&nbsp;Developing with email previews
 
-Mailing includes a development mode for working on your emails. Running `mailing` in dev will boot the preview server on localhost:3883 and show you all previews in `emails/previews`. The previews live reload when files in the emails directory change. Previews are just functions that return one of your emails loaded up with props. We recommend grouping all previews for the same email template in a file at `emails/previews/TemplateName.tsx`.
+Mailing includes a development mode for working on your emails. Running `npx mailing` in dev will boot the preview server on localhost:3883 and show you all previews in `emails/previews`. The previews live reload when files in the emails directory change. Previews are just functions that return one of your emails loaded up with props. We recommend grouping all previews for the same email template in a file at `emails/previews/TemplateName.tsx`.
 
 For example, here's `emails/previews/AccountCreated.tsx`:
 
@@ -142,7 +142,7 @@ When your email is nice, send it to yourself or your QA tool of choice for final
 
 ## ●&nbsp;&nbsp;Templates
 
-We ship with a few templates to help you get started. These get added to your emails directory upon initialization with `mailing init`. We recommend using these as starting points and modifying them to fit your use case. Check them out [here](https://demo.mailing.run).
+We ship with a few templates to help you get started. These get added to your emails directory upon initialization with `npx mailing init`. We recommend using these as starting points and modifying them to fit your use case. Check them out [here](https://demo.mailing.run).
 
 <br/>
 
@@ -189,27 +189,27 @@ describe("Example API", () => {
 
 ## ●&nbsp;&nbsp;&nbsp;CLI
 
-`mailing init` initializes a project then starts the development server
+`npx mailing init` initializes a project then starts the development server
 
-`mailing preview` launches the development server
+`npx mailing preview` launches the development server
 
-`mailing server build` builds the next app in .mailing
+`npx mailing server build` builds the next app in .mailing
 
-`mailing server start` starts the next app built in .mailing/.next
+`npx mailing server start` starts the next app built in .mailing/.next
 
-`mailing server` builds and starts it
+`npx mailing server` builds and starts it
 
-`mailing export-previews` exports template previews as plain html files
+`npx mailing export-previews` exports template previews as plain html files
 
-`mailing` runs init then preview
+`npx mailing` runs init then preview
 
-`mm` is a cute alias for `mailing`
+`npx mm` is a cute alias for `npx mailing`
 
 [source entrypoint](https://github.com/sofn-xyz/mailing/blob/main/packages/cli/src/index.ts)
 
 ### mailing.config.js
 
-Running `mailing init` generates a mailing.config.js file that will be used as default options for the CLI commands. The default options are:
+Running `npx mailing init` generates a mailing.config.js file that will be used as default options for the CLI commands. The default options are:
 
 ```
   {
