@@ -1,5 +1,13 @@
 # mailing
 
+## 0.8.7
+
+### Patch Changes
+
+- 243d4e2: bugfix assert for node 14 compatibility
+- Updated dependencies [243d4e2]
+  - mailing-core@0.8.7
+
 ## 0.8.6
 
 ### Patch Changes
