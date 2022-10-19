@@ -15,31 +15,22 @@ describe("analytics", () => {
     process.env = OLD_ENV;
   });
 
+  describe("#trackMany", () => {
+    // TODO
+  });
+
   describe("#track", () => {
     let analytics: Analytics;
     beforeEach(() => {
       process.env.AXIOM_API_TOKEN = "axiomApiToken";
       process.env.AXIOM_DATASET_NAME = "axiomDatasetName";
-      process.env.MAILING_API_TOKEN = "mailingApiToken";
       process.env.POSTHOG_API_TOKEN = "posthogApiToken";
       analytics = new Analytics();
     });
 
     it("should call fetch with the correct arguments", () => {
-      analytics.track("test.event", { foo: "bar" });
-      expect(fetch).toHaveBeenCalledTimes(3);
-
-      // Mailing call
-      expect(fetch).toHaveBeenCalledWith("https://mailing.run/api/track", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          event: "test.event",
-          properties: { foo: "bar" },
-        }),
-      });
+      analytics.track({ event: "test.event", properties: { foo: "bar" } });
+      expect(fetch).toHaveBeenCalledTimes(2);
 
       // Axiom call
       expect(fetch).toHaveBeenCalledWith(

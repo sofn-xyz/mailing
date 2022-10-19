@@ -139,11 +139,31 @@ export function buildSendMail(options: BuildSendMailOptions) {
       return;
     }
 
-    const response = await options.transport.sendMail(htmlMail);
-    await capture({
-      distinctId: anonymousId,
-      event: "mail sent",
-    });
+    let response;
+    if (
+      process.env.MAILING_API_KEY &&
+      process.env.MAILING_API_URL &&
+      !process.env.MAILING_DATABASE_URL
+    ) {
+      response = await fetch(process.env.MAILING_API_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-api-key": process.env.MAILING_API_KEY,
+        },
+        body: JSON.stringify(htmlMail),
+      });
+    } else {
+      response = await options.transport.sendMail(htmlMail);
+
+      await capture({
+        event: "mail sent",
+        distinctId: anonymousId,
+        properties: {
+          hasDB: !!process.env.MAILING_DATABASE_URL,
+        },
+      });
+    }
 
     return response;
   };

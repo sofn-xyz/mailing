@@ -1,3 +1,6 @@
+type AnalyticsEvent = { event: string; properties: Record<string, unknown> };
+
 interface IAnalyticsProvider {
-  track: (event: string, properties: Record<string, unknown>) => void;
+  track: (event: AnalyticsEvent) => void;
+  trackMany: (events: Array<AnalyticsEvent>) => void;
 }

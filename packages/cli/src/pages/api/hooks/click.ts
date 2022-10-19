@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import Analytics from "../../../util/analytics";
 import { error } from "../../../util/log";
+import prisma from "../../../../prisma";
 
 type ResponseData = {
   error?: string;
@@ -23,7 +24,30 @@ export default async function handler(
     }
 
     if (decodedUrl) {
-      Analytics.track("email.click", { url: decodedUrl, email, sendId });
+      if (typeof sendId === "string") {
+        Analytics.track({
+          event: "email.click",
+          properties: { url: decodedUrl, email, sendId },
+        });
+
+        prisma.click.upsert({
+          where: {
+            sendId_url: {
+              sendId: sendId,
+              url: decodedUrl,
+            },
+          },
+          create: {
+            sendId: sendId,
+            url: decodedUrl,
+            count: 1,
+          },
+          update: {
+            count: { increment: 1 },
+          },
+        });
+      }
+
       res.redirect(307, decodedUrl);
     } else {
       res.status(406).json({ error: "Missing required parameters: url" });

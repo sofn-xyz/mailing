@@ -10,21 +10,33 @@ class Axiom implements IAnalyticsProvider {
     this.datasetName = datasetName;
   }
 
-  track(event: string, properties: Record<string, unknown>) {
-    this.#ingest(event, properties);
+  track(event: AnalyticsEvent) {
+    this.#ingest(event);
   }
 
-  #ingest(event: string, properties: Record<string, unknown>) {
+  trackMany(events: AnalyticsEvent[]) {
+    this.#ingestMany(events);
+  }
+
+  #ingest(event: AnalyticsEvent) {
     fetch(Axiom.baseUrl + "/api/v1/datasets/" + this.datasetName + "/ingest", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${this.apiToken}`,
       },
-      body: JSON.stringify({
-        event: event,
-        properties: properties,
-      }),
+      body: JSON.stringify(event),
+    });
+  }
+
+  #ingestMany(events: AnalyticsEvent[]) {
+    fetch(Axiom.baseUrl + "/api/v1/datasets/" + this.datasetName + "/ingest", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${this.apiToken}`,
+      },
+      body: JSON.stringify(events),
     });
   }
 }

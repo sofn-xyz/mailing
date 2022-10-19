@@ -4,7 +4,6 @@ CREATE TABLE "EmailContent" (
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "html" TEXT NOT NULL,
     "subject" TEXT NOT NULL,
-    "sendId" TEXT NOT NULL,
 
     CONSTRAINT "EmailContent_pkey" PRIMARY KEY ("id")
 );
@@ -13,9 +12,9 @@ CREATE TABLE "EmailContent" (
 CREATE TABLE "Send" (
     "id" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "templateName" TEXT NOT NULL,
-    "previewName" TEXT NOT NULL,
     "to" TEXT NOT NULL,
+    "templateName" TEXT,
+    "previewName" TEXT,
     "openedAt" TIMESTAMP(3),
     "openCount" INTEGER NOT NULL DEFAULT 0,
     "openLocation" TEXT,
@@ -30,14 +29,11 @@ CREATE TABLE "Click" (
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "url" TEXT NOT NULL,
-    "count" INTEGER NOT NULL,
+    "count" INTEGER NOT NULL DEFAULT 0,
     "sendId" TEXT NOT NULL,
 
     CONSTRAINT "Click_pkey" PRIMARY KEY ("id")
 );
-
--- CreateIndex
-CREATE INDEX "EmailContent_sendId_idx" ON "EmailContent"("sendId");
 
 -- CreateIndex
 CREATE INDEX "Send_to_idx" ON "Send"("to");
@@ -47,6 +43,9 @@ CREATE INDEX "Send_templateName_previewName_idx" ON "Send"("templateName", "prev
 
 -- CreateIndex
 CREATE INDEX "Click_sendId_idx" ON "Click"("sendId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Click_sendId_url_key" ON "Click"("sendId", "url");
 
 -- AddForeignKey
 ALTER TABLE "Send" ADD CONSTRAINT "Send_emailContentId_fkey" FOREIGN KEY ("emailContentId") REFERENCES "EmailContent"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

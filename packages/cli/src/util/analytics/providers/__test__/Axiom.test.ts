@@ -4,6 +4,10 @@ import fetch from "node-fetch";
 jest.mock("node-fetch");
 
 describe("Axiom", () => {
+  describe("#trackMany", () => {
+    // TODO
+  });
+
   describe("#track", () => {
     let axiom: Axiom;
     beforeEach(() => {
@@ -11,7 +15,7 @@ describe("Axiom", () => {
     });
 
     it("should call fetch with the correct arguments", () => {
-      axiom.track("test.event", { foo: "bar" });
+      axiom.track({ event: "test.event", properties: { foo: "bar" } });
       expect(fetch).toHaveBeenCalledTimes(1);
       expect(fetch).toHaveBeenCalledWith(
         "https://cloud.axiom.co/api/v1/datasets/datasetName/ingest",

@@ -4,6 +4,10 @@ import fetch from "node-fetch";
 jest.mock("node-fetch");
 
 describe("Posthog", () => {
+  describe("#trackMany", () => {
+    // TODO
+  });
+
   describe("#track", () => {
     let posthog: Posthog;
     beforeEach(() => {
@@ -11,7 +15,7 @@ describe("Posthog", () => {
     });
 
     it("should call fetch with the correct arguments", () => {
-      posthog.track("test.event", { foo: "bar" });
+      posthog.track({ event: "test.event", properties: { foo: "bar" } });
       expect(fetch).toHaveBeenCalledTimes(1);
       expect(fetch).toHaveBeenCalledWith("https://app.posthog.com/capture/", {
         method: "POST",

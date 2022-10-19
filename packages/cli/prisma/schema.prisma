@@ -49,10 +49,7 @@ model EmailContent {
   createdAt DateTime @default(now())
   html      String
   subject   String
-  sendId    String
   Send      Send[]
-
-  @@index([sendId])
 }
 
 // created by sendMail calls
@@ -60,9 +57,9 @@ model EmailContent {
 model Send {
   id             String       @id @default(cuid())
   createdAt      DateTime     @default(now())
-  templateName   String // reference to a mailing template
-  previewName    String // reference to a mailing preview
   to             String // email address
+  templateName   String? // reference to a mailing template
+  previewName    String? // reference to a mailing preview
   // created by tracking pixel
   // only store first open timestamp, then increment count
   openedAt       DateTime?
@@ -84,10 +81,12 @@ model Click {
   createdAt DateTime @default(now()) // first click
   updatedAt DateTime @updatedAt // last click
   url       String
-  count     Int // increment using Prisma’s `increment` function
+  // increment using Prisma’s `increment` function
+  count     Int      @default(0)
   sendId    String
   Send      Send     @relation(fields: [sendId], references: [id])
 
+  @@unique([sendId, url])
   @@index([sendId])
 }
 

@@ -1,5 +1,4 @@
 import Axiom from "./Axiom";
-import Mailing from "./Mailing";
 import Posthog from "./Posthog";
 
-export { Axiom, Mailing, Posthog };
+export { Axiom, Posthog };

@@ -8,12 +8,15 @@ class Posthog implements IAnalyticsProvider {
     this.apiToken = apiToken;
   }
 
-  track(event: string, properties: Record<string, unknown>) {
-    this.#capture(event, properties);
+  track(event: AnalyticsEvent) {
+    this.#capture(event);
   }
 
-  #capture(event: string, properties: Record<string, unknown>) {
-    // Do something
+  trackMany(events: AnalyticsEvent[]) {
+    this.#batch(events);
+  }
+
+  #capture(event: AnalyticsEvent) {
     fetch(Posthog.baseUrl + "/capture/", {
       method: "POST",
       headers: {
@@ -21,8 +24,20 @@ class Posthog implements IAnalyticsProvider {
       },
       body: JSON.stringify({
         api_key: this.apiToken,
-        event: event,
-        properties: properties,
+        ...event,
+      }),
+    });
+  }
+
+  #batch(events: AnalyticsEvent[]) {
+    fetch(Posthog.baseUrl + "/batch/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        api_key: this.apiToken,
+        batch: events,
       }),
     });
   }
