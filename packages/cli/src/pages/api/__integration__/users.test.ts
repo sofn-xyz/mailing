@@ -40,7 +40,7 @@ describe("users", () => {
         instance.formData = { email: "invalid", password: "" };
 
         const { response } = await instance.perform();
-        expect(response.status).toBe(400);
+        expect(response.status).toBe(422);
 
         const data = await response.json();
         expect(data.error).toBe("email is invalid");
@@ -62,7 +62,7 @@ describe("users", () => {
         };
 
         const { response } = await instance.perform();
-        expect(response.status).toBe(400);
+        expect(response.status).toBe(422);
 
         const data = await response.json();
         expect(data.error).toBe("password should be at least 8 characters");
