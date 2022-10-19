@@ -1,4 +1,4 @@
-import { Api, cliUrl } from "./index";
+import { Api } from "./index";
 
 // interface CreateListFormData {
 //   name: string;
@@ -10,7 +10,7 @@ export async function apiGetLists() {
 }
 
 export class ApiGetLists extends Api {
-  path = cliUrl("/api/lists");
+  path = "/api/lists";
 
   fetchData = {
     method: "GET",

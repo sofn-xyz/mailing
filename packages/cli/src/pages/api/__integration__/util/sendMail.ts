@@ -1,4 +1,4 @@
-import { Api, cliUrl } from "./index";
+import { Api } from "./index";
 
 interface SendMailFormData {
   subject: string;
@@ -15,7 +15,7 @@ export async function apiSendMail(apiKey?: string) {
 }
 
 class ApiSendMail extends Api<SendMailFormData> {
-  path = cliUrl("/api/sendMail");
+  path = "/api/sendMail";
 
   constructor(apiKey?: string) {
     super();

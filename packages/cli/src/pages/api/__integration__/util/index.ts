@@ -23,7 +23,7 @@ export abstract class Api<TFormData = undefined> {
       this.fetchData.body = JSON.stringify(this.formData);
     }
 
-    this.response = await fetch(this.path, this.fetchData);
+    this.response = await fetch(cliUrl(this.path), this.fetchData);
 
     return this;
   }
