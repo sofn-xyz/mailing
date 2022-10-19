@@ -11,11 +11,4 @@ export async function apiGetLists() {
 
 export class ApiGetLists extends Api {
   path = "/api/lists";
-
-  fetchData = {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  };
 }

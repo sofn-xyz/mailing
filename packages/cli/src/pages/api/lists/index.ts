@@ -1,7 +1,9 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { withSessionAPIRoute } from "src/util/session";
 
-// interface Data {}
+interface Data {
+  error?: string;
+}
 
 const ApiLists = withSessionAPIRoute(async function (
   req: NextApiRequest,
@@ -17,6 +19,9 @@ const ApiLists = withSessionAPIRoute(async function (
   switch (req.method) {
     case "GET":
       res.status(200).end();
+      break;
+    case "POST":
+      res.status(201).end();
       break;
     default:
       return res.status(404).end();
