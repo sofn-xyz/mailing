@@ -13,13 +13,21 @@ export abstract class Api<TFormData = undefined> {
   method?: string;
   fetchData?: any;
 
+  static defaultFetchData = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+
   setFetchData() {
-    this.fetchData = this.fetchData || {
-      method: this.method || "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
+    if ("undefined" === typeof this.fetchData) {
+      this.fetchData = { ...Api.defaultFetchData };
+
+      if (this.method) {
+        this.fetchData.method = this.method;
+      }
+    }
 
     if ("POST" === this.fetchData.method) {
       this.fetchData.body = JSON.stringify(this.formData);
