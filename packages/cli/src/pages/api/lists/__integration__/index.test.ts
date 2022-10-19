@@ -17,6 +17,9 @@ describe("lists", () => {
     it("GET /lists should 200 with a blank array of lists", async () => {
       const { response } = await apiGetLists();
       expect(response.status).toBe(200);
+      const data = await response.json();
+      expect("lists" in data).toBe(true);
+      expect(data.lists.length).toBe(0);
     });
   });
 });

@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import prisma from "prisma";
+import prisma from "../../../../prisma";
 import { User } from "prisma/generated/client";
 import { withSessionAPIRoute } from "src/util/session";
 
