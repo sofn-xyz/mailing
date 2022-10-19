@@ -1,5 +1,11 @@
 # web
 
+## 0.4.6
+
+### Patch Changes
+
+- 3214dbb: bugfix for header layout
+
 ## 0.4.5
 
 ### Patch Changes

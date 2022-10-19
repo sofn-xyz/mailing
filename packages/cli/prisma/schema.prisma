@@ -39,3 +39,56 @@ model ApiKey {
 
   @@index([organizationId])
 }
+
+// Start ANALYTICS schema
+// created when Sends are created
+// This table will probably get big and we'd want to truncate at some point
+// or only retain last N etc.
+model EmailContent {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  html      String
+  subject   String
+  sendId    String
+  Send      Send[]
+
+  @@index([sendId])
+}
+
+// created by sendMail calls
+// one created for each recipient email ({ to: me, bcc: [elliot, steven] } creates 3 Sends, 1 EmailContent)
+model Send {
+  id             String       @id @default(cuid())
+  createdAt      DateTime     @default(now())
+  templateName   String // reference to a mailing template
+  previewName    String // reference to a mailing preview
+  to             String // email address
+  // created by tracking pixel
+  // only store first open timestamp, then increment count
+  openedAt       DateTime?
+  // increment using Prisma’s `increment` function
+  openCount      Int          @default(0)
+  openLocation   String? // store country data using middleware (example)
+  Click          Click[]
+  emailContentId String
+  EmailContent   EmailContent @relation(fields: [emailContentId], references: [id])
+
+  @@index([to])
+  @@index([templateName, previewName])
+}
+
+// created by /api/click proxy urls
+// only store first click, then increment count
+model Click {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now()) // first click
+  updatedAt DateTime @updatedAt // last click
+  url       String
+  count     Int // increment using Prisma’s `increment` function
+  sendId    String
+  Send      Send     @relation(fields: [sendId], references: [id])
+
+  @@index([sendId])
+}
+
+// end ANALYTICS schema

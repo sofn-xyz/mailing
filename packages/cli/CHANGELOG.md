@@ -1,5 +1,13 @@
 # mailing
 
+## 0.8.6
+
+### Patch Changes
+
+- 3214dbb: bugfix for header layout
+- Updated dependencies [3214dbb]
+  - mailing-core@0.8.6
+
 ## 0.8.5
 
 ### Patch Changes
