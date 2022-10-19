@@ -28,12 +28,22 @@ model Organization {
   name   String
   User   User[]
   ApiKey ApiKey[]
+  List   List[]
 }
 
 model ApiKey {
   id             String       @id @default(cuid())
   createdAt      DateTime     @default(now())
   active         Boolean      @default(true)
+  organizationId String
+  Organization   Organization @relation(fields: [organizationId], references: [id])
+
+  @@index([organizationId])
+}
+
+model List {
+  id             String       @id @default(cuid())
+  name           String
   organizationId String
   Organization   Organization @relation(fields: [organizationId], references: [id])
 
