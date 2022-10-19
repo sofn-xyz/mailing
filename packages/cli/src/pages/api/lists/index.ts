@@ -19,6 +19,23 @@ async function handleGetLists(
   res.json({ lists });
 }
 
+async function handleCreateList(
+  user: User,
+  req: NextApiRequest,
+  res: NextApiResponse<Data>
+) {
+  // validate name presence
+
+  if (req.query.name) {
+    await prisma.list.create({
+      data: { name: "Testme", organizationId: user.organizationId },
+    });
+    res.status(201).end();
+  } else {
+    res.status(422).json({ error: "name is required" });
+  }
+}
+
 const ApiLists = withSessionAPIRoute(async function (
   req: NextApiRequest,
   res: NextApiResponse<Data>
@@ -35,6 +52,7 @@ const ApiLists = withSessionAPIRoute(async function (
       handleGetLists(user, req, res);
       break;
     case "POST":
+      handleCreateList(user, req, res);
       res.status(201).end();
       break;
     default:
