@@ -11,4 +11,5 @@ export async function apiGetLists() {
 
 export class ApiGetLists extends Api {
   path = "/api/lists";
+  method = "GET";
 }

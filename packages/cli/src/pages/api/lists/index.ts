@@ -1,8 +1,22 @@
 import { NextApiRequest, NextApiResponse } from "next";
+import prisma from "prisma";
+import { User } from "prisma/generated/client";
 import { withSessionAPIRoute } from "src/util/session";
 
 interface Data {
   error?: string;
+  lists?: any;
+}
+
+async function handleGetLists(
+  user: User,
+  req: NextApiRequest,
+  res: NextApiResponse<Data>
+) {
+  const lists = await prisma.list.findMany({
+    where: { organizationId: user.organizationId },
+  });
+  res.json({ lists });
 }
 
 const ApiLists = withSessionAPIRoute(async function (
@@ -18,7 +32,7 @@ const ApiLists = withSessionAPIRoute(async function (
 
   switch (req.method) {
     case "GET":
-      res.status(200).end();
+      handleGetLists(user, req, res);
       break;
     case "POST":
       res.status(201).end();
