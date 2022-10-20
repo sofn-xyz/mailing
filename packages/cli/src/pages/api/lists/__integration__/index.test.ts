@@ -9,7 +9,7 @@ describe("lists", () => {
   describe("not logged in", () => {
     it("GET /lists should 404", async () => {
       const { response } = await apiGetLists();
-      expect(response.status).toBe(404);
+      expect(response.status).toBe(401);
     });
   });
 

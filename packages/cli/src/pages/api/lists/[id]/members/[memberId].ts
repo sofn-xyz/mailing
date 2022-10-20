@@ -1,4 +1,9 @@
 import { NextApiRequest, NextApiResponse } from "next";
+import {
+  ResError,
+  validate,
+  validationErrorResponse,
+} from "src/util/api/validate";
 import { withSessionAPIRoute } from "src/util/session";
 import prisma from "../../../../../../prisma";
 
@@ -39,18 +44,18 @@ async function handleGetListMember(
   res.json({ member });
 }
 
-type ValidatedRequestOrError =
-  | { hasError: false; listId: string; memberId: string }
-  | { hasError: true; status: number; error: string };
+type ValidatedRequest = {
+  hasError: false;
+  validated: any;
+};
 
-function validateRequest(req: NextApiRequest): ValidatedRequestOrError {
-  // require login
-  if (!req.session.user) {
-    return { hasError: true, status: 401, error: "you must be logged in" };
-  }
-
+function customValidation(req: NextApiRequest): ValidatedRequest | ResError {
   // todo: validate that this list belongs to the user's organization
-  if (typeof req.query.id !== "string") {
+
+  const listId = req.query.id;
+  const memberId = req.query.memberId;
+
+  if (typeof listId !== "string") {
     return {
       hasError: true,
       status: 422,
@@ -58,7 +63,7 @@ function validateRequest(req: NextApiRequest): ValidatedRequestOrError {
     };
   }
 
-  if (typeof req.query.memberId !== "string") {
+  if (typeof memberId !== "string") {
     return {
       hasError: true,
       status: 422,
@@ -68,8 +73,10 @@ function validateRequest(req: NextApiRequest): ValidatedRequestOrError {
 
   return {
     hasError: false,
-    listId: req.query.id,
-    memberId: req.query.memberId,
+    validated: {
+      listId,
+      memberId,
+    },
   };
 }
 
@@ -77,14 +84,12 @@ const ApiListMember = withSessionAPIRoute(async function (
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  const validatedRequest = validateRequest(req);
+  const validatedRequest = validate(req, { loggedIn: true }, customValidation);
 
-  if (validatedRequest.hasError) {
-    const { status, error } = validatedRequest;
-    return res.status(status).json({ error });
-  }
+  if (validatedRequest.hasError)
+    return validationErrorResponse(validatedRequest, res);
 
-  const { listId, memberId } = validatedRequest;
+  const { listId, memberId } = validatedRequest.validated;
 
   switch (req.method) {
     case "PATCH":

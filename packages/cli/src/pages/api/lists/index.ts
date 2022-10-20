@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import prisma from "../../../../prisma";
 import { User } from "prisma/generated/client";
 import { withSessionAPIRoute } from "src/util/session";
-import { validateLoggedIn } from "../../../util/api/validateLoggedIn";
+import { validate, validationErrorResponse } from "../../../util/api/validate";
 
 interface Data {
   error?: string;
@@ -42,14 +42,12 @@ const ApiLists = withSessionAPIRoute(async function (
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  const validatedRequest = validateLoggedIn(req);
+  const validatedRequest = validate(req, { loggedIn: true });
 
-  if (validatedRequest.hasError) {
-    const { status, error } = validatedRequest;
-    return res.status(status).json({ error });
-  }
+  if (validatedRequest.hasError)
+    return validationErrorResponse(validatedRequest, res);
 
-  const { user } = validatedRequest;
+  const { user } = validatedRequest.validated;
 
   switch (req.method) {
     case "GET":
