@@ -19,15 +19,13 @@ export function debug(message?: any, ...optionalParams: any[]) {
 export async function truncateCliDatabase() {
   debug("Running TRUNCATE on ", process.env.MAILING_DATABASE_URL_TEST);
 
-  await cliPrisma.apiKey.deleteMany({});
-  await cliPrisma.user.deleteMany({});
-  await cliPrisma.organization.deleteMany({});
+  await truncateTables(cliPrisma);
 }
 
 export async function truncateWebDatabase() {
   debug("Running TRUNCATE on ", process.env.WEB_DATABASE_URL_TEST);
 
-  await webPrisma.newsletterSubscriber.deleteMany({});
+  await truncateTables(webPrisma);
 }
 
 export async function truncateDatabases() {
@@ -38,4 +36,16 @@ export async function disconnectDatabases() {
   await Promise.all([cliPrisma.$disconnect(), webPrisma.$disconnect()]);
   delete global.prismaMailingCli;
   delete global.prismaMailingWeb;
+}
+
+async function truncateTables(client: typeof cliPrisma | typeof webPrisma) {
+  const tables =
+    (await client.$queryRaw`SELECT table_name FROM information_schema.tables where table_schema = 'public' AND table_name NOT like '_prisma%';`) as any;
+
+  const joinedTableNames = tables
+    .map((t: any) => `"${t.table_name}"`)
+    .join(", ");
+
+  const query = `TRUNCATE ${joinedTableNames} CASCADE;`;
+  await client.$executeRawUnsafe(query);
 }
