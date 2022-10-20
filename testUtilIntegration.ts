@@ -38,12 +38,16 @@ export async function disconnectDatabases() {
   delete global.prismaMailingWeb;
 }
 
+interface PrismaTableName {
+  table_name: string;
+}
+
 async function truncateTables(client: typeof cliPrisma | typeof webPrisma) {
   const tables =
-    (await client.$queryRaw`SELECT table_name FROM information_schema.tables where table_schema = 'public' AND table_name NOT like '_prisma%';`) as any;
+    (await client.$queryRaw`SELECT table_name FROM information_schema.tables where table_schema = 'public' AND table_name NOT like '_prisma%';`) as PrismaTableName[];
 
   const joinedTableNames = tables
-    .map((t: any) => `"${t.table_name}"`)
+    .map((t: PrismaTableName) => `"${t.table_name}"`)
     .join(", ");
 
   const query = `TRUNCATE ${joinedTableNames} CASCADE;`;
