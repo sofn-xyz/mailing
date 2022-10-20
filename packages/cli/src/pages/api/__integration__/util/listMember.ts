@@ -1,5 +1,9 @@
 import { Api } from "./index";
-import { ListMemberData } from "./lists";
+
+interface ListMemberData {
+  email: string;
+  status: string;
+}
 
 // Return info about all members of a list
 // GET /api/lists/${listId}/members

@@ -4,11 +4,6 @@ interface CreateListFormData {
   name: string;
 }
 
-export interface ListMemberData {
-  email: string;
-  status: string;
-}
-
 export async function apiGetLists() {
   const instance = new ApiGetLists();
   return instance.perform();
