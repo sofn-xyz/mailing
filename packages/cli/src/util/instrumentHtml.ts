@@ -9,7 +9,7 @@ export default function instrumentHtml({
   sendId: string;
   apiUrl: string;
 }) {
-  // find the a, get href, calculate new url, replace base 64 encoded href
+  // find the a, get href, calculate new url, replace href
   const root = parse(html);
   const links = root.querySelectorAll("a");
   for (const link of links) {
@@ -21,7 +21,7 @@ export default function instrumentHtml({
     link.setAttribute("href", url.toString());
   }
 
-  // add <img alt="" src="apiUrl?t=BASE_64" /> to end of body
+  // add open tracking pixel to end of body
   const body = root.querySelector("body");
   if (body) {
     const img = parse(
@@ -29,7 +29,7 @@ export default function instrumentHtml({
     );
     body.appendChild(img);
   } else {
-    console.warn("Could not find body in html");
+    throw new Error("no body found in html");
   }
 
   return root.toString();

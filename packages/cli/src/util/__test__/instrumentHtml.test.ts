@@ -28,4 +28,16 @@ describe("instrumentHtml", () => {
 
     expect(result).toMatchSnapshot();
   });
+
+  it("throws error if no body found", () => {
+    const html = `
+      <html>
+        <head>
+          <title>Test</title>
+        </head>
+      </html>
+    `;
+
+    expect(() => instrumentHtml({ html, sendId, apiUrl })).toThrow();
+  });
 });
