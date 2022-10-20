@@ -1,21 +1,22 @@
 import instrumentHtml from "../instrumentHtml";
 
 describe("instrumentHtml", () => {
-  const html = `
-      <html>
-        <head>
-          <title>Test</title>
-        </head>
-        <body>
-          <a href="https://google.com">Google</a>
-          <a href="https://yahoo.com">Yahoo</a>
-        </body>
-      </html>
-    `;
   const sendId = "123";
   const apiUrl = "https://api.com";
 
   it("should instrument html", () => {
+    const html = `
+    <html>
+      <head>
+        <title>Test</title>
+      </head>
+      <body>
+        <a href="https://google.com">Google</a>
+        <a href="https://yahoo.com">Yahoo</a>
+      </body>
+    </html>
+  `;
+
     const result = instrumentHtml({ html, sendId, apiUrl });
 
     expect(result).toContain(
