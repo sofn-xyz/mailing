@@ -14,18 +14,23 @@ describe("lists/[id]/members", () => {
   });
 
   describe("logged in", () => {
+    let listId: string | undefined;
+
     beforeAll(async () => {
       await apiLogin();
-    });
 
-    it("creates a list, creates a member, and then lists the list members", async () => {
       // create list
       const { response: createListResponse } = await apiCreateList();
       expect(createListResponse.status).toBe(201);
       const data = await createListResponse.json();
 
-      const listId = data.list.id;
+      listId = data.list.id;
       expect(typeof listId).toBe("string");
+    });
+
+    it("creates a list member, and then lists the list members", async () => {
+      if ("string" !== typeof listId)
+        throw new Error("expected listId to be a string");
 
       // create a list member
       const { response: createListMemberResponse } = await apiCreateListMember(
@@ -43,8 +48,34 @@ describe("lists/[id]/members", () => {
       expect(listMembersResponse.status).toBe(200);
     });
 
-    it("should 422 when creating a list member with invalid options", () => {
-      expect("implement me").toBe(true);
+    it("should 422 when creating a list member with invalid email", async () => {
+      if ("string" !== typeof listId)
+        throw new Error("expected listId to be a string");
+
+      const { response: createListMemberResponse } = await apiCreateListMember(
+        listId,
+        {
+          email: "",
+          status: "pending",
+        }
+      );
+
+      expect(createListMemberResponse.status).toBe(422);
+    });
+
+    it("should 422 when creating a list member with invalid status", async () => {
+      if ("string" !== typeof listId)
+        throw new Error("expected listId to be a string");
+
+      const { response: createListMemberResponse } = await apiCreateListMember(
+        listId,
+        {
+          email: "alex.farrill@gmail.com",
+          status: "made-this-up",
+        }
+      );
+
+      expect(createListMemberResponse.status).toBe(422);
     });
   });
 });
