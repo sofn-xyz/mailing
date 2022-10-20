@@ -1,11 +1,11 @@
 import { apiLogin } from "../../../../__integration__/util/login";
+import { apiCreateList } from "../../../../__integration__/util/lists";
 import {
-  apiCreateList,
   apiGetListMembers,
   apiCreateListMember,
   apiPatchListMember,
   apiGetListMember,
-} from "../../../../__integration__/util/lists";
+} from "../../../../__integration__/util/listMember";
 
 describe("lists/[id]/members", () => {
   describe("not logged in", () => {
