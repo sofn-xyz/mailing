@@ -30,7 +30,7 @@ export class ApiCreateLists extends Api<CreateListFormData> {
 
 export async function apiGetListMembers(listId: string) {
   const instance = new ApiListMembers();
-  instance.path = `/lists/${listId}/members`;
+  instance.path = `/api/lists/${listId}/members`;
   return instance.perform();
 }
 

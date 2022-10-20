@@ -17,7 +17,7 @@ describe("lists/[id]/members", () => {
       await apiLogin();
     });
 
-    it("POST /lists should 201 and then GET /lists should 200 and include the list", async () => {
+    it("creates a list and then lists the list members", async () => {
       const { response: createListResponse } = await apiCreateList();
       expect(createListResponse.status).toBe(201);
       const data = await createListResponse.json();
