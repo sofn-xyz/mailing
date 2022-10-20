@@ -12,8 +12,8 @@ export type ComponentMail = SendMailOptions & {
   dangerouslyForceDeliver?: boolean;
   forcePreview?: boolean;
 };
-export type BuildSendMailOptions = {
-  transport: Transporter;
+export type BuildSendMailOptions<T> = {
+  transport: Transporter<T>;
   defaultFrom: string;
   configPath: string;
 };
@@ -44,7 +44,7 @@ export async function clearTestMailQueue() {
   }
 }
 
-export function buildSendMail(options: BuildSendMailOptions) {
+export function buildSendMail<T>(options: BuildSendMailOptions<T>) {
   const testMode =
     process.env.TEST ||
     process.env.NODE_ENV === "test" ||
