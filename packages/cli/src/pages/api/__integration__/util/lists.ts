@@ -27,3 +27,13 @@ export class ApiCreateLists extends Api<CreateListFormData> {
     name: `My list ${Math.random()}`,
   };
 }
+
+export async function apiGetListMembers(listId: string) {
+  const instance = new ApiListMembers();
+  instance.path = `/lists/${listId}/members`;
+  return instance.perform();
+}
+
+export class ApiListMembers extends Api {
+  method = "GET";
+}

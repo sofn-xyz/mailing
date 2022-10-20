@@ -5,6 +5,7 @@ import { withSessionAPIRoute } from "src/util/session";
 
 interface Data {
   error?: string;
+  list?: any;
   lists?: any;
 }
 
@@ -27,10 +28,10 @@ async function handleCreateList(
   // validate name presence
 
   if (req.body.name) {
-    await prisma.list.create({
+    const list = await prisma.list.create({
       data: { name: req.body.name, organizationId: user.organizationId },
     });
-    res.status(201).end();
+    res.status(201).json({ list });
   } else {
     res.status(422).json({ error: "name is required" });
   }
@@ -53,7 +54,6 @@ const ApiLists = withSessionAPIRoute(async function (
       break;
     case "POST":
       handleCreateList(user, req, res);
-      res.status(201).end();
       break;
     default:
       return res.status(404).end();

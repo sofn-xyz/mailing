@@ -7,7 +7,7 @@ export function cliUrl(path: string) {
 }
 
 export abstract class Api<TFormData = undefined> {
-  abstract path: string;
+  path?: string;
   formData?: TFormData;
   response?: Awaited<ReturnType<typeof fetch>>;
   method?: string;
@@ -35,6 +35,8 @@ export abstract class Api<TFormData = undefined> {
   }
 
   async perform() {
+    if (!this.path) throw new Error("path must be set");
+
     this.setFetchData();
 
     this.response = await fetch(cliUrl(this.path), this.fetchData);

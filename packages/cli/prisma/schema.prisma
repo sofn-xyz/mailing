@@ -46,6 +46,15 @@ model List {
   name           String
   organizationId String
   Organization   Organization @relation(fields: [organizationId], references: [id])
+  Member         Member[]
 
   @@index([organizationId])
+}
+
+model Member {
+  id     String @id @default(cuid())
+  email  String
+  listId String
+  List   List   @relation(fields: [listId], references: [id])
+  status String
 }
