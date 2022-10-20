@@ -23,6 +23,7 @@ export type MailingOptions = SendMailOptions & {
   forcePreview?: boolean;
   templateName?: string;
   previewName?: string;
+  sendId?: string;
 };
 
 export async function getTestMailQueue() {
@@ -78,14 +79,14 @@ export function buildSendMail<T>(options: BuildSendMailOptions<T>) {
     if (!mail.html && typeof mail.component === "undefined")
       throw new Error("sendMail requires either html or a component");
 
-    const { NODE_ENV, MAILING_API_URL, MAILING_API_KEY, MAILING_DATABASE_URL } =
-      process.env;
+    const { NODE_ENV, MAILING_API_URL, MAILING_API_KEY } = process.env;
     const {
       component,
       dangerouslyForceDeliver,
       templateName,
       previewName,
       forcePreview,
+      sendId,
       ...mailOptions
     } = mail;
     mailOptions as SendMailOptions;
@@ -94,7 +95,9 @@ export function buildSendMail<T>(options: BuildSendMailOptions<T>) {
     const previewMode =
       forcePreview || (NODE_ENV !== "production" && !dangerouslyForceDeliver);
 
-    const apiMode = MAILING_API_URL && MAILING_API_KEY && MAILING_DATABASE_URL;
+    // Do not send emails analytics if we're given a sendID,
+    // this means sendMail is being called from the API and it will be handled there
+    const analyticsEnabled = !sendId && MAILING_API_URL && MAILING_API_KEY;
 
     // Get html from the rendered component if not provided
     let derivedTemplateName;
@@ -140,7 +143,9 @@ export function buildSendMail<T>(options: BuildSendMailOptions<T>) {
         error("Is the mailing preview server running?");
       }
       return;
-    } else if (apiMode) {
+    }
+
+    if (analyticsEnabled) {
       /* TODO:
       /  - call mailing api to track sends
       /  - mutate email to add url proxies and tracking pixels
@@ -157,7 +162,11 @@ export function buildSendMail<T>(options: BuildSendMailOptions<T>) {
       event: "mail sent",
       distinctId: anonymousId,
       properties: {
-        hasDB: !!MAILING_DATABASE_URL,
+        recipientCount:
+          Array(mailOptions.to).length +
+          Array(mailOptions.cc).length +
+          Array(mailOptions.bcc).length,
+        analyticsEnabled,
       },
     });
 
