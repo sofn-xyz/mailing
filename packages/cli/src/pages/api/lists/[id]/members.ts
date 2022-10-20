@@ -1,15 +1,8 @@
 import { withSessionAPIRoute } from "src/util/session";
 import prisma from "../../../../../prisma";
 import { NextApiRequest, NextApiResponse } from "next";
-
-export const LIST_MEMBER_STATUSES = [
-  "pending",
-  "subscribed",
-  "unsubscribed",
-  "cleaned",
-  "transactional",
-  "archived",
-];
+import { validationErrorResponse } from "src/util/api/validate";
+import { validateMemberStatusInList } from "src/util/api/validateMemberStatusInList";
 
 interface Data {
   error?: string;
@@ -28,10 +21,10 @@ async function handleCreateListMember(
     return res.status(422).json({ error: "expected an 'email' field" });
   }
 
-  if (!LIST_MEMBER_STATUSES.includes(status)) {
-    return res.status(422).json({
-      error: `expected status to be one of: ${LIST_MEMBER_STATUSES.join(", ")}`,
-    });
+  const validatedMemberStatusInList = validateMemberStatusInList(status);
+
+  if (validatedMemberStatusInList.hasError) {
+    return validationErrorResponse(validatedMemberStatusInList, res);
   }
 
   const member = await prisma.member.create({

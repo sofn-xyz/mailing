@@ -1,8 +1,8 @@
 import { NextApiRequest, NextApiResponse } from "next";
 
 export type ResError = { hasError: true; status: number; error: string };
-type ValidatedRequest = { hasError: false; validated: any };
-type ValidatedRequestOrError = ValidatedRequest | ResError;
+export type ValidatedRequest = { hasError: false; validated: any };
+export type ValidatedRequestOrError = ValidatedRequest | ResError;
 
 interface ValidationOptions {
   loggedIn?: true;

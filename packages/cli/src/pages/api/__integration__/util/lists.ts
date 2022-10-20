@@ -106,6 +106,7 @@ export async function apiPatchListMember(
   const instance = new ApiPatchListMember();
   instance.path = `/api/lists/${listId}/members/${memberId}`;
   if (formData) instance.formData = formData;
+
   return instance.perform();
 }
 

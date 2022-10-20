@@ -29,7 +29,7 @@ export abstract class Api<TFormData = undefined> {
       }
     }
 
-    if ("POST" === this.fetchData.method) {
+    if ("GET" !== this.fetchData.method) {
       this.fetchData.body = JSON.stringify(this.formData);
     }
   }

@@ -4,6 +4,7 @@ import {
   validate,
   validationErrorResponse,
 } from "src/util/api/validate";
+import { validateMemberStatusInList } from "src/util/api/validateMemberStatusInList";
 import { withSessionAPIRoute } from "src/util/session";
 import prisma from "../../../../../../prisma";
 
@@ -15,13 +16,21 @@ interface Data {
 async function handlePatchListMember(
   listId: string,
   memberId: string,
+  req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
+  const status = req.body.status;
+
+  const validatedMemberStatusInList = validateMemberStatusInList(status);
+
+  if (validatedMemberStatusInList.hasError) {
+    return validationErrorResponse(validatedMemberStatusInList, res);
+  }
+
   // todo: fix me, does this need to be updateMany?
-  // todo: should take status from req
   await prisma.member.updateMany({
     where: { listId, email: memberId },
-    data: { status: "unsubscribed" },
+    data: { status: req.body.status },
   });
 
   res.status(200).end();
@@ -50,10 +59,10 @@ type ValidatedRequest = {
 };
 
 function customValidation(req: NextApiRequest): ValidatedRequest | ResError {
-  // todo: validate that this list belongs to the user's organization
-
   const listId = req.query.id;
   const memberId = req.query.memberId;
+
+  // todo: validate that this list belongs to the user's organization
 
   if (typeof listId !== "string") {
     return {
@@ -93,7 +102,7 @@ const ApiListMember = withSessionAPIRoute(async function (
 
   switch (req.method) {
     case "PATCH":
-      await handlePatchListMember(listId, memberId, res);
+      await handlePatchListMember(listId, memberId, req, res);
       break;
     case "GET":
       await handleGetListMember(listId, memberId, res);
