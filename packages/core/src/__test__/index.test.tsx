@@ -4,7 +4,7 @@ import {
   buildSendMail,
   getTestMailQueue,
   clearTestMailQueue,
-  ComponentMail,
+  MailingOptions,
   BuildSendMailOptions,
 } from "..";
 import { Mjml, MjmlBody, MjmlRaw } from "mjml-react";
@@ -82,7 +82,7 @@ describe("index", () => {
   });
 
   describe("getTestMailQueue", () => {
-    let sendMail: (mail: ComponentMail) => Promise<any>;
+    let sendMail: (mail: MailingOptions) => Promise<any>;
     beforeEach(async () => {
       await clearTestMailQueue();
       const transport = nodemailer.createTransport({

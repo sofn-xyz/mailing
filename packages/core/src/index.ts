@@ -1,4 +1,3 @@
-import { ReactElement, JSXElementConstructor } from "react";
 import type { SendMailOptions, Transporter } from "nodemailer";
 import open from "open";
 import fs from "fs-extra";
@@ -7,20 +6,22 @@ import { error, log, debug } from "./util/log";
 import fetch from "node-fetch";
 import { capture } from "./util/postHog";
 
-export type ComponentMail = SendMailOptions & {
-  component?: ReactElement<any, string | JSXElementConstructor<any>>;
+// In test, we write the email queue to this file so that it can be read
+// by the test process.
+const TMP_TEST_FILE = "tmp-testMailQueue.json";
+
+export type MailingOptions = SendMailOptions & {
+  component?: JSX.Element;
   dangerouslyForceDeliver?: boolean;
   forcePreview?: boolean;
+  templateName?: string;
+  previewName?: string;
 };
 export type BuildSendMailOptions = {
   transport: Transporter;
   defaultFrom: string;
   configPath: string;
 };
-
-// In test, we write the email queue to this file so that it can be read
-// by the test process.
-const TMP_TEST_FILE = "tmp-testMailQueue.json";
 
 export async function getTestMailQueue() {
   try {
@@ -71,45 +72,46 @@ export function buildSendMail(options: BuildSendMailOptions) {
     }
   }
 
-  return async function sendMail(mail: ComponentMail) {
-    const forcePreview =
-      mail.forcePreview ||
-      (process.env.NODE_ENV !== "production" && !mail.dangerouslyForceDeliver);
-
+  return async function sendMail(mail: MailingOptions) {
     if (!mail.html && typeof mail.component === "undefined")
       throw new Error("sendMail requires either html or a component");
 
-    const { html, errors } =
-      mail.html || !mail.component
-        ? { html: mail.html, errors: [] }
-        : render(mail.component);
+    const { NODE_ENV, MAILING_API_URL, MAILING_API_KEY, MAILING_DATABASE_URL } =
+      process.env;
+    const {
+      component,
+      dangerouslyForceDeliver,
+      templateName,
+      previewName,
+      forcePreview,
+      ...mailOptions
+    } = mail;
+    mailOptions as SendMailOptions;
+    mailOptions.from ||= options.defaultFrom;
 
-    if (errors?.length) {
-      error(errors);
-      throw new Error(errors.join(";"));
+    const previewMode =
+      forcePreview || (NODE_ENV !== "production" && !dangerouslyForceDeliver);
+
+    const apiMode = MAILING_API_URL && MAILING_API_KEY && MAILING_DATABASE_URL;
+
+    // Get html from the rendered component if not provided
+    let derivedTemplateName;
+    if (component && !mailOptions.html) {
+      const { html: renderedHtml, errors } = render(component);
+      if (errors?.length) {
+        error(errors);
+        throw new Error(errors.join(";"));
+      }
+      derivedTemplateName = component.type.name;
+      mailOptions.html = renderedHtml;
     }
-
-    // Create a mail for nodemailer with the component rendered to HTML.
-    const htmlMail = {
-      from: options.defaultFrom,
-      ...mail,
-      html: html,
-      component: undefined,
-      dangerouslyForceDeliver: undefined,
-      forcePreview: undefined,
-    };
-    delete htmlMail.component;
-    delete htmlMail.dangerouslyForceDeliver;
-    delete htmlMail.forcePreview;
 
     if (testMode) {
       const testMessageQueue = await getTestMailQueue();
-      testMessageQueue.push(htmlMail);
+      testMessageQueue.push(mailOptions);
       await fs.writeFile(TMP_TEST_FILE, JSON.stringify(testMessageQueue));
       return;
-    }
-
-    if (forcePreview) {
+    } else if (previewMode) {
       const debugMail = {
         ...mail,
         html: "omitted",
@@ -122,7 +124,7 @@ export function buildSendMail(options: BuildSendMailOptions) {
         const response = await fetch(PREVIEW_SERVER_URL, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(htmlMail),
+          body: JSON.stringify(mailOptions),
         });
         if (response.status === 201) {
           const { id } = (await response.json()) as { id: string };
@@ -137,33 +139,33 @@ export function buildSendMail(options: BuildSendMailOptions) {
       }
 
       return;
-    }
-
-    let response;
-    if (
-      process.env.MAILING_API_KEY &&
-      process.env.MAILING_API_URL &&
-      !process.env.MAILING_DATABASE_URL
-    ) {
-      response = await fetch(process.env.MAILING_API_URL, {
+    } else if (apiMode && MAILING_API_URL && MAILING_API_KEY) {
+      // Send mail via the mailing API
+      const response = await fetch(MAILING_API_URL, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "x-api-key": process.env.MAILING_API_KEY,
+          "X-Api-Key": MAILING_API_KEY,
         },
-        body: JSON.stringify(htmlMail),
+        body: JSON.stringify({
+          templateName: templateName || derivedTemplateName,
+          previewName,
+          ...mailOptions,
+        }),
       });
-    } else {
-      response = await options.transport.sendMail(htmlMail);
 
-      await capture({
-        event: "mail sent",
-        distinctId: anonymousId,
-        properties: {
-          hasDB: !!process.env.MAILING_DATABASE_URL,
-        },
-      });
+      return response;
     }
+
+    // Send mail via nodemailer
+    const response = await options.transport.sendMail(mailOptions);
+    await capture({
+      event: "mail sent",
+      distinctId: anonymousId,
+      properties: {
+        hasDB: !!MAILING_DATABASE_URL,
+      },
+    });
 
     return response;
   };
