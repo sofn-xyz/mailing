@@ -46,7 +46,7 @@ type ValidatedRequestOrError =
 function validateRequest(req: NextApiRequest): ValidatedRequestOrError {
   // require login
   if (!req.session.user) {
-    return { hasError: true, status: 404, error: "you must be logged in" };
+    return { hasError: true, status: 401, error: "you must be logged in" };
   }
 
   // todo: validate that this list belongs to the user's organization

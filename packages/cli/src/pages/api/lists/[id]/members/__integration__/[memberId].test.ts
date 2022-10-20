@@ -40,6 +40,18 @@ describe("lists/[id]/members", () => {
       expect(createListMemberResponse.status).toBe(201);
     });
 
+    it("should refuse to update the list members status if it is not in the list", async () => {
+      const { response: patchListMemberResponse } = await apiPatchListMember(
+        listId,
+        memberId,
+        {
+          status: "this is invalid",
+        }
+      );
+
+      expect(patchListMemberResponse.status).toBe(422);
+    });
+
     it("should update the list members status", async () => {
       // check that the initial state of the "status" field on member is "pending"
       const { response: getInitialListMemberResponse } = await apiGetListMember(
