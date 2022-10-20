@@ -6,6 +6,7 @@ import { render } from "./mjml";
 import { error, log, debug } from "./util/log";
 import fetch from "node-fetch";
 import { capture } from "./util/postHog";
+import instrumentHtml from "./util/instrumentHtml";
 
 // In test, we write the email queue to this file so that it can be read
 // by the test process.
@@ -146,14 +147,34 @@ export function buildSendMail<T>(options: BuildSendMailOptions<T>) {
     }
 
     if (analyticsEnabled) {
-      /* TODO:
-      /  - call mailing api to track sends
-      /  - mutate email to add url proxies and tracking pixels
-      */
-      console.log({
-        templateName: templateName || derivedTemplateName,
-        previewName,
+      const hookResponse = await fetch(MAILING_API_URL + "/api/hooks/send", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-api-key": MAILING_API_KEY,
+        },
+        body: JSON.stringify({
+          anonymousId,
+          sendId,
+          templateName: templateName || derivedTemplateName,
+          previewName,
+          mailOptions,
+        }),
       });
+
+      if (hookResponse.status === 200) {
+        const { sendId } = await hookResponse.json();
+        const stringHtml = mailOptions.html?.toString();
+        if (stringHtml) {
+          mailOptions.html = instrumentHtml({
+            html: stringHtml,
+            sendId: sendId,
+            apiUrl: MAILING_API_KEY,
+          });
+        }
+      } else {
+        error("Error calling mailing api hook", hookResponse);
+      }
     }
 
     // Send mail via nodemailer

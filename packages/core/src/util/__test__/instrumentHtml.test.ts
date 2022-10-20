@@ -20,11 +20,11 @@ describe("instrumentHtml", () => {
     const result = instrumentHtml({ html, sendId, apiUrl });
 
     expect(result).toContain(
-      'href="https://api.com/api/click?sendId=123&url=https%3A%2F%2Fgoogle.com"'
+      'href="https://api.com/api/hooks/click?sendId=123&url=https%3A%2F%2Fgoogle.com"'
     );
     expect(result).not.toContain('href="https://google.com"');
     expect(result).toContain(
-      '<img alt="" src="https://api.com/api/open?sendId=123" >'
+      '<img alt="" src="https://api.com/api/hooks/open?sendId=123" >'
     );
 
     expect(result).toMatchSnapshot();

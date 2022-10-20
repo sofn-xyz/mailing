@@ -15,7 +15,7 @@ export default function instrumentHtml({
   for (const link of links) {
     const href = link.getAttribute("href");
     if (!href) continue;
-    const url = new URL("/api/click", apiUrl);
+    const url = new URL("/api/hooks/click", apiUrl);
     url.searchParams.set("sendId", sendId);
     url.searchParams.set("url", href);
     link.setAttribute("href", url.toString());
@@ -25,7 +25,7 @@ export default function instrumentHtml({
   const body = root.querySelector("body");
   if (body) {
     const img = parse(
-      `<img alt="" src="${apiUrl}/api/open?sendId=${sendId}" />`
+      `<img alt="" src="${apiUrl}/api/hooks/open?sendId=${sendId}" />`
     );
     body.appendChild(img);
   } else {
