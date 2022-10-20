@@ -35,7 +35,7 @@ describe("index", () => {
 
     it("throws a helpful runtime error without a transport and default email", () => {
       expect(() => {
-        buildSendMail({} as BuildSendMailOptions);
+        buildSendMail({} as BuildSendMailOptions<any>);
       }).toThrow();
     });
 
