@@ -17,6 +17,7 @@ describe("lists/[id]/members", () => {
 
   describe("logged in", () => {
     let listId: string | undefined;
+    let memberId: string | undefined;
 
     beforeAll(async () => {
       await apiLogin();
@@ -30,16 +31,16 @@ describe("lists/[id]/members", () => {
       expect(typeof listId).toBe("string");
 
       // create a list member
-      const { response: createListMemberResponse } = await apiCreateListMember(
-        listId
-      );
+      const { formData, response: createListMemberResponse } =
+        await apiCreateListMember(listId);
+
+      memberId = formData.email;
+      expect(memberId).toBeDefined();
 
       expect(createListMemberResponse.status).toBe(201);
     });
 
     it("should update the list members status", async () => {
-      const memberId = "alex.farrill@gmail.com"; // fix me
-
       // check that the initial state of the "status" field on member is "pending"
       const { response: getInitialListMemberResponse } = await apiGetListMember(
         listId,
