@@ -4,6 +4,7 @@ import {
   apiGetListMembers,
   apiCreateListMember,
   apiPatchListMember,
+  apiGetListMember,
 } from "../../../../__integration__/util/lists";
 
 describe("lists/[id]/members", () => {
@@ -47,7 +48,16 @@ describe("lists/[id]/members", () => {
       );
 
       expect(patchListMemberResponse.status).toBe(200);
-      // also check status somehow
+
+      // check that the "status" field on member has been updated
+      const { response: getListMemberResponse } = await apiGetListMember(
+        listId,
+        memberId
+      );
+
+      expect(getListMemberResponse.status).toBe(200);
+      const data = await getListMemberResponse.json();
+      expect(data.member.status).toBe("unsubscribed");
     });
   });
 });

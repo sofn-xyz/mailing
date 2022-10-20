@@ -14,6 +14,8 @@ export async function apiGetLists() {
   return instance.perform();
 }
 
+// Return all of an organization's lists
+// GET /api/lists
 export class ApiGetLists extends Api {
   path = "/api/lists";
   method = "GET";
@@ -24,6 +26,8 @@ export async function apiCreateList() {
   return instance.perform();
 }
 
+// Create a list
+// POST /api/lists
 export class ApiCreateLists extends Api<CreateListFormData> {
   path = "/api/lists";
   method = "POST";
@@ -33,6 +37,8 @@ export class ApiCreateLists extends Api<CreateListFormData> {
   };
 }
 
+// Return info about all members of a list
+// GET /api/lists/${listId}/members
 export async function apiGetListMembers(listId?: string) {
   if ("string" !== typeof listId)
     throw new Error("expected listId to be a string");
@@ -43,6 +49,24 @@ export async function apiGetListMembers(listId?: string) {
 }
 
 export class ApiListMembers extends Api {
+  method = "GET";
+}
+
+// Return info about an individual member of a list
+// GET /api/lists/${listId}/members/${memberId}
+export async function apiGetListMember(listId?: string, memberId?: string) {
+  if ("string" !== typeof listId)
+    throw new Error("expected listId to be a string");
+
+  if ("string" !== typeof memberId)
+    throw new Error("expected memberId to be a string");
+
+  const instance = new ApiListMember();
+  instance.path = `/api/lists/${listId}/members/${memberId}`;
+  return instance.perform();
+}
+
+export class ApiListMember extends Api {
   method = "GET";
 }
 
