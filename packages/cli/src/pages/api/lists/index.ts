@@ -26,9 +26,9 @@ async function handleCreateList(
 ) {
   // validate name presence
 
-  if (req.query.name) {
+  if (req.body.name) {
     await prisma.list.create({
-      data: { name: "Testme", organizationId: user.organizationId },
+      data: { name: req.body.name, organizationId: user.organizationId },
     });
     res.status(201).end();
   } else {

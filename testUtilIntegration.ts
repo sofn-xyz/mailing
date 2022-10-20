@@ -19,7 +19,9 @@ export function debug(message?: any, ...optionalParams: any[]) {
 export async function truncateCliDatabase() {
   debug("Running TRUNCATE on ", process.env.MAILING_DATABASE_URL_TEST);
 
+  // todo: make this find all the tables that should be truncated
   await cliPrisma.apiKey.deleteMany({});
+  await cliPrisma.list.deleteMany({});
   await cliPrisma.user.deleteMany({});
   await cliPrisma.organization.deleteMany({});
 }
@@ -27,6 +29,7 @@ export async function truncateCliDatabase() {
 export async function truncateWebDatabase() {
   debug("Running TRUNCATE on ", process.env.WEB_DATABASE_URL_TEST);
 
+  // todo: make this find all the tables that should be truncated
   await webPrisma.newsletterSubscriber.deleteMany({});
 }
 
