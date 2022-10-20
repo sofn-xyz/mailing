@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`instrumentHtml should instrument html 1`] = `
+"
+      <html>
+        <head>
+          <title>Test</title>
+        </head>
+        <body>
+          <a href="https://api.com/api/click?sendId=123&url=https%3A%2F%2Fgoogle.com">Google</a>
+          <a href="https://api.com/api/click?sendId=123&url=https%3A%2F%2Fyahoo.com">Yahoo</a>
+        <img alt="" src="https://api.com/api/open?sendId=123" ></body>
+      </html>
+    "
+`;
