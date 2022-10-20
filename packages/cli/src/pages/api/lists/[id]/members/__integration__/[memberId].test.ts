@@ -39,6 +39,18 @@ describe("lists/[id]/members", () => {
 
     it("should update the list members status", async () => {
       const memberId = "alex.farrill@gmail.com"; // fix me
+
+      // check that the initial state of the "status" field on member is "pending"
+      const { response: getInitialListMemberResponse } = await apiGetListMember(
+        listId,
+        memberId
+      );
+
+      expect(getInitialListMemberResponse.status).toBe(200);
+      const initialData = await getInitialListMemberResponse.json();
+      expect(initialData.member.status).toBe("pending");
+
+      // PATCH it to be "unsubscribed"
       const { response: patchListMemberResponse } = await apiPatchListMember(
         listId,
         memberId,
@@ -49,7 +61,7 @@ describe("lists/[id]/members", () => {
 
       expect(patchListMemberResponse.status).toBe(200);
 
-      // check that the "status" field on member has been updated
+      // check that the "status" field on member has been updated to "unsubscribed"
       const { response: getListMemberResponse } = await apiGetListMember(
         listId,
         memberId

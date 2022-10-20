@@ -68,7 +68,6 @@ function validateRequest(req: NextApiRequest): ValidatedRequestOrError {
 
   return {
     hasError: false,
-    user: req.session.user,
     listId: req.query.id,
     memberId: req.query.memberId,
   };
