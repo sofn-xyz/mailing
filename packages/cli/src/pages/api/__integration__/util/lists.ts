@@ -4,6 +4,11 @@ interface CreateListFormData {
   name: string;
 }
 
+interface CreateListMemberData {
+  email: string;
+  status: string;
+}
+
 export async function apiGetLists() {
   const instance = new ApiGetLists();
   return instance.perform();
@@ -36,4 +41,15 @@ export async function apiGetListMembers(listId: string) {
 
 export class ApiListMembers extends Api {
   method = "GET";
+}
+
+export async function apiCreateListMember(listId: string, formData: any) {
+  const instance = new ApiCreateListMember();
+  instance.path = `/api/lists/${listId}/members`;
+  instance.formData = formData;
+  return instance.perform();
+}
+
+export class ApiCreateListMember extends Api<CreateListMemberData> {
+  method = "POST";
 }

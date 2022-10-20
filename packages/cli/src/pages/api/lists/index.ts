@@ -17,7 +17,7 @@ async function handleGetLists(
   const lists = await prisma.list.findMany({
     where: { organizationId: user.organizationId },
   });
-  res.json({ lists });
+  return res.json({ lists });
 }
 
 async function handleCreateList(
@@ -31,9 +31,9 @@ async function handleCreateList(
     const list = await prisma.list.create({
       data: { name: req.body.name, organizationId: user.organizationId },
     });
-    res.status(201).json({ list });
+    return res.status(201).json({ list });
   } else {
-    res.status(422).json({ error: "name is required" });
+    return res.status(422).json({ error: "name is required" });
   }
 }
 
