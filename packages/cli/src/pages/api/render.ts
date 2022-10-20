@@ -23,7 +23,7 @@ function renderTemplate(
     };
   }
 
-  return render(React.createElement(Template as any, props as any));
+  return render(React.createElement(Template as any, props));
 }
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {

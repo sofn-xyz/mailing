@@ -1,4 +1,5 @@
 import type { SendMailOptions, Transporter } from "nodemailer";
+
 import open from "open";
 import fs from "fs-extra";
 import { render } from "./mjml";
@@ -10,17 +11,18 @@ import { capture } from "./util/postHog";
 // by the test process.
 const TMP_TEST_FILE = "tmp-testMailQueue.json";
 
+export type BuildSendMailOptions<T> = {
+  transport: Transporter<T>;
+  defaultFrom: string;
+  configPath: string;
+};
+
 export type MailingOptions = SendMailOptions & {
   component?: JSX.Element;
   dangerouslyForceDeliver?: boolean;
   forcePreview?: boolean;
   templateName?: string;
   previewName?: string;
-};
-export type BuildSendMailOptions = {
-  transport: Transporter;
-  defaultFrom: string;
-  configPath: string;
 };
 
 export async function getTestMailQueue() {
@@ -45,7 +47,7 @@ export async function clearTestMailQueue() {
   }
 }
 
-export function buildSendMail(options: BuildSendMailOptions) {
+export function buildSendMail<T>(options: BuildSendMailOptions<T>) {
   const testMode =
     process.env.TEST ||
     process.env.NODE_ENV === "test" ||
@@ -137,24 +139,16 @@ export function buildSendMail(options: BuildSendMailOptions) {
         error(`Caught error ${e}`);
         error("Is the mailing preview server running?");
       }
-
       return;
-    } else if (apiMode && MAILING_API_URL && MAILING_API_KEY) {
-      // Send mail via the mailing API
-      const response = await fetch(MAILING_API_URL, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "X-Api-Key": MAILING_API_KEY,
-        },
-        body: JSON.stringify({
-          templateName: templateName || derivedTemplateName,
-          previewName,
-          ...mailOptions,
-        }),
+    } else if (apiMode) {
+      /* TODO:
+      /  - call mailing api to track sends
+      /  - mutate email to add url proxies and tracking pixels
+      */
+      console.log({
+        templateName: templateName || derivedTemplateName,
+        previewName,
       });
-
-      return response;
     }
 
     // Send mail via nodemailer

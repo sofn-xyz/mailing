@@ -6,9 +6,9 @@ import { templates, sendMail } from "../../moduleManifest";
 import prisma from "../../../prisma";
 import Analytics from "../../util/analytics";
 
-type Data = {
-  error?: string; // api error messages
+type ResponseData = {
   html?: string;
+  error?: string; // api error messages
   mjmlErrors?: MjmlError[];
 };
 
@@ -25,7 +25,7 @@ function renderTemplate(
     };
   }
 
-  return render(React.createElement(Template as any, props as any));
+  return render(React.createElement(Template as any, props));
 }
 
 async function validApiKey(apiKey: string | string[] | undefined) {
@@ -39,14 +39,14 @@ async function validApiKey(apiKey: string | string[] | undefined) {
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse
+  res: NextApiResponse<ResponseData>
 ) {
   if (req.method !== "POST") return res.status(404).end();
 
   const {
     templateName,
-    props,
     previewName,
+    props,
     to,
     subject,
     cc,
@@ -72,21 +72,19 @@ export default async function handler(
     typeof cc === "undefined" &&
     typeof bcc === "undefined"
   ) {
-    return res
-      .status(403)
-      .json({ error: "to, cc, or bcc must be specified" } as Data);
+    return res.status(403).json({ error: "to, cc, or bcc must be specified" });
   }
 
   // validate subject
   if (typeof subject !== "string") {
-    return res.status(403).json({ error: "subject must be specified" } as Data);
+    return res.status(403).json({ error: "subject must be specified" });
   }
 
   // validate template name
   if (typeof templateName !== "string" && typeof html !== "string") {
     return res
       .status(403)
-      .json({ error: "templateName or html must be specified" } as Data);
+      .json({ error: "templateName or html must be specified" });
   }
 
   // render template if html doesn't exist
@@ -97,7 +95,7 @@ export default async function handler(
     );
 
     if (error) {
-      return res.status(404).json({ error } as Data);
+      return res.status(404).json({ error });
     }
     html = renderedHtml;
   }
