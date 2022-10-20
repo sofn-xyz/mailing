@@ -29,16 +29,9 @@ describe("lists/[id]/members", () => {
     });
 
     it("creates a list member, and then lists the list members", async () => {
-      if ("string" !== typeof listId)
-        throw new Error("expected listId to be a string");
-
       // create a list member
       const { response: createListMemberResponse } = await apiCreateListMember(
-        listId,
-        {
-          email: "alex.farrill@gmail.com",
-          status: "pending",
-        }
+        listId
       );
 
       expect(createListMemberResponse.status).toBe(201);
@@ -49,9 +42,6 @@ describe("lists/[id]/members", () => {
     });
 
     it("should 422 when creating a list member with invalid email", async () => {
-      if ("string" !== typeof listId)
-        throw new Error("expected listId to be a string");
-
       const { response: createListMemberResponse } = await apiCreateListMember(
         listId,
         {
@@ -64,9 +54,6 @@ describe("lists/[id]/members", () => {
     });
 
     it("should 422 when creating a list member with invalid status", async () => {
-      if ("string" !== typeof listId)
-        throw new Error("expected listId to be a string");
-
       const { response: createListMemberResponse } = await apiCreateListMember(
         listId,
         {
