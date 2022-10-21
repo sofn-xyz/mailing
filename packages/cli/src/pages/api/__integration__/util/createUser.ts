@@ -1,4 +1,4 @@
-import { Api, cliUrl } from "./index";
+import { Api } from "./index";
 
 interface CreateUserFormData {
   email: string;
@@ -11,7 +11,7 @@ export async function apiCreateUser() {
 }
 
 export class ApiCreateUser extends Api<CreateUserFormData> {
-  path = cliUrl("/api/users");
+  path = "/api/users";
 
   formData = {
     email: `ok${Math.random()}@ok.com`,

@@ -13,7 +13,7 @@ export default function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  const { templateName, props } = req.query;
+  const { templateName, props } = "GET" === req.method ? req.query : req.body;
 
   // validate template name
   if (typeof templateName !== "string") {
@@ -23,7 +23,10 @@ export default function handler(
   // parse props
   let parsedProps = {};
   try {
-    parsedProps = JSON.parse(decodeURIComponent(props as string));
+    parsedProps =
+      "GET" === req.method
+        ? JSON.parse(decodeURIComponent(props as string))
+        : props;
   } catch {
     return res
       .status(403)
