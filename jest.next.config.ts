@@ -13,8 +13,8 @@ const customJestConfig = {
   setupFilesAfterEnv: ["<rootDir>/testSetup.ts"],
   testEnvironment: "jest-environment-jsdom",
   testMatch: [
-    "<rootDir>/packages/cli/src/pages/**/__test__/**/*.[jt]s?(x)",
-    "<rootDir>/packages/cli/src/components/**/__test__/**/*.[jt]s?(x)",
+    "<rootDir>/packages/cli/src/pages/**/__test__/**/*.test.[jt]s?(x)",
+    "<rootDir>/packages/cli/src/components/**/__test__/**/*.test.[jt]s?(x)",
   ],
   modulePathIgnorePatterns: [
     "<rootDir>/packages/.*/__mocks__/index.ts",
