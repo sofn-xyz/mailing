@@ -7,7 +7,7 @@ export async function validateApiKey(
 ): Promise<boolean> {
   const apiKey = (req.headers && req.headers["x-api-key"]) || req.query.apiKey;
   if (typeof apiKey !== "string") {
-    res.status(422).end("expected apiKey to be a string");
+    res.status(422).end("expected x-api-key in header or apiKey in query");
     return false;
   }
 

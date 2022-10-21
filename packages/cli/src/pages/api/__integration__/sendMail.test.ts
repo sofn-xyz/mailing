@@ -29,6 +29,6 @@ describe("sendMail", () => {
     const { response: sendMailResponseWithMissingApiKey } = await apiSendMail(
       undefined
     );
-    expect(sendMailResponseWithMissingApiKey.status).toBe(401);
+    expect(sendMailResponseWithMissingApiKey.status).toBe(422);
   });
 });

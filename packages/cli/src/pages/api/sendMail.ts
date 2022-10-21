@@ -17,11 +17,11 @@ export default async function handler(
   if (req.method !== "POST")
     return res.status(405).json({ error: "Method not allowed" });
 
+  if (!(await validateApiKey(req, res))) return;
+
   const { templateName, previewName, props, ...mailOptions } = req.body;
 
   let html = req.body.html;
-
-  if (!(await validateApiKey(req, res))) return;
 
   // validate at least one of to, cc, bcc exists
   if (
@@ -58,7 +58,7 @@ export default async function handler(
     html = renderedHtml;
   }
 
-  const sendMailResult = await sendMail({ previewName, ...mailOptions });
+  const sendMailResult = await sendMail({ previewName, ...mailOptions, html });
 
   res.status(200).json({ result: sendMailResult });
 }
