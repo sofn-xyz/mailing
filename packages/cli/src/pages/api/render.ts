@@ -27,7 +27,7 @@ function renderTemplate(
 }
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
-  const { templateName, props } = req.query;
+  const { templateName, props } = "GET" === req.method ? req.query : req.body;
 
   // validate template name
   if (typeof templateName !== "string") {
