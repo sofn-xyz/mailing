@@ -48,7 +48,5 @@ jobs:
         run: yarn build
       - name: Run CI tests
         run: yarn ci:test
-      - name: Run CI Next.js tests
-        run: yarn ci:test:next
       - name: Run CI Integration tests
         run: yarn ci:test:integration
