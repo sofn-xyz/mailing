@@ -4,13 +4,30 @@ import {
   buildSendMail,
   getTestMailQueue,
   clearTestMailQueue,
-  MailingOptions,
+  ComponentMail,
   BuildSendMailOptions,
 } from "..";
 import { Mjml, MjmlBody, MjmlRaw } from "mjml-react";
+import fetch from "node-fetch";
+import * as postHog from "../util/postHog";
 import * as log from "../util/log";
 
+jest.mock("../util/postHog");
+jest.mock("node-fetch");
+const { Response } = jest.requireActual("node-fetch");
+
 describe("index", () => {
+  const OLD_ENV = process.env;
+
+  beforeEach(() => {
+    jest.resetModules();
+    process.env = { ...OLD_ENV };
+  });
+
+  afterAll(() => {
+    process.env = OLD_ENV;
+  });
+
   describe("buildSendMail", () => {
     const transport = nodemailer.createTransport({
       pool: true,
@@ -79,10 +96,164 @@ describe("index", () => {
       expect(queue.length).toBe(1);
       debugSpy.mockRestore();
     });
+
+    describe("sendMail", () => {
+      let mockSendMail = jest.fn();
+      let mockCapture = jest.fn();
+      const sendMail = buildSendMail({
+        transport,
+        defaultFrom: "from@mailing.dev",
+        configPath: "./mailing.config.json",
+        forceNotTestMode: true,
+      });
+
+      beforeEach(() => {
+        mockSendMail = jest.fn();
+        mockCapture = jest.fn();
+        jest.spyOn(transport, "sendMail").mockImplementation(mockSendMail);
+        jest.spyOn(postHog, "capture").mockImplementation(mockCapture);
+      });
+
+      it("calls sendMail with correct arguments", async () => {
+        await sendMail({
+          to: ["ok@ok.com"],
+          from: "ok@ok.com",
+          subject: "hello",
+          text: "ok",
+          html: "ok",
+        });
+        expect(mockSendMail).toHaveBeenCalled();
+        expect(mockSendMail).toHaveBeenCalledWith({
+          from: "ok@ok.com",
+          html: "ok",
+          subject: "hello",
+          text: "ok",
+          to: ["ok@ok.com"],
+        });
+      });
+
+      it("calls calls capture with correct arguments", async () => {
+        await sendMail({
+          to: ["ok@ok.com"],
+          from: "ok@ok.com",
+          subject: "hello",
+          text: "ok",
+          html: "ok",
+        });
+        expect(mockCapture).toHaveBeenCalled();
+        expect(mockCapture).toHaveBeenCalledWith({
+          distinctId: null,
+          event: "mail sent",
+          properties: {
+            analyticsEnabled: false,
+            recipientCount: 1,
+          },
+        });
+      });
+
+      describe("analyticsEnabled", () => {
+        beforeEach(() => {
+          process.env.MAILING_DATABASE_URL = undefined;
+          process.env.MAILING_API_URL = "https://mailing.test";
+          process.env.MAILING_API_KEY = "test_key";
+        });
+
+        it("hits message create api with correct arguments", async () => {
+          const res = new Response(
+            JSON.stringify({ message: { id: "message-1234" } }),
+            {
+              status: 200,
+            }
+          );
+
+          (fetch as unknown as jest.Mock).mockResolvedValueOnce(
+            Promise.resolve(res)
+          );
+
+          await sendMail({
+            to: ["ok@ok.com"],
+            from: "ok@ok.com",
+            subject: "hello",
+            text: "ok",
+            html: "<body>ok</body>",
+          });
+          expect(fetch).toHaveBeenCalled();
+          expect(fetch).toHaveBeenCalledWith(
+            "https://mailing.test/api/messages",
+            {
+              headers: {
+                "Content-Type": "application/json",
+                "x-api-key": "test_key",
+              },
+              method: "POST",
+              body: JSON.stringify({
+                anonymousId: null,
+                mailOptions: {
+                  to: ["ok@ok.com"],
+                  from: "ok@ok.com",
+                  subject: "hello",
+                  text: "ok",
+                  html: "<body>ok</body>",
+                },
+              }),
+            }
+          );
+          expect(mockSendMail).toHaveBeenCalled();
+        });
+
+        it("handles errors correctly", async () => {
+          const res = new Response(
+            JSON.stringify({ message: { id: "message-1234" } }),
+            {
+              status: 500,
+            }
+          );
+
+          (fetch as unknown as jest.Mock).mockResolvedValueOnce(
+            Promise.resolve(res)
+          );
+
+          const errorSpy = jest
+            .spyOn(log, "error")
+            .mockImplementation(jest.fn());
+
+          await sendMail({
+            to: ["ok@ok.com"],
+            from: "ok@ok.com",
+            subject: "hello",
+            text: "ok",
+            html: "<body>ok</body>",
+          });
+          expect(fetch).toHaveBeenCalled();
+          expect(fetch).toHaveBeenCalledWith(
+            "https://mailing.test/api/messages",
+            {
+              headers: {
+                "Content-Type": "application/json",
+                "x-api-key": "test_key",
+              },
+              method: "POST",
+              body: JSON.stringify({
+                anonymousId: null,
+                mailOptions: {
+                  to: ["ok@ok.com"],
+                  from: "ok@ok.com",
+                  subject: "hello",
+                  text: "ok",
+                  html: "<body>ok</body>",
+                },
+              }),
+            }
+          );
+          expect(mockSendMail).toHaveBeenCalled();
+          expect(errorSpy).toHaveBeenCalled();
+        });
+      });
+    });
   });
 
   describe("getTestMailQueue", () => {
-    let sendMail: (mail: MailingOptions) => Promise<any>;
+    let sendMail: (mail: ComponentMail) => Promise<any>;
     beforeEach(async () => {
       await clearTestMailQueue();
       const transport = nodemailer.createTransport({

@@ -15,9 +15,10 @@ export type BuildSendMailOptions<T> = {
   transport: Transporter<T>;
   defaultFrom: string;
   configPath: string;
+  forceNotTestMode?: boolean; // Allows test to actually call sendMail
 };
 
-export type MailingOptions = SendMailOptions & {
+export type ComponentMail = SendMailOptions & {
   component?: JSX.Element;
   dangerouslyForceDeliver?: boolean;
   forcePreview?: boolean;
@@ -49,9 +50,10 @@ export async function clearTestMailQueue() {
 
 export function buildSendMail<T>(options: BuildSendMailOptions<T>) {
   const testMode =
-    process.env.TEST ||
-    process.env.NODE_ENV === "test" ||
-    process.env.MAILING_CI;
+    !options.forceNotTestMode &&
+    (process.env.TEST ||
+      process.env.NODE_ENV === "test" ||
+      process.env.MAILING_CI);
 
   if (!options?.transport) {
     throw new Error("buildSendMail options are missing transport");
@@ -74,7 +76,7 @@ export function buildSendMail<T>(options: BuildSendMailOptions<T>) {
     }
   }
 
-  return async function sendMail(mail: MailingOptions) {
+  return async function sendMail(mail: ComponentMail) {
     if (!mail.html && typeof mail.component === "undefined")
       throw new Error("sendMail requires either html or a component");
 
@@ -92,10 +94,11 @@ export function buildSendMail<T>(options: BuildSendMailOptions<T>) {
     mailOptions.from ||= options.defaultFrom;
 
     const previewMode =
-      forcePreview || (NODE_ENV !== "production" && !dangerouslyForceDeliver);
+      !options.forceNotTestMode &&
+      (forcePreview || (NODE_ENV !== "production" && !dangerouslyForceDeliver));
 
-    // Do not send emails analytics if we're given a sendID,
-    // this means sendMail is being called from the REST API and it will be handled there
+    // Do not send emails analytics if MAILING_DATABASE_URL is set
+    // this means sendMail is being called from the REST API and analytics will be handled there
     const analyticsEnabled =
       !MAILING_DATABASE_URL && MAILING_API_URL && MAILING_API_KEY;
 
@@ -173,7 +176,12 @@ export function buildSendMail<T>(options: BuildSendMailOptions<T>) {
           });
         }
       } else {
-        error("Error calling mailing api hook", hookResponse);
+        const json = await hookResponse.json();
+        error("Error calling mailing api hook", {
+          status: hookResponse.status,
+          statuSText: hookResponse.statusText,
+          json,
+        });
       }
     }
 
@@ -184,9 +192,9 @@ export function buildSendMail<T>(options: BuildSendMailOptions<T>) {
       distinctId: anonymousId,
       properties: {
         recipientCount:
-          Array(mailOptions.to).length +
-          Array(mailOptions.cc).length +
-          Array(mailOptions.bcc).length,
+          Array(mailOptions.to).filter(Boolean).length +
+          Array(mailOptions.cc).filter(Boolean).length +
+          Array(mailOptions.bcc).filter(Boolean).length,
         analyticsEnabled,
       },
     });

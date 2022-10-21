@@ -41,7 +41,10 @@ const createMessage = async ({
   Analytics.track({
     event: "email.sent",
     properties: {
-      recipientCount: Array(to).length + Array(cc).length + Array(bcc).length,
+      recipientCount:
+        Array(to).filter(Boolean).length +
+        Array(cc).filter(Boolean).length +
+        Array(bcc).filter(Boolean).length,
     },
   });
 
