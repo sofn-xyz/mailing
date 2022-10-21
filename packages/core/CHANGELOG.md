@@ -1,5 +1,12 @@
 # mailing-core
 
+## 0.8.8
+
+### Patch Changes
+
+- 008e5c7: add typing to sendMail return value
+- 638a7e8: /api/render now supports POST
+
 ## 0.8.7
 
 ### Patch Changes

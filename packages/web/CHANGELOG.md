@@ -1,5 +1,11 @@
 # web
 
+## 0.4.7
+
+### Patch Changes
+
+- 638a7e8: /api/render now supports POST
+
 ## 0.4.6
 
 ### Patch Changes

@@ -29,7 +29,11 @@ export abstract class Api<TFormData = undefined> {
       }
     }
 
-    if ("GET" !== this.fetchData.method) {
+    if ("GET" === this.fetchData.method) {
+      if (this.formData) {
+        this.path = this.path + "?" + new URLSearchParams(this.formData);
+      }
+    } else {
       this.fetchData.body = JSON.stringify(this.formData);
     }
   }
