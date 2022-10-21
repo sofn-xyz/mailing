@@ -17,6 +17,7 @@ const jsdomConfig = async (): Promise<any> => {
       color: "magenta",
     },
     testEnvironment: "jest-environment-jsdom",
+    setupFilesAfterEnv: ["<rootDir>/testSetup.ts"],
     testMatch: [
       "<rootDir>/packages/cli/src/pages/**/__test__/**/*.test.[jt]s?(x)",
       "<rootDir>/packages/cli/src/components/**/__test__/**/*.test.[jt]s?(x)",
@@ -42,6 +43,7 @@ const nodeConfig = (): Config => {
     },
     preset: "ts-jest",
     testEnvironment: "node",
+    setupFilesAfterEnv: ["<rootDir>/testSetup.ts"],
     // TODO: keep testTimeout low and use jest.setTimeout for long ones
     transform: {
       "^.+\\.(ts|tsx)$": "ts-jest",
@@ -73,7 +75,6 @@ const nodeConfig = (): Config => {
 const config = async (): Promise<Config> => {
   return {
     reporters: ["default", "github-actions"],
-    setupFilesAfterEnv: ["<rootDir>/testSetup.ts"],
     testTimeout: 60000,
     projects: [nodeConfig(), await jsdomConfig()],
   };
