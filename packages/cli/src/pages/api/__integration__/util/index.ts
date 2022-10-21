@@ -7,23 +7,39 @@ export function cliUrl(path: string) {
 }
 
 export abstract class Api<TFormData = undefined> {
-  abstract path: string;
+  path?: string;
   formData?: TFormData;
   response?: Awaited<ReturnType<typeof fetch>>;
+  method?: string;
+  fetchData?: any;
 
-  fetchData: any = {
+  static defaultFetchData = {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
   };
 
-  async perform() {
-    if ("POST" === this.fetchData.method) {
-      this.fetchData.body = JSON.stringify(this.formData);
+  setFetchData() {
+    if ("undefined" === typeof this.fetchData) {
+      this.fetchData = { ...Api.defaultFetchData };
+
+      if (this.method) {
+        this.fetchData.method = this.method;
+      }
     }
 
-    this.response = await fetch(this.path, this.fetchData);
+    if ("GET" !== this.fetchData.method) {
+      this.fetchData.body = JSON.stringify(this.formData);
+    }
+  }
+
+  async perform() {
+    if (!this.path) throw new Error("path must be set");
+
+    this.setFetchData();
+
+    this.response = await fetch(cliUrl(this.path), this.fetchData);
 
     return this;
   }

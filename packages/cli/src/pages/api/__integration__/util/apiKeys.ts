@@ -1,4 +1,4 @@
-import { Api, cliUrl } from "./index";
+import { Api } from "./index";
 
 export async function apiCreateApiKey() {
   const instance = new ApiPostApiKeys();
@@ -10,7 +10,7 @@ export async function apiGetApiKeys() {
 }
 
 export class ApiGetApiKeys extends Api {
-  path = cliUrl("/api/apiKeys");
+  path = "/api/apiKeys";
 
   fetchData = {
     method: "GET",
@@ -21,5 +21,5 @@ export class ApiGetApiKeys extends Api {
 }
 
 export class ApiPostApiKeys extends Api {
-  path = cliUrl("/api/apiKeys");
+  path = "/api/apiKeys";
 }

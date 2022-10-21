@@ -1,4 +1,4 @@
-import { Api, cliUrl } from ".";
+import { Api } from ".";
 import { apiCreateUser } from "./createUser";
 
 interface LoginFormData {
@@ -23,5 +23,5 @@ export async function apiLogin() {
 }
 
 export class ApiLogin extends Api<LoginFormData> {
-  path = cliUrl("/api/session");
+  path = "/api/session";
 }

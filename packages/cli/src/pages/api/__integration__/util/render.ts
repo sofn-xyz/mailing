@@ -1,4 +1,4 @@
-import { Api, cliUrl } from "./index";
+import { Api } from "./index";
 
 interface RenderFormData {
   templateName: string;
@@ -11,7 +11,7 @@ export function apiRender() {
 }
 
 export class ApiRender extends Api<RenderFormData> {
-  path = cliUrl("/api/render");
+  path = "/api/render";
   method = "POST";
 
   formData = {
@@ -20,11 +20,7 @@ export class ApiRender extends Api<RenderFormData> {
   };
 }
 export class ApiRenderGet extends Api<RenderFormData> {
-  path = cliUrl("/api/render");
+  path =
+    "/api/render?templateName=AccountCreated&props=%7B%22name%22%3A%22Alex%22%7D";
   method = "GET";
-
-  formData = {
-    templateName: "AccountCreated",
-    props: "%7B%22name%22%3A%22Alex%22%7D",
-  };
 }
