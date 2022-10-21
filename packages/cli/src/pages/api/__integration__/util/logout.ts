@@ -1,4 +1,4 @@
-import { Api, cliUrl } from "./index";
+import { Api } from "./index";
 
 export function apiLogout() {
   const instance = new ApiLogout();
@@ -6,5 +6,5 @@ export function apiLogout() {
 }
 
 export class ApiLogout extends Api {
-  path = cliUrl("/api/logout");
+  path = "/api/logout";
 }
