@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { MjmlError } from "mjml-react";
 import { sendMail } from "../../moduleManifest";
 import renderTemplate from "../../util/renderTemplate";
-import { validateApiKey } from "src/util/validateApiKey";
+import { validateApiKey } from "../../util/validateApiKey";
 
 type Data = {
   error?: string; // api error messages
