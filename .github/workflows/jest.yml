@@ -12,6 +12,26 @@ jobs:
       fail-fast: false
       matrix:
         node-version: [16, 18]
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "yarn"
+      - name: Install dependencies
+        run: yarn
+      - name: Build the app
+        run: yarn build
+      - name: Run CI tests
+        run: yarn ci:test
+
+  jest-integration:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node-version: [16, 18]
     services:
       # Label used to access the service container
       postgres:
@@ -46,9 +66,5 @@ jobs:
         run: yarn
       - name: Build the app
         run: yarn build
-      - name: Run CI tests
-        run: yarn ci:test
-      - name: Run CI Next.js tests
-        run: yarn ci:test:next
       - name: Run CI Integration tests
         run: yarn ci:test:integration
