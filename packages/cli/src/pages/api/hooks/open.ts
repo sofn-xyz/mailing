@@ -9,23 +9,23 @@ export default async function handler(
   if (req.method !== "GET") {
     return res.status(405).json({ error: "Method not allowed" });
   }
-  const { email, sendId } = req.query;
+  const { email, messageId } = req.query;
 
-  if (typeof sendId === "string") {
+  if (typeof messageId === "string") {
     Analytics.track({
       event: "email.open",
-      properties: { email: email, sendId: sendId },
+      properties: { email: email, messageId: messageId },
     });
 
-    const send = await prisma.send.findUnique({ where: { id: sendId } });
-    await prisma.send.update({
-      where: { id: sendId },
+    const message = await prisma.message.findUnique({ where: { id: messageId } });
+    await prisma.message.update({
+      where: { id: messageId },
       data: {
         openCount: { increment: 1 },
-        openedAt: send?.openedAt ? undefined : new Date(),
+        openedAt: message?.openedAt ? undefined : new Date(),
       },
     });
   }
 
-  res.status(200).json({ email, sendId });
+  res.status(200).json({ email, messageId });
 }

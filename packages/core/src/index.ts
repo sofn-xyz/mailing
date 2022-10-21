@@ -1,5 +1,4 @@
 import type { SendMailOptions, Transporter } from "nodemailer";
-
 import open from "open";
 import fs from "fs-extra";
 import { render } from "./mjml";
@@ -24,7 +23,6 @@ export type MailingOptions = SendMailOptions & {
   forcePreview?: boolean;
   templateName?: string;
   previewName?: string;
-  sendId?: string;
 };
 
 export async function getTestMailQueue() {
@@ -80,14 +78,14 @@ export function buildSendMail<T>(options: BuildSendMailOptions<T>) {
     if (!mail.html && typeof mail.component === "undefined")
       throw new Error("sendMail requires either html or a component");
 
-    const { NODE_ENV, MAILING_API_URL, MAILING_API_KEY } = process.env;
+    const { NODE_ENV, MAILING_API_URL, MAILING_API_KEY, MAILING_DATABASE_URL } =
+      process.env;
     const {
       component,
       dangerouslyForceDeliver,
       templateName,
       previewName,
       forcePreview,
-      sendId,
       ...mailOptions
     } = mail;
     mailOptions as SendMailOptions;
@@ -97,8 +95,9 @@ export function buildSendMail<T>(options: BuildSendMailOptions<T>) {
       forcePreview || (NODE_ENV !== "production" && !dangerouslyForceDeliver);
 
     // Do not send emails analytics if we're given a sendID,
-    // this means sendMail is being called from the API and it will be handled there
-    const analyticsEnabled = !sendId && MAILING_API_URL && MAILING_API_KEY;
+    // this means sendMail is being called from the REST API and it will be handled there
+    const analyticsEnabled =
+      !MAILING_DATABASE_URL && MAILING_API_URL && MAILING_API_KEY;
 
     // Get html from the rendered component if not provided
     let derivedTemplateName;
@@ -147,7 +146,7 @@ export function buildSendMail<T>(options: BuildSendMailOptions<T>) {
     }
 
     if (analyticsEnabled) {
-      const hookResponse = await fetch(MAILING_API_URL + "/api/hooks/send", {
+      const hookResponse = await fetch(MAILING_API_URL + "/api/messages", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -155,7 +154,6 @@ export function buildSendMail<T>(options: BuildSendMailOptions<T>) {
         },
         body: JSON.stringify({
           anonymousId,
-          sendId,
           templateName: templateName || derivedTemplateName,
           previewName,
           mailOptions,
@@ -163,12 +161,14 @@ export function buildSendMail<T>(options: BuildSendMailOptions<T>) {
       });
 
       if (hookResponse.status === 200) {
-        const { sendId } = await hookResponse.json();
+        const {
+          message: { id: messageId },
+        } = await hookResponse.json();
         const stringHtml = mailOptions.html?.toString();
         if (stringHtml) {
           mailOptions.html = instrumentHtml({
             html: stringHtml,
-            sendId: sendId,
+            messageId: messageId,
             apiUrl: MAILING_API_KEY,
           });
         }

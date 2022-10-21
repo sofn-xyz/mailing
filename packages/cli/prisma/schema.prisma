@@ -40,54 +40,55 @@ model ApiKey {
   @@index([organizationId])
 }
 
-// Start ANALYTICS schema
-// created when Sends are created
-// This table will probably get big and we'd want to truncate at some point
-// or only retain last N etc.
-model EmailContent {
+model Message {
+  // A unique email message delivered to one or multiple users.
   id        String   @id @default(cuid())
   createdAt DateTime @default(now())
-  html      String
-  subject   String
-  Send      Send[]
-}
+  to        String[]
+  cc        String[]
+  bcc       String[]
+  subject   String?
+  from      String?
 
-// created by sendMail calls
-// one created for each recipient email ({ to: me, bcc: [elliot, steven] } creates 3 Sends, 1 EmailContent)
-model Send {
-  id             String       @id @default(cuid())
-  createdAt      DateTime     @default(now())
-  to             String // email address
-  templateName   String? // reference to a mailing template
-  previewName    String? // reference to a mailing preview
-  // created by tracking pixel
-  // only store first open timestamp, then increment count
-  openedAt       DateTime?
-  // increment using Prisma’s `increment` function
-  openCount      Int          @default(0)
-  openLocation   String? // store country data using middleware (example)
+  // Open related fields
+  openedAt  DateTime?
+  openCount Int       @default(0)
+
+  // Mailing specific metadata
+  templateName String? // reference to a mailing template
+  previewName  String? // reference to a mailing preview
+
   Click          Click[]
-  emailContentId String
-  EmailContent   EmailContent @relation(fields: [emailContentId], references: [id])
+  MessageContent MessageContent?
 
-  @@index([to])
   @@index([templateName, previewName])
 }
 
-// created by /api/click proxy urls
-// only store first click, then increment count
+model MessageContent {
+  // Note: This table will likely grow large over time, we will likely
+  // want to truncate it in the future to only retain last N messages.
+  // We also might need to consider moving it to an external data store like S3.
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  html      String?
+  messageId String
+  Message   Message  @relation(fields: [messageId], references: [id])
+
+  @@unique([messageId])
+  @@index([messageId])
+}
+
 model Click {
+  // A click on specific link in an email message.
+  // Only created when a link is first clicked, after that increment count.
   id        String   @id @default(cuid())
   createdAt DateTime @default(now()) // first click
   updatedAt DateTime @updatedAt // last click
   url       String
-  // increment using Prisma’s `increment` function
-  count     Int      @default(0)
-  sendId    String
-  Send      Send     @relation(fields: [sendId], references: [id])
+  count     Int      @default(1)
+  messageId String
+  Message   Message  @relation(fields: [messageId], references: [id])
 
-  @@unique([sendId, url])
-  @@index([sendId])
+  @@unique([messageId, url])
+  @@index([messageId])
 }
-
-// end ANALYTICS schema

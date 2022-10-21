@@ -1,3 +1,4 @@
+import { NextApiRequest, NextApiResponse } from "next";
 import { createMocks } from "node-mocks-http";
 import Analytics from "../../../../util/analytics";
 import handleClick from "../click";
@@ -5,7 +6,7 @@ import handleClick from "../click";
 jest.mock("../../../../util/analytics");
 
 describe("/api/hooks/click", () => {
-  describe("invalid method type", () => {
+  describe("POST", () => {
     test("returns 405", async () => {
       const { req, res } = createMocks({
         method: "POST",
@@ -14,28 +15,34 @@ describe("/api/hooks/click", () => {
         },
       });
 
-      await handleClick(req, res);
+      await handleClick(
+        req as unknown as NextApiRequest,
+        res as unknown as NextApiResponse
+      );
 
       expect(res.statusCode).toBe(405);
     });
   });
 
-  describe("valid method type", () => {
+  describe("GET", () => {
     test("redirects correctly", async () => {
       const url = "http://mailing.dev/fun?utm_source=test";
       const email = "useremail@mailing.dev";
-      const sendId = "abcd-1234";
+      const messageId = "abcd-1234";
       const encoded = Buffer.from(url).toString("base64");
       const { req, res } = createMocks({
         method: "GET",
         query: {
           url: encoded,
           email: email,
-          sendId: sendId,
+          messageId: messageId,
         },
       });
 
-      await handleClick(req, res);
+      await handleClick(
+        req as unknown as NextApiRequest,
+        res as unknown as NextApiResponse
+      );
 
       expect(res.statusCode).toBe(307);
       expect(res._getRedirectUrl()).toBe(url);
@@ -44,7 +51,7 @@ describe("/api/hooks/click", () => {
       expect(Analytics.track).toHaveBeenCalledWith("email.click", {
         url: url,
         email: email,
-        sendId: sendId,
+        messageId: messageId,
       });
     });
   });

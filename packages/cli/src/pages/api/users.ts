@@ -13,7 +13,7 @@ type DataSuccess = {
   code: string;
 };
 
-type ResponseData = DataSuccess | DataError;
+type Data = DataSuccess | DataError;
 
 async function createPlaceholderOrganization() {
   return await prisma.organization.create({
@@ -31,11 +31,9 @@ const ERRORS = {
   emailInvalid: "email is invalid",
 };
 
-const handler = async (
-  req: NextApiRequest,
-  res: NextApiResponse<ResponseData>
-) => {
-  if (req.method !== "POST") return res.status(404).end();
+const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
+  if (req.method !== "POST")
+    return res.status(405).json({ error: "Method not allowed" });
 
   // for now, we only let you have one user
   const existingUser = await prisma.user.findFirst();

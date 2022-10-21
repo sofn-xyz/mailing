@@ -3,20 +3,20 @@ import Analytics from "../../../util/analytics";
 import { error } from "../../../util/log";
 import prisma from "../../../../prisma";
 
-type ResponseData = {
+type Data = {
   error?: string;
 };
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<ResponseData>
+  res: NextApiResponse<Data>
 ) {
   if (req.method !== "GET") {
     return res.status(405).json({ error: "Method not allowed" });
   }
 
   try {
-    const { url, email, sendId } = req.query;
+    const { url, email, messageId } = req.query;
 
     let decodedUrl;
     if (typeof url == "string") {
@@ -24,21 +24,21 @@ export default async function handler(
     }
 
     if (decodedUrl) {
-      if (typeof sendId === "string") {
+      if (typeof messageId === "string") {
         Analytics.track({
           event: "email.click",
-          properties: { url: decodedUrl, email, sendId },
+          properties: { url: decodedUrl, email, messageId },
         });
 
         prisma.click.upsert({
           where: {
-            sendId_url: {
-              sendId: sendId,
+            messageId_url: {
+              messageId: messageId,
               url: decodedUrl,
             },
           },
           create: {
-            sendId: sendId,
+            messageId: messageId,
             url: decodedUrl,
             count: 1,
           },

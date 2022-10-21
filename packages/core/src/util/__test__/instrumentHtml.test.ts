@@ -1,7 +1,7 @@
 import instrumentHtml from "../instrumentHtml";
 
 describe("instrumentHtml", () => {
-  const sendId = "123";
+  const messageId = "123";
   const apiUrl = "https://api.com";
 
   it("should instrument html", () => {
@@ -17,14 +17,14 @@ describe("instrumentHtml", () => {
     </html>
   `;
 
-    const result = instrumentHtml({ html, sendId, apiUrl });
+    const result = instrumentHtml({ html, messageId, apiUrl });
 
     expect(result).toContain(
-      'href="https://api.com/api/hooks/click?sendId=123&url=https%3A%2F%2Fgoogle.com"'
+      'href="https://api.com/api/hooks/click?messageId=123&url=https%3A%2F%2Fgoogle.com"'
     );
     expect(result).not.toContain('href="https://google.com"');
     expect(result).toContain(
-      '<img alt="" src="https://api.com/api/hooks/open?sendId=123" >'
+      '<img alt="" src="https://api.com/api/hooks/open?messageId=123" >'
     );
 
     expect(result).toMatchSnapshot();
@@ -39,6 +39,6 @@ describe("instrumentHtml", () => {
       </html>
     `;
 
-    expect(() => instrumentHtml({ html, sendId, apiUrl })).toThrow();
+    expect(() => instrumentHtml({ html, messageId, apiUrl })).toThrow();
   });
 });

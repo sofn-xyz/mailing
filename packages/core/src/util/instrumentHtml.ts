@@ -2,11 +2,11 @@ import { parse } from "node-html-parser";
 
 export default function instrumentHtml({
   html,
-  sendId,
+  messageId,
   apiUrl,
 }: {
   html: string;
-  sendId: string;
+  messageId: string;
   apiUrl: string;
 }) {
   // find the a, get href, calculate new url, replace href
@@ -16,7 +16,7 @@ export default function instrumentHtml({
     const href = link.getAttribute("href");
     if (!href) continue;
     const url = new URL("/api/hooks/click", apiUrl);
-    url.searchParams.set("sendId", sendId);
+    url.searchParams.set("messageId", messageId);
     url.searchParams.set("url", href);
     link.setAttribute("href", url.toString());
   }
@@ -25,7 +25,7 @@ export default function instrumentHtml({
   const body = root.querySelector("body");
   if (body) {
     const img = parse(
-      `<img alt="" src="${apiUrl}/api/hooks/open?sendId=${sendId}" />`
+      `<img alt="" src="${apiUrl}/api/hooks/open?messageId=${messageId}" />`
     );
     body.appendChild(img);
   } else {
