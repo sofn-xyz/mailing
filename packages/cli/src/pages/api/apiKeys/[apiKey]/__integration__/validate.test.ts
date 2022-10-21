@@ -4,13 +4,6 @@ import fetch from "node-fetch";
 import prisma from "../../../../../../prisma";
 
 describe("validate", () => {
-  beforeEach(async () => {
-    jest.useRealTimers();
-  });
-  afterEach(() => {
-    jest.clearAllTimers();
-  });
-
   function constructFetch(apiKey: string) {
     return fetch(cliUrl(`/api/apiKeys/${apiKey}/validate`), {
       headers: { "Content-Type": "application/json" },
