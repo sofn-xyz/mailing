@@ -1,4 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
+import { requireValidApiKey } from "src/util/session";
 import createMessage from "../../../util/createMessage";
 
 type Data = {
@@ -13,6 +14,8 @@ export default async function handler(
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Method not allowed" });
   }
+
+  if (!requireValidApiKey(req, res)) return;
 
   const message = createMessage({
     to: req.body.to,

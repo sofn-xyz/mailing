@@ -2,21 +2,13 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { MjmlError } from "mjml-react";
 import { sendMail } from "../../moduleManifest";
 import renderTemplate from "../../util/renderTemplate";
+import { requireValidApiKey } from "src/util/session";
 
 type Data = {
   error?: string; // api error messages
   mjmlErrors?: MjmlError[];
   result?: any;
 };
-
-async function validApiKey(apiKey: string | string[] | undefined) {
-  if (!apiKey) return false;
-
-  const host = process.env.MM_DEV ? "http://localhost:3883" : "yourInstallUrl";
-  const response = await fetch(`${host}/api/apiKeys/${apiKey}/validate`);
-
-  return 200 === response.status;
-}
 
 export default async function handler(
   req: NextApiRequest,
@@ -29,10 +21,7 @@ export default async function handler(
 
   let html = req.body.html;
 
-  if (!(await validApiKey(req.headers && req.headers["x-api-key"])))
-    return res.status(401).json({
-      error: "invalid API key",
-    });
+  if (!requireValidApiKey(req, res)) return;
 
   // validate at least one of to, cc, bcc exists
   if (
