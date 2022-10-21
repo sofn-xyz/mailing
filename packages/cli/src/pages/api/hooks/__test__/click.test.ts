@@ -48,10 +48,13 @@ describe("/api/hooks/click", () => {
       expect(res._getRedirectUrl()).toBe(url);
       // Ensure analytics are called
       expect(Analytics.track).toHaveBeenCalledTimes(1);
-      expect(Analytics.track).toHaveBeenCalledWith("email.click", {
-        url: url,
-        email: email,
-        messageId: messageId,
+      expect(Analytics.track).toHaveBeenCalledWith({
+        event: "email.click",
+        properties: {
+          url: url,
+          email: email,
+          messageId: messageId,
+        },
       });
     });
   });

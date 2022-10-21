@@ -54,9 +54,12 @@ describe("/api/hooks/open", () => {
       expect(res.statusCode).toBe(200);
       // Ensure analytics are called
       expect(Analytics.track).toHaveBeenCalledTimes(1);
-      expect(Analytics.track).toHaveBeenCalledWith("email.open", {
-        email: email,
-        messageId: messageId,
+      expect(Analytics.track).toHaveBeenCalledWith({
+        event: "email.open",
+        properties: {
+          email: email,
+          messageId: messageId,
+        },
       });
     });
   });

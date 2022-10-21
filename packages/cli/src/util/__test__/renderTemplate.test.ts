@@ -17,7 +17,6 @@ describe("renderTemplate", () => {
     expect(mjmlErrors).toBeUndefined();
     expect(error).toBeUndefined();
     expect(html).not.toBeUndefined();
-    console.log(html);
     expect(html).toMatchSnapshot();
   });
 });

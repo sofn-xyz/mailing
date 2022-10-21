@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import Analytics from "../../../util/analytics";
 import prisma from "../../../../prisma";
+import { debug } from "../../../util/log";
 
 export default async function handler(
   req: NextApiRequest,
@@ -17,14 +18,21 @@ export default async function handler(
       properties: { email: email, messageId: messageId },
     });
 
-    const message = await prisma.message.findUnique({ where: { id: messageId } });
-    await prisma.message.update({
+    const message = await prisma.message.findUnique({
       where: { id: messageId },
-      data: {
-        openCount: { increment: 1 },
-        openedAt: message?.openedAt ? undefined : new Date(),
-      },
     });
+
+    try {
+      await prisma.message.update({
+        where: { id: messageId },
+        data: {
+          openCount: { increment: 1 },
+          openedAt: message?.openedAt ? undefined : new Date(),
+        },
+      });
+    } catch (err) {
+      debug(err);
+    }
   }
 
   res.status(200).json({ email, messageId });
