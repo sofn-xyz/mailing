@@ -1,14 +1,8 @@
-import { ApiRender, apiRender } from "./util/render";
+import { apiRender, ApiRenderGet } from "./util/render";
 
 describe("render", () => {
   it("GET should 200", async () => {
-    const instance = new ApiRender();
-    instance.method = "GET";
-    instance.formData = {
-      templateName: "AccountCreated",
-      props: "%7B%22name%22%3A%22Alex%22%7D",
-    };
-
+    const instance = new ApiRenderGet();
     const { response } = await instance.perform();
 
     const data = await response.json();

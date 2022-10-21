@@ -19,3 +19,12 @@ export class ApiRender extends Api<RenderFormData> {
     props: { name: "Alex" },
   };
 }
+export class ApiRenderGet extends Api<RenderFormData> {
+  path = cliUrl("/api/render");
+  method = "GET";
+
+  formData = {
+    templateName: "AccountCreated",
+    props: "%7B%22name%22%3A%22Alex%22%7D",
+  };
+}
