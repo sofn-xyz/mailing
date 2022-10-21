@@ -72,6 +72,7 @@ const nodeConfig = (): Config => {
 
 const config = async (): Promise<Config> => {
   return {
+    reporters: ["default", "github-actions"],
     setupFilesAfterEnv: ["<rootDir>/testSetup.ts"],
     testTimeout: 60000,
     projects: [nodeConfig(), await jsdomConfig()],
