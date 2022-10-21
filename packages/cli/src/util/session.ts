@@ -67,17 +67,3 @@ export function withSessionSsr<
     };
   }
 }
-
-export function requireValidApiKey(
-  req: NextApiRequest,
-  res: NextApiResponse
-): boolean {
-  if (req.headers && req.headers["x-api-key"]) {
-    return true;
-  } else {
-    res.status(401).json({
-      error: "invalid API key",
-    });
-    return false;
-  }
-}

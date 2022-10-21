@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { MjmlError } from "mjml-react";
 import { sendMail } from "../../moduleManifest";
 import renderTemplate from "../../util/renderTemplate";
-import { requireValidApiKey } from "src/util/session";
+import { validateApiKey } from "src/util/validateApiKey";
 
 type Data = {
   error?: string; // api error messages
@@ -21,7 +21,7 @@ export default async function handler(
 
   let html = req.body.html;
 
-  if (!requireValidApiKey(req, res)) return;
+  if (!(await validateApiKey(req, res))) return;
 
   // validate at least one of to, cc, bcc exists
   if (
