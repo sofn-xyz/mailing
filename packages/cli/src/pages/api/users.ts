@@ -48,10 +48,10 @@ const handler = async (
 
   // validations
   if (!validate(email))
-    return res.status(400).json({ error: ERRORS.emailInvalid });
+    return res.status(422).json({ error: ERRORS.emailInvalid });
 
   if (plainTextPassword?.length < 8)
-    return res.status(400).json({ error: ERRORS.passwordMinLength });
+    return res.status(422).json({ error: ERRORS.passwordMinLength });
 
   const salt = await genSalt(10);
   const hashedPassword = await hash(plainTextPassword, salt);
@@ -62,7 +62,7 @@ const handler = async (
   // let user = await prisma.user.findFirst({
   //   where: { email },
   // });
-  // if (user) return res.status(400).json({ error: ERRORS.userWithEmailExists });
+  // if (user) return res.status(422).json({ error: ERRORS.userWithEmailExists });
 
   // create organization in db
   const organization = await createPlaceholderOrganization();
@@ -80,7 +80,7 @@ const handler = async (
   } catch (error) {
     if (error instanceof Prisma.PrismaClientKnownRequestError) {
       if (error.code === "P2002") {
-        return res.status(400).json({ error: ERRORS.userWithEmailExists });
+        return res.status(422).json({ error: ERRORS.userWithEmailExists });
       } else {
         console.error(error);
         return res.status(500).json({ error: ERRORS.unknown });
