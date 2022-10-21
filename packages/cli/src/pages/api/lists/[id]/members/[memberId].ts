@@ -27,8 +27,8 @@ async function handlePatchListMember(
     return validationErrorResponse(validatedMemberStatusInList, res);
   }
 
-  await prisma.member.updateMany({
-    where: { listId, email: memberId },
+  await prisma.member.update({
+    where: { listId_email: { listId, email: memberId } },
     data: { status: req.body.status },
   });
 
