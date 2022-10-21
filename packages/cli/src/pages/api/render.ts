@@ -39,7 +39,10 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   // parse props
   let parsedProps = {};
   try {
-    parsedProps = JSON.parse(decodeURIComponent(props as string));
+    parsedProps =
+      "GET" === req.method
+        ? JSON.parse(decodeURIComponent(props as string))
+        : props;
   } catch {
     return res
       .status(403)
