@@ -16,7 +16,7 @@ describe("validate", () => {
 
   it("succeeds with valid API key", async () => {
     const k = await createApiKey();
-    const response = await constructFetch(k.id);
+    const response = await constructFetch(k);
     expect(response.status).toBe(200);
   });
 });
