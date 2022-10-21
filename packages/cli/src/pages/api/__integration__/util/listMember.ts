@@ -54,7 +54,7 @@ export class ApiCreateListMember extends Api<ListMemberData> {
 
   formData = {
     email: "alex.farrill@gmail.com",
-    status: "pending",
+    status: "subscribed",
   };
 }
 

@@ -52,9 +52,16 @@ model List {
 }
 
 model Member {
-  id     String @id @default(cuid())
+  id     String       @id @default(cuid())
   email  String
   listId String
-  List   List   @relation(fields: [listId], references: [id])
-  status String
+  List   List         @relation(fields: [listId], references: [id])
+  status MemberStatus
+
+  @@unique([listId, email])
+}
+
+enum MemberStatus {
+  subscribed
+  unsubscribed
 }

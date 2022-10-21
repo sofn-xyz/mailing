@@ -46,7 +46,7 @@ describe("lists/[id]/members", () => {
         listId,
         {
           email: "",
-          status: "pending",
+          status: "subscribed",
         }
       );
 

@@ -1,13 +1,6 @@
 import { ValidatedRequestOrError } from "./validate";
 
-export const LIST_MEMBER_STATUSES = [
-  "pending",
-  "subscribed",
-  "unsubscribed",
-  "cleaned",
-  "transactional",
-  "archived",
-];
+export const LIST_MEMBER_STATUSES = ["subscribed", "unsubscribed"];
 
 export function validateMemberStatusInList(
   status: string
