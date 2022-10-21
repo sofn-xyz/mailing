@@ -1,6 +1,6 @@
 import { cliUrl } from "../../../__integration__/util";
 import fetch from "node-fetch";
-import { createApiKey } from "src/pages/api/__integration__/util/apiKeys";
+import { createApiKey } from "../../../__integration__/util/apiKeys";
 
 describe("validate", () => {
   function constructFetch(apiKey: string) {
