@@ -1,7 +1,6 @@
 import { cliUrl } from "../../../__integration__/util";
 import fetch from "node-fetch";
-
-import prisma from "../../../../../../prisma";
+import { createApiKey } from "src/pages/api/__integration__/util/apiKeys";
 
 describe("validate", () => {
   function constructFetch(apiKey: string) {
@@ -16,16 +15,7 @@ describe("validate", () => {
   });
 
   it("succeeds with valid API key", async () => {
-    const org = await prisma.organization.create({
-      data: {
-        name: "My Test Co " + Math.random(),
-      },
-    });
-    const k = await prisma.apiKey.create({
-      data: {
-        organizationId: org.id,
-      },
-    });
+    const k = await createApiKey();
     const response = await constructFetch(k.id);
     expect(response.status).toBe(200);
   });

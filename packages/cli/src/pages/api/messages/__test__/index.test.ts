@@ -2,6 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { createMocks } from "node-mocks-http";
 import messagesIndex from "../index";
 import createMessage from "../../../../util/createMessage";
+import { createApiKey } from "../../__integration__/util/apiKeys";
 
 jest.mock("../../../../util/createMessage");
 
@@ -35,6 +36,9 @@ describe("/api/messages", () => {
           subject: "Hello",
           templateName: "template",
           previewName: "preview",
+        },
+        headers: {
+          "x-api-key": await createApiKey(),
         },
       });
 
