@@ -17,7 +17,7 @@ export default async function handler(
 
   if (!(await validateApiKey(req, res))) return;
 
-  const message = createMessage({
+  const message = await createMessage({
     to: req.body.to,
     bcc: req.body.bcc,
     cc: req.body.cc,

@@ -1,4 +1,5 @@
-import { Api } from "./index";
+import { Api } from "../index";
+import { createApiKey } from "../apiKeys";
 
 interface CreateMessageFormData {
   to: string | string[];
@@ -12,7 +13,8 @@ interface CreateMessageFormData {
 }
 
 export async function apiCreateMessage() {
-  const instance = new ApiCreateMessage();
+  const apiKey = await createApiKey();
+  const instance = new ApiCreateMessage({ apiKey });
   return instance.perform();
 }
 
@@ -25,4 +27,17 @@ export class ApiCreateMessage extends Api<CreateMessageFormData> {
     subject: "subject",
     html: "<body>html</body>",
   };
+
+  constructor({ apiKey }: { apiKey?: string } = {}) {
+    super();
+    this.fetchData = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    if (apiKey) {
+      this.fetchData.headers["X-API-Key"] = apiKey;
+    }
+  }
 }

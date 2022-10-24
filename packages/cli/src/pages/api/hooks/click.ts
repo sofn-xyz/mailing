@@ -16,7 +16,7 @@ export default async function handler(
   }
 
   try {
-    const { url, email, messageId } = req.query;
+    const { url, messageId } = req.query;
 
     let decodedUrl;
     if (typeof url == "string") {
@@ -27,10 +27,10 @@ export default async function handler(
       if (typeof messageId === "string") {
         Analytics.track({
           event: "email.click",
-          properties: { url: decodedUrl, email, messageId },
+          properties: { url: decodedUrl, messageId },
         });
 
-        prisma.click.upsert({
+        await prisma.click.upsert({
           where: {
             messageId_url: {
               messageId: messageId,
@@ -40,7 +40,6 @@ export default async function handler(
           create: {
             messageId: messageId,
             url: decodedUrl,
-            count: 1,
           },
           update: {
             count: { increment: 1 },

@@ -10,12 +10,12 @@ export default async function handler(
   if (req.method !== "GET") {
     return res.status(405).json({ error: "Method not allowed" });
   }
-  const { email, messageId } = req.query;
+  const { messageId } = req.query;
 
   if (typeof messageId === "string") {
     Analytics.track({
       event: "email.open",
-      properties: { email: email, messageId: messageId },
+      properties: { messageId: messageId },
     });
 
     const message = await prisma.message.findUnique({
@@ -35,5 +35,5 @@ export default async function handler(
     }
   }
 
-  res.status(200).json({ email, messageId });
+  res.status(200).end();
 }

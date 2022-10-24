@@ -1,10 +1,9 @@
-import { apiCreateMessage } from "../../__integration__/util/createMessage";
-import { createApiKey } from "../../__integration__/util/apiKeys";
+import { apiCreateMessage } from "../../__integration__/util/messages/create";
 
 describe("messages", () => {
-  it("does nothing", async () => {
-    await createApiKey();
+  it("creates a message", async () => {
     const { response } = await apiCreateMessage();
-    console.log(response);
+    const resJson = await response.json();
+    expect(resJson.message?.id).toBeTruthy();
   });
 });

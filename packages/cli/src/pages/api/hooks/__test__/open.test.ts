@@ -37,12 +37,10 @@ describe("/api/hooks/open", () => {
 
   describe("GET", () => {
     test("redirects correctly", async () => {
-      const email = "useremail@mailing.dev";
       const messageId = "abcd-1234";
       const { req, res } = createMocks({
         method: "GET",
         query: {
-          email: email,
           messageId: messageId,
         },
       });
@@ -57,7 +55,6 @@ describe("/api/hooks/open", () => {
       expect(Analytics.track).toHaveBeenCalledWith({
         event: "email.open",
         properties: {
-          email: email,
           messageId: messageId,
         },
       });

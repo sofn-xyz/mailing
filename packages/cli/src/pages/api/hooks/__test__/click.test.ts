@@ -27,14 +27,12 @@ describe("/api/hooks/click", () => {
   describe("GET", () => {
     test("redirects correctly", async () => {
       const url = "http://mailing.dev/fun?utm_source=test";
-      const email = "useremail@mailing.dev";
       const messageId = "abcd-1234";
       const encoded = Buffer.from(url).toString("base64");
       const { req, res } = createMocks({
         method: "GET",
         query: {
           url: encoded,
-          email: email,
           messageId: messageId,
         },
       });
@@ -52,7 +50,6 @@ describe("/api/hooks/click", () => {
         event: "email.click",
         properties: {
           url: url,
-          email: email,
           messageId: messageId,
         },
       });
