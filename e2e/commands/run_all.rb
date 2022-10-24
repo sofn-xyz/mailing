@@ -9,7 +9,7 @@ module Commands
     def self.perform(opts: {})
       Mailing.build
 
-      (App::CONFIGS - SKIPPED_APPS).each_key do |app_name|
+      (App::CONFIGS.keys - SKIPPED_APPS).each do |app_name|
         Commands::Run.perform(app_name: app_name, opts: opts.merge('skip-build' => true))
       end
     end
