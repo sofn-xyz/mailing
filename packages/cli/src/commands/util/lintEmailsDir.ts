@@ -6,7 +6,7 @@ import { error, log } from "../../util/log";
 // The Linter: define linting rules here
 
 function formatErr(err: Error) {
-  return compact([err.name, err.message, err.cause, err.stack]).join("\n");
+  return compact([err.message, err.stack, err.name, err.cause]).join("\n");
 }
 
 async function ensureMatchingNamedExports(
