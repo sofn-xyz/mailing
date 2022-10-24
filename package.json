@@ -19,7 +19,7 @@
     "link:emails:js": "rm -rf emails; ln -s packages/cli/src/generator_templates/js/emails emails;",
     "build": "preconstruct build",
     "test": "yarn link:emails; yarn jest",
-    "test:integration": "./scripts/assert-free-ports.sh; MAILING_CI=true MAILING_DATABASE_URL=$MAILING_DATABASE_URL_TEST WEB_DATABASE_URL=$WEB_DATABASE_URL_TEST start-test ci:cli :3883 ci:web :3000 \"yarn link:emails; yarn jest -c jest.integration.config.ts $TEST_PARAMS\"",
+    "test:integration": "./scripts/assert-free-ports.sh; MAILING_CI=true MAILING_DATABASE_URL=$MAILING_DATABASE_URL_TEST WEB_DATABASE_URL=$WEB_DATABASE_URL_TEST start-test ci:cli :3883 ci:web :3000 \"yarn link:emails; yarn jest -c jest.integration.config.ts $TEST_FLAGS\"",
     "test:integration:watch": "./scripts/assert-free-ports.sh; MAILING_CI=true MAILING_DATABASE_URL=$MAILING_DATABASE_URL_TEST WEB_DATABASE_URL=$WEB_DATABASE_URL_TEST start-test ci:cli :3883 ci:web :3000 \"yarn link:emails; yarn jest -c jest.integration.config.ts --watch\"",
     "ci:test": "MAILING_DATABASE_URL=$MAILING_DATABASE_URL_TEST WEB_DATABASE_URL=$WEB_DATABASE_URL_TEST start-test ci:cli :3883 ci:web :3000 test",
     "ci:test:integration": "./scripts/assert-free-ports.sh; MAILING_CI=true MAILING_DATABASE_URL=$MAILING_DATABASE_URL_TEST WEB_DATABASE_URL=$WEB_DATABASE_URL_TEST start-test ci:cli :3883 ci:web :3000 \"yarn link:emails; yarn jest -c jest.integration.config.ts\"",
