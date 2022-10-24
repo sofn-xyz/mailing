@@ -1,10 +1,13 @@
 import { readdir } from "fs-extra";
-import { flatten } from "lodash";
+import { compact, flatten } from "lodash";
 import { resolve } from "path";
 import { error, log } from "../../util/log";
 
-// the linter: define linting rules here
-// they should return a helpful error if they fail
+// The Linter: define linting rules here
+
+function formatErr(err: Error) {
+  return compact([err.name, err.message, err.cause, err.stack]).join("\n");
+}
 
 async function ensureMatchingNamedExports(
   emailsDir: string
@@ -34,10 +37,7 @@ async function ensureMatchingNamedExports(
         }
       } catch (e) {
         if (e instanceof Error) {
-          // if (e.message.match(/Cannot find module/)) {
-          // } else {
-          errors.push(e);
-          // }
+          errors.push(formatErr(e));
         } else {
           throw e;
         }
@@ -58,7 +58,7 @@ export async function lintEmailsDirectory(emailsDir: string) {
   // log errors after all linters run
   if (errors.length > 0) {
     const errorDescriptions = errors
-      .map((e, i) => `${i + 1}. ${e}\n\n`)
+      .map((e, i) => `${i + 1}. ${formatErr(e)}\n\n`)
       .join("");
     error(`${errors.length} lint errors\n\n${errorDescriptions}`);
     process.exit(1);
