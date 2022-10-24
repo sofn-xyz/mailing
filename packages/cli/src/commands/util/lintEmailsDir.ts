@@ -1,5 +1,5 @@
 import { readdir } from "fs-extra";
-import { compact, flatten } from "lodash";
+import { flatten } from "lodash";
 import { resolve } from "path";
 import { error, log } from "../../util/log";
 
@@ -45,14 +45,15 @@ async function ensureMatchingNamedExports(
     }
   }
 
-  return errors; // falsey [] if no errors
+  return errors; // [] if no errors
 }
 
 export async function lintEmailsDirectory(emailsDir: string) {
   log(`linting templates in ${emailsDir}...`);
+
   // run linters async
   const linters = [ensureMatchingNamedExports(emailsDir)];
-  const errors = compact(flatten(await Promise.all(linters)));
+  const errors = flatten(await Promise.all(linters));
 
   // log errors after all linters run
   if (errors.length > 0) {
