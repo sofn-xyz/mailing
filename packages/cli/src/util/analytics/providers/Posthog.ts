@@ -9,15 +9,15 @@ class Posthog implements IAnalyticsProvider {
   }
 
   track(event: AnalyticsEvent) {
-    this.#capture(event);
+    return this.#capture(event);
   }
 
   trackMany(events: AnalyticsEvent[]) {
-    this.#batch(events);
+    return this.#batch(events);
   }
 
   #capture(event: AnalyticsEvent) {
-    fetch(Posthog.baseUrl + "/capture/", {
+    return fetch(Posthog.baseUrl + "/capture/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -30,7 +30,7 @@ class Posthog implements IAnalyticsProvider {
   }
 
   #batch(events: AnalyticsEvent[]) {
-    fetch(Posthog.baseUrl + "/batch/", {
+    return fetch(Posthog.baseUrl + "/batch/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

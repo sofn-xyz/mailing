@@ -37,6 +37,13 @@ const createMessage = async ({
     },
   });
 
+  await prisma.messageContent.create({
+    data: {
+      html: html,
+      messageId: message.id,
+    },
+  });
+
   // Send analytics event to 3rd party analytics if desired
   Analytics.track({
     event: "email.sent",
@@ -45,13 +52,6 @@ const createMessage = async ({
         Array(to).filter(Boolean).length +
         Array(cc).filter(Boolean).length +
         Array(bcc).filter(Boolean).length,
-    },
-  });
-
-  await prisma.messageContent.create({
-    data: {
-      html: html,
-      messageId: message.id,
     },
   });
 

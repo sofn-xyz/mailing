@@ -19,15 +19,19 @@ class Analytics {
   }
 
   track(event: AnalyticsEvent) {
-    this.providers.forEach((provider) => {
-      provider.track(event);
+    const trackCalls = this.providers.map((provider) => {
+      return provider.track(event);
     });
+
+    return trackCalls;
   }
 
   trackMany(events: AnalyticsEvent[]) {
-    this.providers.forEach((provider) => {
-      provider.trackMany(events);
+    const trackManyCalls = this.providers.map((provider) => {
+      return provider.trackMany(events);
     });
+
+    return trackManyCalls;
   }
 }
 
