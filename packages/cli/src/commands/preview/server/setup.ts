@@ -37,7 +37,7 @@ export async function linkEmailsDirectory(emailsDir: string) {
   const previewCollections = (await readdir(previewsPath)).filter((path) =>
     COMPONENT_FILE_REGEXP.test(path)
   );
-  debug("scanning for previews at", previewsPath, previewCollections);
+  log("scanning for previews at", previewsPath, previewCollections);
   const uniquePreviewCollections = Array.from(new Set(previewCollections));
   const previewImports: string[] = [];
   const previewConsts: string[] = [];

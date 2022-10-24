@@ -10,7 +10,7 @@ import PreviewViewer, {
 } from "../../components/PreviewViewer";
 import { flatten } from "lodash";
 import { render } from "../../util/mjml";
-import { log } from "src/util/log";
+import { log } from "../../util/log";
 
 type Params = { path: string[] };
 
