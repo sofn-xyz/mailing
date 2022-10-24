@@ -49,8 +49,8 @@ export const handler = buildHandler(
 
     // link files
     await bootstrapMailingDir();
-    await lintEmailsDirectory(argv.emailsDir);
     await linkEmailsDirectory(argv.emailsDir);
+    await lintEmailsDirectory(argv.emailsDir);
 
     // "build" subcommand + default
     if (argv.subcommand !== "start") {

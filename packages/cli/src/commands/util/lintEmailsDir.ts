@@ -1,47 +1,28 @@
-import { readdir } from "fs-extra";
-import { compact, flatten } from "lodash";
-import { resolve } from "path";
+import { flatten } from "lodash";
+import { templates } from "../../moduleManifest";
 import { error, log } from "../../util/log";
 
 // The Linter: define linting rules here
 
-function formatErr(err: Error) {
-  return compact([err.message, err.stack, err.name, err.cause]).join("\n");
-}
-
-async function ensureMatchingNamedExports(
-  emailsDir: string
-): Promise<(string | Error)[]> {
+async function ensureMatchingNamedExports(): Promise<string[]> {
   // For analytics we want template components to be named
   // correctly. This catches a common mistake of naming them
-  // incorrectly.
+  // different from the file they're in which indicates that
+  // a naming mistake has been made.
 
   const errors = [];
 
-  const paths = await readdir(emailsDir);
-  for (const path of paths) {
-    if (path.match(/\.[tj]sx/) && !path.match(/\.test\.[tj]sx/)) {
-      try {
-        // eslint-disable-next-line @typescript-eslint/no-var-requires
-        const component = require(resolve(emailsDir, path));
-        const filename = path.replace(/.[jt]sx/, "");
-        const name = filename[0].toUpperCase() + filename.slice(1);
-        if (component.default.name !== name) {
-          errors.push(
-            [
-              `Template ${path} has no matching default export.`,
-              `The default export component should be named ${name}.`,
-              `This name will be used by mailing for analytics.`,
-            ].join("\n")
-          );
-        }
-      } catch (e) {
-        if (e instanceof Error) {
-          errors.push(formatErr(e));
-        } else {
-          throw e;
-        }
-      }
+  for (const templateName of Object.keys(templates)) {
+    const template = templates[templateName as keyof typeof templates];
+    if (template.name !== templateName) {
+      errors.push(
+        [
+          `Template ${templateName} has no matching default export.`,
+          `Found default export ${template.name} but both the file`,
+          `and default export component should have the same name.`,
+          `This name will be used by mailing for analytics.`,
+        ].join("\n")
+      );
     }
   }
 
@@ -52,15 +33,19 @@ export async function lintEmailsDirectory(emailsDir: string) {
   log(`linting templates in ${emailsDir}...`);
 
   // run linters async
-  const linters = [ensureMatchingNamedExports(emailsDir)];
+  const linters = [ensureMatchingNamedExports()];
   const errors = flatten(await Promise.all(linters));
 
   // log errors after all linters run
   if (errors.length > 0) {
     const errorDescriptions = errors
-      .map((e, i) => `${i + 1}. ${formatErr(e)}\n\n`)
+      .map((e, i) => `${i + 1}. ${e}\n\n`)
       .join("");
-    error(`${errors.length} lint errors\n\n${errorDescriptions}`);
+    error(
+      `${errors.length} lint error${
+        errors.length > 1 ? "s" : ""
+      }\n\n${errorDescriptions}`
+    );
     process.exit(1);
   }
 }
