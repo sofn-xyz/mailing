@@ -2,6 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { createMocks } from "node-mocks-http";
 import Analytics from "../../../../util/analytics";
 import handleClick from "../click";
+import prisma from "../../../../../prisma";
 
 jest.mock("../../../../util/analytics");
 
@@ -26,6 +27,7 @@ describe("/api/hooks/click", () => {
 
   describe("GET", () => {
     test("redirects correctly", async () => {
+      jest.spyOn(prisma.click, "upsert").mockImplementation();
       const url = "http://mailing.dev/fun?utm_source=test";
       const messageId = "abcd-1234";
       const encoded = Buffer.from(url).toString("base64");
