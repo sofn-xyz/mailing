@@ -11,13 +11,7 @@ export async function apiGetApiKeys() {
 
 export class ApiGetApiKeys extends Api {
   path = "/api/apiKeys";
-
-  fetchData = {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  };
+  method = "GET";
 }
 
 export class ApiPostApiKeys extends Api {

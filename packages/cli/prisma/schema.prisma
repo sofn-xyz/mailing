@@ -28,6 +28,7 @@ model Organization {
   name   String
   User   User[]
   ApiKey ApiKey[]
+  List   List[]
 }
 
 model ApiKey {
@@ -38,4 +39,29 @@ model ApiKey {
   Organization   Organization @relation(fields: [organizationId], references: [id])
 
   @@index([organizationId])
+}
+
+model List {
+  id             String       @id @default(cuid())
+  name           String
+  organizationId String
+  Organization   Organization @relation(fields: [organizationId], references: [id])
+  Member         Member[]
+
+  @@index([organizationId])
+}
+
+model Member {
+  id     String       @id @default(cuid())
+  email  String
+  listId String
+  List   List         @relation(fields: [listId], references: [id])
+  status MemberStatus
+
+  @@unique([listId, email])
+}
+
+enum MemberStatus {
+  subscribed
+  unsubscribed
 }
