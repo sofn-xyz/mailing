@@ -67,7 +67,7 @@ export async function apiPatchListMember(
     throw new Error("expected listId to be a string");
 
   if ("string" !== typeof memberId)
-    throw new Error("expected formData to be defined");
+    throw new Error("expected memberId to be a string");
 
   if (undefined === typeof formData)
     throw new Error("expected formData to be defined");

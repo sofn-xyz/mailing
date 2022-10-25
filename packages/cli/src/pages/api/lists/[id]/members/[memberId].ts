@@ -34,19 +34,12 @@ async function handlePatchListMember(
   res.status(200).end();
 }
 
-async function handleGetListMember(
-  listId: string,
-  memberId: string,
-  res: NextApiResponse<Data>
-) {
-  const member = await prisma.member.findFirst({
+async function handleGetListMember(id: string, res: NextApiResponse<Data>) {
+  const member = await prisma.member.findUnique({
     where: {
-      listId,
-      email: memberId,
+      id,
     },
   });
-
-  // todo: update the member info
 
   res.json({ member });
 }
@@ -96,14 +89,14 @@ const ApiListMember = withSessionAPIRoute(async function (
   if (validatedRequest.hasError)
     return validationErrorResponse(validatedRequest, res);
 
-  const { listId, memberId } = validatedRequest.validated;
+  const { memberId } = validatedRequest.validated;
 
   switch (req.method) {
     case "PATCH":
       await handlePatchListMember(memberId, req, res);
       break;
     case "GET":
-      await handleGetListMember(listId, memberId, res);
+      await handleGetListMember(memberId, res);
       break;
     default:
       return res.status(404).end();

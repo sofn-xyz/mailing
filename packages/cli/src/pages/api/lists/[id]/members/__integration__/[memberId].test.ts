@@ -6,6 +6,7 @@ import {
   apiPatchListMember,
   apiGetListMember,
 } from "../../../../__integration__/util/listMember";
+import prisma from "../../../../../../../prisma";
 
 describe("lists/[id]/members", () => {
   describe("not logged in", () => {
@@ -16,8 +17,8 @@ describe("lists/[id]/members", () => {
   });
 
   describe("logged in", () => {
-    let listId: string | undefined;
-    let memberId: string | undefined;
+    let listId: string;
+    let memberId: string;
 
     beforeAll(async () => {
       await apiLogin();
@@ -34,13 +35,20 @@ describe("lists/[id]/members", () => {
       const { formData, response: createListMemberResponse } =
         await apiCreateListMember(listId);
 
-      memberId = formData.email;
-      expect(memberId).toBeDefined();
-
       expect(createListMemberResponse.status).toBe(201);
+
+      const email = formData.email;
+
+      const member = await prisma.member.findUniqueOrThrow({
+        where: { listId_email: { listId, email } },
+      });
+
+      memberId = member.id;
     });
 
     it("should refuse to update the list members status if it is not in the list", async () => {
+      expect(memberId).toBeDefined();
+
       const { response: patchListMemberResponse } = await apiPatchListMember(
         listId,
         memberId,
@@ -61,6 +69,7 @@ describe("lists/[id]/members", () => {
 
       expect(getInitialListMemberResponse.status).toBe(200);
       const initialData = await getInitialListMemberResponse.json();
+      expect(typeof initialData.member).toBe("object");
       expect(initialData.member.status).toBe("subscribed");
 
       // PATCH it to be "unsubscribed"
