@@ -16,7 +16,7 @@ import { debug, log } from "../../../util/log";
 import { build, BuildOptions } from "esbuild";
 import { template } from "lodash";
 import { getNodeModulesDirsFrom } from "../../util/getNodeModulesDirsFrom";
-import { lintEmailsDirectory } from "../../util/lintEmailsDir";
+import { lintEmailsDirectory } from "../../util/lintEmailsDirectory";
 
 export const COMPONENT_FILE_REGEXP = /^[^\s-]+\.[tj]sx$/; // no spaces, .jsx or .tsx
 export const DOT_MAILING_IGNORE_REGEXP =

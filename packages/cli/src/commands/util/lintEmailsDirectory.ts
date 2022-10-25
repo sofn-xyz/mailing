@@ -1,5 +1,5 @@
 import { flatten } from "lodash";
-import { templates } from "../../moduleManifest";
+import manifest from "../../moduleManifest";
 import { error, log } from "../../util/log";
 
 // The Linter: define linting rules here
@@ -11,6 +11,7 @@ async function ensureMatchingNamedExports(): Promise<string[]> {
   // a naming mistake has been made.
 
   const errors = [];
+  const { templates } = manifest;
 
   for (const templateName of Object.keys(templates)) {
     const template = templates[templateName as keyof typeof templates];
