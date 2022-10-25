@@ -14,7 +14,6 @@ interface Data {
 }
 
 async function handlePatchListMember(
-  listId: string,
   memberId: string,
   req: NextApiRequest,
   res: NextApiResponse<Data>
@@ -28,7 +27,7 @@ async function handlePatchListMember(
   }
 
   await prisma.member.updateMany({
-    where: { listId, email: memberId },
+    where: { id: memberId },
     data: { status: req.body.status },
   });
 
@@ -101,7 +100,7 @@ const ApiListMember = withSessionAPIRoute(async function (
 
   switch (req.method) {
     case "PATCH":
-      await handlePatchListMember(listId, memberId, req, res);
+      await handlePatchListMember(memberId, req, res);
       break;
     case "GET":
       await handleGetListMember(listId, memberId, res);
