@@ -45,7 +45,7 @@ const createMessage = async ({
   });
 
   // Send analytics event to 3rd party analytics if desired
-  Analytics.track({
+  await Analytics.track({
     event: "email.sent",
     properties: {
       recipientCount:

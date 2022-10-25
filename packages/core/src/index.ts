@@ -15,7 +15,6 @@ export type BuildSendMailOptions<T> = {
   transport: Transporter<T>;
   defaultFrom: string;
   configPath: string;
-  forceNotTestMode?: boolean; // Allows test to actually call sendMail
 };
 
 export type ComponentMail = SendMailOptions & {
@@ -50,10 +49,9 @@ export async function clearTestMailQueue() {
 
 export function buildSendMail<T>(options: BuildSendMailOptions<T>) {
   const testMode =
-    !options.forceNotTestMode &&
-    (process.env.TEST ||
-      process.env.NODE_ENV === "test" ||
-      process.env.MAILING_CI);
+    process.env.TEST ||
+    process.env.NODE_ENV === "test" ||
+    process.env.MAILING_CI;
 
   if (!options?.transport) {
     throw new Error("buildSendMail options are missing transport");
@@ -94,8 +92,7 @@ export function buildSendMail<T>(options: BuildSendMailOptions<T>) {
     mailOptions.from ||= options.defaultFrom;
 
     const previewMode =
-      !options.forceNotTestMode &&
-      (forcePreview || (NODE_ENV !== "production" && !dangerouslyForceDeliver));
+      forcePreview || (NODE_ENV !== "production" && !dangerouslyForceDeliver);
 
     // Do not send emails analytics if MAILING_DATABASE_URL is set
     // this means sendMail is being called from the REST API and analytics will be handled there
@@ -114,7 +111,7 @@ export function buildSendMail<T>(options: BuildSendMailOptions<T>) {
       mailOptions.html = renderedHtml;
     }
 
-    if (testMode) {
+    if (testMode && !dangerouslyForceDeliver) {
       const testMessageQueue = await getTestMailQueue();
       testMessageQueue.push(mailOptions);
       await fs.writeFile(TMP_TEST_FILE, JSON.stringify(testMessageQueue));
@@ -149,39 +146,43 @@ export function buildSendMail<T>(options: BuildSendMailOptions<T>) {
     }
 
     if (analyticsEnabled) {
-      const hookResponse = await fetch(MAILING_API_URL + "/api/messages", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "x-api-key": MAILING_API_KEY,
-        },
-        body: JSON.stringify({
-          anonymousId,
-          templateName: templateName || derivedTemplateName,
-          previewName,
-          mailOptions,
-        }),
-      });
+      try {
+        const hookResponse = await fetch(MAILING_API_URL + "/api/messages", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "x-api-key": MAILING_API_KEY,
+          },
+          body: JSON.stringify({
+            anonymousId,
+            templateName: templateName || derivedTemplateName,
+            previewName,
+            mailOptions,
+          }),
+        });
 
-      if (hookResponse.status === 200) {
-        const {
-          message: { id: messageId },
-        } = await hookResponse.json();
-        const stringHtml = mailOptions.html?.toString();
-        if (stringHtml) {
-          mailOptions.html = instrumentHtml({
-            html: stringHtml,
-            messageId: messageId,
-            apiUrl: MAILING_API_KEY,
+        if (hookResponse.status === 200) {
+          const {
+            message: { id: messageId },
+          } = await hookResponse.json();
+          const stringHtml = mailOptions.html?.toString();
+          if (stringHtml) {
+            mailOptions.html = instrumentHtml({
+              html: stringHtml,
+              messageId: messageId,
+              apiUrl: MAILING_API_KEY,
+            });
+          }
+        } else {
+          const json = await hookResponse.json();
+          error("Error calling mailing api hook", {
+            status: hookResponse.status,
+            statuSText: hookResponse.statusText,
+            json,
           });
         }
-      } else {
-        const json = await hookResponse.json();
-        error("Error calling mailing api hook", {
-          status: hookResponse.status,
-          statuSText: hookResponse.statusText,
-          json,
-        });
+      } catch (e) {
+        error(`Caught error ${e}`);
       }
     }
 

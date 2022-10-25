@@ -23,7 +23,7 @@ class Analytics {
       return provider.track(event);
     });
 
-    return trackCalls;
+    return Promise.all(trackCalls);
   }
 
   trackMany(events: AnalyticsEvent[]) {
@@ -31,7 +31,7 @@ class Analytics {
       return provider.trackMany(events);
     });
 
-    return trackManyCalls;
+    return Promise.all(trackManyCalls);
   }
 }
 

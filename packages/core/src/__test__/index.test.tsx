@@ -108,7 +108,6 @@ describe("index", () => {
         jest.spyOn(transport, "sendMail").mockImplementation(mockSendMail);
         jest.spyOn(postHog, "capture").mockImplementation(mockCapture);
         jest.spyOn(fsExtra, "readFileSync").mockImplementation((path) => {
-          console.log(path);
           if (/mailing\.config\.json/.test(path.toString())) {
             return JSON.stringify({
               typescript: true,
@@ -127,7 +126,6 @@ describe("index", () => {
           transport,
           defaultFrom: "from@mailing.dev",
           configPath: "./mailing.config.json",
-          forceNotTestMode: true,
         });
         await sendMail({
           to: ["ok@ok.com"],
@@ -135,6 +133,7 @@ describe("index", () => {
           subject: "hello",
           text: "ok",
           html: "ok",
+          dangerouslyForceDeliver: true,
         });
         expect(mockSendMail).toHaveBeenCalled();
         expect(mockSendMail).toHaveBeenCalledWith({
@@ -151,7 +150,6 @@ describe("index", () => {
           transport,
           defaultFrom: "from@mailing.dev",
           configPath: "./mailing.config.json",
-          forceNotTestMode: true,
         });
         await sendMail({
           to: ["ok@ok.com"],
@@ -159,6 +157,7 @@ describe("index", () => {
           subject: "hello",
           text: "ok",
           html: "ok",
+          dangerouslyForceDeliver: true,
         });
         expect(mockCapture).toHaveBeenCalled();
         expect(mockCapture).toHaveBeenCalledWith({
@@ -194,7 +193,6 @@ describe("index", () => {
             transport,
             defaultFrom: "from@mailing.dev",
             configPath: "./mailing.config.json",
-            forceNotTestMode: true,
           });
 
           await sendMail({
@@ -203,6 +201,7 @@ describe("index", () => {
             subject: "hello",
             text: "ok",
             html: "<body>ok</body>",
+            dangerouslyForceDeliver: true,
           });
           expect(fetch).toHaveBeenCalled();
           expect(fetch).toHaveBeenCalledWith(
@@ -248,7 +247,6 @@ describe("index", () => {
             transport,
             defaultFrom: "from@mailing.dev",
             configPath: "./mailing.config.json",
-            forceNotTestMode: true,
           });
 
           await sendMail({
@@ -257,6 +255,7 @@ describe("index", () => {
             subject: "hello",
             text: "ok",
             html: "<body>ok</body>",
+            dangerouslyForceDeliver: true,
           });
           expect(fetch).toHaveBeenCalled();
           expect(fetch).toHaveBeenCalledWith(

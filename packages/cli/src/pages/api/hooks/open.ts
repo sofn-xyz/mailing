@@ -13,7 +13,7 @@ export default async function handler(
   const { messageId } = req.query;
 
   if (typeof messageId === "string") {
-    Analytics.track({
+    await Analytics.track({
       event: "email.open",
       properties: { messageId: messageId },
     });

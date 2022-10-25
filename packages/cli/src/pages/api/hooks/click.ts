@@ -25,7 +25,7 @@ export default async function handler(
 
     if (decodedUrl) {
       if (typeof messageId === "string") {
-        Analytics.track({
+        await Analytics.track({
           event: "email.click",
           properties: { url: decodedUrl, messageId },
         });
