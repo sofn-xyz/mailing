@@ -21,14 +21,14 @@ describe("sendMail", () => {
     const { response: sendMailResponse } = await apiSendMail(apiKey);
     expect(sendMailResponse.status).toBe(200);
 
-    const { response: sendMailResponseWithBadApiKey } = await apiSendMail(
-      "fake"
-    );
-    expect(sendMailResponseWithBadApiKey.status).toBe(401);
-
     const { response: sendMailResponseWithMissingApiKey } = await apiSendMail(
       undefined
     );
     expect(sendMailResponseWithMissingApiKey.status).toBe(422);
+
+    const { response: sendMailResponseWithBadApiKey } = await apiSendMail(
+      "fake"
+    );
+    expect(sendMailResponseWithBadApiKey.status).toBe(401);
   });
 });
