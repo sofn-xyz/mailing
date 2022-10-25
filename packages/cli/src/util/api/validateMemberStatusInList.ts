@@ -1,9 +1,11 @@
 import { ValidatedRequestOrError } from "./validate";
 
-export const LIST_MEMBER_STATUSES = ["subscribed", "unsubscribed"];
+export const LIST_MEMBER_STATUSES = ["subscribed", "unsubscribed"] as const;
+
+export type ListMemberStatus = typeof LIST_MEMBER_STATUSES[number];
 
 export function validateMemberStatusInList(
-  status: string
+  status: ListMemberStatus
 ): ValidatedRequestOrError {
   return LIST_MEMBER_STATUSES.includes(status)
     ? { hasError: false, validated: {} }
