@@ -7,7 +7,6 @@ import {
   linkEmailsDirectory,
 } from "./preview/server/setup";
 import { buildHandler } from "../util/buildHandler";
-import { lintEmailsDirectory } from "./util/lintEmailsDir";
 
 export type ServerArguments = ArgumentsCamelCase<{
   emailsDir?: string;
@@ -50,7 +49,6 @@ export const handler = buildHandler(
     // link files
     await bootstrapMailingDir();
     await linkEmailsDirectory(argv.emailsDir);
-    await lintEmailsDirectory(argv.emailsDir);
 
     // "build" subcommand + default
     if (argv.subcommand !== "start") {
