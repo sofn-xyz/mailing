@@ -70,10 +70,8 @@ export function buildSendMail<T>(options: BuildSendMailOptions<T>) {
       process.env.NODE_ENV === "production" ? config.anonymousId : null;
   } catch (e) {
     if (!options.configPath) {
-      console.warn("buildSendMail requires configPath");
       debug("buildSendMail requires configPath");
     } else {
-      console.warn(`error loading config at ${options.configPath}`);
       debug(`error loading config at ${options.configPath}`);
     }
   }
