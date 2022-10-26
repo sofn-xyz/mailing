@@ -1,6 +1,15 @@
-## Deploying the preview server
+# Deploy
 
-The mailing preview server has a super power: it’s easy to deploy a fast production version when you want to share templates with your team or clients. You can also hit [the REST API](https://github.com/sofn-xyz/mailing#rest-api) on your deployed mailing server to generate HTML from your templates.
+### _[Demo](http://demo.mailing.run/previews/AccountCreated/accountCreated)_
+
+### Why deploy?
+
+- Share previews with clients and your team
+- Email service with [REST API](https://github.com/sofn-xyz/mailing#rest-api)
+  - /api/render renders templates
+  - /api/sendMail sends email using your sendMail from emails/index.ts
+- [Coming soon] Unsubcribe Portal
+- [Coming soon] Analytics
 
 ### Vercel
 
@@ -8,7 +17,7 @@ The easiest way to deploy your preview server is via Vercel's UI. Under the hood
 
 1. Create a new project on [vercel.com](https://vercel.com/)
 2. Connect it to your git repository
-3. Configure the build command to run `mailing server build`
+3. Configure the build command to run `npx mailing server build`
 4. Configure the output directory to be `.mailing/.next`
 
 Here’s a working Vercel configuration:
@@ -17,8 +26,8 @@ Here’s a working Vercel configuration:
 
 #### CLI
 
-Alternatively, `mailing deploy` deploys your server to Vercel via their interactive CLI.
+Alternatively, `npx mailing deploy` deploys your server to Vercel via their interactive CLI. After deploying, be sure to link Vercel to your repo for automatic deployments on [vercel.com](https://vercel.com/dashboard)
 
 ### Other hosts
 
-If you want to deploy somewhere else, you can use `mailing server build` to build the production next app and `mailing server start` to boot it on localhost. The first command runs `next build .mailing` and the second command runs `next start .mailing`.
+If you want to deploy somewhere else, you can use `npx mailing server build` to build the production app and `npx mailing server start` to boot it on localhost.
