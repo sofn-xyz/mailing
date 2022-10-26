@@ -1,3 +1,4 @@
+import Head from "next/head";
 import prisma from "../../../prisma";
 import { GetServerSideProps, NextPage } from "next";
 import SubmitButton from "../../components/SubmitButton";
@@ -34,6 +35,9 @@ const Unsubscribe: NextPage = () => {
 
   return (
     <>
+      <Head>
+        <meta name="robots" content="noindex" />
+      </Head>
       <div>
         <div className="w-full h-full">
           <main className="max-w-3xl mx-auto pt-20 sm:pt-24 lg:pt-32">
