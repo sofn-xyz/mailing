@@ -19,9 +19,7 @@ class ApiSendMail extends Api<SendMailFormData> {
 
   constructor(apiKey?: string) {
     super();
-
-    this.fetchData = { ...Api.defaultFetchData };
-
+    this.fetchData = JSON.parse(JSON.stringify(Api.defaultFetchData));
     if (apiKey) this.fetchData.headers["X-API-Key"] = apiKey;
   }
 

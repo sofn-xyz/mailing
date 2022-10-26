@@ -1,4 +1,3 @@
-import { ReactElement, JSXElementConstructor } from "react";
 import type { SendMailOptions, Transporter } from "nodemailer";
 import open from "open";
 import fs from "fs-extra";
@@ -6,21 +5,25 @@ import { render } from "./mjml";
 import { error, log, debug } from "./util/log";
 import fetch from "node-fetch";
 import { capture } from "./util/postHog";
+import instrumentHtml from "./util/instrumentHtml";
 
-export type ComponentMail = SendMailOptions & {
-  component?: ReactElement<any, string | JSXElementConstructor<any>>;
-  dangerouslyForceDeliver?: boolean;
-  forcePreview?: boolean;
-};
+// In test, we write the email queue to this file so that it can be read
+// by the test process.
+const TMP_TEST_FILE = "tmp-testMailQueue.json";
+
 export type BuildSendMailOptions<T> = {
   transport: Transporter<T>;
   defaultFrom: string;
   configPath: string;
 };
 
-// In test, we write the email queue to this file so that it can be read
-// by the test process.
-const TMP_TEST_FILE = "tmp-testMailQueue.json";
+export type ComponentMail = SendMailOptions & {
+  component?: JSX.Element;
+  dangerouslyForceDeliver?: boolean;
+  forcePreview?: boolean;
+  templateName?: string;
+  previewName?: string;
+};
 
 export async function getTestMailQueue() {
   try {
@@ -72,44 +75,48 @@ export function buildSendMail<T>(options: BuildSendMailOptions<T>) {
   }
 
   return async function sendMail(mail: ComponentMail) {
-    const forcePreview =
-      mail.forcePreview ||
-      (process.env.NODE_ENV !== "production" && !mail.dangerouslyForceDeliver);
-
     if (!mail.html && typeof mail.component === "undefined")
       throw new Error("sendMail requires either html or a component");
 
-    const { html, errors } =
-      mail.html || !mail.component
-        ? { html: mail.html, errors: [] }
-        : render(mail.component);
+    const { NODE_ENV, MAILING_API_URL, MAILING_API_KEY, MAILING_DATABASE_URL } =
+      process.env;
+    const {
+      component,
+      dangerouslyForceDeliver,
+      templateName,
+      previewName,
+      forcePreview,
+      ...mailOptions
+    } = mail;
+    mailOptions as SendMailOptions;
+    mailOptions.from ||= options.defaultFrom;
 
-    if (errors?.length) {
-      error(errors);
-      throw new Error(errors.join(";"));
+    const previewMode =
+      forcePreview || (NODE_ENV !== "production" && !dangerouslyForceDeliver);
+
+    // Do not send emails analytics if MAILING_DATABASE_URL is set
+    // this means sendMail is being called from the REST API and analytics will be handled there
+    const analyticsEnabled =
+      !MAILING_DATABASE_URL && MAILING_API_URL && MAILING_API_KEY;
+
+    // Get html from the rendered component if not provided
+    let derivedTemplateName;
+    if (component && !mailOptions.html) {
+      const { html: renderedHtml, errors } = render(component);
+      if (errors?.length) {
+        error(errors);
+        throw new Error(errors.join(";"));
+      }
+      derivedTemplateName = component.type.name;
+      mailOptions.html = renderedHtml;
     }
 
-    // Create a mail for nodemailer with the component rendered to HTML.
-    const htmlMail = {
-      from: options.defaultFrom,
-      ...mail,
-      html: html,
-      component: undefined,
-      dangerouslyForceDeliver: undefined,
-      forcePreview: undefined,
-    };
-    delete htmlMail.component;
-    delete htmlMail.dangerouslyForceDeliver;
-    delete htmlMail.forcePreview;
-
-    if (testMode) {
+    if (testMode && !dangerouslyForceDeliver) {
       const testMessageQueue = await getTestMailQueue();
-      testMessageQueue.push(htmlMail);
+      testMessageQueue.push(mailOptions);
       await fs.writeFile(TMP_TEST_FILE, JSON.stringify(testMessageQueue));
       return;
-    }
-
-    if (forcePreview) {
+    } else if (previewMode) {
       const debugMail = {
         ...mail,
         html: "omitted",
@@ -122,7 +129,7 @@ export function buildSendMail<T>(options: BuildSendMailOptions<T>) {
         const response = await fetch(PREVIEW_SERVER_URL, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(htmlMail),
+          body: JSON.stringify(mailOptions),
         });
         if (response.status === 201) {
           const { id } = (await response.json()) as { id: string };
@@ -135,14 +142,62 @@ export function buildSendMail<T>(options: BuildSendMailOptions<T>) {
         error(`Caught error ${e}`);
         error("Is the mailing preview server running?");
       }
-
       return;
     }
 
-    const response = await options.transport.sendMail(htmlMail);
+    if (analyticsEnabled) {
+      try {
+        const hookResponse = await fetch(MAILING_API_URL + "/api/messages", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "x-api-key": MAILING_API_KEY,
+          },
+          body: JSON.stringify({
+            anonymousId,
+            templateName: templateName || derivedTemplateName,
+            previewName,
+            mailOptions,
+          }),
+        });
+
+        if (hookResponse.status === 200) {
+          const {
+            message: { id: messageId },
+          } = await hookResponse.json();
+          const stringHtml = mailOptions.html?.toString();
+          if (stringHtml) {
+            mailOptions.html = instrumentHtml({
+              html: stringHtml,
+              messageId: messageId,
+              apiUrl: MAILING_API_KEY,
+            });
+          }
+        } else {
+          const json = await hookResponse.json();
+          error("Error calling mailing api hook", {
+            status: hookResponse.status,
+            statuSText: hookResponse.statusText,
+            json,
+          });
+        }
+      } catch (e) {
+        error(`Caught error ${e}`);
+      }
+    }
+
+    // Send mail via nodemailer
+    const response = await options.transport.sendMail(mailOptions);
     await capture({
-      distinctId: anonymousId,
       event: "mail sent",
+      distinctId: anonymousId,
+      properties: {
+        recipientCount:
+          Array(mailOptions.to).filter(Boolean).length +
+          Array(mailOptions.cc).filter(Boolean).length +
+          Array(mailOptions.bcc).filter(Boolean).length,
+        analyticsEnabled,
+      },
     });
 
     return response;

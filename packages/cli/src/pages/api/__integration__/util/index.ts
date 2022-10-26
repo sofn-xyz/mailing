@@ -22,7 +22,7 @@ export abstract class Api<TFormData = undefined> {
 
   setFetchData() {
     if ("undefined" === typeof this.fetchData) {
-      this.fetchData = { ...Api.defaultFetchData };
+      this.fetchData = JSON.parse(JSON.stringify(Api.defaultFetchData));
 
       if (this.method) {
         this.fetchData.method = this.method;

@@ -1,111 +1,64 @@
-import React from "react";
 import type { NextApiRequest, NextApiResponse } from "next";
-import { render } from "mailing-core";
 import { MjmlError } from "mjml-react";
-import { templates, sendMail } from "../../moduleManifest";
+import { sendMail } from "../../moduleManifest";
+import renderTemplate from "../../util/renderTemplate";
+import { validateApiKey } from "../../util/validateApiKey";
 
 type Data = {
   error?: string; // api error messages
-  html?: string;
   mjmlErrors?: MjmlError[];
+  result?: any;
 };
-
-function renderTemplate(
-  templateName: string,
-  props: { [key: string]: any }
-): { error?: string; mjmlErrors?: MjmlError[]; html?: string } {
-  const Template = templates[templateName as keyof typeof templates];
-  if (!Template) {
-    return {
-      error: `Template ${templateName} not found in list of templates: ${Object.keys(
-        templates
-      ).join(", ")}`,
-    };
-  }
-
-  return render(React.createElement(Template as any, props as any));
-}
-
-async function validApiKey(apiKey: string | string[] | undefined) {
-  if (!apiKey) return false;
-
-  const host = process.env.MM_DEV ? "http://localhost:3883" : "yourInstallUrl";
-  const response = await fetch(`${host}/api/apiKeys/${apiKey}/validate`);
-
-  return 200 === response.status;
-}
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse
+  res: NextApiResponse<Data>
 ) {
-  if (req.method !== "POST") return res.status(404).end();
+  if (req.method !== "POST")
+    return res.status(405).json({ error: "Method not allowed" });
 
-  const {
-    templateName,
-    props,
-    to,
-    subject,
-    cc,
-    bcc,
-    from,
-    text,
-    sender,
-    replyTo,
-    inReplyTo,
-    references,
-  } = req.body;
+  if (!(await validateApiKey(req, res))) return;
 
-  if (!(await validApiKey(req.headers && req.headers["x-api-key"])))
-    return res.status(401).json({
-      error: "invalid API key",
-    });
+  const { templateName, previewName, props, ...mailOptions } = req.body;
 
-  // validate to, cc, bcc name
+  let html = req.body.html;
+
+  // validate at least one of to, cc, bcc exists
   if (
-    typeof to !== "string" &&
-    typeof cc !== "string" &&
-    typeof bcc !== "string"
+    typeof mailOptions.to === "undefined" &&
+    typeof mailOptions.cc === "undefined" &&
+    typeof mailOptions.bcc === "undefined"
   ) {
-    return res
-      .status(403)
-      .json({ error: "to, cc, or bcc must be specified" } as Data);
+    return res.status(403).json({ error: "to, cc, or bcc must be specified" });
   }
 
   // validate subject
-  if (typeof subject !== "string") {
-    return res.status(403).json({ error: "subject must be specified" } as Data);
+  if (typeof mailOptions.subject !== "string") {
+    return res.status(403).json({ error: "subject must be specified" });
   }
 
-  // validate template name
-  if (typeof templateName !== "string") {
-    return res
-      .status(403)
-      .json({ error: "templateName must be specified" } as Data);
+  if (!html) {
+    // validate template name
+    if (typeof templateName !== "string") {
+      return res
+        .status(403)
+        .json({ error: "templateName or html must be specified" });
+    }
+
+    // render template if html doesn't exist
+    const {
+      error,
+      mjmlErrors,
+      html: renderedHtml,
+    } = renderTemplate(templateName.replace(/\.[jt]sx?$/, ""), props);
+
+    if (error) {
+      return res.status(404).json({ error, mjmlErrors });
+    }
+    html = renderedHtml;
   }
 
-  const { error, html } = renderTemplate(
-    templateName.replace(/\.[jt]sx?$/, ""),
-    props
-  );
+  const sendMailResult = await sendMail({ previewName, ...mailOptions, html });
 
-  if (error) {
-    return res.status(404).json({ error } as Data);
-  }
-
-  const sendMailResult = await sendMail({
-    html,
-    to,
-    cc,
-    bcc,
-    subject,
-    from,
-    text,
-    sender,
-    replyTo,
-    inReplyTo,
-    references,
-  });
-
-  res.status(200).json(sendMailResult || {});
+  res.status(200).json({ result: sendMailResult });
 }
