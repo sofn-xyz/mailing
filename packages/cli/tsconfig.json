@@ -18,10 +18,7 @@
     "noEmit": true,
     "incremental": true,
     "resolveJsonModule": true,
-    "baseUrl": "./",
-    "paths": {
-      "@/*": ["src/*"]
-    }
+    "baseUrl": "./"
   },
   "$schema": "https://json.schemastore.org/tsconfig",
   "include": ["src/**/*.ts", "src/**/*.tsx", "prisma/**/*.ts"],
