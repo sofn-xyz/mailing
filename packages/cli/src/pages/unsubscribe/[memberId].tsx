@@ -1,5 +1,23 @@
-import { NextPage } from "next";
+import { GetServerSideProps, NextPage } from "next";
 import SubmitButton from "../../components/SubmitButton";
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const memberId = context?.params?.memberId;
+
+  if ("string" !== typeof memberId) {
+    return { notFound: true };
+  }
+
+  return memberId
+    ? {
+        props: {
+          memberId,
+        }, // will be passed to the page component as props
+      }
+    : {
+        notFound: true,
+      };
+};
 
 const Unsubscribe: NextPage = () => {
   function onSubmit(e: React.FormEvent<HTMLFormElement>) {
