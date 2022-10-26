@@ -53,8 +53,10 @@ export const handler = buildHandler(
     const shouldStart = argv.subcommand === "start" || !argv.subcommand;
     const shouldBuild = argv.subcommand === "build" || !argv.subcommand;
 
+    // "build" subcommand + default
     if (shouldBuild) {
       log("building .mailing...");
+
       execSync("cd .mailing && npx prisma generate", {
         stdio: "inherit",
       });
@@ -69,6 +71,7 @@ export const handler = buildHandler(
       });
     }
 
+    // "start" subcommand + default
     if (shouldStart) {
       log("starting .mailing...");
       execSync("npx next start .mailing", { stdio: "inherit" });
