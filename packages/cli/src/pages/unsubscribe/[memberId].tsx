@@ -1,3 +1,4 @@
+import prisma from "../../../prisma";
 import { GetServerSideProps, NextPage } from "next";
 import SubmitButton from "../../components/SubmitButton";
 
@@ -8,15 +9,21 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     return { notFound: true };
   }
 
-  return memberId
-    ? {
-        props: {
-          memberId,
-        }, // will be passed to the page component as props
-      }
-    : {
-        notFound: true,
-      };
+  const listMember = await prisma.member.findUnique({
+    where: { id: memberId },
+  });
+
+  if (!listMember) {
+    return {
+      notFound: true,
+    };
+  }
+
+  return {
+    props: {
+      memberId,
+    }, // will be passed to the page component as props
+  };
 };
 
 const Unsubscribe: NextPage = () => {
