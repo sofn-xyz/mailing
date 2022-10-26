@@ -12,7 +12,8 @@ const handler = withSessionAPIRoute(async function (
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  if (req.method !== "POST") return res.status(404).end();
+  if (req.method !== "POST")
+    return res.status(405).json({ error: "Method not allowed" });
 
   const email = req.body.email;
   const plainTextPassword = req.body.password;

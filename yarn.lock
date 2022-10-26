@@ -2658,6 +2658,11 @@
     "@typescript-eslint/types" "5.40.0"
     eslint-visitor-keys "^3.3.0"
 
+"@vercel/analytics@^0.1.1":
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/@vercel/analytics/-/analytics-0.1.1.tgz#ce036282d76f03417141b54830930f915f40504b"
+  integrity sha512-34on7YtVt/yT8+QX7c5K2bcKYXnax06sQiK2PUdlQ1ABg5699mPdLGOSpS1gF//kR1s9oig4MCJ+N9nOjpaS6g==
+
 abab@^2.0.6:
   version "2.0.6"
   resolved "https://registry.yarnpkg.com/abab/-/abab-2.0.6.tgz#41b80f2c871d19686216b82309231cfd3cb3d291"
@@ -5399,7 +5404,7 @@ hast-util-whitespace@^2.0.0:
   resolved "https://registry.yarnpkg.com/hast-util-whitespace/-/hast-util-whitespace-2.0.0.tgz#4fc1086467cc1ef5ba20673cb6b03cec3a970f1c"
   integrity sha512-Pkw+xBHuV6xFeJprJe2BBEoDV+AvQySaz3pPDRUs5PNZEMQjpXJJueqrpcHIXxnWTcAGi/UOCgVShlkY6kLoqg==
 
-he@^1.2.0:
+he@1.2.0, he@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/he/-/he-1.2.0.tgz#84ae65fa7eafb165fddb61566ae14baf05664f0f"
   integrity sha512-F/1DnUGPopORZi0ni+CvrCgHQ5FyEAHRLSApuYWMmrbSwoN2Mn/7k+Gl38gJnR7yyDZk6WLXwiGod1JOWNDKGw==
@@ -7858,6 +7863,14 @@ node-fetch@^2.6.0, node-fetch@^2.6.7:
   integrity sha512-ZjMPFEfVx5j+y2yF35Kzx5sF7kDzxuDj6ziH4FFbOp87zKDZNx8yExJIb05OGF4Nlt9IHFIMBkRl41VdvcNdbQ==
   dependencies:
     whatwg-url "^5.0.0"
+
+node-html-parser@^6.1.1:
+  version "6.1.1"
+  resolved "https://registry.yarnpkg.com/node-html-parser/-/node-html-parser-6.1.1.tgz#7f38f4427fafc242a22135d9db80c1455e837467"
+  integrity sha512-eYYblUeoMg0nR6cYGM4GRb1XncNa9FXEftuKAU1qyMIr6rXVtNyUKduvzZtkqFqSHVByq2lLjC7WO8tz7VDmnA==
+  dependencies:
+    css-select "^5.1.0"
+    he "1.2.0"
 
 node-int64@^0.4.0:
   version "0.4.0"

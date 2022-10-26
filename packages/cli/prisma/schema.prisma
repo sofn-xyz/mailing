@@ -28,6 +28,7 @@ model Organization {
   name   String
   User   User[]
   ApiKey ApiKey[]
+  List   List[]
 }
 
 model ApiKey {
@@ -38,4 +39,82 @@ model ApiKey {
   Organization   Organization @relation(fields: [organizationId], references: [id])
 
   @@index([organizationId])
+}
+
+model Message {
+  // A unique email message delivered to one or multiple users.
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  to        String[]
+  cc        String[]
+  bcc       String[]
+  subject   String?
+  from      String?
+
+  // Open related fields
+  openedAt  DateTime?
+  openCount Int       @default(0)
+
+  // Mailing specific metadata
+  templateName String? // reference to a mailing template
+  previewName  String? // reference to a mailing preview
+
+  Click          Click[]
+  MessageContent MessageContent?
+
+  @@index([templateName, previewName])
+}
+
+model MessageContent {
+  // Note: This table will likely grow large over time, we will likely
+  // want to truncate it in the future to only retain last N messages.
+  // We also might need to consider moving it to an external data store like S3.
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  html      String?
+  messageId String
+  Message   Message  @relation(fields: [messageId], references: [id])
+
+  @@unique([messageId])
+  @@index([messageId])
+}
+
+model Click {
+  // A click on specific link in an email message.
+  // Only created when a link is first clicked, after that increment count.
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now()) // first click
+  updatedAt DateTime @updatedAt // last click
+  url       String
+  count     Int      @default(1)
+  messageId String
+  Message   Message  @relation(fields: [messageId], references: [id])
+
+  @@unique([messageId, url])
+  @@index([messageId])
+}
+
+model List {
+  id             String       @id @default(cuid())
+  name           String
+  organizationId String
+  Organization   Organization @relation(fields: [organizationId], references: [id])
+  Member         Member[]
+
+  @@index([organizationId])
+}
+
+model Member {
+  id     String       @id @default(cuid())
+  email  String
+  listId String
+  List   List         @relation(fields: [listId], references: [id])
+  status MemberStatus
+
+  @@unique([listId, email])
+}
+
+enum MemberStatus {
+  subscribed
+  unsubscribed
 }

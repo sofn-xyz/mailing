@@ -27,6 +27,6 @@ describe("login", () => {
   it("should 404 if MAILING_SESSION_PASSWORD is not set", async () => {
     const { req, res } = mockRequestResponse("GET");
     await handler(req, res);
-    expect(res.status).toHaveBeenCalledWith(404);
+    expect(res.status).toHaveBeenCalledWith(405);
   });
 });

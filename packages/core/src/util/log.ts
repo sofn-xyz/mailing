@@ -5,7 +5,6 @@ const { DEBUG } = process.env;
 const PREFIX = "mailing";
 
 export function log(message?: any, ...optionalParams: any[]) {
-  if (!debug) return;
   console.log(chalk.white(PREFIX), message, ...optionalParams);
 }
 
@@ -19,6 +18,5 @@ export function debug(message?: any, ...optionalParams: any[]) {
 }
 
 export function logPlain(message?: any, ...optionalParams: any[]) {
-  if (!debug) return;
   console.log(message, ...optionalParams);
 }

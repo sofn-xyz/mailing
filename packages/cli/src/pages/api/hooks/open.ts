@@ -1,4 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
+import Analytics from "../../../util/analytics";
+import prisma from "../../../../prisma";
+import { debug } from "../../../util/log";
 
 export default async function handler(
   req: NextApiRequest,
@@ -7,7 +10,30 @@ export default async function handler(
   if (req.method !== "GET") {
     return res.status(405).json({ error: "Method not allowed" });
   }
-  const { email, sendId } = req.query;
+  const { messageId } = req.query;
 
-  res.status(200).json({ email, sendId });
+  if (typeof messageId === "string") {
+    await Analytics.track({
+      event: "email.open",
+      properties: { messageId: messageId },
+    });
+
+    const message = await prisma.message.findUnique({
+      where: { id: messageId },
+    });
+
+    try {
+      await prisma.message.update({
+        where: { id: messageId },
+        data: {
+          openCount: { increment: 1 },
+          openedAt: message?.openedAt ? undefined : new Date(),
+        },
+      });
+    } catch (err) {
+      debug(err);
+    }
+  }
+
+  res.status(200).end();
 }
