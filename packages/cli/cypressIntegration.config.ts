@@ -1,4 +1,5 @@
 import { defineConfig } from "cypress";
+import cliPrisma from "./prisma";
 
 export default defineConfig({
   e2e: {
@@ -7,9 +8,9 @@ export default defineConfig({
     baseUrl: "http://localhost:3883",
     setupNodeEvents(on, _config) {
       on("task", {
-        log(message) {
-          console.log(message);
-
+        async "db:reset"() {
+          const count = await cliPrisma.$queryRaw`SELECT COUNT(*) FROM "User";`;
+          console.log("count is", count);
           return null;
         },
       });
