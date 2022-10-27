@@ -41,8 +41,6 @@ jobs:
       - name: Build the app
         run: yarn build
       - name: Cypress run integration tests
-        run: test:integration:cypress
-      - name: Cypress run integration tests
         uses: cypress-io/github-action@v4
         env:
           DEBUG: "@cypress/github-action"
