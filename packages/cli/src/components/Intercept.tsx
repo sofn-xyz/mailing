@@ -51,7 +51,7 @@ const Intercept: React.FC<InterceptProps> = ({ data }) => {
   }
 
   return (
-    <>
+    <div className="h-screen flex flex-col">
       <Header
         setViewMode={setViewMode}
         viewMode={viewMode}
@@ -122,13 +122,15 @@ const Intercept: React.FC<InterceptProps> = ({ data }) => {
           </button>
         </div>
       </div>
-      {data.html && (
-        <HotIFrame
-          viewMode={viewMode}
-          setViewMode={setViewMode}
-          srcDoc={data.html}
-        />
-      )}
+      <div className="flex-1">
+        {data.html && (
+          <HotIFrame
+            viewMode={viewMode}
+            setViewMode={setViewMode}
+            srcDoc={data.html}
+          />
+        )}
+      </div>
       <style jsx>{`
         .container {
           border-bottom: dotted 1px #333;
@@ -156,7 +158,7 @@ const Intercept: React.FC<InterceptProps> = ({ data }) => {
           top: 1.25px;
         }
       `}</style>
-    </>
+    </div>
   );
 };
 
