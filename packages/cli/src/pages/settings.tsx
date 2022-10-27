@@ -1,7 +1,7 @@
 import { withSessionSsr } from "../util/session";
 import { useState } from "react";
 import prisma from "../../prisma";
-import { ApiKey, User } from "../../prisma/generated/client";
+import type { ApiKey, User } from "../../prisma/generated/client";
 
 export const getServerSideProps = withSessionSsr<{ user: any }>(
   async function ({ req }) {
@@ -16,7 +16,7 @@ export const getServerSideProps = withSessionSsr<{ user: any }>(
       };
     }
 
-    const apiKeys: ApiKey[] = await prisma.apiKey.findMany({
+    const apiKeys = await prisma.apiKey.findMany({
       where: { organizationId: user.organizationId },
       select: { id: true, active: true },
     });
