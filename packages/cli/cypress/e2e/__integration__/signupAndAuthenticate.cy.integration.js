@@ -11,8 +11,21 @@ describe("login tests", () => {
     cy.get("h1").should("contain", "Signup");
     cy.get("input#email").should("exist");
 
-    // fill in email and passord fields and then submit the form
-    cy.get("input#email").type(email);
+    // invalid email should give an error
+    cy.get("input#email").type("test");
+    cy.get("form").submit();
+    cy.get(".form-error").should("contain", "email is invalid");
+
+    // invalid password (blank) should give an error
+    cy.get("input#email").clear().type(email);
+    cy.get("form").submit();
+    cy.get(".form-error").should(
+      "contain",
+      "password should be at least 8 characters"
+    );
+
+    // fill in email and passord fields with valid values and then submit the form
+    cy.get("input#email").clear().type(email);
     cy.get("input#password").type("password");
     cy.get("form").submit();
 
