@@ -1,5 +1,15 @@
 # mailing
 
+## 0.8.9
+
+### Patch Changes
+
+- aa0bab5: add lint step for templates
+- 0c843d4: fix layout bugs
+- Updated dependencies [aa0bab5]
+- Updated dependencies [0c843d4]
+  - mailing-core@0.8.9
+
 ## 0.8.8
 
 ### Patch Changes
