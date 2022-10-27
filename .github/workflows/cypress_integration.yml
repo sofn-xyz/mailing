@@ -42,10 +42,12 @@ jobs:
         run: yarn build
       - name: Cypress run integration tests
         run: test:integration:cypress
-        # env:
-        #   DEBUG: "@cypress/github-action"
-        # with:
-        #   install: false
-        #   start: yarn ci:server:nohup
-        #   working-directory: packages/cli
-        #   browser: chrome
+      - name: Cypress run integration tests
+        uses: cypress-io/github-action@v4
+        env:
+          DEBUG: "@cypress/github-action"
+        with:
+          install: false
+          start: yarn integration:servers:start
+          browser: chrome
+          config-file: packages/cli/cypressIntegration.config.ts
