@@ -22,7 +22,7 @@ const HotIFrame: React.FC<HotIFrameProps> = ({
         <textarea
           className={cx("code-container mono text-black", {
             "fixed top-0 left-0 right-0 bottom-0 z-50 h-full": fullScreen,
-            "h-[calc(100vh-53px)]": !fullScreen,
+            "h-[calc(100vh-52px)]": !fullScreen,
           })}
           readOnly
           value={srcDoc}
@@ -43,7 +43,7 @@ const HotIFrame: React.FC<HotIFrameProps> = ({
               className={cx("bg-neutral-50", {
                 "fixed top-0 left-0 right-0 bottom-0 z-50 h-full":
                   fullScreen && viewMode !== "mobile",
-                "h-[calc(100vh-53px)]": !fullScreen,
+                "h-[calc(100vh-52px)]": !fullScreen,
               })}
               srcDoc={srcDoc}
               ref={iframeRef}
