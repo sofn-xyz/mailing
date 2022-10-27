@@ -3,13 +3,9 @@ import { error } from "../../../../util/log";
 import { render } from "../../../../util/mjml";
 import { getPreviewComponent } from "../../../../util/moduleManifestUtil";
 
-type Data = {
-  name: string;
-};
-
 export default function showPreview(
   req: NextApiRequest,
-  res: NextApiResponse<Data>
+  res: NextApiResponse<ShowPreviewResponseBody>
 ) {
   // render preview
   const { previewClass, previewFunction } = req.query;
@@ -25,14 +21,12 @@ export default function showPreview(
 
   if (component?.props) {
     try {
-      const { html, errors, lint } = render(component);
+      const { html, errors, htmlLint } = render(component);
       if (errors.length) {
         error(errors);
       }
 
-      res.setHeader("Content-Type", "application/json");
-      res.writeHead(200);
-      res.end(JSON.stringify({ html, errors, lint }));
+      res.json({ html, errors, htmlLint });
     } catch (e) {
       error("caught error rendering mjml to html", e);
       res.writeHead(500);

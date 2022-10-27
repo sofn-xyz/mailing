@@ -13,6 +13,7 @@ import { HamburgerContext } from "./HamburgerContext";
 
 import type { PreviewIndexResponseBody } from "../pages/api/previews";
 import MobileHeader from "./MobileHeader";
+import HTMLLint from "./HtmlLint";
 
 type Data = {
   preview: ShowPreviewResponseBody;
@@ -53,7 +54,7 @@ const PreviewViewer: React.FC<PreviewViewerProps> = ({ initialData }) => {
     if (!(previewClass && previewFunction)) {
       setData((data: Data) => ({
         ...data,
-        preview: { html: "", errors: [] },
+        preview: { html: "", errors: [], htmlLint: [] },
       }));
       return;
     }
@@ -78,7 +79,7 @@ const PreviewViewer: React.FC<PreviewViewerProps> = ({ initialData }) => {
       <div>
         <div
           className={cx(
-            "left-pane absolute border-dotted border-r border-gray-600 w-full sm:w-[300px] sm:left-0 transition-all z-40 bg-black mt-[52px] sm:mt-0",
+            "left-pane absolute border-dotted border-r border-gray-600 w-full sm:w-[300px] sm:left-0 transition-all z-40 bg-black sm:mt-0",
             {
               "opacity-100": hamburgerOpen,
               "opacity-0 sm:opacity-100 pointer-events-none sm:pointer-events-auto":
@@ -88,8 +89,9 @@ const PreviewViewer: React.FC<PreviewViewerProps> = ({ initialData }) => {
         >
           <IndexPane previews={previews} previewText={data?.previewText} />
         </div>
-        <div className="right-pane sm:left-[300px] sm:w-[calc(100vw-300px)] sm:h-[calc(100vh-52px)]">
-          {!!preview?.errors?.length && <MjmlErrors errors={preview?.errors} />}
+        <div className="right-pane sm:left-[300px] sm:w-[calc(100vw-300px)]">
+          {!!preview?.errors?.length && <MjmlErrors errors={preview.errors} />}
+
           <div className="sm:hidden">
             <MobileHeader title={previewFunction || previewClass || "Emails"} />
           </div>
@@ -160,6 +162,9 @@ const PreviewViewer: React.FC<PreviewViewerProps> = ({ initialData }) => {
                 viewMode={viewMode}
                 setViewMode={setViewMode}
               />
+              {!!preview?.htmlLint?.length && (
+                <HTMLLint htmlLint={preview.htmlLint} />
+              )}
             </>
           ) : (
             <div className="text-2xl grid h-screen place-items-center text-gray-600">

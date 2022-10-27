@@ -22,6 +22,7 @@ type SendPreviewResponseBody = {
 
 type ShowPreviewResponseBody = {
   errors: MjmlError[];
+  htmlLint: HtmlLintError[];
   html: string;
 };
 
@@ -30,6 +31,12 @@ type MjmlError = {
   message: string;
   tagName: string;
   formattedMessage: string;
+};
+
+type HtmlLintError = {
+  line: number;
+  message: string;
+  context?: string[];
 };
 
 type ViewMode = "desktop" | "mobile" | "html";
