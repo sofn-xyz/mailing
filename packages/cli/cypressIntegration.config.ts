@@ -5,8 +5,14 @@ export default defineConfig({
     specPattern: "**/*.cy.integration.{js,jsx,ts,tsx}",
     defaultCommandTimeout: 10000,
     baseUrl: "http://localhost:3883",
-    setupNodeEvents(_on, _config) {
-      // implement node event listeners here
+    setupNodeEvents(on, _config) {
+      on("task", {
+        log(message) {
+          console.log(message);
+
+          return null;
+        },
+      });
     },
   },
 });
