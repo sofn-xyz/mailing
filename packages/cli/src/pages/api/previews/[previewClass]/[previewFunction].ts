@@ -25,14 +25,14 @@ export default function showPreview(
 
   if (component?.props) {
     try {
-      const { html, errors } = render(component);
+      const { html, errors, lint } = render(component);
       if (errors.length) {
         error(errors);
       }
 
       res.setHeader("Content-Type", "application/json");
       res.writeHead(200);
-      res.end(JSON.stringify({ html, errors }));
+      res.end(JSON.stringify({ html, errors, lint }));
     } catch (e) {
       error("caught error rendering mjml to html", e);
       res.writeHead(500);
