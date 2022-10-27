@@ -79,7 +79,7 @@ function Settings(props: { user: User; apiKeys: ApiKey[] }) {
                 </button>
               </div>
               <div className="col-span-3">
-                <table className="table-auto w-full">
+                <table id="api-keys" className="table-auto w-full">
                   <thead className="text-xs uppercase text-gray-500 border-t border-slate-300">
                     <tr>
                       <td>API Key</td>

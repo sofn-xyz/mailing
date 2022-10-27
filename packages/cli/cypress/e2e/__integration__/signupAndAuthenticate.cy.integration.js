@@ -25,8 +25,21 @@ describe("login tests", () => {
 
     // it should redirect you to the settings page
     cy.location("pathname").should("eq", "/settings");
+    cy.get("h1").should("contain", "Settings");
 
-    // you should get a 404 if you try to go back to /signup
+    // you should see a default api key that was created
+    cy.get("#api-keys tbody tr").should("have.length", 1);
+
+    // you should see a button to add an API key
+    cy.get("button").should("contain", "New API Key");
+
+    // click the button to add an API key
+    cy.get("button").click();
+
+    // you should see 2 api keys in the tbody instead of 1
+    cy.get("#api-keys tbody tr").should("have.length", 2);
+
+    // you should get a 404 if you try to go back to /signup, only 1 user is allowed to signup
     cy.visit("/signup", { failOnStatusCode: false });
     cy.request({
       url: "/signup",
