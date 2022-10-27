@@ -1,5 +1,6 @@
 import { defineConfig } from "cypress";
 import cliPrisma from "./prisma";
+import webPrisma from "../../packages/web/prisma";
 
 const resetDb = async () => {
   await truncateDatabases();
@@ -30,7 +31,7 @@ export async function truncateCliDatabase() {
 }
 
 export async function truncateWebDatabase() {
-  // await truncateTables(webPrisma);
+  await truncateTables(webPrisma);
 }
 
 export async function truncateDatabases() {
