@@ -32,7 +32,7 @@ function lintHtml(html: string) {
     if (href && !href.startsWith("http")) {
       lint.push({
         line: lines.findIndex((line) => line.includes(`href="${href}"`)) + 1,
-        message: `link with href "${href}" and copy "${link.rawText.trim()}" is relative and must be absolute`,
+        message: `link with href "${href}" and text "${link.rawText.trim()}" is relative and must be absolute`,
       });
     }
   }
@@ -40,7 +40,7 @@ function lintHtml(html: string) {
   // add context of surrounding lines
   for (const l of lint) {
     if (l.line < 0) continue;
-    l.context = lines.slice(l.line - 1 > 0 ? l.line - 1 : 0, l.line + 2);
+    l.context = lines.slice(l.line - 2 > 0 ? l.line - 1 : 0, l.line + 3);
   }
 
   return lint;

@@ -23,7 +23,7 @@ const MobileHeader: React.FC<MobileHeaderProps> = ({ title }) => {
       <div>
         <nav>
           <button
-            className="w-14 h-[53px] relative focus:outline-none"
+            className="w-14 h-[52px] relative focus:outline-none"
             onClick={() => setHamburgerOpen(!hamburgerOpen)}
           >
             <span

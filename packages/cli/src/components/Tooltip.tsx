@@ -57,7 +57,7 @@ const Tooltip: React.FC<TooltipProps> = ({ content, trigger }) => {
         }
         .overlay {
           position: absolute;
-          top: 53px;
+          top: 52px;
           right: 0;
           left: 0;
           bottom: 0;
