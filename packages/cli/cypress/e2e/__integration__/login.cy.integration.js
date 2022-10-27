@@ -1,5 +1,5 @@
 describe("login tests", () => {
-  beforeEach(() => {
+  before(() => {
     cy.task("db:reset");
   });
 
