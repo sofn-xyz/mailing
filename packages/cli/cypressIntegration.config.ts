@@ -1,6 +1,7 @@
 import { defineConfig } from "cypress";
 import cliPrisma from "./prisma";
 import webPrisma from "../../packages/web/prisma";
+import type { PrismaTableName } from "../../testUtilIntegration";
 
 const resetDb = async () => {
   await truncateDatabases();
@@ -21,10 +22,6 @@ export default defineConfig({
 });
 
 // copied from testUtilIntegration.ts
-
-interface PrismaTableName {
-  table_name: string;
-}
 
 export async function truncateCliDatabase() {
   await truncateTables(cliPrisma);
