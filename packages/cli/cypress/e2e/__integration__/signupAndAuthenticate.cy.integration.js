@@ -45,9 +45,26 @@ describe("login tests", () => {
       url: "/signup",
       followRedirect: false,
       failOnStatusCode: false,
-    }).then((resp) => {
-      expect(resp.status).to.eq(404);
-      expect(resp.redirectedToUrl).to.eq(undefined);
+    }).then((response) => {
+      expect(response.status).to.eq(404);
+      expect(response.redirectedToUrl).to.eq(undefined);
+    });
+
+    // logout
+    cy.request({
+      url: "/api/logout",
+    }).then((response) => {
+      expect(response.status).to.eq(200);
+    });
+
+    cy.visit("/settings", { failOnStatusCode: false });
+    cy.request({
+      url: "/settings",
+      followRedirect: false,
+      failOnStatusCode: false,
+    }).then((response) => {
+      expect(response.status).to.eq(307);
+      expect(response.redirectedToUrl).to.eq("http://localhost:3883/login");
     });
   });
 
@@ -57,9 +74,9 @@ describe("login tests", () => {
       url: "/settings",
       followRedirect: false,
       failOnStatusCode: false,
-    }).then((resp) => {
-      expect(resp.status).to.eq(307);
-      expect(resp.redirectedToUrl).to.eq("http://localhost:3883/login");
+    }).then((response) => {
+      expect(response.status).to.eq(307);
+      expect(response.redirectedToUrl).to.eq("http://localhost:3883/login");
     });
   });
 });
