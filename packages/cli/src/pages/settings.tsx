@@ -18,6 +18,7 @@ export const getServerSideProps = withSessionSsr<{ user: any }>(
 
     const apiKeys: ApiKey[] = await prisma.apiKey.findMany({
       where: { organizationId: user.organizationId },
+      select: { id: true, active: true },
     });
 
     return {
