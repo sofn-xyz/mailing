@@ -54,7 +54,10 @@ const Reservation = ({ headline, body, bulletedList, ctaText }) => {
             {ctaText && (
               <>
                 <MjmlSpacer height="24px" />
-                <ButtonPrimary link={"#"} uiText={ctaText} />
+                <ButtonPrimary
+                  link="https://www.mailing.run"
+                  uiText={ctaText}
+                />
                 <MjmlSpacer height="8px" />
               </>
             )}

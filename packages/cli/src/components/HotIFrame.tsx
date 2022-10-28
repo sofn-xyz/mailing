@@ -20,7 +20,7 @@ const HotIFrame: React.FC<HotIFrameProps> = ({
     <>
       {viewMode === "html" ? (
         <textarea
-          className={cx("code-container mono text-black h-full", {
+          className={cx("code-container mono bg-black h-full", {
             "fixed top-0 left-0 right-0 bottom-0 z-50": fullScreen,
           })}
           readOnly
@@ -30,15 +30,17 @@ const HotIFrame: React.FC<HotIFrameProps> = ({
         <div
           className={cx("h-full", {
             "fixed top-0 left-0 right-0 bottom-0 z-50 bg-black": fullScreen,
+            "py-16": viewMode === "mobile",
           })}
         >
           <div
-            className={cx("frame h-full", {
-              mobile: viewMode === "mobile",
+            className={cx("frame m-auto", {
+              "bg-[white] h-full": viewMode !== "mobile",
+              "mobile bg-gray-800": viewMode === "mobile",
             })}
           >
             <iframe
-              className={cx("bg-neutral-50 h-full", {
+              className={cx("bg-[white] h-full", {
                 "fixed top-0 left-0 right-0 bottom-0 z-50":
                   fullScreen && viewMode !== "mobile",
               })}
@@ -49,20 +51,15 @@ const HotIFrame: React.FC<HotIFrameProps> = ({
         </div>
       )}
       <style jsx>{`
-        .frame {
-          margin: auto;
-          background: white;
-        }
         .mobile.frame {
           padding: 64px 16px 74px;
           max-width: 352px;
           border-radius: 32px;
-          margin: 64px auto;
-          background-color: #252525;
+          max-height: 706px;
         }
         .mobile iframe {
           height: 568px;
-          max-width: 320px;
+          max-width: 375px;
           background-color: white;
         }
         iframe {

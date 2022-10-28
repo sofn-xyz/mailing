@@ -1,7 +1,7 @@
 import Reservation from "../Reservation";
 import BulletedList from "../components/BulletedList";
 
-export function reservationCanceled() {
+export function reservationWithError() {
   return (
     <Reservation
       headline="Reservation Canceled"
@@ -17,7 +17,7 @@ export function reservationCanceled() {
       body={
         <>
           If this was a mistake or if you changed your mind, you can use the
-          link below to rebook your reservation.
+          link below to rebook your reservation. <a href="#">Learn more</a>
         </>
       }
       ctaText={"Rebook Now"}
