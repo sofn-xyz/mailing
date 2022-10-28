@@ -30,9 +30,10 @@ const HTMLLint: React.FC<HTMLLintProps> = ({ htmlLint }) => {
         </ol>
       </div>
 
-      <div
-        className="flex justify-between px-4 py-3 cursor-pointer"
+      <button
+        className="flex justify-between px-4 py-3 w-full"
         onClick={handleOpenToggle}
+        aria-label="toggle html lint details"
       >
         <div className="flex content-center">
           <Image src="/icon-warning.svg" width="16" height="16" alt="Warning" />
@@ -64,7 +65,7 @@ const HTMLLint: React.FC<HTMLLintProps> = ({ htmlLint }) => {
             />
           </svg>
         </div>
-      </div>
+      </button>
     </div>
   );
 };
