@@ -60,7 +60,7 @@ const HotIFrame: React.FC<HotIFrameProps> = ({
         }
         .mobile iframe {
           height: 568px;
-          max-width: 320px;
+          max-width: 375px;
           background-color: white;
         }
         iframe {

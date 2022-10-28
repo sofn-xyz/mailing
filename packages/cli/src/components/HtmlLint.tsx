@@ -18,10 +18,10 @@ const HTMLLint: React.FC<HTMLLintProps> = ({ htmlLint }) => {
       <div
         aria-hidden={!open}
         className={cx(
-          "overflow-scroll text-amber-200 bg-gray-800 transition-transform origin-bottom z-0 absolute max-h-[80vh] px-4 py-6 top-0 left-0 right-0",
+          "overflow-scroll text-amber-200 bg-gray-800 transition-transform origin-bottom z-0 absolute max-h-[80vh] bottom-[40px] left-0 right-0",
           {
-            "pointer-events-none translate-y-0": !open,
-            "-translate-y-full": open,
+            "pointer-events-none translate-y-full ": !open,
+            "translate-y-0 px-4 py-6": open,
           }
         )}
       >
