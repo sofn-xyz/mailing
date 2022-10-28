@@ -57,7 +57,7 @@ type Props = {
 
 const List = (props: { list: List }) => {
   return (
-    <li>
+    <li className="list-none">
       <input type="checkbox" />
       <label>{props.list.name}</label>
     </li>
@@ -89,14 +89,18 @@ const Unsubscribe = (props: Props) => {
               {formSubmitted ? <FormSuccess>Saved!</FormSuccess> : null}
 
               <div className="col-span-3">
-                <h2>Lists</h2>
-                <ul>
-                  {lists.map((list) => (
-                    <List list={list} key={list.id} />
-                  ))}
-                </ul>
+                {lists.length ? (
+                  <>
+                    <h2 className="col-span-2 text-3xl">Lists</h2>
+                    <ul>
+                      {lists.map((list) => (
+                        <List list={list} key={list.id} />
+                      ))}
+                    </ul>
+                  </>
+                ) : null}
 
-                <h2>Unsubscribe from all</h2>
+                <h2 className="col-span-2 text-3xl">Unsubscribe from all</h2>
                 <List list={defaultList} key={defaultList.id} />
 
                 <div>
