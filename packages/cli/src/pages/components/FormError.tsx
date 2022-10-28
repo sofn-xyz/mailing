@@ -4,7 +4,7 @@ export default function FormError(props: { children?: ReactNode }) {
   if (!props.children) return null;
 
   return (
-    <div className="bg-red-300 col-span-3 rounded-md py-2 px-3">
+    <div className="bg-red-300 col-span-3 rounded-md py-2 px-3 form-error">
       {props.children}
     </div>
   );
