@@ -28,6 +28,14 @@ describe("users", () => {
         const { email, password } = formData;
         await apiLoginAs(email, password);
       });
+
+      it("creates a default list for the user", async () => {
+        expect(await prisma.list.count()).toBe(1);
+      });
+
+      it("creates a default apiKey for the user", async () => {
+        expect(await prisma.apiKey.count()).toBe(1);
+      });
     });
 
     describe("failure states", () => {

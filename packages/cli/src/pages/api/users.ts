@@ -94,6 +94,11 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   // make an api key for you to use
   await prisma.apiKey.create({ data: { organizationId: organization.id } });
 
+  // make a list for you to use
+  await prisma.list.create({
+    data: { name: "My list", organizationId: organization.id },
+  });
+
   res.status(201).end();
 };
 
