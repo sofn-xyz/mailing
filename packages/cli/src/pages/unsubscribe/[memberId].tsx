@@ -82,9 +82,12 @@ const Unsubscribe = (props: Props) => {
       <div>
         <div className="w-full h-full">
           <main className="max-w-3xl mx-auto pt-20 sm:pt-24 lg:pt-32">
-            <form className="grid grid-cols-3 gap-3" onSubmit={onSubmit}>
-              <h1 className="col-span-3 text-4xl sm:text-7xl 2xl:text-8xl m-0">
-                Unsubscribe
+            <form
+              className="grid grid-cols-3 gap-3 border-solid border-gray-600 border rounded-2xl p-12"
+              onSubmit={onSubmit}
+            >
+              <h1 className="col-span-3 text-3xl sm:text-3xl 2xl:text-3xl m-0">
+                Email preferences
               </h1>
 
               {formSubmitted ? <FormSuccess>Saved!</FormSuccess> : null}
@@ -92,7 +95,6 @@ const Unsubscribe = (props: Props) => {
               <div className="col-span-3">
                 {lists.length ? (
                   <>
-                    <h2 className="col-span-2 text-3xl">Lists</h2>
                     <ul>
                       {lists.map((list) => (
                         <List list={list} key={list.id} />
@@ -101,11 +103,10 @@ const Unsubscribe = (props: Props) => {
                   </>
                 ) : null}
 
-                <h2 className="col-span-2 text-3xl">Unsubscribe from all</h2>
                 <List
                   list={defaultList}
                   key={defaultList.id}
-                  name="Unsubscribe from all"
+                  name="Unsubscribe from all emails"
                 />
 
                 <div>
