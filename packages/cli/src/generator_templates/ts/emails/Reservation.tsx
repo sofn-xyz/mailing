@@ -67,7 +67,10 @@ const Reservation: React.FC<ReservationProps> = ({
             {ctaText && (
               <>
                 <MjmlSpacer height="24px" />
-                <ButtonPrimary link={"#"} uiText={ctaText} />
+                <ButtonPrimary
+                  link="https://www.mailing.run"
+                  uiText={ctaText}
+                />
                 <MjmlSpacer height="8px" />
               </>
             )}

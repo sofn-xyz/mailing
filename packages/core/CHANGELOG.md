@@ -1,5 +1,18 @@
 # mailing-core
 
+## 0.8.10
+
+### Patch Changes
+
+- f3f7aef: add html linting for relative and localhost images and links
+
+## 0.8.9
+
+### Patch Changes
+
+- aa0bab5: add lint step for templates
+- 0c843d4: fix layout bugs
+
 ## 0.8.8
 
 ### Patch Changes

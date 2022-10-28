@@ -56,7 +56,7 @@ const ResetPassword: React.FC<ResetPasswordProps> = ({
               <>{body}</>
             </MjmlText>
             <MjmlSpacer height="24px" />
-            <ButtonPrimary link={"#"} uiText={ctaText} />
+            <ButtonPrimary link="https://www.mailing.run" uiText={ctaText} />
             <MjmlSpacer height="8px" />
             <MjmlText
               padding="16px 0"

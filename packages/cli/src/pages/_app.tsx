@@ -9,7 +9,7 @@ export default function Mailing({ Component, pageProps }: AppProps) {
       <Head>
         <title>Mailing</title>
       </Head>
-      <Component {...pageProps} />;
+      <Component {...pageProps} />
     </HamburgerProvider>
   );
 }

@@ -54,7 +54,10 @@ const AccountCreated = ({ name }) => (
             Just a couple taps, and the table is yours.
           </MjmlText>
           <MjmlSpacer height="24px" />
-          <ButtonPrimary link={"#"} uiText={"Book a Reservation"} />
+          <ButtonPrimary
+            link="https://www.mailing.run"
+            uiText="Book a Reservation"
+          />
           <MjmlSpacer height="24px" />
           <MjmlText
             padding="0"
