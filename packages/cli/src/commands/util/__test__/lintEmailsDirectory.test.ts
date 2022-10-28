@@ -8,7 +8,8 @@ describe("lintEmailsDirectory", () => {
   beforeEach(() => {
     jest.restoreAllMocks();
     jest.spyOn(process, "exit").mockImplementation(() => undefined as never);
-    jest.spyOn(log, "error");
+    jest.spyOn(log, "error").mockImplementation(() => undefined);
+    jest.spyOn(log, "log").mockImplementation(() => undefined);
   });
 
   afterAll(() => {
