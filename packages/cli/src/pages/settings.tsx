@@ -1,5 +1,5 @@
 import { withSessionSsr } from "../util/session";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import prisma from "../../prisma";
 import type { ApiKey, List, User } from "../../prisma/generated/client";
 
@@ -43,9 +43,10 @@ interface Props {
 
 function Settings(props: Props) {
   const [apiKeys, setApiKeys] = useState(props.apiKeys);
-  const { lists } = props;
+  const { lists: initialLists } = props;
+  const [lists, setLists] = useState(initialLists);
 
-  const createApiKey = async () => {
+  const createApiKey = useCallback(async () => {
     const response = await fetch("/api/apiKeys", {
       method: "POST",
       headers: {
@@ -56,7 +57,20 @@ function Settings(props: Props) {
     const json = await response.json();
 
     setApiKeys(apiKeys.concat(json.apiKey));
-  };
+  }, [apiKeys]);
+
+  const createList = useCallback(async () => {
+    const response = await fetch("/api/lists", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ name: `My List ${Math.random()}` }),
+    });
+
+    const json = await response.json();
+    setLists(lists.concat(json.list));
+  }, [lists]);
 
   const deleteApiKey = (apiKey: string) => {
     return () => {
@@ -123,6 +137,14 @@ function Settings(props: Props) {
 
               <div className="mt-16 col-span-3"></div>
               <h2 className="col-span-2 text-3xl">Lists</h2>
+              <div className="col-span-1 text-right">
+                <button
+                  onClick={createList}
+                  className="text-sm text-green-300 border-emerald-700 border rounded-lg p-[13px]"
+                >
+                  New List
+                </button>
+              </div>
               <div className="col-span-3">
                 <table className="table-auto w-full">
                   <thead className="text-xs uppercase text-gray-500 border-t border-slate-300">
