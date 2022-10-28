@@ -320,7 +320,7 @@ exports[`renderTemplate returns rendered html 1`] = `
                align="center" bgcolor="#000000" role="presentation" style="border:none;border-radius:100px;cursor:auto;height:32px;mso-padding-alt:10px 25px;background:#000000;" valign="middle"
             >
               <a
-                 href="#" style="display:inline-block;background:#000000;color:#f5f5f5;font-family:Inter, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, sans-serif;font-size:16px;font-weight:400;line-height:120%;margin:0;text-decoration:none;text-transform:none;padding:10px 25px;mso-padding-alt:0px;border-radius:100px;" target="_blank"
+                 href="https://www.mailing.run" style="display:inline-block;background:#000000;color:#f5f5f5;font-family:Inter, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, sans-serif;font-size:16px;font-weight:400;line-height:120%;margin:0;text-decoration:none;text-transform:none;padding:10px 25px;mso-padding-alt:0px;border-radius:100px;" target="_blank"
               >
                 Book a Reservation
               </a>
@@ -346,7 +346,7 @@ exports[`renderTemplate returns rendered html 1`] = `
                align="center" bgcolor="#fadf98" role="presentation" style="border:none;border-radius:100px;cursor:auto;height:32px;mso-padding-alt:10px 25px;background:#fadf98;" valign="middle"
             >
               <a
-                 href="#" style="display:inline-block;background:#fadf98;color:#000000;font-family:Inter, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, sans-serif;font-size:16px;font-weight:400;line-height:120%;margin:0;text-decoration:none;text-transform:none;padding:10px 25px;mso-padding-alt:0px;border-radius:100px;" target="_blank"
+                 href="https://www.mailing.run" style="display:inline-block;background:#fadf98;color:#000000;font-family:Inter, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, sans-serif;font-size:16px;font-weight:400;line-height:120%;margin:0;text-decoration:none;text-transform:none;padding:10px 25px;mso-padding-alt:0px;border-radius:100px;" target="_blank"
               >
                 Book a Reservation
               </a>
@@ -427,7 +427,7 @@ exports[`renderTemplate returns rendered html 1`] = `
                   
       <div
          style="font-family:Inter, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, sans-serif;font-size:14px;font-weight:400;line-height:1;text-align:left;color:#888888;"
-      >© 2022 BookBook  ·  <a href="#" target="_blank">Unsubscribe</a></div>
+      >© 2022 BookBook  ·  <a href="https://www.mailing.run" target="_blank" rel="noreferrer">Unsubscribe</a></div>
     
                 </td>
               </tr>

@@ -25,6 +25,7 @@
   "exclude": [
     "src/emails/**/*",
     "dist/**/*",
-    "src/cli/generator_templates/**/*"
+    "src/cli/generator_templates/**/*",
+    "node_modules"
   ]
 }

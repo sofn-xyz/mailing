@@ -13,6 +13,7 @@ import { HamburgerContext } from "./HamburgerContext";
 
 import type { PreviewIndexResponseBody } from "../pages/api/previews";
 import MobileHeader from "./MobileHeader";
+import HTMLLint from "./HtmlLint";
 
 type Data = {
   preview: ShowPreviewResponseBody;
@@ -53,7 +54,7 @@ const PreviewViewer: React.FC<PreviewViewerProps> = ({ initialData }) => {
     if (!(previewClass && previewFunction)) {
       setData((data: Data) => ({
         ...data,
-        preview: { html: "", errors: [] },
+        preview: { html: "", errors: [], htmlLint: [] },
       }));
       return;
     }
@@ -161,6 +162,9 @@ const PreviewViewer: React.FC<PreviewViewerProps> = ({ initialData }) => {
                 setViewMode={setViewMode}
               />
             </div>
+            {!!preview?.htmlLint?.length && (
+              <HTMLLint htmlLint={preview.htmlLint} />
+            )}
           </>
         ) : (
           <div className="text-2xl grid h-screen place-items-center text-gray-600">
