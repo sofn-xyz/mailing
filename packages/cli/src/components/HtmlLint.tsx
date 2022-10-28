@@ -14,12 +14,15 @@ const HTMLLint: React.FC<HTMLLintProps> = ({ htmlLint }) => {
   };
 
   return (
-    <div className="bg-amber-200 text-black hidden sm:block text-xs relative">
+    <div className="bg-transparent text-black hidden sm:block text-xs relative">
       <div
-        className={cx("overflow-scroll bg-gray-800 text-amber-200", {
-          "max-h-0": !open,
-          "max-h-[80vh] px-4 py-6": open,
-        })}
+        className={cx(
+          "overflow-scroll text-amber-200 transition-all origin-bottom",
+          {
+            "max-h-0 pointer-events-none scale-y-0 p-0": !open,
+            "max-h-[80vh] scale-y-100 bg-gray-800 px-4 py-6": open,
+          }
+        )}
       >
         <ol className="font-mono">
           {htmlLint.map((lint, i) => (
@@ -31,7 +34,7 @@ const HTMLLint: React.FC<HTMLLintProps> = ({ htmlLint }) => {
       </div>
 
       <button
-        className="flex justify-between px-4 py-3 w-full"
+        className="bg-amber-200 flex justify-between px-4 py-3 w-full"
         onClick={handleOpenToggle}
         aria-label="toggle html lint details"
       >
