@@ -18,7 +18,8 @@ describe("HTMLLint", () => {
     const button = await findByText("2 HTML lint errors.");
 
     // list is hidden
-    getByRole("list", { hidden: true });
+    const listText = getByRole("list", { hidden: true }).textContent;
+    expect(listText).toBe("1. Oh no!2. Oh no again!");
 
     await user.click(button);
 
