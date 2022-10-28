@@ -1,5 +1,13 @@
 # mailing
 
+## 0.8.10
+
+### Patch Changes
+
+- f3f7aef: add html linting for relative and localhost images and links
+- Updated dependencies [f3f7aef]
+  - mailing-core@0.8.10
+
 ## 0.8.9
 
 ### Patch Changes
