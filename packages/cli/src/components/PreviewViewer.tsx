@@ -155,16 +155,16 @@ const PreviewViewer: React.FC<PreviewViewerProps> = ({ initialData }) => {
                 }
               />
             </div>
-            <div className="flex-1">
+            <div className="flex-1 -z-20">
               <HotIFrame
                 srcDoc={preview.html}
                 viewMode={viewMode}
                 setViewMode={setViewMode}
               />
-              {!!preview?.htmlLint?.length && (
-                <HTMLLint htmlLint={preview.htmlLint} />
-              )}
             </div>
+            {!!preview?.htmlLint?.length && (
+              <HTMLLint htmlLint={preview.htmlLint} />
+            )}
           </>
         ) : (
           <div className="text-2xl grid h-screen place-items-center text-gray-600">
