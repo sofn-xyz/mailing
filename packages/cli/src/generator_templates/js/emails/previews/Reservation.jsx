@@ -1,7 +1,7 @@
 import Reservation from "../Reservation";
 import BulletedList from "../components/BulletedList";
 
-export function reservationCanceled() {
+export function reservationWithError() {
   return (
     <Reservation
       headline="Reservation Canceled"
