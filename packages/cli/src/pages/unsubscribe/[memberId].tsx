@@ -55,11 +55,12 @@ type Props = {
   defaultList: List;
 };
 
-const List = (props: { list: List }) => {
+const List = (props: { list: List; name?: string }) => {
+  const name = props.name || props.list.name;
   return (
     <li className="list-none">
       <input type="checkbox" />
-      <label>{props.list.name}</label>
+      <label>{name}</label>
     </li>
   );
 };
@@ -101,7 +102,11 @@ const Unsubscribe = (props: Props) => {
                 ) : null}
 
                 <h2 className="col-span-2 text-3xl">Unsubscribe from all</h2>
-                <List list={defaultList} key={defaultList.id} />
+                <List
+                  list={defaultList}
+                  key={defaultList.id}
+                  name="Unsubscribe from all"
+                />
 
                 <div>
                   <SubmitButton>Submit</SubmitButton>

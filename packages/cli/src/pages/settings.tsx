@@ -151,6 +151,7 @@ function Settings(props: Props) {
                     <tr>
                       <td>Name</td>
                       <td>Id</td>
+                      <td>Subscribe</td>
                     </tr>
                   </thead>
                   <tbody>
@@ -161,6 +162,9 @@ function Settings(props: Props) {
                       >
                         <td className="py-[7px]">{list.name}</td>
                         <td>{list.id}</td>
+                        <td>
+                          <a href={`/lists/${list.id}/subscribe`}>Subscribe</a>
+                        </td>
                       </tr>
                     ))}
                   </tbody>
