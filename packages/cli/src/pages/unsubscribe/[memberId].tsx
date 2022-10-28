@@ -3,6 +3,8 @@ import prisma from "../../../prisma";
 import { GetServerSideProps } from "next";
 import SubmitButton from "../../components/SubmitButton";
 import type { List, Member } from "../../../prisma/generated/client";
+import { useState } from "react";
+import FormSuccess from "../components/FormSuccess";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const memberId = context?.params?.memberId;
@@ -45,11 +47,12 @@ type Props = {
 };
 
 const Unsubscribe = (props: Props) => {
+  const [formSubmitted, setFormSubmitted] = useState(false);
   console.log(props);
 
   function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    console.log("submit form");
+    setFormSubmitted(true);
   }
 
   return (
@@ -64,6 +67,8 @@ const Unsubscribe = (props: Props) => {
               <h1 className="col-span-3 text-4xl sm:text-7xl 2xl:text-8xl m-0">
                 Unsubscribe
               </h1>
+
+              {formSubmitted ? <FormSuccess>Saved!</FormSuccess> : null}
 
               <div className="col-span-3">
                 <h2>Lists</h2>
