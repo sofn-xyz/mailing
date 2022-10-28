@@ -34,9 +34,7 @@ type MjmlError = {
 };
 
 type HtmlLintError = {
-  line: number;
   message: string;
-  context?: string[];
 };
 
 type ViewMode = "desktop" | "mobile" | "html";

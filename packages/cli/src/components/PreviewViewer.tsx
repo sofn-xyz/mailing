@@ -155,7 +155,7 @@ const PreviewViewer: React.FC<PreviewViewerProps> = ({ initialData }) => {
                 }
               />
             </div>
-            <div className="flex-1 -z-20">
+            <div className="flex-1">
               <HotIFrame
                 srcDoc={preview.html}
                 viewMode={viewMode}

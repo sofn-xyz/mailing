@@ -16,12 +16,27 @@ const HTMLLint: React.FC<HTMLLintProps> = ({ htmlLint }) => {
   return (
     <div className="bg-amber-200 text-black hidden sm:block text-xs relative">
       <div
+        className={cx("overflow-scroll bg-gray-800 text-amber-200", {
+          "max-h-0": !open,
+          "max-h-[80vh] px-4 py-6": open,
+        })}
+      >
+        <ol className="font-mono">
+          {htmlLint.map((lint, i) => (
+            <li key={`warning${i}`}>
+              {i + 1}. {lint.message}
+            </li>
+          ))}
+        </ol>
+      </div>
+
+      <div
         className="flex justify-between px-4 py-3 cursor-pointer"
         onClick={handleOpenToggle}
       >
         <div className="flex content-center">
           <Image src="/icon-warning.svg" width="16" height="16" alt="Warning" />
-          <span className="font-bold pl-3 pr-1">
+          <span className="font-bold pl-2 pr-1">
             {htmlLint.length} HTML lint errors.
           </span>
           Make sure to resolve these before sending this email.
@@ -49,24 +64,6 @@ const HTMLLint: React.FC<HTMLLintProps> = ({ htmlLint }) => {
             />
           </svg>
         </div>
-      </div>
-
-      <div
-        className={cx(
-          "overflow-scroll bg-gray-800 text-amber-200 transition-transform absolute top-0 right-0 left-0 -z-10",
-          {
-            "translate-y-0": !open,
-            "max-h-[80vh] px-4 py-6 -translate-y-full": open,
-          }
-        )}
-      >
-        <ol>
-          {htmlLint.map((lint, i) => (
-            <li key={`warning${i}`}>
-              {i + 1}. {lint.message}
-            </li>
-          ))}
-        </ol>
       </div>
     </div>
   );
