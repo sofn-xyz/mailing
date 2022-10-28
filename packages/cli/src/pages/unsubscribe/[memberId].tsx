@@ -5,6 +5,7 @@ import SubmitButton from "../../components/SubmitButton";
 import type { List, Member } from "../../../prisma/generated/client";
 import { useState } from "react";
 import FormSuccess from "../components/FormSuccess";
+import { remove } from "lodash";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const memberId = context?.params?.memberId;
@@ -33,10 +34,17 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   const lists = await prisma.list.findMany({ where: { id: { in: listIds } } });
 
+  const [defaultList] = remove(lists, (list: List) => list.isDefault);
+
+  if (!defaultList) {
+    throw new Error("Couldn't find default list");
+  }
+
   return {
     props: {
       memberId,
       lists,
+      defaultList,
     },
   };
 };
@@ -44,6 +52,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 type Props = {
   memberId: string;
   lists: List[];
+  defaultList: List;
 };
 
 const List = (props: { list: List }) => {
@@ -57,7 +66,7 @@ const List = (props: { list: List }) => {
 
 const Unsubscribe = (props: Props) => {
   const [formSubmitted, setFormSubmitted] = useState(false);
-  const { lists } = props;
+  const { lists, defaultList } = props;
 
   function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -88,8 +97,7 @@ const Unsubscribe = (props: Props) => {
                 </ul>
 
                 <h2>Unsubscribe from all</h2>
-                <input type="checkbox" />
-                <label>Unsubscribe from all</label>
+                <List list={defaultList} key={defaultList.id} />
 
                 <div>
                   <SubmitButton>Submit</SubmitButton>
