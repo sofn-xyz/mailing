@@ -38,7 +38,7 @@ export async function disconnectDatabases() {
   delete global.prismaMailingWeb;
 }
 
-interface PrismaTableName {
+export interface PrismaTableName {
   table_name: string;
 }
 

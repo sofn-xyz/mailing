@@ -1,7 +1,7 @@
 import { withSessionSsr } from "../util/session";
 import { useState } from "react";
 import prisma from "../../prisma";
-import { ApiKey, User } from "../../prisma/generated/client";
+import type { ApiKey, User } from "../../prisma/generated/client";
 
 export const getServerSideProps = withSessionSsr<{ user: any }>(
   async function ({ req }) {
@@ -16,8 +16,9 @@ export const getServerSideProps = withSessionSsr<{ user: any }>(
       };
     }
 
-    const apiKeys: ApiKey[] = await prisma.apiKey.findMany({
+    const apiKeys = await prisma.apiKey.findMany({
       where: { organizationId: user.organizationId },
+      select: { id: true, active: true },
     });
 
     return {
@@ -78,7 +79,7 @@ function Settings(props: { user: User; apiKeys: ApiKey[] }) {
                 </button>
               </div>
               <div className="col-span-3">
-                <table className="table-auto w-full">
+                <table id="api-keys" className="table-auto w-full">
                   <thead className="text-xs uppercase text-gray-500 border-t border-slate-300">
                     <tr>
                       <td>API Key</td>
