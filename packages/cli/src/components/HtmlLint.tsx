@@ -16,9 +16,9 @@ const HTMLLint: React.FC<HTMLLintProps> = ({ htmlLint }) => {
   return (
     <div className="bg-amber-200 text-black absolute left-0 right-0 bottom-0 hidden sm:block text-xs">
       <div
-        className={cx("overflow-scroll", {
+        className={cx("overflow-scroll bg-gray-800 text-amber-200", {
           "max-h-0": !open,
-          "max-h-[80vh] px-4 py-3": open,
+          "max-h-[80vh] px-4 py-6": open,
         })}
       >
         <ol>
@@ -29,7 +29,10 @@ const HTMLLint: React.FC<HTMLLintProps> = ({ htmlLint }) => {
           ))}
         </ol>
       </div>
-      <div className="flex justify-between px-4 py-3">
+      <div
+        className="flex justify-between px-4 py-3 cursor-pointer"
+        onClick={handleOpenToggle}
+      >
         <div className="flex content-center">
           <Image src="/icon-warning.svg" width="16" height="16" alt="Warning" />
           <span className="font-bold pl-3 pr-1">
@@ -38,9 +41,28 @@ const HTMLLint: React.FC<HTMLLintProps> = ({ htmlLint }) => {
           Make sure to resolve these before sending this email.
         </div>
 
-        <button onClick={handleOpenToggle}>
-          {open ? "Hide errors" : "Show errors"}
-        </button>
+        <div className="relative">
+          <svg
+            width="9"
+            height="9"
+            viewBox="0 0 9 9"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            className={cx(
+              "inline origin-center arrow transition-transform stroke-gray-800",
+              {
+                "-rotate-180 relative -top-px": open,
+                collapsed: !open,
+              }
+            )}
+          >
+            <path
+              d="M1.5 1.5L4.5 4.5L7.5 1.5"
+              strokeWidth="2"
+              strokeLinecap="round"
+            />
+          </svg>
+        </div>
       </div>
     </div>
   );

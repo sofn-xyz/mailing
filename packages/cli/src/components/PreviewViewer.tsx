@@ -165,7 +165,6 @@ const PreviewViewer: React.FC<PreviewViewerProps> = ({ initialData }) => {
                 <HTMLLint htmlLint={preview.htmlLint} />
               )}
             </div>
-            )
           </>
         ) : (
           <div className="text-2xl grid h-screen place-items-center text-gray-600">
