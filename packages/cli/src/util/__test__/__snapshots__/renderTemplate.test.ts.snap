@@ -427,7 +427,7 @@ exports[`renderTemplate returns rendered html 1`] = `
                   
       <div
          style="font-family:Inter, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, sans-serif;font-size:14px;font-weight:400;line-height:1;text-align:left;color:#888888;"
-      >© 2022 BookBook  ·  <a href="https://www.mailing.run" target="_blank">Unsubscribe</a></div>
+      >© 2022 BookBook  ·  <a href="https://www.mailing.run" target="_blank" rel="noreferrer">Unsubscribe</a></div>
     
                 </td>
               </tr>
