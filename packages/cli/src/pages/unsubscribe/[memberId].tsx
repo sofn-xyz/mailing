@@ -46,9 +46,18 @@ type Props = {
   lists: List[];
 };
 
+const List = (props: { list: List }) => {
+  return (
+    <li>
+      <input type="checkbox" />
+      <label>{props.list.name}</label>
+    </li>
+  );
+};
+
 const Unsubscribe = (props: Props) => {
   const [formSubmitted, setFormSubmitted] = useState(false);
-  console.log(props);
+  const { lists } = props;
 
   function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -73,14 +82,9 @@ const Unsubscribe = (props: Props) => {
               <div className="col-span-3">
                 <h2>Lists</h2>
                 <ul>
-                  <li>
-                    <input type="checkbox" />
-                    <label>List name 1</label>
-                  </li>
-                  <li>
-                    <input type="checkbox" />
-                    <label>List name 2</label>
-                  </li>
+                  {lists.map((list) => (
+                    <List list={list} key={list.id} />
+                  ))}
                 </ul>
 
                 <h2>Unsubscribe from all</h2>
