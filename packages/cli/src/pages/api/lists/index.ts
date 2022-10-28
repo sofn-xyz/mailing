@@ -30,7 +30,11 @@ async function handleCreateList(
 
   if (req.body.name) {
     const list = await prisma.list.create({
-      data: { name: req.body.name, organizationId: user.organizationId },
+      data: {
+        name: req.body.name,
+        organizationId: user.organizationId,
+        isDefault: false,
+      },
     });
     return res.status(201).json({ list });
   } else {
