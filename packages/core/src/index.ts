@@ -23,6 +23,7 @@ export type ComponentMail = SendMailOptions & {
   forcePreview?: boolean;
   templateName?: string;
   previewName?: string;
+  listId?: string;
 };
 
 export async function getTestMailQueue() {
@@ -86,6 +87,7 @@ export function buildSendMail<T>(options: BuildSendMailOptions<T>) {
       templateName,
       previewName,
       forcePreview,
+      listId,
       ...mailOptions
     } = mail;
     mailOptions as SendMailOptions;
@@ -94,7 +96,7 @@ export function buildSendMail<T>(options: BuildSendMailOptions<T>) {
     const previewMode =
       forcePreview || (NODE_ENV !== "production" && !dangerouslyForceDeliver);
 
-    // Do not send emails analytics if MAILING_DATABASE_URL is set
+    // Do not send email analytics if MAILING_DATABASE_URL is set
     // this means sendMail is being called from the REST API and analytics will be handled there
     const analyticsEnabled =
       !MAILING_DATABASE_URL && MAILING_API_URL && MAILING_API_KEY;
@@ -158,12 +160,14 @@ export function buildSendMail<T>(options: BuildSendMailOptions<T>) {
             templateName: templateName || derivedTemplateName,
             previewName,
             mailOptions,
+            listId,
           }),
         });
 
         if (hookResponse.status === 200) {
           const {
             message: { id: messageId },
+            // listId: { id: listId },
           } = await hookResponse.json();
           const stringHtml = mailOptions.html?.toString();
           if (stringHtml) {
@@ -172,6 +176,11 @@ export function buildSendMail<T>(options: BuildSendMailOptions<T>) {
               messageId: messageId,
               apiUrl: MAILING_API_KEY,
             });
+
+            // stringHtml.replace(
+            //   /UNSUBSCRIBE_URL/g,
+            //   `${MAILING_API_URL}/unsubsribe/${memberId}`
+            // );
           }
         } else {
           const json = await hookResponse.json();

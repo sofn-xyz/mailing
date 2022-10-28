@@ -96,6 +96,7 @@ model Click {
 
 model List {
   id             String       @id @default(cuid())
+  isDefault      Boolean      @default(false)
   name           String
   organizationId String
   Organization   Organization @relation(fields: [organizationId], references: [id])

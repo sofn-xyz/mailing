@@ -1,7 +1,8 @@
 import Head from "next/head";
 import prisma from "../../../prisma";
-import { GetServerSideProps, NextPage } from "next";
+import { GetServerSideProps } from "next";
 import SubmitButton from "../../components/SubmitButton";
+import type { List, Member } from "../../../prisma/generated/client";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const memberId = context?.params?.memberId;
@@ -20,14 +21,32 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     };
   }
 
+  const listIds = (
+    await prisma.member.findMany({
+      where: {
+        email: listMember.email,
+      },
+    })
+  ).map((member: Member) => member.listId);
+
+  const lists = await prisma.list.findMany({ where: { id: { in: listIds } } });
+
   return {
     props: {
       memberId,
-    }, // will be passed to the page component as props
+      lists,
+    },
   };
 };
 
-const Unsubscribe: NextPage = () => {
+type Props = {
+  memberId: string;
+  lists: List[];
+};
+
+const Unsubscribe = (props: Props) => {
+  console.log(props);
+
   function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     console.log("submit form");
