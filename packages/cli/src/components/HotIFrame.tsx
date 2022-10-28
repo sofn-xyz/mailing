@@ -30,6 +30,7 @@ const HotIFrame: React.FC<HotIFrameProps> = ({
         <div
           className={cx("h-full", {
             "fixed top-0 left-0 right-0 bottom-0 z-50 bg-black": fullScreen,
+            "py-16": viewMode === "mobile",
           })}
         >
           <div
@@ -55,8 +56,6 @@ const HotIFrame: React.FC<HotIFrameProps> = ({
           max-width: 352px;
           border-radius: 32px;
           max-height: 706px;
-          position: relative;
-          top: 64px;
         }
         .mobile iframe {
           height: 568px;
