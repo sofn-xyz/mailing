@@ -29,7 +29,7 @@ const AccountCreated: React.FC<{ name: string }> = ({ name }) => (
             cssClass="hero"
             padding="0 0 40px"
             align="left"
-            src="/lab.campsh.com/bb-hero%402x.jpg"
+            src="https://s3.amazonaws.com/lab.campsh.com/bb-hero%402x.jpg"
           />
         </MjmlColumn>
       </MjmlSection>
