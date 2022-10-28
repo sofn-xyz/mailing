@@ -60,7 +60,7 @@ const Subscribe = (props: Props) => {
       } else {
         try {
           const json = await response.json();
-          setErrors(json.errors);
+          setErrors(json.error);
         } catch {
           setErrors("Something went wrong");
         }
@@ -108,8 +108,7 @@ const Subscribe = (props: Props) => {
                 Subscribe to {list.name}
               </h1>
 
-              <FormError>{errors}</FormError>
-
+              {errors ? <FormError>{errors}</FormError> : null}
               {submitted ? <Submitted /> : <SubscribeForm />}
             </div>
           </main>
