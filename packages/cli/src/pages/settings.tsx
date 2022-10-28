@@ -1,7 +1,7 @@
 import { withSessionSsr } from "../util/session";
 import { useState } from "react";
 import prisma from "../../prisma";
-import { ApiKey, User } from "../../prisma/generated/client";
+import { ApiKey, List, User } from "../../prisma/generated/client";
 
 export const getServerSideProps = withSessionSsr<{ user: any }>(
   async function ({ req }) {
@@ -20,17 +20,29 @@ export const getServerSideProps = withSessionSsr<{ user: any }>(
       where: { organizationId: user.organizationId },
     });
 
+    const lists: List[] = await prisma.list.findMany({
+      where: { organizationId: user.organizationId },
+    });
+
     return {
       props: {
         user: req.session.user,
         apiKeys,
+        lists,
       },
     };
   }
 );
 
-function Settings(props: { user: User; apiKeys: ApiKey[] }) {
+interface Props {
+  user: User;
+  apiKeys: ApiKey[];
+  lists: List[];
+}
+
+function Settings(props: Props) {
   const [apiKeys, setApiKeys] = useState(props.apiKeys);
+  const { lists } = props;
 
   const createApiKey = async () => {
     const response = await fetch("/api/apiKeys", {
@@ -102,6 +114,30 @@ function Settings(props: { user: User; apiKeys: ApiKey[] }) {
                             Delete
                           </a>
                         </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+
+              <div className="mt-16 col-span-3"></div>
+              <h2 className="col-span-2 text-3xl">Lists</h2>
+              <div className="col-span-3">
+                <table className="table-auto w-full">
+                  <thead className="text-xs uppercase text-gray-500 border-t border-slate-300">
+                    <tr>
+                      <td>Name</td>
+                      <td>Id</td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {lists.map((list) => (
+                      <tr
+                        key={`apikey${list.id}`}
+                        className="divide-y-1 divide-[#555]"
+                      >
+                        <td className="py-[7px]">{list.name}</td>
+                        <td>{list.id}</td>
                       </tr>
                     ))}
                   </tbody>
