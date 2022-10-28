@@ -20,7 +20,7 @@ const HotIFrame: React.FC<HotIFrameProps> = ({
     <>
       {viewMode === "html" ? (
         <textarea
-          className={cx("code-container mono text-black h-full", {
+          className={cx("code-container mono bg-black h-full", {
             "fixed top-0 left-0 right-0 bottom-0 z-50": fullScreen,
           })}
           readOnly
