@@ -80,7 +80,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
       if (error.code === "P2002") {
         return res.status(422).json({ error: ERRORS.userWithEmailExists });
       } else {
-        console.error(error);
         return res.status(500).json({ error: ERRORS.unknown });
       }
     }

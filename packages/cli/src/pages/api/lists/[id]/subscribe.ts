@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next/types";
 import prisma from "../../../../../prisma";
+import { Prisma } from "../../../../../prisma/generated/client";
 
 type Data = {
   error?: string;
@@ -19,13 +20,22 @@ const ApiSubscribe = async function (
     const { email } = req.body;
 
     if (email) {
-      const prismaResponse = await prisma.member.create({
-        data: { listId, email, status: "subscribed" },
-      });
+      try {
+        await prisma.member.create({
+          data: { listId, email, status: "subscribed" },
+        });
 
-      console.log(prismaResponse);
-
-      return res.status(201).end();
+        return res.status(201).end();
+      } catch (error) {
+        if (error instanceof Prisma.PrismaClientKnownRequestError) {
+          if (error.code === "P2002") {
+            return res
+              .status(422)
+              .json({ error: "You're already subscribed to that list" });
+          }
+        }
+        return res.status(500).json({ error: "an unknown error occurred" });
+      }
     } else {
       return res
         .status(422)
