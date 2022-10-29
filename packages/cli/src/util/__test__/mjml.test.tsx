@@ -36,6 +36,8 @@ describe("mjml", () => {
               <MjmlImage src="http://localhost/ok.png" />
               <MjmlButton href="http://localhost:3000/21">A button</MjmlButton>
               <MjmlButton href="/ok.png" />
+              <MjmlButton href="tel:8888888888" />
+              <MjmlButton href="mailto:example@ok.com" />
             </MjmlColumn>
           </MjmlSection>
         </MjmlBody>
