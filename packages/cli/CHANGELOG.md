@@ -1,5 +1,13 @@
 # mailing
 
+## 0.8.11
+
+### Patch Changes
+
+- a7fcab4: fix bug in linter where mailto and tel would be considered relative urls
+- Updated dependencies [a7fcab4]
+  - mailing-core@0.8.11
+
 ## 0.8.10
 
 ### Patch Changes
