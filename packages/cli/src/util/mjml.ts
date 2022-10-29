@@ -16,7 +16,7 @@ function lintHtml(html: string) {
       lint.push({
         message: `image src "${src}" uses localhost`,
       });
-    } else if (!src.startsWith("http")) {
+    } else if (src?.startsWith("/")) {
       lint.push({
         message: `image src "${src}" is relative but must be absolute`,
       });
@@ -32,7 +32,7 @@ function lintHtml(html: string) {
       lint.push({
         message: `link with href "${href}" and text "${link.rawText.trim()}" uses localhost`,
       });
-    } else if (href && !href.startsWith("http")) {
+    } else if (href?.startsWith("/")) {
       lint.push({
         message: `link with href "${href}" and text "${link.rawText.trim()}" is relative but must be absolute`,
       });
