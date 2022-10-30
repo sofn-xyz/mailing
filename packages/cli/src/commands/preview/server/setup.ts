@@ -32,6 +32,7 @@ export async function linkEmailsDirectory(emailsDir: string) {
   const dotMailingSrcPath = ".mailing/src";
   const dynManifestPath = dotMailingSrcPath + "/moduleManifest.ts";
   const dynFeManifestPath = dotMailingSrcPath + "/feManifest.ts";
+  const feManifest = writeFrontendManifest(dynFeManifestPath);
 
   const previewsPath = emailsDir + "/previews";
 
@@ -102,20 +103,12 @@ export async function linkEmailsDirectory(emailsDir: string) {
 
   await writeFile(dynManifestPath, moduleManifestContents);
 
-  const feManifestContents = (
-    await readFile(
-      ".mailing/src/commands/preview/server/templates/feModuleManifest.template.ejs"
-    )
-  ).toString();
-
-  await writeFile(dynFeManifestPath, feManifestContents);
-
   debug("writing module manifest to", dynManifestPath);
 
   // build the module manifests
   await buildManifest("node", dynManifestPath);
-  await buildManifest("browser", dynFeManifestPath);
   await lintEmailsDirectory(emailsDir);
+  await feManifest; // wait for the frontend manifest to be written
 }
 
 export async function packageJsonVersionsMatch(): Promise<boolean> {
@@ -244,4 +237,14 @@ async function buildManifest(
   await remove(manifestPath);
   delete require.cache[manifestPath];
   debug(`bundled ${buildType} manifest for ${manifestPath} to ${buildOutdir}`);
+}
+
+async function writeFrontendManifest(toPath: string) {
+  const feManifestContents = (
+    await readFile(
+      ".mailing/src/commands/preview/server/templates/feModuleManifest.template.ejs"
+    )
+  ).toString();
+  await writeFile(toPath, feManifestContents);
+  await buildManifest("browser", toPath);
 }
