@@ -1,5 +1,5 @@
 import { JSXElementConstructor, ReactElement } from "react";
-import moduleManifest from "../moduleManifest";
+import moduleManifest, { config } from "../moduleManifest";
 
 export function previewTree(): [string, string[]][] {
   return Object.entries(moduleManifest.previews).map(([name, preview]) => {
@@ -35,5 +35,5 @@ export function getPreviewComponent(
 }
 
 export function getConfig(): MailingConfig {
-  return moduleManifest.config;
+  return config;
 }
