@@ -1,25 +1,28 @@
 import { JSXElementConstructor, ReactElement } from "react";
-import { previews, config } from "../moduleManifest";
+import moduleManifest from "../moduleManifest";
 
 export function previewTree(): [string, string[]][] {
-  return Object.entries(previews).map(([name, preview]) => {
+  return Object.entries(moduleManifest.previews).map(([name, preview]) => {
     return [
       name,
       typeof preview === "object"
-        ? Object.keys(preview).filter((k) => k !== "default")
+        ? Object.keys(preview).filter(
+            (k) => k !== "default" && k !== "__esModule"
+          )
         : [],
     ];
   });
 }
 
 export function getPreviewModule(name: string) {
-  return previews[name as keyof typeof previews];
+  return moduleManifest.previews[name as keyof typeof moduleManifest.previews];
 }
 
 export function getPreviewComponent(
   name: string,
   functionName: string
 ): ReactElement<any, string | JSXElementConstructor<any>> | undefined {
+  const { previews } = moduleManifest;
   const previewModule:
     | {
         [key: string]: () => ReactElement | undefined;
@@ -32,5 +35,5 @@ export function getPreviewComponent(
 }
 
 export function getConfig(): MailingConfig {
-  return config;
+  return moduleManifest.config;
 }
