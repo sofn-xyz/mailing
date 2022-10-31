@@ -24,7 +24,7 @@ export default function useLiveReload(onShouldReload: () => void) {
       } catch (e: any) {
         if (!/AbortError/.test(e?.message)) return;
       }
-      if (!shouldReload) return;
+      if (shouldReload?.status !== 200) return;
       const json = await shouldReload.json();
       if (json["vectorClock"] > vectorClock.current) {
         vectorClock.current = json["vectorClock"];
