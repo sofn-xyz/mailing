@@ -1,5 +1,13 @@
 # mailing
 
+## 0.8.12
+
+### Patch Changes
+
+- 01631b0: bugfix for crash when adding blank preview file
+- Updated dependencies [01631b0]
+  - mailing-core@0.8.12
+
 ## 0.8.11
 
 ### Patch Changes
