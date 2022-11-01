@@ -57,7 +57,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
       return acc;
     },
-    { [defaultList.id]: { enabled: true, checked: false } } as FormState
+    { [defaultList.id]: { checked: false, enabled: true } } as FormState
   );
 
   return {
@@ -81,7 +81,7 @@ type ListProps = {
   list: List;
   name?: string;
   data: ListState;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange: () => void;
 };
 
 const List = (props: ListProps) => {
@@ -110,11 +110,32 @@ const Unsubscribe = (props: Props) => {
   const { lists, defaultList } = props;
 
   function onChange(listId: string, isDefaultList: boolean) {
-    return function (e: React.ChangeEvent<HTMLInputElement>) {
-      console.log(listId);
-      console.log(isDefaultList);
-      e.preventDefault();
-      const newFormState = { ...formState };
+    return function () {
+      let newFormState;
+
+      if (isDefaultList) {
+        // when checking the default list: disable all other lists and check the default list
+        // when unchecking the default list: enable all lists and uncheck the default list
+        newFormState = Object.keys(formState).reduce((acc: FormState, key) => {
+          acc[key] = {
+            enabled: formState[listId].checked ? true : key === listId,
+            checked:
+              key === listId
+                ? !formState[listId].checked
+                : formState[key].checked,
+          } as ListState;
+
+          return acc;
+        }, {});
+      } else {
+        newFormState = {
+          ...formState,
+          [listId]: { checked: formState[listId]["checked"], enabled: true },
+        };
+      }
+
+      console.log(newFormState);
+
       setFormState(newFormState);
     };
   }
