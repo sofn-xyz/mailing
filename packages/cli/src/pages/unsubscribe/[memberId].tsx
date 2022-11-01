@@ -130,7 +130,7 @@ const Unsubscribe = (props: Props) => {
       } else {
         newFormState = {
           ...formState,
-          [listId]: { checked: formState[listId]["checked"], enabled: true },
+          [listId]: { checked: !formState[listId]["checked"], enabled: true },
         };
       }
 
