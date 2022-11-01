@@ -63,7 +63,9 @@ type Props = {
   defaultList: List;
 };
 
-const List = (props: { list: List; name?: string }) => {
+type ListProps = { list: List; name?: string; data: ListState };
+
+const List = (props: ListProps) => {
   const name = props.name || props.list.name;
   const id = `list-${props.list.id}`;
   return (
@@ -71,8 +73,8 @@ const List = (props: { list: List; name?: string }) => {
       <input
         type="checkbox"
         className="cursor-pointer"
-        checked={true}
-        disabled={true}
+        checked={props.data.checked}
+        disabled={props.data.disabled}
       />
       <label className="cursor-pointer pl-3" htmlFor={id}>
         {name}
@@ -96,8 +98,6 @@ const Unsubscribe = (props: Props) => {
     },
     { [defaultList.id]: { enabled: true, checked: false } } as FormState
   );
-
-  console.log(formState);
 
   function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -128,7 +128,11 @@ const Unsubscribe = (props: Props) => {
                     <>
                       <ul>
                         {lists.map((list) => (
-                          <List list={list} key={list.id} />
+                          <List
+                            list={list}
+                            key={list.id}
+                            data={formState[list.id]}
+                          />
                         ))}
                       </ul>
                     </>
@@ -137,6 +141,7 @@ const Unsubscribe = (props: Props) => {
                   <List
                     list={defaultList}
                     key={defaultList.id}
+                    data={formState[defaultList.id]}
                     name="Unsubscribe from all emails"
                   />
                 </div>
