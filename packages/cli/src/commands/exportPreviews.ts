@@ -93,48 +93,48 @@ export const handler = buildHandler(
 
     const lint: { [filename: string]: HtmlLintError[] } = {};
     const toWrite: Array<() => Promise<void>> = [];
+    const filenames: string[] = [];
 
-    await Promise.all(
-      readdirSync(previewsPath)
-        .filter((path) => !/^\./.test(path))
-        .flatMap((p) => {
-          const previewPath = resolve(previewsPath, p);
-          const previewModule = require(previewPath);
+    const previewRenders = readdirSync(previewsPath)
+      .filter((path) => !/^\./.test(path))
+      .flatMap((p) => {
+        const previewPath = resolve(previewsPath, p);
+        const previewModule = require(previewPath);
 
-          return Object.keys(require(previewPath)).map(
-            async (previewFunction) => {
-              const filename = previewFilename(p, previewFunction);
-              count++;
+        return Object.keys(require(previewPath)).flatMap(
+          async (previewFunction) => {
+            const filename = previewFilename(p, previewFunction);
+            count++;
 
-              const { html, errors, htmlLint } = render(
-                previewModule[previewFunction]()
-              );
-              if (errors.length) {
-                error(`MJML errors rendering ${filename}:`, errors);
-              }
-
-              if (htmlLint.length && !argv.skipLint) {
-                lint[filename] = htmlLint;
-              }
-
-              const minifyConfig = {
-                collapseWhitespace: true,
-                minifyCSS: false,
-                caseSensitive: true,
-                removeEmptyAttributes: true,
-              };
-
-              const outHtml = argv.minify
-                ? await minify(html, minifyConfig)
-                : html;
-              toWrite.push(async () => {
-                log(`  |-- ${filename}`);
-                return outputFile(resolve(outDir, filename), outHtml);
-              });
+            const { html, errors, htmlLint } = render(
+              previewModule[previewFunction]()
+            );
+            if (errors.length) {
+              error(`MJML errors rendering ${filename}:`, errors);
             }
-          );
-        })
-    );
+
+            if (htmlLint.length && !argv.skipLint) {
+              lint[filename] = htmlLint;
+            }
+
+            const minifyConfig = {
+              collapseWhitespace: true,
+              minifyCSS: false,
+              caseSensitive: true,
+              removeEmptyAttributes: true,
+            };
+
+            const outHtml = argv.minify
+              ? await minify(html, minifyConfig)
+              : html;
+            filenames.push(filename);
+            toWrite.push(async () =>
+              outputFile(resolve(outDir, filename), outHtml)
+            );
+          }
+        );
+      });
+    await Promise.all(previewRenders);
 
     const lintCount = Object.keys(lint).length;
     if (lintCount) {
@@ -160,6 +160,9 @@ export const handler = buildHandler(
     log(`Exporting ${previewText} to`);
     log(`${outDir}/`);
     await Promise.all(toWrite.map((f) => f()));
+    for (const f of filenames.sort()) {
+      log(`  |-- ${f}`);
+    }
     log(`✅ Processed ${count} previews\n`);
   },
   {
