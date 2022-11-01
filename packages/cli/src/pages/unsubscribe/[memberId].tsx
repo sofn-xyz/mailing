@@ -48,11 +48,24 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     throw new Error("Couldn't find default list");
   }
 
+  const initialFormState: FormState = lists.reduce(
+    (acc: FormState, list: List) => {
+      acc[list.id] = {
+        enabled: true,
+        checked: true,
+      } as ListState;
+
+      return acc;
+    },
+    { [defaultList.id]: { enabled: true, checked: false } } as FormState
+  );
+
   return {
     props: {
       memberId,
       lists,
       defaultList,
+      initialFormState,
     },
   };
 };
@@ -61,6 +74,7 @@ type Props = {
   memberId: string;
   lists: List[];
   defaultList: List;
+  initialFormState: FormState;
 };
 
 type ListProps = { list: List; name?: string; data: ListState };
@@ -74,7 +88,7 @@ const List = (props: ListProps) => {
         type="checkbox"
         className="cursor-pointer"
         checked={props.data.checked}
-        disabled={props.data.disabled}
+        disabled={!props.data.enabled}
       />
       <label className="cursor-pointer pl-3" htmlFor={id}>
         {name}
@@ -85,19 +99,8 @@ const List = (props: ListProps) => {
 
 const Unsubscribe = (props: Props) => {
   const [formSubmitted, setFormSubmitted] = useState(false);
+  const [formState, setFormState] = useState<FormState>(props.initialFormState);
   const { lists, defaultList } = props;
-
-  const formState: FormState = lists.reduce(
-    (acc: FormState, list: List) => {
-      acc[list.id] = {
-        enabled: true,
-        checked: true,
-      } as ListState;
-
-      return acc;
-    },
-    { [defaultList.id]: { enabled: true, checked: false } } as FormState
-  );
 
   function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
