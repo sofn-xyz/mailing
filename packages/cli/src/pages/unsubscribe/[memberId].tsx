@@ -6,6 +6,15 @@ import { useState } from "react";
 import FormSuccess from "../components/FormSuccess";
 import { remove } from "lodash";
 
+type ListState = {
+  enabled: boolean;
+  checked: boolean;
+};
+
+type FormState = {
+  [key: string]: ListState;
+};
+
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const memberId = context?.params?.memberId;
 
@@ -59,7 +68,12 @@ const List = (props: { list: List; name?: string }) => {
   const id = `list-${props.list.id}`;
   return (
     <li className="list-none pb-4">
-      <input type="checkbox" className="cursor-pointer" id={id} />
+      <input
+        type="checkbox"
+        className="cursor-pointer"
+        checked={true}
+        disabled={true}
+      />
       <label className="cursor-pointer pl-3" htmlFor={id}>
         {name}
       </label>
@@ -70,6 +84,20 @@ const List = (props: { list: List; name?: string }) => {
 const Unsubscribe = (props: Props) => {
   const [formSubmitted, setFormSubmitted] = useState(false);
   const { lists, defaultList } = props;
+
+  const formState: FormState = lists.reduce(
+    (acc: FormState, list: List) => {
+      acc[list.id] = {
+        enabled: true,
+        checked: true,
+      } as ListState;
+
+      return acc;
+    },
+    { [defaultList.id]: { enabled: true, checked: false } } as FormState
+  );
+
+  console.log(formState);
 
   function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -114,9 +142,7 @@ const Unsubscribe = (props: Props) => {
                 </div>
               </div>
               <div className="col-span-3 border border-top border-gray-600 text-center">
-                <button onClick={onSubmit} className="text-blue p-4 m-4">
-                  Save preferences
-                </button>
+                <button className="text-blue p-4 m-4">Save preferences</button>
               </div>
             </form>
           </main>
