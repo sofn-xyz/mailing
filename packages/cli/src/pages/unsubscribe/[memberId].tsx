@@ -77,7 +77,12 @@ type Props = {
   initialFormState: FormState;
 };
 
-type ListProps = { list: List; name?: string; data: ListState };
+type ListProps = {
+  list: List;
+  name?: string;
+  data: ListState;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+};
 
 const List = (props: ListProps) => {
   const name = props.name || props.list.name;
@@ -85,10 +90,12 @@ const List = (props: ListProps) => {
   return (
     <li className="list-none pb-4">
       <input
+        id={id}
         type="checkbox"
         className="cursor-pointer"
         checked={props.data.checked}
         disabled={!props.data.enabled}
+        onChange={props.onChange}
       />
       <label className="cursor-pointer pl-3" htmlFor={id}>
         {name}
@@ -101,6 +108,16 @@ const Unsubscribe = (props: Props) => {
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [formState, setFormState] = useState<FormState>(props.initialFormState);
   const { lists, defaultList } = props;
+
+  function onChange(listId: string, isDefaultList: boolean) {
+    return function (e: React.ChangeEvent<HTMLInputElement>) {
+      console.log(listId);
+      console.log(isDefaultList);
+      e.preventDefault();
+      const newFormState = { ...formState };
+      setFormState(newFormState);
+    };
+  }
 
   function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -135,6 +152,7 @@ const Unsubscribe = (props: Props) => {
                             list={list}
                             key={list.id}
                             data={formState[list.id]}
+                            onChange={onChange(list.id, false)}
                           />
                         ))}
                       </ul>
@@ -145,6 +163,7 @@ const Unsubscribe = (props: Props) => {
                     list={defaultList}
                     key={defaultList.id}
                     data={formState[defaultList.id]}
+                    onChange={onChange(defaultList.id, true)}
                     name="Unsubscribe from all emails"
                   />
                 </div>
