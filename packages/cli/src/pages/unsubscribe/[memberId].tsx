@@ -59,8 +59,10 @@ const List = (props: { list: List; name?: string }) => {
   const id = `list-${props.list.id}`;
   return (
     <li className="list-none pb-4">
-      <input type="checkbox" className="mr-3" id={id} />
-      <label htmlFor={id}>{name}</label>
+      <input type="checkbox" className="cursor-pointer" id={id} />
+      <label className="cursor-pointer pl-3" htmlFor={id}>
+        {name}
+      </label>
     </li>
   );
 };
