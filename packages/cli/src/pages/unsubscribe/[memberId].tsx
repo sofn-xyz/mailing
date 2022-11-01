@@ -1,7 +1,6 @@
 import Head from "next/head";
 import prisma from "../../../prisma";
 import { GetServerSideProps } from "next";
-import SubmitButton from "../../components/SubmitButton";
 import type { List, Member } from "../../../prisma/generated/client";
 import { useState } from "react";
 import FormSuccess from "../components/FormSuccess";
@@ -57,10 +56,11 @@ type Props = {
 
 const List = (props: { list: List; name?: string }) => {
   const name = props.name || props.list.name;
+  const id = `list-${props.list.id}`;
   return (
-    <li className="list-none">
-      <input type="checkbox" />
-      <label>{name}</label>
+    <li className="list-none pb-4">
+      <input type="checkbox" className="mr-3" id={id} />
+      <label htmlFor={id}>{name}</label>
     </li>
   );
 };
@@ -81,37 +81,40 @@ const Unsubscribe = (props: Props) => {
       </Head>
       <div>
         <div className="w-full h-full">
-          <main className="max-w-3xl mx-auto pt-20 sm:pt-24 lg:pt-32">
+          <main className="max-w-sm mx-auto pt-20 sm:pt-24 lg:pt-32">
             <form
-              className="grid grid-cols-3 gap-3 border-solid border-gray-600 border rounded-2xl p-12"
+              className="grid grid-cols-3 gap-3 border-solid border-gray-600 border rounded-2xl pt-12"
               onSubmit={onSubmit}
             >
-              <h1 className="col-span-3 text-3xl sm:text-3xl 2xl:text-3xl m-0">
-                Email preferences
-              </h1>
+              <div className="col-span-3 pr-12 pl-12">
+                <h1 className="text-3xl sm:text-3xl 2xl:text-3xl m-0 mb-8">
+                  Email preferences
+                </h1>
 
-              {formSubmitted ? <FormSuccess>Saved!</FormSuccess> : null}
+                {formSubmitted ? <FormSuccess>Saved!</FormSuccess> : null}
 
-              <div className="col-span-3">
-                {lists.length ? (
-                  <>
-                    <ul>
-                      {lists.map((list) => (
-                        <List list={list} key={list.id} />
-                      ))}
-                    </ul>
-                  </>
-                ) : null}
+                <div className="col-span-3">
+                  {lists.length ? (
+                    <>
+                      <ul>
+                        {lists.map((list) => (
+                          <List list={list} key={list.id} />
+                        ))}
+                      </ul>
+                    </>
+                  ) : null}
 
-                <List
-                  list={defaultList}
-                  key={defaultList.id}
-                  name="Unsubscribe from all emails"
-                />
-
-                <div>
-                  <SubmitButton>Submit</SubmitButton>
+                  <List
+                    list={defaultList}
+                    key={defaultList.id}
+                    name="Unsubscribe from all emails"
+                  />
                 </div>
+              </div>
+              <div className="col-span-3 border border-top border-gray-600 text-center">
+                <button onClick={onSubmit} className="text-blue p-4 m-4">
+                  Save preferences
+                </button>
               </div>
             </form>
           </main>
