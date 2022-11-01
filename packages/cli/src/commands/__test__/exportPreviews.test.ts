@@ -10,10 +10,11 @@ describe("exportPreviews command", () => {
     await handler({
       outDir: "./out",
       emailsDir: "packages/cli/src/emails",
+      skipLint: true,
     } as ExportPreviewsArgs);
     expect(error).not.toHaveBeenCalled();
     expect(log).toHaveBeenCalledWith("Exporting preview html to");
-    expect(log).toHaveBeenCalledWith("✅ Processed 6 previews");
+    expect(log).toHaveBeenCalledWith("✅ Processed 6 previews\n");
   });
 
   it("errors without emails dir", async () => {
@@ -23,6 +24,7 @@ describe("exportPreviews command", () => {
     await handler({
       outDir: "./out",
       emailsDir: "./NoTaDiReCtOrY",
+      skipLint: true,
     } as ExportPreviewsArgs);
     expect(error).toHaveBeenCalledWith(
       "Could not find emails directory. Have you initialized the project with `mailing init`?"
@@ -31,14 +33,21 @@ describe("exportPreviews command", () => {
 
   describe("cli", () => {
     it("runs on templates", async () => {
-      const out = await execCli("export-previews");
+      const out = await execCli("export-previews --skip-lint");
       expect(out).toMatchSnapshot();
     });
   });
 
   describe("cli --minify", () => {
     it("runs on templates", async () => {
-      const out = await execCli("export-previews --minify");
+      const out = await execCli("export-previews --minify --skip-lint");
+      expect(out).toMatchSnapshot();
+    });
+  });
+
+  describe("cli halts on lint errors", () => {
+    it("runs on templates", async () => {
+      const out = await execCli("export-previews");
       expect(out).toMatchSnapshot();
     });
   });
