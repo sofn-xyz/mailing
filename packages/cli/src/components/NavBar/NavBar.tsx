@@ -13,28 +13,32 @@ const NavBar: React.FC<NavBarProps> = ({ children }) => {
   return (
     <div className="flex flex-grow">
       <div className="flex flex-col h-screen bg-gray-800">
-        <div className="flex items-center justify-center px-3 flex-col space-y-4 pt-5">
+        <nav className="flex items-center justify-center px-3 flex-col space-y-4 pt-5">
           <NavBarButton
             active={router.route === "/"}
             href="/"
             Icon={IconHome}
+            name="Home"
           />
           <NavBarButton
             active={router.route === "/previews/[[...path]]"}
             href="/previews"
             Icon={IconEye}
+            name="Previews"
           />
           <NavBarButton
             active={router.route === "/audiences/[[...path]]"}
             href="/audiences"
             Icon={IconAudience}
+            name="Audiences"
           />
           <NavBarButton
             active={router.route === "/settings" || router.route === "/login"}
             href="/settings"
             Icon={IconGear}
+            name="Settings"
           />
-        </div>
+        </nav>
         <div className="flex flex-col items-center justify-center h-full"></div>
       </div>
       <div className="flex-grow">{children}</div>
