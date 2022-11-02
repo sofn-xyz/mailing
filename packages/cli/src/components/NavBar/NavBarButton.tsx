@@ -1,26 +1,25 @@
-import Image from "next/image";
 import cx from "classnames";
-import { useRouter } from "next/router";
 import Link from "next/link";
+import { colors } from "../../util/tailwind";
 
 type NavBarButtonProps = {
   active: boolean;
-  children: React.ReactNode;
   href: string;
+  Icon: React.FC<IconProps>;
 };
 
-const NavBar: React.FC<NavBarButtonProps> = ({ children, active, href }) => {
+const NavBar: React.FC<NavBarButtonProps> = ({ active, href, Icon }) => {
   return (
     <Link href={href}>
       <a
         className={cx(
-          "transition-transform active:scale-90 h-9 w-9 flex items-center justify-center rounded-2xl",
+          "transition-transform active:scale-90 min-h-[36px] min-w-[36px] flex items-center justify-center rounded-2xl hover:bg-gray-700",
           {
-            "bg-gray-500 fill-red-100 stroke-red-500": active,
+            "bg-gray-500": active,
           }
         )}
       >
-        {children}
+        <Icon fill={active ? colors.black : colors["slate-500"]} />
       </a>
     </Link>
   );
