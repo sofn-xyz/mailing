@@ -11,7 +11,7 @@ type NavBarButtonProps = {
 
 const NavBar: React.FC<NavBarButtonProps> = ({ active, href, Icon, name }) => {
   return (
-    <Link href={href}>
+    <Link href={href} legacyBehavior>
       <a
         title={name}
         aria-label={name}
