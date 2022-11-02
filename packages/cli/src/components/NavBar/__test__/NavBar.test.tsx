@@ -14,6 +14,7 @@ jest.mock("next/router", () => ({
 
 describe("NavBar", () => {
   it("render with correct current page", () => {
+    process.env.NEXT_PUBLIC_STATIC = "true";
     const { getByRole } = setup(<NavBar>test</NavBar>);
     const nav = getByRole("navigation");
     expect(nav).toBeVisible();
@@ -25,5 +26,12 @@ describe("NavBar", () => {
       current: "page",
     });
     expect(previewsLink).toBeVisible();
+  });
+
+  it("does not render navigation if not static", () => {
+    delete process.env.NEXT_PUBLIC_STATIC;
+    const { queryByRole } = setup(<NavBar>test</NavBar>);
+    const nav = queryByRole("navigation");
+    expect(nav).toBeNull();
   });
 });

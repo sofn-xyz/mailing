@@ -12,7 +12,7 @@ const NavBar: React.FC<NavBarProps> = ({ children }) => {
 
   return (
     <div className="flex flex-grow">
-      {false && (
+      {process.env.NEXT_PUBLIC_STATIC && (
         <div className="flex flex-col h-screen bg-gray-800">
           <nav className="flex items-center justify-center px-3 flex-col space-y-4 pt-5">
             <NavBarButton
