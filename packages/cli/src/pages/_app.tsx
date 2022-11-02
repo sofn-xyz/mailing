@@ -1,6 +1,7 @@
 import type { AppProps } from "next/app";
 import Head from "next/head";
 import { HamburgerProvider } from "../components/HamburgerContext";
+import NavBar from "../components/NavBar/NavBar";
 import "../styles/globals.css";
 
 export default function Mailing({ Component, pageProps }: AppProps) {
@@ -9,7 +10,9 @@ export default function Mailing({ Component, pageProps }: AppProps) {
       <Head>
         <title>Mailing</title>
       </Head>
-      <Component {...pageProps} />
+      <NavBar>
+        <Component {...pageProps} />
+      </NavBar>
     </HamburgerProvider>
   );
 }
