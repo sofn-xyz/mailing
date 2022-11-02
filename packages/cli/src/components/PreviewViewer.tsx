@@ -78,7 +78,7 @@ const PreviewViewer: React.FC<PreviewViewerProps> = ({ initialData }) => {
     <div className="h-screen flex">
       <div
         className={cx(
-          "left-pane absolute sm:relative border-dotted border-r border-gray-600 w-full sm:w-auto min-w-[300px] transition-all z-40 bg-black mt-[52px] sm:mt-0",
+          "left-pane absolute sm:relative border-dotted border-r border-gray-600 w-full sm:w-[300px] min-w-[300px] transition-all z-40 bg-black mt-[52px] sm:mt-0",
           {
             "opacity-100": hamburgerOpen,
             "opacity-0 sm:opacity-100 pointer-events-none sm:pointer-events-auto":
