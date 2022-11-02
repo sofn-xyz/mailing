@@ -16,7 +16,7 @@ const NavBar: React.FC<NavBarButtonProps> = ({ children, active, href }) => {
         className={cx(
           "transition-transform active:scale-90 h-9 w-9 flex items-center justify-center rounded-2xl",
           {
-            "bg-gray-500": active,
+            "bg-gray-500 fill-red-100 stroke-red-500": active,
           }
         )}
       >
