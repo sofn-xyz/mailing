@@ -13,8 +13,12 @@ jest.mock("next/router", () => ({
 }));
 
 describe("NavBar", () => {
+  beforeAll(() => {
+    (process.env as any).HOME_FEATURE_FLAG = "1";
+    (process.env as any).AUDIENCE_FEATURE_FLAG = "1";
+  });
+
   it("render with correct current page", () => {
-    process.env.NEXT_PUBLIC_STATIC = "true";
     const { getByRole } = setup(<NavBar>test</NavBar>);
     const nav = getByRole("navigation");
     expect(nav).toBeVisible();
@@ -28,10 +32,17 @@ describe("NavBar", () => {
     expect(previewsLink).toBeVisible();
   });
 
-  it("does not render navigation if not static", () => {
-    delete process.env.NEXT_PUBLIC_STATIC;
-    const { queryByRole } = setup(<NavBar>test</NavBar>);
-    const nav = queryByRole("navigation");
-    expect(nav).toBeNull();
+  describe("development mode", () => {
+    beforeAll(() => {
+      (process.env as any).NODE_ENV = "development";
+    });
+    afterAll(() => {
+      (process.env as any).NODE_ENV = "test";
+    });
+    it("does not render navigation in dev", () => {
+      const { queryByRole } = setup(<NavBar>test</NavBar>);
+      const nav = queryByRole("navigation");
+      expect(nav).toBeNull();
+    });
   });
 });
