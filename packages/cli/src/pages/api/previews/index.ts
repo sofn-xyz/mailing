@@ -1,12 +1,12 @@
 import { flatten } from "lodash";
 import type { NextApiRequest, NextApiResponse } from "next";
+import { parse } from "node-html-parser";
 import { render } from "../../../util/mjml";
 import {
   getPreviewComponent,
   previewTree,
 } from "../../../util/moduleManifestUtil";
-import { JSDOM, VirtualConsole } from "jsdom";
-import { error, debug } from "../../../util/log";
+import { error } from "../../../util/log";
 
 export type PreviewIndexResponseBody = {
   previews: [string, string[]][];
@@ -14,12 +14,6 @@ export type PreviewIndexResponseBody = {
     [path: string]: string;
   };
 };
-
-const noopConsole = new VirtualConsole();
-noopConsole.on("error", (data) => {
-  // No-op to skip console errors.
-  debug(data?.toString());
-});
 
 const MAX_TEXT_CHARS = 140;
 
@@ -35,13 +29,8 @@ function getPreviewFunction(
     // slice out the body to minimize funky head parsing
     const body = /<body[^>]*>((.|[\n\r])*)<\/body>/im.exec(html);
     if (body && body[1]) {
-      // let jsdom figure out what the text content is
-      const dom = new JSDOM(body[1], { virtualConsole: noopConsole });
-      text =
-        dom.window.document.body.textContent
-          ?.replace(/\s+/g, " ")
-          .trim()
-          .substring(0, MAX_TEXT_CHARS) || "";
+      const root = parse(body[1]);
+      text = root.text.replace(/\s+/g, " ").trim().substring(0, MAX_TEXT_CHARS);
     }
   } catch (e) {
     error(`error rendering text preview for ${previewClass}#${name}`, e);
