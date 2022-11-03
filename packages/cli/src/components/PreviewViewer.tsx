@@ -75,10 +75,10 @@ const PreviewViewer: React.FC<PreviewViewerProps> = ({ initialData }) => {
   const { preview, previews } = data || { preview: null, previews: [] };
 
   return (
-    <div className="h-screen">
+    <div className="h-screen flex">
       <div
         className={cx(
-          "left-pane absolute border-dotted border-r border-gray-600 w-full sm:w-[300px] sm:left-0 transition-all z-40 bg-black mt-[52px] sm:mt-0",
+          "left-pane absolute sm:relative border-dotted border-r border-gray-600 w-full sm:w-[300px] min-w-[300px] transition-all z-40 bg-black mt-[52px] sm:mt-0",
           {
             "opacity-100": hamburgerOpen,
             "opacity-0 sm:opacity-100 pointer-events-none sm:pointer-events-auto":
@@ -88,7 +88,7 @@ const PreviewViewer: React.FC<PreviewViewerProps> = ({ initialData }) => {
       >
         <IndexPane previews={previews} previewText={data?.previewText} />
       </div>
-      <div className="right-pane sm:left-[300px] sm:w-[calc(100vw-300px)] h-full flex flex-col">
+      <div className="right-pane h-full flex flex-col flex-grow">
         {!!preview?.errors?.length && <MjmlErrors errors={preview?.errors} />}
         <div className="sm:hidden">
           <MobileHeader title={previewFunction || previewClass || "Emails"} />
@@ -184,10 +184,6 @@ const PreviewViewer: React.FC<PreviewViewerProps> = ({ initialData }) => {
           overflow: scroll;
           top: 0;
           bottom: 0;
-        }
-        .right-pane {
-          position: relative;
-          right: 0;
         }
         .character {
           text-transform: uppercase;

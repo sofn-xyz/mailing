@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { ChangeEvent, useState } from "react";
 import useHotkeys from "@reecelucas/react-use-hotkeys";
 
@@ -58,19 +57,13 @@ const IndexPane: React.FC<IndexPaneProps> = ({ previews, previewText }) => {
   );
 
   return (
-    <>
-      <div className="border-dotted border-b border-gray-600 pt-4 px-4 h-[52px] hidden sm:block">
-        <Image
-          src="/logo-light-header@2x.png"
-          width="91"
-          height="20"
-          alt="mailing logo"
-        />
-        <label className="toggle float-right text-sm cursor-pointer">
+    <div className="relative flex-col flex h-full">
+      <div className="border-dotted border-b border-gray-600 bg-black py-2 px-4 hidden sm:block">
+        <label className="toggle text-xs cursor-pointer flex justify-between items-center">
           Compact view
           <div
             id="toggle-compact-view"
-            className="ml-2 w-5 h-[12px] relative inline-block top-[5px]"
+            className="ml-2 w-5 h-[12px] relative inline-block"
           >
             <input
               type="checkbox"
@@ -84,7 +77,10 @@ const IndexPane: React.FC<IndexPaneProps> = ({ previews, previewText }) => {
         </label>
       </div>
 
-      {previews?.map ? view : "Loading"}
+      <div className="flex-grow overflow-y-auto">
+        {previews?.map ? view : "Loading"}
+      </div>
+
       <style jsx>{`
         #toggle-compact-view .slider:before {
           position: absolute;
@@ -107,7 +103,7 @@ const IndexPane: React.FC<IndexPaneProps> = ({ previews, previewText }) => {
           transform: translateX(10px);
         }
       `}</style>
-    </>
+    </div>
   );
 };
 
