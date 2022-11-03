@@ -1,5 +1,12 @@
 # mailing-core
 
+## 0.8.13
+
+### Patch Changes
+
+- 034af17: switch JSDOM to node-html-parser for 3x faster email text generation
+- dd6f635: export-previews lints, halts on error unless no-lint is passed
+
 ## 0.8.12
 
 ### Patch Changes
