@@ -55,25 +55,40 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     throw new Error("Couldn't find default list");
   }
 
+  const [defaultMember] = remove(
+    memberData,
+    (member) => member.listId === defaultList.id
+  );
+
+  if (!defaultMember) {
+    throw new Error("Couldn't find membership for default list");
+  }
+
   const initialFormState: FormState = memberData.reduce(
     (acc: FormState, member: Member) => {
       acc[member.listId] = {
-        enabled: true,
+        enabled: "subscribed" === defaultMember.status,
         checked: "subscribed" === member.status,
       } as ListState;
 
       return acc;
     },
-    { [defaultList.id]: { checked: false, enabled: true } } as FormState
+    {
+      [defaultList.id]: {
+        checked: "unsubscribed" === defaultMember.status,
+        enabled: true,
+      },
+    } as FormState
   );
 
   return {
     props: {
       memberId,
       lists,
-      defaultList,
-      initialFormState,
       listMembers,
+      defaultList,
+      defaultMember,
+      initialFormState,
     },
   };
 };
@@ -122,7 +137,7 @@ type PatchData = {
 const Unsubscribe = (props: Props) => {
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [formState, setFormState] = useState<FormState>(props.initialFormState);
-  const { lists, defaultList, memberId, listMembers } = props;
+  const { lists, defaultList, defaultMember, memberId, listMembers } = props;
 
   function onChange(listId: string, isDefaultList: boolean) {
     return function () {
@@ -159,8 +174,17 @@ const Unsubscribe = (props: Props) => {
 
       const data = Object.keys(formState).reduce((acc: PatchData, listId) => {
         const memberId = listMembers[listId];
+
+        // the checkbox behavior is inverted for the default list
         acc[memberId] = {
-          status: formState[listId].checked ? "subscribed" : "unsubscribed",
+          status:
+            memberId === defaultMember.id
+              ? formState[listId].checked
+                ? "unsubscribed"
+                : "subscribed"
+              : formState[listId].checked
+              ? "subscribed"
+              : "unsubscribed",
         };
 
         return acc;
@@ -177,7 +201,7 @@ const Unsubscribe = (props: Props) => {
 
       setFormSubmitted(true);
     },
-    [formState, memberId, listMembers]
+    [formState, memberId, listMembers, defaultMember]
   );
 
   return (
