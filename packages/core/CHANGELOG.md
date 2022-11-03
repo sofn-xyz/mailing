@@ -1,5 +1,24 @@
 # mailing-core
 
+## 0.8.13
+
+### Patch Changes
+
+- 034af17: switch JSDOM to node-html-parser for 3x faster email text generation
+- dd6f635: export-previews lints, halts on error unless no-lint is passed
+
+## 0.8.12
+
+### Patch Changes
+
+- 01631b0: bugfix for crash when adding blank preview file
+
+## 0.8.11
+
+### Patch Changes
+
+- a7fcab4: fix bug in linter where mailto and tel would be considered relative urls
+
 ## 0.8.10
 
 ### Patch Changes

@@ -241,9 +241,19 @@ The mailing preview server has a super power: it’s easy to deploy a fast produ
 
 Learn more and get started [here](https://github.com/sofn-xyz/mailing/blob/main/docs/DEPLOY.md).
 
+<br/>
+
 ## ●&nbsp;&nbsp;&nbsp;Telemetry
 
 To help understand how people are using mailing so that we can prioritize efforts, mailing collects some anonymized telemetry about usage.
+
+<br/>
+
+## ●&nbsp;&nbsp;&nbsp;Examples
+
+- https://github.com/sofn-xyz/fynn-mailing
+
+Have a good example? Message us or make a PR!
 
 <br/>
 
@@ -252,3 +262,9 @@ To help understand how people are using mailing so that we can prioritize effort
 Want to improve Mailing? Incredible. Try it out, file an issue or open a PR!
 
 Check the [CONTRIBUTING.md](https://github.com/sofn-xyz/mailing/blob/main/docs/CONTRIBUTING.md) for more info.
+
+<br/>
+
+## ●&nbsp;&nbsp;&nbsp;Support
+
+Need help getting set up? Hit us up on discord [![](https://dcbadge.vercel.app/api/server/fdSzmY46wY?style=flat)](https://discord.gg/fdSzmY46wY)

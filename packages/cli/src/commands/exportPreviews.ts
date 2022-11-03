@@ -16,6 +16,7 @@ export type ExportPreviewsArgs = ArgumentsCamelCase<{
   quiet?: boolean;
   minify?: boolean;
   anonymousId?: string | null;
+  skipLint?: boolean;
 }>;
 
 export const command = "export-previews";
@@ -38,6 +39,11 @@ export const builder = {
     default: defaults().quiet,
     descriptioin: "less output",
     boolean: true,
+  },
+  "skip-lint": {
+    default: false,
+    boolean: true,
+    description: "skip linting",
   },
 };
 
@@ -83,25 +89,32 @@ export const handler = buildHandler(
 
     const previewText = argv.minify ? "minified preview html" : "preview html";
 
-    log(`Exporting ${previewText} to`);
-    log(outDir);
-
     let count = 0;
 
-    readdirSync(previewsPath)
+    const lint: { [filename: string]: HtmlLintError[] } = {};
+    const toWrite: Array<() => Promise<void>> = [];
+    const filenames: string[] = [];
+
+    const previewRenders = readdirSync(previewsPath)
       .filter((path) => !/^\./.test(path))
-      .forEach(async (p) => {
+      .flatMap((p) => {
         const previewPath = resolve(previewsPath, p);
         const previewModule = require(previewPath);
-        await Promise.all(
-          Object.keys(require(previewPath)).map(async (previewFunction) => {
+
+        return Object.keys(require(previewPath)).flatMap(
+          async (previewFunction) => {
             const filename = previewFilename(p, previewFunction);
-            log(`  |-- ${filename}`);
             count++;
 
-            const { html, errors } = render(previewModule[previewFunction]());
+            const { html, errors, htmlLint } = render(
+              previewModule[previewFunction]()
+            );
             if (errors.length) {
               error(`MJML errors rendering ${filename}:`, errors);
+            }
+
+            if (htmlLint.length && !argv.skipLint) {
+              lint[filename] = htmlLint;
             }
 
             const minifyConfig = {
@@ -114,12 +127,43 @@ export const handler = buildHandler(
             const outHtml = argv.minify
               ? await minify(html, minifyConfig)
               : html;
-            return outputFile(resolve(outDir, filename), outHtml);
-          })
+            filenames.push(filename);
+            toWrite.push(async () =>
+              outputFile(resolve(outDir, filename), outHtml)
+            );
+          }
         );
       });
+    await Promise.all(previewRenders);
 
-    log(`✅ Processed ${count} previews`);
+    const lintCount = Object.keys(lint).length;
+    if (lintCount) {
+      error(
+        lintCount > 1
+          ? `Aborted because ${lintCount} files have lint errors:`
+          : `Aborted because 1 file has lint errors:`,
+        "\n\n",
+        Object.entries(lint)
+          .map(
+            ([filename, errors]) =>
+              `${filename}\n${errors
+                .map((e, i) => `   ${i + 1}. ${e.message}`)
+                .join("\n\n")}`
+          )
+          .join("\n\n"),
+        "\n\n"
+      );
+
+      return;
+    }
+
+    log(`Exporting ${previewText} to`);
+    log(`${outDir}/`);
+    await Promise.all(toWrite.map((f) => f()));
+    for (const f of filenames.sort()) {
+      log(`  |-- ${f}`);
+    }
+    log(`✅ Processed ${count} previews\n`);
   },
   {
     captureOptions: () => {

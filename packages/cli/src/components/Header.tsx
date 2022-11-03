@@ -29,7 +29,7 @@ const Header: React.FC<HeaderProps> = ({
   helpContent,
 }) => {
   return (
-    <div className="header">
+    <div className="header bg-gray-800">
       <div className="flex-1">{/* NECESSARY FOR LAYOUT */}</div>
       <div className="segmented-control-container">
         <div className="segmented-control">

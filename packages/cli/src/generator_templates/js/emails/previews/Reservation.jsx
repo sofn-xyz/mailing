@@ -17,7 +17,8 @@ export function reservationWithError() {
       body={
         <>
           If this was a mistake or if you changed your mind, you can use the
-          link below to rebook your reservation. <a href="#">Learn more</a>
+          link below to rebook your reservation.{" "}
+          <a href="/learn-more">Learn more</a>
         </>
       }
       ctaText={"Rebook Now"}

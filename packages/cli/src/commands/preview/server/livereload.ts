@@ -18,6 +18,7 @@ let vectorClock = Date.now();
 
 function renderClock(res: ServerResponse) {
   debug("livereload render clock", vectorClock);
+  res.setHeader("Content-Type", "application/json");
   res.writeHead(200);
   res.end(JSON.stringify({ vectorClock }));
 }
@@ -52,8 +53,6 @@ export function pollShouldReload(
   req: IncomingMessage,
   res: ServerResponse
 ): void {
-  res.setHeader("Content-Type", "application/json");
-
   const clientVectorClock: number = requireParam("vectorClock", req, res);
   if (403 === res.statusCode) return;
 

@@ -90,14 +90,18 @@ export function usePreviewTree(
 
   useEffect(() => {
     if (cursor !== -1 || !treeRoutes) return;
-    const path = router.asPath;
+    const path = router.asPath.split("?")[0];
     const idx = treeRoutes.findIndex((route) => route.path === path);
     if (idx >= 0) setCursor(idx);
   }, [router.asPath, cursor, treeRoutes]);
 
   useEffect(() => {
-    if (cursor === -1 || router?.asPath === routes[cursor]?.path) return;
-    safeReplaceState(router, routes[cursor]?.path);
+    const [path, qs] = router.asPath.split("?");
+    if (cursor === -1 || path === routes[cursor]?.path) return;
+    safeReplaceState(
+      router,
+      qs ? `${routes[cursor]?.path}?${qs}` : routes[cursor]?.path
+    );
   }, [cursor, router, routes]);
 
   /* Navigation callbacks */
