@@ -2,7 +2,7 @@ import Head from "next/head";
 import prisma from "../../../prisma";
 import { GetServerSideProps } from "next";
 import type { List, Member } from "../../../prisma/generated/client";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import FormSuccess from "../components/FormSuccess";
 import { remove } from "lodash";
 
@@ -107,7 +107,7 @@ const List = (props: ListProps) => {
 const Unsubscribe = (props: Props) => {
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [formState, setFormState] = useState<FormState>(props.initialFormState);
-  const { lists, defaultList } = props;
+  const { lists, defaultList, memberId } = props;
 
   function onChange(listId: string, isDefaultList: boolean) {
     return function () {
@@ -134,16 +134,27 @@ const Unsubscribe = (props: Props) => {
         };
       }
 
-      console.log(newFormState);
-
       setFormState(newFormState);
     };
   }
 
-  function onSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    setFormSubmitted(true);
-  }
+  const onSubmit = useCallback(
+    async (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+
+      // send json
+      await fetch(`/api/unsubscribe/${memberId}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formState),
+      });
+
+      setFormSubmitted(true);
+    },
+    [formState, memberId]
+  );
 
   return (
     <>
@@ -161,8 +172,6 @@ const Unsubscribe = (props: Props) => {
                 <h1 className="text-3xl sm:text-3xl 2xl:text-3xl m-0 mb-8">
                   Email preferences
                 </h1>
-
-                {formSubmitted ? <FormSuccess>Saved!</FormSuccess> : null}
 
                 <div className="col-span-3">
                   {lists.length ? (
@@ -193,6 +202,11 @@ const Unsubscribe = (props: Props) => {
                 <button className="text-blue p-4 m-4">Save preferences</button>
               </div>
             </form>
+            {formSubmitted ? (
+              <div className="mt-8">
+                <FormSuccess>Saved!</FormSuccess>
+              </div>
+            ) : null}
           </main>
         </div>
       </div>
