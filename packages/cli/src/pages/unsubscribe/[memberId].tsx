@@ -55,11 +55,11 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     throw new Error("Couldn't find default list");
   }
 
-  const initialFormState: FormState = lists.reduce(
-    (acc: FormState, list: List) => {
-      acc[list.id] = {
+  const initialFormState: FormState = memberData.reduce(
+    (acc: FormState, member: Member) => {
+      acc[member.listId] = {
         enabled: true,
-        checked: true,
+        checked: "subscribed" === member.status,
       } as ListState;
 
       return acc;
