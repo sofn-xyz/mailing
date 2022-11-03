@@ -7,5 +7,7 @@ Error.stackTraceLimit = Infinity;
 
 process.env.MM_DEV = 1;
 
-require("esbuild-register/dist/node").register();
+require("esbuild-register/dist/node").register({
+  jsx: "automatic",
+});
 require("./index.ts");
