@@ -32,13 +32,20 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     };
   }
 
-  const listIds = (
-    await prisma.member.findMany({
-      where: {
-        email: listMember.email,
-      },
-    })
-  ).map((member: Member) => member.listId);
+  const memberData: Member[] = await prisma.member.findMany({
+    where: {
+      email: listMember.email,
+    },
+  });
+
+  const listIds = memberData.map((member: Member) => member.listId);
+
+  // map listId to member.id for this member so we can tell the server which Member records to update
+  const listMembers: { [key: string]: string } = {};
+
+  for (const member of memberData) {
+    listMembers[member.listId] = member.id;
+  }
 
   const lists = await prisma.list.findMany({ where: { id: { in: listIds } } });
 
@@ -66,6 +73,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       lists,
       defaultList,
       initialFormState,
+      listMembers,
     },
   };
 };
@@ -75,6 +83,7 @@ type Props = {
   lists: List[];
   defaultList: List;
   initialFormState: FormState;
+  listMembers: { [key: string]: string };
 };
 
 type ListProps = {
@@ -104,10 +113,16 @@ const List = (props: ListProps) => {
   );
 };
 
+type PatchData = {
+  [key: string]: {
+    status: "subscribed" | "unsubscribed";
+  };
+};
+
 const Unsubscribe = (props: Props) => {
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [formState, setFormState] = useState<FormState>(props.initialFormState);
-  const { lists, defaultList, memberId } = props;
+  const { lists, defaultList, memberId, listMembers } = props;
 
   function onChange(listId: string, isDefaultList: boolean) {
     return function () {
@@ -142,18 +157,27 @@ const Unsubscribe = (props: Props) => {
     async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
 
+      const data = Object.keys(formState).reduce((acc: PatchData, listId) => {
+        const memberId = listMembers[listId];
+        acc[memberId] = {
+          status: formState[listId].checked ? "subscribed" : "unsubscribed",
+        };
+
+        return acc;
+      }, {});
+
       // send json
       await fetch(`/api/unsubscribe/${memberId}`, {
-        method: "PUT",
+        method: "PATCH",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formState),
+        body: JSON.stringify({ data }),
       });
 
       setFormSubmitted(true);
     },
-    [formState, memberId]
+    [formState, memberId, listMembers]
   );
 
   return (
