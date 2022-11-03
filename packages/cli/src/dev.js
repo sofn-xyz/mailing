@@ -9,5 +9,6 @@ process.env.MM_DEV = 1;
 
 require("esbuild-register/dist/node").register({
   jsx: "automatic",
+  target: "node14",
 });
 require("./index.ts");
