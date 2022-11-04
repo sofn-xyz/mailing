@@ -170,8 +170,6 @@ export function buildSendMail<T>(options: BuildSendMailOptions<T>) {
             memberId,
           } = await hookResponse.json();
 
-          console.log(listId);
-
           const stringHtml = mailOptions.html?.toString();
           if (stringHtml) {
             mailOptions.html = instrumentHtml({
