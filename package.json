@@ -11,6 +11,7 @@
   "scripts": {
     "lint": "eslint .",
     "dev": "cd packages/cli && yarn dev",
+    "dev:nav": "NEXT_PUBLIC_NAV=1 cd packages/cli && yarn dev",
     "dev:js": "yarn link:emails:js && yarn dev",
     "dev:init": "cd packages/cli && rm -rf previews_html; rm -rf .mailing emails mailing.config.json; src/dev.js",
     "dev:export-previews": "yarn link:emails; cd packages/cli && rm -rf .mailing && src/dev.js export-previews",

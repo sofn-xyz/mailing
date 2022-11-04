@@ -17,7 +17,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   return list
     ? {
-        props: { list },
+        props: { list: JSON.parse(JSON.stringify(list)) },
       }
     : {
         notFound: true,

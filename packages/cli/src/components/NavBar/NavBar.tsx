@@ -15,9 +15,10 @@ const NavBar: React.FC<NavBarProps> = ({ children }) => {
   return (
     <div className="flex flex-grow">
       {(nav ||
+        process.env.NEXT_PUBLIC_NAV ||
         (process.env.NODE_ENV !== "development" &&
           process.env.AUDIENCE_FEATURE_FLAG)) && (
-        <nav className="flex px-3 flex-col space-y-4 py-5 content-between justify-between border-dotted border-r border-gray-600">
+        <nav className="flex px-3 flex-col space-y-4 py-5 h-screen content-between justify-between border-dotted border-r border-gray-600">
           {(nav || process.env.HOME_FEATURE_FLAG) && (
             <NavBarButton
               active={router.route === "/"}
