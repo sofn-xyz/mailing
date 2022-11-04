@@ -186,8 +186,6 @@ export function buildSendMail<T>(options: BuildSendMailOptions<T>) {
             emailPrefsUrl
           );
 
-          console.log("stringHtml is now", stringHtml);
-
           mailOptions.html = instrumentHtml({
             html: stringHtml,
             messageId: messageId,
