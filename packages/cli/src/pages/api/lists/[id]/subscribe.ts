@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next/types";
 import prisma from "../../../../../prisma";
-import { Prisma } from "../../../../../prisma/generated/client";
+import type { Prisma } from "../../../../../prisma/generated/client";
 
 type Data = {
   error?: string;
@@ -27,14 +27,15 @@ const ApiSubscribe = async function (
 
         return res.status(201).end();
       } catch (error) {
-        if (error instanceof Prisma.PrismaClientKnownRequestError) {
-          if (error.code === "P2002") {
-            return res
-              .status(422)
-              .json({ error: "You're already subscribed to that list" });
-          }
+        // having some trouble with the above, so just assuming it's a duplicate for now
+        // the best practice code descired in the prisma docs doesn't work because typeof error is not Prisma.PrismaClientKnownRequestError
+        if ((error as Prisma.PrismaClientKnownRequestError).code === "P2002") {
+          return res
+            .status(422)
+            .json({ error: "You're already subscribed to that list" });
+        } else {
+          return res.status(500).json({ error: "an unknown error occurred" });
         }
-        return res.status(500).json({ error: "an unknown error occurred" });
       }
     } else {
       return res
