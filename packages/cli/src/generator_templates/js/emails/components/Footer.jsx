@@ -12,7 +12,7 @@ export default function Footer() {
           color={grayDark}
         >
           © {new Date().getFullYear()} BookBook&nbsp;&nbsp;·&nbsp;&nbsp;
-          <a href="https://www.mailing.run" target="_blank" rel="noreferrer">
+          <a href="MM_EMAIL_PREFERENCES_URL" target="_blank" rel="noreferrer">
             Unsubscribe
           </a>
         </MjmlText>

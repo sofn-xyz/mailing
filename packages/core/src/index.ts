@@ -167,8 +167,11 @@ export function buildSendMail<T>(options: BuildSendMailOptions<T>) {
         if (hookResponse.status === 200) {
           const {
             message: { id: messageId },
-            // listId: { id: listId },
+            listId,
           } = await hookResponse.json();
+
+          console.log(listId);
+
           const stringHtml = mailOptions.html?.toString();
           if (stringHtml) {
             mailOptions.html = instrumentHtml({
@@ -177,10 +180,10 @@ export function buildSendMail<T>(options: BuildSendMailOptions<T>) {
               apiUrl: MAILING_API_KEY,
             });
 
-            // stringHtml.replace(
-            //   /UNSUBSCRIBE_URL/g,
-            //   `${MAILING_API_URL}/unsubsribe/${memberId}`
-            // );
+            stringHtml.replace(
+              /MM_EMAIL_PREFERENCES_URL/g,
+              emailPreferencesUrl
+            );
           }
         } else {
           const json = await hookResponse.json();
