@@ -144,7 +144,7 @@ export function buildSendMail<T>(options: BuildSendMailOptions<T>) {
     }
 
     if (analyticsEnabled) {
-      const url = MAILING_API_URL + "/api/messages";
+      const url = new URL("/api/messages", MAILING_API_URL).toString();
 
       const hookResponse = await fetch(url, {
         method: "POST",
@@ -176,7 +176,10 @@ export function buildSendMail<T>(options: BuildSendMailOptions<T>) {
         let stringHtml = mailOptions.html?.toString();
 
         if (stringHtml) {
-          const emailPrefsUrl = `${MAILING_API_URL}/unsubscribe/${memberId}`;
+          const emailPrefsUrl = new URL(
+            `unsubscribe/${memberId}`,
+            MAILING_API_URL
+          ).toString();
 
           stringHtml = stringHtml.replace(
             /MM_EMAIL_PREFERENCES_URL/g,
