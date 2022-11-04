@@ -167,7 +167,7 @@ export function buildSendMail<T>(options: BuildSendMailOptions<T>) {
         if (hookResponse.status === 200) {
           const {
             message: { id: messageId },
-            listId,
+            memberId,
           } = await hookResponse.json();
 
           console.log(listId);
@@ -182,7 +182,7 @@ export function buildSendMail<T>(options: BuildSendMailOptions<T>) {
 
             stringHtml.replace(
               /MM_EMAIL_PREFERENCES_URL/g,
-              emailPreferencesUrl
+              `${MAILING_API_URL}/unsubscribe/${memberId}`
             );
           }
         } else {

@@ -6,6 +6,7 @@ import prisma from "../../../../prisma";
 type Data = {
   error?: string;
   message?: any;
+  memberId?: string;
 };
 
 export default async function handler(
@@ -82,7 +83,7 @@ export default async function handler(
   // if there's no record for the list that was specified, create one (subscribed)
 
   if (list && !listMember) {
-    await prisma.member.create({
+    listMember = await prisma.member.create({
       data: {
         listId: list.id,
         email: req.body.email,
@@ -94,7 +95,7 @@ export default async function handler(
   // if there's no record for the default list, create one (subscribed)
 
   if (!defaultListMember) {
-    await prisma.member.create({
+    defaultListMember = await prisma.member.create({
       data: {
         listId: defaultList.id,
         email: req.body.email,
@@ -102,6 +103,8 @@ export default async function handler(
       },
     });
   }
+
+  const memberId = listMember?.id || defaultListMember.id;
 
   const message = await createMessage({
     to: req.body.to,
@@ -114,5 +117,5 @@ export default async function handler(
     previewName: req.body.previewName,
   });
 
-  return res.status(200).json({ message });
+  return res.status(200).json({ message, memberId });
 }
