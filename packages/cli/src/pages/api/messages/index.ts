@@ -81,7 +81,7 @@ export default async function handler(
   ) {
     return res
       .status(200)
-      .json({ message: "user is not subscribed to either list" });
+      .json({ error: "user is not subscribed to either list" });
   }
 
   // if there's no record for the list that was specified, create one (subscribed)

@@ -137,58 +137,67 @@ export function buildSendMail<T>(options: BuildSendMailOptions<T>) {
           error(response);
         }
       } catch (e) {
-        error(`Caught error ${e}`);
+        error(`Caught error 1 ${e}`);
         error("Is the mailing preview server running?");
       }
       return;
     }
 
     if (analyticsEnabled) {
-      try {
-        const hookResponse = await fetch(MAILING_API_URL + "/api/messages", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "x-api-key": MAILING_API_KEY,
-          },
-          body: JSON.stringify({
-            anonymousId,
-            templateName: templateName || derivedTemplateName,
-            previewName,
-            ...mailOptions,
-            listId,
-          }),
-        });
+      const url = MAILING_API_URL + "/api/messages";
 
-        if (hookResponse.status === 200) {
-          const {
-            message: { id: messageId },
-            memberId,
-          } = await hookResponse.json();
+      const hookResponse = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-api-key": MAILING_API_KEY,
+        },
+        body: JSON.stringify({
+          anonymousId,
+          templateName: templateName || derivedTemplateName,
+          previewName,
+          ...mailOptions,
+          listId,
+        }),
+      });
 
-          const stringHtml = mailOptions.html?.toString();
-          if (stringHtml) {
-            mailOptions.html = instrumentHtml({
-              html: stringHtml,
-              messageId: messageId,
-              apiUrl: MAILING_API_KEY,
-            });
+      if (hookResponse.status === 200) {
+        const {
+          message: { id: messageId },
+          memberId,
+          error,
+        } = await hookResponse.json();
 
-            stringHtml.replace(
-              /MM_EMAIL_PREFERENCES_URL/g,
-              `${MAILING_API_URL}/unsubscribe/${memberId}`
-            );
-          }
-        } else {
-          const json = await hookResponse.json();
-          error("Error calling mailing api hook", {
-            status: hookResponse.status,
-            statuSText: hookResponse.statusText,
-            json,
+        if (error) {
+          log("hookResponse returned error", error);
+          return;
+        }
+
+        let stringHtml = mailOptions.html?.toString();
+
+        if (stringHtml) {
+          const emailPrefsUrl = `${MAILING_API_URL}/unsubscribe/${memberId}`;
+
+          stringHtml = stringHtml.replace(
+            /MM_EMAIL_PREFERENCES_URL/g,
+            emailPrefsUrl
+          );
+
+          console.log("stringHtml is now", stringHtml);
+
+          mailOptions.html = instrumentHtml({
+            html: stringHtml,
+            messageId: messageId,
+            apiUrl: MAILING_API_KEY,
           });
         }
-      } catch (e) {
-        error(`Caught error ${e}`);
+      } else {
+        const json = await hookResponse.json();
+        error("Error calling mailing api hook", {
+          status: hookResponse.status,
+          statuSText: hookResponse.statusText,
+          json,
+        });
       }
     }
 
