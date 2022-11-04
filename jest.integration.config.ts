@@ -31,6 +31,7 @@ const config: Config = {
   modulePathIgnorePatterns: [
     "<rootDir>/packages/.*/__mocks__/index.ts",
     "<rootDir>/packages/.*/.mailing/*",
+    "<rootDir>/packages/cli/src/pages/api/__integration__/util/assertIntegrationTestEnv.ts",
   ],
 };
 
