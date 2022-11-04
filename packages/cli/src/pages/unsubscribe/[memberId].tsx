@@ -93,11 +93,12 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   };
 };
 
-type Props = {
+type UnsubscribeProps = {
   memberId: string;
   lists: List[];
   defaultList: List;
   initialFormState: FormState;
+  defaultMember: Member;
   listMembers: { [key: string]: string };
 };
 
@@ -134,7 +135,7 @@ type PatchData = {
   };
 };
 
-const Unsubscribe = (props: Props) => {
+const Unsubscribe = (props: UnsubscribeProps) => {
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [formState, setFormState] = useState<FormState>(props.initialFormState);
   const { lists, defaultList, defaultMember, memberId, listMembers } = props;
