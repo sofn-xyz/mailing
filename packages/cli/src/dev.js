@@ -6,21 +6,9 @@
 Error.stackTraceLimit = Infinity;
 
 process.env.MM_DEV = 1;
-require("@swc/register")({
-  jsc: {
-    parser: {
-      syntax: "typescript",
-      tsx: true,
-      decorators: true,
-    },
-    transform: {
-      react: {
-        runtime: "automatic",
-      },
-    },
-  },
-  module: {
-    type: "commonjs",
-  },
+
+require("esbuild-register/dist/node").register({
+  jsx: "automatic",
+  target: "node14",
 });
 require("./index.ts");
