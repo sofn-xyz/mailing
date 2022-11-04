@@ -25,13 +25,31 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 //
-// declare global {
-//   namespace Cypress {
-//     interface Chainable {
-//       login(email: string, password: string): Chainable<void>
-//       drag(subject: string, options?: Partial<TypeOptions>): Chainable<Element>
-//       dismiss(subject: string, options?: Partial<TypeOptions>): Chainable<Element>
-//       visit(originalFn: CommandOriginalFn, url: string, options: Partial<VisitOptions>): Chainable<Element>
-//     }
-//   }
-// }
+
+/* eslint-disable-next-line @typescript-eslint/no-namespace */
+declare namespace Cypress {
+  interface Chainable {
+    signup(): Chainable<void>;
+  }
+}
+
+Cypress.Commands.add("signup", () => {
+  const email = "test123@mailing.run";
+  cy.visit("/signup");
+  cy.location("pathname").should("eq", "/signup");
+
+  cy.get("input#email").type(email);
+  cy.get("input#password").type("password");
+  cy.get("form").submit();
+
+  // it should redirect to the login page
+  cy.location("pathname").should("eq", "/login");
+  cy.get("h1").should("contain", "Login");
+
+  // fill in email and passord fields and then submit the form
+  cy.get("input#email").type(email);
+  cy.get("input#password").type("password");
+  cy.get("form").submit();
+
+  cy.location("pathname").should("eq", "/settings");
+});
