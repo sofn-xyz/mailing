@@ -17,6 +17,8 @@ export default async function handler(
     return res.status(405).json({ error: "Method not allowed" });
   }
 
+  // todo: verify that required fields like to, from, subject, html are present
+
   const apiKey = apiKeyFromReq(req);
 
   if (typeof apiKey !== "string") {
@@ -97,13 +99,13 @@ export default async function handler(
   // if there's no record for the default list, create one (subscribed)
 
   if (!defaultListMember) {
-    defaultListMember = await prisma.member.create({
-      data: {
-        listId: defaultList.id,
-        email: req.body.to,
-        status: "subscribed",
-      },
-    });
+    const data = {
+      listId: defaultList.id,
+      email: req.body.to,
+      status: "subscribed" as const,
+    };
+
+    defaultListMember = await prisma.member.create({ data });
   }
 
   const memberId = listMember?.id || defaultListMember.id;
