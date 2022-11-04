@@ -22,8 +22,9 @@ export default async function handler(
   const apiKey = apiKeyFromReq(req);
 
   if (typeof apiKey !== "string") {
-    res.status(422).end("expected x-api-key in header or apiKey in query");
-    return false;
+    return res
+      .status(422)
+      .end("expected x-api-key in header or apiKey in query");
   }
 
   let organizationId;
@@ -38,7 +39,7 @@ export default async function handler(
 
     organizationId = apiKeyRecord.organizationId;
   } catch {
-    res.status(401).end("API key is not valid");
+    return res.status(401).end("API key is not valid");
   }
 
   const organization = await prisma.organization.findFirstOrThrow({

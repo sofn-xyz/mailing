@@ -84,10 +84,10 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   return {
     props: {
       memberId,
-      lists,
-      listMembers,
-      defaultList,
-      defaultMember,
+      lists: JSON.parse(JSON.stringify(lists)),
+      listMembers: JSON.parse(JSON.stringify(listMembers)),
+      defaultList: JSON.parse(JSON.stringify(defaultList)),
+      defaultMember: JSON.parse(JSON.stringify(defaultMember)),
       initialFormState,
     },
   };

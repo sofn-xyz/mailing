@@ -191,7 +191,7 @@ export function buildSendMail<T>(options: BuildSendMailOptions<T>) {
           mailOptions.html = instrumentHtml({
             html: stringHtml,
             messageId: messageId,
-            apiUrl: MAILING_API_KEY,
+            apiUrl: MAILING_API_URL,
           });
         }
       } else {
