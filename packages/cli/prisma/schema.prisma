@@ -96,6 +96,8 @@ model Click {
 
 model List {
   id             String       @id @default(cuid())
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
   isDefault      Boolean      @default(false)
   name           String
   organizationId String
@@ -106,11 +108,13 @@ model List {
 }
 
 model Member {
-  id     String       @id @default(cuid())
-  email  String
-  listId String
-  List   List         @relation(fields: [listId], references: [id])
-  status MemberStatus
+  id        String       @id @default(cuid())
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+  email     String
+  listId    String
+  List      List         @relation(fields: [listId], references: [id])
+  status    MemberStatus
 
   @@unique([listId, email])
 }

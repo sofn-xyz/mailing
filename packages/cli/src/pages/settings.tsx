@@ -29,7 +29,7 @@ export const getServerSideProps = withSessionSsr<{ user: any }>(
       props: {
         user: req.session.user,
         apiKeys,
-        lists,
+        lists: JSON.parse(JSON.stringify(lists)),
       },
     };
   }
