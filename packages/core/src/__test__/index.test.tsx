@@ -22,7 +22,11 @@ describe("index", () => {
 
   beforeEach(() => {
     jest.resetModules();
-    process.env = { ...OLD_ENV };
+    process.env = {
+      ...OLD_ENV,
+      MAILING_API_URL: undefined,
+      MAILING_API_KEY: undefined,
+    };
   });
 
   afterAll(() => {
@@ -213,13 +217,11 @@ describe("index", () => {
               method: "POST",
               body: JSON.stringify({
                 anonymousId: null,
-                mailOptions: {
-                  to: ["ok@ok.com"],
-                  from: "ok@ok.com",
-                  subject: "hello",
-                  text: "ok",
-                  html: "<body>ok</body>",
-                },
+                to: ["ok@ok.com"],
+                from: "ok@ok.com",
+                subject: "hello",
+                text: "ok",
+                html: "<body>ok</body>",
               }),
             }
           );
@@ -267,13 +269,11 @@ describe("index", () => {
               method: "POST",
               body: JSON.stringify({
                 anonymousId: null,
-                mailOptions: {
-                  to: ["ok@ok.com"],
-                  from: "ok@ok.com",
-                  subject: "hello",
-                  text: "ok",
-                  html: "<body>ok</body>",
-                },
+                to: ["ok@ok.com"],
+                from: "ok@ok.com",
+                subject: "hello",
+                text: "ok",
+                html: "<body>ok</body>",
               }),
             }
           );

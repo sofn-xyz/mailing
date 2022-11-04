@@ -95,7 +95,7 @@ export function buildSendMail<T>(options: BuildSendMailOptions<T>) {
     const previewMode =
       forcePreview || (NODE_ENV !== "production" && !dangerouslyForceDeliver);
 
-    const analyticsEnabled = MAILING_API_URL && MAILING_API_KEY;
+    const analyticsEnabled = !!(MAILING_API_URL && MAILING_API_KEY);
 
     // Get html from the rendered component if not provided
     let derivedTemplateName;
