@@ -36,7 +36,7 @@ export default function instrumentHtml({
 
     return root.toString();
   } catch (e) {
-    error("instrumentHtml error");
+    error("instrumentHtml error", e);
     throw e;
   }
 }
