@@ -3,18 +3,18 @@ import { buildSendMail } from "mailing-core";
 
 const transport = nodemailer.createTransport({
   pool: true,
-  host: "email-smtp.us-east-1.amazonaws.com",
+  host: "smtp.example.com",
   port: 465,
   secure: true, // use TLS
   auth: {
-    user: process.env.SES_USER,
-    pass: process.env.SES_PASSWORD,
+    user: "username",
+    pass: "password",
   },
 });
 
 const sendMail = buildSendMail({
   transport,
-  defaultFrom: "alex.farrill@gmail.com",
+  defaultFrom: "replace@me.with.your.com",
   configPath: "./mailing.config.json",
 });
 
