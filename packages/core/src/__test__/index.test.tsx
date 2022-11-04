@@ -172,7 +172,6 @@ describe("index", () => {
 
       describe("analyticsEnabled", () => {
         beforeEach(() => {
-          process.env.MAILING_DATABASE_URL = undefined;
           process.env.MAILING_API_URL = "https://mailing.test";
           process.env.MAILING_API_KEY = "test_key";
         });
