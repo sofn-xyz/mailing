@@ -18,6 +18,7 @@ export default async function handler(
   }
 
   const apiKey = apiKeyFromReq(req);
+
   if (typeof apiKey !== "string") {
     res.status(422).end("expected x-api-key in header or apiKey in query");
     return false;
@@ -38,7 +39,7 @@ export default async function handler(
     res.status(401).end("API key is not valid");
   }
 
-  const organization = await prisma.apiKey.findFirstOrThrow({
+  const organization = await prisma.organization.findFirstOrThrow({
     where: { id: organizationId },
   });
 
@@ -46,7 +47,6 @@ export default async function handler(
   let list, defaultList, listMember, defaultListMember;
 
   // if listId exists, look it up
-
   if (listId) {
     list = await prisma.list.findFirstOrThrow({ where: { id: listId } });
   }
@@ -86,7 +86,7 @@ export default async function handler(
     listMember = await prisma.member.create({
       data: {
         listId: list.id,
-        email: req.body.email,
+        email: req.body.to,
         status: "subscribed",
       },
     });
@@ -98,7 +98,7 @@ export default async function handler(
     defaultListMember = await prisma.member.create({
       data: {
         listId: defaultList.id,
-        email: req.body.email,
+        email: req.body.to,
         status: "subscribed",
       },
     });
