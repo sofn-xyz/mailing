@@ -74,10 +74,12 @@ export default async function handler(
 
   // return early if your status to either list is not "subscribed"
   if (
-    listMember?.status !== "subscribed" ||
-    defaultListMember?.status !== "subscribed"
+    (listMember && listMember.status !== "subscribed") ||
+    (defaultListMember && defaultListMember.status !== "subscribed")
   ) {
-    res.status(200).json({ message: "user is not subscribed to either list" });
+    return res
+      .status(200)
+      .json({ message: "user is not subscribed to either list" });
   }
 
   // if there's no record for the list that was specified, create one (subscribed)
