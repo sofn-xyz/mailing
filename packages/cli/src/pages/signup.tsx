@@ -5,7 +5,6 @@ import prisma from "../../prisma";
 import OutlineButton from "./components/ui/OutlineButton";
 import Input from "./components/ui/Input";
 import Link from "next/link";
-import Image from "next/image";
 
 export const getServerSideProps: GetStaticProps = async () => {
   const userCount = await prisma.user.count();
@@ -55,14 +54,6 @@ const Signup: NextPage = () => {
   return (
     <>
       <div className="w-full h-full">
-        <header className="m-8">
-          <Image
-            width="110"
-            height="24"
-            src="/mailing-lockup.svg"
-            alt="Mailing logo"
-          />
-        </header>
         <main className="max-w-md	mx-auto pt-20 sm:pt-24 lg:pt-32">
           <h1 className="text-4xl font-bold text-white m-0 leading-tight">
             Sign up
@@ -83,7 +74,7 @@ const Signup: NextPage = () => {
             <Input
               label="Email"
               placeholder="you@email.com"
-              type="text"
+              type="email"
               name="email"
               id="email"
               ref={emailRef}

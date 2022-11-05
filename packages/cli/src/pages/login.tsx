@@ -1,6 +1,5 @@
 import type { NextPage } from "next";
 import Link from "next/link";
-import Image from "next/image";
 import { useCallback, useRef, useState } from "react";
 import FormError from "./components/FormError";
 import OutlineButton from "./components/ui/OutlineButton";
@@ -36,14 +35,6 @@ const Login: NextPage = () => {
   return (
     <>
       <div className="w-full h-full">
-        <header className="m-8">
-          <Image
-            width="110"
-            height="24"
-            src="/mailing-lockup.svg"
-            alt="Mailing logo"
-          />
-        </header>
         <main className="max-w-md	mx-auto pt-20 sm:pt-24 lg:pt-32">
           <h1 className="text-4xl font-bold text-white m-0 leading-tight">
             Log in
@@ -59,7 +50,7 @@ const Login: NextPage = () => {
             <Input
               label="Email"
               placeholder="you@email.com"
-              type="text"
+              type="email"
               name="email"
               id="email"
               ref={emailRef}

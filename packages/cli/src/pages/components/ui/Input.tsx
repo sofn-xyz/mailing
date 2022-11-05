@@ -3,7 +3,7 @@ import { forwardRef } from "react";
 type InputProps = {
   label: string;
   placeholder?: string;
-  type: "text" | "password";
+  type: "text" | "email" | "password";
   name: string;
   id?: string;
 };
