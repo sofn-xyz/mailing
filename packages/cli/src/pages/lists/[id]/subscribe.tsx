@@ -31,9 +31,7 @@ type Props = {
 };
 
 const Submitted = () => (
-  <>
-    <div>Thanks for subscribing!</div>
-  </>
+  <div className="col-span-3">Thanks for subscribing!</div>
 );
 
 const Subscribe = (props: Props) => {
