@@ -3,6 +3,7 @@ import { NextPage } from "next";
 import { withSessionSsr } from "../../util/session";
 import prisma from "../../../prisma";
 import type { Member, User } from "../../../prisma/generated/client";
+import OutlineButton from "../components/ui/OutlineButton";
 
 const PAGE_SIZE = 20;
 
@@ -10,6 +11,7 @@ type AudiencesProps = {
   members: Member[];
   page: number;
   total: number;
+  defaultListId: string;
   user: User;
 };
 
@@ -50,11 +52,50 @@ export const getServerSideProps = withSessionSsr<{ user: any }>(
 
     const [total, members] = await Promise.all([totalQuery, membersQuery]);
 
+    // No members, go back to page 0
+    if (members.length === 0 && page > 0) {
+      return {
+        redirect: {
+          destination: "/audiences",
+          permanent: false,
+        },
+      };
+    }
+
+    let defaultListId: string | undefined = members[0]?.listId;
+    if (!defaultListId) {
+      // no members, so find the default list
+      defaultListId = (
+        await prisma.list.findFirst({
+          where: {
+            isDefault: true,
+          },
+        })
+      )?.id;
+
+      // create the default list if it doesn't exist
+      if (!defaultListId) {
+        const org = await prisma.organization.findFirst({});
+        if (!org) {
+          throw new Error("No organization found");
+        }
+        const defaultList = await prisma.list.create({
+          data: {
+            organizationId: org.id,
+            name: "Default",
+            isDefault: true,
+          },
+        });
+        defaultListId = defaultList.id;
+      }
+    }
+
     const props: AudiencesProps = {
       user,
       members: JSON.parse(JSON.stringify(members)),
       total,
       page,
+      defaultListId,
     };
 
     return {
@@ -63,14 +104,25 @@ export const getServerSideProps = withSessionSsr<{ user: any }>(
   }
 );
 
-const PreviewIndex: NextPage<AudiencesProps> = ({ members, total }) => {
+const PreviewIndex: NextPage<AudiencesProps> = ({
+  members,
+  total,
+  defaultListId,
+}) => {
   return (
-    <div>
+    <div className="max-w-2xl mx-auto grid grid-cols-3 gap-3">
       <div className="mt-16 col-span-3"></div>
       <h2 className="col-span-2 text-3xl font-bold">
-        Audience<span>{total}</span>
+        Audience{" "}
+        <sup className="font-normal text-sm relative -top-3">{total}</sup>
       </h2>
-
+      <div className="col-span-1 text-right">
+        <OutlineButton
+          text="Add subscriber"
+          type="button"
+          href={`/lists/${defaultListId}/subscribe`}
+        />
+      </div>
       <div className="col-span-3">
         <table className="table-auto w-full">
           <thead className="text-xs uppercase text-gray-500 border-t border-slate-300">
