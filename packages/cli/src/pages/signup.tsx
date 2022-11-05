@@ -53,8 +53,8 @@ const Signup: NextPage = () => {
 
   return (
     <>
-      <div className="w-full h-full">
-        <main className="max-w-md	mx-auto pt-20 sm:pt-24 lg:pt-32">
+      <div className="max-w-md mx-auto h-screen flex flex-col justify-center">
+        <main className="py-20 sm:py-24 lg:py-32">
           <h1 className="text-4xl font-bold text-white m-0 leading-tight">
             Sign up
           </h1>
