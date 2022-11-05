@@ -50,7 +50,7 @@ const Login: NextPage = () => {
             <Input
               label="Email"
               placeholder="you@email.com"
-              type="email"
+              type="text"
               name="email"
               id="email"
               ref={emailRef}
