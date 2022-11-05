@@ -8,7 +8,7 @@ describe("login tests", () => {
     cy.visit("/signup");
     cy.location("pathname").should("eq", "/signup");
 
-    cy.get("h1").should("contain", "Signup");
+    cy.get("h1").should("contain", "Sign up");
     cy.get("input#email").should("exist");
 
     // invalid email should give an error
@@ -31,7 +31,7 @@ describe("login tests", () => {
 
     // it should redirect to the login page
     cy.location("pathname").should("eq", "/login");
-    cy.get("h1").should("contain", "Login");
+    cy.get("h1").should("contain", "Log in");
 
     // fill in email and passord fields and then submit the form
     cy.get("input#email").type(email);
@@ -85,7 +85,7 @@ describe("login tests", () => {
     // you can visit the login page
     cy.visit("/login");
     cy.location("pathname").should("eq", "/login");
-    cy.get("h1").should("contain", "Login");
+    cy.get("h1").should("contain", "Log in");
 
     // it should give you an error if you try to login with the wrong password
     cy.get("input#email").type(email);
@@ -99,7 +99,7 @@ describe("login tests", () => {
     // visit the login page
     cy.visit("/login");
     cy.location("pathname").should("eq", "/login");
-    cy.get("h1").should("contain", "Login");
+    cy.get("h1").should("contain", "Log in");
 
     // fill in email and passord fields and then submit the form
     cy.get("input#email").type("i@didnsignup.com");
