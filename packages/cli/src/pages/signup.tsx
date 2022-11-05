@@ -2,7 +2,9 @@ import FormError from "./components/FormError";
 import type { GetStaticProps, NextPage } from "next";
 import { useCallback, useRef, useState } from "react";
 import prisma from "../../prisma";
-import SubmitButton from "../components/SubmitButton";
+import OutlineButton from "./components/ui/OutlineButton";
+import Input from "./components/ui/Input";
+import Link from "next/link";
 
 export const getServerSideProps: GetStaticProps = async () => {
   const userCount = await prisma.user.count();
@@ -51,60 +53,45 @@ const Signup: NextPage = () => {
 
   return (
     <>
-      <div>
-        <div className="w-full h-full">
-          <main className="max-w-5xl mx-auto pt-20 sm:pt-24 lg:pt-32">
-            <div className="grid grid-cols-3 gap-3">
-              <h1 className="col-span-3 text-4xl sm:text-7xl 2xl:text-8xl m-0">
-                Signup
-              </h1>
-
-              <FormError>{errors}</FormError>
-
-              <form
-                action="/api/users"
-                method="POST"
-                className="col-span-1"
-                onSubmit={onSubmit}
-              >
-                <div>
-                  <label
-                    htmlFor="email"
-                    className="block text-sm font-medium text-gray-700"
-                  >
-                    Email
-                  </label>
-                  <input
-                    type="text"
-                    name="email"
-                    id="email"
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm py-2 px-3 text-black"
-                    placeholder="you@email.com"
-                    ref={emailRef}
-                  />
-                </div>
-                <div className="mt-[12px]">
-                  <label
-                    htmlFor="password"
-                    className="block text-sm font-medium text-gray-700"
-                  >
-                    Password
-                  </label>
-                  <input
-                    type="password"
-                    name="password"
-                    id="password"
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm py-2 px-3 text-black"
-                    ref={passwordRef}
-                  />
-                </div>
-                <div className="mt-[12px]">
-                  <SubmitButton>Save</SubmitButton>
-                </div>
-              </form>
+      <div className="max-w-md mx-auto h-screen flex flex-col justify-center">
+        <main className="py-20 sm:py-24 lg:py-32">
+          <h1 className="text-4xl font-bold text-white m-0 leading-tight">
+            Sign up
+          </h1>
+          <p className="pt-2 pb-10 leading-tight">
+            Already have an account?{" "}
+            <Link href="/login">
+              <a className="text-blue hover:underline">Log in</a>
+            </Link>
+          </p>
+          <FormError>{errors}</FormError>
+          <form
+            action="/api/users"
+            method="POST"
+            className="col-span-1"
+            onSubmit={onSubmit}
+          >
+            <Input
+              label="Email"
+              placeholder="you@email.com"
+              type="email"
+              name="email"
+              id="email"
+              ref={emailRef}
+            />
+            <div className="mt-6" />
+            <Input
+              label="Password"
+              type="password"
+              name="password"
+              id="password"
+              ref={passwordRef}
+            />
+            <div className="mt-10 flex justify-end">
+              <OutlineButton type="submit" text="Sign up" />
             </div>
-          </main>
-        </div>
+          </form>
+        </main>
       </div>
     </>
   );
