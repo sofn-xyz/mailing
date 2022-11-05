@@ -55,17 +55,17 @@ const Signup: NextPage = () => {
   return (
     <>
       <div className="w-full h-full">
-        <header>
+        <header className="m-8">
           <Image
-            width="146"
-            height="32"
-            src="/mailing-logo.svg"
+            width="110"
+            height="24"
+            src="/mailing-lockup.svg"
             alt="Mailing logo"
           />
         </header>
         <main className="max-w-md	mx-auto pt-20 sm:pt-24 lg:pt-32">
           <h1 className="text-4xl font-bold text-white m-0 leading-tight">
-            Create an account
+            Sign up
           </h1>
           <p className="pt-2 pb-10 leading-tight">
             Already have an account?{" "}
@@ -88,18 +88,16 @@ const Signup: NextPage = () => {
               id="email"
               ref={emailRef}
             />
-            <div className="mt-6">
-              <Input
-                label="Password"
-                htmlFor="password"
-                type="password"
-                name="password"
-                id="password"
-                ref={passwordRef}
-              />
-            </div>
+            <div className="mt-6" />
+            <Input
+              label="Password"
+              type="password"
+              name="password"
+              id="password"
+              ref={passwordRef}
+            />
             <div className="mt-10 flex justify-end">
-              <OutlineButton text="Create account" />
+              <OutlineButton type="submit" text="Sign up" />
             </div>
           </form>
         </main>

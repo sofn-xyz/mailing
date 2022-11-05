@@ -1,26 +1,18 @@
-type Input = {
+import { forwardRef } from "react";
+
+type InputProps = {
   label: string;
-  htmlFor?: string;
   placeholder?: string;
-  type?: string;
-  name?: string;
+  type: "text" | "password";
+  name: string;
   id?: string;
-  ref?: string;
 };
 
-const Input: React.FC<Input> = ({
-  label,
-  htmlFor,
-  type,
-  name,
-  id,
-  placeholder,
-  ref,
-}) => {
-  return (
+const Input = forwardRef<HTMLInputElement, InputProps>(
+  ({ label, type, name, id, placeholder }, ref) => (
     <>
       <label
-        htmlFor={htmlFor}
+        htmlFor={name}
         className="block leading-none text-sm font-bold text-slate-400 mb-3"
       >
         {label}
@@ -34,7 +26,9 @@ const Input: React.FC<Input> = ({
         ref={ref}
       />
     </>
-  );
-};
+  )
+);
+
+Input.displayName = "Input";
 
 export default Input;
