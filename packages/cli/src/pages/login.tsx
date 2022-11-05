@@ -1,6 +1,10 @@
 import type { NextPage } from "next";
+import Link from "next/link";
+import Image from "next/image";
 import { useCallback, useRef, useState } from "react";
 import FormError from "./components/FormError";
+import OutlineButton from "./components/ui/OutlineButton";
+import Input from "./components/ui/Input";
 
 const Login: NextPage = () => {
   const [errors, setErrors] = useState();
@@ -31,62 +35,49 @@ const Login: NextPage = () => {
 
   return (
     <>
-      <div>
-        <div className="w-full h-full">
-          <main className="max-w-5xl mx-auto pt-20 sm:pt-24 lg:pt-32">
-            <div className="grid grid-cols-3 gap-3">
-              <h1 className="col-span-3 text-4xl sm:text-7xl 2xl:text-8xl m-0">
-                Login
-              </h1>
-
-              <FormError>{errors}</FormError>
-
-              <form
-                action="/api/session"
-                method="POST"
-                className="col-span-1"
-                onSubmit={onSubmit}
-              >
-                <div>
-                  <label
-                    htmlFor="email"
-                    className="block text-sm font-medium text-gray-700"
-                  >
-                    Email
-                  </label>
-                  <input
-                    type="text"
-                    name="email"
-                    id="email"
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm py-2 px-3 text-black"
-                    placeholder="you@email.com"
-                    ref={emailRef}
-                  />
-                </div>
-                <div className="mt-3">
-                  <label
-                    htmlFor="password"
-                    className="block text-sm font-medium text-gray-700"
-                  >
-                    Password
-                  </label>
-                  <input
-                    type="password"
-                    name="password"
-                    id="password"
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm py-2 px-3 text-black"
-                    ref={passwordRef}
-                  />
-                </div>
-                <div className="mt-3">
-                  <button className="rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-                    Login
-                  </button>
-                </div>
-              </form>
+      <div className="w-full h-full">
+        <header>
+          <Image
+            width="146"
+            height="32"
+            src="/mailing-lockup.svg"
+            alt="Mailing logo"
+          />
+        </header>
+        <main className="max-w-md	mx-auto pt-20 sm:pt-24 lg:pt-32">
+          <h1 className="text-4xl font-bold text-white m-0 leading-tight">
+            Log in
+          </h1>
+          <p className="pt-2 pb-10 leading-tight">
+            New to Mailing?{" "}
+            <Link href="/signup">
+              <a className="text-blue hover:underline">Create an account</a>
+            </Link>
+          </p>
+          <FormError>{errors}</FormError>
+          <form action="/api/session" method="POST" onSubmit={onSubmit}>
+            <Input
+              label="Email"
+              placeholder="you@email.com"
+              type="text"
+              name="email"
+              id="email"
+              ref={emailRef}
+            />
+            <div className="mt-6">
+              <Input
+                label="Password"
+                type="password"
+                name="password"
+                id="password"
+                ref={passwordRef}
+              />
             </div>
-          </main>
-        </div>
+            <div className="mt-10 flex justify-end">
+              <OutlineButton text="Log in" />
+            </div>
+          </form>
+        </main>
       </div>
     </>
   );
