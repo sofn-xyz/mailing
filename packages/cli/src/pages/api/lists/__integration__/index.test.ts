@@ -46,6 +46,8 @@ describe("lists", () => {
       expect(newList).toBeTruthy();
       expect(Object.keys(newList)).toEqual([
         "id",
+        "createdAt",
+        "updatedAt",
         "isDefault",
         "name",
         "organizationId",
