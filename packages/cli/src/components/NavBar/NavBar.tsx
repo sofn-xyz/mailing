@@ -55,7 +55,7 @@ const NavBar: React.FC<NavBarProps> = ({ children }) => {
           />
         </nav>
       )}
-      <div className="flex-grow">{children}</div>
+      <div className="flex-grow h-screen overflow-y-scroll">{children}</div>
     </div>
   );
 };
