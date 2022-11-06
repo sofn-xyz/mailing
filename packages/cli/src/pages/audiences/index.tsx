@@ -6,6 +6,7 @@ import type { Member, User } from "../../../prisma/generated/client";
 import OutlineButton from "../components/ui/OutlineButton";
 import Table from "../components/ui/Table";
 import Link from "next/link";
+import PaginationControl from "../components/ui/PaginationControl";
 
 const PAGE_SIZE = 20;
 
@@ -129,6 +130,7 @@ const PreviewIndex: NextPage<AudiencesProps> = ({
   total,
   defaultListId,
   sortOrder,
+  page,
 }) => {
   const headers: (ReactElement | string)[] = [
     "Email",
@@ -172,6 +174,9 @@ const PreviewIndex: NextPage<AudiencesProps> = ({
       </div>
       <div className="col-span-3 hidden sm:visible">
         <Table rows={[headers].concat(rows)} />
+      </div>
+      <div className="col-span-3 mb-20">
+        <PaginationControl page={page} total={total} pageSize={PAGE_SIZE} />
       </div>
     </div>
   );

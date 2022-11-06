@@ -34,7 +34,7 @@ const NavBar: React.FC<NavBarProps> = ({ children }) => {
             name="Previews"
           />
           <NavBarButton
-            active={router.route === "/audiences/[[...path]]"}
+            active={router.route === "/audiences"}
             href="/audiences"
             Icon={IconAudience}
             name="Audiences"
