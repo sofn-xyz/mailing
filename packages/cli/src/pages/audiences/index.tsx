@@ -1,24 +1,29 @@
-import React from "react";
+import React, { ReactElement } from "react";
 import { NextPage } from "next";
 import { withSessionSsr } from "../../util/session";
 import prisma from "../../../prisma";
 import type { Member, User } from "../../../prisma/generated/client";
 import OutlineButton from "../components/ui/OutlineButton";
+import Table from "../components/ui/Table";
+import Link from "next/link";
 
 const PAGE_SIZE = 20;
 
 type AudiencesProps = {
   members: Member[];
+  memberListCounts: { [key: string]: number };
   page: number;
   total: number;
   defaultListId: string;
   user: User;
+  sortOrder: "desc" | "asc";
 };
 
 export const getServerSideProps = withSessionSsr<{ user: any }>(
   async function ({ req, query }) {
     const user = req.session.user;
     const page = "string" === typeof query.page ? parseInt(query.page, 10) : 0;
+    const sortOrder = "string" === typeof query.sortOrder ? "asc" : "desc";
 
     if (!user) {
       return {
@@ -36,7 +41,7 @@ export const getServerSideProps = withSessionSsr<{ user: any }>(
         },
       },
       orderBy: {
-        createdAt: "desc",
+        createdAt: sortOrder,
       },
       skip: PAGE_SIZE * page,
       take: PAGE_SIZE,
@@ -90,12 +95,26 @@ export const getServerSideProps = withSessionSsr<{ user: any }>(
       }
     }
 
+    const memberListCounts = (
+      await prisma.member.groupBy({
+        by: ["email"],
+        _count: {
+          email: true,
+        },
+        where: {
+          email: { in: members.map((member) => member.email) },
+        },
+      })
+    ).map((member) => [member.email, member._count.email]);
+
     const props: AudiencesProps = {
       user,
       members: JSON.parse(JSON.stringify(members)),
+      memberListCounts: Object.fromEntries(memberListCounts),
       total,
       page,
       defaultListId,
+      sortOrder,
     };
 
     return {
@@ -106,9 +125,30 @@ export const getServerSideProps = withSessionSsr<{ user: any }>(
 
 const PreviewIndex: NextPage<AudiencesProps> = ({
   members,
+  memberListCounts,
   total,
   defaultListId,
+  sortOrder,
 }) => {
+  const headers: (ReactElement | string)[] = [
+    "Email",
+    <Link
+      key="header"
+      href={`/audiences${sortOrder === "desc" ? "?sortOrder=asc" : ""}`}
+    >
+      <a>Added</a>
+    </Link>,
+    "Lists",
+  ];
+
+  const rows = members.map((m) => [
+    m.email,
+    new Date(m.createdAt).toLocaleString(),
+    <Link key={m.id} href={`/unsubscribe/${m.id}`}>
+      <a>{memberListCounts[m.email]}</a>
+    </Link>,
+  ]);
+
   return (
     <div className="max-w-2xl mx-auto grid grid-cols-3 gap-3">
       <div className="mt-16 col-span-3"></div>
@@ -119,31 +159,15 @@ const PreviewIndex: NextPage<AudiencesProps> = ({
       <div className="col-span-1 text-right">
         <OutlineButton
           text="Add subscriber"
-          type="button"
           href={`/lists/${defaultListId}/subscribe`}
+          small
         />
       </div>
-      <div className="col-span-3">
-        <table className="table-auto w-full">
-          <thead className="text-xs uppercase text-gray-500 border-t border-slate-300">
-            <tr>
-              <td>Email Address</td>
-              <td>Date Added</td>
-              <td></td>
-            </tr>
-          </thead>
-          <tbody>
-            {members.map((m) => (
-              <tr key={`apikey${m.id}`} className="divide-y-1 divide-[#555]">
-                <td className="py-[7px]">{m.email}</td>
-                <td>{new Date(m.createdAt).toLocaleString()}</td>
-                <td>
-                  <a href={`/unsubscribe/${m.id}`}>Preferences</a>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+      <div className="col-span-3 hidden:sm">
+        <Table rows={[headers].concat(rows)} />
+      </div>
+      <div className="col-span-3 hidden sm:visible">
+        <Table rows={[headers].concat(rows)} />
       </div>
     </div>
   );

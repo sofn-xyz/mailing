@@ -1,10 +1,12 @@
 import Link from "next/link";
+import cx from "classnames";
 
 type OutlineButtonProps = {
   text: string;
   href?: string;
-  type: "button" | "submit" | "reset";
+  type?: "button" | "submit" | "reset";
   onClick?: () => void;
+  small?: boolean;
 };
 
 const OutlineButton: React.FC<OutlineButtonProps> = ({
@@ -12,19 +14,21 @@ const OutlineButton: React.FC<OutlineButtonProps> = ({
   href,
   onClick,
   type,
+  small,
 }) => {
+  const sharedClasses = cx(
+    "rounded-2xl border border-emerald-700 bg-transparent font-bold leading-none text-green-300 hover:border-green-300 ease-in duration-150",
+    {
+      "text-sm pt-2 pb-3 px-3": small,
+      "text-base pt-3 pb-4 px-4": !small,
+    }
+  );
   return href ? (
     <Link href={href} legacyBehavior>
-      <a className="rounded-xl text-base border border-emerald-700 bg-transparent pt-3 pb-4 px-4 font-bold leading-none text-green-300 hover:border-green-300 ease-in duration-150">
-        {text}
-      </a>
+      <a className={sharedClasses}>{text}</a>
     </Link>
   ) : (
-    <button
-      className="rounded-xl text-base border border-emerald-700 bg-transparent pt-3 pb-4 px-4 font-bold leading-none text-green-300 hover:border-green-300 ease-in duration-150"
-      onClick={onClick}
-      type={type}
-    >
+    <button className={sharedClasses} onClick={onClick} type={type}>
       {text}
     </button>
   );

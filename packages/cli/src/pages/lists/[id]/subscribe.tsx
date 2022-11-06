@@ -74,7 +74,7 @@ const Subscribe = (props: Props) => {
       <form className="col-span-3" onSubmit={onSubmit}>
         <div>
           <Input
-            type="text"
+            type="email"
             name="email"
             label="Email"
             id="email"
