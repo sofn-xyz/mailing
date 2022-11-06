@@ -163,9 +163,9 @@ const PreviewIndex: NextPage<AudiencesProps> = ({
         </h2>
         <div className="text-right float-right relative top-1">
           <OutlineButton
+            small
             text="Add subscriber"
             href={`/lists/${defaultListId}/subscribe`}
-            small
           />
         </div>
       </div>

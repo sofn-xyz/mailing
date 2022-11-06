@@ -17,7 +17,7 @@ const OutlineButton: React.FC<OutlineButtonProps> = ({
   small,
 }) => {
   const sharedClasses = cx(
-    "rounded-2xl border border-emerald-700 bg-transparent font-bold leading-none text-green-300 hover:border-green-300 ease-in duration-150 px-4",
+    "rounded-2xl border border-emerald-700 bg-transparent font-bold leading-none text-green-300 hover:border-green-300 ease-in duration-150 px-4 inline-block",
     {
       "text-sm pt-3 pb-3.5": small,
       "text-base pt-3 pb-4": !small,
