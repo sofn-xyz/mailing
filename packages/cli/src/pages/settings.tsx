@@ -85,7 +85,7 @@ function Settings(props: Props) {
     <>
       <div>
         <div className="w-full">
-          <main className="pt-16">
+          <main className="py-16">
             <div className="px-8 max-w-2xl mx-auto">
               <h1 className="font-bold text-3xl mt-0 mb-8">Account</h1>
               <p className="block leading-none text-sm font-bold text-slate-400 mb-3">
