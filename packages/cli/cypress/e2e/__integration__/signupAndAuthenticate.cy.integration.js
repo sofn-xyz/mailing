@@ -109,7 +109,7 @@ describe("login tests", () => {
     // it should show an error message
     cy.get("div.form-error").should(
       "contain",
-      "no user exists with that email"
+      "No user exists with that email."
     );
   });
 
