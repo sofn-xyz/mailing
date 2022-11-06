@@ -40,7 +40,7 @@ const NavBar: React.FC<NavBarProps> = ({ children }) => {
             name="Audiences"
           />
           <NavBarButton
-            active={router.route === "/settings" || router.route === "/login"}
+            active={router.route === "/settings"}
             href="/settings"
             Icon={IconGear}
             name="Settings"
