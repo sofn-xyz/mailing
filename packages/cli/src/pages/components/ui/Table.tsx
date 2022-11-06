@@ -25,7 +25,7 @@ const Table: React.FC<TableProps> = ({ rows }) => {
         row.map((cell, j) => (
           <div
             key={`${i}:${j}`}
-            className="border-b border-gray-500 border-dotted col-span-1 pb-3 pt-3"
+            className="border-b border-gray-500 border-dotted col-span-1 pb-3 pt-3 pr-1"
           >
             {cell}
           </div>
