@@ -76,7 +76,7 @@ const Home: NextPage = () => {
                   </span>
                   <span className="sm:hidden">
                     <Image
-                      width="25.6"
+                      width="26"
                       height="32"
                       src="/mailing-icon.svg"
                       alt="Mailing icon"
@@ -711,13 +711,13 @@ const Home: NextPage = () => {
           </div>
         </main>
         <footer>
-          <div className="bg-neutral-900 py-6 text-center">
+          <div className="bg-neutral-900 py-6">
             <Image
-              width="19.2"
+              width="19"
               height="24"
               src="/mailing-icon-white.svg"
               alt="Mailing icon"
-              className="dark:opacity-75"
+              className="dark:opacity-75 m-auto"
             />
           </div>
         </footer>
