@@ -152,16 +152,20 @@ const PreviewIndex: NextPage<AudiencesProps> = ({
   return (
     <div className="max-w-2xl mx-auto grid grid-cols-3 gap-3">
       <div className="mt-16 col-span-3"></div>
-      <h2 className="col-span-2 text-3xl font-bold">
-        Audience{" "}
-        <sup className="font-normal text-sm relative -top-3">{total}</sup>
-      </h2>
-      <div className="col-span-1 text-right">
-        <OutlineButton
-          text="Add subscriber"
-          href={`/lists/${defaultListId}/subscribe`}
-          small
-        />
+      <div className="col-span-3">
+        <h2 className="inline-block text-3xl font-bold relative">
+          Audience{" "}
+          <sup className="font-normal text-sm top-0 absolute -right-6">
+            {total}
+          </sup>
+        </h2>
+        <div className="text-right float-right relative top-1">
+          <OutlineButton
+            text="Add subscriber"
+            href={`/lists/${defaultListId}/subscribe`}
+            small
+          />
+        </div>
       </div>
       <div className="col-span-3 hidden:sm">
         <Table rows={[headers].concat(rows)} />
