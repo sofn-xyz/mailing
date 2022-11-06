@@ -2,6 +2,7 @@ import { withSessionSsr } from "../util/session";
 import { useCallback, useState } from "react";
 import prisma from "../../prisma";
 import type { ApiKey, List, User } from "../../prisma/generated/client";
+import OutlineButton from "./components/ui/OutlineButton";
 
 export const getServerSideProps = withSessionSsr<{ user: any }>(
   async function ({ req }) {
@@ -83,26 +84,29 @@ function Settings(props: Props) {
   return (
     <>
       <div>
-        <div className="w-full h-full">
-          <main className="max-w-3xl mx-auto pt-20 sm:pt-24 lg:pt-32">
-            <div className="grid grid-cols-3 gap-3">
-              <h1 className="col-span-3 text-4xl sm:text-7xl 2xl:text-8xl m-0">
-                Settings
-              </h1>
-
-              <div className="col-span-3">
-                <p>Welcome back {props.user?.email}</p>
-              </div>
-
-              <div className="mt-16 col-span-3"></div>
-              <h2 className="col-span-2 text-3xl">API Keys</h2>
-              <div className="col-span-1 text-right">
-                <button
-                  onClick={createApiKey}
-                  className="text-sm text-green-300 border-emerald-700 border rounded-lg p-[13px]"
-                >
-                  New API Key
-                </button>
+        <div className="w-full">
+          <main className="pt-16">
+            <div className="px-8 max-w-2xl mx-auto">
+              <h1 className="font-bold text-3xl mt-0 mb-8">Account</h1>
+              <p className="block leading-none text-sm font-bold text-slate-400 mb-3">
+                Email
+              </p>
+              {props.user?.email}
+            </div>
+            <hr className="my-16 border-dotted border-gray-500 border-top border-bottom-0" />
+            <div className="px-8 max-w-2xl mx-auto ">
+              <div className="mt-16 col-span-3" />
+              <div className="flex mb-8">
+                <h2 className="grow inline-flex text-3xl font-bold">
+                  API Keys
+                </h2>
+                <div className="inline-flex text-right">
+                  <OutlineButton
+                    onClick={createApiKey}
+                    small
+                    text="New API Key"
+                  />
+                </div>
               </div>
               <div className="col-span-3">
                 <table id="api-keys" className="table-auto w-full">
@@ -134,16 +138,14 @@ function Settings(props: Props) {
                   </tbody>
                 </table>
               </div>
-
-              <div className="mt-16 col-span-3"></div>
-              <h2 className="col-span-2 text-3xl">Lists</h2>
-              <div className="col-span-1 text-right">
-                <button
-                  onClick={createList}
-                  className="text-sm text-green-300 border-emerald-700 border rounded-lg p-[13px]"
-                >
-                  New List
-                </button>
+            </div>
+            <hr className="my-16 border-dotted border-gray-500 border-top border-bottom-0" />
+            <div className="px-8 max-w-2xl mx-auto ">
+              <div className="flex mb-8">
+                <h2 className="grow inline-flex text-3xl font-bold">Lists</h2>
+                <div className="inline-flex text-right">
+                  <OutlineButton onClick={createList} small text="New List" />
+                </div>
               </div>
               <div className="col-span-3">
                 <table className="table-auto w-full">

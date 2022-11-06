@@ -9,7 +9,7 @@ type InputProps = {
 };
 
 const Input = forwardRef<HTMLInputElement, InputProps>(
-  ({ label, type, name, id, placeholder }, ref) => (
+  ({ label, placeholder, type, name, id }, ref) => (
     <>
       <label
         htmlFor={name}
@@ -21,10 +21,10 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
         type={type}
         name={name}
         id={id}
-        className="block w-full rounded-lg border border-neutral-600 bg-black hover:border-blue-400 ease-in duration-150 focus:outline-0 active:outline-0 focus:border-blue-400 active:border-blue-400 text-base px-4 pb-1 h-11 text-white leading-none"
+        className="block w-full rounded-lg border border-neutral-600 bg-black hover:border-blue ease-in duration-150 focus:outline-0 active:outline-0 focus:border-blue active:border-blue text-base px-4 pb-1 h-11 text-white leading-none"
         placeholder={placeholder}
         ref={ref}
-      />
+      ></input>
     </>
   )
 );
