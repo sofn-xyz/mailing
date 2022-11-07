@@ -132,7 +132,7 @@ const List = (props: ListProps) => {
 };
 
 type PatchData = {
-  [key: string]: {
+  [memberId: string]: {
     status: "subscribed" | "unsubscribed";
   };
 };

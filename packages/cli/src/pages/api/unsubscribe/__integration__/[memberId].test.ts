@@ -1,17 +1,19 @@
+import prisma from "../../../../../prisma";
 import { apiListSubscribe } from "../../__integration__/util/listMember";
 import { apiCreateList } from "../../__integration__/util/lists";
 import { apiLogin } from "../../__integration__/util/login";
 import { apiLogout } from "../../__integration__/util/logout";
-import { ApiUnsubscribe } from "../../__integration__/util/unsubscribe";
+import {
+  apiUnsubscribe,
+  ApiUnsubscribe,
+} from "../../__integration__/util/unsubscribe";
 
 describe("/api/unsubscribe/[memberId]", () => {
-  // it should 404 if a GET or POST is sent to /api/unsubscribe/[memberId]
   it("should 404 if a GET or POST is sent to /api/unsubscribe/[memberId]", async () => {
     const instance = new ApiUnsubscribe();
     instance.path = "/api/unsubscribe/123";
     instance.method = "GET";
     const { response } = await instance.perform();
-
     expect(response.status).toEqual(404);
   });
 
@@ -41,12 +43,22 @@ describe("/api/unsubscribe/[memberId]", () => {
       });
       expect(subscribeResponse.status).toBe(201);
 
-      // unsubscribe the same email
-      // const { response: unsubscribeResponse } = await apiUnsubscribe(
-      //   memberId,
-      //   email
-      // );
-      // expect(unsubscribeResponse.status).toBe(200);
+      const member = await prisma.member.findUnique({
+        where: {
+          listId_email: { listId, email },
+        },
+      });
+
+      if (!member) {
+        expect(member).not.toBeNull();
+      } else {
+        // unsubscribe the same email
+        const { response: unsubscribeResponse } = await apiUnsubscribe(
+          member.id,
+          { data: { [member.id]: { status: "unsubscribed" as const } } }
+        );
+        expect(unsubscribeResponse.status).toBe(200);
+      }
     });
   });
 });

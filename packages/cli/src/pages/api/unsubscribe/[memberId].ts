@@ -26,8 +26,6 @@ export default async function unsubscribeMember(
     for (const key in data) {
       const memberId = key;
       const status = data[key].status;
-
-      console.log(memberId, status);
       await prisma.member.update({ where: { id: memberId }, data: { status } });
     }
 
