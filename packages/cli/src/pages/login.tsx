@@ -41,7 +41,7 @@ const Login: NextPage = () => {
           </h1>
           <p className="pt-2 pb-10 leading-tight">
             Need an account?{" "}
-            <Link href="/signup">
+            <Link href="/signup" legacyBehavior>
               <a className="text-blue hover:underline">Sign up</a>
             </Link>
           </p>
