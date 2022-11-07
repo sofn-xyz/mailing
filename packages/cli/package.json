@@ -16,6 +16,10 @@
     "mm": "./bin.js"
   },
   "files": [
+    "!**/__test__/",
+    "!**/__integration__/",
+    "!**/__mocks__/",
+    "!*.test.ts",
     "bin.js",
     "next-env.d.ts",
     "package.json",

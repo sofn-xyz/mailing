@@ -33,41 +33,43 @@ const Login: NextPage = () => {
   }, []);
 
   return (
-    <div className="max-w-md mx-auto h-screen flex flex-col justify-center">
-      <main className="py-20 sm:py-24 lg:py-32">
-        <h1 className="text-4xl font-bold text-white m-0 leading-tight">
-          Log in
-        </h1>
-        <p className="pt-2 pb-10 leading-tight">
-          Need an account?{" "}
-          <Link href="/signup">
-            <a className="text-blue hover:underline">Sign up</a>
-          </Link>
-        </p>
-        <FormError>{errors}</FormError>
-        <form action="/api/session" method="POST" onSubmit={onSubmit}>
-          <Input
-            label="Email"
-            placeholder="you@email.com"
-            type="text"
-            name="email"
-            id="email"
-            ref={emailRef}
-          />
-          <div className="mt-6" />
-          <Input
-            label="Password"
-            type="password"
-            name="password"
-            id="password"
-            ref={passwordRef}
-          />
-          <div className="mt-10 flex justify-end">
-            <OutlineButton type="submit" text="Log in" />
-          </div>
-        </form>
-      </main>
-    </div>
+    <>
+      <div className="max-w-md mx-auto h-screen flex flex-col justify-center">
+        <main className="py-20 sm:py-24 lg:py-32">
+          <h1 className="text-4xl font-bold text-white m-0 leading-tight">
+            Log in
+          </h1>
+          <p className="pt-2 pb-10 leading-tight">
+            Need an account?{" "}
+            <Link href="/signup" legacyBehavior>
+              <a className="text-blue hover:underline">Sign up</a>
+            </Link>
+          </p>
+          <FormError>{errors}</FormError>
+          <form action="/api/session" method="POST" onSubmit={onSubmit}>
+            <Input
+              label="Email"
+              placeholder="you@email.com"
+              type="text"
+              name="email"
+              id="email"
+              ref={emailRef}
+            />
+            <div className="mt-6" />
+            <Input
+              label="Password"
+              type="password"
+              name="password"
+              id="password"
+              ref={passwordRef}
+            />
+            <div className="mt-10 flex justify-end">
+              <OutlineButton type="submit" text="Log in" />
+            </div>
+          </form>
+        </main>
+      </div>
+    </>
   );
 };
 
