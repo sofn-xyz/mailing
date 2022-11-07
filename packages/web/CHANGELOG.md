@@ -1,5 +1,11 @@
 # web
 
+## 0.4.8
+
+### Patch Changes
+
+- 22834e4: fix next 13 errors
+
 ## 0.4.7
 
 ### Patch Changes
