@@ -21,7 +21,7 @@ const PaginationControl: React.FC<PaginationControlProps> = ({
     return null;
   }
   const numPages = Math.ceil(total / pageSize);
-  const pages = Array.from({ length: numPages }, (_, i) => i);
+  const pages = Array.from({ length: numPages }, (_, i) => i + 1);
   const visiblePages = pages.slice(
     Math.max(0, page - MAX_VISIBLE_PAGES / 2),
     Math.min(numPages, page + MAX_VISIBLE_PAGES / 2)
@@ -30,12 +30,16 @@ const PaginationControl: React.FC<PaginationControlProps> = ({
   const getPageHref = (page: number) => {
     // current url with page query param
     const url = new URL(router.pathname, "http://localhost");
-    url.searchParams.set("page", page.toString());
+    if (page > 1) {
+      url.searchParams.set("page", page.toString());
+    } else {
+      url.searchParams.delete("page");
+    }
     return url.toString().split("http://localhost")[1];
   };
 
-  const previousEnabled = page > 0;
-  const nextEnabled = page < numPages - 1;
+  const previousEnabled = page > 1;
+  const nextEnabled = page < numPages;
 
   return (
     <div className="flex justify-center mt-8">
@@ -86,7 +90,7 @@ const PaginationControl: React.FC<PaginationControlProps> = ({
                 }
               )}
             >
-              {p + 1}
+              {p}
             </a>
           </Link>
         ))}

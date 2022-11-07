@@ -23,7 +23,10 @@ type AudiencesProps = {
 export const getServerSideProps = withSessionSsr<{ user: any }>(
   async function ({ req, query }) {
     const user = req.session.user;
-    const page = "string" === typeof query.page ? parseInt(query.page, 10) : 0;
+    const page =
+      "string" === typeof query.page
+        ? Math.max(parseInt(query.page, 10), 1)
+        : 1;
     const sortOrder = "string" === typeof query.sortOrder ? "asc" : "desc";
 
     if (!user) {
@@ -44,7 +47,7 @@ export const getServerSideProps = withSessionSsr<{ user: any }>(
       orderBy: {
         createdAt: sortOrder,
       },
-      skip: PAGE_SIZE * page,
+      skip: PAGE_SIZE * (page - 1),
       take: PAGE_SIZE,
     });
 
@@ -58,8 +61,8 @@ export const getServerSideProps = withSessionSsr<{ user: any }>(
 
     const [total, members] = await Promise.all([totalQuery, membersQuery]);
 
-    // No members, go back to page 0
-    if (members.length === 0 && page > 0) {
+    // No members, go back to page 1
+    if (members.length === 0 && page > 1) {
       return {
         redirect: {
           destination: "/audiences",
@@ -132,6 +135,7 @@ const PreviewIndex: NextPage<AudiencesProps> = ({
   sortOrder,
   page,
 }) => {
+  console.log("page", page);
   const headers: (ReactElement | string)[] = [
     "Email",
     <Link
