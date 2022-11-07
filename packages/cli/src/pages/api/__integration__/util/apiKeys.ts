@@ -1,6 +1,7 @@
-import "./assertIntegrationTestEnv";
 import { Api } from "./index";
 import prisma from "../../../../../prisma";
+import { assertIntegrationTestEnv } from "./assertIntegrationTestEnv";
+assertIntegrationTestEnv();
 
 export async function apiCreateApiKey() {
   const instance = new ApiPostApiKeys();
