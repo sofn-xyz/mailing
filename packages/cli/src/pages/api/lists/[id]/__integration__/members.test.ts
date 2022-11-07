@@ -14,7 +14,7 @@ describe("lists/[id]/members", () => {
   });
 
   describe("logged in", () => {
-    let listId: string | undefined;
+    let listId: string;
 
     beforeAll(async () => {
       await apiLogin();
