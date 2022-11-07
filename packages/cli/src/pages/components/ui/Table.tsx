@@ -1,4 +1,5 @@
 import { ReactElement } from "react";
+import cx from "classnames";
 
 type TableProps = {
   rows: (string | ReactElement)[][];
@@ -10,9 +11,9 @@ const Table: React.FC<TableProps> = ({ rows }) => {
   if (rows.find((row) => row.length !== numColumns)) {
     throw new Error("All rows must have the same number of columns");
   }
-  // use grid rather than html table for better responsiveness
+
   return (
-    <div className="grid grid-cols-3 border-t border-neutral-600">
+    <div className="grid grid-cols-3 border-t border-neutral-600 text-sm">
       {rows[0].map((header, i) => (
         <div
           key={`header:${i}`}
@@ -25,7 +26,12 @@ const Table: React.FC<TableProps> = ({ rows }) => {
         row.map((cell, j) => (
           <div
             key={`${i}:${j}`}
-            className="border-b border-gray-500 border-dotted col-span-1 pb-3 pt-3 pr-1"
+            className={cx(
+              "border-b border-gray-500 border-dotted col-span-1 pb-3 pt-3 pr-1",
+              {
+                "text-right": j === 2 && rows[0][2] === "table",
+              }
+            )}
           >
             {cell}
           </div>

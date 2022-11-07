@@ -1,8 +1,10 @@
 import { withSessionSsr } from "../util/session";
-import { useCallback, useState } from "react";
+import { ReactElement, useCallback, useState } from "react";
 import prisma from "../../prisma";
 import type { ApiKey, List, User } from "../../prisma/generated/client";
 import OutlineButton from "./components/ui/OutlineButton";
+import Table from "./components/ui/Table";
+import Link from "next/link";
 
 export const getServerSideProps = withSessionSsr<{ user: any }>(
   async function ({ req }) {
@@ -41,6 +43,9 @@ interface Props {
   apiKeys: ApiKey[];
   lists: List[];
 }
+
+const API_TABLE_HEADERS: (ReactElement | string)[] = ["API Key", "Active", ""];
+const LIST_TABLE_HEADERS: (ReactElement | string)[] = ["Name", "ID", ""];
 
 function Settings(props: Props) {
   const [apiKeys, setApiKeys] = useState(props.apiKeys);
@@ -109,38 +114,25 @@ function Settings(props: Props) {
                 </div>
               </div>
               <div className="col-span-3">
-                <table id="api-keys" className="table-auto w-full">
-                  <thead className="text-xs uppercase text-gray-500 border-t border-slate-300">
-                    <tr>
-                      <td>API Key</td>
-                      <td>Date Added</td>
-                      <td></td>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {apiKeys.map((apiKey) => (
-                      <tr
-                        key={`apikey${apiKey.id}`}
-                        className="divide-y-1 divide-[#555]"
+                <Table
+                  rows={[API_TABLE_HEADERS].concat(
+                    apiKeys.map((apiKey) => [
+                      apiKey.id,
+                      apiKey.createdAt?.toString() || "",
+                      <a
+                        key={apiKey.id}
+                        className="text-sm text-red-400 cursor-pointer"
+                        onClick={deleteApiKey(apiKey.id)}
                       >
-                        <td className="py-[7px]">{apiKey.id}</td>
-                        <td>{apiKey.createdAt?.toString()}</td>
-                        <td>
-                          <a
-                            className="text-sm text-red-400 cursor-pointer"
-                            onClick={deleteApiKey(apiKey.id)}
-                          >
-                            Delete
-                          </a>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+                        Delete
+                      </a>,
+                    ])
+                  )}
+                />
               </div>
             </div>
             <hr className="my-16 border-dotted border-gray-500 border-top border-bottom-0" />
-            <div className="px-8 max-w-2xl mx-auto ">
+            <div className="px-8 max-w-2xl mx-auto">
               <div className="flex mb-8">
                 <h2 className="grow inline-flex text-3xl font-bold">Lists</h2>
                 <div className="inline-flex text-right">
@@ -148,29 +140,21 @@ function Settings(props: Props) {
                 </div>
               </div>
               <div className="col-span-3">
-                <table className="table-auto w-full">
-                  <thead className="text-xs uppercase text-gray-500 border-t border-slate-300">
-                    <tr>
-                      <td>Name</td>
-                      <td>Id</td>
-                      <td>Subscribe</td>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {lists.map((list) => (
-                      <tr
-                        key={`apikey${list.id}`}
-                        className="divide-y-1 divide-[#555]"
+                <Table
+                  rows={[LIST_TABLE_HEADERS].concat(
+                    lists.map((list) => [
+                      list.name,
+                      list.id,
+                      <Link
+                        key={list.id}
+                        href={`/lists/${list.id}/subscribe`}
+                        legacyBehavior
                       >
-                        <td className="py-[7px]">{list.name}</td>
-                        <td>{list.id}</td>
-                        <td>
-                          <a href={`/lists/${list.id}/subscribe`}>Subscribe</a>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+                        <a>Subscribe</a>
+                      </Link>,
+                    ])
+                  )}
+                />
               </div>
             </div>
           </main>
