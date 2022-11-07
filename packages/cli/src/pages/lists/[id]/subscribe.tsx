@@ -1,5 +1,7 @@
 import type { GetServerSideProps } from "next";
 import { useCallback, useRef, useState } from "react";
+import Input from "../../components/ui/Input";
+import OutlineButton from "src/pages/components/ui/OutlineButton";
 import prisma from "../../../../prisma";
 import type { List } from "../../../../prisma/generated/client";
 import FormError from "../../components/FormError";
@@ -29,9 +31,7 @@ type Props = {
 };
 
 const Submitted = () => (
-  <>
-    <div>Thanks for subscribing!</div>
-  </>
+  <div className="col-span-3">Thanks for subscribing!</div>
 );
 
 const Subscribe = (props: Props) => {
@@ -73,25 +73,17 @@ const Subscribe = (props: Props) => {
     () => (
       <form className="col-span-3" onSubmit={onSubmit}>
         <div>
-          <label
-            htmlFor="email"
-            className="block text-sm font-medium text-gray-700"
-          >
-            Email
-          </label>
-          <input
-            type="text"
+          <Input
+            type="email"
             name="email"
+            label="Email"
             id="email"
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm py-2 px-3 text-black"
-            placeholder="you@email.com"
+            placeholder="subscriber@email.com"
             ref={emailRef}
           />
         </div>
-        <div>
-          <button className="rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-            Subscribe
-          </button>
+        <div className="flex justify-end mt-4">
+          <OutlineButton text="Subscribe" type="submit" />
         </div>
       </form>
     ),
@@ -99,22 +91,22 @@ const Subscribe = (props: Props) => {
   );
 
   return (
-    <>
-      <div>
-        <div className="w-full h-full">
-          <main className="max-w-3xl mx-auto pt-20 sm:pt-24 lg:pt-32">
-            <div className="grid grid-cols-3 gap-3">
-              <h1 className="col-span-3 text-4xl sm:text-7xl m-0">
-                Subscribe to {list.name}
-              </h1>
+    <div>
+      <div className="max-w-md mx-auto h-screen flex flex-col justify-center">
+        <main className="pb-20 sm:pb-24 lg:pb-32 pt-10 sm:pt-20">
+          <div className="grid grid-cols-3 gap-4">
+            <h1 className="text-4xl font-bold text-white m-0 leading-tight col-span-3">
+              {list.name === "Default"
+                ? "Subscribe"
+                : `Subscribe to "${list.name}"`}
+            </h1>
 
-              {errors ? <FormError>{errors}</FormError> : null}
-              {submitted ? <Submitted /> : <SubscribeForm />}
-            </div>
-          </main>
-        </div>
+            {errors ? <FormError>{errors}</FormError> : null}
+            {submitted ? <Submitted /> : <SubscribeForm />}
+          </div>
+        </main>
       </div>
-    </>
+    </div>
   );
 };
 

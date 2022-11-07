@@ -1,22 +1,33 @@
-import React from "react";
+import React, { ReactElement } from "react";
 import { NextPage } from "next";
 import { withSessionSsr } from "../../util/session";
 import prisma from "../../../prisma";
 import type { Member, User } from "../../../prisma/generated/client";
+import OutlineButton from "../components/ui/OutlineButton";
+import Table from "../components/ui/Table";
+import Link from "next/link";
+import PaginationControl from "../components/ui/PaginationControl";
 
 const PAGE_SIZE = 20;
 
 type AudiencesProps = {
   members: Member[];
+  memberListCounts: { [key: string]: number };
   page: number;
   total: number;
+  defaultListId: string;
   user: User;
+  sortOrder: "desc" | "asc";
 };
 
 export const getServerSideProps = withSessionSsr<{ user: any }>(
   async function ({ req, query }) {
     const user = req.session.user;
-    const page = "string" === typeof query.page ? parseInt(query.page, 10) : 0;
+    const page =
+      "string" === typeof query.page
+        ? Math.max(parseInt(query.page, 10), 1)
+        : 1;
+    const sortOrder = "string" === typeof query.sortOrder ? "asc" : "desc";
 
     if (!user) {
       return {
@@ -34,9 +45,9 @@ export const getServerSideProps = withSessionSsr<{ user: any }>(
         },
       },
       orderBy: {
-        createdAt: "desc",
+        createdAt: sortOrder,
       },
-      skip: PAGE_SIZE * page,
+      skip: PAGE_SIZE * (page - 1),
       take: PAGE_SIZE,
     });
 
@@ -50,11 +61,64 @@ export const getServerSideProps = withSessionSsr<{ user: any }>(
 
     const [total, members] = await Promise.all([totalQuery, membersQuery]);
 
+    // No members, go back to page 1
+    if (members.length === 0 && page > 1) {
+      return {
+        redirect: {
+          destination: "/audiences",
+          permanent: false,
+        },
+      };
+    }
+
+    let defaultListId: string | undefined = members[0]?.listId;
+    if (!defaultListId) {
+      // no members, so find the default list
+      defaultListId = (
+        await prisma.list.findFirst({
+          where: {
+            isDefault: true,
+          },
+        })
+      )?.id;
+
+      // create the default list if it doesn't exist
+      if (!defaultListId) {
+        const org = await prisma.organization.findFirst({});
+        if (!org) {
+          throw new Error("No organization found");
+        }
+        const defaultList = await prisma.list.create({
+          data: {
+            organizationId: org.id,
+            name: "Default",
+            isDefault: true,
+          },
+        });
+        defaultListId = defaultList.id;
+      }
+    }
+
+    const memberListCounts = (
+      await prisma.member.groupBy({
+        by: ["email"],
+        _count: {
+          email: true,
+        },
+        where: {
+          email: { in: members.map((member) => member.email) },
+        },
+      })
+    ).map((member) => [member.email, member._count.email]);
+
     const props: AudiencesProps = {
       user,
       members: JSON.parse(JSON.stringify(members)),
+      memberListCounts: Object.fromEntries(memberListCounts),
       total,
       page,
+      defaultListId,
+      sortOrder,
     };
 
     return {
@@ -63,35 +127,60 @@ export const getServerSideProps = withSessionSsr<{ user: any }>(
   }
 );
 
-const PreviewIndex: NextPage<AudiencesProps> = ({ members, total }) => {
-  return (
-    <div>
-      <div className="mt-16 col-span-3"></div>
-      <h2 className="col-span-2 text-3xl font-bold">
-        Audience<span>{total}</span>
-      </h2>
+const PreviewIndex: NextPage<AudiencesProps> = ({
+  members,
+  memberListCounts,
+  total,
+  defaultListId,
+  sortOrder,
+  page,
+}) => {
+  console.log("page", page);
+  const headers: (ReactElement | string)[] = [
+    "Email",
+    <Link
+      key="header"
+      href={`/audiences${sortOrder === "desc" ? "?sortOrder=asc" : ""}`}
+    >
+      <a>Added</a>
+    </Link>,
+    "Lists",
+  ];
 
+  const rows = members.map((m) => [
+    m.email,
+    new Date(m.createdAt).toLocaleString(),
+    <Link key={m.id} href={`/unsubscribe/${m.id}`}>
+      <a>{memberListCounts[m.email]}</a>
+    </Link>,
+  ]);
+
+  return (
+    <div className="max-w-2xl mx-auto grid grid-cols-3 gap-3">
+      <div className="mt-16 col-span-3"></div>
       <div className="col-span-3">
-        <table className="table-auto w-full">
-          <thead className="text-xs uppercase text-gray-500 border-t border-slate-300">
-            <tr>
-              <td>Email Address</td>
-              <td>Date Added</td>
-              <td></td>
-            </tr>
-          </thead>
-          <tbody>
-            {members.map((m) => (
-              <tr key={`apikey${m.id}`} className="divide-y-1 divide-[#555]">
-                <td className="py-[7px]">{m.email}</td>
-                <td>{new Date(m.createdAt).toLocaleString()}</td>
-                <td>
-                  <a href={`/unsubscribe/${m.id}`}>Preferences</a>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <h2 className="inline-block text-3xl font-bold relative">
+          Audience{" "}
+          <sup className="font-normal text-sm top-0 absolute -right-6">
+            {total}
+          </sup>
+        </h2>
+        <div className="text-right float-right relative top-1">
+          <OutlineButton
+            small
+            text="Add subscriber"
+            href={`/lists/${defaultListId}/subscribe`}
+          />
+        </div>
+      </div>
+      <div className="col-span-3 hidden:sm">
+        <Table rows={[headers].concat(rows)} />
+      </div>
+      <div className="col-span-3 hidden sm:visible">
+        <Table rows={[headers].concat(rows)} />
+      </div>
+      <div className="col-span-3 mb-20">
+        <PaginationControl page={page} total={total} pageSize={PAGE_SIZE} />
       </div>
     </div>
   );

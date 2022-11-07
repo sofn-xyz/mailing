@@ -5,6 +5,8 @@ import type { List, Member } from "../../../prisma/generated/client";
 import { useCallback, useState } from "react";
 import FormSuccess from "../components/FormSuccess";
 import { remove } from "lodash";
+import Watermark from "../components/Watermark";
+import Button from "../components/ui/Button";
 
 type ListState = {
   enabled: boolean;
@@ -210,54 +212,55 @@ const Unsubscribe = (props: UnsubscribeProps) => {
       <Head>
         <meta name="robots" content="noindex" />
       </Head>
-      <div>
-        <div className="w-full h-full">
-          <main className="max-w-sm mx-auto pt-20 sm:pt-24 lg:pt-32">
-            <form
-              className="grid grid-cols-3 gap-3 border-solid border-gray-600 border rounded-2xl pt-12"
-              onSubmit={onSubmit}
-            >
-              <div className="col-span-3 pr-12 pl-12">
-                <h1 className="text-3xl sm:text-3xl 2xl:text-3xl m-0 mb-8">
-                  Email preferences
-                </h1>
-
-                <div className="col-span-3">
-                  {lists.length ? (
-                    <>
-                      <ul>
-                        {lists.map((list) => (
-                          <List
-                            list={list}
-                            key={list.id}
-                            data={formState[list.id]}
-                            onChange={onChange(list.id, false)}
-                          />
-                        ))}
-                      </ul>
-                    </>
-                  ) : null}
-
-                  <List
-                    list={defaultList}
-                    key={defaultList.id}
-                    data={formState[defaultList.id]}
-                    onChange={onChange(defaultList.id, true)}
-                    name="Unsubscribe from all emails"
-                  />
-                </div>
+      <div className="w-full h-full">
+        <main className="max-w-xs mx-auto pt-20 sm:pt-24 lg:pt-32">
+          <form
+            className="border-dotted border-gray-500 border rounded-2xl"
+            onSubmit={onSubmit}
+          >
+            <div>
+              <div className="text-center px-10 pt-9 pb-7">
+                <h1 className="text-xl font-bold">Email preferences</h1>
+                <p className="pt-1 text-sm text-neutral-500">
+                  email@example.com
+                </p>
               </div>
-              <div className="col-span-3 border border-top border-gray-600 text-center">
-                <button className="text-blue p-4 m-4">Save preferences</button>
+              <hr className="border-dotted border-gray-500 border-top border-bottom-0" />
+              <div className="text-slate-300 px-10 pt-8 pb-5">
+                {lists.length ? (
+                  <>
+                    <ul>
+                      {lists.map((list) => (
+                        <List
+                          list={list}
+                          key={list.id}
+                          data={formState[list.id]}
+                          onChange={onChange(list.id, false)}
+                        />
+                      ))}
+                    </ul>
+                  </>
+                ) : null}
+                <List
+                  list={defaultList}
+                  key={defaultList.id}
+                  data={formState[defaultList.id]}
+                  onChange={onChange(defaultList.id, true)}
+                  name="Unsubscribe from all emails"
+                />
               </div>
-            </form>
-            {formSubmitted ? (
-              <div className="mt-8">
-                <FormSuccess>Saved!</FormSuccess>
-              </div>
-            ) : null}
-          </main>
-        </div>
+            </div>
+            <div className="px-10 pb-9">
+              <Button white full text="Save" />
+            </div>
+          </form>
+          {formSubmitted ? (
+            <div className="mt-8">
+              <FormSuccess>Saved!</FormSuccess>
+            </div>
+          ) : null}
+        </main>
+        <Watermark />
       </div>
     </>
   );

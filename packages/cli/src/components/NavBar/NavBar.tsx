@@ -34,13 +34,13 @@ const NavBar: React.FC<NavBarProps> = ({ children }) => {
             name="Previews"
           />
           <NavBarButton
-            active={router.route === "/audiences/[[...path]]"}
+            active={router.route === "/audiences"}
             href="/audiences"
             Icon={IconAudience}
             name="Audiences"
           />
           <NavBarButton
-            active={router.route === "/settings" || router.route === "/login"}
+            active={router.route === "/settings"}
             href="/settings"
             Icon={IconGear}
             name="Settings"
@@ -55,7 +55,7 @@ const NavBar: React.FC<NavBarProps> = ({ children }) => {
           />
         </nav>
       )}
-      <div className="flex-grow">{children}</div>
+      <div className="flex-grow h-screen overflow-y-scroll">{children}</div>
     </div>
   );
 };
