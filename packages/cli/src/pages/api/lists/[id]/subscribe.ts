@@ -1,7 +1,8 @@
-import type { NextApiRequest, NextApiResponse } from "next/types";
 import prisma from "../../../../../prisma";
-import type { Prisma } from "../../../../../prisma/generated/client";
+import { validate } from "email-validator";
 import { error } from "../../../../util/log";
+import type { NextApiRequest, NextApiResponse } from "next/types";
+import type { Prisma } from "../../../../../prisma/generated/client";
 
 type Data = {
   error?: string;
@@ -20,7 +21,7 @@ const ApiSubscribe = async function (
   if (req.method === "POST") {
     const { email } = req.body;
 
-    if (email) {
+    if (validate(email)) {
       try {
         await prisma.member.create({
           data: { listId, email, status: "subscribed" },

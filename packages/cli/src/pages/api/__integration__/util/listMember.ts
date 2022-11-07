@@ -1,9 +1,13 @@
 import { Api } from "./index";
 
-interface ListMemberData {
+type ListMemberData = {
   email: string;
   status: string;
-}
+};
+
+type ListSubscribeData = {
+  email: string;
+};
 
 // Return info about all members of a list
 // GET /api/lists/${listId}/members
@@ -47,6 +51,21 @@ export async function apiCreateListMember(listId?: string, formData?: any) {
   instance.path = `/api/lists/${listId}/members`;
   if (formData) instance.formData = formData;
   return instance.perform();
+}
+
+export async function apiListSubscribe(listId: string, formData?: any) {
+  const instance = new ApiListSubscribe();
+  instance.path = `/api/lists/${listId}/subscribe`;
+  if (formData) instance.formData = formData;
+  return instance.perform();
+}
+
+export class ApiListSubscribe extends Api<ListSubscribeData> {
+  method = "POST";
+
+  formData = {
+    email: "alex.farrill@gmail.com",
+  };
 }
 
 export class ApiCreateListMember extends Api<ListMemberData> {

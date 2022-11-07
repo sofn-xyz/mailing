@@ -1,80 +1,88 @@
-// import { apiLogin } from "../../../__integration__/util/login";
-// import { apiCreateList } from "../../../__integration__/util/lists";
-// import {
-//   apiGetListMembers,
-//   apiCreateListMember,
-// } from "../../../__integration__/util/listMember";
-// import { apiLogout } from "../../../__integration__/util/logout";
+import { apiLogin } from "../../../__integration__/util/login";
+import { apiCreateList } from "../../../__integration__/util/lists";
+import { apiListSubscribe } from "../../../__integration__/util/listMember";
+import { apiLogout } from "../../../__integration__/util/logout";
+import prisma from "../../../../../../prisma";
 
-// describe("lists/[id]/subscribe", () => {
-//   let listId: string | undefined;
+describe("lists/[id]/subscribe", () => {
+  let listId: string;
 
-//   beforeAll(async () => {
-//     await apiLogin();
+  beforeAll(async () => {
+    await apiLogin();
 
-//     // create list
-//     const { response: createListResponse } = await apiCreateList();
-//     expect(createListResponse.status).toBe(201);
-//     const data = await createListResponse.json();
+    // create list
+    const { response: createListResponse } = await apiCreateList();
+    expect(createListResponse.status).toBe(201);
+    const data = await createListResponse.json();
 
-//     listId = data.list.id;
-//     expect(typeof listId).toBe("string");
+    listId = data.list.id;
+    expect(typeof listId).toBe("string");
 
-//     await apiLogout();
-//   });
+    await apiLogout();
+  });
 
-//   it("subscribes an email to a list", async () => {
-//     // // create a list member
-//     // const { response: createListMemberResponse } = await apiCreateListMember(
-//     //   listId
-//     // );
-//     // expect(createListMemberResponse.status).toBe(201);
-//     // // get list members
-//     // const { response: listMembersResponse } = await apiGetListMembers(listId);
-//     // expect(listMembersResponse.status).toBe(200);
-//   });
+  it("subscribes an email to a list", async () => {
+    const { response: subscribeResponse, formData } = await apiListSubscribe(
+      listId
+    );
+    expect(subscribeResponse.status).toBe(201);
 
-//   it("should 422 when trying to subscribe with an invalid email", async () => {
-//     // const { response: createListMemberResponse } = await apiCreateListMember(
-//     //   listId,
-//     //   {
-//     //     email: "",
-//     //     status: "subscribed",
-//     //   }
-//     // );
-//     // expect(createListMemberResponse.status).toBe(422);
-//   });
+    const count = await prisma.member.count({
+      where: { listId, email: formData.email },
+    });
 
-//   it("should be a noop for an existing email that is already subscribed", async () => {
-//     // const { response: createListMemberResponse } = await apiCreateListMember(
-//     //   listId,
-//     //   {
-//     //     email: "alex.farrill@gmail.com",
-//     //     status: "made-this-up",
-//     //   }
-//     // );
-//     // expect(createListMemberResponse.status).toBe(422);
-//   });
+    expect(count).toBe(1);
+  });
 
-//   it("should update an existing email that is unsubscribed to subscribed", async () => {
-//     // const { response: createListMemberResponse } = await apiCreateListMember(
-//     //   listId,
-//     //   {
-//     //     email: "alex.farrill@gmail.com",
-//     //     status: "made-this-up",
-//     //   }
-//     // );
-//     // expect(createListMemberResponse.status).toBe(422);
-//   });
+  it("should 422 when trying to subscribe with an invalid email", async () => {
+    const { response: subscribeResponse } = await apiListSubscribe(listId, {
+      email: "",
+    });
+    expect(subscribeResponse.status).toBe(422);
 
-//   it("should be a noop for an existing email that is cleaned", async () => {
-//     // const { response: createListMemberResponse } = await apiCreateListMember(
-//     //   listId,
-//     //   {
-//     //     email: "alex.farrill@gmail.com",
-//     //     status: "made-this-up",
-//     //   }
-//     // );
-//     // expect(createListMemberResponse.status).toBe(422);
-//   });
-// });
+    const { response: subscribeResponse2 } = await apiListSubscribe(listId, {
+      email: "invalid",
+    });
+    expect(subscribeResponse2.status).toBe(422);
+
+    const { response: subscribeResponse3 } = await apiListSubscribe(listId, {
+      email: "@gmail.com",
+    });
+    expect(subscribeResponse3.status).toBe(422);
+
+    const { response: subscribeResponse4 } = await apiListSubscribe(listId, {
+      email: "invalid@",
+    });
+    expect(subscribeResponse4.status).toBe(422);
+  });
+
+  it("should 422 for an email that is already subscribed", async () => {
+    const { response: subscribeResponse } = await apiListSubscribe(listId, {
+      email: "dupe@dupe.com",
+    });
+    expect(subscribeResponse.status).toBe(201);
+
+    const { response: subscribeResponse2 } = await apiListSubscribe(listId, {
+      email: "dupe@dupe.com",
+    });
+    expect(subscribeResponse2.status).toBe(422);
+  });
+
+  it("it should 422 for now when attempting to re-subscribe an unsubscribed user", async () => {
+    const email = "something@new.com";
+    const { response: subscribeResponse } = await apiListSubscribe(listId, {
+      email,
+    });
+    expect(subscribeResponse.status).toBe(201);
+
+    await prisma.member.update({
+      where: { listId_email: { listId, email } },
+      data: { status: "unsubscribed" },
+    });
+
+    const { response: subscribeResponse2 } = await apiListSubscribe(listId, {
+      email,
+    });
+    expect(subscribeResponse2.status).toBe(422);
+  });
+});
