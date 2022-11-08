@@ -1,5 +1,11 @@
 # web
 
+## 0.4.9
+
+### Patch Changes
+
+- e94f966: bugfix for force delivery from intercepts #316
+
 ## 0.4.8
 
 ### Patch Changes
