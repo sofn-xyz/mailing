@@ -1,4 +1,4 @@
-describe("login tests", () => {
+describe("audience", () => {
   before(() => {
     cy.task("db:reset");
   });
@@ -15,7 +15,6 @@ describe("login tests", () => {
 
     // ok@ok.com should appear on the /audiences page
     cy.visit("/audiences");
-    cy.get("table tbody tr").should("have.length", 1);
-    cy.get("table tbody tr td").should("contain", "ok@ok.com");
+    cy.get(".table-data").should("contain", "ok@ok.com");
   });
 });

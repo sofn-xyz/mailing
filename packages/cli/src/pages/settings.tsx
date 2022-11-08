@@ -113,7 +113,7 @@ function Settings(props: Props) {
                   />
                 </div>
               </div>
-              <div className="col-span-3">
+              <div id="api-keys" className="col-span-3">
                 <Table
                   rows={[API_TABLE_HEADERS].concat(
                     apiKeys.map((apiKey) => [

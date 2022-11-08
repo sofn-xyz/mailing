@@ -44,7 +44,7 @@ Cypress.Commands.add("signup", () => {
 
   // it should redirect to the login page
   cy.location("pathname").should("eq", "/login");
-  cy.get("h1").should("contain", "Login");
+  cy.get("h1").should("contain", "Log in");
 
   // fill in email and passord fields and then submit the form
   cy.get("input#email").type(email);
