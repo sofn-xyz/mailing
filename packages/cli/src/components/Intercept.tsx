@@ -22,7 +22,7 @@ const Intercept: React.FC<InterceptProps> = ({ data }) => {
 
   const handleForceDeliver = useCallback(async () => {
     if (!data) return;
-    const { to, cc, bcc } = data;
+    const { to, cc, bcc, html, subject } = data;
 
     const numRecipients =
       recipientCount(to) + recipientCount(cc) + recipientCount(bcc);
@@ -32,9 +32,17 @@ const Intercept: React.FC<InterceptProps> = ({ data }) => {
     );
     if (!confirmed) return;
 
-    const res = await fetch(`/intercepts/${data.id}/forceDeliver.json`, {
+    const res = await fetch(`/api/sendMail`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        to,
+        cc,
+        bcc,
+        html,
+        subject,
+        dangerouslyForceDeliver: true,
+      }),
     });
     if (res.status !== 200) {
       alert(
