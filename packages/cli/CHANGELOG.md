@@ -1,5 +1,13 @@
 # mailing
 
+## 0.8.15
+
+### Patch Changes
+
+- e94f966: bugfix for force delivery from intercepts #316
+- Updated dependencies [e94f966]
+  - mailing-core@0.8.15
+
 ## 0.8.14
 
 ### Patch Changes
