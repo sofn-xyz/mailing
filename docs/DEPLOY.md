@@ -28,6 +28,17 @@ Here’s a working Vercel configuration:
 
 Alternatively, `npx mailing deploy` deploys your server to Vercel via their interactive CLI. After deploying, be sure to link Vercel to your repo for automatic deployments on [vercel.com](https://vercel.com/dashboard)
 
+### Netlify
+
+1. Install the Netlify NextJS plugin: `yarn add @netlify/plugin-nextjs`
+2. Create a `netlify.toml` w/ the plugin enabled:
+```
+# $ cat netlify.toml
+[[plugins]]
+package = "@netlify/plugin-nextjs"
+```
+3. In the Netlify deploy settings, set the "build command" to `yarn install && yarn mailing server build` and set "publish directory" to `.mailing/.next`
+
 ### Other hosts
 
 If you want to deploy somewhere else, you can use `npx mailing server build` to build the production app and `npx mailing server start` to boot it on localhost.
