@@ -43,6 +43,8 @@ export default async function startPreviewServer() {
 
   const hostname = "localhost";
 
+  process.env.NEXT_PUBLIC_MAILING_SKIP_AUTH =
+    process.env.NODE_ENV === "development" ? "true" : "";
   const app = next({
     dev: true, // true will use the app from source, not built .next bundle
     hostname,

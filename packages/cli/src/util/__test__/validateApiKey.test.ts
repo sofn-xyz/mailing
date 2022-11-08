@@ -16,13 +16,12 @@ function mockRequestResponse() {
 }
 
 describe("validateApiKey", () => {
-  const OG_NODE_ENV = process.env.NODE_ENV;
   afterEach(() => {
-    (process.env as any).NODE_ENV = OG_NODE_ENV;
+    delete (process.env as any).NEXT_PUBLIC_MAILING_SKIP_AUTH;
   });
 
   it("returns true if NODE_ENV is development", async () => {
-    (process.env as any).NODE_ENV = "development";
+    (process.env as any).NEXT_PUBLIC_MAILING_SKIP_AUTH = "true";
     const { req, res } = mockRequestResponse();
     const result = await validateApiKey(req, res);
     expect(result).toBe(true);
