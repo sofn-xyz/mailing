@@ -10,7 +10,6 @@ import { getPreviewsDirectory } from "../../../util/paths";
 import { error, log, debug } from "../../../util/log";
 import {
   createIntercept,
-  sendIntercept,
   showIntercept,
 } from "../../../preview/controllers/intercepts";
 import registerRequireHooks from "../../util/registerRequireHooks";
@@ -44,6 +43,8 @@ export default async function startPreviewServer() {
 
   const hostname = "localhost";
 
+  process.env.NEXT_PUBLIC_MAILING_SKIP_AUTH =
+    process.env.NODE_ENV === "development" ? "true" : "";
   const app = next({
     dev: true, // true will use the app from source, not built .next bundle
     hostname,
@@ -110,10 +111,6 @@ export default async function startPreviewServer() {
           createIntercept(req, res);
         } else if (/^\/intercepts\/[a-zA-Z0-9]+\.json/.test(req.url)) {
           showIntercept(req, res);
-        } else if (
-          /^\/intercepts\/[a-zA-Z0-9]+\/forceDeliver.json/.test(req.url)
-        ) {
-          await sendIntercept(req, res);
         } else if (/^\/_+next/.test(req.url)) {
           noLog = true;
           await app.render(req, res, `${pathname}`, query);
