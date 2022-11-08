@@ -1,10 +1,10 @@
 import type { GetServerSideProps } from "next";
 import { useCallback, useRef, useState } from "react";
-import Input from "../../components/ui/Input";
-import OutlineButton from "src/pages/components/ui/OutlineButton";
+import Input from "../../../components/ui/Input";
+import OutlineButton from "src/components/ui/OutlineButton";
 import prisma from "../../../../prisma";
 import type { List } from "../../../../prisma/generated/client";
-import FormError from "../../components/FormError";
+import FormError from "../../../components/FormError";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const id = context?.params?.id;

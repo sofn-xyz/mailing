@@ -3,10 +3,10 @@ import prisma from "../../../prisma";
 import { GetServerSideProps } from "next";
 import type { List, Member } from "../../../prisma/generated/client";
 import { useCallback, useState } from "react";
-import FormSuccess from "../components/FormSuccess";
+import FormSuccess from "../../components/FormSuccess";
 import { remove } from "lodash";
-import Watermark from "../components/Watermark";
-import Button from "../components/ui/Button";
+import Watermark from "../../components/Watermark";
+import Button from "../../components/ui/Button";
 
 type ListState = {
   enabled: boolean;

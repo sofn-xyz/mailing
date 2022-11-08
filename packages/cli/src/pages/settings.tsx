@@ -2,8 +2,8 @@ import { withSessionSsr } from "../util/session";
 import { ReactElement, useCallback, useState } from "react";
 import prisma from "../../prisma";
 import type { ApiKey, List, User } from "../../prisma/generated/client";
-import OutlineButton from "./components/ui/OutlineButton";
-import Table from "./components/ui/Table";
+import OutlineButton from "../components/ui/OutlineButton";
+import Table from "../components/ui/Table";
 import Link from "next/link";
 
 export const getServerSideProps = withSessionSsr<{ user: any }>(

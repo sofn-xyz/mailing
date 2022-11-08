@@ -3,10 +3,10 @@ import { NextPage } from "next";
 import { withSessionSsr } from "../../util/session";
 import prisma from "../../../prisma";
 import type { Member, User } from "../../../prisma/generated/client";
-import OutlineButton from "../components/ui/OutlineButton";
-import Table from "../components/ui/Table";
+import OutlineButton from "../../components/ui/OutlineButton";
+import Table from "../../components/ui/Table";
 import Link from "next/link";
-import PaginationControl from "../components/ui/PaginationControl";
+import PaginationControl from "../../components/ui/PaginationControl";
 
 const PAGE_SIZE = 20;
 
