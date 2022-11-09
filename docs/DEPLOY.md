@@ -11,6 +11,8 @@
 - [Coming soon] Unsubcribe Portal
 - [Coming soon] Analytics
 
+<br/>
+
 ### Vercel
 
 The easiest way to deploy your preview server is via Vercel's UI. Under the hood, mailing is a Next.js application and Vercel is great at hosting these. Configuring your deployment this way will also give you easy previews on PRs and automatic deployments from your main branch.
@@ -24,20 +26,22 @@ Here’s a working Vercel configuration:
 
 <img width="793" alt="Screen Shot 2022-09-26 at 11 57 06 AM" src="https://user-images.githubusercontent.com/282016/192357879-a19ec556-00c3-49b6-883c-6ae55e8eff7f.png">
 
-#### CLI
-
-Alternatively, `npx mailing deploy` deploys your server to Vercel via their interactive CLI. After deploying, be sure to link Vercel to your repo for automatic deployments on [vercel.com](https://vercel.com/dashboard)
+<br/>
 
 ### Netlify
 
 1. Install the Netlify NextJS plugin: `yarn add @netlify/plugin-nextjs`
 2. Create a `netlify.toml` w/ the plugin enabled:
+
 ```
 # $ cat netlify.toml
 [[plugins]]
 package = "@netlify/plugin-nextjs"
 ```
+
 3. In the Netlify deploy settings, set the "build command" to `yarn install && yarn mailing server build` and set "publish directory" to `.mailing/.next`
+
+<br/>
 
 ### Other hosts
 
