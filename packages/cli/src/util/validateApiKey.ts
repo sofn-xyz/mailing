@@ -5,7 +5,7 @@ export async function validateApiKey(
   req: NextApiRequest,
   res: NextApiResponse
 ): Promise<boolean> {
-  if (process.env.NEXT_PUBLIC_MAILING_SKIP_AUTH) return true;
+  if (process.env.NEXT_PUBLIC_MAILING_SKIP_AUTH === "true") return true;
 
   const apiKey = (req.headers && req.headers["x-api-key"]) || req.query.apiKey;
   if (typeof apiKey !== "string") {
