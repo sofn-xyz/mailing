@@ -11,6 +11,8 @@ import instrumentHtml from "./util/instrumentHtml";
 // by the test process.
 const TMP_TEST_FILE = "tmp-testMailQueue.json";
 
+export const EMAIL_PREFERENCES_URL = "MM_EMAIL_PREFERENCES_URL";
+
 export type BuildSendMailOptions<T> = {
   transport: Transporter<T>;
   defaultFrom: string;
@@ -181,10 +183,8 @@ export function buildSendMail<T>(options: BuildSendMailOptions<T>) {
             MAILING_API_URL
           ).toString();
 
-          stringHtml = stringHtml.replace(
-            /MM_EMAIL_PREFERENCES_URL/g,
-            emailPrefsUrl
-          );
+          const emailPrefsRegex = new RegExp(EMAIL_PREFERENCES_URL, "g");
+          stringHtml = stringHtml.replace(emailPrefsRegex, emailPrefsUrl);
 
           mailOptions.html = instrumentHtml({
             html: stringHtml,
