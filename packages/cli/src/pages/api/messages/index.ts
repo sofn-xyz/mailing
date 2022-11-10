@@ -54,9 +54,18 @@ export default async function handler(
     const listName = req.query.listName || req.body.listName;
     let list, defaultList, listMember, defaultListMember;
 
-    // if listName exists, look it up
+    // if listName is passed, look it up or create it
     if (listName) {
-      list = await prisma.list.findUniqueOrThrow({ where: { name: listName } });
+      list = await prisma.list.upsert({
+        where: { name: listName },
+        create: {
+          name: listName,
+          displayName: listName,
+          isDefault: false,
+          organizationId: organization.id,
+        },
+        update: {},
+      });
     }
 
     // also lookup the default list
