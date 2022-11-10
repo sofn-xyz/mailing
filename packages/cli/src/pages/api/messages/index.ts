@@ -51,12 +51,12 @@ export default async function handler(
       where: { id: organizationId },
     });
 
-    const listId = req.query.listId || req.body.listId;
+    const listName = req.query.listName || req.body.listName;
     let list, defaultList, listMember, defaultListMember;
 
-    // if listId exists, look it up
-    if (listId) {
-      list = await prisma.list.findFirstOrThrow({ where: { id: listId } });
+    // if listName exists, look it up
+    if (listName) {
+      list = await prisma.list.findUniqueOrThrow({ where: { name: listName } });
     }
 
     // also lookup the default list

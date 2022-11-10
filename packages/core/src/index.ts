@@ -25,7 +25,7 @@ export type ComponentMail = SendMailOptions & {
   forcePreview?: boolean;
   templateName?: string;
   previewName?: string;
-  listId?: string;
+  listName?: string;
 };
 
 export async function getTestMailQueue() {
@@ -88,7 +88,7 @@ export function buildSendMail<T>(options: BuildSendMailOptions<T>) {
       templateName,
       previewName,
       forcePreview,
-      listId,
+      listName,
       ...mailOptions
     } = mail;
     mailOptions as SendMailOptions;
@@ -153,14 +153,14 @@ export function buildSendMail<T>(options: BuildSendMailOptions<T>) {
       let stringHtml = mailOptions.html?.toString();
 
       const htmlIncludesUnsubscribeLink = emailPrefsRegex.test(stringHtml);
-      if (listId && !htmlIncludesUnsubscribeLink) {
+      if (listName && !htmlIncludesUnsubscribeLink) {
         // return an error that you must include an unsubscribe link
         throw new Error(
           "Templates sent to a list must include an unsubscribe link. Add an unsubscribe link or remove the list parameter from your sendMail call."
         );
       }
 
-      const skipUnsubscribeChecks = !htmlIncludesUnsubscribeLink && !listId;
+      const skipUnsubscribeChecks = !htmlIncludesUnsubscribeLink && !listName;
 
       const url = new URL("/api/messages", MAILING_API_URL).toString();
 
@@ -176,7 +176,7 @@ export function buildSendMail<T>(options: BuildSendMailOptions<T>) {
           templateName: templateName || derivedTemplateName,
           previewName,
           ...mailOptions,
-          listId,
+          listName,
         }),
       });
 
