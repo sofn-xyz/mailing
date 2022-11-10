@@ -45,12 +45,15 @@ interface Props {
 }
 
 const API_TABLE_HEADERS: (ReactElement | string)[] = ["API Key", "Active", ""];
-const LIST_TABLE_HEADERS: (ReactElement | string)[] = ["Name", "ID", ""];
+const LIST_TABLE_HEADERS: (ReactElement | string)[] = [
+  "Name",
+  "Display name",
+  "",
+];
 
 function Settings(props: Props) {
   const [apiKeys, setApiKeys] = useState(props.apiKeys);
-  const { lists: initialLists } = props;
-  const [lists, setLists] = useState(initialLists);
+  const { lists } = props;
 
   const createApiKey = useCallback(async () => {
     const response = await fetch("/api/apiKeys", {
@@ -64,19 +67,6 @@ function Settings(props: Props) {
 
     setApiKeys(apiKeys.concat(json.apiKey));
   }, [apiKeys]);
-
-  const createList = useCallback(async () => {
-    const response = await fetch("/api/lists", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ name: `My List ${Math.random()}` }),
-    });
-
-    const json = await response.json();
-    setLists(lists.concat(json.list));
-  }, [lists]);
 
   const deleteApiKey = (apiKey: string) => {
     return () => {
@@ -135,16 +125,13 @@ function Settings(props: Props) {
             <div className="px-8 max-w-2xl mx-auto">
               <div className="flex mb-8">
                 <h2 className="grow inline-flex text-3xl font-bold">Lists</h2>
-                <div className="inline-flex text-right">
-                  <OutlineButton onClick={createList} small text="New List" />
-                </div>
               </div>
               <div className="col-span-3">
                 <Table
                   rows={[LIST_TABLE_HEADERS].concat(
                     lists.map((list) => [
                       list.name,
-                      list.id,
+                      list.displayName,
                       <Link
                         key={list.id}
                         href={`/lists/${list.id}/subscribe`}
