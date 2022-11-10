@@ -216,6 +216,7 @@ describe("index", () => {
               },
               method: "POST",
               body: JSON.stringify({
+                skipUnsubscribeChecks: true,
                 anonymousId: null,
                 to: ["ok@ok.com"],
                 from: "ok@ok.com",
@@ -268,6 +269,7 @@ describe("index", () => {
               },
               method: "POST",
               body: JSON.stringify({
+                skipUnsubscribeChecks: true,
                 anonymousId: null,
                 to: ["ok@ok.com"],
                 from: "ok@ok.com",
