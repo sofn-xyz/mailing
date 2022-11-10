@@ -86,6 +86,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   return {
     props: {
       memberId,
+      email: listMember.email,
       lists: JSON.parse(JSON.stringify(lists)),
       listMembers: JSON.parse(JSON.stringify(listMembers)),
       defaultList: JSON.parse(JSON.stringify(defaultList)),
@@ -102,6 +103,7 @@ type UnsubscribeProps = {
   initialFormState: FormState;
   defaultMember: Member;
   listMembers: { [key: string]: string };
+  email: string;
 };
 
 type ListProps = {
@@ -140,7 +142,8 @@ type PatchData = {
 const Unsubscribe = (props: UnsubscribeProps) => {
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [formState, setFormState] = useState<FormState>(props.initialFormState);
-  const { lists, defaultList, defaultMember, memberId, listMembers } = props;
+  const { lists, defaultList, defaultMember, memberId, listMembers, email } =
+    props;
 
   function onChange(listId: string, isDefaultList: boolean) {
     return function () {
@@ -221,9 +224,7 @@ const Unsubscribe = (props: UnsubscribeProps) => {
             <div>
               <div className="text-center px-10 pt-9 pb-7">
                 <h1 className="text-xl font-bold">Email preferences</h1>
-                <p className="pt-1 text-sm text-neutral-500">
-                  email@example.com
-                </p>
+                <p className="pt-1 text-sm text-neutral-500">{email}</p>
               </div>
               <hr className="border-dotted border-gray-500 border-top border-bottom-0" />
               <div className="text-slate-300 px-10 pt-8 pb-5">
