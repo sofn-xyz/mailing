@@ -152,12 +152,15 @@ export function buildSendMail<T>(options: BuildSendMailOptions<T>) {
       const emailPrefsRegex = new RegExp(EMAIL_PREFERENCES_URL, "g");
       let stringHtml = mailOptions.html?.toString();
 
-      if (listId && !emailPrefsRegex.test(stringHtml)) {
+      const htmlIncludesUnsubscribeLink = emailPrefsRegex.test(stringHtml);
+      if (listId && !htmlIncludesUnsubscribeLink) {
         // return an error that you must include an unsubscribe link
         throw new Error(
           "Templates sent to a list must include an unsubscribe link. Add an unsubscribe link or remove the list parameter from your sendMail call."
         );
       }
+
+      const skipUnsubscribeChecks = !htmlIncludesUnsubscribeLink && !listId;
 
       const url = new URL("/api/messages", MAILING_API_URL).toString();
 
@@ -168,6 +171,7 @@ export function buildSendMail<T>(options: BuildSendMailOptions<T>) {
           "x-api-key": MAILING_API_KEY,
         },
         body: JSON.stringify({
+          skipUnsubscribeChecks,
           anonymousId,
           templateName: templateName || derivedTemplateName,
           previewName,
@@ -183,12 +187,13 @@ export function buildSendMail<T>(options: BuildSendMailOptions<T>) {
           error,
         } = await hookResponse.json();
 
+        // Don't send to members that are not subscribed to the list
         if (error) {
           log("hookResponse returned error", error);
           return;
         }
 
-        if (stringHtml) {
+        if (stringHtml && memberId) {
           const emailPrefsUrl = new URL(
             `unsubscribe/${memberId}`,
             MAILING_API_URL
