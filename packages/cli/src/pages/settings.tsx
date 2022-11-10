@@ -21,7 +21,7 @@ export const getServerSideProps = withSessionSsr<{ user: any }>(
 
     const apiKeys = await prisma.apiKey.findMany({
       where: { organizationId: user.organizationId },
-      select: { id: true, active: true },
+      select: { id: true, active: true, createdAt: true },
     });
 
     const lists: List[] = await prisma.list.findMany({
@@ -31,7 +31,7 @@ export const getServerSideProps = withSessionSsr<{ user: any }>(
     return {
       props: {
         user: req.session.user,
-        apiKeys,
+        apiKeys: JSON.parse(JSON.stringify(apiKeys)),
         lists: JSON.parse(JSON.stringify(lists)),
       },
     };
@@ -44,7 +44,11 @@ interface Props {
   lists: List[];
 }
 
-const API_TABLE_HEADERS: (ReactElement | string)[] = ["API Key", "Active", ""];
+const API_TABLE_HEADERS: (ReactElement | string)[] = [
+  "API Key",
+  "Active",
+  "Date created",
+];
 const LIST_TABLE_HEADERS: (ReactElement | string)[] = [
   "Name",
   "Display name",
@@ -67,14 +71,6 @@ function Settings(props: Props) {
 
     setApiKeys(apiKeys.concat(json.apiKey));
   }, [apiKeys]);
-
-  const deleteApiKey = (apiKey: string) => {
-    return () => {
-      console.log(apiKey);
-      // fetch delete api with apiKey;
-      // setApiKeys
-    };
-  };
 
   return (
     <>
@@ -108,14 +104,10 @@ function Settings(props: Props) {
                   rows={[API_TABLE_HEADERS].concat(
                     apiKeys.map((apiKey) => [
                       apiKey.id,
-                      apiKey.createdAt?.toString() || "",
-                      <a
-                        key={apiKey.id}
-                        className="text-sm text-red-400 cursor-pointer"
-                        onClick={deleteApiKey(apiKey.id)}
-                      >
-                        Delete
-                      </a>,
+                      JSON.stringify(apiKey.active),
+                      apiKey.createdAt
+                        ? new Date(apiKey.createdAt).toLocaleString()
+                        : "",
                     ])
                   )}
                 />
