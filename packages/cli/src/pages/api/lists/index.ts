@@ -1,6 +1,6 @@
+import type { User } from "prisma/generated/client";
 import { NextApiRequest, NextApiResponse } from "next";
 import prisma from "../../../../prisma";
-import { User } from "prisma/generated/client";
 import { withSessionAPIRoute } from "src/util/session";
 import { validate, validationErrorResponse } from "../../../util/api/validate";
 
@@ -27,11 +27,11 @@ async function handleCreateList(
   res: NextApiResponse<Data>
 ) {
   // validate name presence
-
   if (req.body.name) {
     const list = await prisma.list.create({
       data: {
         name: req.body.name,
+        displayName: req.body.name.capitalize(),
         organizationId: user.organizationId,
         isDefault: false,
       },
