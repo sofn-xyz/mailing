@@ -7,6 +7,7 @@ import OutlineButton from "../../components/ui/OutlineButton";
 import Table from "../../components/ui/Table";
 import Link from "next/link";
 import PaginationControl from "../../components/ui/PaginationControl";
+import { findOrCreateDefaultList } from "../../util/lists";
 
 const PAGE_SIZE = 20;
 
@@ -74,29 +75,7 @@ export const getServerSideProps = withSessionSsr<{ user: any }>(
     let defaultListId: string | undefined = members[0]?.listId;
     if (!defaultListId) {
       // no members, so find the default list
-      defaultListId = (
-        await prisma.list.findFirst({
-          where: {
-            isDefault: true,
-          },
-        })
-      )?.id;
-
-      // create the default list if it doesn't exist
-      if (!defaultListId) {
-        const org = await prisma.organization.findFirst({});
-        if (!org) {
-          throw new Error("No organization found");
-        }
-        const defaultList = await prisma.list.create({
-          data: {
-            organizationId: org.id,
-            name: "Default",
-            isDefault: true,
-          },
-        });
-        defaultListId = defaultList.id;
-      }
+      defaultListId = (await findOrCreateDefaultList()).id;
     }
 
     const memberListCounts = (

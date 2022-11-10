@@ -5,6 +5,7 @@ import { genSalt, hash } from "bcrypt";
 import prisma from "../../../prisma";
 import { Prisma } from "../../../prisma/generated/client";
 import { withSessionAPIRoute } from "../../util/session";
+import { findOrCreateDefaultList } from "../../util/lists";
 
 type DataError = {
   error: string;
@@ -101,15 +102,8 @@ const handler = withSessionAPIRoute(async function (
   // make an api key for you to use
   await prisma.apiKey.create({ data: { organizationId: organization.id } });
 
-  // make a list for you to use
-  await prisma.list.create({
-    data: {
-      name: "default",
-      displayName: "Default",
-      organizationId: organization.id,
-      isDefault: true,
-    },
-  });
+  // make the default list for you to use
+  findOrCreateDefaultList(organization);
 
   res.status(201).end();
 });
