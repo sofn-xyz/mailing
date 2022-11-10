@@ -38,7 +38,8 @@ export async function createApiKey() {
     data: {
       organizationId: org.id,
       isDefault: true,
-      name: "Default",
+      displayName: "Default",
+      name: "default",
     },
   });
   return k.id;
