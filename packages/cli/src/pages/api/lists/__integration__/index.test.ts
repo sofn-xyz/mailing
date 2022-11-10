@@ -50,6 +50,7 @@ describe("lists", () => {
         "updatedAt",
         "isDefault",
         "name",
+        "displayName",
         "organizationId",
       ]);
     });

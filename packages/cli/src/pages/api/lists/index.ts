@@ -30,10 +30,15 @@ async function handleCreateList(
   // validate name presence
   if (req.body.name) {
     try {
+      const displayName =
+        req.body.name.charAt(0).toUpperCase() + req.body.name.slice(1);
+
       const list = await prisma.list.create({
+        // capitalize the first letter of the list name
+
         data: {
           name: req.body.name,
-          displayName: req.body.name.capitalize(),
+          displayName,
           organizationId: user.organizationId,
           isDefault: false,
         },
