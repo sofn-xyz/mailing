@@ -16,7 +16,7 @@ export default async function unsubscribeMember(
     }, []);
 
     if (
-      statuses.some((status: any) => !LIST_MEMBER_STATUSES.includes(status))
+      statuses.find((status: any) => !LIST_MEMBER_STATUSES.includes(status))
     ) {
       return res
         .status(422)
