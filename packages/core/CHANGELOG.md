@@ -1,5 +1,18 @@
 # mailing-core
 
+## 0.8.15
+
+### Patch Changes
+
+- e94f966: bugfix for force delivery from intercepts #316
+
+## 0.8.14
+
+### Patch Changes
+
+- 22834e4: fix next 13 errors
+- e7627ac: remove unused images, fix test file ignores
+
 ## 0.8.13
 
 ### Patch Changes
