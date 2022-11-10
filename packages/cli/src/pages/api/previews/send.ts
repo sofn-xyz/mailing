@@ -3,7 +3,7 @@ import { error } from "../../../util/log";
 import { sendMail } from "../../../moduleManifest";
 import { getPreviewComponent } from "../../../util/moduleManifestUtil";
 
-export default async function showPreviewsIndex(
+export default async function send(
   req: NextApiRequest,
   res: NextApiResponse<SendPreviewResponseBody>
 ) {
@@ -14,22 +14,20 @@ export default async function showPreviewsIndex(
   }
   const body: SendPreviewRequestBody = req.body;
 
-  // Caller can provide html or preview references, html takes precedence.
-  const { html, to, subject, previewClass, previewFunction } = body;
+  const { to, subject, previewClass, previewFunction } = body;
   let component;
-  if (!html && previewClass && previewFunction) {
+  if (previewClass && previewFunction) {
     component = getPreviewComponent(previewClass, previewFunction);
   }
 
-  if (!html && !component) {
-    error("no html provided, no component found");
+  if (!component) {
+    error("no component found");
     res.writeHead(400);
     res.end(JSON.stringify({ error: "no html provided, no component found" }));
     return;
   }
 
   await sendMail({
-    html,
     component,
     to,
     dangerouslyForceDeliver: true,
