@@ -3,6 +3,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import prisma from "../../../../prisma";
 import { withSessionAPIRoute } from "src/util/session";
 import { validate, validationErrorResponse } from "../../../util/api/validate";
+import { error } from "../../../util/log";
 
 interface Data {
   error?: string;
@@ -28,15 +29,21 @@ async function handleCreateList(
 ) {
   // validate name presence
   if (req.body.name) {
-    const list = await prisma.list.create({
-      data: {
-        name: req.body.name,
-        displayName: req.body.name.capitalize(),
-        organizationId: user.organizationId,
-        isDefault: false,
-      },
-    });
-    return res.status(201).json({ list });
+    try {
+      const list = await prisma.list.create({
+        data: {
+          name: req.body.name,
+          displayName: req.body.name.capitalize(),
+          organizationId: user.organizationId,
+          isDefault: false,
+        },
+      });
+      return res.status(201).json({ list });
+    } catch (e) {
+      // probably the unique constraint on name failed
+      error(e);
+      return res.status(500);
+    }
   } else {
     return res.status(422).json({ error: "name is required" });
   }
