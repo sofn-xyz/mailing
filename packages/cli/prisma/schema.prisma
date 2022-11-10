@@ -100,10 +100,12 @@ model List {
   updatedAt      DateTime     @updatedAt
   isDefault      Boolean      @default(false)
   name           String
+  displayName    String
   organizationId String
   Organization   Organization @relation(fields: [organizationId], references: [id])
   Member         Member[]
 
+  @@unique([name])
   @@index([organizationId])
 }
 
