@@ -111,6 +111,8 @@ export function buildSendMail<T>(options: BuildSendMailOptions<T>) {
       mailOptions.html = renderedHtml;
     }
 
+    if (!mailOptions.html) throw new Error("sendMail couldn't find your html");
+
     if (testMode && !dangerouslyForceDeliver) {
       const testMessageQueue = await getTestMailQueue();
       testMessageQueue.push(mailOptions);
@@ -146,6 +148,17 @@ export function buildSendMail<T>(options: BuildSendMailOptions<T>) {
     }
 
     if (analyticsEnabled) {
+      // unsubscribe link
+      const emailPrefsRegex = new RegExp(EMAIL_PREFERENCES_URL, "g");
+      let stringHtml = mailOptions.html?.toString();
+
+      if (listId && !emailPrefsRegex.test(stringHtml)) {
+        // return an error that you must include an unsubscribe link
+        throw new Error(
+          "Templates sent to a list must include an unsubscribe link. Add an unsubscribe link or remove the list parameter from your sendMail call."
+        );
+      }
+
       const url = new URL("/api/messages", MAILING_API_URL).toString();
 
       const hookResponse = await fetch(url, {
@@ -175,15 +188,12 @@ export function buildSendMail<T>(options: BuildSendMailOptions<T>) {
           return;
         }
 
-        let stringHtml = mailOptions.html?.toString();
-
         if (stringHtml) {
           const emailPrefsUrl = new URL(
             `unsubscribe/${memberId}`,
             MAILING_API_URL
           ).toString();
 
-          const emailPrefsRegex = new RegExp(EMAIL_PREFERENCES_URL, "g");
           stringHtml = stringHtml.replace(emailPrefsRegex, emailPrefsUrl);
 
           mailOptions.html = instrumentHtml({
