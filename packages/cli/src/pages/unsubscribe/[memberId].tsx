@@ -252,7 +252,7 @@ const Unsubscribe = (props: UnsubscribeProps) => {
               </div>
             </div>
             <div className="px-10 pb-9">
-              <Button white full text="Save" />
+              <Button white full text="Save" type="submit" />
             </div>
           </form>
           {formSubmitted ? (
