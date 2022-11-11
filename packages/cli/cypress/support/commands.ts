@@ -36,11 +36,12 @@ declare namespace Cypress {
 Cypress.Commands.add("signup", () => {
   const email = "test123@mailing.run";
   cy.visit("/signup");
+  cy.get("h1").should("contain", "Sign up");
   cy.location("pathname").should("eq", "/signup");
 
   cy.get("input#email").type(email);
   cy.get("input#password").type("password");
-  cy.get("form").submit();
+  cy.get("button").click();
 
   cy.location("pathname").should("eq", "/settings");
 });
