@@ -9,8 +9,9 @@ interface SendMailFormData {
   };
 }
 
-export async function apiSendMail(apiKey?: string) {
+export async function apiSendMail(apiKey: string | undefined, formData?: any) {
   const instance = new ApiSendMail(apiKey);
+  if (formData) instance.formData = formData;
   return await instance.perform();
 }
 
