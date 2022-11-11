@@ -1,5 +1,11 @@
 # mailing-core
 
+## 0.8.17
+
+### Patch Changes
+
+- dc02ed3: fix intercept force deliver
+
 ## 0.8.15
 
 ### Patch Changes
