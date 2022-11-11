@@ -113,6 +113,7 @@ typings/
 emails
 !packages/cli/src/generator_templates/ts/emails/
 !packages/cli/src/generator_templates/js/emails/
+!packages/web/emails
 
 # E2E tests
 e2e/runs
