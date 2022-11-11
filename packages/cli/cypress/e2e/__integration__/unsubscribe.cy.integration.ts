@@ -48,6 +48,14 @@ describe("unsubscribe page", () => {
 
         // should see "Saved!" message
         cy.get("div").should("contain", "Saved!");
+
+        // the user's status should be unsubscribed
+        cy.request({
+          url: `/api/lists/${listId}/members/${memberId}`,
+        }).then((response) => {
+          expect(response.status).to.eq(200);
+          expect(response.body.member.status).to.eq("unsubscribed");
+        });
       });
     });
   });
