@@ -19,8 +19,10 @@ describe("sendMail", () => {
     expect(typeof defaultListId).toBe("string");
   });
 
-  describe("with the valid api key in the db", () => {
+  describe("with the valid api key in the db, without using the magic MAILING_API_KEY", () => {
     let apiKey: string;
+    const OG_MAILING_API_URL = process.env.MAILING_API_URL;
+    const OG_MAILING_API_KEY = process.env.MAILING_API_KEY;
 
     beforeAll(async () => {
       // a valid api key was created
@@ -29,6 +31,14 @@ describe("sendMail", () => {
       const apiKeys = (await apiKeysResponse.json()).apiKeys;
       expect(apiKeys.length).toBe(1);
       apiKey = apiKeys[0].id;
+
+      delete process.env.MAILING_API_URL;
+      delete process.env.MAILING_API_KEY;
+    });
+
+    afterAll(() => {
+      process.env.MAILING_API_URL = OG_MAILING_API_URL;
+      process.env.MAILING_API_KEY = OG_MAILING_API_KEY;
     });
 
     it("should 200 with a valid apiKey", async () => {
