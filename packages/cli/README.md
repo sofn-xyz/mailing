@@ -102,7 +102,7 @@ const transport = nodemailer.createTransport({
 4. Finally, send your first email like so:
 
 ```tsx
-import { sendMail } from "emails";
+import sendMail from "./path/to/emails";
 import AccountCreated from "emails/AccountCreated";
 
 sendMail({
@@ -161,7 +161,7 @@ Clear the test message queue. You probably want to call this before tests that u
 Example:
 
 ```tsx
-import { sendMail } from "emails";
+import sendMail from "./path/to/emails";
 import { getTestMailQueue, clearTestMailQueue } from "mailing/core";
 import IssueNotification from "emails/IssueNotification";
 
