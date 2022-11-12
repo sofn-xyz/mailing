@@ -4,7 +4,7 @@ import { apiSendMail, ApiSendMail } from "./util/sendMail";
 import prisma from "../../../../prisma";
 import { apiGetLists } from "./util/lists";
 import type { List } from "../../../../prisma/generated/client";
-import { truncateCliTables } from "./util/truncateTables";
+import { truncateCliTables } from "./util/truncateCliTables";
 
 describe("sendMail", () => {
   let defaultListId: string;
