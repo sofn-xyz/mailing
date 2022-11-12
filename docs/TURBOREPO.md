@@ -8,11 +8,17 @@ This is the simpler setup and is best if you're just using Mailing to send email
 
 To set this up, go to your app’s directory and install `mailing` and `mailing-core` then setup with `npx mailing init` as usual. Full setup instructions in the [Readme](https://github.com/sofn-xyz/mailing#setup) should just work in your app's directory.
 
-An example with this setup can be found here: https://github.com/sofn-xyz/mailing-turborepo-example/tree/email-per-app
+Example: https://github.com/sofn-xyz/mailing-turborepo-example/tree/email-per-app
 
 ### Option 2: package with shared emails across apps
 
 This is a more complicated setup intended for cases where you have different apps that should all be able to send the same emails.
 
-1. Add a package called packages/mailing. You'll want to install `mailing`, `mailing-core`, `next`, `react`, and `react-dom` in here.
-2. 
+1. Add an internal package called packages/emails. You'll want to install `mailing`, `mailing-core`, `next`, `react`, and `react-dom` in here. If you're using typescript, you'll also need to add `@types/react` and `@types/react-dom`
+2. Add an packages/emails/index.ts that exports your templates and emails/index.
+3. Refer to this as your packages/emails/package.json entrypoint. Add a dev script to this as well to boot up the preview server when you boot your other apps.
+4. Import this package into apps where you want to use it.
+
+Example: https://github.com/sofn-xyz/mailing-turborepo-example/tree/shared-emails
+
+More info on internal packages: https://turbo.build/repo/docs/handbook/sharing-code/internal-packages
