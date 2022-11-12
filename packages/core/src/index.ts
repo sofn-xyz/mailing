@@ -218,7 +218,9 @@ export function buildSendMail<T>(options: BuildSendMailOptions<T>) {
     }
 
     // Send mail via nodemailer
-    const response = await options.transport.sendMail(mailOptions);
+    const response = testMode
+      ? "delivered!"
+      : await options.transport.sendMail(mailOptions);
     await capture({
       event: "mail sent",
       distinctId: anonymousId,

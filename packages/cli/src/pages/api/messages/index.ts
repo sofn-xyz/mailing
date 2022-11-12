@@ -21,7 +21,7 @@ export default async function handler(
 
   const apiKey = apiKeyFromReq(req);
 
-  const { skipUnsubscribeChecks } = req.body;
+  const { skipUnsubscribeChecks, to: email } = req.body;
 
   if (typeof apiKey !== "string") {
     return res
@@ -31,17 +31,21 @@ export default async function handler(
 
   let organizationId;
 
-  try {
-    const apiKeyRecord = await prisma.apiKey.findFirstOrThrow({
-      where: {
-        id: apiKey,
-        active: true,
-      },
-    });
+  const apiTestMode = process.env.MAILING_CI && "testApiKey" === apiKey;
 
-    organizationId = apiKeyRecord.organizationId;
-  } catch {
-    return res.status(401).end("API key is not valid");
+  if (!apiTestMode) {
+    try {
+      const apiKeyRecord = await prisma.apiKey.findFirstOrThrow({
+        where: {
+          id: apiKey,
+          active: true,
+        },
+      });
+
+      organizationId = apiKeyRecord.organizationId;
+    } catch {
+      return res.status(401).end("API key is not valid");
+    }
   }
 
   let memberId;
@@ -79,13 +83,13 @@ export default async function handler(
 
     if (list) {
       listMember = await prisma.member.findFirst({
-        where: { listId: list.id, email: req.body.email },
+        where: { listId: list.id, email },
       });
     }
 
     if (list !== defaultList) {
       defaultListMember = await prisma.member.findFirst({
-        where: { listId: defaultList.id, email: req.body.email },
+        where: { listId: defaultList.id, email },
       });
     }
 
@@ -105,25 +109,27 @@ export default async function handler(
       listMember = await prisma.member.create({
         data: {
           listId: list.id,
-          email: req.body.to,
           status: "subscribed",
+          email,
         },
       });
     }
 
     // if there's no record for the default list, create one (subscribed)
 
-    if (!defaultListMember) {
+    if (list === defaultList) {
+      defaultListMember = listMember;
+    } else if (!defaultListMember) {
       const data = {
         listId: defaultList.id,
-        email: req.body.to,
+        email,
         status: "subscribed" as const,
       };
 
       defaultListMember = await prisma.member.create({ data });
     }
 
-    memberId = listMember?.id || defaultListMember.id;
+    memberId = listMember?.id || defaultListMember?.id;
   }
 
   const message = await createMessage({
