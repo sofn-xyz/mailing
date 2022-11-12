@@ -4,6 +4,7 @@ import { apiSendMail, ApiSendMail } from "./util/sendMail";
 import prisma from "../../../../prisma";
 import { apiGetLists } from "./util/lists";
 import type { List } from "../../../../prisma/generated/client";
+import { truncateCliTables } from "./util/truncateTables";
 
 describe("sendMail", () => {
   let defaultListId: string;
@@ -61,6 +62,7 @@ describe("sendMail", () => {
     describe("sending to the default list", () => {
       beforeEach(() => {
         // delete all members and messages
+        truncateCliTables(["Member", "Message"]);
       });
 
       it("should 200", async () => {
