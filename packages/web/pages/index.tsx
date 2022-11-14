@@ -6,6 +6,7 @@ import { useInView } from "react-intersection-observer";
 
 import styles from "../styles/Home.module.css";
 import { useEffect, useState } from "react";
+import Link from "next/link";
 
 const IN_VIEW_OPTIONS = {
   threshold: 0.5,
@@ -85,6 +86,12 @@ const Home: NextPage = () => {
                   </span>
                 </div>
                 <div>
+                  <Link
+                    className="hover:underline mr-4 text-base leading-none inline-block"
+                    href="/docs"
+                  >
+                    Docs
+                  </Link>
                   <a
                     className="hover:underline mr-4 text-base leading-none inline-block"
                     href="https://discord.gg/fdSzmY46wY"

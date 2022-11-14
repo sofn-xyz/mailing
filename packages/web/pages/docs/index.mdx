@@ -1,9 +1,9 @@
-<img src="https://user-images.githubusercontent.com/609038/163605455-478b8883-235c-4803-9b48-fc2d9a912b73.png#gh-dark-mode-only" alt="Mailing logo" width="295" height="128"/>
-<img src="https://user-images.githubusercontent.com/609038/163605459-12c1d04b-9891-4c73-9ed0-fbccddfaa476.png#gh-light-mode-only" alt="Mailing logo" width="295" height="128"/>
-
-<a href="https://www.npmjs.com/package/mailing"><img src="https://img.shields.io/npm/v/mailing.svg?sanitize=true" alt="Version"></a>
-[![Featured on Openbase](https://badges.openbase.com/js/featured/mailing.svg?token=A6xfdFmUU161m5Jns1Aqf4SwwIMSQBipWCm7HCdl1wc=)](https://openbase.com/js/mailing?utm_source=embedded&utm_medium=badge&utm_campaign=rate-badge)
-[![](https://dcbadge.vercel.app/api/server/fdSzmY46wY?style=flat)](https://discord.gg/fdSzmY46wY)
+<img
+  src="https://user-images.githubusercontent.com/609038/163605455-478b8883-235c-4803-9b48-fc2d9a912b73.png#gh-dark-mode-only"
+  alt="Mailing logo"
+  width="295"
+  height="128"
+/>
 
 <h2>Build, test, send emails with React</h2>
 
@@ -15,19 +15,7 @@
 - Plays well with js frameworks like next.js, redwood.js, remix
 - Written in TypeScript, inspired by Action Mailer from Ruby on Rails
 
-<br/>
-
-## Why?
-
-We’re longtime users of Action Mailer and wanted something similar for our typescript/react apps. We didn’t find anything, so we decided to build Mailing. We added some features that we would’ve liked in Action Mailer, like a mobile toggle (with hotkeys), and the ability to send a test email from the browser while developing. We went all in on MJML so that we (almost) never have to think about email clients or nested tables :)
-
-<br/>
-
-## Demo
-
-<a href="https://www.youtube.com/watch?v=FUCoXg2sAg0" target="_blank"><img width="600" alt="Mailing demo video" src="https://user-images.githubusercontent.com/609038/183299543-fbe8b7de-daab-4a79-8644-1d4b3af1bf63.jpg"></a>
-
-<br/>
+<br />
 
 ## Setup
 
@@ -84,7 +72,9 @@ emails
     └── ResetPassword.tsx
 ```
 
-3. <a id="configure-transport"></a>Configure your email transport and `defaultFrom` in `emails/index.ts`. It defaults to nodemailer's SMTP transport, but you can read about others [here](https://nodemailer.com/transports/).
+3. <a id="configure-transport"></a>Configure your email transport and `defaultFrom`
+   in `emails/index.ts`. It defaults to nodemailer's SMTP transport, but you can
+   read about others [here](https://nodemailer.com/transports/).
 
 Example SendGrid transport:
 
@@ -114,7 +104,7 @@ sendMail({
 });
 ```
 
-<br/>
+<br />
 
 ## Developing with email previews
 
@@ -132,19 +122,27 @@ export function accountCreated() {
 
 On the left, you'll see a list of all of your emails. On the right, you'll see an individual email preview with a mobile/desktop/HTML toggle and live reload as you edit:
 
-<img width="600" alt="Mailing desktop preview" src="https://user-images.githubusercontent.com/609038/188324943-729009f0-c6f2-45a5-87b7-ae6338d7c45f.jpg">
+<img
+  width="600"
+  alt="Mailing desktop preview"
+  src="https://user-images.githubusercontent.com/609038/188324943-729009f0-c6f2-45a5-87b7-ae6338d7c45f.jpg"
+/>
 
 When your email is nice, send it to yourself or your QA tool of choice for final testing (we like [Litmus](<[url](https://www.litmus.com)>)):
 
-<img width="600" alt="Mailing mobile preview" src="https://user-images.githubusercontent.com/609038/188352419-8e1be23a-fa64-4e61-9e36-ecac8d882959.jpg">
+<img
+  width="600"
+  alt="Mailing mobile preview"
+  src="https://user-images.githubusercontent.com/609038/188352419-8e1be23a-fa64-4e61-9e36-ecac8d882959.jpg"
+/>
 
-<br/>
+<br />
 
 ## Templates
 
 We ship with a few templates to help you get started. These get added to your emails directory upon initialization with `npx mailing init`. We recommend using these as starting points and modifying them to fit your use case. Check them out [here](https://demo.mailing.run).
 
-<br/>
+<br />
 
 ## Testing emails with jest
 
@@ -185,7 +183,7 @@ describe("Example API", () => {
 });
 ```
 
-<br/>
+<br />
 
 ## &nbsp;CLI
 
@@ -221,7 +219,7 @@ Running `npx mailing init` generates a mailing.config.js file that will be used 
 
 Append --help to your CLI command for a full list of supported options. Any of these options can be added to your config file.
 
-<br/>
+<br />
 
 ## &nbsp;REST API
 
@@ -233,7 +231,7 @@ With the REST API, you can use mailing for email templating even if most of your
 
 `GET /api/previews/[previewClass]/[previewFunction]` returns the rendered preview and data for `/previews/[previewClass]/[previewFunction]`. [Example](https://demo.mailing.run/api/previews)
 
-<br/>
+<br />
 
 ## &nbsp;Deployment
 
@@ -241,13 +239,13 @@ The mailing preview server has a super power: it’s easy to deploy a fast produ
 
 Learn more and get started [here](https://github.com/sofn-xyz/mailing/blob/main/docs/DEPLOY.md).
 
-<br/>
+<br />
 
 ## &nbsp;Telemetry
 
 To help understand how people are using mailing so that we can prioritize efforts, mailing collects some anonymized telemetry about usage.
 
-<br/>
+<br />
 
 ## &nbsp;Examples
 
@@ -255,7 +253,7 @@ To help understand how people are using mailing so that we can prioritize effort
 
 Have a good example? Message us or make a PR!
 
-<br/>
+<br />
 
 ## &nbsp;Contributing
 
@@ -263,7 +261,7 @@ Want to improve Mailing? Incredible. Try it out, file an issue or open a PR!
 
 Check the [CONTRIBUTING.md](https://github.com/sofn-xyz/mailing/blob/main/docs/CONTRIBUTING.md) for more info.
 
-<br/>
+<br />
 
 ## &nbsp;Support
 

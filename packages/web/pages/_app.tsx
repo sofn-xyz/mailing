@@ -3,8 +3,8 @@ import { MDXProvider } from "@mdx-js/react";
 import { Analytics } from "@vercel/analytics/react";
 import { useRouter } from "next/router";
 
-import MDXComponents from "../components/MDXComponents";
-import DocsLayout from "../components/DocsLayout";
+import MDXComponents from "../components/mdx/MDXComponents";
+import DocsLayout from "../components/docs/DocsLayout";
 import BlogLayout from "../components/BlogLayout";
 import DefaultLayout from "../components/DefaultLayout";
 
