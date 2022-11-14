@@ -75,7 +75,7 @@ describe("sendMail", () => {
         truncateCliTables(["Member", "Message"]);
       });
 
-      it("should 200", async () => {
+      it("should send an email", async () => {
         const email = "testDefaultList@test.com";
         const { response: sendMailResponse } = await apiSendMail("testApiKey", {
           ...ApiSendMail.defaultFormData,
@@ -103,7 +103,7 @@ describe("sendMail", () => {
         expect(member?.status).toBe("subscribed");
       });
 
-      it("should 200 - send the same email twice", async () => {
+      it("can send the same email twice", async () => {
         const email = "testDefaultList@test.com";
         const { response: sendMailResponse } = await apiSendMail("testApiKey", {
           ...ApiSendMail.defaultFormData,
@@ -154,6 +154,51 @@ describe("sendMail", () => {
         expect(members.length).toBe(1);
 
         const member = members[0];
+        expect(member.status).toBe("subscribed");
+      });
+    });
+
+    describe("sending to a different list than 'default'", () => {
+      beforeEach(() => {
+        // delete all members and messages
+        truncateCliTables(["Member", "Message"]);
+      });
+
+      it("should send an email and create the list if necessary", async () => {
+        const email = "testADifferentList@test.com";
+        const { response: sendMailResponse } = await apiSendMail("testApiKey", {
+          ...ApiSendMail.defaultFormData,
+          to: email,
+          listName: "mynewlist",
+          dangerouslyForceDeliver: true,
+        });
+        expect(sendMailResponse.status).toBe(200);
+
+        expect(await sendMailResponse.json()).toEqual({ result: "delivered!" });
+
+        // it should have created a message object
+        const messages = await prisma.message.findMany();
+        expect(messages.length).toEqual(1);
+
+        const message = messages[0];
+        expect(message.to).toEqual([email]);
+
+        // it should have created a new list
+        const list = await prisma.list.findFirst({
+          where: { name: "mynewlist" },
+        });
+        expect(list).toBeTruthy;
+        expect(list?.displayName).toBe("mynewlist");
+
+        // it should have subscribed the member to the new list
+        const members = await prisma.member.findMany({
+          where: { listId: list?.id },
+        });
+
+        expect(members.length).toBe(1);
+
+        const member = members[0];
+        expect(member.email).toBe(email);
         expect(member.status).toBe("subscribed");
       });
     });
