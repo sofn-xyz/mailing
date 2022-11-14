@@ -79,32 +79,7 @@ describe("sendMail", () => {
         const email = "testDefaultList@test.com";
         const { response: sendMailResponse } = await apiSendMail("testApiKey", {
           ...ApiSendMail.defaultFormData,
-          email,
-          listName: "default",
-          dangerouslyForceDeliver: true,
-        });
-        expect(sendMailResponse.status).toBe(200);
-
-        expect(await sendMailResponse.json()).toEqual({ result: "delivered!" });
-
-        // it should have created a message object
-        // const messages = await prisma.message.findMany({});
-        // expect(messages).toBeTruthy();
-        // console.log(messages);
-        // it should have subscribed the member to the default list
-        // const member = await prisma.member.findUnique({
-        //   where: { listId_email: { listId: defaultListId, email } },
-        // });
-
-        // expect(member).toBeTruthy();
-        // expect(member?.status).toBe("subscribed");
-      });
-
-      it("should 200 - send the same email twice", async () => {
-        const email = "testDefaultList@test.com";
-        const { response: sendMailResponse } = await apiSendMail("testApiKey", {
-          ...ApiSendMail.defaultFormData,
-          email,
+          to: email,
           listName: "default",
           dangerouslyForceDeliver: true,
         });
@@ -114,15 +89,46 @@ describe("sendMail", () => {
 
         // it should have created a message object
         const messages = await prisma.message.findMany({});
-        expect(messages).toBeTruthy();
-        // console.log(messages);
+        expect(messages.length).toEqual(1);
+
+        const message = messages[0];
+        expect(message.to).toEqual([email]);
+
+        // it should have subscribed the member to the default list
+        const member = await prisma.member.findUnique({
+          where: { listId_email: { listId: defaultListId, email } },
+        });
+
+        expect(member).toBeTruthy();
+        expect(member?.status).toBe("subscribed");
+      });
+
+      it("should 200 - send the same email twice", async () => {
+        const email = "testDefaultList@test.com";
+        const { response: sendMailResponse } = await apiSendMail("testApiKey", {
+          ...ApiSendMail.defaultFormData,
+          to: email,
+          listName: "default",
+          dangerouslyForceDeliver: true,
+        });
+        expect(sendMailResponse.status).toBe(200);
+
+        expect(await sendMailResponse.json()).toEqual({ result: "delivered!" });
+
+        // it should have created a message object
+        const messages = await prisma.message.findMany();
+        expect(messages.length).toBe(1);
+
+        const message = messages[0];
+        expect(message.to).toEqual([email]);
+
         // it should have subscribed the member to the default list
 
         const { response: sendMailResponse2 } = await apiSendMail(
           "testApiKey",
           {
             ...ApiSendMail.defaultFormData,
-            email,
+            to: email,
             listName: "default",
             dangerouslyForceDeliver: true,
           }
@@ -133,11 +139,22 @@ describe("sendMail", () => {
           result: "delivered!",
         });
 
-        // it should have created a message object
-        const messages2 = await prisma.message.findMany({});
-        expect(messages2).toBeTruthy();
-        // console.log(messages2);
-        // it should have subscribed the member to the default list
+        // it should have created a second message object
+        const messages2 = await prisma.message.findMany({
+          where: { id: { not: message.id } },
+        });
+        expect(messages2.length).toBe(1);
+
+        const message2 = messages2[0].to;
+        expect(message2).toEqual([email]);
+
+        // it should have subscribed the member to the default list, but only once
+        const members = await prisma.member.findMany();
+
+        expect(members.length).toBe(1);
+
+        const member = members[0];
+        expect(member.status).toBe("subscribed");
       });
     });
   });
