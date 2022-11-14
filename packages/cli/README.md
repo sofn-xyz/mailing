@@ -5,7 +5,7 @@
 [![Featured on Openbase](https://badges.openbase.com/js/featured/mailing.svg?token=A6xfdFmUU161m5Jns1Aqf4SwwIMSQBipWCm7HCdl1wc=)](https://openbase.com/js/mailing?utm_source=embedded&utm_medium=badge&utm_campaign=rate-badge)
 [![](https://dcbadge.vercel.app/api/server/fdSzmY46wY?style=flat)](https://discord.gg/fdSzmY46wY)
 
-<h2>Build, test, send emails with React</h2>
+<h2>●&nbsp;&nbsp;Build, test, send emails with React</h2>
 
 - Email templates with React components
 - MJML components that work across clients (Outlook!)
@@ -17,19 +17,19 @@
 
 <br/>
 
-## Why?
+## ●&nbsp;&nbsp;Why?
 
 We’re longtime users of Action Mailer and wanted something similar for our typescript/react apps. We didn’t find anything, so we decided to build Mailing. We added some features that we would’ve liked in Action Mailer, like a mobile toggle (with hotkeys), and the ability to send a test email from the browser while developing. We went all in on MJML so that we (almost) never have to think about email clients or nested tables :)
 
 <br/>
 
-## Demo
+## ●&nbsp;&nbsp;Demo
 
 <a href="https://www.youtube.com/watch?v=FUCoXg2sAg0" target="_blank"><img width="600" alt="Mailing demo video" src="https://user-images.githubusercontent.com/609038/183299543-fbe8b7de-daab-4a79-8644-1d4b3af1bf63.jpg"></a>
 
 <br/>
 
-## Setup
+## ●&nbsp;&nbsp;Setup
 
 1. Install mailing with yarn or npm:
 
@@ -116,7 +116,7 @@ sendMail({
 
 <br/>
 
-## Developing with email previews
+## ●&nbsp;&nbsp;Developing with email previews
 
 Mailing includes a development mode for working on your emails. Running `npx mailing` in dev will boot the preview server on localhost:3883 and show you all previews in `emails/previews`. The previews live reload when files in the emails directory change. Previews are just functions that return one of your emails loaded up with props. We recommend grouping all previews for the same email template in a file at `emails/previews/TemplateName.tsx`.
 
@@ -140,13 +140,13 @@ When your email is nice, send it to yourself or your QA tool of choice for final
 
 <br/>
 
-## Templates
+## ●&nbsp;&nbsp;Templates
 
 We ship with a few templates to help you get started. These get added to your emails directory upon initialization with `npx mailing init`. We recommend using these as starting points and modifying them to fit your use case. Check them out [here](https://demo.mailing.run).
 
 <br/>
 
-## Testing emails with jest
+## ●&nbsp;&nbsp;Testing emails with jest
 
 When `NODE_ENV === "test"`, calling `sendMail` pushes messages into a queue for later examination. The `mail-core` package exports a couple of functions for testing that emails send with the correct content.
 
@@ -187,7 +187,7 @@ describe("Example API", () => {
 
 <br/>
 
-## &nbsp;CLI
+## ●&nbsp;&nbsp;&nbsp;CLI
 
 `npx mailing init` initializes a project then starts the development server
 
@@ -223,7 +223,7 @@ Append --help to your CLI command for a full list of supported options. Any of t
 
 <br/>
 
-## &nbsp;REST API
+## ●&nbsp;&nbsp;&nbsp;REST API
 
 With the REST API, you can use mailing for email templating even if most of your app is not written in TypeScript or JavaScript.
 
@@ -235,7 +235,7 @@ With the REST API, you can use mailing for email templating even if most of your
 
 <br/>
 
-## &nbsp;Deployment
+## ●&nbsp;&nbsp;&nbsp;Deployment
 
 The mailing preview server has a super power: it’s easy to deploy a fast production version when you want to share templates with your team or clients. You can also hit the REST API on your deployed mailing server to generate HTML from your templates.
 
@@ -243,13 +243,13 @@ Learn more and get started [here](https://github.com/sofn-xyz/mailing/blob/main/
 
 <br/>
 
-## &nbsp;Telemetry
+## ●&nbsp;&nbsp;&nbsp;Telemetry
 
 To help understand how people are using mailing so that we can prioritize efforts, mailing collects some anonymized telemetry about usage.
 
 <br/>
 
-## &nbsp;Examples
+## ●&nbsp;&nbsp;&nbsp;Examples
 
 - https://github.com/sofn-xyz/fynn-mailing
 
@@ -257,7 +257,7 @@ Have a good example? Message us or make a PR!
 
 <br/>
 
-## &nbsp;Contributing
+## ●&nbsp;&nbsp;&nbsp;Contributing
 
 Want to improve Mailing? Incredible. Try it out, file an issue or open a PR!
 
@@ -265,6 +265,6 @@ Check the [CONTRIBUTING.md](https://github.com/sofn-xyz/mailing/blob/main/docs/C
 
 <br/>
 
-## &nbsp;Support
+## ●&nbsp;&nbsp;&nbsp;Support
 
 Need help getting set up? Hit us up on discord [![](https://dcbadge.vercel.app/api/server/fdSzmY46wY?style=flat)](https://discord.gg/fdSzmY46wY)
