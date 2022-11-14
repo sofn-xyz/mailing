@@ -171,7 +171,7 @@ describe("Example API", () => {
 });
 ```
 
-## &nbsp;CLI
+## CLI
 
 `npx mailing init` initializes a project then starts the development server
 
@@ -187,13 +187,11 @@ describe("Example API", () => {
 
 `npx mailing` runs init then preview
 
-`npx mm` is a cute alias for `npx mailing`
-
 [source entrypoint](https://github.com/sofn-xyz/mailing/blob/main/packages/cli/src/index.ts)
 
-### mailing.config.js
+### mailing.config.json
 
-Running `npx mailing init` generates a mailing.config.js file that will be used as default options for the CLI commands. The default options are:
+Running `npx mailing init` generates a mailing.config.json file that will be used as default options for the CLI commands. The default options are:
 
 ```
   {
@@ -205,7 +203,7 @@ Running `npx mailing init` generates a mailing.config.js file that will be used 
 
 Append --help to your CLI command for a full list of supported options. Any of these options can be added to your config file.
 
-## &nbsp;REST API
+## REST API
 
 With the REST API, you can use mailing for email templating even if most of your app is not written in TypeScript or JavaScript.
 
@@ -215,10 +213,10 @@ With the REST API, you can use mailing for email templating even if most of your
 
 `GET /api/previews/[previewClass]/[previewFunction]` returns the rendered preview and data for `/previews/[previewClass]/[previewFunction]`. [Example](https://demo.mailing.run/api/previews)
 
-## &nbsp;Telemetry
+## Telemetry
 
 To help understand how people are using mailing so that we can prioritize efforts, mailing collects some anonymized telemetry about usage.
 
-## &nbsp;Support
+## Support
 
 Need help getting set up? Hit us up on discord [![](https://dcbadge.vercel.app/api/server/fdSzmY46wY?style=flat)](https://discord.gg/fdSzmY46wY)

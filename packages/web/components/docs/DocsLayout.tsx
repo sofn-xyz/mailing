@@ -89,6 +89,13 @@ export default function DocsLayout({ children }) {
           >
             Contributing
           </NavLink>
+          <NavLink
+            className="pl-5"
+            href="1https://discord.gg/fdSzmY46wY"
+            active={false}
+          >
+            Discord
+          </NavLink>
         </nav>
         <div className="lg:pl-[19.5rem]">
           <a id="0"></a> {/* anchor for scroll to top */}
