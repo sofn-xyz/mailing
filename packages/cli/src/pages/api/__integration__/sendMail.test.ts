@@ -97,6 +97,8 @@ describe("sendMail", () => {
         });
         expect(sendMailResponse.status).toBe(200);
 
+        // “Templates sent to a list must include an unsubscribe link. Add an unsubscribe link or remove the list parameter from your sendMail call.”
+
         expect(await sendMailResponse.json()).toEqual({
           result: "delivered!",
         });
@@ -127,7 +129,8 @@ describe("sendMail", () => {
         expect(member?.status).toBe("subscribed");
       });
 
-      it("should NOT throw an error when sending without a list specifed", async () => {
+      it("should send the message when sending without a list specifed", async () => {
+        expect("implement me").toBe(true);
         const email = "testNoUnsubDefaultList@test.com";
         const { response: sendMailResponse } = await apiSendMail("testApiKey", {
           ...ApiSendMail.defaultFormData,
