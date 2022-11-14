@@ -29,6 +29,9 @@ module.exports = {
     fontSize: {
       "6xl": "64px",
     },
+    maxWidth: {
+      "8xl": "90rem",
+    },
     animation: {
       "delayed-fade": "delay-fade 1s ease",
     },

@@ -12,6 +12,7 @@ type H2Props = {
 export default function H2({ children }: H2Props) {
   const anchor = getAnchor(children);
   const link = `#${anchor}`;
+
   return (
     <h2 id={anchor}>
       <a href={link} className="anchor-link no-underline">

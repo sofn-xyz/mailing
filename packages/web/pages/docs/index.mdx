@@ -15,8 +15,6 @@
 - Plays well with js frameworks like next.js, redwood.js, remix
 - Written in TypeScript, inspired by Action Mailer from Ruby on Rails
 
-<br />
-
 ## Setup
 
 1. Install mailing with yarn or npm:
@@ -104,8 +102,6 @@ sendMail({
 });
 ```
 
-<br />
-
 ## Developing with email previews
 
 Mailing includes a development mode for working on your emails. Running `npx mailing` in dev will boot the preview server on localhost:3883 and show you all previews in `emails/previews`. The previews live reload when files in the emails directory change. Previews are just functions that return one of your emails loaded up with props. We recommend grouping all previews for the same email template in a file at `emails/previews/TemplateName.tsx`.
@@ -135,14 +131,6 @@ When your email is nice, send it to yourself or your QA tool of choice for final
   alt="Mailing mobile preview"
   src="https://user-images.githubusercontent.com/609038/188352419-8e1be23a-fa64-4e61-9e36-ecac8d882959.jpg"
 />
-
-<br />
-
-## Templates
-
-We ship with a few templates to help you get started. These get added to your emails directory upon initialization with `npx mailing init`. We recommend using these as starting points and modifying them to fit your use case. Check them out [here](https://demo.mailing.run).
-
-<br />
 
 ## Testing emails with jest
 
@@ -183,8 +171,6 @@ describe("Example API", () => {
 });
 ```
 
-<br />
-
 ## &nbsp;CLI
 
 `npx mailing init` initializes a project then starts the development server
@@ -219,8 +205,6 @@ Running `npx mailing init` generates a mailing.config.js file that will be used 
 
 Append --help to your CLI command for a full list of supported options. Any of these options can be added to your config file.
 
-<br />
-
 ## &nbsp;REST API
 
 With the REST API, you can use mailing for email templating even if most of your app is not written in TypeScript or JavaScript.
@@ -231,37 +215,9 @@ With the REST API, you can use mailing for email templating even if most of your
 
 `GET /api/previews/[previewClass]/[previewFunction]` returns the rendered preview and data for `/previews/[previewClass]/[previewFunction]`. [Example](https://demo.mailing.run/api/previews)
 
-<br />
-
-## &nbsp;Deployment
-
-The mailing preview server has a super power: it’s easy to deploy a fast production version when you want to share templates with your team or clients. You can also hit the REST API on your deployed mailing server to generate HTML from your templates.
-
-Learn more and get started [here](https://github.com/sofn-xyz/mailing/blob/main/docs/DEPLOY.md).
-
-<br />
-
 ## &nbsp;Telemetry
 
 To help understand how people are using mailing so that we can prioritize efforts, mailing collects some anonymized telemetry about usage.
-
-<br />
-
-## &nbsp;Examples
-
-- https://github.com/sofn-xyz/fynn-mailing
-
-Have a good example? Message us or make a PR!
-
-<br />
-
-## &nbsp;Contributing
-
-Want to improve Mailing? Incredible. Try it out, file an issue or open a PR!
-
-Check the [CONTRIBUTING.md](https://github.com/sofn-xyz/mailing/blob/main/docs/CONTRIBUTING.md) for more info.
-
-<br />
 
 ## &nbsp;Support
 

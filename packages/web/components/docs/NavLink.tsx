@@ -19,10 +19,12 @@ export default function DocsLink({
   return (
     <Link
       href={href}
-      className={cx("block text-blue-500 hover:text-blue-600", className, {
-        "text-blue-600": active,
+      className={cx("block hover:text-blue-600", className, {
+        "text-blue": active,
+        "text-white": !active,
       })}
       scroll={!!scroll}
+      shallow={true}
     >
       {children}
     </Link>
