@@ -2,16 +2,32 @@
 
 With the REST API, you can use mailing for email templating even if most of your app is not written in TypeScript or JavaScript.
 
-| Method        | Path                                           | Description                          | Example                                                                                                          |
-| ------------- | ---------------------------------------------- | ------------------------------------ | ---------------------------------------------------------------------------------------------------------------- |
-| GET           | /api/render                                    | render a template with props to HTML | [Response](https://demo.mailing.run/api/render?templateName=AccountCreated&props=%7B%22name%22%3A%22peter%22%7D) |
-| Previews      |
-| GET           | /api/previews                                  | returns the list of previews         | [Response](https://demo.mailing.run/api/previews)                                                                |
-| GET           | /api/previews/[previewClass]/[previewFunction] | returns the rendered preview         | [Response](https://demo.mailing.run/api/previews/AccountCreated/accountCreated)                                  |
-| Lists/Members |
-| GET           | /api/lists                                     | get all lists                        |
-| POST          | /api/lists                                     | create a new list                    |
-| GET           | /api/lists/[listId]/members                    | get the members of a list            |
-| POST          | /api/lists/[listId]/members                    | add a member to a list               |
-| GET           | /api/lists/[listId]/members/[memberId]         | get a list member's status           |
-| PATCH         | /api/lists/[listId]/members/[memberId]         | update a list member's status        |
+## Render Templates
+
+| Method | Path        | Description                          | <div style={{width:40}}>Example</div>                                                                        |
+| ------ | ----------- | ------------------------------------ | ------------------------------------------------------------------------------------------------------------ |
+| GET    | /api/render | render a template with props to HTML | [Link](https://demo.mailing.run/api/render?templateName=AccountCreated&props=%7B%22name%22%3A%22peter%22%7D) |
+
+## Previews
+
+| Method | Path                                           | Description                                                                            | <div style={{width:40}}>Example</div>                                       |
+| ------ | ---------------------------------------------- | -------------------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
+| GET    | /api/previews                                  | returns the list of previews                                                           | [Link](https://demo.mailing.run/api/previews)                               |
+| GET    | /api/previews/[previewClass]/[previewFunction] | returns the rendered preview and data for `/previews/[previewClass]/[previewFunction]` | [Link](https://demo.mailing.run/api/previews/AccountCreated/accountCreated) |
+
+## Lists/Members
+
+| <div style={{width:20}}>Method</div> | Path       | Description       |
+| ------------------------------------ | ---------- | ----------------- |
+| GET                                  | /api/lists | get all lists     |
+| POST                                 | /api/lists | create a new list |
+
+| <div style={{width:20}}>Method</div> | Path                        | Description               |
+| ------------------------------------ | --------------------------- | ------------------------- |
+| GET                                  | /api/lists/[listId]/members | get the members of a list |
+| POST                                 | /api/lists/[listId]/members | add a member to a list    |
+
+| <div style={{width:20}}>Method</div> | Path                                   | Description                   |
+| ------------------------------------ | -------------------------------------- | ----------------------------- |
+| GET                                  | /api/lists/[listId]/members/[memberId] | get a list member's status    |
+| PATCH                                | /api/lists/[listId]/members/[memberId] | update a list member's status |
