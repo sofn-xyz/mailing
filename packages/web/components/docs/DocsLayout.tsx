@@ -81,7 +81,7 @@ export default function DocsLayout({ children }) {
           >
             Turborepo
           </NavLink>
-          <NavCategory>org</NavCategory>
+          <NavCategory>Community</NavCategory>
           <NavLink
             className="pl-5"
             href="/docs/contributing"

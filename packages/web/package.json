@@ -26,6 +26,9 @@
     "typescript": "4.8.4"
   },
   "devDependencies": {
+    "@code-hike/mdx": "^0.7.4",
+    "@mdx-js/loader": "^2.1.5",
+    "@next/mdx": "^13.0.3",
     "@tailwindcss/typography": "^0.5.8",
     "@types/node": "^18.6.3",
     "@types/react": "^18.0.15",
