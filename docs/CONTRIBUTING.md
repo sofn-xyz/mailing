@@ -60,7 +60,7 @@ The frameworks currently covered by the tests are:
 - redwood_ts (Redwood with Typescript)
 - redwood_js (Redwood without Typescript)
 - remix_ts (Remix with Typescript)
-- remid_js (Remix without Typescript)
+- remix_js (Remix without Typescript)
 
 **Initial test setup**
 
