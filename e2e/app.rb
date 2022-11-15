@@ -21,6 +21,8 @@ module App
     remix_js: App::RemixJs
   }.freeze
 
+  SKIPPED_APPS = %i[redwood_js redwood_ts].freeze
+
   def self.from_name(app_name)
     CONFIGS[app_name.to_sym]
   end
