@@ -217,7 +217,9 @@ export function buildSendMail<T>(options: BuildSendMailOptions<T>) {
       }
     }
 
-    // Send mail via nodemailer
+    // Send mail via nodemailer unless you are in integration tests.
+    // sendMail is not mocked in integration tests, so don't call it at all, it will just fail
+    // because of the invalid transport setting.
     const response = integrationTestMode
       ? "delivered!"
       : await options.transport.sendMail(mailOptions);
