@@ -56,6 +56,8 @@ export function buildSendMail<T>(options: BuildSendMailOptions<T>) {
     process.env.NODE_ENV === "test" ||
     process.env.MAILING_CI;
 
+  const integrationTestMode = !!process.env.MAILING_CI;
+
   if (!options?.transport) {
     throw new Error("buildSendMail options are missing transport");
   }
@@ -216,7 +218,7 @@ export function buildSendMail<T>(options: BuildSendMailOptions<T>) {
     }
 
     // Send mail via nodemailer
-    const response = testMode
+    const response = integrationTestMode
       ? "delivered!"
       : await options.transport.sendMail(mailOptions);
     await capture({

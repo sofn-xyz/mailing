@@ -207,6 +207,7 @@ describe("index", () => {
               html: "<body>ok</body>",
               dangerouslyForceDeliver: true,
             });
+
             expect(fetch).toHaveBeenCalled();
             expect(fetch).toHaveBeenCalledWith(
               "https://mailing.test/api/messages",
