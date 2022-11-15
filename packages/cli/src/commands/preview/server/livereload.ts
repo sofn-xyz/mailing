@@ -1,75 +1,16 @@
-import { IncomingMessage, ServerResponse } from "http";
+import { Server } from "http";
 import { debounce } from "lodash";
 import { cwd } from "process";
 import { relative, resolve } from "path";
 import { watch } from "chokidar";
+import { Server as SocketServer, Socket } from "socket.io";
 
 import { error, log, debug } from "../../../util/log";
 import { linkEmailsDirectory } from "./setup";
-import {
-  LONG_POLLING_INTERVAL,
-  SHORT_POLLING_INTERVAL,
-} from "../../util/livereloadUtil";
-import { URL } from "url";
 
 export const WATCH_IGNORE = /^\.|node_modules/;
 
-let vectorClock = Date.now();
-
-function renderClock(res: ServerResponse) {
-  debug("livereload render clock", vectorClock);
-  res.setHeader("Content-Type", "application/json");
-  res.writeHead(200);
-  res.end(JSON.stringify({ vectorClock }));
-}
-
-function requireParam(
-  param: string,
-  req: IncomingMessage,
-  res: ServerResponse
-) {
-  try {
-    if (!req.url) {
-      throw new Error("No URL");
-    }
-    const url = new URL(req.url, `http://${req.headers.host}`);
-
-    const paramFromSearch = url.searchParams.get(param);
-    if (!paramFromSearch) {
-      throw new Error(`Missing required param: ${param}`);
-    }
-
-    return JSON.parse(paramFromSearch);
-  } catch (e) {
-    const err = `error parsing ${param} from url`;
-    error(err, e);
-    res.writeHead(403);
-    res.end(JSON.stringify({ err }));
-    return null;
-  }
-}
-
-export function pollShouldReload(
-  req: IncomingMessage,
-  res: ServerResponse
-): void {
-  const clientVectorClock: number = requireParam("vectorClock", req, res);
-  if (403 === res.statusCode) return;
-
-  const poller = setInterval(() => {
-    if (clientVectorClock >= vectorClock) return;
-    clearInterval(poller);
-    clearTimeout(timeout);
-    renderClock(res);
-  }, SHORT_POLLING_INTERVAL);
-  const timeout = setTimeout(() => {
-    // timed out long poll, close connection
-    clearInterval(poller);
-    renderClock(res);
-  }, LONG_POLLING_INTERVAL);
-}
-
-export function startChangeWatcher(emailsDir: string) {
+export function startChangeWatcher(server: Server, emailsDir: string) {
   try {
     // simple live reload implementation
     const changeWatchPath = emailsDir;
@@ -78,11 +19,27 @@ export function startChangeWatcher(emailsDir: string) {
       return;
     }
 
+    let clients: Socket[] = [];
+    const io = new SocketServer(server);
+
+    io.on("connection", (client) => {
+      clients.push(client);
+      console.log("Adding client", clients.length);
+
+      client.on("disconnect", () => {
+        clients = clients.filter((item) => item !== client);
+        console.log("Removing client", clients.length);
+      });
+    });
+
     const reload = debounce(
       async () => {
         debug("reload from change");
         await linkEmailsDirectory(emailsDir);
-        vectorClock++;
+
+        clients.forEach((client) => {
+          client.emit("reload");
+        });
       },
       100,
       { leading: true }
@@ -97,6 +54,7 @@ export function startChangeWatcher(emailsDir: string) {
         reload();
       }
     );
+
     log(`watching for changes to ${relative(cwd(), changeWatchPath)}`);
   } catch (e) {
     error(`error starting livereload change watcher`, e);
