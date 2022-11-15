@@ -41,7 +41,7 @@ Cypress.Commands.add("signup", () => {
 
   cy.get("input#email").type(email);
   cy.get("input#password").type("password");
-  cy.get("button").click();
+  cy.get("button[type=submit]").click();
 
   cy.location("pathname").should("eq", "/settings");
 });

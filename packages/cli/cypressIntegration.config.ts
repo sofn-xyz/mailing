@@ -13,6 +13,10 @@ export default defineConfig({
     specPattern: "**/*.cy.integration.{js,jsx,ts,tsx}",
     defaultCommandTimeout: 10000,
     baseUrl: "http://localhost:3883",
+    retries: {
+      runMode: 2,
+      openMode: 0,
+    },
     setupNodeEvents(on, _config) {
       on("task", {
         "db:reset": resetDb,
