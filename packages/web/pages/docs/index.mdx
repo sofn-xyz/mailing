@@ -10,37 +10,23 @@
 - Plays well with js frameworks like next.js, redwood.js, remix
 - Written in TypeScript, inspired by Action Mailer from Ruby on Rails
 
-## Setup
+## Getting started
 
 1. Install mailing with yarn or npm:
 
-yarn:
+<CH.Code>
 
-```
-yarn add mailing mailing-core next
-```
-
-npm:
-
-```
-npm install --save mailing mailing-core next
+```bash yarn
+yarn add mailing-core next react react-dom
+yarn add --dev mailing
 ```
 
-Note: you may want to add mailing as a dev dependency instead if you don't plan to use the preview function outside of development. mailing-core exports buildSendMail, which returns the sendMail function
-
-Note: mailing requires version 17 or 18 of react and react-dom, so if you're not already in a react-based app, you'll need to add the following:
-
-yarn:
-
-```
-yarn add react react-dom
+```bash npm
+npm install --save mailing-core next react react-dom
+npm install --save --dev mailing
 ```
 
-npm:
-
-```
-npm install --save react react-dom
-```
+</CH.Code>
 
 2. Run `npx mailing` to start the preview server and scaffold your `emails` directory. This will create the following directory for all of your emails:
 
@@ -88,7 +74,7 @@ const transport = nodemailer.createTransport({
 import sendMail from "./path/to/emails";
 import AccountCreated from "emails/AccountCreated";
 
-sendMail({
+await sendMail({
   subject: "My First Email",
   to: "tester@example.com",
   cc: "tester+cc@example.com",
@@ -96,6 +82,8 @@ sendMail({
   component: <AccountCreated firstName="Amelita" />,
 });
 ```
+
+This will send an email with the subject "My First Email" to the `to`, `cc`, and `bcc` addresses. The `component` prop is the React component that will be rendered to HTML for the email.
 
 ## Developing with email previews
 
@@ -128,6 +116,10 @@ When your email is nice, send it to yourself or your QA tool of choice for final
 />
 
 ## sendMail
+
+The main API for using mailing from your app is `sendMail`. This function is built on nodemailer's `sendMail` function, so you can pass in any options that nodemailer supports. The main difference is that you pass in a React component instead of an HTML string. The component is rendered to HTML and sent as the email body.
+
+You can also access `sendMail` via the REST API.
 
 ## Testing emails with jest
 

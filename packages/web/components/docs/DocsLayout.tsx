@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 
+import "@code-hike/mdx/dist/index.css";
 import NavLink from "./NavLink";
 
 function NavCategory({ children }) {
@@ -33,31 +34,42 @@ export default function DocsLayout({ children }) {
             <h2 className="text-8xl font-bold mb-4">Docs</h2>
           </NavLink>
           <NavCategory>Basics</NavCategory>
-          <NavLink className="pl-5" href="/docs#0" active={router.asPath}>
+          <NavLink className="pl-4" href="/docs#0" active={router.asPath}>
             What’s Mailing?
           </NavLink>
-          <NavLink className="pl-5" href="/docs#setup" active={router.asPath}>
-            Setup
+          <NavLink
+            className="pl-4"
+            href="/docs#getting-started"
+            active={router.asPath}
+          >
+            Getting started
           </NavLink>
           <NavLink
-            className="pl-5"
+            className="pl-4"
             href="/docs#developing-with-email-previews"
             active={router.asPath}
           >
             Dev
           </NavLink>
           <NavLink
-            className="pl-5"
+            className="pl-4"
+            href="/docs#sendmail"
+            active={router.asPath}
+          >
+            Send
+          </NavLink>
+          <NavLink
+            className="pl-4"
             href="/docs#testing-emails-with-jest"
             active={router.asPath}
           >
             Testing
           </NavLink>
-          <NavLink className="pl-5" href="/docs#cli" active={router.asPath}>
+          <NavLink className="pl-4" href="/docs#cli" active={router.asPath}>
             CLI
           </NavLink>
           <NavLink
-            className="pl-5"
+            className="pl-4"
             href="/docs#rest-api"
             active={router.asPath}
           >
@@ -66,7 +78,7 @@ export default function DocsLayout({ children }) {
 
           <NavCategory>Platform</NavCategory>
           <NavLink
-            className="pl-5"
+            className="pl-4"
             href="/docs/deploy"
             active={router.asPath}
             scroll
@@ -74,26 +86,26 @@ export default function DocsLayout({ children }) {
             Deploying Mailing
           </NavLink>
           <NavLink
-            className="pl-5"
+            className="pl-4"
             href="/docs/lists"
             active={router.asPath}
             scroll
           >
             Lists
           </NavLink>
-          <NavLink className="pl-5" href="/docs/pricing" active={router.asPath}>
+          <NavLink className="pl-4" href="/docs/pricing" active={router.asPath}>
             Pricing
           </NavLink>
           <NavCategory>etc</NavCategory>
           <NavLink
-            className="pl-5"
+            className="pl-4"
             href="/docs/templates"
             active={router.asPath}
           >
             Templates
           </NavLink>
           <NavLink
-            className="pl-5"
+            className="pl-4"
             href="/docs/turborepo"
             active={router.asPath}
           >
@@ -101,14 +113,14 @@ export default function DocsLayout({ children }) {
           </NavLink>
           <NavCategory>Org</NavCategory>
           <NavLink
-            className="pl-5"
+            className="pl-4"
             href="/docs/contributing"
             active={router.asPath}
           >
             Contributing
           </NavLink>
           <NavLink
-            className="pl-5"
+            className="pl-4"
             href="https://discord.gg/fdSzmY46wY"
             active={false}
           >
