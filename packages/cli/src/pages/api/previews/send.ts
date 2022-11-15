@@ -17,7 +17,7 @@ export default async function send(
   const { to, subject, previewClass, previewFunction } = body;
   let component;
   if (previewClass && previewFunction) {
-    component = getPreviewComponent(previewClass, previewFunction);
+    component = await getPreviewComponent(previewClass, previewFunction);
   }
 
   if (!component) {

@@ -1,4 +1,3 @@
-import { flatten } from "lodash";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { parse } from "node-html-parser";
 import { render } from "../../../util/mjml";
@@ -17,13 +16,13 @@ export type PreviewIndexResponseBody = {
 
 const MAX_TEXT_CHARS = 140;
 
-function getPreviewFunction(
+async function getPreviewFunction(
   previewClass: string,
   name: string
-): [string, string] {
+): Promise<[string, string]> {
   let text = "";
   try {
-    const component = getPreviewComponent(previewClass, name);
+    const component = await getPreviewComponent(previewClass, name);
     if (!component) throw new Error(`${previewClass}#${name} not found`);
     const { html } = render(component);
     // slice out the body to minimize funky head parsing
@@ -44,8 +43,8 @@ export default async function showPreviewsIndex(
 ) {
   const previews = previewTree();
   const previewText = Object.fromEntries(
-    flatten(
-      previews.map((previewGroup) =>
+    await Promise.all(
+      previews.flatMap((previewGroup) =>
         previewGroup[1].map((pf) => getPreviewFunction(previewGroup[0], pf))
       )
     )
