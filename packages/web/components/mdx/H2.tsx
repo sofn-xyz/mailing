@@ -14,9 +14,9 @@ export default function H2({ children }: H2Props) {
   const link = `#${anchor}`;
 
   return (
-    <h2 id={anchor}>
+    <h2 id={anchor} className="text-3xl">
       <a href={link} className="anchor-link no-underline">
-        ●&nbsp;&nbsp; {children}
+        🔗 {children}
       </a>
     </h2>
   );

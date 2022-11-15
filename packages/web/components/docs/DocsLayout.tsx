@@ -1,4 +1,5 @@
 import { useRouter } from "next/router";
+import { useEffect } from "react";
 
 import NavLink from "./NavLink";
 
@@ -13,46 +14,52 @@ function NavCategory({ children }) {
 export default function DocsLayout({ children }) {
   const router = useRouter();
 
+  useEffect(() => {
+    if (document) {
+      document.body.classList.add("bg-black");
+    }
+    return () => {
+      if (document) {
+        document.body.classList.remove("bg-black");
+      }
+    };
+  }, []);
+
   return (
     <div className="bg-black text-gray-400 min-h-screen">
       <div className="max-w-8xl mx-auto px-4 sm:px-6 md:px-8 pb-20">
         <nav className="hidden lg:block fixed z-20 inset-0 top-10 left-[max(0px,calc(50%-45rem))] right-auto w-[19.5rem] pb-10 px-8 overflow-y-auto">
           <NavLink href="/docs#0" active={false}>
-            <h2 className="text-2xl font-bold mb-4">Mailing Docs</h2>
+            <h2 className="text-8xl font-bold mb-4">Docs</h2>
           </NavLink>
           <NavCategory>Basics</NavCategory>
-          <NavLink
-            className="pl-5"
-            href="/docs#setup"
-            active={router.asPath === "/docs#setup"}
-          >
+          <NavLink className="pl-5" href="/docs#0" active={router.asPath}>
+            What’s Mailing?
+          </NavLink>
+          <NavLink className="pl-5" href="/docs#setup" active={router.asPath}>
             Setup
           </NavLink>
           <NavLink
             className="pl-5"
             href="/docs#developing-with-email-previews"
-            active={router.asPath === "/docs#developing-with-email-previews"}
+            active={router.asPath}
           >
-            Email previews
+            Dev
           </NavLink>
           <NavLink
             className="pl-5"
             href="/docs#testing-emails-with-jest"
-            active={router.asPath === "/docs#testing-emails-with-jest"}
+            active={router.asPath}
           >
-            Testing emails with jest
+            Testing
           </NavLink>
-          <NavLink
-            className="pl-5"
-            href="/docs#cli"
-            active={router.asPath === "/docs#cli"}
-          >
+          <NavLink className="pl-5" href="/docs#cli" active={router.asPath}>
             CLI
           </NavLink>
           <NavLink
             className="pl-5"
             href="/docs#rest-api"
-            active={router.asPath === "/docs#rest-api"}
+            active={router.asPath}
           >
             REST API
           </NavLink>
@@ -61,37 +68,48 @@ export default function DocsLayout({ children }) {
           <NavLink
             className="pl-5"
             href="/docs/deploy"
-            active={router.asPath === "/docs/deploy"}
+            active={router.asPath}
             scroll
           >
             Deploying Mailing
+          </NavLink>
+          <NavLink
+            className="pl-5"
+            href="/docs/lists"
+            active={router.asPath}
+            scroll
+          >
+            Lists
+          </NavLink>
+          <NavLink className="pl-5" href="/docs/pricing" active={router.asPath}>
+            Pricing
           </NavLink>
           <NavCategory>etc</NavCategory>
           <NavLink
             className="pl-5"
             href="/docs/templates"
-            active={router.asPath === "/docs/templates"}
+            active={router.asPath}
           >
             Templates
           </NavLink>
           <NavLink
             className="pl-5"
             href="/docs/turborepo"
-            active={router.asPath === "/docs/turborepo"}
+            active={router.asPath}
           >
             Turborepo
           </NavLink>
-          <NavCategory>Community</NavCategory>
+          <NavCategory>Org</NavCategory>
           <NavLink
             className="pl-5"
             href="/docs/contributing"
-            active={router.asPath === "/docs/contributing"}
+            active={router.asPath}
           >
             Contributing
           </NavLink>
           <NavLink
             className="pl-5"
-            href="1https://discord.gg/fdSzmY46wY"
+            href="https://discord.gg/fdSzmY46wY"
             active={false}
           >
             Discord
