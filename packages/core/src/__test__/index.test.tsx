@@ -73,6 +73,47 @@ describe("index", () => {
       }).rejects.toThrow();
     });
 
+    it("should throw an error when called with a list using a template that does not have an unsubscribe link", async () => {
+      expect("implement me").toBe("done");
+      // const email = "testListSpecifiedButNoUnsub@test.com";
+      // const fn = async () => {
+      //   await apiSendMail("testApiKey", {
+      //     ...ApiSendMail.defaultFormData,
+      //     to: email,
+      //     listName: "mylista4290",
+      //     dangerouslyForceDeliver: true,
+      //     templateName: "Minimal",
+      //   });
+      // };
+      // expect(fn).rejects.toThrow(
+      //   "The template AccountCreated does not contain an unsubscribe link"
+      // );
+      // expect(sendMailResponse.status).toBe(200);
+      // // “Templates sent to a list must include an unsubscribe link. Add an unsubscribe link or remove the list parameter from your sendMail call.”
+      // expect(await sendMailResponse.json()).toEqual({
+      //   result: "delivered!",
+      // });
+      // // it should have created a message object
+      // const messages = await prisma.message.findMany({});
+      // expect(messages.length).toEqual(1);
+      // const message = messages[0];
+      // expect(message.to).toEqual([email]);
+      // // get the MessageContent
+      // const messageContentRecords = await prisma.messageContent.findMany();
+      // expect(messageContentRecords.length).toEqual(1);
+      // // it should contain an unsubscribe link
+      // const messageContent = messageContentRecords[0];
+      // expect(messageContent.html).toContain(
+      //   `<a href="${EMAIL_PREFERENCES_URL}" target="_blank" rel="noreferrer">Unsubscribe</a>`
+      // );
+      // // it should have subscribed the member to the default list
+      // const member = await prisma.member.findUnique({
+      //   where: { listId_email: { listId: defaultListId, email } },
+      // });
+      // expect(member).toBeTruthy();
+      // expect(member?.status).toBe("subscribed");
+    });
+
     it("logs an error without a valid configPath but still sends", async () => {
       await clearTestMailQueue();
       const debugSpy = jest.spyOn(log, "debug").mockImplementation(jest.fn());

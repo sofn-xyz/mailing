@@ -2,6 +2,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { apiKeyFromReq } from "../../../util/validateApiKey";
 import createMessage from "../../../util/createMessage";
 import prisma from "../../../../prisma";
+import { Prisma } from "../../../../prisma/generated/client";
 
 type Data = {
   error?: string;
@@ -50,11 +51,31 @@ export default async function handler(
 
   let memberId;
 
-  if (!skipUnsubscribeChecks) {
-    const organization = await prisma.organization.findFirstOrThrow({
-      where: { id: organizationId },
+  const organization = await prisma.organization.findFirstOrThrow({
+    where: { id: organizationId },
+  });
+
+  if (skipUnsubscribeChecks) {
+    // in this case we still want to add the email to the default list if it doesn't exist
+    const defaultList = await prisma.list.findFirstOrThrow({
+      where: { organizationId: organization.id, isDefault: true },
     });
 
+    try {
+      await prisma.member.create({
+        data: {
+          listId: defaultList.id,
+          email,
+          status: "subscribed",
+        },
+      });
+    } catch (e) {
+      // ignore if it's a duplicate key error because that means the email is already on the default list
+      if ((e as Prisma.PrismaClientKnownRequestError).code !== "P2002") {
+        throw e;
+      }
+    }
+  } else {
     const listName = req.query.listName || req.body.listName;
     let list, defaultList, listMember, defaultListMember;
 

@@ -5,7 +5,7 @@ import prisma from "../../../../prisma";
 import { apiGetLists } from "./util/lists";
 import type { List } from "../../../../prisma/generated/client";
 import { truncateCliTables } from "./util/truncateCliTables";
-import { apiPatchListMember } from "./util/listMember";
+import { apiCreateListMember } from "./util/listMember";
 import { EMAIL_PREFERENCES_URL } from "mailing-core";
 
 describe("sendMail", () => {
@@ -69,10 +69,13 @@ describe("sendMail", () => {
           templateName: "ThisIsNotATemplate",
         });
       expect(sendMailResponseWithBadTemplateName.status).toBe(404);
-      expect(await sendMailResponseWithBadTemplateName.json()).toEqual({
-        error:
-          "Template ThisIsNotATemplate not found in list of templates: AccountCreated, NewSignIn, Reservation, ResetPassword",
-      });
+      const errorJson = await sendMailResponseWithBadTemplateName.json();
+
+      expect("error" in errorJson).toBe(true);
+
+      expect(errorJson.error).toContain(
+        "Template ThisIsNotATemplate not found in list of templates"
+      );
     });
   });
 
@@ -90,56 +93,12 @@ describe("sendMail", () => {
     });
 
     describe("the template does NOT contain an unsubscribe link", () => {
-      it("should throw an error when sending to a list", async () => {
-        const email = "testListSpecifiedButNoUnsub@test.com";
-        const { response: sendMailResponse } = await apiSendMail("testApiKey", {
-          ...ApiSendMail.defaultFormData,
-          to: email,
-          listName: "mylista4290",
-          dangerouslyForceDeliver: true,
-          templateName: "Minimal",
-        });
-        console.log(await sendMailResponse.json());
-        expect(sendMailResponse.status).toBe(200);
-
-        // “Templates sent to a list must include an unsubscribe link. Add an unsubscribe link or remove the list parameter from your sendMail call.”
-
-        expect(await sendMailResponse.json()).toEqual({
-          result: "delivered!",
-        });
-
-        // it should have created a message object
-        const messages = await prisma.message.findMany({});
-        expect(messages.length).toEqual(1);
-
-        const message = messages[0];
-        expect(message.to).toEqual([email]);
-
-        // get the MessageContent
-        const messageContentRecords = await prisma.messageContent.findMany();
-        expect(messageContentRecords.length).toEqual(1);
-
-        // it should contain an unsubscribe link
-        const messageContent = messageContentRecords[0];
-        expect(messageContent.html).toContain(
-          `<a href="${EMAIL_PREFERENCES_URL}" target="_blank" rel="noreferrer">Unsubscribe</a>`
-        );
-
-        // it should have subscribed the member to the default list
-        const member = await prisma.member.findUnique({
-          where: { listId_email: { listId: defaultListId, email } },
-        });
-
-        expect(member).toBeTruthy();
-        expect(member?.status).toBe("subscribed");
-      });
-
-      it("should send the message when sending without a list specifed", async () => {
-        expect("implement me").toBe(true);
+      it("should send the message when sending without a list specifed and add this new email to the default list", async () => {
         const email = "testNoUnsubDefaultList@test.com";
         const sendMailOpts = {
           ...ApiSendMail.defaultFormData,
           to: email,
+          templateName: "Minimal",
           dangerouslyForceDeliver: true,
         };
 
@@ -168,9 +127,7 @@ describe("sendMail", () => {
 
         // it should contain an unsubscribe link
         const messageContent = messageContentRecords[0];
-        expect(messageContent.html).toContain(
-          `<a href="${EMAIL_PREFERENCES_URL}" target="_blank" rel="noreferrer">Unsubscribe</a>`
-        );
+        expect(messageContent.html).not.toContain(EMAIL_PREFERENCES_URL);
 
         // it should have subscribed the member to the default list
         const member = await prisma.member.findUnique({
@@ -180,11 +137,115 @@ describe("sendMail", () => {
         expect(member).toBeTruthy();
         expect(member?.status).toBe("subscribed");
       });
+
+      it("should send the message when sending without a list specifed, even if the email is unsubscribed", async () => {
+        const email = "testNoUnsubDefaultListAndUnsubscribed@test.com";
+
+        // create an unsubscribed member for the email from the default list
+        const { response: createMemberResponse } = await apiCreateListMember(
+          defaultListId,
+          { email, status: "unsubscribed" }
+        );
+
+        expect(createMemberResponse.status).toBe(201);
+        const { member } = await createMemberResponse.json();
+
+        expect(member.status).toBe("unsubscribed");
+
+        const sendMailOpts = {
+          ...ApiSendMail.defaultFormData,
+          to: email,
+          templateName: "Minimal",
+          dangerouslyForceDeliver: true,
+        };
+
+        expect("listname" in sendMailOpts).toBe(false);
+
+        const { response: sendMailResponse } = await apiSendMail(
+          "testApiKey",
+          sendMailOpts
+        );
+        expect(sendMailResponse.status).toBe(200);
+
+        expect(await sendMailResponse.json()).toEqual({
+          result: "delivered!",
+        });
+
+        // it should have created a message object
+        const messages = await prisma.message.findMany({});
+        expect(messages.length).toEqual(1);
+
+        const message = messages[0];
+        expect(message.to).toEqual([email]);
+
+        // get the MessageContent
+        const messageContentRecords = await prisma.messageContent.findMany();
+        expect(messageContentRecords.length).toEqual(1);
+
+        // it should NOT contain an unsubscribe link
+        const messageContent = messageContentRecords[0];
+        expect(messageContent.html).not.toContain(EMAIL_PREFERENCES_URL);
+
+        // the member should still be unsubscribed from the default list
+        const memberAgain = await prisma.member.findUnique({
+          where: { listId_email: { listId: defaultListId, email } },
+        });
+
+        expect(memberAgain).toBeTruthy();
+        expect(memberAgain?.status).toBe("unsubscribed");
+      });
     });
 
     describe("the template contains an unsubscribe link", () => {
       describe("sending to the default list", () => {
-        it("should send an email that includes an unsubscribe link", async () => {
+        it("should send an email using the default list if no list is specified", async () => {
+          const email = "testDefaultList@test.com";
+          const sendMailOpts = {
+            ...ApiSendMail.defaultFormData,
+            to: email,
+            dangerouslyForceDeliver: true,
+          };
+
+          // no list is specified
+          expect("listname" in sendMailOpts).toBe(false);
+
+          const { response: sendMailResponse } = await apiSendMail(
+            "testApiKey",
+            sendMailOpts
+          );
+          expect(sendMailResponse.status).toBe(200);
+
+          expect(await sendMailResponse.json()).toEqual({
+            result: "delivered!",
+          });
+
+          // it should have created a message object
+          const messages = await prisma.message.findMany({});
+          expect(messages.length).toEqual(1);
+
+          const message = messages[0];
+          expect(message.to).toEqual([email]);
+
+          // get the MessageContent
+          const messageContentRecords = await prisma.messageContent.findMany();
+          expect(messageContentRecords.length).toEqual(1);
+
+          // it should contain an unsubscribe link
+          const messageContent = messageContentRecords[0];
+          expect(messageContent.html).toContain(
+            `<a href="${EMAIL_PREFERENCES_URL}" target="_blank" rel="noreferrer">Unsubscribe</a>`
+          );
+
+          // it should have subscribed the member to the default list
+          const member = await prisma.member.findUnique({
+            where: { listId_email: { listId: defaultListId, email } },
+          });
+
+          expect(member).toBeTruthy();
+          expect(member?.status).toBe("subscribed");
+        });
+
+        it("should send an email that includes an unsubscribe link and subscribe them to the default list", async () => {
           const email = "testDefaultList@test.com";
           const { response: sendMailResponse } = await apiSendMail(
             "testApiKey",
@@ -288,48 +349,33 @@ describe("sendMail", () => {
 
         it("should not send an email to a member that is unsubscribed", async () => {
           const email = "testDefaultListUnsubscribedUser@test.com";
-          const apiSendMailOpts = {
-            ...ApiSendMail.defaultFormData,
-            to: email,
-            listName: "default",
-            dangerouslyForceDeliver: true,
-          };
-          const { response: sendMailResponse } = await apiSendMail(
-            "testApiKey",
-            apiSendMailOpts
+
+          // create an unsubscribed member for the email from the default list
+          const { response: createMemberResponse } = await apiCreateListMember(
+            defaultListId,
+            { email, status: "unsubscribed" }
           );
-          expect(sendMailResponse.status).toBe(200);
 
-          expect(await sendMailResponse.json()).toEqual({
-            result: "delivered!",
-          });
+          expect(createMemberResponse.status).toBe(201);
+          const { member } = await createMemberResponse.json();
 
-          // it should have subscribed the member to the default list
-          const member = await prisma.member.findUniqueOrThrow({
-            where: { listId_email: { listId: defaultListId, email } },
-          });
-
-          // unsubscribe the email
-          const { response: updateListMemberResponse } =
-            await apiPatchListMember(defaultListId, member.id, {
-              email,
-              status: "unsubscribed",
-            });
-
-          expect(updateListMemberResponse.status).toBe(200);
+          expect(member.status).toBe("unsubscribed");
 
           // try to send the email again
           const { response: sendMailResponse2 } = await apiSendMail(
             "testApiKey",
-            apiSendMailOpts
+            {
+              ...ApiSendMail.defaultFormData,
+              to: email,
+            }
           );
           expect(sendMailResponse2.status).toBe(200);
 
           expect(await sendMailResponse2.json()).toEqual({});
 
-          // it should not create a second message
+          // it should not create a message
           const messages = await prisma.message.findMany();
-          expect(messages.length).toBe(1);
+          expect(messages.length).toBe(0);
 
           // the member should still be unsubscribed
           const memberAgain = await prisma.member.findUniqueOrThrow({

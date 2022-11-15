@@ -181,17 +181,15 @@ export function buildSendMail<T>(options: BuildSendMailOptions<T>) {
       });
 
       if (hookResponse.status === 200) {
-        const {
-          message: { id: messageId },
-          memberId,
-          error,
-        } = await hookResponse.json();
+        const { message, memberId, error } = await hookResponse.json();
 
         // Don't send to members that are not subscribed to the list
         if (error) {
           log("hookResponse returned error", error);
           return;
         }
+
+        const messageId = message.id;
 
         if (stringHtml && memberId) {
           const emailPrefsUrl = new URL(
