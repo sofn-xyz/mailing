@@ -22,14 +22,32 @@ module App
       @root_dir
     end
 
+    def use_cache(&block)
+      framework_cache_dir = File.join(Config::CACHE_DIR, @name)
+      if Dir.exist?(framework_cache_dir)
+        puts "Using cached #{@name}..."
+        FileUtils.cp_r("#{framework_cache_dir}/.", @root_dir)
+      else
+        block.call
+
+        if @save_cache
+          verify_package_json_exists!
+          FileUtils.cp_r(@root_dir, File.join(Config::CACHE_DIR, @name))
+        end
+      end
+    end
+
     def setup!
       announce! "Creating new #{name} app in #{root_dir}", '⚙️'
       ::FileUtils.mkdir_p(root_dir)
 
-      yarn_create!
-      verify_package_json_exists!
-      yarn_add_test_dependencies!
-      add_yarn_ci_scripts!
+      use_cache do
+        yarn_create!
+        verify_package_json_exists!
+        yarn_add_test_dependencies!
+        add_yarn_ci_scripts!
+      end
+
       yalc_add_packages!
       yarn!
       copy_ci_scripts!
