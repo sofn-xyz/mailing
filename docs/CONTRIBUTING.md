@@ -81,4 +81,4 @@ The script supports some options for running:
 
 **Cache the framework installs for faster runs**
 
-- Use the `--save-cache` flag to save each framework install (before mailing is added) to the `cache` directory. Subsequent test runs will use the cache instead of running `yarn create` and `yarn install`, which will speed things up 🏎 If you need to reset the cache, e.g. if you want to test a newer version of the framework or if the framework install process changes, you can delete the cache directory or the subdirectory containing the specific framework you are targeting.
+- Use the `--save-cache` flag to save each framework install (before mailing is added) to the `cache` directory. Subsequent test runs will start with a copy of the cache instead of running `yarn create` and `yarn install`, which will speed things up 🏎 If you need to reset the cache, e.g. if you want to test a newer version of the framework or if the framework install process changes, you can delete the cache directory or the subdirectory containing the specific framework you are targeting.
