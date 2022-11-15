@@ -8,7 +8,7 @@ module Commands
 
     def self.perform(opts: {})
       app_name = opts['app'] || 'next_ts'
-      Commands::Run.perform(app_name: app_name, opts: opts)
+      new(app_name: app_name, opts: opts)
     end
 
     # @param [String] app_name
@@ -23,8 +23,8 @@ module Commands
         system('yarn jest --rootDir=mailing_tests/jest --config mailing_tests/jest/jest.config.json --updateSnapshot')
 
         # copy snapshots back to mailing
-        # require 'pry'
-        # binding.pry
+        announce! 'Copying updated snapshots to the mailing project', '🥋'
+        system(format('find ./mailing_tests -name \'*.snap\' | cpio -p %s', Config::E2E_ROOT))
       end
     end
   end
