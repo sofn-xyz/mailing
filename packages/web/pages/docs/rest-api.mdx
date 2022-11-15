@@ -1,0 +1,17 @@
+# REST API
+
+With the REST API, you can use mailing for email templating even if most of your app is not written in TypeScript or JavaScript.
+
+| Method        | Path                                           | Description                          | Example                                                                                                          |
+| ------------- | ---------------------------------------------- | ------------------------------------ | ---------------------------------------------------------------------------------------------------------------- |
+| GET           | /api/render                                    | render a template with props to HTML | [Response](https://demo.mailing.run/api/render?templateName=AccountCreated&props=%7B%22name%22%3A%22peter%22%7D) |
+| Previews      |
+| GET           | /api/previews                                  | returns the list of previews         | [Response](https://demo.mailing.run/api/previews)                                                                |
+| GET           | /api/previews/[previewClass]/[previewFunction] | returns the rendered preview         | [Response](https://demo.mailing.run/api/previews/AccountCreated/accountCreated)                                  |
+| Lists/Members |
+| GET           | /api/lists                                     | get all lists                        |
+| POST          | /api/lists                                     | create a new list                    |
+| GET           | /api/lists/[listId]/members                    | get the members of a list            |
+| POST          | /api/lists/[listId]/members                    | add a member to a list               |
+| GET           | /api/lists/[listId]/members/[memberId]         | get a list member's status           |
+| PATCH         | /api/lists/[listId]/members/[memberId]         | update a list member's status        |

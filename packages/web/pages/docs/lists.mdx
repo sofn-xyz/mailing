@@ -62,23 +62,6 @@ When you go to send your emails using sendMail, Mailing will automatically injec
 
 Subscribers to an individual list are stored in the Member table in the database. The subscriber’s status can be either “subscribed” or “unsubscribed.”
 
-## Lists/Members REST API
-
-**Lists**
-
-- GET `/api/lists` - get all lists
-- POST `/api/lists` - create a new list
-
-**List members**
-
-- GET `/api/lists/[id]/members` - get the members of a list
-- POST `/api/lists/[id]/members` - add a member to a list
-
-**List member**
-
-- GET `/api/lists/[id]/members/[memberId]` - get a list member’s status
-- PATCH `/api/lists/[id]/members/[memberId]` - update a list member’s status
-
 ## Setup: Making an API Key
 
 1. **Connect a database**. To use Lists, you’ll need to have deployed mailing and connect it to a postgres database by setting `MAILING_DATABASE_URL` in your deploy environment. We’re happy to do this for you, email peter@campsh.com and we’ll set up a Neon database for you to connect to. Because the API is serverless, it’s important that you use a postgres service that can handle a high number of connections. We reccomend [neon.tech](https://neon.tech).

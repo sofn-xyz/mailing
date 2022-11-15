@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 import { useEffect, useMemo, useState } from "react";
+import cx from "classnames";
 
 function getAnchor(text) {
   return text
@@ -27,8 +28,13 @@ export default function H2({ children }: H2Props) {
 
   return (
     <h2 id={anchor} className="text-3xl">
-      <a href={link} className="anchor-link no-underline">
-        {active && "|"} {children}
+      <a
+        href={link}
+        className={cx("anchor-link no-underline", {
+          "border-l-2 pl-4": active,
+        })}
+      >
+        {children}
       </a>
     </h2>
   );

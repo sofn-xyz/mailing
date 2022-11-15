@@ -176,7 +176,7 @@ describe("Example API", () => {
 
 `npx mailing` runs init then preview
 
-[source entrypoint](https://github.com/sofn-xyz/mailing/blob/main/packages/cli/src/index.ts)
+Append `--help` to your CLI command for a full list of supported options. Any of these options can be added to your config file.
 
 ### mailing.config.json
 
@@ -190,21 +190,9 @@ Running `npx mailing init` generates a mailing.config.json file that will be use
   }
 ```
 
-Append --help to your CLI command for a full list of supported options. Any of these options can be added to your config file.
+### Telemetry
 
-## REST API
-
-With the REST API, you can use mailing for email templating even if most of your app is not written in TypeScript or JavaScript.
-
-`GET /api/render` takes a template name and props and returns your rendered HTML ready to be sent. [Example](https://demo.mailing.run/api/render?templateName=AccountCreated&props=%7B%22name%22%3A%22peter%22%7D)
-
-`GET /api/previews` returns the list of previews. [Example](https://demo.mailing.run/api/previews)
-
-`GET /api/previews/[previewClass]/[previewFunction]` returns the rendered preview and data for `/previews/[previewClass]/[previewFunction]`. [Example](https://demo.mailing.run/api/previews)
-
-## Telemetry
-
-To help understand how people are using mailing so that we can prioritize efforts, mailing collects some anonymized telemetry about usage.
+To understand how people are using mailing so that we can prioritize our effort, Mailing collects some anonymized usage telemetry. To opt out, remove the `anonymousId` from your mailing.config.json file.
 
 ## Support
 

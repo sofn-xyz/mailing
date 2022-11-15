@@ -54,3 +54,7 @@ a:active {
     color-scheme: dark;
   }
 }
+
+.ch-frame-buttons {
+  display: none;
+}

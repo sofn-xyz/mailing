@@ -68,13 +68,6 @@ export default function DocsLayout({ children }) {
           <NavLink className="pl-4" href="/docs#cli" active={router.asPath}>
             CLI
           </NavLink>
-          <NavLink
-            className="pl-4"
-            href="/docs#rest-api"
-            active={router.asPath}
-          >
-            REST API
-          </NavLink>
 
           <NavCategory>Platform</NavCategory>
           <NavLink
@@ -84,6 +77,13 @@ export default function DocsLayout({ children }) {
             scroll
           >
             Deploying Mailing
+          </NavLink>
+          <NavLink
+            className="pl-4"
+            href="/docs/rest-api"
+            active={router.asPath}
+          >
+            REST API
           </NavLink>
           <NavLink
             className="pl-4"

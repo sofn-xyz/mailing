@@ -30,12 +30,10 @@ export default function DocsLink({
 
   return (
     <div className="relative">
-      <div className="absolute left-0">{showActive && "|"}</div>
+      <div className="absolute left-0 -top-px">{showActive && "|"}</div>
       <Link
         href={href}
-        className={cx("block text-white hover:text-blue-600", className, {
-          // "relative -left-4": active,
-        })}
+        className={cx("block text-white hover:text-blue-600", className)}
         scroll={!!scroll}
         shallow={true}
         aria-selected={isActive}
