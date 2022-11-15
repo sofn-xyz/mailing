@@ -17,8 +17,7 @@
     "@prisma/client": "^4.2.0",
     "@vercel/analytics": "^0.1.1",
     "classnames": "^2.3.2",
-    "mailing": "^0.8.16",
-    "mailing-core": "^0.8.16",
+    "mailing-core": "*",
     "next": "13.0.3",
     "react": "18.2.0",
     "react-dom": "18.2.0",
@@ -26,6 +25,7 @@
     "typescript": "4.8.4"
   },
   "devDependencies": {
+    "mailing": "*",
     "@code-hike/mdx": "^0.7.4",
     "@mdx-js/loader": "^2.1.5",
     "@next/mdx": "^13.0.3",
