@@ -10,7 +10,7 @@ describe("audience", () => {
     cy.visit("/settings");
     cy.get("a").contains("Subscribe").click();
     cy.get("input#email").type("ok@ok.com");
-    cy.get("form").submit();
+    cy.get("button[type=submit]").click();
     cy.get("body").should("contain", "Thanks for subscribing!");
 
     // ok@ok.com should appear on the /audiences page

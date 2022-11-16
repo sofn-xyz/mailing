@@ -87,7 +87,7 @@ describe("sendMail", () => {
       expect(process.env.MAILING_API_KEY).toBe("testApiKey");
     });
 
-    beforeEach(() => {
+    beforeEach(async () => {
       // delete all members and messages
       await truncateCliTables(["Member", "Message"]);
     });
@@ -387,7 +387,7 @@ describe("sendMail", () => {
       });
 
       describe("sending to a different list than 'default'", () => {
-        beforeEach(() => {
+        beforeEach(async () => {
           // delete all members and messages
           await truncateCliTables(["Member", "Message"]);
         });

@@ -15,12 +15,12 @@ describe("signup and authenticate", () => {
 
     // invalid email should give an error
     cy.get("input#email").type("test");
-    cy.get("form").submit();
+    cy.get("button[type=submit]").click();
     cy.get(".form-error").should("contain", "email is invalid");
 
     // invalid password (blank) should give an error
     cy.get("input#email").clear().type(email);
-    cy.get("form").submit();
+    cy.get("button[type=submit]").click();
     cy.get(".form-error").should(
       "contain",
       "password should be at least 8 characters"
@@ -29,7 +29,7 @@ describe("signup and authenticate", () => {
     // fill in email and passord fields with valid values and then submit the form
     cy.get("input#email").clear().type(email);
     cy.get("input#password").type(password);
-    cy.get("form").submit();
+    cy.get("button[type=submit]").click();
 
     // it should redirect you to the settings page
     cy.location("pathname").should("eq", "/settings");
@@ -83,7 +83,7 @@ describe("signup and authenticate", () => {
     // it should give you an error if you try to login with the wrong password
     cy.get("input#email").type(email);
     cy.get("input#password").type("wrongpassword");
-    cy.get("form").submit();
+    cy.get("button[type=submit]").click();
 
     cy.get(".form-error").should("contain", "invalid password");
   });
@@ -97,7 +97,7 @@ describe("signup and authenticate", () => {
     // fill in email and passord fields and then submit the form
     cy.get("input#email").type("i@didnsignup.com");
     cy.get("input#password").type("password");
-    cy.get("form").submit();
+    cy.get("button[type=submit]").click();
 
     // it should show an error message
     cy.get("div.form-error").should(
@@ -124,6 +124,6 @@ describe("signup and authenticate", () => {
     // fill in email and passord fields and then submit the form
     cy.get("input#email").type(email);
     cy.get("input#password").type(password);
-    cy.get("form").submit();
+    cy.get("button[type=submit]").click();
   });
 });
