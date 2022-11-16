@@ -7,5 +7,3 @@ out
 .vercel
 
 mailing.vercel.json
-
-!mailing.config.json
