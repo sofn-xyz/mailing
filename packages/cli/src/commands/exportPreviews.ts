@@ -107,7 +107,7 @@ export const handler = buildHandler(
             count++;
 
             const { html, errors, htmlLint } = render(
-              previewModule[previewFunction]()
+              await previewModule[previewFunction]()
             );
             if (errors.length) {
               error(`MJML errors rendering ${filename}:`, errors);

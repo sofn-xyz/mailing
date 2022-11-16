@@ -18,10 +18,10 @@ export function getPreviewModule(name: string) {
   return moduleManifest.previews[name as keyof typeof moduleManifest.previews];
 }
 
-export function getPreviewComponent(
+export async function getPreviewComponent(
   name: string,
   functionName: string
-): ReactElement<any, string | JSXElementConstructor<any>> | undefined {
+): Promise<ReactElement<any, string | JSXElementConstructor<any>> | undefined> {
   const { previews } = moduleManifest;
   const previewModule:
     | {
@@ -30,7 +30,7 @@ export function getPreviewComponent(
     | undefined = previews[name as keyof typeof previews] as any;
   const previewComponent = previewModule?.[functionName];
   return typeof previewComponent === "function"
-    ? previewComponent()
+    ? await previewComponent()
     : undefined;
 }
 

@@ -1,5 +1,13 @@
 # mailing
 
+## 0.8.18
+
+### Patch Changes
+
+- 31e98b3: add support for async preview functions
+- Updated dependencies [31e98b3]
+  - mailing-core@0.8.18
+
 ## 0.8.17
 
 ### Patch Changes

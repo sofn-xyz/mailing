@@ -41,7 +41,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
   const [previewClass, previewFunction] = path || [];
   let preview = null;
   if (previewClass && previewFunction) {
-    const component = getPreviewComponent(previewClass, previewFunction);
+    const component = await getPreviewComponent(previewClass, previewFunction);
     if (!component) {
       console.log(
         `${previewClass} or ${previewFunction} not found, redirecting to home`
