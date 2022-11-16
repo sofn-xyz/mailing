@@ -89,7 +89,7 @@ describe("sendMail", () => {
 
     beforeEach(() => {
       // delete all members and messages
-      truncateCliTables(["Member", "Message"]);
+      await truncateCliTables(["Member", "Message"]);
     });
 
     describe("the template does NOT contain an unsubscribe link", () => {
@@ -389,7 +389,7 @@ describe("sendMail", () => {
       describe("sending to a different list than 'default'", () => {
         beforeEach(() => {
           // delete all members and messages
-          truncateCliTables(["Member", "Message"]);
+          await truncateCliTables(["Member", "Message"]);
         });
 
         it("should send an email and create the list if necessary", async () => {
