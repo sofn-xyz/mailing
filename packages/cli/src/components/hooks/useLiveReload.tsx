@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import io from "Socket.IO-client";
+import io from "socket.io-client";
 
 export default function useLiveReload(onShouldReload: () => void) {
   useEffect(() => {
