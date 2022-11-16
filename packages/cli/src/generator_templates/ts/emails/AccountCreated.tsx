@@ -49,9 +49,9 @@ const AccountCreated: React.FC<{ name: string }> = ({ name }) => (
             lineHeight={leadingRelaxed}
             cssClass="paragraph"
           >
-            {Date.now()} Thank you for joining BookBook! We’re excited to help
-            you enjoy great meals without any begging, guessing, waiting or
-            phone calls. Just a couple taps, and the table is yours.
+            Thank you for joining BookBook! We’re excited to help you enjoy
+            great meals without any begging, guessing, waiting or phone calls.
+            Just a couple taps, and the table is yours.
           </MjmlText>
           <MjmlSpacer height="24px" />
           <ButtonPrimary

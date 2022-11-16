@@ -63,7 +63,6 @@ const PreviewViewer: React.FC<PreviewViewerProps> = ({ initialData }) => {
     const json = await fetchJson(
       `/api/previews/${previewClass}/${previewFunction}`
     );
-    console.timeEnd("reload")
     setData((data: Data) => ({
       ...data,
       preview: json,
