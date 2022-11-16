@@ -12,7 +12,7 @@ module App
 
     def yarn_create!
       Dir.chdir(root_dir) do
-        system_quiet('yarn create next-app .')
+        system_quiet('yarn create next-app . --javascript --no-eslint')
       end
     end
   end
