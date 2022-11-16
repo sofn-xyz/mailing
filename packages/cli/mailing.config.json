@@ -1,0 +1,5 @@
+{
+  "typescript": true,
+  "emailsDir": "./src/emails",
+  "outDir": "./previews_html"
+}
