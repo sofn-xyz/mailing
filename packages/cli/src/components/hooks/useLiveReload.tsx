@@ -4,7 +4,8 @@ import { useEffect, useRef } from "react";
 import io, { Socket } from "socket.io-client";
 
 const waitUntilBundleReady = async (bundleId: number) => {
-  while (true) {
+  let x = 0;
+  while (x++ < 20) {
     const res = await fetch(`/api/bundleId`);
     const json = await res.json();
     if (json.bundleId >= bundleId) {
