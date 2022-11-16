@@ -37,7 +37,7 @@ async function handleCreateList(
 
       const list = await prisma.list.create({
         data: {
-          name: listName,
+          name,
           displayName,
           organizationId: user.organizationId,
           isDefault: false,
