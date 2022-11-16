@@ -1,4 +1,4 @@
-import config from "../mailing.config.json";
+const config = {}
 import sendMail from "./emails";
 
 // template imports
@@ -13,7 +13,12 @@ import * as NewSignInPreview from "./emails/previews/NewSignIn";
 import * as ReservationPreview from "./emails/previews/Reservation";
 import * as ResetPasswordPreview from "./emails/previews/ResetPassword";
 
-const previews = { AccountCreated: AccountCreatedPreview, NewSignIn: NewSignInPreview, Reservation: ReservationPreview, ResetPassword: ResetPasswordPreview };
+const previews = {
+  AccountCreated: AccountCreatedPreview,
+  NewSignIn: NewSignInPreview,
+  Reservation: ReservationPreview,
+  ResetPassword: ResetPasswordPreview,
+};
 const templates = { AccountCreated, NewSignIn, Reservation, ResetPassword };
 const bundleId = 1668630398978;
 
