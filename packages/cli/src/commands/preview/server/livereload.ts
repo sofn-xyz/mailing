@@ -24,11 +24,9 @@ export function startChangeWatcher(server: Server, emailsDir: string) {
 
     io.on("connection", (client) => {
       clients.push(client);
-      console.log("Adding client", clients.length);
 
       client.on("disconnect", () => {
         clients = clients.filter((item) => item !== client);
-        console.log("Removing client", clients.length);
       });
     });
 

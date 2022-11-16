@@ -1,4 +1,4 @@
-import { execCli } from "../__test__/execCli";
+import { execCli } from "./execCli";
 
 jest.mock("../../util/log");
 
