@@ -81,11 +81,14 @@ export default async function handler(
 
     // if listName is passed, look it up or create it
     if (listName) {
+      // capitalize the first letter of the list name
+      const displayName = listName.charAt(0).toUpperCase() + listName.slice(1);
+
       list = await prisma.list.upsert({
         where: { name: listName },
         create: {
           name: listName,
-          displayName: listName,
+          displayName,
           isDefault: false,
           organizationId: organization.id,
         },
