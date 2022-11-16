@@ -69,6 +69,7 @@ emails
       `generated your emails dir at /tmp/src/emails:
 emails
 ├── AccountCreated.jsx
+├── Minimal.jsx
 ├── NewSignIn.jsx
 ├── Reservation.jsx
 ├── ResetPassword.jsx
@@ -82,6 +83,7 @@ emails
 ├── index.js
 └── previews
     ├── AccountCreated.jsx
+    ├── Minimal.jsx
     ├── NewSignIn.jsx
     ├── Reservation.jsx
     └── ResetPassword.jsx`
