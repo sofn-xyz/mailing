@@ -30,7 +30,8 @@ export type PreviewServerOptions = {
 
 export async function linkEmailsDirectory(emailsDir: string) {
   const bundleId = Date.now();
-  const dotMailingSrcPath = process.env.MM_DEV ? "src" : ".mailing/src";
+  const dotMailingSrcPath =
+    process.env.MM_ENV === "development" ? "src" : ".mailing/src";
   const dynManifestPath = dotMailingSrcPath + "/moduleManifest.ts";
   const dynFeManifestPath = dotMailingSrcPath + "/feManifest.ts";
   const feManifest = writeFrontendManifest(dynFeManifestPath);
@@ -48,9 +49,10 @@ export async function linkEmailsDirectory(emailsDir: string) {
   // calculate the relative path the user's emailsDir
   // so we can import templates and previews from there
   // when in the context of the build output
-  const relativePathToEmailsDir = process.env.MM_DEV
-    ? "./" + posix.relative(dotMailingSrcPath, emailsDir)
-    : posix.relative(dotMailingSrcPath, emailsDir);
+  const relativePathToEmailsDir =
+    process.env.MM_ENV === "development"
+      ? "./" + posix.relative(dotMailingSrcPath, emailsDir)
+      : posix.relative(dotMailingSrcPath, emailsDir);
 
   uniquePreviewCollections.forEach((p) => {
     const moduleName = p.replace(/\.[jt]sx/g, "");
@@ -88,9 +90,10 @@ export async function linkEmailsDirectory(emailsDir: string) {
     );
   });
 
-  const mailingConfigPath = process.env.MM_DEV
-    ? "../mailing.config.json"
-    : "../../mailing.config.json";
+  const mailingConfigPath =
+    process.env.MM_ENV === "development"
+      ? "../mailing.config.json"
+      : "../../mailing.config.json";
 
   const moduleManifestTemplate = template(
     (
@@ -244,7 +247,7 @@ async function buildManifest(
   await build(buildOpts);
 
   // delete the original .ts file so there is no confusion loading the bundled .js files
-  if (!process.env.MM_DEV) {
+  if (process.env.MM_ENV !== "development") {
     await remove(manifestPath);
   }
   delete require.cache[manifestPath];
@@ -259,9 +262,10 @@ async function writeFrontendManifest(toPath: string) {
       )
     ).toString()
   );
-  const mailingConfigPath = process.env.MM_DEV
-    ? "../mailing.config.json"
-    : "../../mailing.config.json";
+  const mailingConfigPath =
+    process.env.MM_ENV === "development"
+      ? "../mailing.config.json"
+      : "../../mailing.config.json";
   const feManifestContents = feManifestTemplate({
     mailingConfigPath,
   });

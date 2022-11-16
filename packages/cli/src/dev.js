@@ -5,6 +5,7 @@
 // Make stack traces really big!
 Error.stackTraceLimit = Infinity;
 
+process.env.MM_ENV = 'development';
 process.env.MM_DEV = 1;
 
 require("esbuild-register/dist/node").register({

@@ -31,6 +31,7 @@ jobs:
           - 5432:5432
     env:
       MM_DEV: 1
+      MM_ENV: test
       MAILING_DATABASE_URL_TEST: postgresql://postgres:postgres@localhost:5432/mailing_cli_test
       WEB_DATABASE_URL_TEST: postgresql://postgres:postgres@localhost:5432/mailing_test
       MAILING_WEB_SESSION_PASSWORD: test-YEAed65EasPz7zbGF4fuoMTDka7C
