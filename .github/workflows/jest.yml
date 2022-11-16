@@ -47,6 +47,6 @@ jobs:
       - name: Build the app
         run: yarn build
       - name: Run CI tests
-        run: yarn ci:test
+        run: yarn test
       - name: Run CI Integration tests
-        run: yarn ci:test:integration
+        run: yarn test:integration
