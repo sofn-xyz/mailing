@@ -393,11 +393,12 @@ describe("sendMail", () => {
         });
 
         it("should send an email and create the list if necessary", async () => {
+          const listName = "mynewlist";
           const email = "testADifferentList@test.com";
           const apiSendMailOpts = {
             ...ApiSendMail.defaultFormData,
             to: email,
-            listName: "mynewlist",
+            listName,
             dangerouslyForceDeliver: true,
           };
           const { response: sendMailResponse } = await apiSendMail(
@@ -418,15 +419,16 @@ describe("sendMail", () => {
           expect(message.to).toEqual([email]);
 
           // it should have created a new list
-          const list = await prisma.list.findFirst({
-            where: { name: "mynewlist" },
+          const list = await prisma.list.findUniqueOrThrow({
+            where: { name: listName },
           });
-          expect(list).toBeTruthy;
-          expect(list?.displayName).toBe("mynewlist");
+
+          // it capitalizes the first letter
+          expect(list.displayName).toBe("Mynewlist");
 
           // it should have subscribed the member to the new list
           const members = await prisma.member.findMany({
-            where: { listId: list?.id },
+            where: { listId: list.id },
           });
 
           expect(members.length).toBe(1);

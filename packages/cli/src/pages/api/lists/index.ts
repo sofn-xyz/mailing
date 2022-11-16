@@ -28,16 +28,16 @@ async function handleCreateList(
   res: NextApiResponse<Data>
 ) {
   // validate name presence
-  if (req.body.name) {
+  const { name } = req.body;
+
+  if (name) {
     try {
-      const displayName =
-        req.body.name.charAt(0).toUpperCase() + req.body.name.slice(1);
+      // capitalize the first letter of the list name
+      const displayName = name.charAt(0).toUpperCase() + name.slice(1);
 
       const list = await prisma.list.create({
-        // capitalize the first letter of the list name
-
         data: {
-          name: req.body.name,
+          listName,
           displayName,
           organizationId: user.organizationId,
           isDefault: false,
@@ -45,7 +45,7 @@ async function handleCreateList(
       });
       return res.status(201).json({ list });
     } catch (e) {
-      // probably the unique constraint on name failed
+      // the unique constraint on name might have failed
       error(e);
       return res.status(500);
     }
