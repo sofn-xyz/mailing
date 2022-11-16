@@ -33,10 +33,10 @@ export function startChangeWatcher(server: Server, emailsDir: string) {
     const reload = debounce(
       async () => {
         debug("reload from change");
-        await linkEmailsDirectory(emailsDir);
+        const bundleId = await linkEmailsDirectory(emailsDir);
 
         clients.forEach((client) => {
-          client.emit("reload");
+          client.emit("reload", { bundleId });
         });
       },
       100,

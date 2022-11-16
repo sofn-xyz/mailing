@@ -29,7 +29,8 @@ export type PreviewServerOptions = {
 };
 
 export async function linkEmailsDirectory(emailsDir: string) {
-  const dotMailingSrcPath = ".mailing/src";
+  const bundleId = Date.now();
+  const dotMailingSrcPath = process.env.MM_DEV ? "src" : ".mailing/src";
   const dynManifestPath = dotMailingSrcPath + "/moduleManifest.ts";
   const dynFeManifestPath = dotMailingSrcPath + "/feManifest.ts";
   const feManifest = writeFrontendManifest(dynFeManifestPath);
@@ -47,7 +48,8 @@ export async function linkEmailsDirectory(emailsDir: string) {
   // calculate the relative path the user's emailsDir
   // so we can import templates and previews from there
   // when in the context of the build output
-  const relativePathToEmailsDir = posix.relative(dotMailingSrcPath, emailsDir);
+  const relativePathToEmailsDir =
+    "./" + posix.relative(dotMailingSrcPath, emailsDir);
 
   uniquePreviewCollections.forEach((p) => {
     const moduleName = p.replace(/\.[jt]sx/g, "");
@@ -99,6 +101,8 @@ export async function linkEmailsDirectory(emailsDir: string) {
     previewImports,
     previewConsts,
     templateModuleNames,
+    bundleId,
+    mailingConfigPath: "../mailing.config.json",
   });
 
   await writeFile(dynManifestPath, moduleManifestContents);
@@ -109,6 +113,7 @@ export async function linkEmailsDirectory(emailsDir: string) {
   await buildManifest("node", dynManifestPath);
   await lintEmailsDirectory(emailsDir);
   await feManifest; // wait for the frontend manifest to be written
+  return bundleId;
 }
 
 export async function packageJsonVersionsMatch(): Promise<boolean> {
@@ -234,17 +239,24 @@ async function buildManifest(
   await build(buildOpts);
 
   // delete the original .ts file so there is no confusion loading the bundled .js files
-  await remove(manifestPath);
+  // await remove(manifestPath);
   delete require.cache[manifestPath];
   debug(`bundled ${buildType} manifest for ${manifestPath} to ${buildOutdir}`);
 }
 
 async function writeFrontendManifest(toPath: string) {
-  const feManifestContents = (
-    await readFile(
-      ".mailing/src/commands/preview/server/templates/feModuleManifest.template.ejs"
-    )
-  ).toString();
+  const feManifestTemplate = template(
+    (
+      await readFile(
+        ".mailing/src/commands/preview/server/templates/feModuleManifest.template.ejs"
+      )
+    ).toString()
+  );
+
+  const feManifestContents = feManifestTemplate({
+    mailingConfigPath: "../mailing.config.json",
+  });
+
   await writeFile(toPath, feManifestContents);
   await buildManifest("browser", toPath);
 }

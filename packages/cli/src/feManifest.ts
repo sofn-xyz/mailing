@@ -1,5 +1,4 @@
-const config = {};
-
-export { config };
-const manifest = { config };
-export default manifest;
+import config from "../mailing.config.json"; 
+export { config }; 
+const feManifest = { config }; 
+export default feManifest;

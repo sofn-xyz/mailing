@@ -30,7 +30,8 @@ describe("livereload", () => {
     });
 
     it("socket emits 'reload' when a template is touched", (done) => {
-      clientSocket.on("reload", (_arg: any) => {
+      clientSocket.on("reload", (arg: any) => {
+        expect(arg.bundleId).toBeDefined();
         done();
       });
 

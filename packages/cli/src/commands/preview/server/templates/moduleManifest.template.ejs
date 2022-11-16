@@ -1,4 +1,4 @@
-import config from "../../mailing.config.json";
+import config from "<%= mailingConfigPath %>";
 import sendMail from "<%= relativePathToEmailsDir %>";
 
 // template imports
@@ -9,7 +9,8 @@ import sendMail from "<%= relativePathToEmailsDir %>";
 
 const previews = { <%= previewConsts.join(", ") %> };
 const templates = { <%= templateModuleNames.join(", ") %> };
+const bundleId = <%= bundleId %>;
 
-export { sendMail, config, templates, previews };
-const moduleManifest = { sendMail, templates, previews };
+export { sendMail, config, templates, previews, bundleId };
+const moduleManifest = { sendMail, templates, previews, bundleId };
 export default moduleManifest;
