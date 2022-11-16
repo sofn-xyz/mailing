@@ -98,7 +98,12 @@ describe("sendMail", () => {
         const sendMailOpts = {
           ...ApiSendMail.defaultFormData,
           to: email,
-          templateName: "Minimal",
+          templateName: "ResetPassword",
+          props: {
+            name: "Alex",
+            body: "Reset your password",
+            ctaText: "Reset Password",
+          },
           dangerouslyForceDeliver: true,
         };
 
@@ -155,7 +160,12 @@ describe("sendMail", () => {
         const sendMailOpts = {
           ...ApiSendMail.defaultFormData,
           to: email,
-          templateName: "Minimal",
+          templateName: "ResetPassword",
+          props: {
+            name: "Alex",
+            body: "Reset your password",
+            ctaText: "Reset Password",
+          },
           dangerouslyForceDeliver: true,
         };
 

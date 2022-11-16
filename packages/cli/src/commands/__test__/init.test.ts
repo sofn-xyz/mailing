@@ -33,7 +33,6 @@ describe("init command", () => {
       `generated your emails dir at /tmp/src/emails:
 emails
 ├── AccountCreated.tsx
-├── Minimal.tsx
 ├── NewSignIn.tsx
 ├── Reservation.tsx
 ├── ResetPassword.tsx
@@ -47,7 +46,6 @@ emails
 ├── index.ts
 └── previews
     ├── AccountCreated.tsx
-    ├── Minimal.tsx
     ├── NewSignIn.tsx
     ├── Reservation.tsx
     └── ResetPassword.tsx`
@@ -69,7 +67,6 @@ emails
       `generated your emails dir at /tmp/src/emails:
 emails
 ├── AccountCreated.jsx
-├── Minimal.jsx
 ├── NewSignIn.jsx
 ├── Reservation.jsx
 ├── ResetPassword.jsx
@@ -83,7 +80,6 @@ emails
 ├── index.js
 └── previews
     ├── AccountCreated.jsx
-    ├── Minimal.jsx
     ├── NewSignIn.jsx
     ├── Reservation.jsx
     └── ResetPassword.jsx`

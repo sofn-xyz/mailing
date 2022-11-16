@@ -71,7 +71,7 @@ const AccountCreated: React.FC<{ name: string }> = ({ name }) => (
           </MjmlText>
         </MjmlColumn>
       </MjmlSection>
-      <Footer />
+      <Footer includeUnsubscribe />
     </MjmlBody>
   </Mjml>
 );
