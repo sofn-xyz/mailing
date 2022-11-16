@@ -52,6 +52,7 @@ module App
       yarn!
       copy_ci_scripts!
       intialize_mailing!
+      verify_typescript!
     end
 
     def run_mailing
@@ -86,6 +87,25 @@ module App
 
     def verify_package_json_exists!
       raise "missing package.json in #{root_dir}" unless File.exist?(File.join(root_dir, 'package.json'))
+    end
+
+    def verify_typescript!
+      return unless @typescript
+
+      mailing_config_json = File.join(root_dir, 'mailing.config.json')
+      raise 'missing mailing.config.json' unless File.exist?(mailing_config_json)
+
+      json = JSON.parse(File.read(mailing_config_json))
+      return if json['typescript']
+
+      warn <<-STR
+        * * * * * * * * * * * * * * * * *
+        ⚠️ WARNING ⚠️ Expected mailing.config.json to have 'typescript' set to true but it was not!\n
+        In other words, mailing init did not correctly detect that this is a typescript project\n
+        Please implement https://github.com/sofn-xyz/mailing/issues/338 and then have this raise an error instead or move this check to a jest test\n
+        Until #338 is implemented, the e2e tests will override this by passing the --typescript flag to `npx mailing init` in typescript frameworks.
+        * * * * * * * * * * * * * * * * *
+      STR
     end
 
     ## yalc add mailing and mailing-cor to the project
@@ -136,7 +156,14 @@ module App
     def intialize_mailing!
       Dir.chdir(install_dir) do
         puts 'Initializing Mailing'
-        system('MM_E2E=1 npx mailing --quiet --scaffold-only')
+        mailing_cmd = 'MM_E2E=1 npx mailing --quiet --scaffold-only'
+
+        ## Override the typescript flag specified in mailing.config.json
+        ## This should be removed when https://github.com/sofn-xyz/mailing/issues/338 is implemented
+        ## (see warning message above)
+        mailing_cmd += ' --typescript' if @typescript
+
+        system(mailing_cmd)
       end
     end
 

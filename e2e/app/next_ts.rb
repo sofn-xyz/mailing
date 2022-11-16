@@ -5,6 +5,7 @@ require_relative 'base'
 module App
   class NextTs < Base
     def initialize(root_dir, *args)
+      @typescript = true
       super('next_ts', root_dir, *args)
     end
 
