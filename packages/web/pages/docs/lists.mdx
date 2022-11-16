@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 # Mailing Lists
 
 // N.B. In the future this will be a paid feature
@@ -61,11 +63,3 @@ When you go to send your emails using sendMail, Mailing will automatically injec
 ### List members
 
 Subscribers to an individual list are stored in the Member table in the database. The subscriber’s status can be either “subscribed” or “unsubscribed.”
-
-## Setup: Making an API Key
-
-1. **Connect a database**. To use Lists, you’ll need to have deployed mailing and connect it to a postgres database by setting `MAILING_DATABASE_URL` in your deploy environment. We’re happy to do this for you, email peter@campsh.com and we’ll set up a Neon database for you to connect to. Because the API is serverless, it’s important that you use a postgres service that can handle a high number of connections. We reccomend [neon.tech](https://neon.tech).
-2. **Create an account**. Navigate to /signup on your production instance of Mailing and set up a new account. This secures your deployment and will automatically create your Default list and an API key to use /api/sendMail as well. (Note: at the moment, we only allow one user to sign up per instance). If you need to login again in the future, visit /login.
-3. Set env variables in the environment you're using `sendMail` from:
-   - After logging in, you are taken to the /settings page. Make note of the API key that was created and set this as `MAILING_API_KEY`
-   - Set the url of your deployed mailing instance as `MAILING_API_URL`

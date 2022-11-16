@@ -68,8 +68,6 @@ export default function DocsLayout({ children }) {
           <NavLink className="pl-4" href="/docs#cli" active={router.asPath}>
             CLI
           </NavLink>
-
-          <NavCategory>Platform</NavCategory>
           <NavLink
             className="pl-4"
             href="/docs/deploy"
@@ -78,12 +76,29 @@ export default function DocsLayout({ children }) {
           >
             Deploying Mailing
           </NavLink>
+
+          <NavCategory>Platform</NavCategory>
           <NavLink
             className="pl-4"
-            href="/docs/rest-api"
+            href="/docs/platform#0"
+            active={router.asPath}
+            scroll
+          >
+            What’s Platform?
+          </NavLink>
+          <NavLink
+            className="pl-4"
+            href="/docs/platform#pricing"
             active={router.asPath}
           >
-            REST API
+            Pricing
+          </NavLink>
+          <NavLink
+            className="pl-4"
+            href="/docs/platform#getting-started-making-an-api-key"
+            active={router.asPath}
+          >
+            Getting started
           </NavLink>
           <NavLink
             className="pl-4"
@@ -93,16 +108,23 @@ export default function DocsLayout({ children }) {
           >
             Lists
           </NavLink>
-          <NavLink className="pl-4" href="/docs/pricing" active={router.asPath}>
-            Pricing
+
+          <NavCategory>Reference</NavCategory>
+          <NavLink
+            className="pl-4"
+            href="/docs/rest-api"
+            active={router.asPath}
+          >
+            REST API
           </NavLink>
+
           <NavCategory>etc</NavCategory>
           <NavLink
             className="pl-4"
             href="/docs/templates"
             active={router.asPath}
           >
-            Templates
+            Example Templates
           </NavLink>
           <NavLink
             className="pl-4"
