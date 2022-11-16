@@ -48,8 +48,9 @@ export async function linkEmailsDirectory(emailsDir: string) {
   // calculate the relative path the user's emailsDir
   // so we can import templates and previews from there
   // when in the context of the build output
-  const relativePathToEmailsDir =
-    "./" + posix.relative(dotMailingSrcPath, emailsDir);
+  const relativePathToEmailsDir = process.env.MM_DEV
+    ? "./" + posix.relative(dotMailingSrcPath, emailsDir)
+    : posix.relative(dotMailingSrcPath, emailsDir);
 
   uniquePreviewCollections.forEach((p) => {
     const moduleName = p.replace(/\.[jt]sx/g, "");
@@ -87,6 +88,10 @@ export async function linkEmailsDirectory(emailsDir: string) {
     );
   });
 
+  const mailingConfigPath = process.env.MM_DEV
+    ? "../mailing.config.json"
+    : "../../mailing.config.json";
+
   const moduleManifestTemplate = template(
     (
       await readFile(
@@ -102,7 +107,7 @@ export async function linkEmailsDirectory(emailsDir: string) {
     previewConsts,
     templateModuleNames,
     bundleId,
-    mailingConfigPath: "../mailing.config.json",
+    mailingConfigPath,
   });
 
   await writeFile(dynManifestPath, moduleManifestContents);
@@ -239,7 +244,9 @@ async function buildManifest(
   await build(buildOpts);
 
   // delete the original .ts file so there is no confusion loading the bundled .js files
-  // await remove(manifestPath);
+  if (!process.env.MM_DEV) {
+    await remove(manifestPath);
+  }
   delete require.cache[manifestPath];
   debug(`bundled ${buildType} manifest for ${manifestPath} to ${buildOutdir}`);
 }
@@ -252,9 +259,11 @@ async function writeFrontendManifest(toPath: string) {
       )
     ).toString()
   );
-
+  const mailingConfigPath = process.env.MM_DEV
+    ? "../mailing.config.json"
+    : "../../mailing.config.json";
   const feManifestContents = feManifestTemplate({
-    mailingConfigPath: "../mailing.config.json",
+    mailingConfigPath,
   });
 
   await writeFile(toPath, feManifestContents);

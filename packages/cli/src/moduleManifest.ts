@@ -15,7 +15,7 @@ import * as ResetPasswordPreview from "./emails/previews/ResetPassword";
 
 const previews = { AccountCreated: AccountCreatedPreview, NewSignIn: NewSignInPreview, Reservation: ReservationPreview, ResetPassword: ResetPasswordPreview };
 const templates = { AccountCreated, NewSignIn, Reservation, ResetPassword };
-const bundleId = 1668623150986;
+const bundleId = 1668623374711;
 
 export { sendMail, config, templates, previews, bundleId };
 const moduleManifest = { sendMail, templates, previews, bundleId };

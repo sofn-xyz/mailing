@@ -27,6 +27,7 @@ export default function useLiveReload(
 
     socket.on("reload", async ({ bundleId }: { bundleId: number }) => {
       console.info("Reloading...", { bundleId });
+      console.time("reload")
       await waitUntilBundleReady(bundleId);
       onShouldReload(bundleId);
     });
