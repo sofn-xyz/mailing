@@ -31,5 +31,9 @@ export default function useLiveReload(
       await waitUntilBundleReady(bundleId);
       onShouldReload(bundleId);
     });
+  return function cleanupSocket() {
+    socket.off();
+    socket.disconnect();
+  };
   }, [onShouldReload]);
 }
