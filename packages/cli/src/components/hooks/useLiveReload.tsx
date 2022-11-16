@@ -13,5 +13,9 @@ export default function useLiveReload(onShouldReload: () => void) {
       console.info("Reloading...");
       onShouldReload();
     });
+  return function cleanupSocket() {
+    socket.off();
+    socket.disconnect();
+  };
   }, [onShouldReload]);
 }
