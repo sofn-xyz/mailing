@@ -1,14 +1,14 @@
 /*eslint no-constant-condition: ["error", { "checkLoops": false }]*/
 
-import { useEffect } from "react";
-import io from "socket.io-client";
+import { useEffect, useRef } from "react";
+import io, { Socket } from "socket.io-client";
 
 const waitUntilBundleReady = async (bundleId: number) => {
   while (true) {
     const res = await fetch(`/api/bundleId`);
     const json = await res.json();
     if (json.bundleId >= bundleId) {
-      return json.bundleId === bundleId;
+      return;
     }
     console.debug("Waiting for bundle to update", {
       currentBundleId: json.bundleId,
@@ -19,11 +19,16 @@ const waitUntilBundleReady = async (bundleId: number) => {
 };
 
 export default function useLiveReload(onShouldReload: () => void) {
+  const socketRef = useRef<Socket | null>(null);
+
   useEffect(() => {
     // This is required to make navigating between previews work
     onShouldReload();
 
-    const socket = io();
+    if (!socketRef.current) {
+      socketRef.current = io();
+    }
+    const socket = socketRef.current;
 
     socket.on("connect", () => {
       console.debug("Connected to live reload server");
@@ -31,13 +36,12 @@ export default function useLiveReload(onShouldReload: () => void) {
 
     socket.on("reload", async ({ bundleId }: { bundleId: number }) => {
       console.debug("Reloading...", { bundleId });
-      const shouldReload = await waitUntilBundleReady(bundleId);
-      if (shouldReload) onShouldReload();
+      await waitUntilBundleReady(bundleId);
+      onShouldReload();
     });
 
     return function cleanupSocket() {
       socket.off();
-      socket.disconnect();
     };
   }, [onShouldReload]);
 }

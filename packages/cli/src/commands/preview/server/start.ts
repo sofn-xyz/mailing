@@ -78,7 +78,6 @@ export default async function startPreviewServer() {
       }
 
       const parsedUrl = parse(req.url, true);
-      const { pathname, query } = parsedUrl;
 
       // Never cache anything
       res.setHeader(
@@ -102,14 +101,14 @@ export default async function startPreviewServer() {
           log(`${res.statusCode} ${req.url} ${Date.now() - startTime}ms`);
       });
 
+      if (/^\/_+next|^\/api\/bundleId$/.test(req.url)) {
+        noLog = true;
+      }
       try {
         if (req.url === "/intercepts" && req.method === "POST") {
           createIntercept(req, res);
         } else if (/^\/intercepts\/[a-zA-Z0-9]+\.json/.test(req.url)) {
           showIntercept(req, res);
-        } else if (/^\/_+next/.test(req.url)) {
-          noLog = true;
-          await app.render(req, res, `${pathname}`, query);
         } else {
           // static assets in public directory
           await nextHandle(req, res, parsedUrl);
