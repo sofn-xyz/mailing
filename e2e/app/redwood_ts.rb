@@ -5,6 +5,7 @@ require_relative 'base'
 module App
   class RedwoodTs < Base
     def initialize(root_dir, *args)
+      @typescript = true
       super('redwood_ts', root_dir, *args)
     end
 

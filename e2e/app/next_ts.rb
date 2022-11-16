@@ -5,6 +5,7 @@ require_relative 'base'
 module App
   class NextTs < Base
     def initialize(root_dir, *args)
+      @typescript = true
       super('next_ts', root_dir, *args)
     end
 
@@ -12,7 +13,7 @@ module App
 
     def yarn_create!
       Dir.chdir(root_dir) do
-        system_quiet('yarn create next-app . --typescript')
+        system_quiet('yarn create next-app . --typescript --no-eslint')
       end
     end
   end
