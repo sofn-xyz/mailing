@@ -1,5 +1,13 @@
 # mailing
 
+## 0.8.19
+
+### Patch Changes
+
+- 217e98d: Fix livereload for M1 macs
+- Updated dependencies [217e98d]
+  - mailing-core@0.8.19
+
 ## 0.8.18
 
 ### Patch Changes
