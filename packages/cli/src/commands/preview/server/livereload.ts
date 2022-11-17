@@ -35,6 +35,7 @@ export function startChangeWatcher(server: Server, emailsDir: string) {
         debug("reload from change");
         await linkEmailsDirectory(emailsDir);
 
+        await new Promise((resolve) => setTimeout(resolve, 150));
         clients.forEach((client) => {
           client.emit("reload");
         });
