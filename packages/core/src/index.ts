@@ -54,9 +54,9 @@ export function buildSendMail<T>(options: BuildSendMailOptions<T>) {
   const testMode =
     process.env.TEST ||
     process.env.NODE_ENV === "test" ||
-    process.env.MAILING_CI;
+    process.env.MAILING_INTEGRATION_TEST;
 
-  const integrationTestMode = !!process.env.MAILING_CI;
+  const integrationTestMode = !!process.env.MAILING_INTEGRATION_TEST;
 
   if (!options?.transport) {
     throw new Error("buildSendMail options are missing transport");

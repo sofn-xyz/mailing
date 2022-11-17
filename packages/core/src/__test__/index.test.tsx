@@ -348,7 +348,7 @@ describe("index", () => {
 
       beforeAll(() => {
         process.env.MAILING_API_URL = "http://localhost:3883";
-        // testApiKey is a magic string that bypasses the api key check when MAILING_CI is set to true
+        // testApiKey is a magic string that bypasses the api key check when MAILING_INTEGRATION_TEST is set to true
         process.env.MAILING_API_KEY = "testApiKey";
       });
 

@@ -29,7 +29,7 @@
     "ci:web": "cd packages/web && yarn ci:server",
     "test:e2e": "bundle && bundle exec ruby e2e/cli.rb run-all",
     "test:servers:start": "./scripts/assert-free-ports.sh && MAILING_API_KEY=testApiKey MAILING_API_URL=http://localhost:3883 MAILING_DATABASE_URL=$MAILING_DATABASE_URL_TEST WEB_DATABASE_URL=$WEB_DATABASE_URL_TEST start-test ci:cli :3883 ci:web :3000",
-    "integration:servers:start": "MAILING_CI=true yarn test:servers:start",
+    "integration:servers:start": "MAILING_INTEGRATION_TEST=true yarn test:servers:start",
     "prepublish": "yarn build",
     "postinstall": "husky install && preconstruct dev",
     "watch": "preconstruct watch",
