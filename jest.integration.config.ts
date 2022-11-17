@@ -8,7 +8,7 @@ const config: Config = {
   maxConcurrency: 1,
   maxWorkers: 1,
   // TODO: keep testTimeout low and use jest.setTimeout for long ones
-  testTimeout: 60000,
+  testTimeout: 120000,
   transform: {
     "^.+\\.(ts|tsx)$": "ts-jest",
     "^.+\\.(js)$": "babel-jest",
