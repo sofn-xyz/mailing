@@ -17,17 +17,28 @@ type FormState = {
   [key: string]: ListState;
 };
 
-type StatusType = {
+type SoloSubscribeUnsubscribeButtonProps = {
   status: "subscribed" | "unsubscribed";
   onClick: (e: React.MouseEvent<HTMLElement>) => void;
+  disabled: boolean;
 };
 
-const SoloSubscribeUnsubscribeButton = ({ status, onClick }: StatusType) => {
+const SoloSubscribeUnsubscribeButton = ({
+  status,
+  onClick,
+  disabled,
+}: SoloSubscribeUnsubscribeButtonProps) => {
   const text = "subscribed" === status ? "Unsubscribe" : "Re-subscribe";
 
   return (
     <div className="text-center">
-      <Button type="submit" text={text} white onClick={onClick} />
+      <Button
+        type="submit"
+        text={text}
+        white
+        onClick={onClick}
+        disabled={disabled}
+      />
     </div>
   );
 };
@@ -155,11 +166,13 @@ type PatchData = {
 };
 
 const Unsubscribe = (props: UnsubscribeProps) => {
+  const [formSaving, setFormSaving] = useState(false);
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [formState, setFormState] = useState<FormState>(props.initialFormState);
   const { lists, defaultList, defaultMember, memberId, listMembers, email } =
     props;
 
+  // subscribed/unsubscribed for a list changed because of some user action
   const onChange = useCallback(
     (listId: string, isDefaultList: boolean) => {
       return function () {
@@ -196,6 +209,7 @@ const Unsubscribe = (props: UnsubscribeProps) => {
     [formState]
   );
 
+  // serialize the formState data you pass in and send it to the server
   const serializeAndSubmitForm = useCallback(
     async (formState: FormState) => {
       const data = Object.keys(formState).reduce((acc: PatchData, listId) => {
@@ -224,26 +238,31 @@ const Unsubscribe = (props: UnsubscribeProps) => {
         },
         body: JSON.stringify({ data }),
       });
+
+      setFormSubmitted(true);
+      setFormSaving(false);
     },
     [defaultMember.id, listMembers, memberId]
   );
 
+  // the "Subscribe" or "Unsubscribe" button was clicked on the form with only the default list
   const subscribeUnsubscribeButtonClick = useCallback(
     (e: React.MouseEvent<HTMLElement>) => {
       e.preventDefault();
+      setFormSaving(true);
       const newFormState = onChange(defaultList.id, true)();
       serializeAndSubmitForm(newFormState);
     },
     [defaultList.id, onChange, serializeAndSubmitForm]
   );
 
+  // the form was submitted
   const onSubmit = useCallback(
     async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
+      setFormSaving(true);
 
       await serializeAndSubmitForm(formState);
-
-      setFormSubmitted(true);
     },
     [formState, serializeAndSubmitForm]
   );
@@ -311,6 +330,7 @@ const Unsubscribe = (props: UnsubscribeProps) => {
                     subscribedToDefaultList ? "subscribed" : "unsubscribed"
                   }
                   onClick={subscribeUnsubscribeButtonClick}
+                  disabled={formSaving}
                 />
               ) : (
                 <Button white full text="Save" type="submit" />
