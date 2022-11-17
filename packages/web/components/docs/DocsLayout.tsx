@@ -95,7 +95,7 @@ export default function DocsLayout({ children }) {
           </NavLink>
           <NavLink
             className="pl-4"
-            href="/docs/platform#getting-started-making-an-api-key"
+            href="/docs/platform#setup"
             active={router.asPath}
           >
             Setup
