@@ -75,7 +75,7 @@ const nodeConfig = (): Config => {
 const config = async (): Promise<Config> => {
   return {
     reporters: ["default", "github-actions"],
-    testTimeout: 60000,
+    testTimeout: 120000,
     projects: [nodeConfig(), await jsdomConfig()],
   };
 };
