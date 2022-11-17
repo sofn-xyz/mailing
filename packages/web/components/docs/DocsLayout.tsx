@@ -68,14 +68,6 @@ export default function DocsLayout({ children }) {
           <NavLink className="pl-4" href="/docs#cli" active={router.asPath}>
             CLI
           </NavLink>
-          <NavLink
-            className="pl-4"
-            href="/docs/deploy"
-            active={router.asPath}
-            scroll
-          >
-            Deploying Mailing
-          </NavLink>
 
           <NavCategory>Platform [beta]</NavCategory>
           <NavLink
@@ -112,6 +104,14 @@ export default function DocsLayout({ children }) {
           <NavCategory>Reference</NavCategory>
           <NavLink
             className="pl-4"
+            href="/docs/deploy"
+            active={router.asPath}
+            scroll
+          >
+            Deploy
+          </NavLink>
+          <NavLink
+            className="pl-4"
             href="/docs/rest-api"
             active={router.asPath}
           >
@@ -141,11 +141,7 @@ export default function DocsLayout({ children }) {
           >
             Contributing
           </NavLink>
-          <NavLink
-            className="pl-4"
-            href="https://discord.gg/fdSzmY46wY"
-            active={false}
-          >
+          <NavLink className="pl-4" href="/docs/discord" active={false}>
             Discord
           </NavLink>
         </nav>

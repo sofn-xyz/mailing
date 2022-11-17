@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-# Deploying Mailing
+# Deploy
 
 Your Mailing server can be deployed as a production website. The production build excludes development features like livereload and is optimized for performance.
 
@@ -12,6 +12,8 @@ Your Mailing server can be deployed as a production website. The production buil
 - [Coming soon] Analytics
 
 # _[Demo](http://demo.mailing.run/previews/AccountCreated/accountCreated)_
+
+## How to deploy
 
 ### Vercel
 
@@ -33,10 +35,9 @@ Here’s a working Vercel configuration:
 ### Netlify
 
 1. Install the Netlify NextJS plugin: `yarn add @netlify/plugin-nextjs`
-2. Create a `netlify.toml` w/ the plugin enabled:
+2. Create a `netlify.toml` in your project root with the plugin enabled:
 
-```
-# $ cat netlify.toml
+```bash netlify.toml
 [[plugins]]
 package = "@netlify/plugin-nextjs"
 ```
@@ -46,3 +47,45 @@ package = "@netlify/plugin-nextjs"
 ### Other hosts
 
 If you want to deploy somewhere else, you can use `npx mailing server build` to build the production app and `npx mailing server start` to boot it on localhost.
+
+## Adding a Database
+
+Your mailing deploy is a perfectly useful way to view your email previews. But adding a database unlocks another level of functionality.
+
+Adding a database to your Mailing deployment allows you to create an API key and perform priveleged actions. This includes paid Mailing Platform features as well as the ability to use the `sendMail` REST API, a free feature.
+
+### 1. Deploy your Mailing server
+
+See <Link href="/docs/deploy#how-to-deploy">above</Link> if you haven't done this.
+
+### 2. Connect a database
+
+To use Lists, you’ll need to deploy mailing and connect
+it to a postgres database by setting `MAILING_DATABASE_URL`
+in your deploy environment. We recommend [neon.tech](https://neon.tech).
+We’re happy to do this for you, ping in the discord and
+we’ll set up a Neon database for you to connect to.
+Because the API is serverless, it’s important that you use
+a postgres service like neon that can handle a high number of connections.
+
+### 3. Create an account
+
+This secures your database. Navigate to /signup on your production instance of Mailing and set up a new account. This secures your deployment and will automatically create your Default list and an API key to use /api/sendMail as well. (Note: at the moment, we only allow one user to sign up per instance). If you need to login again in the future, visit /login. 4. Configure your clients with the api key. Any app that's calling sendMail is a client.
+
+### 4. Set env variables
+
+Set env variables in the environments you use `sendMail` from:
+
+<CH.Section>
+
+- _`MAILING_API_URL`_ - the url of your deployed mailing instance (e.g. "https://mailing.yourdomain.com")
+- _`MAILING_API_KEY`_ - an api key from `$MAILING_API_URL/settings`
+
+Example .env file:
+
+```bash .env
+MAILING_API_URL=https://mailing.yourdomain.com
+MAILING_API_KEY=yourapikey
+```
+
+</CH.Section>

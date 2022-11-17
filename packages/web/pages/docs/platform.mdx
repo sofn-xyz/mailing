@@ -7,7 +7,7 @@ import Link from "next/link";
 Mailing is free. Mailing Platform is the advanced version with paid features. It requires a deployment, associated database, and API key. It's designed to give you everything you need to send both marketing and transactional emails.
 
 - Analytics (coming soon)
-- Easy unsubscribe
+- Easy unsubscribe links
 - Mailing lists
 - Still Open Source
 - Self-hosted (for now)
@@ -18,38 +18,8 @@ $10/mo. per 100k sends/mo
 
 ## Setup
 
-### 1. Deploy your Mailing server
+To enable Mailing Platform, deploy Mailing and add a database to set up an API key.
 
-See the <Link href="/docs/deploy">deployment guide</Link> if you haven't done this.
+Instructions for doing this can be found in the <Link href="/docs/deploy">deployment guide</Link>.
 
-### 2. Connect a database
-
-To use Lists, you’ll need to deploy mailing and connect
-it to a postgres database by setting `MAILING_DATABASE_URL`
-in your deploy environment. We reccomend [neon.tech](https://neon.tech).
-We’re happy to do this for you, email peter@campsh.com and
-we’ll set up a Neon database for you to connect to.
-Because the API is serverless, it’s important that you use
-a postgres service like neon that can handle a high number of connections.
-
-### 3. Create an account
-
-This secures your database. Navigate to /signup on your production instance of Mailing and set up a new account. This secures your deployment and will automatically create your Default list and an API key to use /api/sendMail as well. (Note: at the moment, we only allow one user to sign up per instance). If you need to login again in the future, visit /login. 4. Configure your clients with the api key. Any app that's calling sendMail is a client.
-
-### 4. Set env variables
-
-Set env variables in the environments you use `sendMail` from:
-
-<CH.Section>
-
-- `MAILING_API_URL` - the url of your deployed mailing instance (e.g. "https://mailing.yourdomain.com")
-- `MAILING_API_KEY` - an api key from `$MAILING_API_URL/settings`
-
-Example .env file:
-
-```bash .env
-MAILING_API_URL=https://mailing.yourdomain.com
-MAILING_API_KEY=yourapikey
-```
-
-</CH.Section>
+Once you're done, you can start using <Link href="/docs/lists">Lists</Link> to allow users to manage subscription preferences.
