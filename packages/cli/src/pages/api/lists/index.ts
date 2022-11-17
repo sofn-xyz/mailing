@@ -5,16 +5,20 @@ import { withSessionAPIRoute } from "src/util/session";
 import { validate, validationErrorResponse } from "../../../util/api/validate";
 import { error } from "../../../util/log";
 
-interface Data {
+type CreateListRequestBody = {
+  name?: string;
+};
+
+type ListApiResponse = {
   error?: string;
   list?: any;
   lists?: any;
-}
+};
 
 async function handleGetLists(
   user: User,
   req: NextApiRequest,
-  res: NextApiResponse<Data>
+  res: NextApiResponse<ListApiResponse>
 ) {
   const lists = await prisma.list.findMany({
     where: { organizationId: user.organizationId },
@@ -25,10 +29,10 @@ async function handleGetLists(
 async function handleCreateList(
   user: User,
   req: NextApiRequest,
-  res: NextApiResponse<Data>
+  res: NextApiResponse<ListApiResponse>
 ) {
   // validate name presence
-  const { name } = req.body;
+  const { name } = req.body as CreateListRequestBody;
 
   if (name) {
     try {
@@ -56,7 +60,7 @@ async function handleCreateList(
 
 const ApiLists = withSessionAPIRoute(async function (
   req: NextApiRequest,
-  res: NextApiResponse<Data>
+  res: NextApiResponse<ListApiResponse>
 ) {
   const validatedRequest = validate(req, { loggedIn: true });
 
