@@ -97,7 +97,7 @@ export function buildSendMail<T>(options: BuildSendMailOptions<T>) {
     // Do not send emails analytics if MAILING_DATABASE_URL is set
     // this means sendMail is being called from the REST API and analytics will be handled there
     const analyticsEnabled =
-      !MAILING_DATABASE_URL && MAILING_API_URL && MAILING_API_KEY;
+      !MAILING_DATABASE_URL && !!MAILING_API_URL && !!MAILING_API_KEY;
 
     // Get html from the rendered component if not provided
     let derivedTemplateName;
