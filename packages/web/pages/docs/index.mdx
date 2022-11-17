@@ -89,7 +89,13 @@ This will send an email with the subject "My First Email" to the `to`, `cc`, and
 
 ## Developing with email previews
 
-Mailing includes a development mode for working on your emails. Running `npx mailing` in dev will boot the preview server on localhost:3883 and show you all previews in `emails/previews`. The previews live reload when files in the emails directory change. Previews are just functions that return one of your emails loaded up with props. We recommend grouping all previews for the same email template in a file at `emails/previews/TemplateName.tsx`.
+Running `npx mailing` will boot the preview server on localhost:3883
+and show you all previews in `emails/previews`. The previews live reload
+when files in the emails directory change. Previews are just functions
+that return one of your emails loaded up with props. You can use them to
+render your templates in different contexts and related templates can be
+grouped in the same preview file. You can make your preview function
+async if you'd like to fetch data inside of it.
 
 For example, here's `emails/previews/AccountCreated.tsx`:
 
@@ -120,6 +126,8 @@ When your email is nice, send it to yourself or your QA tool of choice for final
 ## sendMail
 
 The main API for using mailing from your app is `sendMail`. This function is built on nodemailer's `sendMail` function, so you can pass in any options that nodemailer supports. The main difference is that you pass in a React component instead of an HTML string, the component is rendered to HTML and sent as the email body.
+
+To configure your `sendMail` function, edit the `emails/index.ts` file where it's built and exported. This is where you'll configure your email transport and set your `defaultFrom` address. You can also add any other options that nodemailer supports.
 
 You can also access `sendMail` via the <Link href="/docs/rest-api">REST API</Link>.
 

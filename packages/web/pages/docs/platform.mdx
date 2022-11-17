@@ -22,7 +22,7 @@ $10/mo. per 100k sends/mo
 
 See the <Link href="/docs/deploy">deployment guide</Link> if you haven't done this.
 
-### 2. Connect a database to enable Platform features
+### 2. Connect a database
 
 To use Lists, you’ll need to deploy mailing and connect
 it to a postgres database by setting `MAILING_DATABASE_URL`
@@ -32,9 +32,9 @@ we’ll set up a Neon database for you to connect to.
 Because the API is serverless, it’s important that you use
 a postgres service like neon that can handle a high number of connections.
 
-### 3. Create an account to secure your server
+### 3. Create an account
 
-Navigate to /signup on your production instance of Mailing and set up a new account. This secures your deployment and will automatically create your Default list and an API key to use /api/sendMail as well. (Note: at the moment, we only allow one user to sign up per instance). If you need to login again in the future, visit /login. 4. Configure your clients with the api key. Any app that's calling sendMail is a client.
+This secures your database. Navigate to /signup on your production instance of Mailing and set up a new account. This secures your deployment and will automatically create your Default list and an API key to use /api/sendMail as well. (Note: at the moment, we only allow one user to sign up per instance). If you need to login again in the future, visit /login. 4. Configure your clients with the api key. Any app that's calling sendMail is a client.
 
 ### 4. Set env variables
 
