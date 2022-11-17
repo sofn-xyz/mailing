@@ -23,7 +23,9 @@ describe("lists", () => {
       expect(response.status).toBe(200);
       const data = await response.json();
       expect("lists" in data).toBe(true);
-      expect(data.lists.length).toBe(0);
+
+      // just the default list
+      expect(data.lists.length).toBe(1);
     });
 
     it("POST /lists should 201 and then GET /lists should 200 and include the list", async () => {
@@ -34,11 +36,23 @@ describe("lists", () => {
       expect(getListsResponse.status).toBe(200);
       const data = await getListsResponse.json();
       expect("lists" in data).toBe(true);
-      expect(data.lists.length).toBe(1);
 
-      const newList = data.lists[0];
-      expect(Object.keys(newList)).toEqual(["id", "name", "organizationId"]);
-      expect(newList.name).toBe(formData.name);
+      // the default list plus the new one
+      expect(data.lists.length).toBe(2);
+
+      const newList = data.lists.find(
+        (list: any) => list.name === formData.name
+      );
+      expect(newList).toBeTruthy();
+      expect(Object.keys(newList)).toEqual([
+        "id",
+        "createdAt",
+        "updatedAt",
+        "isDefault",
+        "name",
+        "displayName",
+        "organizationId",
+      ]);
     });
 
     it("POST /lists should validate presence of name", async () => {

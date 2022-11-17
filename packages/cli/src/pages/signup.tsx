@@ -1,9 +1,9 @@
-import FormError from "./components/FormError";
+import FormError from "../components/FormError";
 import type { GetStaticProps, NextPage } from "next";
 import { useCallback, useRef, useState } from "react";
 import prisma from "../../prisma";
-import OutlineButton from "./components/ui/OutlineButton";
-import Input from "./components/ui/Input";
+import OutlineButton from "../components/ui/OutlineButton";
+import Input from "../components/ui/Input";
 import Link from "next/link";
 
 export const getServerSideProps: GetStaticProps = async () => {

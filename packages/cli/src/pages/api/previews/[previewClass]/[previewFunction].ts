@@ -3,7 +3,7 @@ import { error } from "../../../../util/log";
 import { render } from "../../../../util/mjml";
 import { getPreviewComponent } from "../../../../util/moduleManifestUtil";
 
-export default function showPreview(
+export default async function showPreview(
   req: NextApiRequest,
   res: NextApiResponse<ShowPreviewResponseBody>
 ) {
@@ -17,7 +17,10 @@ export default function showPreview(
   }
 
   const cleanpreviewFunction = previewFunction.replace(/\.json$/, "");
-  const component = getPreviewComponent(previewClass, cleanpreviewFunction);
+  const component = await getPreviewComponent(
+    previewClass,
+    cleanpreviewFunction
+  );
 
   if (component?.props) {
     try {

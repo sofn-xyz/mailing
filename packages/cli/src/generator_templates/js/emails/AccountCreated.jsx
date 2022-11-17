@@ -71,7 +71,7 @@ const AccountCreated = ({ name }) => (
           </MjmlText>
         </MjmlColumn>
       </MjmlSection>
-      <Footer />
+      <Footer includeUnsubscribe/>
     </MjmlBody>
   </Mjml>
 );

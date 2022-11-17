@@ -5,6 +5,7 @@ require_relative 'base'
 module App
   class RemixTs < Base
     def initialize(root_dir, *args)
+      @typescript = true
       super('remix_ts', root_dir, *args)
     end
 

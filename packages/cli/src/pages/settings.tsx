@@ -1,7 +1,10 @@
 import { withSessionSsr } from "../util/session";
-import { useState } from "react";
+import { ReactElement, useCallback, useState } from "react";
 import prisma from "../../prisma";
-import type { ApiKey, User } from "../../prisma/generated/client";
+import type { ApiKey, List, User } from "../../prisma/generated/client";
+import OutlineButton from "../components/ui/OutlineButton";
+import Table from "../components/ui/Table";
+import Link from "next/link";
 
 export const getServerSideProps = withSessionSsr<{ user: any }>(
   async function ({ req }) {
@@ -18,22 +21,45 @@ export const getServerSideProps = withSessionSsr<{ user: any }>(
 
     const apiKeys = await prisma.apiKey.findMany({
       where: { organizationId: user.organizationId },
-      select: { id: true, active: true },
+      select: { id: true, active: true, createdAt: true },
+    });
+
+    const lists: List[] = await prisma.list.findMany({
+      where: { organizationId: user.organizationId },
     });
 
     return {
       props: {
         user: req.session.user,
-        apiKeys,
+        apiKeys: JSON.parse(JSON.stringify(apiKeys)),
+        lists: JSON.parse(JSON.stringify(lists)),
       },
     };
   }
 );
 
-function Settings(props: { user: User; apiKeys: ApiKey[] }) {
-  const [apiKeys, setApiKeys] = useState(props.apiKeys);
+interface Props {
+  user: User;
+  apiKeys: ApiKey[];
+  lists: List[];
+}
 
-  const createApiKey = async () => {
+const API_TABLE_HEADERS: (ReactElement | string)[] = [
+  "API Key",
+  "Active",
+  "Date created",
+];
+const LIST_TABLE_HEADERS: (ReactElement | string)[] = [
+  "Name",
+  "Display name",
+  "",
+];
+
+function Settings(props: Props) {
+  const [apiKeys, setApiKeys] = useState(props.apiKeys);
+  const { lists } = props;
+
+  const createApiKey = useCallback(async () => {
     const response = await fetch("/api/apiKeys", {
       method: "POST",
       headers: {
@@ -44,69 +70,70 @@ function Settings(props: { user: User; apiKeys: ApiKey[] }) {
     const json = await response.json();
 
     setApiKeys(apiKeys.concat(json.apiKey));
-  };
-
-  const deleteApiKey = (apiKey: string) => {
-    return () => {
-      console.log(apiKey);
-      // fetch delete api with apiKey;
-      // setApiKeys
-    };
-  };
+  }, [apiKeys]);
 
   return (
     <>
       <div>
-        <div className="w-full h-full">
-          <main className="max-w-3xl mx-auto pt-20 sm:pt-24 lg:pt-32">
-            <div className="grid grid-cols-3 gap-3">
-              <h1 className="col-span-3 text-4xl sm:text-7xl 2xl:text-8xl m-0">
-                Settings
-              </h1>
-
-              <div className="col-span-3">
-                <p>Welcome back {props.user?.email}</p>
+        <div className="w-full">
+          <main className="py-16">
+            <div className="px-8 max-w-2xl mx-auto">
+              <h1 className="font-bold text-3xl mt-0 mb-8">Account</h1>
+              <p className="block leading-none text-sm font-bold text-slate-400 mb-3">
+                Email
+              </p>
+              {props.user?.email}
+            </div>
+            <hr className="my-16 border-dotted border-gray-500 border-top border-bottom-0" />
+            <div className="px-8 max-w-2xl mx-auto ">
+              <div className="mt-16 col-span-3" />
+              <div className="flex mb-8">
+                <h2 className="grow inline-flex text-3xl font-bold">
+                  API Keys
+                </h2>
+                <div className="inline-flex text-right">
+                  <OutlineButton
+                    onClick={createApiKey}
+                    small
+                    text="New API Key"
+                  />
+                </div>
               </div>
-
-              <div className="mt-16 col-span-3"></div>
-              <h2 className="col-span-2 text-3xl">API Keys</h2>
-              <div className="col-span-1 text-right">
-                <button
-                  onClick={createApiKey}
-                  className="text-sm text-green-300 border-emerald-700 border rounded-lg p-[13px]"
-                >
-                  New API Key
-                </button>
+              <div id="api-keys" className="col-span-3">
+                <Table
+                  rows={[API_TABLE_HEADERS].concat(
+                    apiKeys.map((apiKey) => [
+                      apiKey.id,
+                      JSON.stringify(apiKey.active),
+                      apiKey.createdAt
+                        ? new Date(apiKey.createdAt).toLocaleString()
+                        : "",
+                    ])
+                  )}
+                />
+              </div>
+            </div>
+            <hr className="my-16 border-dotted border-gray-500 border-top border-bottom-0" />
+            <div className="px-8 max-w-2xl mx-auto">
+              <div className="flex mb-8">
+                <h2 className="grow inline-flex text-3xl font-bold">Lists</h2>
               </div>
               <div className="col-span-3">
-                <table id="api-keys" className="table-auto w-full">
-                  <thead className="text-xs uppercase text-gray-500 border-t border-slate-300">
-                    <tr>
-                      <td>API Key</td>
-                      <td>Date Added</td>
-                      <td></td>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {apiKeys.map((apiKey) => (
-                      <tr
-                        key={`apikey${apiKey.id}`}
-                        className="divide-y-1 divide-[#555]"
+                <Table
+                  rows={[LIST_TABLE_HEADERS].concat(
+                    lists.map((list) => [
+                      list.name,
+                      list.displayName,
+                      <Link
+                        key={list.id}
+                        href={`/lists/${list.id}/subscribe`}
+                        legacyBehavior
                       >
-                        <td className="py-[7px]">{apiKey.id}</td>
-                        <td>{apiKey.createdAt?.toString()}</td>
-                        <td>
-                          <a
-                            className="text-sm text-red-400 cursor-pointer"
-                            onClick={deleteApiKey(apiKey.id)}
-                          >
-                            Delete
-                          </a>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+                        <a>Subscribe</a>
+                      </Link>,
+                    ])
+                  )}
+                />
               </div>
             </div>
           </main>

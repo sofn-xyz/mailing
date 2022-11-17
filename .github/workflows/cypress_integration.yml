@@ -42,3 +42,11 @@ jobs:
         run: yarn build
       - name: Cypress run integration tests
         run: yarn test:integration:cypress
+      - name: cypress-integration-upload-artifacts
+        uses: actions/upload-artifact@v3
+        if: failure()
+        with:
+          name: cypress-integration-artifacts
+          path: |
+            packages/cli/cypress/screenshots
+            packages/cli/cypress/videos

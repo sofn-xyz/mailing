@@ -1,9 +1,9 @@
 import type { NextPage } from "next";
 import Link from "next/link";
 import { useCallback, useRef, useState } from "react";
-import FormError from "./components/FormError";
-import OutlineButton from "./components/ui/OutlineButton";
-import Input from "./components/ui/Input";
+import FormError from "../components/FormError";
+import OutlineButton from "../components/ui/OutlineButton";
+import Input from "../components/ui/Input";
 
 const Login: NextPage = () => {
   const [errors, setErrors] = useState();

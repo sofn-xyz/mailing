@@ -1,5 +1,21 @@
 # mailing
 
+## 0.8.19
+
+### Patch Changes
+
+- 217e98d: Fix livereload for M1 macs
+- Updated dependencies [217e98d]
+  - mailing-core@0.8.19
+
+## 0.8.18
+
+### Patch Changes
+
+- 31e98b3: add support for async preview functions
+- Updated dependencies [31e98b3]
+  - mailing-core@0.8.18
+
 ## 0.8.17
 
 ### Patch Changes

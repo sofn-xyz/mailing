@@ -3,6 +3,7 @@ import prisma from "../../../../../prisma";
 import { NextApiRequest, NextApiResponse } from "next";
 import { validationErrorResponse } from "src/util/api/validate";
 import { validateMemberStatusInList } from "src/util/api/validateMemberStatusInList";
+import { validate } from "email-validator";
 
 interface Data {
   error?: string;
@@ -17,7 +18,7 @@ async function handleCreateListMember(
 ) {
   const { email, status } = req.body;
 
-  if (!email) {
+  if (!validate(email)) {
     return res.status(422).json({ error: "expected an 'email' field" });
   }
 

@@ -14,7 +14,7 @@ describe("lists/[id]/members", () => {
   });
 
   describe("logged in", () => {
-    let listId: string | undefined;
+    let listId: string;
 
     beforeAll(async () => {
       await apiLogin();
@@ -51,6 +51,16 @@ describe("lists/[id]/members", () => {
       );
 
       expect(createListMemberResponse.status).toBe(422);
+
+      const { response: createListMemberResponse2 } = await apiCreateListMember(
+        listId,
+        {
+          email: "invalid",
+          status: "subscribed",
+        }
+      );
+
+      expect(createListMemberResponse2.status).toBe(422);
     });
 
     it("should 422 when creating a list member with invalid status", async () => {

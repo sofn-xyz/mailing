@@ -9,12 +9,20 @@ interface SendMailFormData {
   };
 }
 
-export async function apiSendMail(apiKey?: string) {
+export async function apiSendMail(apiKey: string | undefined, formData?: any) {
   const instance = new ApiSendMail(apiKey);
+  if (formData) instance.formData = formData;
   return await instance.perform();
 }
 
-class ApiSendMail extends Api<SendMailFormData> {
+export class ApiSendMail extends Api<SendMailFormData> {
+  static defaultFormData: SendMailFormData = {
+    subject: "hello",
+    to: "alex.farrill@gmail.com",
+    templateName: "AccountCreated",
+    props: { name: "Peter" },
+  };
+
   path = "/api/sendMail";
 
   constructor(apiKey?: string) {
@@ -23,10 +31,5 @@ class ApiSendMail extends Api<SendMailFormData> {
     if (apiKey) this.fetchData.headers["X-API-Key"] = apiKey;
   }
 
-  formData = {
-    subject: "hello",
-    to: "peter+sendMailAPI@campsh.com",
-    templateName: "AccountCreated",
-    props: { name: "Peter" },
-  };
+  formData = { ...ApiSendMail.defaultFormData };
 }

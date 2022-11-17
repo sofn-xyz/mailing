@@ -16,7 +16,12 @@ const previews = {
   Reservation: ReservationPreview,
   ResetPassword: ResetPasswordPreview,
 };
-const templates = { AccountCreated, NewSignIn, Reservation, ResetPassword };
+const templates = {
+  AccountCreated,
+  NewSignIn,
+  Reservation,
+  ResetPassword,
+};
 const config = { anonymousId: null };
 
 export { sendMail, config, templates, previews };

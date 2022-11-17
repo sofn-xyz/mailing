@@ -15,7 +15,7 @@ import {
 import registerRequireHooks from "../../util/registerRequireHooks";
 import { bootstrapMailingDir, linkEmailsDirectory } from "./setup";
 import { getConfig } from "../../../util/config";
-import { pollShouldReload, startChangeWatcher } from "./livereload";
+import { startChangeWatcher } from "./livereload";
 
 export default async function startPreviewServer() {
   const { emailsDir, port, quiet } = getConfig();
@@ -103,10 +103,7 @@ export default async function startPreviewServer() {
       });
 
       try {
-        if (/^\/should_reload\.json/.test(req.url)) {
-          noLog = true;
-          pollShouldReload(req, res);
-        } else if (req.url === "/intercepts" && req.method === "POST") {
+        if (req.url === "/intercepts" && req.method === "POST") {
           createIntercept(req, res);
         } else if (/^\/intercepts\/[a-zA-Z0-9]+\.json/.test(req.url)) {
           showIntercept(req, res);
@@ -127,7 +124,8 @@ export default async function startPreviewServer() {
     .listen(port, async () => {
       clearTimeout(loadLag);
       log(`running preview at ${currentUrl}`);
-      if (!quiet && !process.env.MAILING_CI) await open(currentUrl);
+      if (!quiet && !process.env.MAILING_INTEGRATION_TEST)
+        await open(currentUrl);
     })
     .on("error", async function onServerError(e: NodeJS.ErrnoException) {
       if (e.code === "EADDRINUSE") {
@@ -139,7 +137,7 @@ export default async function startPreviewServer() {
       }
     });
 
-  startChangeWatcher(emailsDir);
+  startChangeWatcher(server, emailsDir);
 
   return server;
 }

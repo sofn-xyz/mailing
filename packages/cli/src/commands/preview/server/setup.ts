@@ -1,4 +1,5 @@
-import { resolve, posix, relative } from "path";
+import { resolve, posix, join } from "path";
+import { tmpdir } from "os";
 import { execSync } from "child_process";
 import {
   copy,
@@ -10,6 +11,7 @@ import {
   readFile,
   appendFile,
   readJSONSync,
+  move,
 } from "fs-extra";
 
 import { debug, log } from "../../../util/log";
@@ -156,22 +158,24 @@ export async function bootstrapMailingDir() {
   debug("versions do not match, copying .mailing from", nodeMailingPath);
 
   await rm(mailingPath, { recursive: true, force: true });
-  await mkdir(mailingPath, { recursive: true });
 
   if (process.env.MM_DEV) {
-    // copy directory contents so that it works in packages/cli
-    // otherwise there will be an error because .mailing is in the dir being copied
-    const copies = (await readdir(nodeMailingPath))
-      .filter((path) => !DOT_MAILING_IGNORE_REGEXP.test(path))
-      .map(async (p) =>
-        copy(p, mailingPath + "/" + relative(".", p), {
-          recursive: true,
-          dereference: true,
-          overwrite: true,
-        })
-      );
-    await Promise.all(copies);
+    // copy directory contents via a temp directory intermediary
+    // so that it works in packages/cli, otherwise there will be an
+    // error because .mailing is in the dir being copied
+
+    const tmpDir = join(tmpdir(), `mailing${Date.now()}`);
+
+    await copy(nodeMailingPath, tmpDir, {
+      recursive: true,
+      dereference: true,
+      overwrite: true,
+      filter: (path) => !DOT_MAILING_IGNORE_REGEXP.test(path),
+    });
+
+    await move(tmpDir, mailingPath);
   } else {
+    await mkdir(mailingPath, { recursive: true });
     await copy(nodeMailingPath, mailingPath, {
       recursive: true,
       dereference: true,

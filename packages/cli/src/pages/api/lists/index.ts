@@ -1,8 +1,9 @@
+import type { User } from "prisma/generated/client";
 import { NextApiRequest, NextApiResponse } from "next";
 import prisma from "../../../../prisma";
-import { User } from "prisma/generated/client";
 import { withSessionAPIRoute } from "src/util/session";
 import { validate, validationErrorResponse } from "../../../util/api/validate";
+import { error } from "../../../util/log";
 
 interface Data {
   error?: string;
@@ -27,12 +28,27 @@ async function handleCreateList(
   res: NextApiResponse<Data>
 ) {
   // validate name presence
+  const { name } = req.body;
 
-  if (req.body.name) {
-    const list = await prisma.list.create({
-      data: { name: req.body.name, organizationId: user.organizationId },
-    });
-    return res.status(201).json({ list });
+  if (name) {
+    try {
+      // capitalize the first letter of the list name
+      const displayName = name.charAt(0).toUpperCase() + name.slice(1);
+
+      const list = await prisma.list.create({
+        data: {
+          name,
+          displayName,
+          organizationId: user.organizationId,
+          isDefault: false,
+        },
+      });
+      return res.status(201).json({ list });
+    } catch (e) {
+      // the unique constraint on name might have failed
+      error(e);
+      return res.status(500);
+    }
   } else {
     return res.status(422).json({ error: "name is required" });
   }

@@ -12,15 +12,7 @@ describe("moduleManifestUtil", () => {
 
   it("the original module manifest has a tree of preview components", () => {
     const previews = previewTree();
-    expect(previews).toEqual([
-      ["AccountCreated", ["accountCreated"]],
-      ["NewSignIn", ["newSignIn"]],
-      [
-        "Reservation",
-        ["reservationWithError", "reservationConfirmed", "reservationChanged"],
-      ],
-      ["ResetPassword", ["resetPassword"]],
-    ]);
+    expect(previews).toMatchSnapshot();
   });
 
   it("does not error on empty preview files", () => {
