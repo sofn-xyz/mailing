@@ -3,6 +3,14 @@ describe("unsubscribe page", () => {
     cy.task("db:reset");
   });
 
+  it("should show the right interface for multiple lists", async () => {
+    expect("implement me").to.equal("do it");
+  });
+
+  it("should show the right interface for just the default list", async () => {
+    expect("implement me").to.equal("do it");
+  });
+
   it("should not show the nav", async () => {
     cy.signup();
 
