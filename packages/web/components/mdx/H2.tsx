@@ -27,7 +27,7 @@ export default function H2({ children }: H2Props) {
   }, [router.asPath, anchor]);
 
   return (
-    <h2 id={anchor} className="text-3xl">
+    <h2 id={anchor} className="text-3xl font-medium">
       <a
         href={link}
         className={cx("anchor-link no-underline", {

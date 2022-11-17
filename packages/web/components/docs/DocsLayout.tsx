@@ -31,7 +31,7 @@ export default function DocsLayout({ children }) {
       <div className="max-w-8xl mx-auto px-4 sm:px-6 md:px-8 pb-20">
         <nav className="hidden lg:block fixed z-20 inset-0 top-10 left-[max(0px,calc(50%-45rem))] right-auto w-[19.5rem] pb-10 px-8 overflow-y-auto">
           <NavLink href="/docs#0" active={false}>
-            <h2 className="text-8xl font-bold mb-4">Docs</h2>
+            <h2 className="text-8xl font-medium mb-4">Docs</h2>
           </NavLink>
           <NavCategory>Basics</NavCategory>
           <NavLink className="pl-4" href="/docs#0" active={router.asPath}>
@@ -151,7 +151,7 @@ export default function DocsLayout({ children }) {
         </nav>
         <div className="lg:pl-[19.5rem]">
           <a id="0"></a> {/* anchor for scroll to top */}
-          <main className="prose prose-mailing-dark max-w-3xl mx-auto relative z-20 pt-10 xl:max-w-none">
+          <main className="prose prose-mailing-dark font-medium max-w-3xl mx-auto relative z-20 pt-10 xl:max-w-none">
             <div className="float-right z-40">
               <NavLink href="/" active={false} scroll>
                 Home

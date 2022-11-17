@@ -5,5 +5,9 @@ type H1Props = {
 };
 
 export default function H1({ children }: H1Props) {
-  return <h1 className="text-3xl md:text-7xl lg:text-8xl mb-10">{children}</h1>;
+  return (
+    <h1 className="text-3xl md:text-7xl lg:text-8xl mb-10 font-medium">
+      {children}
+    </h1>
+  );
 }
