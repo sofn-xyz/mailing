@@ -6,6 +6,18 @@ import { execCli } from "./execCli";
 jest.mock("../../util/log");
 
 describe("exportPreviews command", () => {
+  beforeEach(() => {
+    // config file exists
+    jest.spyOn(fsExtra, "existsSync").mockImplementation((_path) => true);
+
+    jest.spyOn(fsExtra, "readJSONSync").mockImplementation(() => ({
+      typescript: true,
+      emailsDir: "./emails",
+      outDir: "./previews_html",
+      anonymousId: "TEST_VALUE",
+    }));
+  });
+
   it("outputs html files to outDir", async () => {
     await handler({
       outDir: "./out",

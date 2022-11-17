@@ -15,7 +15,7 @@ import {
 import registerRequireHooks from "../../util/registerRequireHooks";
 import { bootstrapMailingDir, linkEmailsDirectory } from "./setup";
 import { getConfig } from "../../../util/config";
-import { pollShouldReload, startChangeWatcher } from "./livereload";
+import { startChangeWatcher } from "./livereload";
 
 export default async function startPreviewServer() {
   const { emailsDir, port, quiet } = getConfig();
@@ -103,10 +103,7 @@ export default async function startPreviewServer() {
       });
 
       try {
-        if (/^\/should_reload\.json/.test(req.url)) {
-          noLog = true;
-          pollShouldReload(req, res);
-        } else if (req.url === "/intercepts" && req.method === "POST") {
+        if (req.url === "/intercepts" && req.method === "POST") {
           createIntercept(req, res);
         } else if (/^\/intercepts\/[a-zA-Z0-9]+\.json/.test(req.url)) {
           showIntercept(req, res);
@@ -140,7 +137,7 @@ export default async function startPreviewServer() {
       }
     });
 
-  startChangeWatcher(emailsDir);
+  startChangeWatcher(server, emailsDir);
 
   return server;
 }
