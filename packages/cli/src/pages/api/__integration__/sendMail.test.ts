@@ -83,7 +83,7 @@ describe("sendMail", () => {
     beforeAll(() => {
       // these are setup in the yarn command "integration:servers:start" and the tests assume they are setup like this
       expect(process.env.MAILING_API_URL).toBe("http://localhost:3883");
-      // testApiKey is a magic string that bypasses the api key check when MAILING_CI is set to true
+      // testApiKey is a magic string that bypasses the api key check when MAILING_INTEGRATION_TEST is set to true
       expect(process.env.MAILING_API_KEY).toBe("testApiKey");
     });
 

@@ -32,7 +32,8 @@ export default async function handler(
 
   let organizationId;
 
-  const apiTestMode = process.env.MAILING_CI && "testApiKey" === apiKey;
+  const apiTestMode =
+    process.env.MAILING_INTEGRATION_TEST && "testApiKey" === apiKey;
 
   if (!apiTestMode) {
     try {
