@@ -1,40 +1,55 @@
 import Link from "next/link";
 
-# Mailing Platform
+# Mailing Platform [beta]
 
-Mailing Platform is the advanced version of Mailing with paid features. It requires a deployment, associated database, and API key. It's designed to give you everything you need to send both marketing and transactional emails.
+## The email platform for teams that code.
+
+Mailing is free. Mailing Platform is the advanced version with paid features. It requires a deployment, associated database, and API key. It's designed to give you everything you need to send both marketing and transactional emails.
+
+- Analytics (coming soon)
+- Easy unsubscribe
+- Mailing lists
+- Still Open Source
+- Self-hosted (for now)
 
 ## Pricing
 
-### Mailing Free
+$10/mo. per 100k sends/mo
 
-_Powerful email dev tools, unlimited basic sends_
+## Setup
 
-- Free, unlimited basic sends
-- Hot-reload mjml-react template dev environment
-- Send mail via any transport
-- Self-host previews on vercel
-- 0 lock-in: export to html or take your mjml templates to another platform
-- Themes
+### 1. Deploy your Mailing server
 
-Price: Free
+See the <Link href="/docs/deploy">deployment guide</Link> if you haven't done this.
 
-### Mailing Platform
+### 2. Connect a database to enable Platform features
 
-_Convert more customers with analytics and fine-grained subscription preferences_
+To use Lists, you’ll need to deploy mailing and connect
+it to a postgres database by setting `MAILING_DATABASE_URL`
+in your deploy environment. We reccomend [neon.tech](https://neon.tech).
+We’re happy to do this for you, email peter@campsh.com and
+we’ll set up a Neon database for you to connect to.
+Because the API is serverless, it’s important that you use
+a postgres service like neon that can handle a high number of connections.
 
-- Analytics
-- Easy unsubscribe
-- Mailing lists
+### 3. Create an account to secure your server
 
-Price: $10/mo. for up to 100k premium sends/mo
+Navigate to /signup on your production instance of Mailing and set up a new account. This secures your deployment and will automatically create your Default list and an API key to use /api/sendMail as well. (Note: at the moment, we only allow one user to sign up per instance). If you need to login again in the future, visit /login. 4. Configure your clients with the api key. Any app that's calling sendMail is a client.
 
-A premium send is a send that uses Platform features like <Link href="/docs/lists">Lists</Link> or analytics tracking (coming soon).
+### 4. Set env variables
 
-## Getting started: Making an API Key
+Set env variables in the environments you use `sendMail` from:
 
-1. **Connect a database**. To use Lists, you’ll need to have deployed mailing and connect it to a postgres database by setting `MAILING_DATABASE_URL` in your deploy environment. We’re happy to do this for you, email peter@campsh.com and we’ll set up a Neon database for you to connect to. Because the API is serverless, it’s important that you use a postgres service that can handle a high number of connections. We reccomend [neon.tech](https://neon.tech).
-2. **Create an account**. Navigate to /signup on your production instance of Mailing and set up a new account. This secures your deployment and will automatically create your Default list and an API key to use /api/sendMail as well. (Note: at the moment, we only allow one user to sign up per instance). If you need to login again in the future, visit /login.
-3. Set env variables in the environment you're using `sendMail` from:
-   - After logging in, you are taken to the /settings page. Make note of the API key that was created and set this as `MAILING_API_KEY`
-   - Set the url of your deployed mailing instance as `MAILING_API_URL`
+<CH.Section>
+
+- `MAILING_API_URL` - the url of your deployed mailing instance (e.g. "https://mailing.yourdomain.com")
+- `MAILING_API_KEY` - an api key from `$MAILING_API_URL/settings`
+
+Example .env file:
+
+```bash .env
+MAILING_API_URL=https://mailing.yourdomain.com
+MAILING_API_KEY=yourapikey
+```
+
+</CH.Section>

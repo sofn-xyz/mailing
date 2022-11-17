@@ -77,7 +77,7 @@ export default function DocsLayout({ children }) {
             Deploying Mailing
           </NavLink>
 
-          <NavCategory>Platform</NavCategory>
+          <NavCategory>Platform [beta]</NavCategory>
           <NavLink
             className="pl-4"
             href="/docs/platform#0"
@@ -98,7 +98,7 @@ export default function DocsLayout({ children }) {
             href="/docs/platform#getting-started-making-an-api-key"
             active={router.asPath}
           >
-            Getting started
+            Setup
           </NavLink>
           <NavLink
             className="pl-4"
