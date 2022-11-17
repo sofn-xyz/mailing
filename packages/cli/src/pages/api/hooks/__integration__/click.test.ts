@@ -11,6 +11,7 @@ describe("api/hooks/click", () => {
         templateName: "Test",
       },
     });
+
     const { response } = await apiHookClick({ messageId: message.id });
     expect(response.status).toEqual(200);
 

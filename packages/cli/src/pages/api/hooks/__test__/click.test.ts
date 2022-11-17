@@ -30,11 +30,10 @@ describe("/api/hooks/click", () => {
       jest.spyOn(prisma.click, "upsert").mockImplementation();
       const url = "http://mailing.dev/fun?utm_source=test";
       const messageId = "abcd-1234";
-      const encoded = Buffer.from(url).toString("base64");
       const { req, res } = createMocks({
         method: "GET",
         query: {
-          url: encoded,
+          url,
           messageId: messageId,
         },
       });

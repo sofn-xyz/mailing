@@ -4,6 +4,8 @@ import { genSalt, hash } from "bcrypt";
 
 import prisma from "../../../prisma";
 import { Prisma } from "../../../prisma/generated/client";
+import { withSessionAPIRoute } from "../../util/session";
+import { findOrCreateDefaultList } from "../../util/lists";
 
 type DataError = {
   error: string;
@@ -31,7 +33,10 @@ const ERRORS = {
   emailInvalid: "email is invalid",
 };
 
-const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
+const handler = withSessionAPIRoute(async function (
+  req: NextApiRequest,
+  res: NextApiResponse<Data>
+) {
   if (req.method !== "POST")
     return res.status(405).json({ error: "Method not allowed" });
 
@@ -80,7 +85,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
       if (error.code === "P2002") {
         return res.status(422).json({ error: ERRORS.userWithEmailExists });
       } else {
-        console.error(error);
         return res.status(500).json({ error: ERRORS.unknown });
       }
     }
@@ -91,10 +95,17 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     return res.status(500).json({ error: ERRORS.unknown });
   }
 
+  // log the user into the session
+  req.session.user = user;
+  await req.session.save();
+
   // make an api key for you to use
   await prisma.apiKey.create({ data: { organizationId: organization.id } });
 
+  // make the default list for you to use
+  findOrCreateDefaultList(organization);
+
   res.status(201).end();
-};
+});
 
 export default handler;

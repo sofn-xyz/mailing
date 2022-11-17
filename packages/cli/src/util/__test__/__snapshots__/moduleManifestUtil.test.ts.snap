@@ -1,0 +1,32 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`moduleManifestUtil the original module manifest has a tree of preview components 1`] = `
+[
+  [
+    "AccountCreated",
+    [
+      "accountCreated",
+    ],
+  ],
+  [
+    "NewSignIn",
+    [
+      "newSignIn",
+    ],
+  ],
+  [
+    "Reservation",
+    [
+      "reservationWithError",
+      "reservationConfirmed",
+      "reservationChanged",
+    ],
+  ],
+  [
+    "ResetPassword",
+    [
+      "resetPassword",
+    ],
+  ],
+]
+`;

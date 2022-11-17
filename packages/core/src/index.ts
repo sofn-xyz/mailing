@@ -11,6 +11,8 @@ import instrumentHtml from "./util/instrumentHtml";
 // by the test process.
 const TMP_TEST_FILE = "tmp-testMailQueue.json";
 
+export const EMAIL_PREFERENCES_URL = "MM_EMAIL_PREFERENCES_URL";
+
 export type BuildSendMailOptions<T> = {
   transport: Transporter<T>;
   defaultFrom: string;
@@ -23,6 +25,7 @@ export type ComponentMail = SendMailOptions & {
   forcePreview?: boolean;
   templateName?: string;
   previewName?: string;
+  listName?: string;
 };
 
 export async function getTestMailQueue() {
@@ -51,7 +54,9 @@ export function buildSendMail<T>(options: BuildSendMailOptions<T>) {
   const testMode =
     process.env.TEST ||
     process.env.NODE_ENV === "test" ||
-    process.env.MAILING_CI;
+    process.env.MAILING_INTEGRATION_TEST;
+
+  const integrationTestMode = !!process.env.MAILING_INTEGRATION_TEST;
 
   if (!options?.transport) {
     throw new Error("buildSendMail options are missing transport");
@@ -78,14 +83,14 @@ export function buildSendMail<T>(options: BuildSendMailOptions<T>) {
     if (!mail.html && typeof mail.component === "undefined")
       throw new Error("sendMail requires either html or a component");
 
-    const { NODE_ENV, MAILING_API_URL, MAILING_API_KEY, MAILING_DATABASE_URL } =
-      process.env;
+    const { NODE_ENV, MAILING_API_URL, MAILING_API_KEY } = process.env;
     const {
       component,
       dangerouslyForceDeliver,
       templateName,
       previewName,
       forcePreview,
+      listName,
       ...mailOptions
     } = mail;
     mailOptions as SendMailOptions;
@@ -94,10 +99,7 @@ export function buildSendMail<T>(options: BuildSendMailOptions<T>) {
     const previewMode =
       forcePreview || (NODE_ENV !== "production" && !dangerouslyForceDeliver);
 
-    // Do not send emails analytics if MAILING_DATABASE_URL is set
-    // this means sendMail is being called from the REST API and analytics will be handled there
-    const analyticsEnabled =
-      !MAILING_DATABASE_URL && !!MAILING_API_URL && !!MAILING_API_KEY;
+    const analyticsEnabled = !!(MAILING_API_URL && MAILING_API_KEY);
 
     // Get html from the rendered component if not provided
     let derivedTemplateName;
@@ -110,6 +112,8 @@ export function buildSendMail<T>(options: BuildSendMailOptions<T>) {
       derivedTemplateName = component.type.name;
       mailOptions.html = renderedHtml;
     }
+
+    if (!mailOptions.html) throw new Error("sendMail couldn't find your html");
 
     if (testMode && !dangerouslyForceDeliver) {
       const testMessageQueue = await getTestMailQueue();
@@ -139,55 +143,86 @@ export function buildSendMail<T>(options: BuildSendMailOptions<T>) {
           error(response);
         }
       } catch (e) {
-        error(`Caught error ${e}`);
+        error(`Caught error 1 ${e}`);
         error("Is the mailing preview server running?");
       }
       return;
     }
 
     if (analyticsEnabled) {
-      try {
-        const hookResponse = await fetch(MAILING_API_URL + "/api/messages", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "x-api-key": MAILING_API_KEY,
-          },
-          body: JSON.stringify({
-            anonymousId,
-            templateName: templateName || derivedTemplateName,
-            previewName,
-            mailOptions,
-          }),
-        });
+      // unsubscribe link
+      const emailPrefsRegex = new RegExp(EMAIL_PREFERENCES_URL, "g");
+      let stringHtml = mailOptions.html?.toString();
 
-        if (hookResponse.status === 200) {
-          const {
-            message: { id: messageId },
-          } = await hookResponse.json();
-          const stringHtml = mailOptions.html?.toString();
-          if (stringHtml) {
-            mailOptions.html = instrumentHtml({
-              html: stringHtml,
-              messageId: messageId,
-              apiUrl: MAILING_API_KEY,
-            });
-          }
-        } else {
-          const json = await hookResponse.json();
-          error("Error calling mailing api hook", {
-            status: hookResponse.status,
-            statuSText: hookResponse.statusText,
-            json,
+      const htmlIncludesUnsubscribeLink = emailPrefsRegex.test(stringHtml);
+      if (listName && !htmlIncludesUnsubscribeLink) {
+        // return an error that you must include an unsubscribe link
+        throw new Error(
+          "Templates sent to a list must include an unsubscribe link. Add an unsubscribe link or remove the list parameter from your sendMail call."
+        );
+      }
+
+      const skipUnsubscribeChecks = !htmlIncludesUnsubscribeLink && !listName;
+
+      const url = new URL("/api/messages", MAILING_API_URL).toString();
+
+      const hookResponse = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-api-key": MAILING_API_KEY,
+        },
+        body: JSON.stringify({
+          skipUnsubscribeChecks,
+          anonymousId,
+          templateName: templateName || derivedTemplateName,
+          previewName,
+          ...mailOptions,
+          listName,
+        }),
+      });
+
+      if (hookResponse.status === 200) {
+        const { message, memberId, error } = await hookResponse.json();
+
+        // Don't send to members that are not subscribed to the list
+        if (error) {
+          log("hookResponse returned error", error);
+          return;
+        }
+
+        const messageId = message.id;
+
+        if (stringHtml && memberId) {
+          const emailPrefsUrl = new URL(
+            `unsubscribe/${memberId}`,
+            MAILING_API_URL
+          ).toString();
+
+          stringHtml = stringHtml.replace(emailPrefsRegex, emailPrefsUrl);
+
+          mailOptions.html = instrumentHtml({
+            html: stringHtml,
+            messageId: messageId,
+            apiUrl: MAILING_API_URL,
           });
         }
-      } catch (e) {
-        error(`Caught error ${e}`);
+      } else {
+        const json = await hookResponse.json();
+        error("Error calling mailing api hook", {
+          status: hookResponse.status,
+          statuSText: hookResponse.statusText,
+          json,
+        });
       }
     }
 
-    // Send mail via nodemailer
-    const response = await options.transport.sendMail(mailOptions);
+    // Send mail via nodemailer unless you are in integration tests.
+    // sendMail is not mocked in integration tests, so don't call it at all, it will just fail
+    // because of the invalid transport setting.
+    const response = integrationTestMode
+      ? "delivered!"
+      : await options.transport.sendMail(mailOptions);
     await capture({
       event: "mail sent",
       distinctId: anonymousId,

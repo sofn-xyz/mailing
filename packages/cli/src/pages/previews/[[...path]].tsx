@@ -54,6 +54,20 @@ export const getStaticProps: GetStaticProps = async (context) => {
       };
     }
     preview = render(component);
+  } else if (!previewClass) {
+    let destination = "/previews";
+    const tree = previewTree();
+    const firstPreview = tree[0];
+    if (firstPreview && firstPreview[1]?.length) {
+      destination = `/previews/${firstPreview[0]}/${firstPreview[1][0]}`;
+    }
+
+    return {
+      redirect: {
+        destination,
+        permanent: false,
+      },
+    };
   }
 
   return {

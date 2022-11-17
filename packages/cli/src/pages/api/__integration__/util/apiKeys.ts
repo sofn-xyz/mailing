@@ -1,6 +1,7 @@
 import { Api } from "./index";
-
 import prisma from "../../../../../prisma";
+import { assertIntegrationTestEnv } from "./assertIntegrationTestEnv";
+assertIntegrationTestEnv();
 
 export async function apiCreateApiKey() {
   const instance = new ApiPostApiKeys();
@@ -26,9 +27,19 @@ export async function createApiKey() {
       name: "My Test Co " + Math.random(),
     },
   });
+
   const k = await prisma.apiKey.create({
     data: {
       organizationId: org.id,
+    },
+  });
+
+  await prisma.list.create({
+    data: {
+      organizationId: org.id,
+      isDefault: true,
+      displayName: "Default",
+      name: "default",
     },
   });
   return k.id;

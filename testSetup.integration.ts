@@ -1,7 +1,7 @@
 import { disconnectDatabases, truncateDatabases } from "./testUtilIntegration";
 import chalk from "chalk";
 
-if (!process.env.MAILING_CI) {
+if (!process.env.MAILING_INTEGRATION_TEST) {
   throw new Error(
     chalk.red(
       "Refusing to run outside of CI mode! WARNING: running the integration tests against your development server will cause test data to be inserted into your development database.  To run these tests locally, use `yarn ci:test:integration` instead."

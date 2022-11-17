@@ -17,7 +17,7 @@ export class ApiHookClick extends Api<HookClickFormData> {
   constructor({ messageId }: { messageId?: string } = {}) {
     super();
     this.formData = {
-      url: Buffer.from("http://localhost:3883").toString("base64"),
+      url: "http://localhost:3883",
       messageId,
     };
   }

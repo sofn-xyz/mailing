@@ -124,7 +124,8 @@ export default async function startPreviewServer() {
     .listen(port, async () => {
       clearTimeout(loadLag);
       log(`running preview at ${currentUrl}`);
-      if (!quiet && !process.env.MAILING_CI) await open(currentUrl);
+      if (!quiet && !process.env.MAILING_INTEGRATION_TEST)
+        await open(currentUrl);
     })
     .on("error", async function onServerError(e: NodeJS.ErrnoException) {
       if (e.code === "EADDRINUSE") {

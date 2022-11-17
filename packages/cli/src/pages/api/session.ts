@@ -26,7 +26,7 @@ const handler = withSessionAPIRoute(async function (
   });
 
   if (!user)
-    return res.status(400).json({ error: "no user exists with that email" });
+    return res.status(400).json({ error: "No user exists with that email." });
 
   const authenticated = await compare(plainTextPassword, user.password);
 

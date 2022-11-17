@@ -31,18 +31,4 @@ describe("NavBar", () => {
     });
     expect(previewsLink).toBeVisible();
   });
-
-  describe("development mode", () => {
-    beforeAll(() => {
-      (process.env as any).NODE_ENV = "development";
-    });
-    afterAll(() => {
-      (process.env as any).NODE_ENV = "test";
-    });
-    it("does not render navigation in dev", () => {
-      const { queryByRole } = setup(<NavBar>test</NavBar>);
-      const nav = queryByRole("navigation");
-      expect(nav).toBeNull();
-    });
-  });
 });

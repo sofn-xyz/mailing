@@ -2,6 +2,7 @@ dev-app
 tmp-testMailQueue.json
 dist
 mailing.config.json
+!packages/web/mailing.config.json
 previews_html
 out
 .mailing
@@ -113,6 +114,7 @@ typings/
 emails
 !packages/cli/src/generator_templates/ts/emails/
 !packages/cli/src/generator_templates/js/emails/
+!packages/web/emails
 
 # E2E tests
 e2e/runs

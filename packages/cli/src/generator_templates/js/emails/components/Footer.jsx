@@ -1,7 +1,8 @@
 import { MjmlSection, MjmlColumn, MjmlText } from "mjml-react";
 import { grayDark, textSm } from "./theme";
+import { EMAIL_PREFERENCES_URL } from "mailing-core";
 
-export default function Footer() {
+export default function Footer({ includeUnsubscribe }) {
   return (
     <MjmlSection cssClass="smooth">
       <MjmlColumn>
@@ -12,9 +13,11 @@ export default function Footer() {
           color={grayDark}
         >
           © {new Date().getFullYear()} BookBook&nbsp;&nbsp;·&nbsp;&nbsp;
-          <a href="https://www.mailing.run" target="_blank" rel="noreferrer">
+          {includeUnsubscribe ? (
+            <a href={EMAIL_PREFERENCES_URL} target="_blank" rel="noreferrer">
             Unsubscribe
           </a>
+          ) : null}
         </MjmlText>
       </MjmlColumn>
     </MjmlSection>
