@@ -30,6 +30,7 @@
 declare namespace Cypress {
   interface Chainable {
     signup(): Chainable<void>;
+    subscribeToDefaultList(email: string): Chainable<void>;
   }
 }
 
@@ -44,4 +45,30 @@ Cypress.Commands.add("signup", () => {
   cy.get("button[type=submit]").click();
 
   cy.location("pathname").should("eq", "/settings");
+});
+
+Cypress.Commands.add("subscribeToDefaultList", (email) => {
+  // get the defalt list id from the database
+  cy.request({
+    url: `/api/lists`,
+  }).then((response) => {
+    expect(response.status).to.eq(200);
+    const defaultListId = response.body.lists[0].id;
+    expect(defaultListId).to.be.a("string");
+    cy.wrap(defaultListId).as("defaultListId");
+    // subscribe a user to the default list
+    cy.request({
+      url: `/api/lists/${defaultListId}/subscribe`,
+      method: "POST",
+      body: {
+        email,
+      },
+    }).then((response) => {
+      expect(response.status).to.eq(201);
+      expect(response.body.member).to.have.property("id");
+      const memberId = response.body.member.id;
+      expect(memberId).to.be.a("string");
+      cy.wrap(memberId).as("memberId");
+    });
+  });
 });

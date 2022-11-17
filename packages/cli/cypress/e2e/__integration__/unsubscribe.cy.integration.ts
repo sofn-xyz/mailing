@@ -1,179 +1,119 @@
-describe("unsubscribe page with multiple lists", () => {
-  let anotherListId: string;
-  let listId: string;
-  let memberId: string;
+describe("unsubscribe page", () => {
+  describe("just the default list", () => {
+    beforeEach(() => {
+      const email = "test@test.com";
+      cy.wrap(email).as("email");
 
-  before(() => {
-    const email = "test@test.com";
-    cy.task("db:reset");
-    cy.signup();
+      cy.task("db:reset");
+      cy.signup();
 
-    // get the defalt list id from the database
-    cy.request({
-      url: `/api/lists`,
-    })
-      .then((response) => {
-        expect(response.status).to.eq(200);
+      cy.subscribeToDefaultList(email);
+    });
 
-        listId = response.body.lists[0].id;
-        expect(listId).to.be.a("string");
-      })
-      .then(() => {
-        // subscribe a user to the default list
-        cy.request({
-          url: `/api/lists/${listId}/subscribe`,
-          method: "POST",
-          body: {
-            email,
-          },
-        }).then((response) => {
-          expect(response.status).to.eq(201);
-          expect(response.body.member).to.have.property("id");
-          memberId = response.body.member.id;
+    it("should show the right interface for just the default list", function () {
+      cy.intercept("/api/unsubscribe/*").as("patchUnsubscribe");
+      cy.visit(`/unsubscribe/${this.memberId}`);
+      // it should not show the nav
+      cy.get("nav").should("not.exist");
 
-          expect(memberId).to.be.a("string");
-        });
-      })
-      .then(() => {
-        // create an additional list called anotherList
-        cy.request({
-          url: "/api/lists",
-          method: "POST",
-          body: {
-            name: "anotherList",
-          },
-        })
-          .then((response) => {
-            expect(response.status).to.eq(201);
-            expect(response.body.list).to.have.property("id");
-            cy.log(response.body.list.id);
-            anotherListId = response.body.list.id;
-            expect(anotherListId).to.be.a("string");
-          })
-          .then(() => {
-            // subscribe the same user to anotherList
-            cy.request({
-              url: `/api/lists/${anotherListId}/subscribe`,
-              method: "POST",
-              body: {
-                email,
-              },
-            }).then((response) => {
-              expect(response.status).to.eq(201);
-              expect(response.body.member).to.have.property("id");
-              memberId = response.body.member.id;
+      // if you're subscribed, it should show the unsubscribe button and we click it
+      cy.get("h1").should("contain", "You're subscribed");
+      cy.get("button[type=submit]").should("contain", "Unsubscribe").click();
+      cy.get(".form-success-message").should("contain", "Saved!");
+      cy.wait("@patchUnsubscribe");
 
-              expect(memberId).to.be.a("string");
-            });
-          });
-      });
-  });
+      // if you're unsubscribed, it should show the re-subscribe button and we click it
+      cy.get("h1").should("contain", "You're unsubscribed");
+      cy.get("button[type=submit]").should("contain", "Re-subscribe").click();
+      cy.get(".form-success-message").should("contain", "Saved!");
+      cy.wait("@patchUnsubscribe");
 
-  it("should show the right interface for multiple lists", async () => {
-    cy.visit(`/unsubscribe/${memberId}`);
-    cy.get("h1").should("contain", "Email preferences");
+      // now it should show the subscribed state AND click it again to unsubscribe
+      cy.get("h1").should("contain", "You're subscribed");
+      cy.get("button[type=submit]").should("contain", "Unsubscribe").click();
+      cy.get(".form-success-message").should("contain", "Saved!");
+      cy.wait("@patchUnsubscribe");
 
-    // it should not show the nav
-    cy.get("nav").should("not.exist");
+      // if you reload the page, it should show the unsubscribed state
+      cy.visit(`/unsubscribe/${this.memberId}`);
+      cy.get("h1").should("contain", "You're unsubscribed");
+      cy.get("button[type=submit]").should("contain", "Re-subscribe").click();
+      cy.get(".form-success-message").should("contain", "Saved!");
+      cy.wait("@patchUnsubscribe");
 
-    // check that the user is not unsubscribed
-    cy.get("label").should("have.length", 1);
-    cy.get("label").should("contain", "Unsubscribe from all emails");
-    cy.get("input[type=checkbox]").should("have.length", 1);
-    cy.get("input[type=checkbox]").should("not.be.checked");
-
-    // check the unsubscribe all checkbox
-    cy.get("input[type=checkbox]").check();
-    // click the submit button
-    cy.get("button").click();
-
-    // should see "Saved!" message
-    cy.get("div").should("contain", "Saved!");
-
-    // the user's status should be unsubscribed
-    cy.request({
-      url: `/api/lists/${listId}/members/${memberId}`,
-    }).then((response) => {
-      expect(response.status).to.eq(200);
-      expect(response.body.member.status).to.eq("unsubscribed");
+      // if you reload the page, it should show the subscribed state
+      cy.get("h1").should("contain", "You're subscribed");
+      cy.get("button[type=submit]").should("contain", "Unsubscribe");
+      cy.get(".form-success-message").should("contain", "Saved!");
     });
   });
-});
 
-describe("unsubscribe page with only the default list", () => {
-  let listId: string;
-  let memberId: string;
+  describe("with an additional list", () => {
+    beforeEach(() => {
+      const email = "test@test.com";
+      cy.wrap(email).as("email");
 
-  before(() => {
-    const email = "test@test.com";
+      cy.task("db:reset");
+      cy.signup();
 
-    cy.task("db:reset");
-    cy.signup();
+      cy.subscribeToDefaultList(email);
 
-    // get the defalt list id from the database
-    cy.request({
-      url: `/api/lists`,
-    })
-      .then((response) => {
-        expect(response.status).to.eq(200);
+      // create an additional list called anotherList
+      cy.request({
+        url: "/api/lists",
+        method: "POST",
+        body: {
+          name: "anotherList",
+        },
+      }).then((response) => {
+        expect(response.status).to.eq(201);
+        expect(response.body.list).to.have.property("id");
+        const anotherListId = response.body.list.id;
+        expect(anotherListId).to.be.a("string");
 
-        listId = response.body.lists[0].id;
-        expect(listId).to.be.a("string");
-      })
-      .then(() => {
-        // subscribe a user to the default list
+        cy.wrap(anotherListId).as("anotherListId");
+
+        // subscribe the same user to anotherList
         cy.request({
-          url: `/api/lists/${listId}/subscribe`,
+          url: `/api/lists/${anotherListId}/subscribe`,
           method: "POST",
           body: {
-            email,
+            email: email,
           },
         }).then((response) => {
           expect(response.status).to.eq(201);
           expect(response.body.member).to.have.property("id");
-          memberId = response.body.member.id;
-
+          const memberId = response.body.member.id;
           expect(memberId).to.be.a("string");
+
+          cy.wrap(memberId).as("anotherListMemberId");
         });
       });
-  });
+    });
 
-  it("should show the right interface for just the default list", async () => {
-    cy.intercept("/api/unsubscribe/*").as("patchUnsubscribe");
-
-    cy.visit(`/unsubscribe/${memberId}`);
-
-    // it should not show the nav
-    cy.get("nav").should("not.exist");
-
-    // if you're subscribed, it should show the unsubscribe button and we click it
-    cy.get("h1").should("contain", "You're subscribed");
-    cy.get("button[type=submit]").should("contain", "Unsubscribe").click();
-    cy.get(".form-success-message").should("contain", "Saved!");
-    cy.wait("@patchUnsubscribe");
-
-    // if you're unsubscribed, it should show the re-subscribe button and we click it
-    cy.get("h1").should("contain", "You're unsubscribed");
-    cy.get("button[type=submit]").should("contain", "Re-subscribe").click();
-    cy.get(".form-success-message").should("contain", "Saved!");
-    cy.wait("@patchUnsubscribe");
-
-    // now it should show the subscribed state AND click it again to unsubscribe
-    cy.get("h1").should("contain", "You're subscribed");
-    cy.get("button[type=submit]").should("contain", "Unsubscribe").click();
-    cy.get(".form-success-message").should("contain", "Saved!");
-    cy.wait("@patchUnsubscribe");
-
-    // if you reload the page, it should show the unsubscribed state
-    cy.visit(`/unsubscribe/${memberId}`);
-    cy.get("h1").should("contain", "You're unsubscribed");
-    cy.get("button[type=submit]").should("contain", "Re-subscribe").click();
-    cy.get(".form-success-message").should("contain", "Saved!");
-    cy.wait("@patchUnsubscribe");
-
-    // if you reload the page, it should show the subscribed state
-    cy.get("h1").should("contain", "You're subscribed");
-    cy.get("button[type=submit]").should("contain", "Unsubscribe");
-    cy.get(".form-success-message").should("contain", "Saved!");
+    it("should show the right interface for multiple lists", function () {
+      cy.visit(`/unsubscribe/${this.memberId}`);
+      cy.get("h1").should("contain", "Email preferences");
+      // it should not show the nav
+      cy.get("nav").should("not.exist");
+      // check that the user is not unsubscribed
+      cy.get("label").should("have.length", 1);
+      cy.get("label").should("contain", "Unsubscribe from all emails");
+      cy.get("input[type=checkbox]").should("have.length", 1);
+      cy.get("input[type=checkbox]").should("not.be.checked");
+      // check the unsubscribe all checkbox
+      cy.get("input[type=checkbox]").check();
+      // click the submit button
+      cy.get("button").click();
+      // should see "Saved!" message
+      cy.get("div").should("contain", "Saved!");
+      // the user's status should be unsubscribed
+      cy.request({
+        url: `/api/lists/${this.defaultListId}/members/${this.memberId}`,
+      }).then((response) => {
+        expect(response.status).to.eq(200);
+        expect(response.body.member.status).to.eq("unsubscribed");
+      });
+    });
   });
 });
