@@ -2,7 +2,7 @@ import Head from "next/head";
 import prisma from "../../../prisma";
 import { GetServerSideProps } from "next";
 import type { List, Member } from "../../../prisma/generated/client";
-import { useCallback, useState } from "react";
+import React, { useCallback, useState } from "react";
 import FormSuccess from "../../components/FormSuccess";
 import { remove } from "lodash";
 import Watermark from "../../components/Watermark";
@@ -19,7 +19,7 @@ type FormState = {
 
 type StatusType = {
   status: "subscribed" | "unsubscribed";
-  onClick: () => void;
+  onClick: (e: React.MouseEvent<HTMLElement>) => void;
 };
 
 const SoloSubscribeUnsubscribeButton = ({ status, onClick }: StatusType) => {
@@ -160,39 +160,44 @@ const Unsubscribe = (props: UnsubscribeProps) => {
   const { lists, defaultList, defaultMember, memberId, listMembers, email } =
     props;
 
-  function onChange(listId: string, isDefaultList: boolean) {
-    return function () {
-      let newFormState;
+  const onChange = useCallback(
+    (listId: string, isDefaultList: boolean) => {
+      return function () {
+        let newFormState;
 
-      if (isDefaultList) {
-        // when checking the default list: disable all other lists and check the default list
-        // when unchecking the default list: enable all lists and uncheck the default list
-        newFormState = Object.keys(formState).reduce((acc: FormState, key) => {
-          acc[key] = {
-            enabled: formState[listId].checked ? true : key === listId,
-            checked:
-              key === listId
-                ? !formState[listId].checked
-                : formState[key].checked,
-          } as ListState;
+        if (isDefaultList) {
+          // when checking the default list: disable all other lists and check the default list
+          // when unchecking the default list: enable all lists and uncheck the default list
+          newFormState = Object.keys(formState).reduce(
+            (acc: FormState, key) => {
+              acc[key] = {
+                enabled: formState[listId].checked ? true : key === listId,
+                checked:
+                  key === listId
+                    ? !formState[listId].checked
+                    : formState[key].checked,
+              } as ListState;
 
-          return acc;
-        }, {});
-      } else {
-        newFormState = {
-          ...formState,
-          [listId]: { checked: !formState[listId]["checked"], enabled: true },
-        };
-      }
+              return acc;
+            },
+            {}
+          );
+        } else {
+          newFormState = {
+            ...formState,
+            [listId]: { checked: !formState[listId]["checked"], enabled: true },
+          };
+        }
 
-      setFormState(newFormState);
-    };
-  }
+        setFormState(newFormState);
+        return newFormState;
+      };
+    },
+    [formState]
+  );
 
-  const onSubmit = useCallback(
-    async (e: React.FormEvent<HTMLFormElement>) => {
-      e.preventDefault();
-
+  const serializeAndSubmitForm = useCallback(
+    async (formState: FormState) => {
       const data = Object.keys(formState).reduce((acc: PatchData, listId) => {
         const memberId = listMembers[listId];
 
@@ -219,10 +224,28 @@ const Unsubscribe = (props: UnsubscribeProps) => {
         },
         body: JSON.stringify({ data }),
       });
+    },
+    [defaultMember.id, listMembers, memberId]
+  );
+
+  const subscribeUnsubscribeButtonClick = useCallback(
+    (e: React.MouseEvent<HTMLElement>) => {
+      e.preventDefault();
+      const newFormState = onChange(defaultList.id, true)();
+      serializeAndSubmitForm(newFormState);
+    },
+    [defaultList.id, onChange, serializeAndSubmitForm]
+  );
+
+  const onSubmit = useCallback(
+    async (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+
+      await serializeAndSubmitForm(formState);
 
       setFormSubmitted(true);
     },
-    [formState, memberId, listMembers, defaultMember]
+    [formState, serializeAndSubmitForm]
   );
 
   const defaultListOnly = lists.length === 0;
@@ -287,7 +310,7 @@ const Unsubscribe = (props: UnsubscribeProps) => {
                   status={
                     subscribedToDefaultList ? "subscribed" : "unsubscribed"
                   }
-                  onClick={onChange(defaultList.id, true)}
+                  onClick={subscribeUnsubscribeButtonClick}
                 />
               ) : (
                 <Button white full text="Save" type="submit" />

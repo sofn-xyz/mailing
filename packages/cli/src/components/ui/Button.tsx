@@ -1,11 +1,12 @@
 import Link from "next/link";
 import cx from "classnames";
+import React from "react";
 
 type ButtonProps = {
   text: string;
   href?: string;
   type?: "button" | "submit" | "reset";
-  onClick?: () => void;
+  onClick?: (e: React.MouseEvent<HTMLElement>) => void;
   small?: boolean;
   white?: boolean;
   full?: boolean;

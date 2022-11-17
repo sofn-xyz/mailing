@@ -9,6 +9,8 @@ export default async function unsubscribeMember(
   if ("PATCH" === req.method) {
     const data = req.body.data;
 
+    console.log("data is", data);
+
     // validate statuses are in the list
     const statuses = Object.keys(data).reduce((acc: string[], key) => {
       acc.push(data[key].status);
