@@ -1,8 +1,11 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  variants: {
+    fill: ["hover", "focus"], // this line does the trick
+  },
   extend: {
     fontFamily: {
-      mono: ["Xanh Mono Regular", "ui-monospace", "SFMono-Regular"],
+      mono: ["Xanh Mono", "ui-monospace", "SFMono-Regular"],
     },
     colors: {
       white: "#e4ebfa",

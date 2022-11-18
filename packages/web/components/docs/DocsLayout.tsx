@@ -10,7 +10,7 @@ import IndexButton from "./IndexButton";
 
 function NavCategory({ children }) {
   return (
-    <div className="mt-3 text-base font-medium pt-4 pb-1 text-blue-300">
+    <div className="mt-3 text-base font-medium pt-4 pb-0 text-white">
       {children}
     </div>
   );
@@ -30,7 +30,7 @@ export default function DocsLayout({ children }) {
 
   return (
     <div className="bg-black text-gray-400 min-h-screen">
-      <div className="z-50 bg-black fixed w-full flex justify-between items-middle py-0 text-sm mb-16 px-4 sm:px-8 border-b border-gray-500 text-blue-300 border-dotted">
+      <div className="z-50 bg-black fixed w-full flex justify-between items-middle py-0 text-sm mb-16 px-4 sm:px-6 border-b border-gray-500 text-blue-300 border-dotted">
         <a className="hidden" id="0"></a>
         <div className="brand flex flex-col justify-center py-4">
           <Link href="/">
@@ -57,7 +57,7 @@ export default function DocsLayout({ children }) {
         <div className="hidden sm:flex flex-col justify-center">
           <div>
             <Link
-              className="hover:underline mr-4 text-sm leading-none inline-block"
+              className="underline mr-4 text-sm leading-none inline-block"
               href="/docs"
             >
               Docs
@@ -94,12 +94,46 @@ export default function DocsLayout({ children }) {
       <div className="max-w-8xl mx-auto px-4 sm:px-6 md:px-8 pb-20">
         <nav
           className={cx(
-            "lg:block fixed bg-black w-full z-20 inset-0 top-16 pt-6 left-[max(0px,calc(50%-45rem))] right-auto sm:w-[19.5rem] pb-10 px-8 overflow-y-auto",
+            "lg:block fixed bg-black w-full z-20 inset-0 top-12 left-0 right-auto sm:w-72 pb-10 px-6 overflow-y-auto border-r border-gray-500  border-dotted",
             {
               hidden: !hamburgerOpen,
             }
           )}
         >
+          <h3 className="text-white text-2xl pt-7 mb-3">Docs</h3>
+          <button className="search border text-sm bg-gray-800 border-gray-800 text-slate-500 hover:text-blue w-full transition-all duration-300 text-left rounded-md px-3 pt-1 pb-[5px]">
+            <svg
+              className="fill-slate-500 transition-all duration-300 inline -mt-[3px] mr-2"
+              width="14"
+              height="13.5"
+              viewBox="0 0 14 13.5"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fillRule="evenodd"
+                clipRule="evenodd"
+                d="M9.45006 9.47688C8.63839 10.2818 7.52112 10.7789 6.28772 10.7789C3.80728 10.7789 1.79649 8.76816 1.79649 6.28772C1.79649 3.80728 3.80728 1.79649 6.28772 1.79649C8.76816 1.79649 10.7789 3.80728 10.7789 6.28772C10.7789 7.36243 10.4015 8.34897 9.77187 9.12199C9.71705 9.15678 9.66517 9.19808 9.61734 9.24591C9.54779 9.31546 9.49203 9.39359 9.45006 9.47688ZM10.2617 11.1606C9.1786 12.045 7.7951 12.5754 6.28772 12.5754C2.81511 12.5754 0 9.76033 0 6.28772C0 2.81511 2.81511 0 6.28772 0C9.76033 0 12.5754 2.81511 12.5754 6.28772C12.5754 7.60455 12.1706 8.82684 11.4787 9.83693L14.1086 12.4668C14.4594 12.8176 14.4594 13.3863 14.1086 13.7371C13.7578 14.0879 13.189 14.0879 12.8383 13.7371L10.2617 11.1606Z"
+              />
+            </svg>
+            Quick search
+            <svg
+              className="inline mt-[5px] float-right"
+              width="20"
+              height="10"
+              viewBox="0 0 20 10"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M7.91403 5.83597H7.16403V3.836H7.91403C8.86401 3.836 9.66406 3.03602 9.66406 2.08597C9.66406 1.13591 8.86409 0.335938 7.91403 0.335938C6.96406 0.335938 6.16409 1.13591 6.16409 2.08597V2.83597H4.16412L4.16403 2.08597C4.16403 1.13591 3.36406 0.335938 2.41409 0.335938C1.46403 0.335938 0.664062 1.13591 0.664062 2.08597C0.664062 3.03594 1.46403 3.83591 2.41409 3.83591H3.16409V5.83588L2.41409 5.83597C1.46403 5.83597 0.664062 6.63594 0.664062 7.58591C0.664062 8.53597 1.46403 9.33594 2.41409 9.33594C3.36406 9.33594 4.16412 8.53597 4.16412 7.58591L4.16404 6.83591H6.16401V7.58591C6.16401 8.53588 6.96398 9.33594 7.91404 9.33594C8.86401 9.33594 9.66407 8.53597 9.66407 7.58591C9.66407 6.63594 8.8641 5.83597 7.91404 5.83597L7.91403 5.83597ZM7.16403 2.08597C7.16403 1.68594 7.51409 1.33597 7.91403 1.33597C8.31406 1.33597 8.66403 1.68594 8.66403 2.08597C8.66403 2.48591 8.31406 2.83597 7.91403 2.83597H7.16403V2.08597ZM3.16418 7.58583C3.16418 7.98585 2.81412 8.33583 2.41418 8.33583C2.01415 8.33583 1.66418 7.98585 1.66418 7.58583C1.66418 7.18588 2.01415 6.83583 2.41418 6.83583H3.16418V7.58583ZM2.41418 2.83597C2.01415 2.83597 1.66418 2.48591 1.66418 2.08597C1.66418 1.68594 2.01415 1.33597 2.41418 1.33597C2.81412 1.33597 3.16418 1.68594 3.16418 2.08597V2.83597H2.41418ZM4.16412 5.83597V3.836H6.16409V5.83597H4.16412ZM7.91412 8.33583C7.51409 8.33583 7.16412 7.98585 7.16412 7.58583V6.83583H7.91412C8.31415 6.83583 8.66412 7.1858 8.66412 7.58583C8.66412 7.98585 8.31415 8.33583 7.91412 8.33583Z"
+                fill="#7B7E85"
+              />
+              <path
+                d="M15.8762 4.52405L19.3682 0.456055H17.6402L14.5202 4.26005H14.4962V0.456055H13.0562V9.00006H14.4962V4.88405H14.5202L17.8202 9.00006H19.6802L15.8762 4.52405Z"
+                fill="#7B7E85"
+              />
+            </svg>
+          </button>
           <NavCategory>Basics</NavCategory>
           <NavLink href="/docs#0" active={router.asPath}>
             What’s Mailing?
@@ -164,11 +198,19 @@ export default function DocsLayout({ children }) {
           </NavLink>
         </nav>
         <div className="lg:pl-[20rem]">
-          <main className="prose prose-mailing-dark font-medium text-xl max-w-3xl top-16 pt-12 pb-16 relative z-20">
+          <main className="prose prose-mailing-dark font-medium text-xl max-w-3xl top-10 pt-3 pb-16 relative z-20">
             {children}
           </main>
         </div>
       </div>
+      <style jsx>{`
+        .search:hover svg {
+          fill: #b8ceff;
+        }
+        button:active {
+          transform: translateY(2px);
+        }
+      `}</style>
     </div>
   );
 }

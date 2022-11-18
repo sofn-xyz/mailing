@@ -27,11 +27,11 @@ export default function H2({ children }: H2Props) {
   }, [router.asPath, anchor]);
 
   return (
-    <h2 id={anchor} className="text-5xl font-medium -mt-16 pt-28 mb-10">
+    <h2 id={anchor} className="text-5xl font-medium -mt-12 pt-24 mb-8">
       <a href={link} className={cx("anchor-link no-underline", {})}>
         {children}
         {active && (
-          <span className="text-green-300 pt-[8px] pl-4 absolute text-3xl -left-[56px]">
+          <span className="text-green-300 pt-[9px] pl-4 absolute text-3xl -left-[64px]">
             ●
           </span>
         )}
