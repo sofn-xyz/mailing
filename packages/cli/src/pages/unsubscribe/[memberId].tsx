@@ -337,7 +337,7 @@ const Unsubscribe = (props: UnsubscribeProps) => {
               )}
             </div>
           </form>
-          {formSubmitted ? (
+          {formSubmitted && !formSaving ? (
             <div className="mt-8">
               <FormSuccess>Saved!</FormSuccess>
             </div>
