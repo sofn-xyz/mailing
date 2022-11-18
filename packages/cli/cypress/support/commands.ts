@@ -49,6 +49,11 @@ Cypress.Commands.add("signup", () => {
   cy.location("pathname").should("eq", "/settings");
 });
 
+/* 
+  Assigns aliases:
+  - @defaultListId - the id of the default list
+  - @defaultListMemberId - the id of the default list member
+*/
 Cypress.Commands.add("subscribeToDefaultList", (email) => {
   // get the defalt list id from the database
   cy.request({
@@ -75,6 +80,10 @@ Cypress.Commands.add("subscribeToDefaultList", (email) => {
   });
 });
 
+/* 
+  Assigns alias:
+  - @{listName}Id - the id of the list that was created
+*/
 Cypress.Commands.add("createList", (listName) => {
   cy.request({
     url: "/api/lists",
@@ -87,13 +96,17 @@ Cypress.Commands.add("createList", (listName) => {
     expect(response.body.list).to.have.property("id");
 
     cy.wrap(response.body.list.id, { timeout: 0 })
-      .as(listName)
+      .as(`${listName}Id`)
       .should("be.a", "string");
   });
 });
 
+/* 
+  Assigns alias:
+  - @{listName}MemberId - the id of the list member that was created
+*/
 Cypress.Commands.add("subscribe", (email, listName) => {
-  cy.get(`@${listName}`).then((listId) => {
+  cy.get(`@${listName}Id`).then((listId) => {
     expect(listId).to.be.a("string");
 
     cy.request({
