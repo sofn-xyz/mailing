@@ -32,7 +32,7 @@ export default function DocsLayout({ children }) {
     <div className="bg-black text-gray-400 min-h-screen">
       <div className="z-50 bg-black fixed w-full flex justify-between items-middle py-0 text-sm mb-16 px-4 sm:px-8 border-b border-gray-500 text-blue-300 border-dotted">
         <a className="hidden" id="0"></a>
-        <div className="brand py-4 sm:py-6">
+        <div className="brand flex flex-col justify-center py-4">
           <Link href="/">
             <span className="hidden sm:block">
               <Image
@@ -54,35 +54,37 @@ export default function DocsLayout({ children }) {
             </span>
           </Link>
         </div>
-        <div className="hidden sm:block py-6">
-          <Link
-            className="hover:underline mr-4 text-sm leading-none inline-block"
-            href="/docs"
-          >
-            Docs
-          </Link>
-          <a
-            className="hover:underline mr-4 text-sm leading-none inline-block"
-            href="https://discord.gg/fdSzmY46wY"
-            target="blank"
-          >
-            Discord
-          </a>
-          <a
-            className="hover:underline mr-4 text-sm leading-none inline-block"
-            href="https://demo.mailing.run"
-          >
-            Demo
-          </a>
-          <a
-            className="text-sm leading-none hover:underline"
-            href="https://github.com/sofn-xyz/mailing"
-            target="blank"
-          >
-            GitHub
-          </a>
+        <div className="hidden sm:flex flex-col justify-center">
+          <div>
+            <Link
+              className="hover:underline mr-4 text-sm leading-none inline-block"
+              href="/docs"
+            >
+              Docs
+            </Link>
+            <a
+              className="hover:underline mr-4 text-sm leading-none inline-block"
+              href="https://discord.gg/fdSzmY46wY"
+              target="blank"
+            >
+              Discord
+            </a>
+            <a
+              className="hover:underline mr-4 text-sm leading-none inline-block"
+              href="https://demo.mailing.run"
+            >
+              Demo
+            </a>
+            <a
+              className="text-sm leading-none hover:underline"
+              href="https://github.com/sofn-xyz/mailing"
+              target="blank"
+            >
+              GitHub
+            </a>
+          </div>
         </div>
-        <div className="sm:hidden">
+        <div className="sm:hidden flex flex-col justify-center">
           <IndexButton
             isOpen={hamburgerOpen}
             onClick={() => setHamburgerOpen((v) => !v)}
