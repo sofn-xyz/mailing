@@ -1,6 +1,9 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   extend: {
+    fontFamily: {
+      mono: ["Xanh Mono Regular", "ui-monospace", "SFMono-Regular"],
+    },
     colors: {
       white: "#e4ebfa",
       "gray-300": "#ccc",

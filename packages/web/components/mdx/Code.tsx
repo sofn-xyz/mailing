@@ -5,5 +5,5 @@ type CodeProps = {
 };
 
 export default function Code({ children }: CodeProps) {
-  return <code className="text-amber-200 font-normal">{children}</code>;
+  return <code className="mono text-amber-200 font-normal">{children}</code>;
 }
