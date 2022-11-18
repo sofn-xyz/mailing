@@ -183,6 +183,36 @@ describe("unsubscribe page", () => {
         expect(response.status).to.eq(200);
         expect(response.body.member.status).to.eq("subscribed");
       });
+
+      // uncheck the "anotherList" checkbox
+      cy.get("@anotherListLabel").click();
+
+      // the "anotherList" checkbox should be unchecked
+      cy.get("@anotherListLabel")
+        .siblings("input[type=checkbox]")
+        .should("not.be.checked");
+
+      // submit the form
+      cy.get("button[type=submit]").contains("Save").click();
+
+      // should see "Saved!" message
+      cy.get(".form-success-message").should("contain", "Saved!");
+
+      // the user's status on "anotherList" should be unsubscribed
+      cy.request({
+        url: `/api/lists/${anotherListId}/members/${anotherListMemberId}`,
+      }).then((response) => {
+        expect(response.status).to.eq(200);
+        expect(response.body.member.status).to.eq("unsubscribed");
+      });
+
+      // the user's status on the default list should still be subscribed
+      cy.request({
+        url: `/api/lists/${defaultListId}/members/${defaultListMemberId}`,
+      }).then((response) => {
+        expect(response.status).to.eq(200);
+        expect(response.body.member.status).to.eq("subscribed");
+      });
     });
   });
 });
