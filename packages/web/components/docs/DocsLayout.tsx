@@ -159,7 +159,7 @@ export default function DocsLayout({ children }) {
 
           <NavCategory>
             Platform{" "}
-            <span className="pl-1 text-xs uppercase text-green-300">Beta</span>
+            <span className="pl-1 text-xs uppercase text-green-200">Beta</span>
           </NavCategory>
           <NavLink href="/docs/platform#0" active={router.asPath} scroll>
             What’s Platform?

@@ -31,7 +31,7 @@ export default function H2({ children }: H2Props) {
       <a href={link} className={cx("anchor-link no-underline", {})}>
         {children}
         {active && (
-          <span className="text-green-300 pt-[9px] pl-4 absolute text-3xl -left-[64px]">
+          <span className="text-green-200 pt-[9px] pl-4 absolute text-3xl -left-[64px]">
             ●
           </span>
         )}
