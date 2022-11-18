@@ -6,6 +6,7 @@ import cx from "classnames";
 
 import "@code-hike/mdx/dist/index.css";
 import NavLink from "./NavLink";
+import IndexButton from "./IndexButton";
 
 function NavCategory({ children }) {
   return (
@@ -85,15 +86,13 @@ export default function DocsLayout({ children }) {
       <div className="max-w-8xl mx-auto px-4 sm:px-6 md:px-8 pb-20">
         <nav
           className={cx(
-            "lg:block fixed z-20 inset-0 top-16 left-[max(0px,calc(50%-45rem))] right-auto w-[19.5rem] pb-10 px-8 overflow-y-auto",
+            "hidden lg:block fixed z-20 inset-0 top-16 pt-6 left-[max(0px,calc(50%-45rem))] right-auto w-[19.5rem] pb-10 px-8 overflow-y-auto",
             {
               hidden: !hamburgerOpen,
             }
           )}
         >
-          <NavLink href="/docs#0" active={false}>
-            <h2 className="text-8xl font-medium mb-4">Docs</h2>
-          </NavLink>
+          <IndexButton open={hamburgerOpen} setOpen={setHamburgerOpen} />
           <NavCategory>Basics</NavCategory>
           <NavLink href="/docs#0" active={router.asPath}>
             What’s Mailing?
