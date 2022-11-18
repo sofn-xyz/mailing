@@ -17,7 +17,8 @@ export default function DocsLink({
   className,
   scroll,
 }: NavLinkProps) {
-  const isActive = active === href || active === href + "/";
+  const isActive =
+    active === href || active === href + "/" || active + "#0" === href;
   const [showActive, setShowActive] = useState(false);
 
   useEffect(() => {

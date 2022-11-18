@@ -1,7 +1,8 @@
 import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import cx from "classnames";
 
 import "@code-hike/mdx/dist/index.css";
 import NavLink from "./NavLink";
@@ -16,15 +17,13 @@ function NavCategory({ children }) {
 
 export default function DocsLayout({ children }) {
   const router = useRouter();
+  const [hamburgerOpen, setHamburgerOpen] = useState(false);
 
   useEffect(() => {
-    if (document) {
-      document.body.classList.add("bg-black");
-    }
-    return () => {
-      if (document) {
-        document.body.classList.remove("bg-black");
-      }
+    const bodyClass = "bg-black";
+    document?.body.classList.add(bodyClass);
+    return function cleanupBodyClass() {
+      document?.body.classList.remove(bodyClass);
     };
   }, []);
 
@@ -84,7 +83,17 @@ export default function DocsLayout({ children }) {
         </div>
       </div>
       <div className="max-w-8xl mx-auto px-4 sm:px-6 md:px-8 pb-20">
-        <nav className="hidden lg:block fixed z-20 inset-0 top-16 pt-6 left-[max(0px,calc(50%-45rem))] right-auto w-[19.5rem] pb-10 px-8 overflow-y-auto">
+        <nav
+          className={cx(
+            "lg:block fixed z-20 inset-0 top-16 left-[max(0px,calc(50%-45rem))] right-auto w-[19.5rem] pb-10 px-8 overflow-y-auto",
+            {
+              hidden: !hamburgerOpen,
+            }
+          )}
+        >
+          <NavLink href="/docs#0" active={false}>
+            <h2 className="text-8xl font-medium mb-4">Docs</h2>
+          </NavLink>
           <NavCategory>Basics</NavCategory>
           <NavLink href="/docs#0" active={router.asPath}>
             What’s Mailing?
