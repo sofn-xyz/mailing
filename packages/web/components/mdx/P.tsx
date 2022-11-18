@@ -5,5 +5,7 @@ type PProps = {
 };
 
 export default function P({ children }: PProps) {
-  return <p className="leading-relaxed font-normal">{children}</p>;
+  return (
+    <p className="leading-relaxed font-normal text-blue-300">{children}</p>
+  );
 }
