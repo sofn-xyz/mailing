@@ -6,7 +6,7 @@ describe("signup and authenticate", () => {
     cy.task("db:reset");
   });
 
-  it("should be able to signup, login, and everything else", () => {
+  it("should be able to signup, login, logout, and everything else", () => {
     cy.visit("/signup");
     cy.location("pathname").should("eq", "/signup");
 

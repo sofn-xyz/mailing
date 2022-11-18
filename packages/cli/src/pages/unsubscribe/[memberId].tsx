@@ -333,7 +333,13 @@ const Unsubscribe = (props: UnsubscribeProps) => {
                   disabled={formSaving}
                 />
               ) : (
-                <Button white full text="Save" type="submit" />
+                <Button
+                  white
+                  full
+                  text="Save"
+                  type="submit"
+                  disabled={formSaving}
+                />
               )}
             </div>
           </form>

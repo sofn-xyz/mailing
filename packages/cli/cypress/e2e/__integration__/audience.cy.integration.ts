@@ -1,11 +1,10 @@
 describe("audience", () => {
-  before(() => {
+  beforeEach(() => {
     cy.task("db:reset");
+    cy.signup();
   });
 
   it("should show subscribers on the /audiences page", () => {
-    cy.signup();
-
     // subscribe a user to the default list
     cy.visit("/settings");
     cy.get("a").contains("Subscribe").click();
