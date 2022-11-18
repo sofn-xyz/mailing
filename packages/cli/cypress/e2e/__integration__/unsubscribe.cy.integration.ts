@@ -10,7 +10,6 @@ describe("unsubscribe page", () => {
 
     it("should show the right interface for just the default list", function () {
       cy.get("@defaultListMemberId").then((defaultListMemberId) => {
-        cy.intercept("/api/unsubscribe/*").as("patchUnsubscribe");
         cy.visit(`/unsubscribe/${defaultListMemberId}`);
         // it should not show the nav
         cy.get("nav").should("not.exist");
@@ -19,26 +18,22 @@ describe("unsubscribe page", () => {
         cy.get("h1").should("contain", "You're subscribed");
         cy.get("button[type=submit]").should("contain", "Unsubscribe").click();
         cy.get(".form-success-message").should("contain", "Saved!");
-        cy.wait("@patchUnsubscribe");
 
         // if you're unsubscribed, it should show the re-subscribe button and we click it
         cy.get("h1").should("contain", "You're unsubscribed");
         cy.get("button[type=submit]").should("contain", "Re-subscribe").click();
         cy.get(".form-success-message").should("contain", "Saved!");
-        cy.wait("@patchUnsubscribe");
 
         // now it should show the subscribed state AND click it again to unsubscribe
         cy.get("h1").should("contain", "You're subscribed");
         cy.get("button[type=submit]").should("contain", "Unsubscribe").click();
         cy.get(".form-success-message").should("contain", "Saved!");
-        cy.wait("@patchUnsubscribe");
 
         // if you reload the page, it should show the unsubscribed state
         cy.visit(`/unsubscribe/${defaultListMemberId}`);
         cy.get("h1").should("contain", "You're unsubscribed");
         cy.get("button[type=submit]").should("contain", "Re-subscribe").click();
         cy.get(".form-success-message").should("contain", "Saved!");
-        cy.wait("@patchUnsubscribe");
 
         // if you reload the page, it should show the subscribed state
         cy.get("h1").should("contain", "You're subscribed");
