@@ -105,13 +105,12 @@ const Home: NextPage = () => {
                   >
                     Demo
                   </a>
-                  <a
-                    className="text-black dark:text-white leading-none ml-4 px-4 h-9 inline-flex items-center rounded-2xl border-2 border-black dark:border-white hover:underline"
-                    href="https://github.com/sofn-xyz/mailing"
-                    target="blank"
+                  <Link
+                    className="hidden sm:inline-flex text-black dark:text-white leading-none ml-4 px-4 h-9 items-center rounded-2xl border-2 border-black dark:border-white hover:underline"
+                    href="/docs#getting-started"
                   >
                     Get Started
-                  </a>
+                  </Link>
                 </div>
               </div>
               <div className="flex flex-col lg:flex-row justify-between md:items-center pt-6 pb-12">
@@ -129,13 +128,12 @@ const Home: NextPage = () => {
                     An open source email development tool
                   </p>
                   <div id={styles.cta}>
-                    <a
+                    <Link
                       className="bg-blue-400 text-black text-xl leading-none px-8 h-16 inline-flex items-center rounded-2xl hover:underline mx-auto"
-                      href="https://github.com/sofn-xyz/mailing"
-                      target="blank"
+                      href="/docs#getting-started"
                     >
-                      Get Started on GitHub
-                    </a>
+                      Get Started
+                    </Link>
                   </div>
                 </div>
                 <div

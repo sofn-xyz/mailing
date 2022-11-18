@@ -29,16 +29,30 @@ export default function DocsLink({
   }, [isActive, showActive]);
 
   return (
-    <div className="relative">
-      <div className="absolute left-0 -top-px">{showActive && "|"}</div>
+    <div className="relative leading-none my-3">
       <Link
         href={href}
-        className={cx("block text-white hover:text-blue-600", className)}
+        className={cx(
+          "hover:text-white inline-block text-base leading-none font-normal",
+          className,
+          {
+            "text-white font-medium": isActive,
+            "text-slate-500": !isActive,
+          }
+        )}
         scroll={!!scroll}
         shallow={true}
         aria-selected={isActive}
       >
-        {children}
+        <span
+          className={cx("pr-2", {
+            "text-green-300": isActive,
+            "text-gray-500": !isActive,
+          })}
+        >
+          ●
+        </span>
+        <span className="hover:underline">{children}</span>
       </Link>
     </div>
   );
