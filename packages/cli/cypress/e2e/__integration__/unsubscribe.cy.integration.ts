@@ -8,7 +8,7 @@ describe("unsubscribe page", () => {
       cy.subscribeToDefaultList(email);
     });
 
-    it("should show the right interface for just the default list", function () {
+    it("should show the checkbox interface for just the default list", function () {
       cy.get("@defaultListMemberId").then((defaultListMemberId) => {
         cy.visit(`/unsubscribe/${defaultListMemberId}`);
         // it should not show the nav
