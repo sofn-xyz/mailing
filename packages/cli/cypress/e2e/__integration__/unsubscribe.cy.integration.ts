@@ -2,7 +2,6 @@ describe("unsubscribe page", () => {
   describe("just the default list", () => {
     beforeEach(() => {
       const email = "test@test.com";
-      cy.wrap(email).as("email");
 
       cy.task("db:reset");
       cy.signup();
@@ -68,10 +67,12 @@ describe("unsubscribe page", () => {
       }).then((response) => {
         expect(response.status).to.eq(201);
         expect(response.body.list).to.have.property("id");
-        const anotherListId = response.body.list.id;
-        expect(anotherListId).to.be.a("string");
 
-        cy.wrap(anotherListId).as("anotherListId");
+        const anotherListId = response.body.list.id;
+
+        cy.wrap(anotherListId, { timeout: 0 })
+          .as("anotherListId")
+          .should("be.a", "string");
 
         // subscribe the same user to anotherList
         cy.request({
@@ -83,10 +84,10 @@ describe("unsubscribe page", () => {
         }).then((response) => {
           expect(response.status).to.eq(201);
           expect(response.body.member).to.have.property("id");
-          const memberId = response.body.member.id;
-          expect(memberId).to.be.a("string");
 
-          cy.wrap(memberId).as("anotherListMemberId");
+          cy.wrap(response.body.member.id, { timeout: 0 })
+            .as("anotherListMemberId")
+            .should("be.a", "string");
         });
       });
     });
