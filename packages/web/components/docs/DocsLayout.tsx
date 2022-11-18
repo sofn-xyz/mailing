@@ -6,6 +6,7 @@ import cx from "classnames";
 
 import "@code-hike/mdx/dist/index.css";
 import NavLink from "./NavLink";
+import IndexButton from "./IndexButton";
 
 function NavCategory({ children }) {
   return (
@@ -29,9 +30,9 @@ export default function DocsLayout({ children }) {
 
   return (
     <div className="bg-black text-gray-400 min-h-screen">
-      <div className="z-50 bg-black fixed w-full flex justify-between items-middle py-6 text-sm mb-16 px-4 sm:px-8 border-b border-gray-500 text-blue-300 border-dotted">
+      <div className="z-50 bg-black fixed w-full flex justify-between items-middle py-0 text-sm mb-16 px-4 sm:px-8 border-b border-gray-500 text-blue-300 border-dotted">
         <a className="hidden" id="0"></a>
-        <div className="brand">
+        <div className="brand flex flex-col justify-center py-4">
           <Link href="/">
             <span className="hidden sm:block">
               <Image
@@ -53,47 +54,52 @@ export default function DocsLayout({ children }) {
             </span>
           </Link>
         </div>
-        <div>
-          <Link
-            className="hover:underline mr-4 text-sm leading-none inline-block"
-            href="/docs"
-          >
-            Docs
-          </Link>
-          <a
-            className="hover:underline mr-4 text-sm leading-none inline-block"
-            href="https://discord.gg/fdSzmY46wY"
-            target="blank"
-          >
-            Discord
-          </a>
-          <a
-            className="hover:underline mr-4 text-sm leading-none inline-block"
-            href="https://demo.mailing.run"
-          >
-            Demo
-          </a>
-          <a
-            className="text-sm leading-none hover:underline"
-            href="https://github.com/sofn-xyz/mailing"
-            target="blank"
-          >
-            GitHub
-          </a>
+        <div className="hidden sm:flex flex-col justify-center">
+          <div>
+            <Link
+              className="hover:underline mr-4 text-sm leading-none inline-block"
+              href="/docs"
+            >
+              Docs
+            </Link>
+            <a
+              className="hover:underline mr-4 text-sm leading-none inline-block"
+              href="https://discord.gg/fdSzmY46wY"
+              target="blank"
+            >
+              Discord
+            </a>
+            <a
+              className="hover:underline mr-4 text-sm leading-none inline-block"
+              href="https://demo.mailing.run"
+            >
+              Demo
+            </a>
+            <a
+              className="text-sm leading-none hover:underline"
+              href="https://github.com/sofn-xyz/mailing"
+              target="blank"
+            >
+              GitHub
+            </a>
+          </div>
+        </div>
+        <div className="sm:hidden flex flex-col justify-center">
+          <IndexButton
+            isOpen={hamburgerOpen}
+            onClick={() => setHamburgerOpen((v) => !v)}
+          />
         </div>
       </div>
       <div className="max-w-8xl mx-auto px-4 sm:px-6 md:px-8 pb-20">
         <nav
           className={cx(
-            "lg:block fixed z-20 inset-0 top-16 left-[max(0px,calc(50%-45rem))] right-auto w-[19.5rem] pb-10 px-8 overflow-y-auto",
+            "lg:block fixed bg-black w-full z-20 inset-0 top-16 pt-6 left-[max(0px,calc(50%-45rem))] right-auto sm:w-[19.5rem] pb-10 px-8 overflow-y-auto",
             {
               hidden: !hamburgerOpen,
             }
           )}
         >
-          <NavLink href="/docs#0" active={false}>
-            <h2 className="text-8xl font-medium mb-4">Docs</h2>
-          </NavLink>
           <NavCategory>Basics</NavCategory>
           <NavLink href="/docs#0" active={router.asPath}>
             What’s Mailing?
@@ -158,7 +164,7 @@ export default function DocsLayout({ children }) {
           </NavLink>
         </nav>
         <div className="lg:pl-[20rem]">
-          <main className="prose prose-mailing-dark font-medium text-xl max-w-3xl top-16 pt-12 pb-16 relative z-20">
+          <main className="prose prose-mailing-dark font-medium text-xl max-w-3xl top-16 pt-12 pb-16 relative z-10">
             {children}
           </main>
         </div>
