@@ -156,6 +156,9 @@ export default function DocsLayout({ children }) {
           <NavLink href="/docs#cli" active={router.asPath}>
             CLI
           </NavLink>
+          <NavLink href="/docs/deploy" active={router.asPath} scroll>
+            Deploy
+          </NavLink>
 
           <NavCategory>
             Platform{" "}
@@ -175,14 +178,10 @@ export default function DocsLayout({ children }) {
           </NavLink>
 
           <NavCategory>Reference</NavCategory>
-          <NavLink href="/docs/deploy" active={router.asPath} scroll>
-            Deploy
-          </NavLink>
+
           <NavLink href="/docs/rest-api" active={router.asPath}>
             REST API
           </NavLink>
-
-          <NavCategory>Etc.</NavCategory>
           <NavLink href="/docs/templates" active={router.asPath}>
             Example Templates
           </NavLink>
