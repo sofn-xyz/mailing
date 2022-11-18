@@ -198,7 +198,7 @@ export default function DocsLayout({ children }) {
           </NavLink>
         </nav>
         <div className="lg:pl-[20rem]">
-          <main className="prose prose-mailing-dark font-medium text-xl max-w-3xl top-10 pt-3 pb-16 relative z-20">
+          <main className="prose prose-mailing-dark font-medium text-xl max-w-3xl top-16 pt-12 pb-16 relative">
             {children}
           </main>
         </div>
