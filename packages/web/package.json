@@ -8,7 +8,10 @@
     "build": "yarn prisma generate && yarn prisma migrate deploy && next build",
     "start": "next start",
     "lint": "next lint",
-    "type-check": "tsc"
+    "type-check": "tsc",
+    "build-emails": "yarn mailing server build && cp -r ./emails/assets ./.mailing/public",
+    "dev-emails": "yarn mailing",
+    "dev-emails:local-assets": "npx mailing server scaffold && ln -sf ../../emails/assets ./.mailing/public && LOCAL_ASSETS=true yarn mailing preview"
   },
   "dependencies": {
     "@mdx-js/loader": "2.1.2",
