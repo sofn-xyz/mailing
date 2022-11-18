@@ -15,7 +15,7 @@ export default function Header() {
       backgroundColor={colors.amber200}
       backgroundUrl={assetUrl("/assets/header-background.png")}
       backgroundRepeat="no-repeat"
-      backgroundSize={"100% 312"}
+      backgroundSize={"100% 312px"}
     >
       <MjmlSection cssClass="gutter" paddingBottom={92}>
         <MjmlGroup>
