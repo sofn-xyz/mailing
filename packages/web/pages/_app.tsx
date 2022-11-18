@@ -8,6 +8,13 @@ import DocsLayout from "../components/docs/DocsLayout";
 import BlogLayout from "../components/BlogLayout";
 import DefaultLayout from "../components/DefaultLayout";
 
+import { Fira_Code as Mono } from "@next/font/google";
+
+const mono = Mono({
+  weight: "400",
+  variable: "--font-mono",
+});
+
 import "../styles/globals.css";
 
 function MyApp({ Component, pageProps }: AppProps) {
@@ -25,10 +32,12 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   return (
     <MDXProvider components={MDXComponents}>
-      <Layout>
-        <Component {...pageProps} />
-        <Analytics />
-      </Layout>
+      <span className={`${mono.variable} font-sans`}>
+        <Layout>
+          <Component {...pageProps} />
+          <Analytics />
+        </Layout>
+      </span>
     </MDXProvider>
   );
 }

@@ -2,8 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 @import url("https://use.typekit.net/qdl2rbc.css");
-@import url("https://fonts.googleapis.com/css2?family=Fragment+Mono&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Fragment+Mono&family=Xanh+Mono&display=swap");
 
 html,
 body {

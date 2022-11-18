@@ -5,5 +5,11 @@ type CodeProps = {
 };
 
 export default function Code({ children }: CodeProps) {
-  return <code className="mono text-amber-200 font-normal">{children}</code>;
+  return (
+    <span className="not-prose">
+      <code className="mono text-amber-200 font-normal text-base">
+        {children}
+      </code>
+    </span>
+  );
 }

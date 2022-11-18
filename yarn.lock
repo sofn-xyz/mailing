@@ -1729,6 +1729,11 @@
   dependencies:
     glob "7.1.7"
 
+"@next/font@^13.0.4":
+  version "13.0.4"
+  resolved "https://registry.yarnpkg.com/@next/font/-/font-13.0.4.tgz#43a9d38df0279745d2119bf79f10882b825a01a3"
+  integrity sha512-csZhVqe870p7XE03WfbDLzjVwdBAWxe6/lWGQosfqY/XN5tsmfDLpj442veicfCiiuF7/ydSnAAJxH8PQVBVWQ==
+
 "@next/mdx@^12.2.3":
   version "12.3.3"
   resolved "https://registry.yarnpkg.com/@next/mdx/-/mdx-12.3.3.tgz#27a65b4e60752ddf859273afe2f55e4005e7abfc"

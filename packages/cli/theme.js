@@ -5,7 +5,13 @@ module.exports = {
   },
   extend: {
     fontFamily: {
-      mono: ["Xanh Mono", "ui-monospace", "SFMono-Regular"],
+      mono: [
+        "var(--font-mono)",
+        "ui-monospace",
+        "SFMono-Regular",
+        "Courier",
+        "monospace",
+      ],
     },
     colors: {
       white: "#e4ebfa",

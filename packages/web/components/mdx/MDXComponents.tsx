@@ -6,8 +6,9 @@ import P from "./P";
 import Li from "./Li";
 import Ul from "./Ul";
 import Code from "./Code";
+import { Components } from "@mdx-js/react/lib";
 
-const MDXComponents = {
+const MDXComponents: Components = {
   h1: H1,
   h2: H2,
   h3: H3,
