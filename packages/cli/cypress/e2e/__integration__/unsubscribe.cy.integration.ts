@@ -11,7 +11,7 @@ describe("unsubscribe page", () => {
 
     it("should show the right interface for just the default list", function () {
       cy.intercept("/api/unsubscribe/*").as("patchUnsubscribe");
-      cy.visit(`/unsubscribe/${this.memberId}`);
+      cy.visit(`/unsubscribe/${this.defaultListMemberId}`);
       // it should not show the nav
       cy.get("nav").should("not.exist");
 
@@ -34,7 +34,7 @@ describe("unsubscribe page", () => {
       cy.wait("@patchUnsubscribe");
 
       // if you reload the page, it should show the unsubscribed state
-      cy.visit(`/unsubscribe/${this.memberId}`);
+      cy.visit(`/unsubscribe/${this.defaultListMemberId}`);
       cy.get("h1").should("contain", "You're unsubscribed");
       cy.get("button[type=submit]").should("contain", "Re-subscribe").click();
       cy.get(".form-success-message").should("contain", "Saved!");
@@ -56,44 +56,12 @@ describe("unsubscribe page", () => {
       cy.signup();
 
       cy.subscribeToDefaultList(email);
-
-      // create an additional list called anotherList
-      cy.request({
-        url: "/api/lists",
-        method: "POST",
-        body: {
-          name: "anotherList",
-        },
-      }).then((response) => {
-        expect(response.status).to.eq(201);
-        expect(response.body.list).to.have.property("id");
-
-        const anotherListId = response.body.list.id;
-
-        cy.wrap(anotherListId, { timeout: 0 })
-          .as("anotherListId")
-          .should("be.a", "string");
-
-        // subscribe the same user to anotherList
-        cy.request({
-          url: `/api/lists/${anotherListId}/subscribe`,
-          method: "POST",
-          body: {
-            email: email,
-          },
-        }).then((response) => {
-          expect(response.status).to.eq(201);
-          expect(response.body.member).to.have.property("id");
-
-          cy.wrap(response.body.member.id, { timeout: 0 })
-            .as("anotherListMemberId")
-            .should("be.a", "string");
-        });
-      });
+      cy.createList("anotherList");
+      cy.subscribe(email, "anotherList");
     });
 
     it("should show the right interface for multiple lists", function () {
-      cy.visit(`/unsubscribe/${this.memberId}`);
+      cy.visit(`/unsubscribe/${this.defaultListMemberId}`);
       cy.get("h1").should("contain", "Email preferences");
       // it should not show the nav
       cy.get("nav").should("not.exist");
@@ -110,7 +78,7 @@ describe("unsubscribe page", () => {
       cy.get("div").should("contain", "Saved!");
       // the user's status should be unsubscribed
       cy.request({
-        url: `/api/lists/${this.defaultListId}/members/${this.memberId}`,
+        url: `/api/lists/${this.defaultListMemberId}/members/${this.defaultListMemberId}`,
       }).then((response) => {
         expect(response.status).to.eq(200);
         expect(response.body.member.status).to.eq("unsubscribed");

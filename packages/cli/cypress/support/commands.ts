@@ -31,6 +31,8 @@ declare namespace Cypress {
   interface Chainable {
     signup(): Chainable<void>;
     subscribeToDefaultList(email: string): Chainable<void>;
+    createList(name: string): Chainable<void>;
+    subscribe(email: string, listName: string): Chainable<void>;
   }
 }
 
@@ -66,9 +68,47 @@ Cypress.Commands.add("subscribeToDefaultList", (email) => {
     }).then((response) => {
       expect(response.status).to.eq(201);
       expect(response.body.member).to.have.property("id");
-      const memberId = response.body.member.id;
-      expect(memberId).to.be.a("string");
-      cy.wrap(memberId).as("memberId");
+      cy.wrap(response.body.member.id)
+        .as("defaultListMemberId")
+        .should("be.a", "string");
+    });
+  });
+});
+
+Cypress.Commands.add("createList", (listName) => {
+  cy.request({
+    url: "/api/lists",
+    method: "POST",
+    body: {
+      name: listName,
+    },
+  }).then((response) => {
+    expect(response.status).to.eq(201);
+    expect(response.body.list).to.have.property("id");
+
+    cy.wrap(response.body.list.id, { timeout: 0 })
+      .as(listName)
+      .should("be.a", "string");
+  });
+});
+
+Cypress.Commands.add("subscribe", (email, listName) => {
+  cy.get(`@${listName}`).then((listId) => {
+    expect(listId).to.be.a("string");
+
+    cy.request({
+      url: `/api/lists/${listId}/subscribe`,
+      method: "POST",
+      body: {
+        email,
+      },
+    }).then((response) => {
+      expect(response.status).to.eq(201);
+      expect(response.body.member).to.have.property("id");
+
+      cy.wrap(response.body.member.id, { timeout: 0 })
+        .as(`${listName}MemberId`)
+        .should("be.a", "string");
     });
   });
 });
