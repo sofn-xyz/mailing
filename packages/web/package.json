@@ -9,7 +9,7 @@
     "start": "next start",
     "lint": "next lint",
     "type-check": "tsc",
-    "build-emails": "yarn mailing server bootstrap && cp -r ./emails/assets ./.mailing/public && cd .mailing && npx next build",
+    "build-emails": "yarn mailing server bootstrap && cp -r ./emails/assets ./.mailing/public && cd .mailing && npx prisma generate && npx next build",
     "dev-emails": "yarn mailing",
     "dev-emails:local-assets": "npx mailing server scaffold && ln -sf ../../emails/assets ./.mailing/public && LOCAL_ASSETS=true yarn mailing preview"
   },
