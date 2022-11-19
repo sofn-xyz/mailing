@@ -121,7 +121,7 @@ const List = (props: ListProps) => {
       <input
         id={id}
         type="checkbox"
-        className="cursor-pointer"
+        className="cursor-pointer relative top-[2px]"
         checked={props.data.checked}
         disabled={!props.data.enabled}
         onChange={props.onChange}
