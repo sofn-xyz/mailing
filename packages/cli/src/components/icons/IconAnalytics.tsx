@@ -1,4 +1,4 @@
-export default function IconEye({ fill }: IconProps) {
+export default function IconAnalytics({ fill }: IconProps) {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" width="21" height="12" fill="none">
       <path
