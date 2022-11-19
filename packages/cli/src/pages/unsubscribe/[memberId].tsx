@@ -17,32 +17,6 @@ type FormState = {
   [key: string]: ListState;
 };
 
-type SoloSubscribeUnsubscribeButtonProps = {
-  status: "subscribed" | "unsubscribed";
-  onClick: (e: React.MouseEvent<HTMLElement>) => void;
-  disabled: boolean;
-};
-
-const SoloSubscribeUnsubscribeButton = ({
-  status,
-  onClick,
-  disabled,
-}: SoloSubscribeUnsubscribeButtonProps) => {
-  const text = "subscribed" === status ? "Unsubscribe" : "Re-subscribe";
-
-  return (
-    <div className="text-center">
-      <Button
-        type="submit"
-        text={text}
-        white
-        onClick={onClick}
-        disabled={disabled}
-      />
-    </div>
-  );
-};
-
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const memberId = context?.params?.memberId;
 
@@ -324,10 +298,12 @@ const Unsubscribe = (props: UnsubscribeProps) => {
               )}
             </div>
           </div>
-          <div className="px-10 pb-9">
+          <div className="px-12 pb-9 text-center">
             {defaultListOnly ? (
-              <SoloSubscribeUnsubscribeButton
-                status={subscribedToDefaultList ? "subscribed" : "unsubscribed"}
+              <Button
+                type="submit"
+                text={subscribedToDefaultList ? "Unsubscribe" : "Re-subscribe"}
+                white
                 onClick={subscribeUnsubscribeButtonClick}
                 disabled={formSaving}
               />

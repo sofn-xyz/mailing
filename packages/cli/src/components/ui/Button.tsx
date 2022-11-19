@@ -24,7 +24,7 @@ const Button: React.FC<ButtonProps> = ({
   disabled,
 }) => {
   const sharedClasses = cx(
-    "rounded-2xl border-transparent font-bold leading-none text-black ease-in duration-150",
+    "rounded-2xl border-transparent font-bold leading-none text-black ease-in duration-150 w-full",
     {
       "text-sm pt-2 pb-3 px-3": small,
       "text-base pt-3 pb-4 px-4": !small,
