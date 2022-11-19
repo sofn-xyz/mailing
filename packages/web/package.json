@@ -19,7 +19,7 @@
     "@vercel/analytics": "^0.1.1",
     "classnames": "^2.3.2",
     "mailing-core": "*",
-    "next": "13.0.3",
+    "next": "13.0.4",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-intersection-observer": "^9.4.0",
@@ -28,7 +28,7 @@
   "devDependencies": {
     "@code-hike/mdx": "^0.7.4",
     "@mdx-js/loader": "^2.1.5",
-    "@next/mdx": "^13.0.3",
+    "@next/mdx": "^13.0.4",
     "@tailwindcss/typography": "^0.5.8",
     "@types/node": "^18.6.3",
     "@types/react": "^18.0.15",
