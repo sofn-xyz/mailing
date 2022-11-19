@@ -73,6 +73,7 @@ const PreviewViewer: React.FC<PreviewViewerProps> = ({ initialData }) => {
   useLiveReload(fetchData);
 
   const { preview, previews } = data || { preview: null, previews: [] };
+  const linterVisible = !!preview?.htmlLint?.length;
 
   return (
     <div className="h-screen flex">
@@ -162,9 +163,7 @@ const PreviewViewer: React.FC<PreviewViewerProps> = ({ initialData }) => {
                 setViewMode={setViewMode}
               />
             </div>
-            {!!preview?.htmlLint?.length && (
-              <HTMLLint htmlLint={preview.htmlLint} />
-            )}
+            {linterVisible && <HTMLLint htmlLint={preview.htmlLint} />}
           </>
         ) : (
           <div className="text-2xl grid h-screen place-items-center text-gray-600">
@@ -172,12 +171,16 @@ const PreviewViewer: React.FC<PreviewViewerProps> = ({ initialData }) => {
           </div>
         )}
         {fetching && (
-          <div className="loader-position">
+          <div
+            className={cx(
+              "absolute right-6 dark:stroke-black",
+              linterVisible ? "bottom-16" : "bottom-6"
+            )}
+          >
             <CircleLoader />
           </div>
         )}
       </div>
-
       <style jsx>{`
         .left-pane,
         .right-pane {
@@ -188,8 +191,6 @@ const PreviewViewer: React.FC<PreviewViewerProps> = ({ initialData }) => {
         .character {
           text-transform: uppercase;
           line-height: 100%;
-        }
-        .character {
           color: #bbb;
           width: 24px;
           height: 24px;
@@ -210,11 +211,6 @@ const PreviewViewer: React.FC<PreviewViewerProps> = ({ initialData }) => {
           bottom: 0;
           font-size: 48px;
           background-color: pink;
-        }
-        .loader-position {
-          position: absolute;
-          bottom: 24px;
-          right: 24px;
         }
       `}</style>
     </div>
