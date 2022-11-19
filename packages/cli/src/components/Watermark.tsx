@@ -3,7 +3,7 @@ import LogoMarkSmall from "./icons/LogoMarkSmall";
 
 const Watermark: React.FC = () => {
   return (
-    <div className="pt-8 pb-12 flex justify-center left-0 right-0 bottom-0 absolute mx-auto">
+    <div className="pt-8 pb-12 flex justify-center mx-auto">
       <Link href="https://www.mailing.run" legacyBehavior>
         <a
           className="flex flex-col items-center"

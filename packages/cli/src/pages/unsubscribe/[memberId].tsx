@@ -273,87 +273,83 @@ const Unsubscribe = (props: UnsubscribeProps) => {
   const subscribedToDefaultList = !formState[defaultList.id].checked;
 
   return (
-    <>
+    <div className="flex flex-col justify-between min-h-screen">
       <Head>
         <meta name="robots" content="noindex" />
       </Head>
-      <div className="w-full h-full">
-        <main className="max-w-xs mx-auto pt-20 sm:pt-24 lg:pt-32">
-          <form
-            className="border-dotted border-gray-500 border rounded-2xl"
-            onSubmit={onSubmit}
-          >
-            <div>
-              <div className="text-center px-10 pt-9 pb-7">
-                <h1 className="text-xl font-bold">
-                  {defaultListOnly
-                    ? subscribedToDefaultList
-                      ? "You’re subscribed"
-                      : "You’re unsubscribed"
-                    : "Email preferences"}
-                </h1>
-                <p className="pt-1 text-sm text-neutral-500">{email}</p>
-              </div>
-              <hr className="border-dotted border-gray-500 border-top border-bottom-0" />
-              <div className="text-slate-300 px-10 pt-8 pb-5">
-                {lists.length ? (
-                  <>
-                    <ul>
-                      {lists.map((list) => (
-                        <List
-                          list={list}
-                          key={list.id}
-                          data={formState[list.id]}
-                          onChange={onChange(list.id, false)}
-                        />
-                      ))}
-                    </ul>
-                    <List
-                      list={defaultList}
-                      key={defaultList.id}
-                      data={formState[defaultList.id]}
-                      onChange={onChange(defaultList.id, true)}
-                      name="Unsubscribe from all emails"
-                    />
-                  </>
-                ) : (
-                  <div className="pb-3 text-center">
-                    {subscribedToDefaultList
-                      ? "You’re on the list! Use the button below to unsubscribe."
-                      : "Your email address has been removed from this mailing list. If you unsubscribed by accident, use the button below to re-subscribe."}
-                  </div>
-                )}
-              </div>
+      <main className="max-w-xs mx-auto pt-20 sm:pt-24 lg:pt-32">
+        <form
+          className="border-dotted border-gray-500 border rounded-2xl"
+          onSubmit={onSubmit}
+        >
+          <div>
+            <div className="text-center px-10 pt-9 pb-7">
+              <h1 className="text-xl font-bold">
+                {defaultListOnly
+                  ? subscribedToDefaultList
+                    ? "You’re subscribed"
+                    : "You’re unsubscribed"
+                  : "Email preferences"}
+              </h1>
+              <p className="pt-1 text-sm text-neutral-500">{email}</p>
             </div>
-            <div className="px-10 pb-9">
-              {defaultListOnly ? (
-                <SoloSubscribeUnsubscribeButton
-                  status={
-                    subscribedToDefaultList ? "subscribed" : "unsubscribed"
-                  }
-                  onClick={subscribeUnsubscribeButtonClick}
-                  disabled={formSaving}
-                />
+            <hr className="border-dotted border-gray-500 border-top border-bottom-0" />
+            <div className="text-slate-300 px-10 pt-8 pb-5">
+              {lists.length ? (
+                <>
+                  <ul>
+                    {lists.map((list) => (
+                      <List
+                        list={list}
+                        key={list.id}
+                        data={formState[list.id]}
+                        onChange={onChange(list.id, false)}
+                      />
+                    ))}
+                  </ul>
+                  <List
+                    list={defaultList}
+                    key={defaultList.id}
+                    data={formState[defaultList.id]}
+                    onChange={onChange(defaultList.id, true)}
+                    name="Unsubscribe from all emails"
+                  />
+                </>
               ) : (
-                <Button
-                  white
-                  full
-                  text="Save"
-                  type="submit"
-                  disabled={formSaving}
-                />
+                <div className="pb-3 text-center">
+                  {subscribedToDefaultList
+                    ? "You’re on the list! Use the button below to unsubscribe."
+                    : "Your email address has been removed from this mailing list. If you unsubscribed by accident, use the button below to re-subscribe."}
+                </div>
               )}
             </div>
-          </form>
-          {formSubmitted && !formSaving && (
-            <div className="mt-8">
-              <FormSuccess>Saved!</FormSuccess>
-            </div>
-          )}
-        </main>
-        <Watermark />
-      </div>
-    </>
+          </div>
+          <div className="px-10 pb-9">
+            {defaultListOnly ? (
+              <SoloSubscribeUnsubscribeButton
+                status={subscribedToDefaultList ? "subscribed" : "unsubscribed"}
+                onClick={subscribeUnsubscribeButtonClick}
+                disabled={formSaving}
+              />
+            ) : (
+              <Button
+                white
+                full
+                text="Save"
+                type="submit"
+                disabled={formSaving}
+              />
+            )}
+          </div>
+        </form>
+        {formSubmitted && !formSaving && (
+          <div className="mt-8">
+            <FormSuccess>Saved!</FormSuccess>
+          </div>
+        )}
+      </main>
+      <Watermark />
+    </div>
   );
 };
 
