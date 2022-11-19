@@ -298,7 +298,7 @@ const Unsubscribe = (props: UnsubscribeProps) => {
               )}
             </div>
           </div>
-          <div className="px-12 pb-9 text-center">
+          <div className="px-10 pb-9 text-center">
             {defaultListOnly ? (
               <Button
                 type="submit"
