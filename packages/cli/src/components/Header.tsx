@@ -8,6 +8,7 @@ import cx from "classnames";
 import Tooltip from "./Tooltip";
 import PreviewSender from "./PreviewSender";
 import IconClose from "./icons/IconClose";
+import IconQuestion from "./icons/IconQuestion";
 
 const white = "#E4EBFA";
 const gray = "#333";
@@ -67,18 +68,7 @@ const Header: React.FC<HeaderProps> = ({
               className="help cursor-pointer hover:bg-gray-700"
               onClick={() => setShow((current) => !current)}
             >
-              {show ? (
-                <IconClose />
-              ) : (
-                <Image
-                  key="icon-question"
-                  src="/icon-question.svg"
-                  width="36"
-                  height="24"
-                  alt="Close icon"
-                  title="Close"
-                />
-              )}
+              {show ? <IconClose /> : <IconQuestion />}
             </button>
           )}
           content={helpContent}
