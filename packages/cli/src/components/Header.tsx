@@ -2,13 +2,13 @@ import { ReactElement } from "react";
 import IconCode from "./icons/IconCode";
 import IconMobile from "./icons/IconMobile";
 import IconDesktop from "./icons/IconDesktop";
-import Image from "next/image";
 import cx from "classnames";
 
 import Tooltip from "./Tooltip";
 import PreviewSender from "./PreviewSender";
 import IconClose from "./icons/IconClose";
 import IconQuestion from "./icons/IconQuestion";
+import IconSend from "./icons/IconSend";
 
 const white = "#E4EBFA";
 const gray = "#333";
@@ -80,18 +80,7 @@ const Header: React.FC<HeaderProps> = ({
                 className="send cursor-pointer hover:bg-gray-700"
                 onClick={() => setShow((current) => !current)}
               >
-                {show ? (
-                  <IconClose />
-                ) : (
-                  <Image
-                    key="icon-send"
-                    src="/icon-send.svg"
-                    width="15"
-                    height="13"
-                    alt="Send icon"
-                    title="Send a preview"
-                  />
-                )}
+                {show ? <IconClose /> : <IconSend />}
               </button>
             )}
             content={
