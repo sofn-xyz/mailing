@@ -1,8 +1,8 @@
 import { useContext } from "react";
-import Image from "next/image";
 import cx from "classnames";
 
 import { HamburgerContext } from "./HamburgerContext";
+import LogoMarkSmall from "./icons/LogoMarkSmall";
 type MobileHeaderProps = {
   title: string;
 };
@@ -12,13 +12,7 @@ const MobileHeader: React.FC<MobileHeaderProps> = ({ title }) => {
 
   return (
     <div className="header">
-      <Image
-        src="/logo-mark-small.svg"
-        width="20"
-        height="24"
-        alt="Mailing logo mark"
-        role="presentation"
-      />
+      <LogoMarkSmall />
       {title}
       <div>
         <nav>

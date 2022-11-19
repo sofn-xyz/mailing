@@ -1,4 +1,4 @@
-export default function IconClose() {
+export default function IconSend() {
   return (
     <svg
       width="15"
