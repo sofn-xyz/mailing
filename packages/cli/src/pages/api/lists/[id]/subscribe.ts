@@ -36,7 +36,7 @@ const ApiSubscribe = async function (
         if ((e as Prisma.PrismaClientKnownRequestError).code === "P2002") {
           return res
             .status(422)
-            .json({ error: "You're already subscribed to that list" });
+            .json({ error: "You’re already subscribed to that list" });
         } else if (
           (e as Prisma.PrismaClientKnownRequestError).code === "P2003"
         ) {

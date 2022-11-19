@@ -14,29 +14,29 @@ describe("unsubscribe page", () => {
         // it should not show the nav
         cy.get("nav").should("not.exist");
 
-        // if you're subscribed, it should show the unsubscribe button and we click it
-        cy.get("h1").should("contain", "You're subscribed");
+        // if You’re subscribed, it should show the unsubscribe button and we click it
+        cy.get("h1").should("contain", "You’re subscribed");
         cy.get("button[type=submit]").should("contain", "Unsubscribe").click();
         cy.get(".form-success-message").should("contain", "Saved!");
 
-        // if you're unsubscribed, it should show the re-subscribe button and we click it
-        cy.get("h1").should("contain", "You're unsubscribed");
+        // if You’re unsubscribed, it should show the re-subscribe button and we click it
+        cy.get("h1").should("contain", "You’re unsubscribed");
         cy.get("button[type=submit]").should("contain", "Re-subscribe").click();
         cy.get(".form-success-message").should("contain", "Saved!");
 
         // now it should show the subscribed state AND click it again to unsubscribe
-        cy.get("h1").should("contain", "You're subscribed");
+        cy.get("h1").should("contain", "You’re subscribed");
         cy.get("button[type=submit]").should("contain", "Unsubscribe").click();
         cy.get(".form-success-message").should("contain", "Saved!");
 
         // if you reload the page, it should show the unsubscribed state
         cy.visit(`/unsubscribe/${defaultListMemberId}`);
-        cy.get("h1").should("contain", "You're unsubscribed");
+        cy.get("h1").should("contain", "You’re unsubscribed");
         cy.get("button[type=submit]").should("contain", "Re-subscribe").click();
         cy.get(".form-success-message").should("contain", "Saved!");
 
         // if you reload the page, it should show the subscribed state
-        cy.get("h1").should("contain", "You're subscribed");
+        cy.get("h1").should("contain", "You’re subscribed");
         cy.get("button[type=submit]").should("contain", "Unsubscribe");
         cy.get(".form-success-message").should("contain", "Saved!");
       });

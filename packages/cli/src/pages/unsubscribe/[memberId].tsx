@@ -288,8 +288,8 @@ const Unsubscribe = (props: UnsubscribeProps) => {
                 <h1 className="text-xl font-bold">
                   {defaultListOnly
                     ? subscribedToDefaultList
-                      ? "You're subscribed"
-                      : "You're unsubscribed"
+                      ? "You’re subscribed"
+                      : "You’re unsubscribed"
                     : "Email preferences"}
                 </h1>
                 <p className="pt-1 text-sm text-neutral-500">{email}</p>
@@ -316,10 +316,12 @@ const Unsubscribe = (props: UnsubscribeProps) => {
                       name="Unsubscribe from all emails"
                     />
                   </>
-                ) : subscribedToDefaultList ? (
-                  "You're on the list! Use the button below to unsubscribe."
                 ) : (
-                  "Your email address has been removed from this mailing list. If you unsubscribed by accident, use the button below to re-subscribe."
+                  <div className="pb-3 text-center">
+                    {subscribedToDefaultList
+                      ? "You’re on the list! Use the button below to unsubscribe."
+                      : "Your email address has been removed from this mailing list. If you unsubscribed by accident, use the button below to re-subscribe."}
+                  </div>
                 )}
               </div>
             </div>
@@ -343,11 +345,11 @@ const Unsubscribe = (props: UnsubscribeProps) => {
               )}
             </div>
           </form>
-          {formSubmitted && !formSaving ? (
+          {formSubmitted && !formSaving && (
             <div className="mt-8">
               <FormSuccess>Saved!</FormSuccess>
             </div>
-          ) : null}
+          )}
         </main>
         <Watermark />
       </div>
