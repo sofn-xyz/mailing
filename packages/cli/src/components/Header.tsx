@@ -7,6 +7,7 @@ import cx from "classnames";
 
 import Tooltip from "./Tooltip";
 import PreviewSender from "./PreviewSender";
+import IconClose from "./icons/IconClose";
 
 const white = "#E4EBFA";
 const gray = "#333";
@@ -67,14 +68,7 @@ const Header: React.FC<HeaderProps> = ({
               onClick={() => setShow((current) => !current)}
             >
               {show ? (
-                <Image
-                  key="icon-close"
-                  src="/icon-close.svg"
-                  width="36"
-                  height="30"
-                  alt="Close icon"
-                  title="Close"
-                />
+                <IconClose />
               ) : (
                 <Image
                   key="icon-question"
@@ -97,14 +91,7 @@ const Header: React.FC<HeaderProps> = ({
                 onClick={() => setShow((current) => !current)}
               >
                 {show ? (
-                  <Image
-                    key="icon-close"
-                    src="/icon-close.svg"
-                    width="36"
-                    height="30"
-                    alt="Close icon"
-                    title="Close"
-                  />
+                  <IconClose />
                 ) : (
                   <Image
                     key="icon-send"
