@@ -120,6 +120,7 @@ const PreviewIndex: NextPage<AudiencesProps> = ({
     <Link
       key="header"
       href={`/audiences${sortOrder === "desc" ? "?sortOrder=asc" : ""}`}
+      legacyBehavior
     >
       <a>Added</a>
     </Link>,
@@ -129,7 +130,7 @@ const PreviewIndex: NextPage<AudiencesProps> = ({
   const rows = members.map((m) => [
     m.email,
     new Date(m.createdAt).toLocaleString(),
-    <Link key={m.id} href={`/unsubscribe/${m.id}`}>
+    <Link key={m.id} href={`/unsubscribe/${m.id}`} legacyBehavior>
       <a>{memberListCounts[m.email]}</a>
     </Link>,
   ]);
