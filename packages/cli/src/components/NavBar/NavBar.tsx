@@ -1,10 +1,10 @@
 import { useRouter } from "next/router";
-import Image from "next/image";
 import NavBarButton from "./NavBarButton";
 import IconEye from "../icons/IconEye";
 import IconHome from "../icons/IconHome";
 import IconGear from "../icons/IconGear";
 import IconAudience from "../icons/IconAudience";
+import LogoMark from "../icons/LogoMark";
 
 type NavBarProps = { children: React.ReactNode };
 
@@ -41,13 +41,7 @@ const NavBar: React.FC<NavBarProps> = ({ children }) => {
           name="Settings"
         />
         <div className="flex-grow flex-1" />
-        <Image
-          src="/logo-mark.svg"
-          alt="Logo"
-          width={24}
-          height={30}
-          title="Logo"
-        />
+        <LogoMark />
       </nav>
       <div className="flex-grow h-screen overflow-y-scroll">{children}</div>
     </div>
