@@ -8,7 +8,10 @@
     "build": "yarn prisma generate && yarn prisma migrate deploy && next build",
     "start": "next start",
     "lint": "next lint",
-    "type-check": "tsc"
+    "type-check": "tsc",
+    "build-emails": "cp -r ./emails/assets public && yarn mailing server build",
+    "dev-emails": "yarn mailing",
+    "dev-emails:local-assets": "npx mailing server scaffold && ln -sf ../../emails/assets ./.mailing/public && LOCAL_ASSETS=true yarn mailing preview"
   },
   "dependencies": {
     "@mdx-js/loader": "2.1.2",
@@ -18,8 +21,9 @@
     "@prisma/client": "^4.2.0",
     "@vercel/analytics": "^0.1.1",
     "classnames": "^2.3.2",
-    "mailing-core": "*",
     "next": "13.0.4",
+    "mailing": "^0.8.19",
+    "mailing-core": "^0.8.19",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-intersection-observer": "^9.4.0",

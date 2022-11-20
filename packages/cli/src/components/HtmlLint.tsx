@@ -1,6 +1,6 @@
 import { useState } from "react";
-import Image from "next/image";
 import cx from "classnames";
+import IconWarning from "./icons/IconWarning";
 
 type HTMLLintProps = {
   htmlLint: HtmlLintError[];
@@ -40,7 +40,7 @@ const HTMLLint: React.FC<HTMLLintProps> = ({ htmlLint }) => {
         aria-label="toggle html lint details"
       >
         <div className="flex content-center">
-          <Image src="/icon-warning.svg" width="16" height="16" alt="Warning" />
+          <IconWarning />
           <span className="font-bold pl-2 pr-1">
             {htmlLint.length} HTML lint errors.
           </span>
