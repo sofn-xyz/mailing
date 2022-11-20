@@ -40,6 +40,9 @@ Cypress.Commands.add("signup", () => {
   const email = "test123@mailing.run";
   const password = "password";
 
+  cy.wrap(email).as("email");
+  cy.wrap(password).as("password");
+
   cy.request({
     url: `/api/users`,
     method: "POST",
