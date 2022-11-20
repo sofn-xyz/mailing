@@ -91,7 +91,7 @@ export default function DocsLayout({ children }) {
             }
           )}
         >
-          <h3 className="text-white text-2xl pt-7 mb-3">Docs</h3>
+          <h3 className="text-white text-2xl pt-7 mb-5">Docs</h3>
           <button className="search border text-sm bg-gray-800 border-gray-800 text-slate-500 hover:text-blue w-full transition-all duration-300 text-left rounded-md px-2 pt-1 pb-[5px]">
             <svg
               className="fill-slate-500 transition-all duration-300 inline -mt-[3px] mr-2"
@@ -153,7 +153,7 @@ export default function DocsLayout({ children }) {
 
           <NavCategory>
             Platform{" "}
-            <span className="pl-1 text-xs uppercase text-green-200">Beta</span>
+            <span className="pl-1 text-xs uppercase text-green-300">Beta</span>
           </NavCategory>
           <NavLink href="/docs/platform#0" active={router.asPath} scroll>
             What’s Platform?
