@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import cx from "classnames";
@@ -18,6 +18,10 @@ function NavCategory({ children }) {
 export default function DocsLayout({ children }) {
   const asPath = useHydrationFriendlyAsPath();
   const [hamburgerOpen, setHamburgerOpen] = useState(false);
+
+  useEffect(() => {
+    setHamburgerOpen(false);
+  }, [asPath]);
 
   return (
     <div className="bg-black text-gray-400 min-h-screen">
