@@ -38,15 +38,18 @@ declare namespace Cypress {
 
 Cypress.Commands.add("signup", () => {
   const email = "test123@mailing.run";
-  cy.visit("/signup");
-  cy.get("h1").should("contain", "Sign up");
-  cy.location("pathname").should("eq", "/signup");
+  const password = "password";
 
-  cy.get("input#email").type(email);
-  cy.get("input#password").type("password");
-  cy.get("button[type=submit]").click();
-
-  cy.location("pathname").should("eq", "/settings");
+  cy.request({
+    url: `/api/users`,
+    method: "POST",
+    body: {
+      email,
+      password,
+    },
+  }).then((response) => {
+    expect(response.status).to.eq(201);
+  });
 });
 
 /* 
