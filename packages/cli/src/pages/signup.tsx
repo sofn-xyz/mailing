@@ -1,20 +1,27 @@
 import FormError from "../components/FormError";
-import type { GetStaticProps, NextPage } from "next";
+import type { NextPage } from "next";
 import { useCallback, useRef, useState } from "react";
 import prisma from "../../prisma";
 import OutlineButton from "../components/ui/OutlineButton";
 import Input from "../components/ui/Input";
 import Link from "next/link";
+import { withSessionSsr } from "../util/session";
 
-export const getServerSideProps: GetStaticProps = async () => {
-  const userCount = await prisma.user.count();
+export const getServerSideProps = withSessionSsr(
+  async function getServerSideProps({ req }) {
+    const user = req.session.user;
 
-  return userCount
-    ? {
-        notFound: true,
-      }
-    : { props: {} };
-};
+    const userCount = await prisma.user.count();
+
+    return userCount
+      ? user
+        ? { redirect: { destination: "/settings", permanent: false } }
+        : {
+            notFound: true,
+          }
+      : { props: {} };
+  }
+);
 
 const Signup: NextPage = () => {
   const [errors, setErrors] = useState();
