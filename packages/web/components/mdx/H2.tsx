@@ -25,7 +25,7 @@ export default function H2({ children }: H2Props) {
           {children}
           <span
             className={cx(
-              "active-dot text-green-300 pt-[9px] pl-4 absolute  top-0 text-3xl -left-[64px]",
+              "active-dot text-green-300 pt-[9px] pl-4 absolute top-0 text-3xl -left-[64px]",
               {
                 hidden: anchor !== asPath.split("#", 2)[1],
               }
