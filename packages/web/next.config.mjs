@@ -1,15 +1,12 @@
-import theme from "shiki/themes/nord.json" assert { type: "json" };
-import { remarkCodeHike } from "@code-hike/mdx";
-import gfm from "remark-gfm";
+// import gfm from "remark-gfm";
 import nextMDX from "@next/mdx";
+import rehypeHighlight from "rehype-highlight";
 
 const withMDX = nextMDX({
   extension: /\.mdx?$/,
   options: {
-    remarkPlugins: [[remarkCodeHike, { theme, showCopyButton: true }], gfm],
-    rehypePlugins: [],
-    // use @mdx-js/react so we can style mdx components
-    // see: https://nextjs.org/docs/advanced-features/using-mdx
+    remarkPlugins: [],
+    rehypePlugins: [rehypeHighlight],
     providerImportSource: "@mdx-js/react",
   },
 });

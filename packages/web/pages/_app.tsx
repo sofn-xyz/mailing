@@ -10,12 +10,14 @@ import DefaultLayout from "../components/DefaultLayout";
 
 import { Fira_Code as Mono } from "@next/font/google";
 
+import "../styles/globals.css";
+import "../components/mdx/highlight-js-styles/rainbow.css";
+
 const mono = Mono({
+  subsets: ["latin"],
   weight: "400",
   variable: "--font-mono",
 });
-
-import "../styles/globals.css";
 
 function MyApp({ Component, pageProps }: AppProps) {
   // Determine if we're rendering /docs or /blog

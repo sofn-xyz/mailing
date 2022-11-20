@@ -1,12 +1,11 @@
-import { useRouter } from "next/router";
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import cx from "classnames";
 
-import "@code-hike/mdx/dist/index.css";
 import NavLink from "./NavLink";
 import IndexButton from "./IndexButton";
+import { useHydrationFriendlyAsPath } from "../mdx/hooks/useHydrationFriendlyAsPath";
 
 function NavCategory({ children }) {
   return (
@@ -17,7 +16,7 @@ function NavCategory({ children }) {
 }
 
 export default function DocsLayout({ children }) {
-  const router = useRouter();
+  const asPath = useHydrationFriendlyAsPath();
   const [hamburgerOpen, setHamburgerOpen] = useState(false);
 
   return (
@@ -126,28 +125,25 @@ export default function DocsLayout({ children }) {
             </svg>
           </button>
           <NavCategory>Basics</NavCategory>
-          <NavLink href="/docs#0" active={router.asPath}>
+          <NavLink href="/docs#whats-mailing" active={asPath}>
             What’s Mailing?
           </NavLink>
-          <NavLink href="/docs#getting-started" active={router.asPath}>
+          <NavLink href="/docs#getting-started" active={asPath}>
             Getting started
           </NavLink>
-          <NavLink
-            href="/docs#developing-with-email-previews"
-            active={router.asPath}
-          >
+          <NavLink href="/docs#developing-with-email-previews" active={asPath}>
             Dev
           </NavLink>
-          <NavLink href="/docs#sendmail" active={router.asPath}>
+          <NavLink href="/docs#sendmail" active={asPath}>
             Send
           </NavLink>
-          <NavLink href="/docs#testing-emails-with-jest" active={router.asPath}>
+          <NavLink href="/docs#testing-emails-with-jest" active={asPath}>
             Testing
           </NavLink>
-          <NavLink href="/docs#cli" active={router.asPath}>
+          <NavLink href="/docs#cli" active={asPath}>
             CLI
           </NavLink>
-          <NavLink href="/docs/deploy" active={router.asPath} scroll>
+          <NavLink href="/docs/deploy" active={asPath}>
             Deploy
           </NavLink>
 
@@ -155,41 +151,41 @@ export default function DocsLayout({ children }) {
             Platform{" "}
             <span className="pl-1 text-xs uppercase text-green-300">Beta</span>
           </NavCategory>
-          <NavLink href="/docs/platform#0" active={router.asPath} scroll>
+          <NavLink href="/docs/platform#whats-platform" active={asPath}>
             What’s Platform?
           </NavLink>
-          <NavLink href="/docs/platform#pricing" active={router.asPath}>
+          <NavLink href="/docs/platform#pricing" active={asPath}>
             Pricing
           </NavLink>
-          <NavLink href="/docs/platform#setup" active={router.asPath}>
+          <NavLink href="/docs/platform#setup" active={asPath}>
             Setup
           </NavLink>
-          <NavLink href="/docs/lists" active={router.asPath} scroll>
+          <NavLink href="/docs/lists" active={asPath}>
             Lists
           </NavLink>
 
           <NavCategory>Reference</NavCategory>
 
-          <NavLink href="/docs/rest-api" active={router.asPath}>
+          <NavLink href="/docs/rest-api" active={asPath}>
             REST API
           </NavLink>
-          <NavLink href="/docs/templates" active={router.asPath}>
+          <NavLink href="/docs/templates" active={asPath}>
             Example Templates
           </NavLink>
-          <NavLink href="/docs/turborepo" active={router.asPath}>
+          <NavLink href="/docs/turborepo" active={asPath}>
             Turborepo
           </NavLink>
           <NavCategory>Org</NavCategory>
-          <NavLink href="/docs/contributing" active={router.asPath}>
+          <NavLink href="/docs/contributing" active={asPath}>
             Contributing
           </NavLink>
           <NavLink href="/docs/discord" active={false}>
             Discord
           </NavLink>
         </nav>
-        <div className="lg:pl-[20rem]">
+        <div className="lg:pl-[10rem]">
           <a id="0"></a>
-          <main className="overflow-scroll prose prose-mailing-dark font-medium text-xl max-w-3xl pt-12 pb-16 relative">
+          <main className="lg:pl-[10rem] overflow-scroll prose prose-mailing-dark font-medium text-xl max-w-4xl px-12 pt-12 pb-16 relative">
             {children}
           </main>
         </div>
@@ -200,6 +196,14 @@ export default function DocsLayout({ children }) {
         }
         button:active {
           transform: translateY(2px);
+        }
+      `}</style>
+
+      <style global jsx>{`
+        /* must be global for first-of-type to work on children */
+        .prose h2:first-of-type {
+          margin-top: -18rem;
+          padding-top: 20rem;
         }
       `}</style>
     </div>
