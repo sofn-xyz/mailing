@@ -80,7 +80,7 @@ describe("unsubscribe page", () => {
       // check the initial state of the form
       // "anotherList" should be checked
       cy.get("label")
-        .contains("anotherList")
+        .contains("AnotherList")
         .as("anotherListLabel")
         .should("exist")
         .siblings("input[type=checkbox]")
@@ -208,6 +208,38 @@ describe("unsubscribe page", () => {
         expect(response.status).to.eq(200);
         expect(response.body.member.status).to.eq("subscribed");
       });
+    });
+  });
+
+  describe("3 lists", () => {
+    beforeEach(() => {
+      cy.task("db:reset");
+      cy.signup();
+
+      const email = "test@test.com";
+      cy.subscribeToDefaultList(email);
+      cy.createList("notifications");
+      cy.subscribe(email, "notifications");
+      cy.createList("marketing");
+      cy.subscribe(email, "marketing");
+    });
+
+    it("should show the right interface for 3 lists", function () {
+      // get aliases
+      const { defaultListId, defaultListMemberId } = this;
+      expect(defaultListId).to.be.a("string");
+      expect(defaultListMemberId).to.be.a("string");
+
+      cy.visit(`/unsubscribe/${defaultListMemberId}`);
+      cy.get("h1").should("contain", "Email preferences");
+
+      // it should not show the nav
+      cy.get("nav").should("not.exist");
+
+      // there should be 3 labels and checkboxes
+      cy.get("label").should("have.length", 3);
+      cy.get("input[type=checkbox]").should("have.length", 3);
+      cy.get("label").should("contain", "Notifications");
     });
   });
 });

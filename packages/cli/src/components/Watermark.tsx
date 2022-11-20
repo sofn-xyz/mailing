@@ -10,7 +10,7 @@ const Watermark: React.FC = () => {
           target="_blank"
           rel="noopener noreferrer"
         >
-          <LogoMarkSmall />
+          <LogoMarkSmall height={13} width={16} />
           <div className="text-white text-[10px] pt-2 leading-none">
             Powered by Mailing
           </div>
