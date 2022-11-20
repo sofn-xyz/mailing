@@ -1,12 +1,12 @@
 describe("signup and authenticate", () => {
-  const email = "test@mailing.run";
-  const password = "password";
-
-  before(() => {
+  beforeEach(() => {
     cy.task("db:reset");
   });
 
   it("should be able to signup, login, logout, and everything else", () => {
+    const email = "test@mailin.run";
+    const password = "password";
+
     cy.visit("/signup");
     cy.location("pathname").should("eq", "/signup");
 
@@ -47,15 +47,15 @@ describe("signup and authenticate", () => {
     // you should see 2 api keys in the tbody instead of 1
     cy.get("#api-keys .table-data").should("have.length", 6);
 
-    // you should get a 404 if you try to go back to /signup, only 1 user is allowed to signup
+    // you should get a temporary redirect to /settings if you try to go back to /signup, only 1 user is allowed to signup
     cy.visit("/signup", { failOnStatusCode: false });
     cy.request({
       url: "/signup",
       followRedirect: false,
       failOnStatusCode: false,
     }).then((response) => {
-      expect(response.status).to.eq(404);
-      expect(response.redirectedToUrl).to.eq(undefined);
+      expect(response.status).to.eq(307);
+      expect(response.redirectedToUrl).to.match(new RegExp("/settings"));
     });
 
     // logout
@@ -88,25 +88,7 @@ describe("signup and authenticate", () => {
     cy.get(".form-error").should("contain", "invalid password");
   });
 
-  it("should show the user an error message if they try to login with an invalid email", () => {
-    // visit the login page
-    cy.visit("/login");
-    cy.location("pathname").should("eq", "/login");
-    cy.get("h1").should("contain", "Log in");
-
-    // fill in email and passord fields and then submit the form
-    cy.get("input#email").type("i@didnsignup.com");
-    cy.get("input#password").type("password");
-    cy.get("button[type=submit]").click();
-
-    // it should show an error message
-    cy.get("div.form-error").should(
-      "contain",
-      "No user exists with that email."
-    );
-  });
-
-  it("login is required on /settings", () => {
+  it("/settings requires authentication", () => {
     cy.visit("/settings", { failOnStatusCode: false });
     cy.request({
       url: "/settings",
@@ -116,14 +98,5 @@ describe("signup and authenticate", () => {
       expect(response.status).to.eq(307);
       expect(response.redirectedToUrl).to.eq("http://localhost:3883/login");
     });
-
-    // it should redirect to the login page
-    cy.visit("/login");
-    cy.get("h1").should("contain", "Log in");
-
-    // fill in email and passord fields and then submit the form
-    cy.get("input#email").type(email);
-    cy.get("input#password").type(password);
-    cy.get("button[type=submit]").click();
   });
 });
