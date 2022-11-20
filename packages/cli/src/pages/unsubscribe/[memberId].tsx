@@ -2,7 +2,7 @@ import Head from "next/head";
 import prisma from "../../../prisma";
 import { GetServerSideProps } from "next";
 import type { List, Member } from "../../../prisma/generated/client";
-import { useCallback, useState } from "react";
+import React, { useCallback, useState } from "react";
 import FormSuccess from "../../components/FormSuccess";
 import { remove } from "lodash";
 import Watermark from "../../components/Watermark";
@@ -121,7 +121,7 @@ const List = (props: ListProps) => {
       <input
         id={id}
         type="checkbox"
-        className="cursor-pointer"
+        className="cursor-pointer relative top-[2px]"
         checked={props.data.checked}
         disabled={!props.data.enabled}
         onChange={props.onChange}
@@ -140,44 +140,52 @@ type PatchData = {
 };
 
 const Unsubscribe = (props: UnsubscribeProps) => {
+  const [formSaving, setFormSaving] = useState(false);
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [formState, setFormState] = useState<FormState>(props.initialFormState);
   const { lists, defaultList, defaultMember, memberId, listMembers, email } =
     props;
 
-  function onChange(listId: string, isDefaultList: boolean) {
-    return function () {
-      let newFormState;
+  // subscribed/unsubscribed for a list changed because of some user action
+  const onChange = useCallback(
+    (listId: string, isDefaultList: boolean) => {
+      return function () {
+        let newFormState;
 
-      if (isDefaultList) {
-        // when checking the default list: disable all other lists and check the default list
-        // when unchecking the default list: enable all lists and uncheck the default list
-        newFormState = Object.keys(formState).reduce((acc: FormState, key) => {
-          acc[key] = {
-            enabled: formState[listId].checked ? true : key === listId,
-            checked:
-              key === listId
-                ? !formState[listId].checked
-                : formState[key].checked,
-          } as ListState;
+        if (isDefaultList) {
+          // when checking the default list: disable all other lists and check the default list
+          // when unchecking the default list: enable all lists and uncheck the default list
+          newFormState = Object.keys(formState).reduce(
+            (acc: FormState, key) => {
+              acc[key] = {
+                enabled: formState[listId].checked ? true : key === listId,
+                checked:
+                  key === listId
+                    ? !formState[listId].checked
+                    : formState[key].checked,
+              } as ListState;
 
-          return acc;
-        }, {});
-      } else {
-        newFormState = {
-          ...formState,
-          [listId]: { checked: !formState[listId]["checked"], enabled: true },
-        };
-      }
+              return acc;
+            },
+            {}
+          );
+        } else {
+          newFormState = {
+            ...formState,
+            [listId]: { checked: !formState[listId]["checked"], enabled: true },
+          };
+        }
 
-      setFormState(newFormState);
-    };
-  }
+        setFormState(newFormState);
+        return newFormState;
+      };
+    },
+    [formState]
+  );
 
-  const onSubmit = useCallback(
-    async (e: React.FormEvent<HTMLFormElement>) => {
-      e.preventDefault();
-
+  // serialize the formState data you pass in and send it to the server
+  const serializeAndSubmitForm = useCallback(
+    async (formState: FormState) => {
       const data = Object.keys(formState).reduce((acc: PatchData, listId) => {
         const memberId = listMembers[listId];
 
@@ -206,64 +214,118 @@ const Unsubscribe = (props: UnsubscribeProps) => {
       });
 
       setFormSubmitted(true);
+      setFormSaving(false);
     },
-    [formState, memberId, listMembers, defaultMember]
+    [defaultMember.id, listMembers, memberId]
   );
 
+  // the "Subscribe" or "Unsubscribe" button was clicked on the form with only the default list
+  const subscribeUnsubscribeButtonClick = useCallback(
+    (e: React.MouseEvent<HTMLElement>) => {
+      e.preventDefault();
+      setFormSaving(true);
+      const newFormState = onChange(defaultList.id, true)();
+      serializeAndSubmitForm(newFormState);
+    },
+    [defaultList.id, onChange, serializeAndSubmitForm]
+  );
+
+  // the form was submitted
+  const onSubmit = useCallback(
+    async (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      setFormSaving(true);
+
+      await serializeAndSubmitForm(formState);
+    },
+    [formState, serializeAndSubmitForm]
+  );
+
+  const defaultListOnly = lists.length === 0;
+
+  // if the emails is subscribed to the default list... the checkbox is inverted for this one
+  const subscribedToDefaultList = !formState[defaultList.id].checked;
+
   return (
-    <>
+    <div className="flex flex-col justify-between min-h-screen">
       <Head>
         <meta name="robots" content="noindex" />
       </Head>
-      <div className="w-full h-full">
-        <main className="max-w-xs mx-auto pt-20 sm:pt-24 lg:pt-32">
-          <form
-            className="border-dotted border-gray-500 border rounded-2xl"
-            onSubmit={onSubmit}
-          >
-            <div>
-              <div className="text-center px-10 pt-9 pb-7">
-                <h1 className="text-xl font-bold">Email preferences</h1>
-                <p className="pt-1 text-sm text-neutral-500">{email}</p>
-              </div>
-              <hr className="border-dotted border-gray-500 border-top border-bottom-0" />
-              <div className="text-slate-300 px-10 pt-8 pb-5">
-                {lists.length ? (
-                  <>
-                    <ul>
-                      {lists.map((list) => (
-                        <List
-                          list={list}
-                          key={list.id}
-                          data={formState[list.id]}
-                          onChange={onChange(list.id, false)}
-                        />
-                      ))}
-                    </ul>
-                  </>
-                ) : null}
-                <List
-                  list={defaultList}
-                  key={defaultList.id}
-                  data={formState[defaultList.id]}
-                  onChange={onChange(defaultList.id, true)}
-                  name="Unsubscribe from all emails"
-                />
-              </div>
+      <main className="max-w-xs mx-auto pt-20 sm:pt-24 lg:pt-32">
+        <form
+          className="border-dotted border-gray-500 border rounded-2xl"
+          onSubmit={onSubmit}
+        >
+          <div>
+            <div className="text-center px-10 pt-9 pb-7">
+              <h1 className="text-xl font-bold">
+                {defaultListOnly
+                  ? subscribedToDefaultList
+                    ? "You’re subscribed"
+                    : "You’re unsubscribed"
+                  : "Email preferences"}
+              </h1>
+              <p className="pt-1 text-sm text-neutral-500">{email}</p>
             </div>
-            <div className="px-10 pb-9">
-              <Button white full text="Save" type="submit" />
+            <hr className="border-dotted border-gray-500 border-top border-bottom-0" />
+            <div className="text-slate-300 px-10 pt-8 pb-5">
+              {lists.length ? (
+                <>
+                  <ul>
+                    {lists.map((list) => (
+                      <List
+                        list={list}
+                        key={list.id}
+                        data={formState[list.id]}
+                        onChange={onChange(list.id, false)}
+                      />
+                    ))}
+                  </ul>
+                  <List
+                    list={defaultList}
+                    key={defaultList.id}
+                    data={formState[defaultList.id]}
+                    onChange={onChange(defaultList.id, true)}
+                    name="Unsubscribe from all emails"
+                  />
+                </>
+              ) : (
+                <div className="pb-3 text-center">
+                  {subscribedToDefaultList
+                    ? "You’re on the list! Use the button below to unsubscribe."
+                    : "Your email address has been removed from this mailing list. If you unsubscribed by accident, use the button below to re-subscribe."}
+                </div>
+              )}
             </div>
-          </form>
-          {formSubmitted ? (
-            <div className="mt-8">
-              <FormSuccess>Saved!</FormSuccess>
-            </div>
-          ) : null}
-        </main>
-        <Watermark />
-      </div>
-    </>
+          </div>
+          <div className="px-10 pb-9 text-center">
+            {defaultListOnly ? (
+              <Button
+                type="submit"
+                text={subscribedToDefaultList ? "Unsubscribe" : "Re-subscribe"}
+                white
+                onClick={subscribeUnsubscribeButtonClick}
+                disabled={formSaving}
+              />
+            ) : (
+              <Button
+                white
+                full
+                text="Save"
+                type="submit"
+                disabled={formSaving}
+              />
+            )}
+          </div>
+        </form>
+        {formSubmitted && !formSaving && (
+          <div className="mt-8">
+            <FormSuccess>Saved!</FormSuccess>
+          </div>
+        )}
+      </main>
+      <Watermark />
+    </div>
   );
 };
 
