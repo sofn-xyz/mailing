@@ -6,6 +6,7 @@ import P from "./P";
 import Li from "./Li";
 import Ul from "./Ul";
 import Code from "./Code";
+import Pre from "./Pre";
 import { Components } from "@mdx-js/react/lib";
 
 const MDXComponents: Components = {
@@ -17,6 +18,7 @@ const MDXComponents: Components = {
   li: Li,
   ul: Ul,
   code: Code,
+  pre: Pre,
 };
 
 export default MDXComponents;
