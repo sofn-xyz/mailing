@@ -47,7 +47,7 @@ export default function DocsLink({
       >
         <span
           className={cx("pr-2", {
-            "text-green-200": isActive,
+            "text-green-300": isActive,
             "text-gray-500": !isActive,
           })}
         >
