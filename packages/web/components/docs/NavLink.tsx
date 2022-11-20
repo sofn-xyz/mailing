@@ -37,18 +37,18 @@ export default function DocsLink({
           "hover:text-white inline-block text-base leading-none font-normal",
           className,
           {
-            "text-white font-medium": isActive,
-            "text-slate-500": !isActive,
+            "text-white font-medium": showActive,
+            "text-slate-500": !showActive,
           }
         )}
         scroll={!!scroll}
         shallow={true}
-        aria-selected={isActive}
+        aria-selected={showActive}
       >
         <span
           className={cx("pr-2", {
-            "text-green-300": isActive,
-            "text-gray-500": !isActive,
+            "text-green-300": showActive,
+            "text-gray-500": !showActive,
           })}
         >
           ●

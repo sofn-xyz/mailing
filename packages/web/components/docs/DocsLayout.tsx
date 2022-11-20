@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import cx from "classnames";
@@ -20,18 +20,9 @@ export default function DocsLayout({ children }) {
   const router = useRouter();
   const [hamburgerOpen, setHamburgerOpen] = useState(false);
 
-  useEffect(() => {
-    const bodyClass = "bg-black";
-    document?.body.classList.add(bodyClass);
-    return function cleanupBodyClass() {
-      document?.body.classList.remove(bodyClass);
-    };
-  }, []);
-
   return (
     <div className="bg-black text-gray-400 min-h-screen">
       <div className="z-50 bg-black fixed w-full flex justify-between items-middle py-0 text-sm mb-16 px-4 sm:px-6 border-b border-gray-500 text-blue-300 border-dotted">
-        <a className="hidden" id="0"></a>
         <div className="brand flex flex-col justify-center py-4">
           <Link href="/">
             <span className="hidden sm:block">
@@ -197,7 +188,8 @@ export default function DocsLayout({ children }) {
           </NavLink>
         </nav>
         <div className="lg:pl-[20rem]">
-          <main className="prose prose-mailing-dark font-medium text-xl max-w-3xl top-16 pt-12 pb-16 relative">
+          <a id="0"></a>
+          <main className="overflow-scroll prose prose-mailing-dark font-medium text-xl max-w-3xl pt-12 pb-16 relative">
             {children}
           </main>
         </div>
