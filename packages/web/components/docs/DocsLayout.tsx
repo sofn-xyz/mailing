@@ -183,7 +183,7 @@ export default function DocsLayout({ children }) {
           <NavLink href="/docs/contributing" active={asPath}>
             Contributing
           </NavLink>
-          <NavLink href="/docs/discord" active={false}>
+          <NavLink href="/docs/discord" active={asPath}>
             Discord
           </NavLink>
         </nav>
