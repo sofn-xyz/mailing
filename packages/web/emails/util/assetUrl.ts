@@ -5,7 +5,7 @@
  * NOTE: This will cause the email linter to throw errors
  */
 
-const ASSET_URL = process.env.VERCEL_URL || process.env.MAILING_API_URL || "https://emails.mailing.run";
+const ASSET_URL = (process.env.NEXT_PUBLIC_VERCEL_URL && `https://${NEXT_PUBLIC_VERCEL_URL}`) || process.env.MAILING_API_URL || "https://emails.mailing.run";
 
 export default function assetUrl(url: string) {
   if (url.startsWith("/") && !process.env.LOCAL_ASSETS) {
