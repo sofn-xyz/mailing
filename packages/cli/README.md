@@ -29,7 +29,7 @@ To get started with Mailing, check out the [official docs](https://www.mailing.r
 
 ## ●&nbsp;&nbsp;&nbsp;Contributing
 
-Want to improve Mailing? Incredible. Try it out, file an issue or open a PR!
+Want to improve Mailing? Incredible. Try it out, file an issue or open a PR.
 
 Check the [CONTRIBUTING.md](https://github.com/sofn-xyz/mailing/blob/main/docs/CONTRIBUTING.md) for more info.
 
