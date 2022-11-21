@@ -11,7 +11,7 @@ import DefaultLayout from "../components/DefaultLayout";
 import { Fira_Code as Mono } from "@next/font/google";
 
 import "../styles/globals.css";
-import "../components/mdx/highlight-js-styles/gradient-dark.css";
+import "../components/mdx/highlight-js-styles/vs2015.css";
 
 const mono = Mono({
   subsets: ["latin"],
