@@ -1,0 +1,205 @@
+import Link from "next/link";
+
+# Basics
+
+## What’s Mailing?
+
+Mailing is a tool for building, testing, and sending emails with React.
+
+- Build email templates with React components
+- MJML components that work across clients (Outlook!)
+- Preview server with live reload for quick development
+- Dev mode opens emails in your browser instead of sending
+- Test mode for ensuring emails send and have the correct content
+- Plays well with js frameworks like next.js, redwood.js, remix
+- Written in TypeScript, inspired by Action Mailer from Ruby on Rails
+
+## Getting started
+
+1. Install mailing with yarn or npm:
+
+```bash yarn
+yarn add mailing-core next react react-dom
+yarn add --dev mailing
+# or
+npm install --save mailing-core next react react-dom
+npm install --save-dev mailing
+```
+
+2. Run `npx mailing` to start the preview server and scaffold your `emails` directory. This will create the following directory for all of your emails:
+
+```
+emails
+├── AccountCreated.tsx
+├── NewSignIn.tsx
+├── Reservation.tsx
+├── ResetPassword.tsx
+├── components // shared components go in here
+│   ├── BulletedList.tsx
+│   ├── ButtonPrimary.tsx
+│   ├── Footer.tsx
+│   ├── Head.tsx
+│   ├── Header.tsx
+│   └── theme.ts
+├── index.ts // this exports sendMail and is where your SMTP config goes
+└── previews // use previews to develop and check templates
+    ├── AccountCreated.tsx
+    ├── NewSignIn.tsx
+    ├── Reservation.tsx
+    └── ResetPassword.tsx
+```
+
+3. <a id="configure-transport"></a>Configure your email transport and `defaultFrom`
+   in `emails/index.ts`. It defaults to nodemailer's SMTP transport, but you can
+   read about others [here](https://nodemailer.com/transports/).
+
+Example SendGrid transport:
+
+```tsx
+const transport = nodemailer.createTransport({
+  host: "smtp.sendgrid.net",
+  port: 587,
+  auth: {
+    user: "apikey",
+    pass: process.env.SEND_GRID_KEY,
+  },
+});
+```
+
+4. Finally, send your first email like so:
+
+```tsx
+import sendMail from "./path/to/emails";
+import AccountCreated from "emails/AccountCreated";
+
+await sendMail({
+  subject: "My First Email",
+  to: "tester@example.com",
+  cc: "tester+cc@example.com",
+  bcc: ["tester+bcc@example.com", "tester+bcc2@example.com"],
+  component: <AccountCreated firstName="Amelita" />,
+});
+```
+
+This will send an email with the subject "My First Email" to the `to`, `cc`, and `bcc` addresses. The `component` prop is the React component that will be rendered to HTML for the email.
+
+## Developing with email previews
+
+Running `npx mailing` will boot the preview server on localhost:3883
+and show you all previews in `emails/previews`. The previews live reload
+when files in the emails directory change. Previews are just functions
+that return one of your emails loaded up with props. You can use them to
+render your templates in different contexts and related templates can be
+grouped in the same preview file. You can make your preview function
+async if you'd like to fetch data inside of it.
+
+For example, here's `emails/previews/AccountCreated.tsx`:
+
+```tsx
+import AccountCreated from "../AccountCreated";
+
+export function accountCreated() {
+  return <AccountCreated name="Amelita" />;
+}
+```
+
+On the left, you'll see a list of all of your emails. On the right, you'll see an individual email preview with a mobile/desktop/HTML toggle and live reload as you edit:
+
+<img
+  width="600"
+  alt="Mailing desktop preview"
+  src="https://user-images.githubusercontent.com/609038/188324943-729009f0-c6f2-45a5-87b7-ae6338d7c45f.jpg"
+/>
+
+When your email is nice, send it to yourself or your QA tool of choice for final testing (we like [Litmus](https://www.litmus.com)):
+
+<img
+  width="600"
+  alt="Mailing mobile preview"
+  src="https://user-images.githubusercontent.com/609038/188352419-8e1be23a-fa64-4e61-9e36-ecac8d882959.jpg"
+/>
+
+## sendMail
+
+The main API for using mailing from your app is `sendMail`. This function is built on nodemailer's `sendMail` function, so you can pass in any options that nodemailer supports. The main difference is that you pass in a React component instead of an HTML string, the component is rendered to HTML and sent as the email body.
+
+To configure your `sendMail` function, edit the `emails/index.ts` file where it's built and exported. This is where you'll configure your email transport and set your `defaultFrom` address. You can also add any other options that nodemailer supports.
+
+You can also access `sendMail` via the [REST API](/docs/rest-api).
+
+## Testing emails with jest
+
+When `NODE_ENV === "test"`, calling `sendMail` pushes messages into a queue for later examination. The `mail-core` package exports a couple of functions for testing that emails send with the correct content.
+
+`function getTestMailQueue(): Promise<Mail[]>`
+
+Retrieve the test message queue.
+
+`function clearTestMailQueue(): Promise<void>`
+
+Clear the test message queue. You probably want to call this before tests that use the queue.
+
+Example:
+
+```tsx
+import sendMail from "./path/to/emails";
+import { getTestMailQueue, clearTestMailQueue } from "mailing/core";
+import IssueNotification from "emails/IssueNotification";
+
+describe("Example API", () => {
+  it("sends an email when an issue is ready for review", () => {
+    await clearTestEmailQueue();
+
+    // SOMETHING THAT WILL SEND AN EMAIL e.g.
+    // await sendMail({
+    //   to: "someone@something.com",
+    //   subject: "test",
+    //   component: <TextEmail ... />,
+    // });
+
+    const emails = await getTestMailQueue();
+    expect(emails.length).toBe(1);
+    expect(emails[0].subject).toMatch("Re: An issue title");
+    expect(emails[0].html).toMatch("READY FOR REVIEW");
+    expect(emails[0].html).toMatch("ready for QA");
+  });
+});
+```
+
+## CLI
+
+`npx mailing init` initializes a project then starts the development server
+
+`npx mailing preview` launches the development server
+
+`npx mailing server build` builds the next app in .mailing
+
+`npx mailing server start` starts the next app built in .mailing/.next
+
+`npx mailing server` builds and starts it
+
+`npx mailing export-previews` exports template previews as plain html files
+
+`npx mailing` runs init then preview
+
+Append `--help` to your CLI command for a full list of supported options. Any of these options can be added to your config file.
+
+### mailing.config.json
+
+Running `npx mailing init` generates a mailing.config.json file that will be used as default options for the CLI commands. The default options are:
+
+```
+  {
+    "typescript": ???, // ("true" if you have a tsconfig.json in your root, otherwise "false")
+    "emailsDir": "./emails",
+    "outDir": "./previews_html" // (directory for export-previews html output)
+  }
+```
+
+### Telemetry
+
+To understand how people are using mailing so that we can prioritize our effort, Mailing collects some anonymized usage telemetry. To opt out, remove the `anonymousId` from your mailing.config.json file.
+
+## Support
+
+Need help getting set up? Hit us up on discord [![](https://dcbadge.vercel.app/api/server/fdSzmY46wY?style=flat)](https://discord.gg/fdSzmY46wY)

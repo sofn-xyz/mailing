@@ -30,7 +30,7 @@ const MobileHeader: React.FC<MobileHeaderProps> = ({ title }) => {
             ></span>
             <span
               className={cx(
-                "block absolute left-3 bottom-[20px] h-[3px] w-7 text-white bg-current transform  transition duration-200 ease-in-out",
+                "block absolute left-3 bottom-[20px] h-[3px] w-7 text-white bg-current transform transition duration-200 ease-in-out",
                 {
                   "rotate-45 -translate-y-[5px]": hamburgerOpen,
                 }

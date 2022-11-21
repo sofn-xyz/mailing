@@ -127,7 +127,7 @@ const List = (props: ListProps) => {
         onChange={props.onChange}
       />
       <label className="cursor-pointer pl-3" htmlFor={id}>
-        {name}
+        {name.slice(0, 1).toUpperCase() + name.slice(1)}
       </label>
     </li>
   );

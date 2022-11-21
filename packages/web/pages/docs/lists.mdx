@@ -1,0 +1,66 @@
+import Link from "next/link";
+import Image from "next/image";
+
+# Mailing Lists
+
+Mailing Lists make sure your users only get the emails they want. With Lists, you can include a link for users to update their email preferences in your templates by adding a magic link to your mailing template. Mailing will keep track of what their preferences are and show them the option to unsubscribe or resubscribe to any list that they’ve ever been sent from before.
+
+We hope you and your users will enjoy using Lists!
+
+// This paid feature is part of [Mailing Platform](/docs/platform)
+
+## Usage with sendMail
+
+Once you have an API Key set in your environment (see below), you can email a list:
+
+```jsx
+const send = await sendMail({
+  component: <SystemNotification data={d} />,
+  subject: “Re: Issue #432”,
+  to: "alex <alex@g.com>",
+  cc: “bot”,
+  list: "notifications" // << each list has a unique name
+})
+```
+
+This sends an email to the `to` and `cc` recipients (`alex` and `peter`) but first it checks if `alex` is has unsubscribed from the “notifications” list. If `alex@g.com` has unsubscribed from the “notifications” list, it will return false without sending.
+
+If the list doesn't exist, it will be created. There's no limit to the number of lists you can create.
+
+The SystemNotification template contains a link to `alex`’s email preferences screen.
+
+```jsx
+UnsubscribeLink.jsx
+
+import { LIST_SETTINGS_URL } from “mailing-core”;
+
+…
+
+<a href={LIST_SETTINGS_URL}>Unsubscribe</a>
+```
+
+`sendMail` will substitute `LIST_SETTINGS_URL` with a link to the recipient's email settings page. Users will only see lists they've been sent from before.
+
+<Image src="/email-prefs-screenshot.png" width={999} height={660} />
+
+The subscriber `test@test.com` would see a screen like this if they had received mail to the “notifications” list and "marketing" list.
+
+## Concepts: lists and members
+
+A list is an email newsletter with a name and a collection of members (email address and a subscription status).
+
+### The default list
+
+When you first create an account in your Mailing instance, it will automatically create a list called Default for you. This list acts as a global unsubscribe list: anyone who unsubscribes from this list won’t receive email sent to any of your other lists.
+
+### Other lists
+
+You can create additional lists just by sending to one with `sendMail`. Each should correspond to a particular topic, e.g. “Product updates” or “Transactional emails”. Users can subscribe or unsubscribe to these lists individually via the email preferences page. They won’t be sent any emails to other lists if they are unsubscribed from the Default list.
+
+You can (and should) add a link to the subscriber’s email preferences page by adding a link in your template with the magic text `EMAIL_PREFERENCES_URL` from `mailing-core` as the href. Example:
+`<a href={MM_EMAIL_PREFERENCES_URL}>Unsubscribe</a>`
+When you go to send your emails using sendMail, Mailing will automatically inject the correct link for each subscriber into the email.
+
+### List members
+
+Subscribers to an individual list are stored in the Member table in the database. The subscriber’s status can be either “subscribed” or “unsubscribed.”

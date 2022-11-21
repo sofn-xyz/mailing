@@ -1,8 +1,16 @@
-export default function LogoMarkSmall() {
+type LogoMarkSmallProps = {
+  height?: number;
+  width?: number;
+};
+
+export default function LogoMarkSmall({
+  height: h,
+  width: w,
+}: LogoMarkSmallProps) {
   return (
     <svg
-      width="20"
-      height="24"
+      width={w || 20}
+      height={h || 24}
       viewBox="0 0 20 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
