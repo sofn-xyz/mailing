@@ -210,6 +210,10 @@ export default function DocsLayout({ children }) {
           padding-top: 20rem;
         }
 
+        .prose :where(thead):not(:where([class~="not-prose"] *)) {
+          border-top-color: #666;
+          border-top-width: 1px;
+        }
         .prose :where(thead):not(:where([class~="not-prose"] *)),
         .prose :where(tbody tr):not(:where([class~="not-prose"] *)) {
           border-bottom-color: rgb(85 85 85);
@@ -217,6 +221,16 @@ export default function DocsLayout({ children }) {
         }
         .prose :where(tbody tr:last-child):not(:where([class~="not-prose"] *)) {
           border-bottom-width: 1px;
+        }
+        .prose :where(tbody td, tfoot td):not(:where([class~="not-prose"] *)) {
+          font-size: 14px;
+          border-bottom-width: 0;
+        }
+        .prose :where(thead th):not(:where([class~="not-prose"] *)) {
+          font-size: 10px;
+          color: #a5aab4;
+          text-transform: uppercase;
+          padding-top: 12px;
         }
       `}</style>
     </div>
