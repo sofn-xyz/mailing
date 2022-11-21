@@ -30,8 +30,8 @@ export default function Header() {
           </MjmlColumn>
           <MjmlColumn>
             <MjmlImage
-              width="170px"
-              height="28px"
+              width="167px"
+              height="25px"
               align="right"
               src={assetUrl("/assets/header-side.png")}
             />
