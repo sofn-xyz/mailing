@@ -7,7 +7,7 @@
 
 <h2>●&nbsp;&nbsp;Build, test, send emails with React</h2>
 
-- Email templates with React components
+- Build email templates with React components
 - MJML components that work across clients (Outlook!)
 - Preview server with live reload for quick development
 - Dev mode opens emails in your browser instead of sending
