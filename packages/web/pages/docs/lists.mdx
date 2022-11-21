@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 # Mailing Lists
 
@@ -40,9 +41,9 @@ import { LIST_SETTINGS_URL } from “mailing-core”;
 
 `sendMail` will substitute `LIST_SETTINGS_URL` with a link to the recipient's email settings page. Users will only see lists they've been sent from before.
 
-[IMAGE of email settings with 3 lists “Notifications”, “Marketing”, “”]
+<Image src="/email-prefs-screenshot.png" width={999} height={660} />
 
-Live example: https://demo.mailing.run/unsubscribe/mock
+The subscriber `test@test.com` would see a screen like this if they had received mail to the “notifications” list and "marketing" list.
 
 ## Concepts: lists and members
 
