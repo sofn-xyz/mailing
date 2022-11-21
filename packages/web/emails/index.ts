@@ -2,11 +2,11 @@ import nodemailer from "nodemailer";
 import { buildSendMail } from "mailing-core";
 
 const transport = nodemailer.createTransport({
-  host: "smtp.sendgrid.net",
+  host: "email-smtp.us-east-1.amazonaws.com",
   port: 587,
   auth: {
-    user: "apikey",
-    pass: process.env.SENDGRID_API_KEY,
+    user: process.env.MAILING_SES_USER,
+    pass: process.env.MAILING_SES_PASSWORD,
   },
 });
 
