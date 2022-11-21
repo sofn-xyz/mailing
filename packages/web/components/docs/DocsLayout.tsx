@@ -136,7 +136,7 @@ export default function DocsLayout({ children }) {
             Getting started
           </NavLink>
           <NavLink href="/docs#developing-with-email-previews" active={asPath}>
-            Dev
+            Previews
           </NavLink>
           <NavLink href="/docs#sendmail" active={asPath}>
             Send
@@ -174,7 +174,7 @@ export default function DocsLayout({ children }) {
             REST API
           </NavLink>
           <NavLink href="/docs/templates" active={asPath}>
-            Example Templates
+            Example templates
           </NavLink>
           <NavLink href="/docs/turborepo" active={asPath}>
             Turborepo
