@@ -209,6 +209,15 @@ export default function DocsLayout({ children }) {
           margin-top: -18rem;
           padding-top: 20rem;
         }
+
+        .prose :where(thead):not(:where([class~="not-prose"] *)),
+        .prose :where(tbody tr):not(:where([class~="not-prose"] *)) {
+          border-bottom-color: rgb(85 85 85);
+          border-bottom-style: dotted;
+        }
+        .prose :where(tbody tr:last-child):not(:where([class~="not-prose"] *)) {
+          border-bottom-width: 1px;
+        }
       `}</style>
     </div>
   );
