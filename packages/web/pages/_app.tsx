@@ -8,7 +8,7 @@ import DocsLayout from "../components/docs/DocsLayout";
 import BlogLayout from "../components/BlogLayout";
 import DefaultLayout from "../components/DefaultLayout";
 
-import { Fira_Code as Mono } from "@next/font/google";
+import { IBM_Plex_Mono as Mono } from "@next/font/google";
 
 import "../styles/globals.css";
 import "../components/mdx/highlight-js-styles/vs2015.css";

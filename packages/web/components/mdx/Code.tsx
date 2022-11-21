@@ -7,7 +7,7 @@ type CodeProps = {
 export default function Code({ children }: CodeProps) {
   return (
     <span className="not-prose">
-      <code className="mono font-normal text-sm not-prose bg-gray-700 px-2 py-1 mx-0.5 rounded-lg relative top-[-2px] text-green-200">
+      <code className="mono font-normal text-sm not-prose bg-zinc-800 px-2 py-1 mx-0.5 rounded-lg relative top-[-2px] text-green-200">
         {children}
       </code>
     </span>
