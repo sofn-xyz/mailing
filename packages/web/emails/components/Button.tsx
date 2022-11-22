@@ -26,7 +26,7 @@ export default function Button({ secondary, ...props }: ButtonProps) {
       fontSize={fontSize.sm}
       fontWeight={fontWeight.bold}
       color={colors.black}
-      innerPadding="16px 24px"
+      innerPadding="14px 24px 16px 24px"
       backgroundColor={colors.white}
       borderRadius={borderRadius.base}
       align="left"
