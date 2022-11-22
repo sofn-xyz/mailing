@@ -12,24 +12,15 @@ const PreviewSender: React.FC<PreviewSenderProps> = ({
   previewClass,
 }) => {
   const [email, setEmail] = useState<string | null>(null);
-  const [usedEmailFromLocalStorage, setUsedEmailFromLocalStorage] =
-    useState<boolean>(false);
   const [error, setError] = useState<React.ReactElement | null>(null);
   const [lastSendAt, setLastSentAt] = useState<Date | null>(null);
   const [sending, setSending] = useState<boolean>(false);
 
   useEffect(() => {
-    if (!email && !usedEmailFromLocalStorage) {
-      setEmail(window.localStorage.getItem("previewSenderEmail"));
-      const lastSent = window.localStorage.getItem("previewSenderLastSentAt");
-      if (lastSent) {
-        setLastSentAt(new Date(lastSent));
-      }
-
-      // ensure this only happens once
-      setUsedEmailFromLocalStorage(true);
-    }
-  }, [email, usedEmailFromLocalStorage]);
+    setEmail(window.localStorage.getItem("previewSenderEmail"));
+    const lastSent = window.localStorage.getItem("previewSenderLastSentAt");
+    if (lastSent) setLastSentAt(new Date(lastSent));
+  }, []);
 
   const send: React.FormEventHandler<HTMLFormElement> = useCallback(
     async (e) => {
