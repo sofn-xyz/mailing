@@ -113,7 +113,7 @@ const PreviewSender: React.FC<PreviewSenderProps> = ({
           placeholder="name@example.com"
           value={email || ""}
           onChange={onInputChange}
-          className="text-sm p-2 border-neutral-600 border-[1px] border-r-0 rounded-l-sm bg-gray-700 text-white outline-none hover:border-[#bbb] focus:border-[#bbb] placeholder:text-color-[#aaa] min-w-[216px]"
+          className="text-sm p-2 border-neutral-600 border-[1px] border-r-0 rounded-l-sm bg-gray-700 text-white outline-none hover:border-[#bbb] focus:border-[#bbb] placeholder:text-color-[#aaa] min-w-[216px] max-h-[38px]"
         />
         <input
           type="submit"
