@@ -138,9 +138,6 @@ export default function DocsLayout({ children }) {
           <NavLink href="/docs#developing-with-email-previews" active={asPath}>
             Previews
           </NavLink>
-          <NavLink href="/docs#sendmail" active={asPath}>
-            Send
-          </NavLink>
           <NavLink href="/docs#testing-emails-with-jest" active={asPath}>
             Testing
           </NavLink>
@@ -170,6 +167,9 @@ export default function DocsLayout({ children }) {
 
           <NavCategory>Reference</NavCategory>
 
+          <NavLink href="/docs/sending-email" active={asPath}>
+            Sending email
+          </NavLink>
           <NavLink href="/docs/rest-api" active={asPath}>
             REST API
           </NavLink>
@@ -179,6 +179,7 @@ export default function DocsLayout({ children }) {
           <NavLink href="/docs/turborepo" active={asPath}>
             Turborepo
           </NavLink>
+
           <NavCategory>Org</NavCategory>
           <NavLink href="/docs/contributing" active={asPath}>
             Contributing
