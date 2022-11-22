@@ -1,5 +1,5 @@
 import { Api } from "../index";
-import { createApiKey } from "../apiKeys";
+import { createOrganizationDefaultListAndApiKey } from "../createOrganizationDefaultListAndApiKey";
 
 interface CreateMessageFormData {
   to: string | string[];
@@ -12,8 +12,12 @@ interface CreateMessageFormData {
   previewName?: string;
 }
 
-export async function apiCreateMessage() {
-  const apiKey = await createApiKey();
+export async function apiCreateMessage(apiKeyArg?: string) {
+  const apiKey =
+    "string" === typeof apiKeyArg
+      ? apiKeyArg
+      : (await createOrganizationDefaultListAndApiKey()).apiKey.id;
+
   const instance = new ApiCreateMessage({ apiKey });
   return instance.perform();
 }
