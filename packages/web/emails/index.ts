@@ -12,7 +12,7 @@ const transport = nodemailer.createTransport({
 
 const sendMail = buildSendMail({
   transport,
-  defaultFrom: "peter+sendgrid@campsh.com",
+  defaultFrom: "alex@mailing.run",
   configPath: "./mailing.config.json",
 });
 
