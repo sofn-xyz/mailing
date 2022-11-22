@@ -23,11 +23,11 @@ export default function Button({ secondary, ...props }: ButtonProps) {
   return (
     <MjmlButton
       lineHeight={lineHeight.tight}
-      fontSize={fontSize.lg}
-      fontWeight={fontWeight.normal}
-      color={colors.white}
+      fontSize={fontSize.sm}
+      fontWeight={fontWeight.bold}
+      color={colors.black}
       innerPadding="16px 24px"
-      backgroundColor={colors.amber200}
+      backgroundColor={colors.white}
       borderRadius={borderRadius.base}
       align="left"
       {...props}

@@ -39,7 +39,17 @@ export default function Footer() {
                   fontSize={fontSize.sm}
                   href="https://discord.gg/fdSzmY46wY"
                 >
-                  Mailing Discord
+                  <img
+                    height={12}
+                    width={16}
+                    src={assetUrl("/assets/discord.png")}
+                    style={{
+                      verticalAlign: "text-bottom",
+                      paddingRight: 6,
+                      paddingBottom: 4,
+                    }}
+                  />
+                  Discord
                 </Link>
               </MjmlText>
             </MjmlColumn>
@@ -52,7 +62,7 @@ export default function Footer() {
                 paddingBottom={8}
                 textTransform="uppercase"
               >
-                What we&apos;re up to
+                What we&rsquo;re up to
               </MjmlText>
               <MjmlText align="center">
                 <Link
@@ -60,7 +70,17 @@ export default function Footer() {
                   color={colors.white}
                   href="https://github.com/sofn-xyz/mailing/issues"
                 >
-                  GitHub Issues
+                  <img
+                    height={16}
+                    width={16}
+                    src={assetUrl("/assets/github.png")}
+                    style={{
+                      verticalAlign: "text-bottom",
+                      paddingRight: 6,
+                      paddingBottom: 2,
+                    }}
+                  />
+                  Issues
                 </Link>
               </MjmlText>
             </MjmlColumn>
@@ -86,9 +106,9 @@ export default function Footer() {
               fontSize={fontSize.xs}
               color={colors.slate400}
             >
-              You’re receiving this email because you asked for occasional
-              updates about Mailing. If you don’t want to receive these in the
-              future, you can{" "}
+              You&rsquo;re receiving this email because you asked for occasional
+              updates about Mailing. If you don&rsquo;t want to receive these in
+              the future, you can{" "}
               <Link
                 color={colors.slate400}
                 textDecoration="underline"
@@ -104,7 +124,7 @@ export default function Footer() {
           <MjmlColumn>
             <MjmlImage
               height={16}
-              width={12.8}
+              width={13}
               src={assetUrl("/assets/logo.png")}
               href="https://mailing.run"
             />
