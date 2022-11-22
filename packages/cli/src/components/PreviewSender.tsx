@@ -108,10 +108,20 @@ const PreviewSender: React.FC<PreviewSenderProps> = ({
           placeholder="name@example.com"
           value={email || ""}
           onChange={onInputChange}
+          className="text-sm p-2 border-neutral-600 border-[1px] border-r-0 rounded-l-sm bg-gray-700 text-white outline-none hover:border-[#bbb] focus:border-[#bbb] placeholder:text-color-[#aaa] min-w-[216px]"
         />
-        <input type="submit" value="Send" disabled={!email?.length} />
+        <input
+          type="submit"
+          value="Send"
+          disabled={!email?.length}
+          className="text-sm border-none p-[9px] rounded-r-sm cursor-pointer bg-[#fff] text-black hover:bg-white"
+        />
       </form>
-      {error && <div className="error">⚠ {error}</div>}
+      {error && !sending && (
+        <div className="error break-words max-w-[288px]">
+          <span className="text-amber-300">⚠</span> {error}
+        </div>
+      )}
       {sending && <div className="sending">Sending...</div>}
       {!sending && lastSendAt && (
         <div className="last-send">
@@ -130,55 +140,7 @@ const PreviewSender: React.FC<PreviewSenderProps> = ({
         form {
           margin-bottom: 8px;
         }
-        input {
-          font-size: 14px;
-          background: #333;
-          color: #fff;
-          line-height: 120%;
-          padding: 8px;
-          border: solid 1px #666;
-          border-top-left-radius: 2px;
-          border-bottom-left-radius: 2px;
-        }
-        input[type="email"] {
-          border-right: none;
-          min-width: 216px;
-        }
-        input[type="email"]:hover {
-          outline: none;
-          border: 1px solid #bbb;
-          border-right: none;
-        }
-        input[type="email"]:focus {
-          outline: none;
-          border: 1px solid #bbb;
-          border-right: none;
-        }
-        ::placeholder {
-          color: #aaa;
-        }
-        input[type="submit"] {
-          background-color: #fff;
-          color: #000;
-          font-size: 12px;
-          border: none;
-          padding: 11px 12px 14px;
-          position: relative;
-          top: -2px;
-          border-image-width: 0;
-          border-top-left-radius: 0px;
-          border-bottom-left-radius: 0px;
-          border-top-right-radius: 2px;
-          border-bottom-right-radius: 2px;
-          transition: box-shadow 200ms ease-out;
-        }
-        input[type="submit"]:hover {
-          cursor: pointer;
-          background: #e4ebfa;
-        }
-        input[type="submit"]:active {
-          box-shadow: inset 0 0 12px rgba(0, 0, 0, 0.75);
-        }
+
         a {
           transition: background-color, transform 200ms ease-out;
           display: inline-block;
