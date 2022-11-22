@@ -27,12 +27,18 @@ export default async function send(
     return;
   }
 
-  await sendMail({
-    component,
-    to,
-    dangerouslyForceDeliver: true,
-    subject,
-  });
-
-  res.json({});
+  try {
+    await sendMail({
+      component,
+      to,
+      dangerouslyForceDeliver: true,
+      subject,
+    });
+    res.json({});
+  } catch (e) {
+    error("error sending mail", e);
+    res
+      .status(500)
+      .json({ error: "sendMail threw an error: " + JSON.stringify(e) });
+  }
 }

@@ -42,16 +42,26 @@ const PreviewSender: React.FC<PreviewSenderProps> = ({
           previewClass,
           subject: `${previewClass} - ${previewFunction}`,
         };
+
         const response = await fetch("/api/previews/send", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload),
         });
-        const data: SendPreviewResponseBody = await response.json();
 
-        if (data.error || response.status >= 300) {
+        let data: SendPreviewResponseBody | undefined;
+        let errorLoadingJson = false;
+
+        try {
+          data = await response.json();
+        } catch (e) {
+          console.log("response body was", response.body);
+          errorLoadingJson = true;
+        }
+
+        if (errorLoadingJson || data?.error || response.status >= 300) {
           setLastSentAt(null);
-          setError(<>{data.error || "Unknown error, check your console"}</>);
+          setError(<>{data?.error || "Unknown error, check your console"}</>);
         } else {
           setError(null);
           const lastSent = new Date();
