@@ -60,7 +60,7 @@ const PreviewSender: React.FC<PreviewSenderProps> = ({
         try {
           data = await response.json();
         } catch (e) {
-          console.log("response body was", response.body);
+          console.error("response body was", response.body);
           errorLoadingJson = true;
         }
 
