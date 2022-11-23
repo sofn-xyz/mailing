@@ -291,13 +291,12 @@ const Home: NextPage = () => {
                   </div>
                 </div>
                 <div className="text-left md:text-center mt-2 md:mt-8">
-                  <a
+                  <Link
                     className="text-black dark:text-white text-xl leading-none px-4 h-9 inline-flex items-center rounded-2xl border-2 border-black dark:border-white hover:underline"
-                    href="https://github.com/sofn-xyz/mailing/blob/main/docs/DEPLOY.md"
-                    target="blank"
+                    href="/docs/deploy"
                   >
                     Learn More about Deployment
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>
