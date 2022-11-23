@@ -34,8 +34,9 @@ export default async function send(
       subject,
     });
     res.json({});
-  } catch (e) {
+  } catch (e: any) {
     error("error sending mail", e);
+
     res
       .status(500)
       .json({ error: "sendMail threw an error: " + jsonStringifyError(e) });
