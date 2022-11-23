@@ -27,6 +27,8 @@ We’re longtime users of Action Mailer and wanted something similar for our typ
 
 To get started with Mailing, check out the [official docs](https://www.mailing.run/docs).
 
+<br/>
+
 ## ●&nbsp;&nbsp;&nbsp;Contributing
 
 Want to improve Mailing? Incredible. Try it out, file an issue or open a PR.
