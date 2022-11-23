@@ -20,7 +20,8 @@
     "./*.ts",
     "packages/*/src/**/*",
     "packages/web/**/*",
-    "emails/**/*"
+    "emails/**/*",
+    "e2e/**/*.ts",
   ],
   "exclude": [
     "packages/**/__test__/*",
