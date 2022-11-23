@@ -14,6 +14,12 @@ export function previewTree(): [string, string[]][] {
   });
 }
 
+export function getTemplateModule(name: string) {
+  return moduleManifest.templates[
+    name as keyof typeof moduleManifest.templates
+  ];
+}
+
 export function getPreviewModule(name: string) {
   return moduleManifest.previews[name as keyof typeof moduleManifest.previews];
 }
@@ -29,6 +35,7 @@ export async function getPreviewComponent(
       }
     | undefined = previews[name as keyof typeof previews] as any;
   const previewComponent = previewModule?.[functionName];
+
   return typeof previewComponent === "function"
     ? await previewComponent()
     : undefined;

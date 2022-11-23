@@ -10,10 +10,8 @@ type Intercept = {
 
 type SendPreviewRequestBody = {
   to: string;
-  html?: string;
-  previewFunction?: string;
-  previewClass?: string;
-  subject: string;
+  previewFunction: string;
+  previewClass: string;
 };
 
 type SendPreviewResponseBody = {
@@ -45,3 +43,8 @@ type MailingConfig = {
   port?: number;
   quiet?: boolean;
 };
+
+/* eslint-disable-next-line @typescript-eslint/ban-types */
+interface Template<P> extends React.FC<P> {
+  subject?: string | ((args: Partial<P>) => string);
+}

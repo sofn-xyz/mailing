@@ -1,7 +1,10 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { error } from "../../../util/log";
 import { sendMail } from "../../../moduleManifest";
-import { getPreviewComponent } from "../../../util/moduleManifestUtil";
+import {
+  getPreviewComponent,
+  getTemplateModule,
+} from "../../../util/moduleManifestUtil";
 import { jsonStringifyError } from "../../../util/jsonStringifyError";
 
 export default async function send(
@@ -14,16 +17,23 @@ export default async function send(
   }
 
   const body: SendPreviewRequestBody = req.body;
-  const { to, subject, previewClass, previewFunction } = body;
-  let component;
+  const { to, previewClass, previewFunction } = body;
+  let component, template;
+  let subject = `${previewClass} - ${previewFunction}`;
 
   if (previewClass && previewFunction) {
     component = await getPreviewComponent(previewClass, previewFunction);
+    template = await getTemplateModule(previewClass);
   }
+
   if (!component) {
     error("no component found");
     res.status(400).json({ error: "no html provided, no component found" });
     return;
+  }
+
+  if (template && typeof template.subject === "function") {
+    subject = template.subject(component.props);
   }
 
   try {

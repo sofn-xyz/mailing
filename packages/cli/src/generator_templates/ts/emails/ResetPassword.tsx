@@ -21,7 +21,7 @@ type ResetPasswordProps = {
   ctaText: string;
 };
 
-const ResetPassword: React.FC<ResetPasswordProps> = ({
+const ResetPassword: Template<ResetPasswordProps> = ({
   name,
   body,
   ctaText,

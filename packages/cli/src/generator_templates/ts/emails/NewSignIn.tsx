@@ -26,7 +26,7 @@ type NewSignInProps = {
   bulletedList: ReactElement;
 };
 
-const NewSignIn: React.FC<NewSignInProps> = ({
+const NewSignIn: Template<NewSignInProps> = ({
   name,
   headline,
   body,

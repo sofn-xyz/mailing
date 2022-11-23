@@ -27,7 +27,7 @@ type ReservationProps = {
   ctaText?: string;
 };
 
-const Reservation: React.FC<ReservationProps> = ({
+const Reservation: Template<ReservationProps> = ({
   headline,
   body,
   bulletedList,

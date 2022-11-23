@@ -3,6 +3,7 @@ import { parse } from "node-html-parser";
 import { render } from "../../../util/mjml";
 import {
   getPreviewComponent,
+  getTemplateModule,
   previewTree,
 } from "../../../util/moduleManifestUtil";
 import { error } from "../../../util/log";
@@ -22,18 +23,34 @@ async function getPreviewFunction(
 ): Promise<[string, string]> {
   let text = "";
   try {
-    const component = await getPreviewComponent(previewClass, name);
-    if (!component) throw new Error(`${previewClass}#${name} not found`);
-    const { html } = render(component);
-    // slice out the body to minimize funky head parsing
-    const body = /<body[^>]*>((.|[\n\r])*)<\/body>/im.exec(html);
-    if (body && body[1]) {
-      const root = parse(body[1]);
-      text = root.text.replace(/\s+/g, " ").trim().substring(0, MAX_TEXT_CHARS);
+    const component = await getTemplateModule(previewClass);
+    if (!component) throw new Error(`${previewClass} not found`);
+
+    const previewComponent = await getPreviewComponent(previewClass, name);
+    if (!previewComponent) throw new Error(`${previewClass}#${name} not found`);
+
+    // Try to build preview text from subject
+    if (typeof component.subject === "function") {
+      text = component.subject(previewComponent.props);
+    }
+
+    // If that didn't work, try to build preview text from the rendered preview
+    if (text.length === 0) {
+      const { html } = render(previewComponent);
+      // slice out the body to minimize funky head parsing
+      const body = /<body[^>]*>((.|[\n\r])*)<\/body>/im.exec(html);
+      if (body && body[1]) {
+        const root = parse(body[1]);
+        text = root.text
+          .replace(/\s+/g, " ")
+          .trim()
+          .substring(0, MAX_TEXT_CHARS);
+      }
     }
   } catch (e) {
     error(`error rendering text preview for ${previewClass}#${name}`, e);
   }
+
   return [`/previews/${previewClass}/${name}`, text];
 }
 
