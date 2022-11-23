@@ -13,6 +13,7 @@
     "prisma": true
   },
   "parserOptions": {
+    "project": ["./tsconfig.json"],
     "requireConfigFile": false,
     "sourceType": "module",
     "ecmaFeatures": {
@@ -66,6 +67,7 @@
   ],
   "rules": {
     "semi": "off",
+    "@typescript-eslint/no-floating-promises": "error",
     "@next/next/google-font-display": "off",
     "@next/next/no-html-link-for-pages": [
       "error",
