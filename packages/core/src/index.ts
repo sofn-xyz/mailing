@@ -137,7 +137,7 @@ export function buildSendMail<T>(options: BuildSendMailOptions<T>) {
         });
         if (response.status === 201) {
           const { id } = (await response.json()) as { id: string };
-          open(`${PREVIEW_SERVER_URL}/${id}`);
+          await open(`${PREVIEW_SERVER_URL}/${id}`);
         } else {
           error(`Error hitting ${PREVIEW_SERVER_URL}`);
           error(response);

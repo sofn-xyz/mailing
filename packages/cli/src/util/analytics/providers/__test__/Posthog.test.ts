@@ -10,8 +10,8 @@ describe("Posthog", () => {
   });
 
   describe("#trackMany", () => {
-    it("should call fetch with the correct arguments", () => {
-      posthog.trackMany([
+    it("should call fetch with the correct arguments", async () => {
+      await posthog.trackMany([
         { event: "test.event.one", properties: { foo: "bar.one" } },
         { event: "test.event.two", properties: { foo: "bar.two" } },
       ]);
@@ -39,8 +39,8 @@ describe("Posthog", () => {
   });
 
   describe("#track", () => {
-    it("should call fetch with the correct arguments", () => {
-      posthog.track({ event: "test.event", properties: { foo: "bar" } });
+    it("should call fetch with the correct arguments", async () => {
+      await posthog.track({ event: "test.event", properties: { foo: "bar" } });
       expect(fetch).toHaveBeenCalledTimes(1);
       expect(fetch).toHaveBeenCalledWith("https://app.posthog.com/capture/", {
         method: "POST",
