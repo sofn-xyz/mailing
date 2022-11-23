@@ -36,6 +36,10 @@ describe("users", () => {
       it("creates a default apiKey for the user", async () => {
         expect(await prisma.apiKey.count()).toBe(1);
       });
+
+      it("creates an organization", async () => {
+        expect(await prisma.organization.count()).toBe(1);
+      });
     });
 
     describe("failure states", () => {
