@@ -13,7 +13,6 @@
     "prisma": true
   },
   "parserOptions": {
-    "project": ["./tsconfig.json"],
     "requireConfigFile": false,
     "sourceType": "module",
     "ecmaFeatures": {
@@ -36,6 +35,9 @@
     {
       "files": ["**/*.ts", "**/*.tsx"],
       "parser": "@typescript-eslint/parser",
+      "parserOptions": {
+        "project": ["./tsconfig.json"]
+      },
       "plugins": ["@typescript-eslint"],
       "extends": [
         "eslint:recommended",
@@ -43,6 +45,7 @@
       ],
       "rules": {
         "no-unused-vars": "off",
+        "@typescript-eslint/no-floating-promises": "error",
         "@typescript-eslint/no-explicit-any": "off",
         "@typescript-eslint/no-unused-vars": [
           "error",
@@ -67,7 +70,6 @@
   ],
   "rules": {
     "semi": "off",
-    "@typescript-eslint/no-floating-promises": "error",
     "@next/next/google-font-display": "off",
     "@next/next/no-html-link-for-pages": [
       "error",
