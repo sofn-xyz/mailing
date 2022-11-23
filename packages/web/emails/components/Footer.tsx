@@ -9,6 +9,7 @@ import {
 import Link from "./Link";
 import { colors, fontSize, fontWeight } from "../theme";
 import assetUrl from "../util/assetUrl";
+import { EMAIL_PREFERENCES_URL } from "mailing-core";
 
 export default function Footer() {
   return (
@@ -112,7 +113,7 @@ export default function Footer() {
               <Link
                 color={colors.slate400}
                 textDecoration="underline"
-                href="https://mailing.run/unsubscribe"
+                href={EMAIL_PREFERENCES_URL}
               >
                 unsubscribe.
               </Link>
