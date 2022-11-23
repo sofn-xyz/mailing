@@ -32,14 +32,14 @@ The SystemNotification template contains a link to `alex`’s email preferences 
 ```jsx
 UnsubscribeLink.jsx
 
-import { LIST_SETTINGS_URL } from “mailing-core”;
+import { EMAIL_PREFERENCES_URL } from “mailing-core”;
 
 …
 
-<a href={LIST_SETTINGS_URL}>Unsubscribe</a>
+<a href={EMAIL_PREFERENCES_URL}>Unsubscribe</a>
 ```
 
-`sendMail` will substitute `LIST_SETTINGS_URL` with a link to the recipient's email settings page. Users will only see lists they've been sent from before.
+`sendMail` will substitute `EMAIL_PREFERENCES_URL` with a link to the recipient's email settings page. Users will only see lists they've been sent from before.
 
 <Image src="/email-prefs-screenshot.png" width={999} height={660} />
 
@@ -58,7 +58,7 @@ When you first create an account in your Mailing instance, it will automatically
 You can create additional lists just by sending to one with `sendMail`. Each should correspond to a particular topic, e.g. “Product updates” or “Transactional emails”. Users can subscribe or unsubscribe to these lists individually via the email preferences page. They won’t be sent any emails to other lists if they are unsubscribed from the Default list.
 
 You can (and should) add a link to the subscriber’s email preferences page by adding a link in your template with the magic text `EMAIL_PREFERENCES_URL` from `mailing-core` as the href. Example:
-`<a href={MM_EMAIL_PREFERENCES_URL}>Unsubscribe</a>`
+`<a href={EMAIL_PREFERENCES_URL}>Unsubscribe</a>`
 When you go to send your emails using sendMail, Mailing will automatically inject the correct link for each subscriber into the email.
 
 ### List members
