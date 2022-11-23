@@ -1,5 +1,16 @@
 # mailing
 
+## 0.9.0
+
+### Minor Changes
+
+- add beta Lists, Members, unsubscribe functionality
+
+### Patch Changes
+
+- Updated dependencies
+  - mailing-core@0.9.0
+
 ## 0.8.19
 
 ### Patch Changes

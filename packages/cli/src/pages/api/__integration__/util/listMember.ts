@@ -1,12 +1,17 @@
+import prisma from "../../../../../prisma";
 import { Api } from "./index";
 
-type ListMemberData = {
+type CreateListMemberData = {
   email: string;
   status: string;
 };
 
 type ListSubscribeData = {
   email: string;
+};
+
+type UpdateListMemberData = {
+  status: string;
 };
 
 // Return info about all members of a list
@@ -34,14 +39,39 @@ export class ApiListMember extends Api {
   method = "GET";
 }
 
-export async function apiCreateListMember(listId: string, formData?: any) {
+// create a list member on the default list
+// fails if the member already exists
+export async function apiCreateDefaultListMember(email: string) {
+  // get the default list from the database
+  const defaultList = await prisma.list.findFirstOrThrow({
+    where: { isDefault: true },
+  });
+
+  const apiListSubscribeReturn = await apiListSubscribe(defaultList.id, {
+    email,
+  });
+
+  const { response: createDefaultListMemberResponse } = apiListSubscribeReturn;
+
+  expect(createDefaultListMemberResponse.status).toEqual(201);
+
+  return apiListSubscribeReturn;
+}
+
+export async function apiCreateListMember(
+  listId: string,
+  formData?: CreateListMemberData
+) {
   const instance = new ApiCreateListMember();
   instance.path = `/api/lists/${listId}/members`;
   if (formData) instance.formData = formData;
   return instance.perform();
 }
 
-export async function apiListSubscribe(listId: string, formData?: any) {
+export async function apiListSubscribe(
+  listId: string,
+  formData?: ListSubscribeData
+) {
   const instance = new ApiListSubscribe();
   instance.path = `/api/lists/${listId}/subscribe`;
   if (formData) instance.formData = formData;
@@ -56,7 +86,7 @@ export class ApiListSubscribe extends Api<ListSubscribeData> {
   };
 }
 
-export class ApiCreateListMember extends Api<ListMemberData> {
+export class ApiCreateListMember extends Api<CreateListMemberData> {
   method = "POST";
 
   formData = {
@@ -77,6 +107,6 @@ export async function apiPatchListMember(
   return instance.perform();
 }
 
-export class ApiPatchListMember extends Api<ListMemberData> {
+export class ApiPatchListMember extends Api<UpdateListMemberData> {
   method = "PATCH";
 }

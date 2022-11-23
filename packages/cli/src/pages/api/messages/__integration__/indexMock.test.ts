@@ -2,11 +2,20 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { createMocks } from "node-mocks-http";
 import messagesIndex from "../index";
 import createMessage from "../../../../util/createMessage";
-import { createApiKey } from "../../__integration__/util/apiKeys";
+import { createOrganizationDefaultListAndApiKey } from "../../__integration__/util/createOrganizationDefaultListAndApiKey";
 
 jest.mock("../../../../util/createMessage");
 
 describe("/api/messages", () => {
+  let apiKey: string;
+
+  beforeAll(async () => {
+    const {
+      apiKey: { id: validApiKey },
+    } = await createOrganizationDefaultListAndApiKey();
+    apiKey = validApiKey;
+  });
+
   describe("GET", () => {
     test("returns 405", async () => {
       const { req, res } = createMocks({
@@ -38,7 +47,7 @@ describe("/api/messages", () => {
           previewName: "preview",
         },
         headers: {
-          "x-api-key": await createApiKey(),
+          "x-api-key": apiKey,
         },
       });
 

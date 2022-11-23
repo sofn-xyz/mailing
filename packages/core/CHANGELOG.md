@@ -1,5 +1,11 @@
 # mailing-core
 
+## 0.9.0
+
+### Minor Changes
+
+- add beta Lists, Members, unsubscribe functionality
+
 ## 0.8.19
 
 ### Patch Changes

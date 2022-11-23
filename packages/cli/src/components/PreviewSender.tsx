@@ -17,14 +17,10 @@ const PreviewSender: React.FC<PreviewSenderProps> = ({
   const [sending, setSending] = useState<boolean>(false);
 
   useEffect(() => {
-    if (!email) {
-      setEmail(window.localStorage.getItem("previewSenderEmail"));
-      const lastSent = window.localStorage.getItem("previewSenderLastSentAt");
-      if (lastSent) {
-        setLastSentAt(new Date(lastSent));
-      }
-    }
-  }, [email]);
+    setEmail(window.localStorage.getItem("previewSenderEmail"));
+    const lastSent = window.localStorage.getItem("previewSenderLastSentAt");
+    if (lastSent) setLastSentAt(new Date(lastSent));
+  }, []);
 
   const send: React.FormEventHandler<HTMLFormElement> = useCallback(
     async (e) => {
@@ -34,6 +30,7 @@ const PreviewSender: React.FC<PreviewSenderProps> = ({
 
       window.localStorage.setItem("previewSenderEmail", email);
       try {
+        setError(null);
         setSending(true);
         const payload: SendPreviewRequestBody = {
           to: email,
@@ -42,16 +39,26 @@ const PreviewSender: React.FC<PreviewSenderProps> = ({
           previewClass,
           subject: `${previewClass} - ${previewFunction}`,
         };
+
         const response = await fetch("/api/previews/send", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload),
         });
-        const data: SendPreviewResponseBody = await response.json();
 
-        if (data.error || response.status >= 300) {
+        let data: SendPreviewResponseBody | undefined;
+        let errorLoadingJson = false;
+
+        try {
+          data = await response.json();
+        } catch (e) {
+          console.error("response body was", response.body);
+          errorLoadingJson = true;
+        }
+
+        if (errorLoadingJson || data?.error || response.status >= 300) {
           setLastSentAt(null);
-          setError(<>{data.error || "Unknown error, check your console"}</>);
+          setError(<>{data?.error || "Unknown error, check your console"}</>);
         } else {
           setError(null);
           const lastSent = new Date();
@@ -98,10 +105,20 @@ const PreviewSender: React.FC<PreviewSenderProps> = ({
           placeholder="name@example.com"
           value={email || ""}
           onChange={onInputChange}
+          className="text-sm p-2 border-neutral-600 border-[1px] border-r-0 rounded-l-sm bg-gray-700 text-white outline-none hover:border-[#bbb] focus:border-[#bbb] placeholder:text-color-[#aaa] min-w-[216px] max-h-[38px]"
         />
-        <input type="submit" value="Send" disabled={!email?.length} />
+        <input
+          type="submit"
+          value="Send"
+          disabled={!email?.length}
+          className="text-sm border-none p-[9px] rounded-r-sm cursor-pointer bg-[#fff] text-black hover:bg-white"
+        />
       </form>
-      {error && <div className="error">⚠ {error}</div>}
+      {error && (
+        <div className="error break-words max-w-[288px]">
+          <span className="text-amber-300">⚠</span> {error}
+        </div>
+      )}
       {sending && <div className="sending">Sending...</div>}
       {!sending && lastSendAt && (
         <div className="last-send">
@@ -120,55 +137,7 @@ const PreviewSender: React.FC<PreviewSenderProps> = ({
         form {
           margin-bottom: 8px;
         }
-        input {
-          font-size: 14px;
-          background: #333;
-          color: #fff;
-          line-height: 120%;
-          padding: 8px;
-          border: solid 1px #666;
-          border-top-left-radius: 2px;
-          border-bottom-left-radius: 2px;
-        }
-        input[type="email"] {
-          border-right: none;
-          min-width: 216px;
-        }
-        input[type="email"]:hover {
-          outline: none;
-          border: 1px solid #bbb;
-          border-right: none;
-        }
-        input[type="email"]:focus {
-          outline: none;
-          border: 1px solid #bbb;
-          border-right: none;
-        }
-        ::placeholder {
-          color: #aaa;
-        }
-        input[type="submit"] {
-          background-color: #fff;
-          color: #000;
-          font-size: 12px;
-          border: none;
-          padding: 11px 12px 14px;
-          position: relative;
-          top: -2px;
-          border-image-width: 0;
-          border-top-left-radius: 0px;
-          border-bottom-left-radius: 0px;
-          border-top-right-radius: 2px;
-          border-bottom-right-radius: 2px;
-          transition: box-shadow 200ms ease-out;
-        }
-        input[type="submit"]:hover {
-          cursor: pointer;
-          background: #e4ebfa;
-        }
-        input[type="submit"]:active {
-          box-shadow: inset 0 0 12px rgba(0, 0, 0, 0.75);
-        }
+
         a {
           transition: background-color, transform 200ms ease-out;
           display: inline-block;

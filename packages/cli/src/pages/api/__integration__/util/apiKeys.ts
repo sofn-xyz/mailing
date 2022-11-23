@@ -1,5 +1,4 @@
 import { Api } from "./index";
-import prisma from "../../../../../prisma";
 import { assertIntegrationTestEnv } from "./assertIntegrationTestEnv";
 assertIntegrationTestEnv();
 
@@ -19,28 +18,4 @@ export class ApiGetApiKeys extends Api {
 
 export class ApiPostApiKeys extends Api {
   path = "/api/apiKeys";
-}
-
-export async function createApiKey() {
-  const org = await prisma.organization.create({
-    data: {
-      name: "My Test Co " + Math.random(),
-    },
-  });
-
-  const k = await prisma.apiKey.create({
-    data: {
-      organizationId: org.id,
-    },
-  });
-
-  await prisma.list.create({
-    data: {
-      organizationId: org.id,
-      isDefault: true,
-      displayName: "Default",
-      name: "default",
-    },
-  });
-  return k.id;
 }

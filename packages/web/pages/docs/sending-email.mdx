@@ -1,0 +1,88 @@
+# Sending email
+
+Mailing can be used just for developing HTML emails, but we think it works best when it’s also used to send. This way you can render emails dynamically based on props at runtime and keep all of your templating logic in one place.
+
+The main API for using Mailing from your app is `sendMail()`. This function is built with nodemailer, so you can pass in any options that nodemailer supports. When you pass in a React component instead of an HTML string, the component is rendered to HTML and sent as the email body.
+
+If you’re triggering sends from a non-node app, you can also access `sendMail` via the [REST API](/docs/rest-api).
+
+## Configuring a transport
+
+Before sending email, you'll need to configure a transport. This is the SMTP service that will send your email.
+
+Mailing is transport agnostic, here are a few we like:
+
+- [Sendgrid](https://sendgrid.com): cheap and reliable, pairs well with other Twilio products
+- [SES](https://aws.amazon.com/ses/): cheap and reliable, pairs well with AWS
+- [Postmark](https://postmarkapp.com): more expensive but great developer experience
+
+Once you've selected one of these, set your SMTP credentials they give you in `emails/index.ts`.
+
+Here's a [working example](https://github.com/steven-tey/dub/blob/main/emails/index.ts) using Postmark:
+
+```ts
+const sendMail = buildSendMail({
+  transport: nodemailer.createTransport({
+    host: "smtp.postmarkapp.com",
+    port: 587,
+    auth: {
+      user: process.env.POSTMARK_API_KEY,
+      pass: process.env.POSTMARK_API_KEY,
+    },
+  }),
+  defaultFrom: "Steven from Dub <steven@dub.sh>",
+  configPath: "./mailing.config.json",
+});
+```
+
+You'll notice that environment variables are used to store credentials. This is a good practice for security, but you can also hardcode them for testing.
+
+## Calling sendMail
+
+Once you’ve configured `sendMail` in `emails/index.ts`, you can import and call it. It’s an async function so if you need to wait for the send to complete, you can use `await`:
+
+```tsx
+import sendMail from “path/to/emails”;
+
+await sendMail({
+  to: "ok@ok.com",
+  subject: "Hello",
+  component: <MyTemplate data={myData} />
+});
+```
+
+Note that `sendMail` must be called from your back-end (e.g. an API route in your NextJS app) because it uses secrets. We recommend configuring it with environment variables.
+
+### sendMail `(mail: ComponentMail) => Promise<T | undefined>`
+
+Sends an email using the configured transport. It extends the `sendMail` function from nodemailer and can accomodate any [options that nodemailer supports](https://nodemailer.com/message/).
+
+#### Common ComponentMail options
+
+- `component` – The React component to render as the email body. If you pass in a string for `html`, this will be ignored
+- `dangerouslyForceDeliver` – If true, the email will be sent even if the `NODE_ENV` is not `production`. Use with caution.
+- `forcePreview` – If true, the email will be intercepted by the preview server
+- `listName` – The name of the list to send the email to. [Read more about lists](/docs/lists)
+- `from` – The email address of the sender. If not provided, the defaultFrom address configured in `buildSendMail` will be used.
+- `to` – Comma separated list or an array of recipients email addresses that will appear on the To: field
+- `cc` – Comma separated list or an array of recipients email addresses that will appear on the Cc: field
+- `bcc` – Comma separated list or an array of recipients email addresses that will appear on the Bcc: field
+- `subject` – The subject of the email
+- `text` – The plaintext version of the message as an Unicode string, Buffer, Stream
+- `html` – The HTML version of the message as an Unicode string, Buffer, Stream
+- `attachments` – An array of attachment objects (see [nodemailer docs](https://nodemailer.com/message/attachments/) for details). Attachments can be used for embedding images as well.
+
+## FAQ
+
+**Q: How can I send from my Django/Rails/PHP app?**
+
+**A:** Once you've configured your transport, you can use the REST API to send emails from any app. To use it you'll need to [deploy and set up an API key](/docs/deploy).
+
+**Q: Can I have multiple transports?**
+
+**A:** Yes, you can build multiple `sendMail` functions and import them as needed.
+This is useful if you want to send emails from different accounts or with
+different settings. For example Postmark encourages users to have one transport
+for transactional emails and another for marketing emails. Just make sure to export
+one of them as the default to be used by the development preview server
+and the REST API.

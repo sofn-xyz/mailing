@@ -28,7 +28,7 @@ async function handlePatchListMember(
 
   await prisma.member.update({
     where: { id: memberId },
-    data: { status: req.body.status },
+    data: { status },
   });
 
   res.status(200).end();
