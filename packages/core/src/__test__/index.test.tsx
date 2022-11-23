@@ -373,7 +373,7 @@ describe("index", () => {
             html: "No unsubscribe link here",
           });
 
-        expect(callSendMail).rejects.toThrowError(
+        await expect(callSendMail).rejects.toThrowError(
           "Templates sent to a list must include an unsubscribe link. Add an unsubscribe link or remove the list parameter from your sendMail call."
         );
       });
