@@ -58,9 +58,16 @@ export default async function handler(
 
   if (skipUnsubscribeChecks) {
     // in this case we still want to add the email to the default list if it doesn't exist
-    const defaultList = await prisma.list.findFirstOrThrow({
-      where: { organizationId: organization.id, isDefault: true },
-    });
+    let defaultList;
+    try {
+      defaultList = await prisma.list.findFirstOrThrow({
+        where: { organizationId: organization.id, isDefault: true },
+      });
+    } catch (e) {
+      return res
+        .status(422)
+        .json({ error: "default list not found 1 " + organization.id });
+    }
 
     try {
       await prisma.member.create({
@@ -85,25 +92,41 @@ export default async function handler(
       // capitalize the first letter of the list name
       const displayName = listName.charAt(0).toUpperCase() + listName.slice(1);
 
-      list = await prisma.list.upsert({
-        where: { name: listName },
-        create: {
-          name: listName,
-          displayName,
-          isDefault: false,
-          organizationId: organization.id,
-        },
-        update: {},
-      });
+      try {
+        list = await prisma.list.upsert({
+          where: { name: listName },
+          create: {
+            name: listName,
+            displayName,
+            isDefault: false,
+            organizationId: organization.id,
+          },
+          update: {},
+        });
+      } catch (e) {
+        return res.status(422).json({
+          error:
+            "list not found 2 " +
+            organization.id +
+            " " +
+            JSON.stringify(listName),
+        });
+      }
     }
 
     // also lookup the default list
     if (list?.isDefault) {
       defaultList = list;
     } else {
-      defaultList = await prisma.list.findFirstOrThrow({
-        where: { organizationId: organization.id, isDefault: true },
-      });
+      try {
+        defaultList = await prisma.list.findFirstOrThrow({
+          where: { organizationId: organization.id, isDefault: true },
+        });
+      } catch (e) {
+        return res
+          .status(422)
+          .json({ error: "default list not found 3 " + organization.id });
+      }
     }
 
     if (list) {
