@@ -30,6 +30,7 @@ const PreviewSender: React.FC<PreviewSenderProps> = ({
 
       window.localStorage.setItem("previewSenderEmail", email);
       try {
+        setError(null);
         setSending(true);
         const payload: SendPreviewRequestBody = {
           to: email,
@@ -113,7 +114,7 @@ const PreviewSender: React.FC<PreviewSenderProps> = ({
           className="text-sm border-none p-[9px] rounded-r-sm cursor-pointer bg-[#fff] text-black hover:bg-white"
         />
       </form>
-      {error && !sending && (
+      {error && (
         <div className="error break-words max-w-[288px]">
           <span className="text-amber-300">⚠</span> {error}
         </div>
