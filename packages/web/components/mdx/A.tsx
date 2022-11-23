@@ -16,7 +16,7 @@ export default function A({ children, ...anchorProps }: AProps) {
   ) : (
     <a
       {...anchorProps}
-      className="text-blue no-underline"
+      className="text-blue-500 no-underline"
       target="_blank"
       rel="noopener noreferrer"
     >

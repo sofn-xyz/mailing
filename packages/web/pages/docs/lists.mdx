@@ -16,14 +16,14 @@ Once you have an API Key set in your environment (see below), you can email a li
 ```jsx
 const send = await sendMail({
   component: <SystemNotification data={d} />,
-  subject: “Re: Issue #432”,
+  subject: "Re: Issue #432",
   to: "alex <alex@g.com>",
-  cc: “bot”,
-  list: "notifications" // << each list has a unique name
-})
+  cc: "bot@g.com",
+  listName: "notifications", // << each list has a unique name
+});
 ```
 
-This sends an email to the `to` and `cc` recipients (`alex` and `peter`) but first it checks if `alex` is has unsubscribed from the “notifications” list. If `alex@g.com` has unsubscribed from the “notifications” list, it will return false without sending.
+This sends an email to the `to` and `cc` recipients (`alex` and `bot`) but first it checks if `alex` is has unsubscribed from the “notifications” list. If `alex@g.com` has unsubscribed from the “notifications” list, it will return false without sending.
 
 If the list doesn't exist, it will be created. There's no limit to the number of lists you can create.
 
@@ -32,7 +32,7 @@ The SystemNotification template contains a link to `alex`’s email preferences 
 ```jsx
 UnsubscribeLink.jsx
 
-import { LIST_SETTINGS_URL } from “mailing-core”;
+import { LIST_SETTINGS_URL } from "mailing-core";
 
 …
 

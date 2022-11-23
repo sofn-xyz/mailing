@@ -1,5 +1,3 @@
-import Link from "next/link";
-
 # Basics
 
 ## What’s Mailing?
@@ -83,6 +81,8 @@ await sendMail({
 
 This will send an email with the subject "My First Email" to the `to`, `cc`, and `bcc` addresses. The `component` prop is the React component that will be rendered to HTML for the email.
 
+More info on sending email and configuring your transport can be found in the [Sending email doc](docs/sending-email).
+
 ## Developing with email previews
 
 Running `npx mailing` will boot the preview server on localhost:3883
@@ -118,14 +118,6 @@ When your email is nice, send it to yourself or your QA tool of choice for final
   alt="Mailing mobile preview"
   src="https://user-images.githubusercontent.com/609038/188352419-8e1be23a-fa64-4e61-9e36-ecac8d882959.jpg"
 />
-
-## sendMail
-
-The main API for using mailing from your app is `sendMail`. This function is built on nodemailer's `sendMail` function, so you can pass in any options that nodemailer supports. The main difference is that you pass in a React component instead of an HTML string, the component is rendered to HTML and sent as the email body.
-
-To configure your `sendMail` function, edit the `emails/index.ts` file where it's built and exported. This is where you'll configure your email transport and set your `defaultFrom` address. You can also add any other options that nodemailer supports.
-
-You can also access `sendMail` via the [REST API](/docs/rest-api).
 
 ## Testing emails with jest
 
