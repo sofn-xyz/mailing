@@ -27,7 +27,7 @@ export default async function handler(
   if (typeof apiKey !== "string") {
     return res
       .status(422)
-      .end("expected x-api-key in header or apiKey in query");
+      .json({ error: "expected x-api-key in header or apiKey in query" });
   }
 
   let organizationId;
@@ -46,7 +46,7 @@ export default async function handler(
 
       organizationId = apiKeyRecord.organizationId;
     } catch {
-      return res.status(401).end("API key is not valid");
+      return res.status(401).json({ error: "API key is not valid" });
     }
   }
 
