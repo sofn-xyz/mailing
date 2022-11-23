@@ -1,5 +1,13 @@
 # mailing
 
+## 0.9.1
+
+### Patch Changes
+
+- 1c2444d: Improvements to the preview send UI
+- Updated dependencies [1c2444d]
+  - mailing-core@0.9.1
+
 ## 0.9.0
 
 ### Minor Changes
