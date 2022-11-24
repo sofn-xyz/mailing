@@ -11,7 +11,7 @@
   "scripts": {
     "lint": "yarn lint:unlink; eslint .; yarn lint:link",
     "lint:unlink": "rm packages/cli/src/emails",
-    "lint:link": "ln -s generator_templates/ts/emails packages/cli/src/emails",
+    "lint:link": "ln -s 'generator_templates/ts/emails/' packages/cli/src/emails",
     "dev": "cd packages/cli && yarn dev",
     "dev:js": "yarn link:emails:js && yarn dev",
     "dev:init": "cd packages/cli && rm -rf previews_html; rm -rf .mailing emails mailing.config.json; src/dev.js",
