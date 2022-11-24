@@ -94,7 +94,9 @@ export default function DocsLayout({ children }) {
             }
           )}
         >
-          <h3 className="text-white text-2xl pt-7 -mb-2">Docs</h3>
+          <Link href="/docs">
+            <h3 className="text-white text-2xl pt-7 -mb-2">Docs</h3>
+          </Link>
           <button className="hidden search border text-sm bg-gray-800 border-gray-800 text-slate-500 hover:text-blue w-full transition-all duration-300 text-left rounded-md px-2 pt-1 pb-[5px]">
             <svg
               className="fill-slate-500 transition-all duration-300 inline -mt-[3px] mr-2"
