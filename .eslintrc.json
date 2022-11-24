@@ -41,7 +41,7 @@
           "./packages/cli/tsconfig.json",
           "./packages/core/tsconfig.json",
           "./packages/web/tsconfig.json",
-          "./packages/cli/cypress/tsconfig.json",
+          "./packages/cli/cypress/tsconfig.json"
         ]
       },
       "plugins": ["@typescript-eslint"],
