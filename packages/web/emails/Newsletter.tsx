@@ -20,7 +20,7 @@ const NewsletterSection = ({
     <MjmlColumn
       paddingBottom={32}
       paddingTop={32}
-      borderBottom={noBorder ? null : `1px dotted ${colors.gray500}`}
+      borderBottom={noBorder ? "" : `1px dotted ${colors.gray500}`}
     >
       {children}
     </MjmlColumn>
