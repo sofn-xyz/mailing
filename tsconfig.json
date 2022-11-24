@@ -18,14 +18,16 @@
   "$schema": "https://json.schemastore.org/tsconfig",
   "include": [
     "./*.ts",
-    "packages",
-    "emails",
+    "packages/*/src/**/*",
+    "packages/web/**/*",
+    "testSetup.ts",
+    "emails/**/*",
     "e2e"
   ],
   "exclude": [
-    "packages/**/__test__",
-    "packages/**/__integration__",
-    "packages/*/dist"
+    "packages/**/__test__/*",
+    "packages/**/__integration__/*",
+    "packages/*/dist/**/*",
   ],
   "ts-node": {
     "files": true

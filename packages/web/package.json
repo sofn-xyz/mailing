@@ -43,21 +43,5 @@
     "postcss": "^8.4.14",
     "prisma": "^4.2.0",
     "tailwindcss": "^3.1.6"
-  }, "files": [
-    "components",
-    "dist",
-    "src",
-    "next.config.mjs",
-    "next-env.d.ts",
-    "netlify.toml",
-    "pages",
-    "postcss.config.js",
-    "prisma",
-    "public",
-    "styles",
-    "tailwind.config.js",
-    "tsconfig.json",
-    "!__test__",
-    "!__integration__"
-  ]
+  }
 }

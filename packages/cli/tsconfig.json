@@ -21,9 +21,9 @@
     "baseUrl": "./"
   },
   "$schema": "https://json.schemastore.org/tsconfig",
-  "include": ["src/**/*.ts", "src/**/*.tsx", "prisma/**/*.ts"],
+  "include": ["./*.ts", "src/**/*.ts", "src/**/*.tsx", "prisma/**/*.ts"],
   "exclude": [
-    "dist",
+    "dist/**/*",
     "node_modules"
   ]
 }
