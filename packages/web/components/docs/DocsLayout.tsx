@@ -5,7 +5,7 @@ import cx from "classnames";
 
 import NavLink from "./NavLink";
 import IndexButton from "./IndexButton";
-import { useHydrationFriendlyAsPath } from "../mdx/hooks/useHydrationFriendlyAsPath";
+import { useHydrationFriendlyAsPath } from "../hooks/useHydrationFriendlyAsPath";
 
 function NavCategory({ children }) {
   return (
