@@ -12,6 +12,7 @@ module.exports = {
         "Courier",
         "monospace",
       ],
+      serif: ["swear-display-cilati", "Georgia", "Times New Roman", "serif"],
     },
     colors: {
       white: "#e4ebfa",
@@ -30,6 +31,7 @@ module.exports = {
       black: "#111",
       "red-400": "#f59c9c",
       "amber-200": "#fadf98",
+      "green-100": "#eeffec",
       "green-200": "#dbf7d7",
       "green-300": "#c3f2bc",
       "emerald-700": "#728a6f",
