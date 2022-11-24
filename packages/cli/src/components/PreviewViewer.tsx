@@ -49,7 +49,7 @@ const PreviewViewer: React.FC<PreviewViewerProps> = ({ initialData }) => {
 
   const fetchData = useCallback(async () => {
     // fire this one async, no loader
-    fetchPreviews();
+    await fetchPreviews();
 
     if (!(previewClass && previewFunction)) {
       setData((data: Data) => ({

@@ -10,7 +10,7 @@ const ShowIntercept = () => {
     setData(await res.json());
   }, [query.interceptId]);
   useEffect(() => {
-    if (query.interceptId) fetchData();
+    if (query.interceptId) void fetchData();
   }, [query.interceptId, fetchData]);
 
   return <Intercept data={data} />;

@@ -71,10 +71,10 @@ const ApiLists = withSessionAPIRoute(async function (
 
   switch (req.method) {
     case "GET":
-      handleGetLists(user, req, res);
+      await handleGetLists(user, req, res);
       break;
     case "POST":
-      handleCreateList(user, req, res);
+      await handleCreateList(user, req, res);
       break;
     default:
       return res.status(404).end();

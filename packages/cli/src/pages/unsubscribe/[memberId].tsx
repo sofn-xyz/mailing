@@ -225,7 +225,7 @@ const Unsubscribe = (props: UnsubscribeProps) => {
       e.preventDefault();
       setFormSaving(true);
       const newFormState = onChange(defaultList.id, true)();
-      serializeAndSubmitForm(newFormState);
+      await serializeAndSubmitForm(newFormState);
     },
     [defaultList.id, onChange, serializeAndSubmitForm]
   );

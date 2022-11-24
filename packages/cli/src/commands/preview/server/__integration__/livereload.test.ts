@@ -34,7 +34,7 @@ describe("livereload", () => {
         done();
       });
 
-      touchTemplate();
+      void touchTemplate();
     });
   });
 });
