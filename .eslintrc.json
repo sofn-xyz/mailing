@@ -42,7 +42,6 @@
           "./packages/core/tsconfig.json",
           "./packages/web/tsconfig.json",
           "./packages/cli/cypress/tsconfig.json",
-          "./e2e/mailing_tests/cypress/tsconfig.json"
         ]
       },
       "plugins": ["@typescript-eslint"],
