@@ -3,3 +3,5 @@ node_modules
 **/generated/**
 **/runs/**
 .mailing
+packages/cli/src/generator_templates
+packages/cli/src/emails

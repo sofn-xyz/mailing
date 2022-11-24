@@ -23,7 +23,6 @@
   "$schema": "https://json.schemastore.org/tsconfig",
   "include": ["src/**/*.ts", "src/**/*.tsx", "prisma/**/*.ts"],
   "exclude": [
-    "src/emails/**/*",
     "dist/**/*",
     "node_modules"
   ]

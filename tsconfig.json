@@ -21,13 +21,13 @@
     "packages/*/src/**/*",
     "packages/web/**/*",
     "emails/**/*",
-    "e2e/**/*.ts",
+    "e2e/**/*.ts"
   ],
   "exclude": [
     "packages/**/__test__/*",
     "packages/**/__integration__/*",
-    "packages/*/src/emails/**/*",
     "packages/*/dist/**/*",
+    "packages/*/src/emails/**/*",
     "packages/cli/src/generator_templates/**/*"
   ],
   "ts-node": {
