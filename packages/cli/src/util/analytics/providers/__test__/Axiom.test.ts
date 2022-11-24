@@ -10,8 +10,8 @@ describe("Axiom", () => {
   });
 
   describe("#trackMany", () => {
-    it("should call fetch with the correct arguments", () => {
-      axiom.trackMany([
+    it("should call fetch with the correct arguments", async () => {
+      await axiom.trackMany([
         { event: "test.event.one", properties: { foo: "bar.one" } },
         { event: "test.event.two", properties: { foo: "bar.two" } },
       ]);
@@ -40,8 +40,8 @@ describe("Axiom", () => {
   });
 
   describe("#track", () => {
-    it("should call fetch with the correct arguments", () => {
-      axiom.track({ event: "test.event", properties: { foo: "bar" } });
+    it("should call fetch with the correct arguments", async () => {
+      await axiom.track({ event: "test.event", properties: { foo: "bar" } });
       expect(fetch).toHaveBeenCalledTimes(1);
       expect(fetch).toHaveBeenCalledWith(
         "https://cloud.axiom.co/api/v1/datasets/datasetName/ingest",

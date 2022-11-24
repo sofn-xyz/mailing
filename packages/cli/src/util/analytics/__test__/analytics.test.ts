@@ -22,8 +22,8 @@ describe("analytics", () => {
   });
 
   describe("#trackMany", () => {
-    it("should call fetch with the correct arguments", () => {
-      analytics.trackMany([
+    it("should call fetch with the correct arguments", async () => {
+      await analytics.trackMany([
         { event: "test.event.one", properties: { foo: "bar.one" } },
         { event: "test.event.two", properties: { foo: "bar.two" } },
       ]);
@@ -75,8 +75,11 @@ describe("analytics", () => {
   });
 
   describe("#track", () => {
-    it("should call fetch with the correct arguments", () => {
-      analytics.track({ event: "test.event", properties: { foo: "bar" } });
+    it("should call fetch with the correct arguments", async () => {
+      await analytics.track({
+        event: "test.event",
+        properties: { foo: "bar" },
+      });
       expect(fetch).toHaveBeenCalledTimes(2);
 
       // Axiom call
