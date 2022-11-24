@@ -66,7 +66,7 @@ export const handler = buildHandler(
           stdio: "inherit",
         });
 
-      execSync("cd .mailing && npx next build", {
+      execSync("npx next build .mailing", {
         stdio: "inherit",
       });
     }
