@@ -16,7 +16,7 @@ type BuildHandlerOptions = {
 };
 
 export function buildHandler(
-  handler: (argv: any) => void,
+  handler: (argv: any) => Promise<void>,
   options: BuildHandlerOptions
 ) {
   return async (argv: any) => {
@@ -51,7 +51,7 @@ export function buildHandler(
 
       await handler(argv);
     } finally {
-      shutdownAnalytics();
+      await shutdownAnalytics();
     }
   };
 }
