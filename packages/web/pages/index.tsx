@@ -622,7 +622,7 @@ const Home: NextPage = () => {
                     <p className="leading-snug mt-4">
                       Wow, you guys are fast! Thank you{" "}
                       <a
-                        href="https:://github.com/alexfarril"
+                        href="https://github.com/alexfarrill"
                         target="blank"
                         rel="noopener"
                         className="hover:underline inline-block text-blue-600 dark:text-blue-400"
