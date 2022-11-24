@@ -34,7 +34,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <header className="bg-black text-white">
-        <nav className="mx-auto flex items-center justify-between px-8 py-4 border-b border-gray-500">
+        <nav className="mx-auto flex items-center justify-between px-5 py-3 sm:px-8 sm:py-4 border-b border-gray-500 border-dotted">
           <Link href="/">
             <Image
               src="/mailing-icon-white.svg"
@@ -43,18 +43,41 @@ const Home: NextPage = () => {
               height={28}
             />
           </Link>
-          <KeyButton small href="https://www.typeform.com">
-            Get Started →
+          <span className="text-lg sm:text-2xl font-bold font-serif text-amber-200">
+            White Glove
+          </span>
+          <KeyButton
+            target="_blank"
+            small
+            href="https://www.typeform.com"
+            className="hidden lg:inline-block"
+          >
+            Get Started <span className="font-serif font-bold">→</span>
           </KeyButton>
+          <Link
+            target="_blank"
+            href="https://www.typeform.com"
+            className="lg:hidden text-green-200"
+          >
+            Start <span className="font-serif font-bold">→</span>
+          </Link>
         </nav>
       </header>
-      <main className="px-10 mx-auto container bg-black min-h-screen text-white">
-        <h1 className="text-8xl sm:text-9xl lg:text-[160px]">
+      <main className="px-5 sm:px-8 md:px-16 mx-auto container bg-black min-h-screen text-white">
+        <h1 className="text-6xl sm:text-7xl md:text-8xl lg:text-[120px] xl:text-[160px] mt-24">
           No time for
-          <div className="font-serif">beautiful emails?</div>
+          <div className="font-serif font-bold text-green-200">
+            beautiful emails?
+          </div>
         </h1>
-        <h2 className="text-4xl">No problem. We’ll make them for you.</h2>
-        <KeyButton href="https://www.typeform.com">Get Started →</KeyButton>
+        <h2 className="text-3xl md:text-4xl lg:text-5xl mt-8">
+          No problem. We’ll make them for you.
+        </h2>
+        <div className="flex justify-end mt-16">
+          <KeyButton href="https://www.typeform.com">
+            Get Started <span className="font-serif font-bold">→</span>
+          </KeyButton>
+        </div>
       </main>
       <footer className="bg-black">
         <Image src="/logo.svg" alt="Mailing logo" width={32} height={32} />

@@ -1,8 +1,9 @@
 import { ReactNode } from "react";
 import Link from "next/link";
 import cx from "classnames";
+import { InferProps } from "prop-types";
 
-type KeyButtonProps = {
+type KeyButtonProps = InferProps<HTMLAnchorElement> & {
   href: string;
   className?: string;
   children: ReactNode | ReactNode[];
@@ -11,18 +12,18 @@ type KeyButtonProps = {
 
 export default function KeyButton({
   children,
-  href,
   className,
   small,
+  ...anchorProps
 }: KeyButtonProps) {
   return (
     <Link
-      href={href}
       draggable={false}
       className={cx(
-        "relative inline-flex rounded-2xl bg-emerald-700 text-center font-bold text-black mt-1",
+        "relative inline-flex rounded-2xl bg-emerald-700 text-center text-black mt-1",
         className
       )}
+      {...anchorProps}
     >
       <div
         className={cx(
@@ -30,7 +31,7 @@ export default function KeyButton({
           {
             "text-lg px-3 pt-2 pb-1 -translate-y-1 -translate-x-1 hover:-translate-y-0.5 hover:-translate-x-0.5 active:-translate-y-0 active:-translate-x-0":
               small,
-            "text-4xl px-16 pt-8 pb-7 -translate-y-2 -translate-x-2 hover:-translate-y-1 hover:-translate-x-1 active:-translate-y-0 active:-translate-x-0":
+            "text-3xl md:text-4xl px-8 md:px-16 pt-6 pb-5 md:pt-8 md:pb-7 -translate-y-2 -translate-x-2 hover:-translate-y-1 hover:-translate-x-1 active:-translate-y-0 active:-translate-x-0":
               !small,
           }
         )}

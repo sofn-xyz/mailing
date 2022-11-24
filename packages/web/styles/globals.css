@@ -1,7 +1,8 @@
+@import url("https://use.typekit.net/qqd8jtb.css");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import url("https://use.typekit.net/qdl2rbc.css");
 
 html,
 body {
