@@ -29,8 +29,8 @@ export function ExampleCard({ name }: ExampleCardProps) {
   if (!example) return null;
   const { title, imageUrl, brandUrl, sourceUrl, demoUrl } = example;
   return (
-    <div className="flex flex-col mx-6 mb-16">
-      <div className="w-[342px]">
+    <div className="sm:mx-6 mb-16 w-full sm:w-[342px]">
+      <div className="w-full">
         <div className="relative rounded-full">
           <Image
             src={imageUrl}
@@ -41,35 +41,33 @@ export function ExampleCard({ name }: ExampleCardProps) {
           />
         </div>
       </div>
-      <div className="flex flex-col mt-8">
-        <div className="flex mt-4 text-4xl">
-          <a
-            href={sourceUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="underline"
-          >
-            Source
-          </a>
-          &nbsp;&nbsp;·&nbsp;&nbsp;
-          <a
-            href={demoUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="underline"
-          >
-            Demo
-          </a>
-        </div>
+      <div className="flex mt-4 text-4xl">
         <a
-          href={brandUrl}
+          href={sourceUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="text-gray-300 block text-2xl mt-1"
+          className="underline"
         >
-          {title}
+          Source
+        </a>
+        &nbsp;&nbsp;·&nbsp;&nbsp;
+        <a
+          href={demoUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="underline"
+        >
+          Demo
         </a>
       </div>
+      <a
+        href={brandUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="text-gray-300 block text-2xl mt-1"
+      >
+        {title}
+      </a>
     </div>
   );
 }
