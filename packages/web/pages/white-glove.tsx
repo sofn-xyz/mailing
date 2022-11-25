@@ -5,11 +5,12 @@ import Link from "next/link";
 import { useInView } from "react-intersection-observer";
 import cx from "classnames";
 
-import KeyButton from "../components/ui/KeyButton";
+import KeyButton from "../components/white-glove/KeyButton";
 import H2 from "../components/white-glove/H2";
 import Subheading from "../components/white-glove/Subheading";
-
-const Arrow = () => <span className="font-serif font-bold">→</span>;
+import Li from "../components/white-glove/Li";
+import ExampleCard from "../components/white-glove/ExampleCard";
+import { Arrow } from "../components/white-glove/Arrow";
 
 const WhiteGlove: NextPage = () => {
   const [hideHeaderRef, hideHeaderRefInView] = useInView();
@@ -81,9 +82,9 @@ const WhiteGlove: NextPage = () => {
         </nav>
       </header>
       <main className="px-5 sm:px-8 md:px-16 mx-auto container bg-black min-h-screen text-white">
-        <h1 className="text-6xl sm:text-7xl md:text-8xl lg:text-[120px] xl:text-[160px] mt-24">
+        <h1 className="text-6xl sm:text-7xl md:text-8xl lg:text-[120px] xl:text-[160px] mt-24 leading-none">
           No time for
-          <div className="font-serif font-bold text-green-200">
+          <div className="font-serif font-bold text-green-200 leading-none">
             beautiful emails?
           </div>
         </h1>
@@ -97,11 +98,34 @@ const WhiteGlove: NextPage = () => {
           </KeyButton>
         </div>
         <H2>How it works</H2>
-        <H2>Examples</H2>
-        <Subheading>
-          White Glove templates are responsive and compatible across major email
-          clients.
-        </Subheading>
+        <Li
+          title="Tell us what you need"
+          description="Give us a 1-2 sentence description for each template that you need. Copy and design inspiration are helpful but not necessary."
+          index={1}
+        />
+        <Li
+          title="We’ll design the emails"
+          description="We’ll design two variations using your homepage as a brand and visual guide. Choose one of these variations, and then we’ll make any refinements until you love it."
+          index={2}
+        />
+        <Li
+          title="We’ll code the emails"
+          description="We’ll give you the HTML output and React source files in a repo like this. Use Mailing to send, or use the React or exported HTML."
+          index={3}
+        />
+        <div className="bg-black flexn flex-col text-center py-40">
+          <H2>Examples</H2>
+          <Subheading>
+            White Glove templates are responsive and compatible across major
+            email clients.
+          </Subheading>
+          <div className="text-left flex flex-wrap justify-center mt-16">
+            {/* <ExampleCard name="lancey" /> */}
+            <ExampleCard name="thoughtfulPost" />
+            <ExampleCard name="fynn" />
+            {/* <ExampleCard name="thoughtful-post" /> */}
+          </div>
+        </div>
         <H2>Pricing</H2>
         <Subheading>
           Pricing includes design and development and is discounted for launch –

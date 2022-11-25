@@ -189,6 +189,9 @@ export default function DocsLayout({ children }) {
           <NavLink href="/docs/discord" active={asPath}>
             Discord
           </NavLink>
+          <NavLink href="/white-glove" active={asPath}>
+            White Glove
+          </NavLink>
         </nav>
         <div className="lg:pl-[10rem]">
           <a id="0"></a>
