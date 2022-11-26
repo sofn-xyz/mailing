@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import * as playwright from "playwright-aws-lambda";
+import { launchChromium } from "playwright-aws-lambda";
 
 type Data = {
   error?: string;
@@ -19,7 +19,7 @@ export default async function PageSnap(
   let browser = null;
 
   try {
-    browser = await playwright.launchChromium();
+    browser = await launchChromium();
     const context = await browser.newContext();
 
     const page = await context.newPage();
