@@ -11,10 +11,10 @@ export default async function PageSnap(
 ) {
   if (req.method !== "GET") return res.status(404).end();
 
-  const url = req.query.url;
-  if (typeof url !== "string") {
-    return res.status(403).json({ error: "url not provided" });
-  }
+  const url =
+    process.env.VERCEL_URL ||
+    process.env.MAILING_API_URL ||
+    "https://www.mailing.run";
 
   let browser = null;
 
@@ -27,7 +27,8 @@ export default async function PageSnap(
     const buffer = await page.screenshot();
 
     res.setHeader("Content-Type", "image/png");
-    res.status(201).end(buffer);
+    res.setHeader("Cache-Control", "max-age=0, s-maxage=86400");
+    res.status(200).end(buffer);
   } finally {
     if (browser) {
       await browser.close();
