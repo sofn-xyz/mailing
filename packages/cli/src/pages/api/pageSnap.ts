@@ -26,6 +26,7 @@ export default async function PageSnap(
     const page = await context.newPage();
     page.setViewportSize({ width: 1200, height: 630 });
     await page.goto(url, { timeout: 15 * 1000 });
+    await page.waitForRequest(/typekit/);
     const buffer = await page.screenshot({ type: "png" });
 
     res.setHeader("Content-Type", "image/png");
