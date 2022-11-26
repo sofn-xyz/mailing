@@ -1,7 +1,7 @@
 import { Html, Head, Main, NextScript } from "next/document";
 
 export default function Document() {
-  const image = `${process.env.NEXT_PUBLIC_VERCEL_URL}/api/pageSnap`;
+  const image = `https://${process.env.NEXT_PUBLIC_VERCEL_URL}/api/pageSnap`;
   const description = "Powered by Mailing";
   return (
     <Html>

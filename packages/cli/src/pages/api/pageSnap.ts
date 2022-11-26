@@ -12,7 +12,7 @@ export default async function PageSnap(
   if (req.method !== "GET") return res.status(404).end();
 
   const url =
-    process.env.VERCEL_URL ||
+    (process.env.VERCEL_URL && `https://${process.env.VERCEL_URL}`) ||
     process.env.MAILING_API_URL ||
     "https://www.mailing.run";
 
@@ -29,12 +29,8 @@ export default async function PageSnap(
         height: 630,
       },
     });
-    await page.goto(url, {
-      timeout: 15 * 1000,
-    });
-    const buffer = await page.screenshot({
-      type: "png",
-    });
+    await page.goto(url, { timeout: 15 * 1000 });
+    const buffer = await page.screenshot({ type: "png" });
 
     res.setHeader("Content-Type", "image/png");
     res.setHeader("Cache-Control", "max-age=0, s-maxage=86400");
