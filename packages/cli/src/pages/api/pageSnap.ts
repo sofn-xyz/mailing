@@ -22,9 +22,19 @@ export default async function PageSnap(
     browser = await launchChromium();
     const context = await browser.newContext();
 
-    const page = await context.newPage();
-    await page.goto(url);
-    const buffer = await page.screenshot();
+    // Create a page with the Open Graph image size best practise
+    const page = await context.newPage({
+      viewport: {
+        width: 1200,
+        height: 630,
+      },
+    });
+    await page.goto(url, {
+      timeout: 15 * 1000,
+    });
+    const buffer = await page.screenshot({
+      type: "png",
+    });
 
     res.setHeader("Content-Type", "image/png");
     res.setHeader("Cache-Control", "max-age=0, s-maxage=86400");
