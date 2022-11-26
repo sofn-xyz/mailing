@@ -23,12 +23,8 @@ export default async function PageSnap(
     const context = await browser.newContext();
 
     // Create a page with the Open Graph image size best practise
-    const page = await context.newPage({
-      viewport: {
-        width: 1200,
-        height: 630,
-      },
-    });
+    const page = await context.newPage();
+    page.setViewportSize({ width: 1200, height: 630 });
     await page.goto(url, { timeout: 15 * 1000 });
     const buffer = await page.screenshot({ type: "png" });
 
