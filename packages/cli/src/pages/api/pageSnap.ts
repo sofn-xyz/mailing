@@ -22,11 +22,12 @@ export default async function PageSnap(
     browser = await launchChromium();
     const context = await browser.newContext();
 
-    // Create a page with the Open Graph image size best practise
+    // Create a page with the Open Graph image size best practice
     const page = await context.newPage();
     page.setViewportSize({ width: 1200, height: 630 });
-    await page.goto(url, { timeout: 15 * 1000 });
-    await page.waitForRequest(/typekit/);
+    await page.goto(url, { timeout: 15 * 1000, waitUntil: "networkidle" });
+    // Press Command+Period to go full screen
+    await page.keyboard.press("Meta+.");
     const buffer = await page.screenshot({ type: "png" });
 
     res.setHeader("Content-Type", "image/png");
