@@ -5,19 +5,32 @@ const EXAMPLES = {
     title: "Fynn",
     imageUrl: "/white-glove/fynn.png",
     brandUrl: "http://fynncredit.com",
-    sourceUrl: "",
+    sourceUrl: "https://github.com/sofn-xyz/mailing-templates/tree/main/fynn",
     demoUrl: "https://fynn-mailing.vercel.app",
   },
   thoughtfulPost: {
     title: "Thoughtful Post",
     imageUrl: "/white-glove/thoughtful-post.png",
     brandUrl: "https://thoughtfulpost.com",
-    sourceUrl: "",
+    sourceUrl:
+      "https://github.com/sofn-xyz/mailing-templates/tree/main/thoughtful-post",
     demoUrl: "https://thoughtful-post-mailing.vercel.app",
   },
-  //   - ThoughtfulPost [Demo](https://thoughtful-post-mailing.vercel.app/) / [Source](https://github.com/sofn-xyz/mailing-templates/tree/main/thoughtful-post)
-  // - Lancey [Demo](https://lancey-mailing.vercel.app/) / [Source](https://github.com/sofn-xyz/mailing-templates/tree/main/lancey)
-  // - Fynn [Demo](https://fynn-mailing.vercel.app/) / [Source](https://github.com/sofn-xyz/mailing-templates/tree/main/fynn)
+  lancey: {
+    title: "Lancey",
+    imageUrl: "/white-glove/lancey.png",
+    brandUrl: "https://lancey.com",
+    sourceUrl: "https://github.com/sofn-xyz/mailing-templates/tree/main/lancey",
+    demoUrl: "https://lancey-mailing.vercel.app",
+  },
+  mailing: {
+    title: "Mailing",
+    imageUrl: "/white-glove/mailing.png",
+    brandUrl: "https://www.mailing.run",
+    sourceUrl:
+      "https://github.com/sofn-xyz/mailing/tree/main/packages/web/emails",
+    demoUrl: "https://emails.mailing.run",
+  },
 };
 
 type ExampleCardProps = {
@@ -32,13 +45,20 @@ export function ExampleCard({ name }: ExampleCardProps) {
     <div className="sm:mx-6 mb-16 w-full sm:w-[342px]">
       <div className="w-full">
         <div className="relative rounded-full">
-          <Image
-            src={imageUrl}
-            alt={title}
-            width={1200}
-            height={800}
-            layout="responsive"
-          />
+          <a
+            href={demoUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline"
+          >
+            <Image
+              src={imageUrl}
+              alt={title}
+              width={1200}
+              height={800}
+              layout="responsive"
+            />
+          </a>
         </div>
       </div>
       <div className="flex mt-4 text-4xl">

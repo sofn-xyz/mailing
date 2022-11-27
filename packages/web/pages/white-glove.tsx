@@ -109,7 +109,7 @@ const WhiteGlove: NextPage = () => {
           index={2}
         />
         <Li
-          title="We’ll code the emails"
+          title="You get handcrafted email templates"
           description="We’ll give you the HTML output and React source files in a repo like this. Use Mailing to send, or use the React or exported HTML."
           index={3}
         />
@@ -120,10 +120,10 @@ const WhiteGlove: NextPage = () => {
             email clients.
           </Subheading>
           <div className="text-left flex flex-wrap justify-center mt-16 md:mt-24">
-            {/* <ExampleCard name="lancey" /> */}
+            <ExampleCard name="lancey" />
             <ExampleCard name="thoughtfulPost" />
             <ExampleCard name="fynn" />
-            {/* <ExampleCard name="thoughtful-post" /> */}
+            <ExampleCard name="mailing" />
           </div>
         </div>
         <H2>Pricing</H2>
@@ -134,8 +134,10 @@ const WhiteGlove: NextPage = () => {
         <div className="text-center">
           <H2>Limited time</H2>
           <Subheading className="mx-auto">
-            White Glove is the easiest way to get custom, quality email
-            templates. But don’t delay – it’s only available for a limited time.
+            {/* White Glove is the easiest way to get custom, quality email
+            templates. But don’t delay – it’s only available for a limited time. */}
+            We’re doing this for a limited time to dogfood Mailing as we add
+            features.
           </Subheading>
           <KeyButton href="https://www.typeform.com" className="mt-20">
             Get Started&nbsp;&nbsp;
