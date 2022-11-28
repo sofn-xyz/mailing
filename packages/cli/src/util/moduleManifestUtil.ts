@@ -1,4 +1,5 @@
 import { JSXElementConstructor, ReactElement } from "react";
+import { Template } from "mailing-core";
 import moduleManifest, { config } from "../moduleManifest";
 
 export function previewTree(): [string, string[]][] {
