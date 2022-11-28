@@ -127,6 +127,50 @@ const WhiteGlove: NextPage = () => {
           </div>
         </div>
         <H2>Pricing</H2>
+        <table className="table-auto mt-8 sm:mt-12">
+          <thead>
+            <tr>
+              <th className="text-left"># of templates</th>
+              <th className="text-left">Private templates</th>
+              <th className="text-left border-x-4 border-t-4 rounded-t-2xl border-green-200">
+                Open source templates{" "}
+                <span className="text-green-300 font-bold font-serif">*</span>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr className="border-b border-gray-500 border-dotted">
+              <td>1-5</td>
+              <td>$500 each</td>
+              <td className="border-x-4 border-green-200">$250 each</td>
+            </tr>
+            <tr className="border-b border-gray-500 border-dotted">
+              <td>6-10</td>
+              <td>$400 each</td>
+              <td className="border-x-4 border-green-200">$200 each</td>
+            </tr>
+            <tr className="border-b border-gray-500 border-dotted">
+              <td>11-20</td>
+              <td>$300 each</td>
+              <td className="border-x-4 border-green-200">$150 each</td>
+            </tr>
+            <tr>
+              <td>21+</td>
+              <td>$200 each</td>
+              <td className="border-x-4 border-green-200 border-b-4 rounded-2xl">
+                $100 each
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div className="text-sm mt-4 flex justify-center py-12 bg-green-200 text-black">
+          <div className="font-bold font-serif px-2 text-7xl">
+            *Get a discount
+          </div>
+          <div className="text-center">
+            for sharing your templates open source with the Mailing community.{" "}
+          </div>
+        </div>
         <Subheading>
           Pricing includes design and development and is discounted for launch –
           while supplies last.
