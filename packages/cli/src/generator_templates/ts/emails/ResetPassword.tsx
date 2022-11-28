@@ -14,6 +14,7 @@ import {
   MjmlSpacer,
   MjmlDivider,
 } from "mjml-react";
+import { Template } from "mailing-core";
 
 type ResetPasswordProps = {
   name: string;
@@ -21,7 +22,7 @@ type ResetPasswordProps = {
   ctaText: string;
 };
 
-const ResetPassword: React.FC<ResetPasswordProps> = ({
+const ResetPassword: Template<ResetPasswordProps> = ({
   name,
   body,
   ctaText,

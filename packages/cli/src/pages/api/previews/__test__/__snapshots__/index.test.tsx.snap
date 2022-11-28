@@ -1,0 +1,42 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`index should return previews 1`] = `
+{
+  "previewText": {
+    "/previews/AccountCreated/accountCreated": "Welcome to BookBook, Amelita!",
+    "/previews/NewSignIn/newSignIn": "Security Alert: New Sign-In Hello Amelita, We noticed a new sign-in to your BookBook account on a Mac device. If this was you, you don’t nee",
+    "/previews/Reservation/reservationChanged": "Reservation Changed • Salazar in Silver Lake • Sunday, Aug 22 at 1:30pm • Party of 4, patio You’re all set! Your reservation at Salazar has ",
+    "/previews/Reservation/reservationConfirmed": "Reservation Confirmed • Salazar in Silver Lake • Saturday, Aug 22 at 1:30pm • Party of 4, patio Thanks for booking your reservation at Salaz",
+    "/previews/Reservation/reservationWithError": "Reservation Canceled • Salazar in Silver Lake • Sunday, Aug 22 at 1:30pm • Party of 4, patio If this was a mistake or if you changed your mi",
+    "/previews/ResetPassword/resetPassword": "Hello Amelita, We’ve received your request to change your password. Use the link below to set up a new password for your account. This link ",
+  },
+  "previews": [
+    [
+      "AccountCreated",
+      [
+        "accountCreated",
+      ],
+    ],
+    [
+      "NewSignIn",
+      [
+        "newSignIn",
+      ],
+    ],
+    [
+      "Reservation",
+      [
+        "reservationWithError",
+        "reservationConfirmed",
+        "reservationChanged",
+      ],
+    ],
+    [
+      "ResetPassword",
+      [
+        "resetPassword",
+      ],
+    ],
+  ],
+}
+`;

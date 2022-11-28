@@ -83,6 +83,8 @@
     "node-html-parser": "^6.1.1",
     "nodemailer": "6.8.0",
     "open": "^8.4.0",
+    "playwright-aws-lambda": "^0.9.0",
+    "playwright-core": "^1.28.1",
     "postcss": "^8.4.16",
     "posthog-node": "^2.0.2",
     "prettier": "^2.7.1",
