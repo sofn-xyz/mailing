@@ -2,6 +2,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { MjmlError } from "mjml-react";
 
 import renderTemplate from "../../util/renderTemplate";
+import { validateApiKey } from "src/util/validateApiKey";
 
 type Data = {
   error?: string; // api error messages
@@ -9,11 +10,13 @@ type Data = {
   mjmlErrors?: MjmlError[];
 };
 
-export default function handler(
+export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
   const { templateName, props } = "GET" === req.method ? req.query : req.body;
+
+  if (!(await validateApiKey(req, res))) return;
 
   // validate template name
   if (typeof templateName !== "string") {

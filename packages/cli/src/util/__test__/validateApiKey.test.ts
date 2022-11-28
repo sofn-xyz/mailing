@@ -33,23 +33,45 @@ describe("validateApiKey", () => {
     expect(result).toBe(false);
   });
 
-  it("returns false if NODE_ENV is not development and apiKey is not valid", async () => {
-    const { req, res } = mockRequestResponse();
-    jest
-      .spyOn(prisma.apiKey, "findFirstOrThrow")
-      .mockRejectedValueOnce(new Error("NOT FOUND"));
-    req.query = { apiKey: "321" };
-    const result = await validateApiKey(req, res);
-    expect(result).toBe(false);
+  describe("using process.env.MAILING_API_KEY", () => {
+    const validProcessEnvApiKey = "validProcessEnvApiKey";
+    const OG_MAILING_API_KEY = process.env.MAILING_API_KEY;
+
+    beforeAll(() => {
+      process.env.MAILING_API_KEY = validProcessEnvApiKey;
+    });
+
+    afterAll(() => {
+      process.env.MAILING_API_KEY = OG_MAILING_API_KEY;
+    });
+
+    it("returns true if apiKey matches process.env.MAILING_API_KEY", async () => {
+      const { req, res } = mockRequestResponse();
+      req.query = { apiKey: validProcessEnvApiKey };
+      const result = await validateApiKey(req, res);
+      expect(result).toBe(true);
+    });
   });
 
-  it("returns true if NODE_ENV is not development and apiKey is valid", async () => {
-    const { req, res } = mockRequestResponse();
-    jest
-      .spyOn(prisma.apiKey, "findFirstOrThrow")
-      .mockReturnValueOnce(Promise.resolve({ id: "123" }) as any);
-    req.query = { apiKey: "123" };
-    const result = await validateApiKey(req, res);
-    expect(result).toBe(true);
+  describe("using database", () => {
+    it("returns false if NODE_ENV is not development and apiKey is not valid", async () => {
+      const { req, res } = mockRequestResponse();
+      jest
+        .spyOn(prisma.apiKey, "findFirstOrThrow")
+        .mockRejectedValueOnce(new Error("NOT FOUND"));
+      req.query = { apiKey: "321" };
+      const result = await validateApiKey(req, res);
+      expect(result).toBe(false);
+    });
+
+    it("returns true if NODE_ENV is not development and apiKey is valid", async () => {
+      const { req, res } = mockRequestResponse();
+      jest
+        .spyOn(prisma.apiKey, "findFirstOrThrow")
+        .mockReturnValueOnce(Promise.resolve({ id: "123" }) as any);
+      req.query = { apiKey: "123" };
+      const result = await validateApiKey(req, res);
+      expect(result).toBe(true);
+    });
   });
 });
