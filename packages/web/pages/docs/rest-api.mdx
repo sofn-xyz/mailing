@@ -11,6 +11,12 @@ With the REST API, you can use mailing for email templating even if most of your
 | GET, POST | /api/render   | render a template with props to HTML | [Link](https://demo.mailing.run/api/render?templateName=AccountCreated&props=%7B%22name%22%3A%22peter%22%7D) |
 | GET       | /api/sendMail | send an email with props             |                                                                                                              |
 
+<div className="text-sm">
+  Note: /api/render is publicly accessible by default. However, if
+  process.env.MAILING_API_KEY is set then api/render requires that API key to be
+  sent in a query string parameter ("?apiKey=") or in the headers ("x-api-key")
+</div>
+
 ## Previews
 
 | Method | Path                                           | Description                  |                                                                     Example |
