@@ -71,6 +71,10 @@
       "error",
       ["packages/cli/pages", "packages/web/pages"]
     ],
+    "@next/next/no-img-element": [
+      "error",
+      ["packages/cli/pages", "packages/web/pages"]
+    ],
     "import/no-anonymous-default-export": [
       "error",
       {
