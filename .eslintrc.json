@@ -62,19 +62,20 @@
           }
         ]
       }
+    },
+    {
+      "files": ["packages/cli/pages/**/*", "packages/web/pages/**/*"],
+      "rules": {
+        "@next/next/no-html-link-for-pages": "error",
+        "@next/next/no-img-element": "error"
+      }
     }
   ],
   "rules": {
     "semi": "off",
     "@next/next/google-font-display": "off",
-    "@next/next/no-html-link-for-pages": [
-      "error",
-      ["packages/cli/pages", "packages/web/pages"]
-    ],
-    "@next/next/no-img-element": [
-      "error",
-      ["packages/cli/pages", "packages/web/pages"]
-    ],
+    "@next/next/no-html-link-for-pages": "off",
+    "@next/next/no-img-element": "off",
     "import/no-anonymous-default-export": [
       "error",
       {
