@@ -12,6 +12,7 @@ jest.mock("../../../../moduleManifest", () => ({
 
 jest.mock("../../../../util/moduleManifestUtil", () => ({
   getPreviewComponent: jest.fn(),
+  getTemplateModule: jest.fn(),
 }));
 
 describe("send", () => {

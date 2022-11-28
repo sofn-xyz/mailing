@@ -3,6 +3,7 @@ import { parse } from "node-html-parser";
 import { render } from "../../../util/mjml";
 import {
   getPreviewComponent,
+  getTemplateModule,
   previewTree,
 } from "../../../util/moduleManifestUtil";
 import { error } from "../../../util/log";
@@ -24,16 +25,34 @@ async function getPreviewFunction(
   try {
     const component = await getPreviewComponent(previewClass, name);
     if (!component) throw new Error(`${previewClass}#${name} not found`);
-    const { html } = render(component);
-    // slice out the body to minimize funky head parsing
-    const body = /<body[^>]*>((.|[\n\r])*)<\/body>/im.exec(html);
-    if (body && body[1]) {
-      const root = parse(body[1]);
-      text = root.text.replace(/\s+/g, " ").trim().substring(0, MAX_TEXT_CHARS);
+
+    // Try to build preview text from subject
+    const template = getTemplateModule(previewClass);
+    if (template) {
+      if (typeof template.subject === "function") {
+        text = template.subject(component.props);
+      } else if (typeof template.subject === "string") {
+        text = template.subject;
+      }
+    }
+
+    // If that didn't work, try to build preview text from the rendered preview
+    if (text.length === 0) {
+      const { html } = render(component);
+      // slice out the body to minimize funky head parsing
+      const body = /<body[^>]*>((.|[\n\r])*)<\/body>/im.exec(html);
+      if (body && body[1]) {
+        const root = parse(body[1]);
+        text = root.text
+          .replace(/\s+/g, " ")
+          .trim()
+          .substring(0, MAX_TEXT_CHARS);
+      }
     }
   } catch (e) {
     error(`error rendering text preview for ${previewClass}#${name}`, e);
   }
+
   return [`/previews/${previewClass}/${name}`, text];
 }
 

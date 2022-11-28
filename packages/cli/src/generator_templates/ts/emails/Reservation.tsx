@@ -19,6 +19,7 @@ import {
   MjmlSpacer,
   MjmlDivider,
 } from "mjml-react";
+import { Template } from "mailing-core";
 
 type ReservationProps = {
   headline: string;
@@ -27,7 +28,7 @@ type ReservationProps = {
   ctaText?: string;
 };
 
-const Reservation: React.FC<ReservationProps> = ({
+const Reservation: Template<ReservationProps> = ({
   headline,
   body,
   bulletedList,
