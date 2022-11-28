@@ -25,6 +25,7 @@ type NewSignInProps = {
   body: ReactElement;
   bulletedList: ReactElement;
 };
+import { Template } from "mailing-core";
 
 const NewSignIn: Template<NewSignInProps> = ({
   name,

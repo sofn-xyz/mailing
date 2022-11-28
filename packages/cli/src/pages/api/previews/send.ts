@@ -18,22 +18,22 @@ export default async function send(
 
   const body: SendPreviewRequestBody = req.body;
   const { to, previewClass, previewFunction } = body;
-  let component, template;
   let subject = `${previewClass} - ${previewFunction}`;
 
-  if (previewClass && previewFunction) {
-    component = await getPreviewComponent(previewClass, previewFunction);
-    template = await getTemplateModule(previewClass);
-  }
-
+  const component = await getPreviewComponent(previewClass, previewFunction);
   if (!component) {
     error("no component found");
     res.status(400).json({ error: "no html provided, no component found" });
     return;
   }
 
-  if (template && typeof template.subject === "function") {
-    subject = template.subject(component.props);
+  const template = getTemplateModule(previewClass);
+  if (template) {
+    if (typeof template.subject === "function") {
+      subject = template.subject(component.props);
+    } else if (typeof template.subject === "string") {
+      subject = template.subject;
+    }
   }
 
   try {

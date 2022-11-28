@@ -16,7 +16,7 @@ const jsdomConfig = async (): Promise<any> => {
       name: "jest.jsdom",
       color: "magenta",
     },
-    testEnvironment: "jest-environment-jsdom",
+    testEnvironment: "<rootDir>/jsdom.env.ts",
     setupFilesAfterEnv: ["<rootDir>/testSetup.ts"],
     testMatch: [
       "<rootDir>/packages/cli/src/pages/**/__test__/**/*.test.[jt]s?(x)",

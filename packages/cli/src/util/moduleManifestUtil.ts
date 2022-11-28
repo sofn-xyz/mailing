@@ -14,10 +14,12 @@ export function previewTree(): [string, string[]][] {
   });
 }
 
-export function getTemplateModule(name: string) {
+export function getTemplateModule(name?: string) {
+  if (!name) return null;
+
   return moduleManifest.templates[
     name as keyof typeof moduleManifest.templates
-  ];
+  ] as unknown as Template<any>;
 }
 
 export function getPreviewModule(name: string) {

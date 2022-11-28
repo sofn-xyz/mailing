@@ -17,6 +17,7 @@ import {
   textBase,
   textXl,
 } from "./components/theme";
+import { Template } from "mailing-core";
 
 type AccountCreatedProps = { name: string };
 

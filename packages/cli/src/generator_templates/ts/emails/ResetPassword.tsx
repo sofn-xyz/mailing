@@ -14,6 +14,7 @@ import {
   MjmlSpacer,
   MjmlDivider,
 } from "mjml-react";
+import { Template } from "mailing-core";
 
 type ResetPasswordProps = {
   name: string;

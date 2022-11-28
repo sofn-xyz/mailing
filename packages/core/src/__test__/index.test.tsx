@@ -54,7 +54,7 @@ describe("index", () => {
         "sendMail couldn't find a subject for your email"
       );
     });
-    
+
     it("should use subject from options", async () => {
       const sendMail = buildSendMail({
         transport,
@@ -78,7 +78,7 @@ describe("index", () => {
       expect(email.subject).toEqual("hello");
     });
 
-    it("should use subject from the component", async () => {
+    it("should use subject from the component - subject is function", async () => {
       const sendMail = buildSendMail({
         transport,
         defaultFrom: "replace@me.with.your.com",
@@ -101,6 +101,31 @@ describe("index", () => {
       expect(queue.length).toBe(1);
       const email = queue[0];
       expect(email.subject).toEqual("Hello Gerald");
+    });
+
+    it("should use subject from the component - subject is string", async () => {
+      const sendMail = buildSendMail({
+        transport,
+        defaultFrom: "replace@me.with.your.com",
+        configPath: "./mailing.config.json",
+      });
+
+      const Component = ({ name }: { name: string }) => <div>{name}</div>;
+      Component.subject = "Hello world";
+
+      await sendMail({
+        component: <Component name="Gerald" />,
+        to: ["ok@ok.com"],
+        from: "ok@ok.com",
+        text: "ok",
+        html: "ok",
+      });
+
+      // still hits the queue even with the error
+      const queue = await getTestMailQueue();
+      expect(queue.length).toBe(1);
+      const email = queue[0];
+      expect(email.subject).toEqual("Hello world");
     });
   });
 

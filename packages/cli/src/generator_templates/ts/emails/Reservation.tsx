@@ -19,6 +19,7 @@ import {
   MjmlSpacer,
   MjmlDivider,
 } from "mjml-react";
+import { Template } from "mailing-core";
 
 type ReservationProps = {
   headline: string;

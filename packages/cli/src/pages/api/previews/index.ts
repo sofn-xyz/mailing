@@ -23,20 +23,22 @@ async function getPreviewFunction(
 ): Promise<[string, string]> {
   let text = "";
   try {
-    const component = await getTemplateModule(previewClass);
-    if (!component) throw new Error(`${previewClass} not found`);
-
-    const previewComponent = await getPreviewComponent(previewClass, name);
-    if (!previewComponent) throw new Error(`${previewClass}#${name} not found`);
+    const component = await getPreviewComponent(previewClass, name);
+    if (!component) throw new Error(`${previewClass}#${name} not found`);
 
     // Try to build preview text from subject
-    if (typeof component.subject === "function") {
-      text = component.subject(previewComponent.props);
+    const template = getTemplateModule(previewClass);
+    if (template) {
+      if (typeof template.subject === "function") {
+        text = template.subject(component.props);
+      } else if (typeof template.subject === "string") {
+        text = template.subject;
+      }
     }
 
     // If that didn't work, try to build preview text from the rendered preview
     if (text.length === 0) {
-      const { html } = render(previewComponent);
+      const { html } = render(component);
       // slice out the body to minimize funky head parsing
       const body = /<body[^>]*>((.|[\n\r])*)<\/body>/im.exec(html);
       if (body && body[1]) {

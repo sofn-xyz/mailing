@@ -43,8 +43,3 @@ type MailingConfig = {
   port?: number;
   quiet?: boolean;
 };
-
-/* eslint-disable-next-line @typescript-eslint/ban-types */
-interface Template<P> extends React.FC<P> {
-  subject?: string | ((args: Partial<P>) => string);
-}

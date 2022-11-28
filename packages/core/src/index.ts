@@ -28,6 +28,11 @@ export type ComponentMail = SendMailOptions & {
   listName?: string;
 };
 
+export type Template<P> = React.FC<P> & {
+  subject?: string | ((args: Partial<P>) => string);
+};
+
+
 export async function getTestMailQueue() {
   try {
     const queue = await fs.readFile(TMP_TEST_FILE);
