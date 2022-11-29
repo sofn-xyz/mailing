@@ -16,7 +16,9 @@ export async function validateApiKey(
   if (process.env.MAILING_INTEGRATION_TEST && "testApiKey" === apiKey)
     return true;
   if (typeof apiKey !== "string") {
-    res.status(422).end("expected x-api-key in header or apiKey in query");
+    res
+      .status(422)
+      .json({ error: "expected x-api-key in header or apiKey in query" });
     return false;
   }
 
@@ -35,7 +37,7 @@ export async function validateApiKey(
 
     return true;
   } catch {
-    res.status(401).end("API key is not valid");
+    res.status(401).json({ error: "API key is not valid" });
   }
 
   return false;
