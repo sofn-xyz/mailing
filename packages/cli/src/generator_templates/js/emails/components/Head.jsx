@@ -8,6 +8,7 @@ import {
   MjmlRaw,
 } from "mjml-react";
 import { black, grayDark } from "./theme";
+
 const Head = ({ children }) => {
   return (
     <MjmlHead>

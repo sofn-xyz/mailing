@@ -17,6 +17,7 @@ import {
   textBase,
   textXl,
 } from "./components/theme";
+
 const AccountCreated = ({ name }) => (
   <Mjml>
     <Head />

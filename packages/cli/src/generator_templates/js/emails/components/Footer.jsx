@@ -1,6 +1,7 @@
 import { MjmlSection, MjmlColumn, MjmlText } from "mjml-react";
 import { grayDark, textSm } from "./theme";
 import { EMAIL_PREFERENCES_URL } from "mailing-core";
+
 export default function Footer({ includeUnsubscribe }) {
   return (
     <MjmlSection cssClass="smooth">

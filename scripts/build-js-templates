@@ -10,6 +10,6 @@ npx tsc \
 packages/cli/src/generator_templates/ts/emails/**/*.tsx packages/cli/src/generator_templates/ts/emails/*.ts
 
 npx prettier --write packages/cli/src/generator_templates/js/*
-npx eslint --fix packages/cli/src/generator_templates/js/*
+yarn eslint --fix --ext .jsx,.js packages/cli/src/generator_templates/js/*
 
-git add packages/cli/src/generator_templates/js/*g
+git add packages/cli/src/generator_templates/js/*

@@ -1,4 +1,5 @@
 import { MjmlSection, MjmlColumn, MjmlImage } from "mjml-react";
+
 const Header = ({ loose }) => {
   return (
     <MjmlSection padding={loose ? "48px 0 40px" : "48px 0 24px"}>
