@@ -11,4 +11,4 @@ packages/cli/src/generator_templates/ts/emails/**/*.tsx packages/cli/src/generat
 
 npx prettier --write packages/cli/src/generator_templates/js/*
 
-git add packages/cli/src/generator_templates/js/*
+git add packages/cli/src/generator_templates/js/*g
