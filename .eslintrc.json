@@ -69,6 +69,12 @@
         "@next/next/no-html-link-for-pages": "error",
         "@next/next/no-img-element": "error"
       }
+    },
+    {
+      "files": ["**/moduleManifest.js"],
+      "rules": {
+        "import/newline-after-import": "off"
+      }
     }
   ],
   "rules": {
