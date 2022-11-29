@@ -20,6 +20,11 @@ export async function validateApiKey(
     return false;
   }
 
+  // try to validate api key using process.env.MAILING_API_KEY
+  if (process.env.MAILING_API_KEY && apiKey === process.env.MAILING_API_KEY)
+    return true;
+
+  // try to validate api key using the database
   try {
     await prisma.apiKey.findFirstOrThrow({
       where: {
