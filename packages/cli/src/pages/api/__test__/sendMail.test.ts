@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { sendMail } from "../../../moduleManifest";
+import moduleManifest from "../../../moduleManifest";
 import handler from "../sendMail";
 
 // api authentication is tested in __integration__/sendMail.test.ts so don't also test it here
@@ -24,22 +24,18 @@ function mockRequestResponse(method: string) {
   res.end = jest.fn();
   req.query = {};
   res.status = jest.fn(() => res);
-  req.body = {
-    to: "alex@mailing.run",
-    templateName: "AccountCreated",
-    subject: "Welcome to Mailing!",
-    props: { name: "Alex" },
-  };
   req.headers = { "Content-Type": "application/json" };
   return { req, res };
 }
 
 describe("sendMail with a valid api key", () => {
-  beforeAll(() => {});
-
   it("should 422 if no to, cc, or bcc is provided", async () => {
     const { req, res } = mockRequestResponse("POST");
-    delete req.body.to;
+    req.body = {
+      templateName: "AccountCreated",
+      props: { name: "Alex" },
+    };
+
     await handler(req, res);
     expect(res.status).toHaveBeenCalledWith(422);
     expect(res.json).toHaveBeenCalledWith({
@@ -49,6 +45,11 @@ describe("sendMail with a valid api key", () => {
 
   it("should 422 if no templateName is provided", async () => {
     const { req, res } = mockRequestResponse("POST");
+    req.body = {
+      to: "alex@mailing.run",
+      props: { name: "Alex" },
+    };
+
     delete req.body.templateName;
     await handler(req, res);
     expect(res.status).toHaveBeenCalledWith(422);
@@ -57,10 +58,37 @@ describe("sendMail with a valid api key", () => {
     });
   });
 
-  it("should 200 with everything correctly given", async () => {
+  it("should 422 if template does not exist", async () => {
     const { req, res } = mockRequestResponse("POST");
+    req.body = {
+      to: "alex@mailing.run",
+      templateName: "FAKE",
+      props: { name: "Alex" },
+    };
+
+    await handler(req, res);
+    expect(res.status).toHaveBeenCalledWith(422);
+    expect(res.json).toHaveBeenCalledWith({
+      error:
+        "Template FAKE not found in list of templates: AccountCreated, NewSignIn, Reservation, ResetPassword",
+      mjmlErrors: undefined,
+    });
+  });
+
+  it("should 200 with valid arguments", async () => {
+    const { req, res } = mockRequestResponse("POST");
+    req.body = {
+      to: "alex@mailing.run",
+      templateName: "AccountCreated",
+      props: { name: "Alex" },
+    };
+
+    expect(typeof moduleManifest.templates.AccountCreated.subject).toBe(
+      "function"
+    );
+
     await handler(req, res);
     expect(res.status).toHaveBeenCalledWith(200);
-    expect(sendMail).toHaveBeenCalled();
+    expect(moduleManifest.sendMail).toHaveBeenCalled();
   });
 });
