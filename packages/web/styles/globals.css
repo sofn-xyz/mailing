@@ -59,3 +59,14 @@ a:active {
 .ch-frame-buttons {
   display: none;
 }
+
+.bb-dotted {
+  background-image: linear-gradient(
+    to right,
+    #555 50%,
+    rgba(255, 255, 255, 0) 0%
+  );
+  background-position: bottom;
+  background-size: 2px 1px;
+  background-repeat: repeat-x;
+}

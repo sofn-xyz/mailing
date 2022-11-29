@@ -11,6 +11,7 @@ import Subheading from "../components/white-glove/Subheading";
 import Li from "../components/white-glove/Li";
 import ExampleCard from "../components/white-glove/ExampleCard";
 import { Arrow } from "../components/white-glove/Arrow";
+import Pricing from "../components/white-glove/Pricing";
 
 const WhiteGlove: NextPage = () => {
   const [hideHeaderRef, hideHeaderRefInView] = useInView();
@@ -97,23 +98,31 @@ const WhiteGlove: NextPage = () => {
             <Arrow />
           </KeyButton>
         </div>
-        <H2>How it works</H2>
-        <Li
-          title="Tell us what you need"
-          description="Give us a 1-2 sentence description for each template that you need. Copy and design inspiration are helpful but not necessary."
-          index={1}
-        />
-        <Li
-          title="We’ll design the emails"
-          description="We’ll design two variations using your homepage as a brand and visual guide. Choose one of these variations, and then we’ll make any refinements until you love it."
-          index={2}
-        />
-        <Li
-          title="You get handcrafted email templates"
-          description="We’ll give you the HTML output and React source files in a repo like this. Use Mailing to send, or use the React or exported HTML."
-          index={3}
-        />
-        <div className="bg-black flexn flex-col text-center py-40">
+        <div className="mx-auto max-w-6xl">
+          <H2>How it works</H2>
+          <Li
+            title="Tell us what you need"
+            description="Give us a 1-2 sentence description for each template that you need. Copy and design inspiration are helpful but not necessary."
+            index={1}
+          />
+          <Li
+            title="We’ll design the emails"
+            description="We’ll design two variations using your homepage as a brand and visual guide. Choose one of these variations, and then we’ll make any refinements until you love it."
+            index={2}
+          />
+          <Li
+            title="You get handcrafted email templates"
+            description={
+              <>
+                We’ll give you the HTML output and React source files in a repo
+                like this. Use Mailing to send, or use the React or exported
+                HTML.
+              </>
+            }
+            index={3}
+          />
+        </div>
+        <div className="bg-black flexn flex-col text-center pt-40">
           <H2>Examples</H2>
           <Subheading className="mx-auto lg:mt-20">
             White Glove templates are responsive and compatible across major
@@ -126,55 +135,15 @@ const WhiteGlove: NextPage = () => {
             <ExampleCard name="mailing" />
           </div>
         </div>
-        <H2>Pricing</H2>
-        <table className="table-auto mt-8 sm:mt-12">
-          <thead>
-            <tr>
-              <th className="text-left"># of templates</th>
-              <th className="text-left">Private templates</th>
-              <th className="text-left border-x-4 border-t-4 rounded-t-2xl border-green-200">
-                Open source templates{" "}
-                <span className="text-green-300 font-bold font-serif">*</span>
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr className="border-b border-gray-500 border-dotted">
-              <td>1-5</td>
-              <td>$500 each</td>
-              <td className="border-x-4 border-green-200">$250 each</td>
-            </tr>
-            <tr className="border-b border-gray-500 border-dotted">
-              <td>6-10</td>
-              <td>$400 each</td>
-              <td className="border-x-4 border-green-200">$200 each</td>
-            </tr>
-            <tr className="border-b border-gray-500 border-dotted">
-              <td>11-20</td>
-              <td>$300 each</td>
-              <td className="border-x-4 border-green-200">$150 each</td>
-            </tr>
-            <tr>
-              <td>21+</td>
-              <td>$200 each</td>
-              <td className="border-x-4 border-green-200 border-b-4 rounded-2xl">
-                $100 each
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <div className="text-sm mt-4 flex justify-center py-12 bg-green-200 text-black">
-          <div className="font-bold font-serif px-2 text-7xl">
-            *Get a discount
-          </div>
-          <div className="text-center">
-            for sharing your templates open source with the Mailing community.{" "}
-          </div>
+        <div className="mx-auto max-w-6xl">
+          <H2>Pricing</H2>
+          <Subheading>
+            Pricing includes design and development and is discounted for launch
+            – while supplies last.
+          </Subheading>
+          <Pricing />
         </div>
-        <Subheading>
-          Pricing includes design and development and is discounted for launch –
-          while supplies last.
-        </Subheading>
+
         <div className="text-center">
           <H2>Limited time</H2>
           <Subheading className="mx-auto">
@@ -190,7 +159,7 @@ const WhiteGlove: NextPage = () => {
         </div>
       </main>
       <footer
-        className="bg-black flex justify-center py-40"
+        className="bg-black flex justify-center mt-64 pb-40"
         ref={hideHeaderRef}
       >
         <Link href="/">

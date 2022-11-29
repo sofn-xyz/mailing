@@ -13,7 +13,7 @@ export default function Subheading({
   return (
     <div
       className={cx(
-        "text-2xl sm:text-3xl md:text-4xl mt-8 sm:mt-12 max-w-3xl",
+        "text-2xl sm:text-3xl md:text-4xl mt-8 sm:mt-12 sm:max-w-lg max-w-3xl",
         className
       )}
       {...divProps}

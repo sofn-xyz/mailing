@@ -61,7 +61,7 @@ export function ExampleCard({ name }: ExampleCardProps) {
           </a>
         </div>
       </div>
-      <div className="flex mt-4 text-4xl">
+      <div className="flex mt-4 text-2xl sm:text-3xl md:text-4xl">
         <a
           href={sourceUrl}
           target="_blank"
@@ -84,7 +84,7 @@ export function ExampleCard({ name }: ExampleCardProps) {
         href={brandUrl}
         target="_blank"
         rel="noopener noreferrer"
-        className="text-gray-300 block text-2xl mt-1"
+        className="text-gray-300 block text-lg sm:text-2xl mt-1"
       >
         {title}
       </a>
