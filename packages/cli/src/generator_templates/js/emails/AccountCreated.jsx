@@ -71,9 +71,9 @@ const AccountCreated = ({ name }) => (
           </MjmlText>
         </MjmlColumn>
       </MjmlSection>
-      <Footer includeUnsubscribe/>
+      <Footer includeUnsubscribe />
     </MjmlBody>
   </Mjml>
 );
-
+AccountCreated.subject = ({ name }) => `Welcome to BookBook, ${name}!`;
 export default AccountCreated;

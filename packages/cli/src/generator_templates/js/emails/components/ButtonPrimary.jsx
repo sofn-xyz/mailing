@@ -8,7 +8,7 @@ const ButtonPrimary = ({ link, uiText }) => {
       <MjmlButton
         lineHeight={leadingTight}
         fontSize={textBase}
-        height={52}
+        height={32}
         padding="0"
         align="left"
         href={link}
@@ -22,7 +22,7 @@ const ButtonPrimary = ({ link, uiText }) => {
       <MjmlButton
         lineHeight={leadingTight}
         fontSize={textBase}
-        height={52}
+        height={32}
         padding="0"
         align="left"
         href={link}
@@ -36,5 +36,4 @@ const ButtonPrimary = ({ link, uiText }) => {
     </>
   );
 };
-
 export default ButtonPrimary;
