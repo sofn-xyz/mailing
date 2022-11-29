@@ -33,6 +33,26 @@ describe("validateApiKey", () => {
     expect(result).toBe(false);
   });
 
+  describe("using process.env.MAILING_API_KEY", () => {
+    const validProcessEnvApiKey = "validProcessEnvApiKey";
+    const OG_MAILING_API_KEY = process.env.MAILING_API_KEY;
+
+    beforeAll(() => {
+      process.env.MAILING_API_KEY = validProcessEnvApiKey;
+    });
+
+    afterAll(() => {
+      process.env.MAILING_API_KEY = OG_MAILING_API_KEY;
+    });
+
+    it("returns true if apiKey matches process.env.MAILING_API_KEY", async () => {
+      const { req, res } = mockRequestResponse();
+      req.query = { apiKey: validProcessEnvApiKey };
+      const result = await validateApiKey(req, res);
+      expect(result).toBe(true);
+    });
+  });
+
   describe("using database", () => {
     it("returns false if NODE_ENV is not development and apiKey is not valid", async () => {
       const { req, res } = mockRequestResponse();

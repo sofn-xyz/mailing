@@ -18,15 +18,15 @@ function mockRequestResponse(method: string) {
 }
 
 describe("render", () => {
-  const MAILING_API_KEY_OG = process.env.MAILING_API_KEY;
+  const REQUIRE_API_KEY_OG = process.env.REQUIRE_API_KEY;
 
-  describe("without MAILING_API_KEY set - it should not require an ApiKey", () => {
+  describe("without REQUIRE_API_KEY set - it should not require an ApiKey", () => {
     beforeEach(() => {
-      delete process.env.MAILING_API_KEY;
+      delete process.env.REQUIRE_API_KEY;
     });
 
     afterEach(() => {
-      process.env.MAILING_API_KEY = MAILING_API_KEY_OG;
+      process.env.REQUIRE_API_KEY = REQUIRE_API_KEY_OG;
     });
 
     it("should 200 without an api key", async () => {
@@ -36,14 +36,17 @@ describe("render", () => {
     });
   });
 
-  describe("with MAILING_API_KEY set - it should require a valid ApiKey", () => {
+  describe("with REQUIRE_API_KEY and MAILING_API_KEY set", () => {
+    const MAILING_API_KEY_OG = process.env.MAILING_API_KEY;
     const VALID_PROCESS_ENV_API_KEY = "validProcessEnvApiKey";
 
     beforeEach(() => {
+      process.env.REQUIRE_API_KEY = "true";
       process.env.MAILING_API_KEY = VALID_PROCESS_ENV_API_KEY;
     });
 
     afterEach(() => {
+      process.env.REQUIRE_API_KEY = REQUIRE_API_KEY_OG;
       process.env.MAILING_API_KEY = MAILING_API_KEY_OG;
     });
 

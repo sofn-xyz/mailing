@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { MjmlError } from "mjml-react";
 
 import renderTemplate from "../../util/renderTemplate";
-import { apiKeyFromReq } from "../../util/validateApiKey";
+import { validateApiKey } from "../../util/validateApiKey";
 
 type Data = {
   error?: string; // api error messages
@@ -10,17 +10,15 @@ type Data = {
   mjmlErrors?: MjmlError[];
 };
 
-export default function handler(
+export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
   const { templateName, props } = "GET" === req.method ? req.query : req.body;
 
-  // if process.env.MAILING_API_KEY is set then require an api key that matches to be passed in
-  if (process.env.MAILING_API_KEY) {
-    const apiKey = apiKeyFromReq(req);
-
-    if (apiKey !== process.env.MAILING_API_KEY) {
+  // if process.env.REQUIRE_API_KEY is set then require a valid api key to be passed in
+  if (process.env.REQUIRE_API_KEY === "true") {
+    if (!(await validateApiKey(req, res))) {
       return res.status(401).json({ error: "API key is not valid" });
     }
   }
