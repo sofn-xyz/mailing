@@ -37,7 +37,13 @@ With the REST API, you can use mailing for email templating even if most of your
 
 ## API keys
 
-For endpoints that require an API key, the following methods are supported:
+Mailing uses API keys to protect endpoints that consume limited resources (e.g. sending email with your transport).
+
+To get an API key, either [set up a database](https://www.mailing.run/docs/deploy#adding-a-database) and log in (recommended) or set the `MAILING_API_KEY` environment variable in your deployment environment to your desired key.
+
+You then pass your API key in each request with one of these methods:
 
 - Include the API key in the request headers: `X-API-KEY=...`
 - Include the API key as a query string parameter: `?apiKey=...`
+
+
