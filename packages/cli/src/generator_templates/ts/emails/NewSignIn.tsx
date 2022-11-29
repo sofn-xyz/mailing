@@ -1,23 +1,13 @@
-import { ReactElement } from "react";
-import Head from "./components/Head";
+import React, { ReactElement } from "react";
+import { MjmlSection, MjmlColumn, MjmlSpacer } from "mjml-react";
+import { Template } from "mailing-core";
 import Header from "./components/Header";
+import Heading from "./components/Heading";
 import Footer from "./components/Footer";
-import {
-  leadingTight,
-  leadingRelaxed,
-  textBase,
-  textLg,
-} from "./components/theme";
-
-import {
-  Mjml,
-  MjmlBody,
-  MjmlSection,
-  MjmlColumn,
-  MjmlText,
-  MjmlSpacer,
-  MjmlDivider,
-} from "mjml-react";
+import Divider from "./components/Divider";
+import Text from "./components/Text";
+import BaseLayout from "./layouts/BaseLayout";
+import { fontSize, spacing } from "./theme";
 
 type NewSignInProps = {
   name: string;
@@ -25,7 +15,6 @@ type NewSignInProps = {
   body: ReactElement;
   bulletedList: ReactElement;
 };
-import { Template } from "mailing-core";
 
 const NewSignIn: Template<NewSignInProps> = ({
   name,
@@ -34,65 +23,34 @@ const NewSignIn: Template<NewSignInProps> = ({
   bulletedList,
 }) => {
   return (
-    <Mjml>
-      <Head />
-      <MjmlBody width={400}>
-        <Header />
-        <MjmlSection padding="0 24px" cssClass="smooth">
-          <MjmlColumn>
-            <MjmlDivider
-              borderColor="#666"
-              borderStyle="dotted"
-              borderWidth="1px"
-              padding="8px 0"
-            ></MjmlDivider>
-            <MjmlText
-              padding="24px 0 8px"
-              fontSize={textLg}
-              lineHeight={leadingTight}
-              cssClass="paragraph"
-            >
-              {headline}
-            </MjmlText>
-            <MjmlText
-              padding="16px 0"
-              fontSize={textBase}
-              lineHeight={leadingRelaxed}
-              cssClass="paragraph"
-            >
-              Hello {name},
-            </MjmlText>
-            <MjmlText
-              cssClass="paragraph"
-              padding="0"
-              fontSize={textBase}
-              lineHeight={leadingRelaxed}
-            >
-              <>{body}</>
-            </MjmlText>
-            <MjmlSpacer height="16px" />
-            {bulletedList}
-            <MjmlText
-              padding="16px 0"
-              fontSize={textBase}
-              lineHeight={leadingRelaxed}
-              cssClass="paragraph"
-            >
-              ♥,
-              <br />
-              The BookBook Team
-            </MjmlText>
-            <MjmlDivider
-              borderColor="#666"
-              borderStyle="dotted"
-              borderWidth="1px"
-              padding="20px 0 8px"
-            ></MjmlDivider>
-          </MjmlColumn>
-        </MjmlSection>
-        <Footer />
-      </MjmlBody>
-    </Mjml>
+    <BaseLayout width={352}>
+      <Header />
+      <MjmlSection cssClass="gutter">
+        <MjmlColumn>
+          <Divider paddingTop={spacing.s3} paddingBottom={spacing.s3} />
+          <Heading
+            paddingTop={spacing.s7}
+            paddingBottom={spacing.s3}
+            fontSize={fontSize.lg}
+          >
+            {headline}
+          </Heading>
+          <Text paddingTop={spacing.s5} paddingBottom={spacing.s5}>
+            Hello {name},
+          </Text>
+          <Text>{body}</Text>
+          <MjmlSpacer height={spacing.s5} />
+          {bulletedList}
+          <Text paddingTop={spacing.s5} paddingBottom={spacing.s5}>
+            ♥,
+            <br />
+            The BookBook Team
+          </Text>
+          <Divider paddingTop={spacing.s5} paddingBottom={spacing.s5} />
+        </MjmlColumn>
+      </MjmlSection>
+      <Footer includeUnsubscribe />
+    </BaseLayout>
   );
 };
 

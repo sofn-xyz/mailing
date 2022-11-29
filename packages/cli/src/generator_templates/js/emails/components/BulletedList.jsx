@@ -1,5 +1,5 @@
 import { MjmlText } from "mjml-react";
-import { leadingRelaxed, textBase } from "./theme";
+import { fontSize, lineHeight } from "../theme";
 
 const BulletedList = ({ items }) => {
   return (
@@ -7,8 +7,8 @@ const BulletedList = ({ items }) => {
       {items.map((item) => (
         <MjmlText
           padding="1px 0 0"
-          fontSize={textBase}
-          lineHeight={leadingRelaxed}
+          fontSize={fontSize.base}
+          lineHeight={lineHeight.relaxed}
           cssClass="li"
           key={item}
         >

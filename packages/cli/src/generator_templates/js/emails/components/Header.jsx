@@ -1,3 +1,4 @@
+import React from "react";
 import { MjmlSection, MjmlColumn, MjmlImage } from "mjml-react";
 
 const Header = ({ loose }) => {
@@ -10,7 +11,7 @@ const Header = ({ loose }) => {
           height="54px"
           align="center"
           src="https://s3.amazonaws.com/lab.campsh.com/bb-transparent%402x.png"
-          cssClass="logo"
+          cssClass="invert"
         />
       </MjmlColumn>
     </MjmlSection>

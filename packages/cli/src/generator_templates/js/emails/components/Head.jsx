@@ -7,7 +7,7 @@ import {
   MjmlStyle,
   MjmlRaw,
 } from "mjml-react";
-import { black, grayDark } from "./theme";
+import { colors } from "../theme";
 
 const Head = ({ children }) => {
   return (
@@ -29,7 +29,7 @@ const Head = ({ children }) => {
           -webkit-font-smoothing: antialiased;
         }
         .paragraph a {
-          color: ${black} !important;
+          color: ${colors.black} !important;
         }
         .li {
           text-indent: -18px;
@@ -38,7 +38,7 @@ const Head = ({ children }) => {
         }
         .footer a {
           text-decoration: none !important;
-          color: ${grayDark} !important;
+          color: ${colors.grayDark} !important;
         }
         .dark-mode {
           display: none;
@@ -51,7 +51,7 @@ const Head = ({ children }) => {
         }
         @media (prefers-color-scheme: dark) {
           body {
-            background: ${black};
+            background: ${colors.black};
           }
           .logo > * {
             filter: invert(1) !important;

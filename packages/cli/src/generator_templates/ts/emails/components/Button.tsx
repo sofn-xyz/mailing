@@ -1,38 +1,35 @@
+import React from "react";
 import { MjmlButton } from "mjml-react";
-import { colors, fontSize, borderRadius, lineHeight } from "../theme";
 
-const ButtonPrimary = ({ link, uiText }) => {
+import { colors, fontSize, borderRadius, lineHeight, spacing } from "../theme";
+
+type ButtonProps = React.ComponentProps<typeof MjmlButton>;
+
+export default function Button(props: ButtonProps) {
   return (
     <>
       <MjmlButton
         lineHeight={lineHeight.tight}
         fontSize={fontSize.base}
-        height={32}
-        padding="0"
+        height={spacing.s8}
         align="left"
-        href={link}
         backgroundColor={colors.black}
-        color={colors.grayLight}
+        color={colors.neutral100}
         borderRadius={borderRadius.base}
         cssClass="light-mode"
-      >
-        {uiText}
-      </MjmlButton>
+        {...props}
+      />
       <MjmlButton
         lineHeight={lineHeight.tight}
         fontSize={fontSize.base}
-        height={32}
-        padding="0"
+        height={spacing.s8}
         align="left"
-        href={link}
         backgroundColor={colors.gold}
         color={colors.black}
         borderRadius={borderRadius.base}
         cssClass="dark-mode"
-      >
-        {uiText}
-      </MjmlButton>
+        {...props}
+      />
     </>
   );
-};
-export default ButtonPrimary;
+}

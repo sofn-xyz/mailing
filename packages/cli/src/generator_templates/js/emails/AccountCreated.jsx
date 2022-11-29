@@ -1,79 +1,42 @@
-import Head from "./components/Head";
+import React from "react";
+import { MjmlSection, MjmlColumn, MjmlImage } from "mjml-react";
+import Button from "./components/Button";
 import Header from "./components/Header";
+import Heading from "./components/Heading";
 import Footer from "./components/Footer";
-import {
-  Mjml,
-  MjmlBody,
-  MjmlSection,
-  MjmlColumn,
-  MjmlText,
-  MjmlImage,
-  MjmlSpacer,
-} from "mjml-react";
-import ButtonPrimary from "./components/ButtonPrimary";
-import {
-  leadingTight,
-  leadingRelaxed,
-  textBase,
-  textXl,
-} from "./components/theme";
+import BaseLayout from "./layouts/BaseLayout";
+import Text from "./components/Text";
+import { spacing, fontSize } from "./theme";
 
 const AccountCreated = ({ name }) => (
-  <Mjml>
-    <Head />
-    <MjmlBody width={600}>
-      <Header loose />
-      <MjmlSection padding="0">
-        <MjmlColumn>
-          <MjmlImage
-            cssClass="hero"
-            padding="0 0 40px"
-            align="left"
-            src="https://s3.amazonaws.com/lab.campsh.com/bb-hero%402x.jpg"
-          />
-        </MjmlColumn>
-      </MjmlSection>
-      <MjmlSection padding="0 24px" cssClass="smooth">
-        <MjmlColumn>
-          <MjmlText
-            cssClass="paragraph"
-            padding="0"
-            fontSize={textXl}
-            lineHeight={leadingTight}
-          >
-            {name}, your table awaits.
-          </MjmlText>
-          <MjmlText
-            padding="24px 0 0"
-            fontSize={textBase}
-            lineHeight={leadingRelaxed}
-            cssClass="paragraph"
-          >
-            Thank you for joining BookBook! We’re excited to help you enjoy
-            great meals without any begging, guessing, waiting or phone calls.
-            Just a couple taps, and the table is yours.
-          </MjmlText>
-          <MjmlSpacer height="24px" />
-          <ButtonPrimary
-            link="https://www.mailing.run"
-            uiText="Book a Reservation"
-          />
-          <MjmlSpacer height="24px" />
-          <MjmlText
-            padding="0"
-            fontSize={textBase}
-            lineHeight={leadingRelaxed}
-            cssClass="paragraph"
-          >
-            Enjoy!
-            <br />
-            The BookBook Team
-          </MjmlText>
-        </MjmlColumn>
-      </MjmlSection>
-      <Footer includeUnsubscribe />
-    </MjmlBody>
-  </Mjml>
+  <BaseLayout width={600}>
+    <Header loose />
+    <MjmlSection cssClass="lg-gutter" paddingBottom={spacing.s9}>
+      <MjmlColumn>
+        <MjmlImage
+          align="left"
+          src="https://s3.amazonaws.com/lab.campsh.com/bb-hero%402x.jpg"
+        />
+      </MjmlColumn>
+    </MjmlSection>
+    <MjmlSection cssClass="gutter">
+      <MjmlColumn>
+        <Heading fontSize={fontSize.xl}>{name}, your table awaits.</Heading>
+        <Text paddingTop={spacing.s7} paddingBottom={spacing.s7}>
+          Thank you for joining BookBook! We’re excited to help you enjoy great
+          meals without any begging, guessing, waiting or phone calls. Just a
+          couple taps, and the table is yours.
+        </Text>
+        <Button href="https://www.mailing.run">Book a Reservation</Button>
+        <Text paddingTop={spacing.s7}>
+          Enjoy!
+          <br />
+          The BookBook Team
+        </Text>
+      </MjmlColumn>
+    </MjmlSection>
+    <Footer />
+  </BaseLayout>
 );
 AccountCreated.subject = ({ name }) => `Welcome to BookBook, ${name}!`;
 export default AccountCreated;
