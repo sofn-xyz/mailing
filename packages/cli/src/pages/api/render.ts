@@ -16,9 +16,11 @@ export default async function handler(
 ) {
   const { templateName, props } = "GET" === req.method ? req.query : req.body;
 
-  if (process.env.REQUIRE_API_KEY === "true" && !(await validateApiKey(req, res))) {
-      return res.status(401).json({ error: "API key is not valid" });
-    }
+  if (
+    process.env.REQUIRE_API_KEY === "true" &&
+    !(await validateApiKey(req, res))
+  ) {
+    return res.status(401).json({ error: "API key is not valid" });
   }
 
   // validate template name
