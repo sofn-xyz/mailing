@@ -52,7 +52,7 @@ const WhiteGlove: NextPage = () => {
         )}
       >
         <nav className="mx-auto flex items-center justify-between px-5 py-3 sm:px-8 sm:py-4 border-b border-gray-500 border-dotted">
-          <Link href="/">
+          <Link href="/" className="flex-1">
             <Image
               src="/mailing-icon-white.svg"
               alt="Mailing"
@@ -60,7 +60,7 @@ const WhiteGlove: NextPage = () => {
               height={28}
             />
           </Link>
-          <span className="text-lg sm:text-[44px] font-bold font-serif leading-snug text-amber-200 relative -top-1">
+          <span className="flex-1 text-lg sm:text-[44px] font-bold font-serif leading-snug text-amber-200 relative -top-1">
             White Glove
           </span>
           <KeyButton
@@ -69,7 +69,7 @@ const WhiteGlove: NextPage = () => {
             href="https://www.typeform.com"
             className="hidden lg:inline-block"
           >
-            Get Started&nbsp;&nbsp;
+            Get Started
             <Arrow />
           </KeyButton>
           <Link
@@ -77,7 +77,7 @@ const WhiteGlove: NextPage = () => {
             href="https://www.typeform.com"
             className="lg:hidden text-green-200"
           >
-            Start&nbsp;&nbsp;
+            Start
             <Arrow />
           </Link>
         </nav>
@@ -94,12 +94,13 @@ const WhiteGlove: NextPage = () => {
         </div>
         <div className="flex justify-end mt-16">
           <KeyButton href="https://www.typeform.com">
-            Get Started&nbsp;&nbsp;
+            Get Started
             <Arrow />
           </KeyButton>
         </div>
         <div className="mx-auto max-w-6xl">
           <H2>How it works</H2>
+          <div className="mt-24"></div>
           <Li
             title="Tell us what you need"
             description="Give us a 1-2 sentence description for each template that you need. Copy and design inspiration are helpful but not necessary."
@@ -147,21 +148,17 @@ const WhiteGlove: NextPage = () => {
         <div className="text-center">
           <H2>Limited time</H2>
           <Subheading className="mx-auto">
-            {/* White Glove is the easiest way to get custom, quality email
-            templates. But don’t delay – it’s only available for a limited time. */}
+            <span ref={hideHeaderRef}></span>
             We’re doing this for a limited time to dogfood Mailing as we add
             features.
           </Subheading>
           <KeyButton href="https://www.typeform.com" className="mt-20">
-            Get Started&nbsp;&nbsp;
+            Get Started
             <Arrow />
           </KeyButton>
         </div>
       </main>
-      <footer
-        className="bg-black flex justify-center mt-64 pb-40"
-        ref={hideHeaderRef}
-      >
+      <footer className="bg-black flex justify-center mt-64 pb-40">
         <Link href="/">
           <Image
             src="/mailing-icon-white.svg"

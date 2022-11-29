@@ -66,7 +66,7 @@ export function ExampleCard({ name }: ExampleCardProps) {
           href={sourceUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="underline"
+          className="underline hover:text-green-300 transition-colors"
         >
           Source
         </a>
@@ -75,7 +75,7 @@ export function ExampleCard({ name }: ExampleCardProps) {
           href={demoUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="underline"
+          className="underline hover:text-green-300 transition-colors"
         >
           Demo
         </a>
@@ -84,7 +84,7 @@ export function ExampleCard({ name }: ExampleCardProps) {
         href={brandUrl}
         target="_blank"
         rel="noopener noreferrer"
-        className="text-gray-300 block text-lg sm:text-2xl mt-1"
+        className="text-gray-300 hover:text-green-300 block text-lg sm:text-2xl mt-1"
       >
         {title}
       </a>

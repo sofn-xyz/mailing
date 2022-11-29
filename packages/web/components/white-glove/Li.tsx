@@ -8,8 +8,8 @@ type LiProps = {
 
 export default function Li({ title, description, index }: LiProps) {
   return (
-    <div className="flex max-w-4xl  mt-8 sm:mt-12">
-      <div className="text-green-200 font-serif font-bold text-6xl md:text-8xl lg:text-[120px] xl:text-[160px] min-w-[72px] leading-[.9] md:leading-[.6] lg:leading-[.7] xl:leading-[.6]">
+    <div className="flex max-w-4xl  mt-16 sm:mt-20">
+      <div className="text-green-200 font-serif font-bold text-[64px] lg:text-[84px] xl:text-[108px] min-w-[72px] leading-[.9] md:leading-[.6] lg:leading-[.7] xl:leading-[.6]">
         {index}
       </div>
       <div className="ml-6 sm:ml-16">
