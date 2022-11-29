@@ -68,7 +68,7 @@ describe("sendMail", () => {
           ...ApiSendMail.defaultFormData,
           templateName: "ThisIsNotATemplate",
         });
-      expect(sendMailResponseWithBadTemplateName.status).toBe(404);
+      expect(sendMailResponseWithBadTemplateName.status).toBe(422);
       const errorJson = await sendMailResponseWithBadTemplateName.json();
 
       expect("error" in errorJson).toBe(true);
