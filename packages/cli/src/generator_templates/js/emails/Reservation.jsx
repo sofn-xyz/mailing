@@ -8,7 +8,6 @@ import {
   textBase,
   textLg,
 } from "./components/theme";
-
 import {
   Mjml,
   MjmlBody,
@@ -74,5 +73,4 @@ const Reservation = ({ headline, body, bulletedList, ctaText }) => {
     </Mjml>
   );
 };
-
 export default Reservation;

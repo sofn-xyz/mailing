@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+npx tsc \
+--allowSyntheticDefaultImports true \
+--moduleResolution node \
+--jsx preserve \
+--target es2020 \
+--outDir packages/cli/src/generator_templates/js/emails \
+--noEmit false \
+packages/cli/src/generator_templates/ts/emails/**/*.tsx packages/cli/src/generator_templates/ts/emails/*.ts
+
+npx prettier --write packages/cli/src/generator_templates/js/*
+yarn eslint --fix --ext .jsx,.js packages/cli/src/generator_templates/js/*
+
+git add packages/cli/src/generator_templates/js/*

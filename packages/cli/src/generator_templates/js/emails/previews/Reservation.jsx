@@ -25,7 +25,6 @@ export async function reservationWithError() {
     />
   );
 }
-
 export function reservationConfirmed() {
   return (
     <Reservation
@@ -49,7 +48,6 @@ export function reservationConfirmed() {
     />
   );
 }
-
 export function reservationChanged() {
   return (
     <Reservation
