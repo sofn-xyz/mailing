@@ -71,7 +71,6 @@ const AccountCreated: Template<AccountCreatedProps> = ({ name }) => (
             Enjoy!
             <br />
             The BookBook Team
-            ABCD
           </MjmlText>
         </MjmlColumn>
       </MjmlSection>

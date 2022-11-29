@@ -66,7 +66,7 @@ const AccountCreated = ({ name }) => (
           >
             Enjoy!
             <br />
-            The BookBook Team ABCD
+            The BookBook Team
           </MjmlText>
         </MjmlColumn>
       </MjmlSection>
