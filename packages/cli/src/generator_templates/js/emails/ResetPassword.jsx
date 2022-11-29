@@ -12,6 +12,7 @@ import {
   MjmlSpacer,
   MjmlDivider,
 } from "mjml-react";
+
 const ResetPassword = ({ name, body, ctaText }) => {
   return (
     <Mjml>

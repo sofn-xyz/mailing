@@ -16,6 +16,7 @@ import {
   MjmlSpacer,
   MjmlDivider,
 } from "mjml-react";
+
 const NewSignIn = ({ name, headline, body, bulletedList }) => {
   return (
     <Mjml>

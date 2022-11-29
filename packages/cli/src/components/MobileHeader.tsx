@@ -3,6 +3,7 @@ import cx from "classnames";
 
 import { HamburgerContext } from "./HamburgerContext";
 import LogoMarkSmall from "./icons/LogoMarkSmall";
+
 type MobileHeaderProps = {
   title: string;
 };

@@ -2,6 +2,7 @@ import {
   getOrSetGeneratedAnonymousId,
   getGeneratedAnonymousId,
 } from "../anonymousId";
+
 describe("anonymousId", () => {
   it("read and write anonymouse id's", () => {
     // before getOrSetGeneratedAnonymousId has been called, getGeneratedAnonymousId should return undefined

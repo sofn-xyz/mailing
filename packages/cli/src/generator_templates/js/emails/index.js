@@ -1,5 +1,6 @@
 import nodemailer from "nodemailer";
 import { buildSendMail } from "mailing-core";
+
 const transport = nodemailer.createTransport({
   pool: true,
   host: "smtp.example.com",
