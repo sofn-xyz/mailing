@@ -49,7 +49,7 @@ export function ExampleCard({ name }: ExampleCardProps) {
             href={demoUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="underline"
+            className="underline active:translate-y-1 inline-block"
           >
             <Image
               src={imageUrl}

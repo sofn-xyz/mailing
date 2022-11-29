@@ -60,22 +60,19 @@ const WhiteGlove: NextPage = () => {
               height={28}
             />
           </Link>
-          <span className="flex-1 text-lg sm:text-[44px] font-bold font-serif leading-snug text-amber-200 relative -top-1">
+          <span className="flex-2 text-2xl sm:text-[44px] font-bold font-serif leading-snug text-amber-200 relative -top-1 text-center">
             White Glove
           </span>
-          <KeyButton
-            target="_blank"
-            small
-            href="https://www.typeform.com"
-            className="hidden lg:inline-block"
-          >
-            Get Started
-            <Arrow />
-          </KeyButton>
+          <div className="flex-1 text-right hidden lg:inline-block">
+            <KeyButton target="_blank" small href="https://www.typeform.com">
+              Get Started
+              <Arrow />
+            </KeyButton>
+          </div>
           <Link
             target="_blank"
             href="https://www.typeform.com"
-            className="lg:hidden text-green-200"
+            className="lg:hidden text-green-200 flex-1 text-right"
           >
             Start
             <Arrow />
@@ -129,7 +126,7 @@ const WhiteGlove: NextPage = () => {
             White Glove templates are responsive and compatible across major
             email clients.
           </Subheading>
-          <div className="text-left flex flex-wrap justify-center mt-16 md:mt-24">
+          <div className="text-left flex flex-wrap justify-center mt-16 md:mt-32">
             <ExampleCard name="lancey" />
             <ExampleCard name="thoughtfulPost" />
             <ExampleCard name="fynn" />
@@ -139,8 +136,8 @@ const WhiteGlove: NextPage = () => {
         <div className="mx-auto max-w-6xl">
           <H2>Pricing</H2>
           <Subheading>
-            Pricing includes design and development and is discounted for launch
-            – while supplies last.
+            Pricing includes design and development and is discounted for
+            launch, while supplies last.
           </Subheading>
           <Pricing />
         </div>
