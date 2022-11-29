@@ -9,7 +9,7 @@ import sendMail from "<%= relativePathToEmailsDir %>";
 
 const previews = { <%= previewConsts.join(", ") %> };
 const templates = { <%= templateModuleNames.join(", ") %> };
+const moduleManifest = { sendMail, templates, previews };
 
 export { sendMail, config, templates, previews };
-const moduleManifest = { sendMail, templates, previews };
 export default moduleManifest;

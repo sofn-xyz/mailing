@@ -16,5 +16,4 @@ const Header = ({ loose }) => {
     </MjmlSection>
   );
 };
-
 export default Header;

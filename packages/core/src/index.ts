@@ -28,6 +28,11 @@ export type ComponentMail = SendMailOptions & {
   listName?: string;
 };
 
+export type Template<P> = React.FC<P> & {
+  subject?: string | ((args: Partial<P>) => string);
+};
+
+
 export async function getTestMailQueue() {
   try {
     const queue = await fs.readFile(TMP_TEST_FILE);
@@ -112,8 +117,18 @@ export function buildSendMail<T>(options: BuildSendMailOptions<T>) {
       derivedTemplateName = component.type.name;
       mailOptions.html = renderedHtml;
     }
-
     if (!mailOptions.html) throw new Error("sendMail couldn't find your html");
+
+    // Get subject from the component if not provided
+    if (component && !mailOptions.subject) {
+      if (typeof component.type.subject === "string") {
+        mailOptions.subject = component.type.subject;
+      } else if (typeof component.type.subject === "function") {
+        mailOptions.subject = component.type.subject(component.props);
+      }
+    }
+    if (!mailOptions.subject)
+      throw new Error("sendMail couldn't find a subject for your email");
 
     if (testMode && !dangerouslyForceDeliver) {
       const testMessageQueue = await getTestMailQueue();

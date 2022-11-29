@@ -3,7 +3,6 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import ButtonPrimary from "./components/ButtonPrimary";
 import { leadingRelaxed, textBase } from "./components/theme";
-
 import {
   Mjml,
   MjmlBody,
@@ -70,5 +69,4 @@ const ResetPassword = ({ name, body, ctaText }) => {
     </Mjml>
   );
 };
-
 export default ResetPassword;

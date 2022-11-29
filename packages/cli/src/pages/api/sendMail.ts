@@ -32,11 +32,6 @@ export default async function handler(
     return res.status(403).json({ error: "to, cc, or bcc must be specified" });
   }
 
-  // validate subject
-  if (typeof mailOptions.subject !== "string") {
-    return res.status(403).json({ error: "subject must be specified" });
-  }
-
   if (!html) {
     // validate template name
     if (typeof templateName !== "string") {

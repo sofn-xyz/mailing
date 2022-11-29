@@ -44,6 +44,7 @@ export default function Footer() {
                     height={12}
                     width={16}
                     src={assetUrl("/assets/discord.png")}
+                    alt=""
                     style={{
                       verticalAlign: "text-bottom",
                       paddingRight: 6,
@@ -75,6 +76,7 @@ export default function Footer() {
                     height={16}
                     width={16}
                     src={assetUrl("/assets/github.png")}
+                    alt=""
                     style={{
                       verticalAlign: "text-bottom",
                       paddingRight: 6,

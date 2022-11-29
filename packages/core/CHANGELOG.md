@@ -1,5 +1,11 @@
 # mailing-core
 
+## 0.9.2
+
+### Patch Changes
+
+- /api/render now supports api key authentication if REQUIRE_API_KEY is set in your environment
+
 ## 0.9.1
 
 ### Patch Changes

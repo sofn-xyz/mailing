@@ -18,5 +18,4 @@ const BulletedList = ({ items }) => {
     </>
   );
 };
-
 export default BulletedList;

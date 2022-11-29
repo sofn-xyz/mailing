@@ -17,8 +17,11 @@ import {
   textBase,
   textXl,
 } from "./components/theme";
+import { Template } from "mailing-core";
 
-const AccountCreated: React.FC<{ name: string }> = ({ name }) => (
+type AccountCreatedProps = { name: string };
+
+const AccountCreated: Template<AccountCreatedProps> = ({ name }) => (
   <Mjml>
     <Head />
     <MjmlBody width={600}>
@@ -75,5 +78,7 @@ const AccountCreated: React.FC<{ name: string }> = ({ name }) => (
     </MjmlBody>
   </Mjml>
 );
+
+AccountCreated.subject = ({ name }) => `Welcome to BookBook, ${name}!`;
 
 export default AccountCreated;

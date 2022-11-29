@@ -1,6 +1,6 @@
 {
   "name": "web",
-  "version": "0.4.11",
+  "version": "0.4.12",
   "private": true,
   "scripts": {
     "dev": "yarn prisma migrate dev && next dev",
@@ -21,7 +21,7 @@
     "@prisma/client": "^4.2.0",
     "@vercel/analytics": "^0.1.5",
     "classnames": "^2.3.2",
-    "mailing-core": "^0.9.1",
+    "mailing-core": "^0.9.2",
     "next": "13.0.5",
     "react": "18.2.0",
     "react-dom": "18.2.0",
@@ -39,7 +39,7 @@
     "eslint": "^8.28.0",
     "eslint-config-next": "13.0.5",
     "jest-mock-extended": "^2.0.7",
-    "mailing": "^0.9.1",
+    "mailing": "^0.9.2",
     "postcss": "^8.4.14",
     "prisma": "^4.2.0",
     "tailwindcss": "^3.1.6"

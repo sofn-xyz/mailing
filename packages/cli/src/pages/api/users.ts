@@ -95,15 +95,15 @@ const handler = withSessionAPIRoute(async function (
     return res.status(500).json({ error: ERRORS.unknown });
   }
 
-  // log the user into the session
+  // Log the user into the session
   req.session.user = user;
   await req.session.save();
 
-  // make an api key for you to use
+  // Create an api key for your organization
   await prisma.apiKey.create({ data: { organizationId: organization.id } });
 
-  // make the default list for you to use
-  findOrCreateDefaultList(organization);
+  // Create the default list for you
+  await findOrCreateDefaultList(organization);
 
   res.status(201).end();
 });
