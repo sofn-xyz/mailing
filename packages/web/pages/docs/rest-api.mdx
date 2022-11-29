@@ -13,8 +13,8 @@ With the REST API, you can use mailing for email templating even if most of your
 
 <div className="text-sm">
   Note: /api/render is publicly accessible by default. However, if
-  process.env.MAILING_API_KEY is set then api/render requires that API key to be
-  sent in a query string parameter ("?apiKey=") or in the headers ("x-api-key")
+  process.env.REQUIRE_API_KEY is set then api/render will 401 unless a valid API
+  key is included in the request. Read more about [API keys](#api-keys)
 </div>
 
 ## Previews
@@ -34,3 +34,10 @@ With the REST API, you can use mailing for email templating even if most of your
 | POST   | /api/lists/[listId]/members            | add a member to a list        |
 | GET    | /api/lists/[listId]/members/[memberId] | get a list member's status    |
 | PATCH  | /api/lists/[listId]/members/[memberId] | update a list member's status |
+
+## API keys
+
+For endpoints that require an API key, the following methods are supported:
+
+- Include the API key in the request headers: `X-API-KEY=...`
+- Include the API key as a query string parameter: `?apiKey=...`
