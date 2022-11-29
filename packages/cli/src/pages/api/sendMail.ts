@@ -29,14 +29,14 @@ export default async function handler(
     typeof mailOptions.cc === "undefined" &&
     typeof mailOptions.bcc === "undefined"
   ) {
-    return res.status(403).json({ error: "to, cc, or bcc must be specified" });
+    return res.status(422).json({ error: "to, cc, or bcc must be specified" });
   }
 
   if (!html) {
     // validate template name
     if (typeof templateName !== "string") {
       return res
-        .status(403)
+        .status(422)
         .json({ error: "templateName or html must be specified" });
     }
 
@@ -48,7 +48,7 @@ export default async function handler(
     } = renderTemplate(templateName.replace(/\.[jt]sx?$/, ""), props);
 
     if (error) {
-      return res.status(404).json({ error, mjmlErrors });
+      return res.status(422).json({ error, mjmlErrors });
     }
     html = renderedHtml;
   }
