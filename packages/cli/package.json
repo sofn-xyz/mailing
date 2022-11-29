@@ -101,6 +101,7 @@
   },
   "scripts": {
     "dev": "rm -rf .mailing && yarn prisma migrate dev && src/dev.js",
+    "build-js-templates": "npx tsc --allowSyntheticDefaultImports true --moduleResolution node  --jsx preserve -t es2020 --outDir src/generator_templates/eh/emails --noEmit false src/generator_templates/ts/emails/**/*.tsx src/generator_templates/ts/emails/*.ts && yarn prettier --write src/generator_templates/eh/*",
     "ci:server": "rm -rf .mailing && yarn prisma generate && yarn prisma migrate deploy && NEXT_PUBLIC_MAILING_SKIP_AUTH=false NODE_ENV=test src/dev.js > test.log",
     "ci:server:nohup": "rm -rf .mailing && NEXT_PUBLIC_MAILING_SKIP_AUTH=false NODE_ENV=test nohup src/dev.js --quiet > /dev/null 2>&1 &"
   },
