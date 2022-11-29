@@ -1,6 +1,5 @@
 import NewSignIn from "../NewSignIn";
 import BulletedList from "../components/BulletedList";
-
 export function newSignIn() {
   return (
     <NewSignIn

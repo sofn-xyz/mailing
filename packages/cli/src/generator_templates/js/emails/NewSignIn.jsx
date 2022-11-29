@@ -1,14 +1,12 @@
 import Head from "./components/Head";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import ButtonPrimary from "./components/ButtonPrimary";
 import {
   leadingTight,
   leadingRelaxed,
   textBase,
   textLg,
 } from "./components/theme";
-
 import {
   Mjml,
   MjmlBody,
@@ -18,7 +16,6 @@ import {
   MjmlSpacer,
   MjmlDivider,
 } from "mjml-react";
-
 const NewSignIn = ({ name, headline, body, bulletedList }) => {
   return (
     <Mjml>
@@ -82,5 +79,4 @@ const NewSignIn = ({ name, headline, body, bulletedList }) => {
     </Mjml>
   );
 };
-
 export default NewSignIn;

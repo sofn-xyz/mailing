@@ -1,6 +1,5 @@
 import { MjmlText } from "mjml-react";
 import { leadingRelaxed, textBase } from "./theme";
-
 const BulletedList = ({ items }) => {
   return (
     <>
@@ -18,5 +17,4 @@ const BulletedList = ({ items }) => {
     </>
   );
 };
-
 export default BulletedList;

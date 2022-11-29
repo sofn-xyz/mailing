@@ -17,7 +17,6 @@ import {
   textBase,
   textXl,
 } from "./components/theme";
-
 const AccountCreated = ({ name }) => (
   <Mjml>
     <Head />
@@ -71,9 +70,9 @@ const AccountCreated = ({ name }) => (
           </MjmlText>
         </MjmlColumn>
       </MjmlSection>
-      <Footer includeUnsubscribe/>
+      <Footer includeUnsubscribe />
     </MjmlBody>
   </Mjml>
 );
-
+AccountCreated.subject = ({ name }) => `Welcome to BookBook, ${name}!`;
 export default AccountCreated;

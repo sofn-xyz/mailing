@@ -1,14 +1,13 @@
 import { MjmlButton } from "mjml-react";
 import { black, gold, grayLight } from "./theme";
 import { leadingTight, textBase, borderBase } from "./theme";
-
 const ButtonPrimary = ({ link, uiText }) => {
   return (
     <>
       <MjmlButton
         lineHeight={leadingTight}
         fontSize={textBase}
-        height={52}
+        height={32}
         padding="0"
         align="left"
         href={link}
@@ -22,7 +21,7 @@ const ButtonPrimary = ({ link, uiText }) => {
       <MjmlButton
         lineHeight={leadingTight}
         fontSize={textBase}
-        height={52}
+        height={32}
         padding="0"
         align="left"
         href={link}
@@ -36,5 +35,4 @@ const ButtonPrimary = ({ link, uiText }) => {
     </>
   );
 };
-
 export default ButtonPrimary;

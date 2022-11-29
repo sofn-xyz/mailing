@@ -1,5 +1,4 @@
 import ResetPassword from "../ResetPassword";
-
 export function resetPassword() {
   return (
     <ResetPassword

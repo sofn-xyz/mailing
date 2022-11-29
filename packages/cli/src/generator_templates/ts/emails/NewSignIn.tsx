@@ -81,7 +81,6 @@ const NewSignIn: Template<NewSignInProps> = ({
               ♥,
               <br />
               The BookBook Team
-              ABC
             </MjmlText>
             <MjmlDivider
               borderColor="#666"

@@ -1,6 +1,6 @@
 {
   "*.{js,jsx,ts,tsx}": "eslint --fix",
   "*.rb": "rubocop --autocorrect",
-  "packages/cli/src/generator_templates/ts/**/*.{ts,tsx}": "cd packages/cli && yarn build-js-templates"
+  "packages/cli/src/generator_templates/ts/**/*.{ts,tsx}": "scripts/build-js-templates"
 }
 

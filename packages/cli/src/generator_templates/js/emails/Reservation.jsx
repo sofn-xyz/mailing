@@ -8,7 +8,6 @@ import {
   textBase,
   textLg,
 } from "./components/theme";
-
 import {
   Mjml,
   MjmlBody,
@@ -18,7 +17,6 @@ import {
   MjmlSpacer,
   MjmlDivider,
 } from "mjml-react";
-
 const Reservation = ({ headline, body, bulletedList, ctaText }) => {
   return (
     <Mjml>
@@ -74,5 +72,4 @@ const Reservation = ({ headline, body, bulletedList, ctaText }) => {
     </Mjml>
   );
 };
-
 export default Reservation;

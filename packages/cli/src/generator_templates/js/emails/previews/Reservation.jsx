@@ -1,6 +1,5 @@
 import Reservation from "../Reservation";
 import BulletedList from "../components/BulletedList";
-
 export async function reservationWithError() {
   return (
     <Reservation
@@ -25,7 +24,6 @@ export async function reservationWithError() {
     />
   );
 }
-
 export function reservationConfirmed() {
   return (
     <Reservation
@@ -49,7 +47,6 @@ export function reservationConfirmed() {
     />
   );
 }
-
 export function reservationChanged() {
   return (
     <Reservation

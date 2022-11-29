@@ -1,3 +1,4 @@
+import React from "react";
 import {
   MjmlHead,
   MjmlFont,
@@ -7,22 +8,22 @@ import {
   MjmlRaw,
 } from "mjml-react";
 import { black, grayDark } from "./theme";
-
 const Head = ({ children }) => {
   return (
     <MjmlHead>
-      <MjmlRaw>
-        <meta name="color-scheme" content="light dark" />
-        <meta name="supported-color-schemes" content="light dark" />
-      </MjmlRaw>
-      <MjmlFont
-        name="Inter"
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700"
-      />
-      <MjmlStyle>{`
-       strong {
-        font-weight: 700;
-      }
+      <>
+        <MjmlRaw>
+          <meta name="color-scheme" content="light dark" />
+          <meta name="supported-color-schemes" content="light dark" />
+        </MjmlRaw>
+        <MjmlFont
+          name="Inter"
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700"
+        />
+        <MjmlStyle>{`
+        strong {
+          font-weight: 700;
+        }
         .smooth {
           -webkit-font-smoothing: antialiased;
         }
@@ -48,6 +49,9 @@ const Head = ({ children }) => {
           }
         }
         @media (prefers-color-scheme: dark) {
+          body {
+            background: ${black};
+          }
           .logo > * {
             filter: invert(1) !important;
           }
@@ -62,15 +66,15 @@ const Head = ({ children }) => {
           }
         }
       `}</MjmlStyle>
-      <MjmlAttributes>
-        <MjmlAll
-          font-family='Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
-          font-weight="400"
-        />
-      </MjmlAttributes>
-      {children}
+        <MjmlAttributes>
+          <MjmlAll
+            font-family='Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
+            font-weight="400"
+          />
+        </MjmlAttributes>
+        {children}
+      </>
     </MjmlHead>
   );
 };
-
 export default Head;
