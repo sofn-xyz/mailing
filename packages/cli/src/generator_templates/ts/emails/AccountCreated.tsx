@@ -38,7 +38,7 @@ const AccountCreated: Template<AccountCreatedProps> = ({ name }) => (
         </Text>
       </MjmlColumn>
     </MjmlSection>
-    <Footer />
+    <Footer includeUnsubscribe />
   </BaseLayout>
 );
 

@@ -35,7 +35,7 @@ const AccountCreated = ({ name }) => (
         </Text>
       </MjmlColumn>
     </MjmlSection>
-    <Footer />
+    <Footer includeUnsubscribe />
   </BaseLayout>
 );
 AccountCreated.subject = ({ name }) => `Welcome to BookBook, ${name}!`;
