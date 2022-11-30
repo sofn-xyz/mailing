@@ -29,66 +29,116 @@ function mockRequestResponse(method: string) {
 }
 
 describe("sendMail with a valid api key", () => {
-  it("should 422 if no to, cc, or bcc is provided", async () => {
-    const { req, res } = mockRequestResponse("POST");
-    req.body = {
-      templateName: "AccountCreated",
-      props: { name: "Alex" },
-    };
+  describe("with real sendMail -- be careful as this could send email if tranpsort is configured", () => {
+    // this tests both that sendMail throws an error with a "status" attribute and
+    // that api/sendMail takes "status" and relays it to the user as an http status code
+    it.skip("should 422 if no subject is provided and template has no subject function", async () => {
+      const templateName = "ResetPassword";
+      const template = moduleManifest.templates[templateName];
 
-    await handler(req, res);
-    expect(res.status).toHaveBeenCalledWith(422);
-    expect(res.json).toHaveBeenCalledWith({
-      error: "to, cc, or bcc must be specified",
+      expect(template).toBeDefined();
+      expect(template.subject).toBeUndefined();
+
+      const { req, res } = mockRequestResponse("POST");
+      req.body = {
+        to: "alex@mailing.run",
+        templateName: templateName,
+      };
+
+      await handler(req, res);
+      expect(res.status).toHaveBeenCalledWith(422);
+      expect(res.json).toHaveBeenCalledWith({
+        error: "sendMail couldn't find a subject for your email",
+      });
     });
   });
 
-  it("should 422 if no templateName is provided", async () => {
-    const { req, res } = mockRequestResponse("POST");
-    req.body = {
-      to: "alex@mailing.run",
-      props: { name: "Alex" },
-    };
+  describe("with mocked sendMail", () => {
+    it("should 422 if no to, cc, or bcc is provided", async () => {
+      const { req, res } = mockRequestResponse("POST");
+      req.body = {
+        templateName: "AccountCreated",
+        props: { name: "Alex" },
+      };
 
-    delete req.body.templateName;
-    await handler(req, res);
-    expect(res.status).toHaveBeenCalledWith(422);
-    expect(res.json).toHaveBeenCalledWith({
-      error: "templateName or html must be specified",
+      await handler(req, res);
+      expect(res.status).toHaveBeenCalledWith(422);
+      expect(res.json).toHaveBeenCalledWith({
+        error: "to, cc, or bcc must be specified",
+      });
     });
-  });
 
-  it("should 422 if template does not exist", async () => {
-    const { req, res } = mockRequestResponse("POST");
-    req.body = {
-      to: "alex@mailing.run",
-      templateName: "FAKE",
-      props: { name: "Alex" },
-    };
+    it("should 422 if no templateName is provided", async () => {
+      const { req, res } = mockRequestResponse("POST");
+      req.body = {
+        to: "alex@mailing.run",
+        props: { name: "Alex" },
+      };
 
-    await handler(req, res);
-    expect(res.status).toHaveBeenCalledWith(422);
-    expect(res.json).toHaveBeenCalledWith({
-      error:
-        "Template FAKE not found in list of templates: AccountCreated, NewSignIn, Reservation, ResetPassword",
-      mjmlErrors: undefined,
+      delete req.body.templateName;
+      await handler(req, res);
+      expect(res.status).toHaveBeenCalledWith(422);
+      expect(res.json).toHaveBeenCalledWith({
+        error: "templateName or html must be specified",
+      });
     });
-  });
 
-  it("should 200 with valid arguments", async () => {
-    const { req, res } = mockRequestResponse("POST");
-    req.body = {
-      to: "alex@mailing.run",
-      templateName: "AccountCreated",
-      props: { name: "Alex" },
-    };
+    it("should 422 if template does not exist", async () => {
+      const { req, res } = mockRequestResponse("POST");
+      req.body = {
+        to: "alex@mailing.run",
+        templateName: "FAKE",
+        props: { name: "Alex" },
+      };
 
-    expect(typeof moduleManifest.templates.AccountCreated.subject).toBe(
-      "function"
-    );
+      await handler(req, res);
+      expect(res.status).toHaveBeenCalledWith(422);
+      expect(res.json).toHaveBeenCalledWith({
+        error:
+          "Template FAKE not found in list of templates: AccountCreated, NewSignIn, Reservation, ResetPassword",
+        mjmlErrors: undefined,
+      });
+    });
 
-    await handler(req, res);
-    expect(res.status).toHaveBeenCalledWith(200);
-    expect(moduleManifest.sendMail).toHaveBeenCalled();
+    it("should 200 with valid arguments -- subject is provided as a function on the template", async () => {
+      const { req, res } = mockRequestResponse("POST");
+      req.body = {
+        to: "alex@mailing.run",
+        templateName: "AccountCreated",
+        props: { name: "Alex" },
+      };
+
+      expect(typeof moduleManifest.templates.AccountCreated.subject).toBe(
+        "function"
+      );
+
+      await handler(req, res);
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(moduleManifest.sendMail).toHaveBeenCalled();
+
+      // it uses the subject from the function on the template
+      // expect(moduleManifest.sendMail).toHaveBeenCalledWith(
+      //   expect.objectContaining({ subject: "Welcome to BookBook, Alex!" })
+      // );
+    });
+
+    it("should 200 with valid arguments -- subject is provided", async () => {
+      const { req, res } = mockRequestResponse("POST");
+      req.body = {
+        to: "alex@mailing.run",
+        templateName: "AccountCreated",
+        subject: "Welcome to Mailing Run",
+        props: { name: "Alex" },
+      };
+
+      await handler(req, res);
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(moduleManifest.sendMail).toHaveBeenCalled();
+
+      // it uses the subject provided
+      expect(moduleManifest.sendMail).toHaveBeenCalledWith(
+        expect.objectContaining({ subject: "Welcome to Mailing Run" })
+      );
+    });
   });
 });
