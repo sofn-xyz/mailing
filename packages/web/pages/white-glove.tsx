@@ -123,9 +123,9 @@ const WhiteGlove: NextPage = () => {
             index={3}
           />
         </div>
-        <div className="bg-black flexn flex-col text-center container">
+        <div className="bg-black flex mx-auto flex-col text-center container">
           <H2>Examples</H2>
-          <Subheading className="mx-auto lg:mt-20">
+          <Subheading className="mx-auto">
             White Glove templates are responsive and compatible across major
             email clients.
           </Subheading>
