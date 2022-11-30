@@ -13,6 +13,8 @@ import ExampleCard from "../components/white-glove/ExampleCard";
 import { Arrow } from "../components/white-glove/Arrow";
 import Pricing from "../components/white-glove/Pricing";
 
+const TYPEFORM_URL = "https://gbbspiwghkd.typeform.com/to/w77PsIsC";
+
 const WhiteGlove: NextPage = () => {
   const [hideHeaderRef, hideHeaderRefInView] = useInView();
 
@@ -71,7 +73,7 @@ const WhiteGlove: NextPage = () => {
           </div>
           <Link
             target="_blank"
-            href="https://www.typeform.com"
+            href={TYPEFORM_URL}
             className="lg:hidden text-green-200 flex-1 text-right"
           >
             Start
@@ -94,7 +96,7 @@ const WhiteGlove: NextPage = () => {
             make them for you.
           </div>
           <div className="flex justify-end mt-16">
-            <KeyButton href="https://www.typeform.com">
+            <KeyButton href={TYPEFORM_URL}>
               Get Started
               <Arrow />
             </KeyButton>
@@ -155,7 +157,7 @@ const WhiteGlove: NextPage = () => {
             We’re doing this for a limited time to dogfood Mailing as we add
             features.
           </Subheading>
-          <KeyButton href="https://www.typeform.com" className="mt-20">
+          <KeyButton href={TYPEFORM_URL} className="mt-20">
             Get Started
             <Arrow />
           </KeyButton>
