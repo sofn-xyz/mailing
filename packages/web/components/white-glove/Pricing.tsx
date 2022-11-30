@@ -90,7 +90,9 @@ export default function Pricing() {
         .discount-gradient {
           background: conic-gradient(from 0deg at 50% 54.21%, #C3F2BC 0deg, #DBF7D7 360deg);
         }
-        
+        th {
+          line-height: 120%;
+        }
       `}</style>
     </>
   );

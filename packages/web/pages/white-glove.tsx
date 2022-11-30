@@ -150,12 +150,15 @@ const WhiteGlove: NextPage = () => {
           <Pricing />
         </div>
 
-        <div className="text-center">
+        <div className="text-center mx-auto">
           <H2>Limited time</H2>
-          <Subheading className="mx-auto">
+          <Subheading className="mx-auto px-0 sm:px-4 md:px-6">
             <span ref={hideHeaderRef}></span>
             We’re doing this to dogfood Mailing and build up an{" "}
-            <Link href="/docs/templates" className="underline">
+            <Link
+              href="/docs/templates"
+              className="underline active:translate-y-0.5 hover:text-green-200 inline"
+            >
               open source template library
             </Link>
             . Book while supplies last.

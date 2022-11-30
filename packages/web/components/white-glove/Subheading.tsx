@@ -13,12 +13,22 @@ export default function Subheading({
   return (
     <div
       className={cx(
-        "text-2xl sm:text-3xl md:text-4xl mt-8 sm:mt-16 max-w-lg sm:max-w-3xl",
+        "subhead text-2xl sm:text-3xl md:text-4xl mt-8 sm:mt-16 max-w-lg sm:max-w-3xl",
         className
       )}
       {...divProps}
     >
       {children}
+      <style jsx>{`
+        .subhead {
+          line-height: 120%;
+        }
+        @media (max-width: 640px) {
+          .subhead {
+            line-height: 140%;
+          }
+        }
+      `}</style>
     </div>
   );
 }
