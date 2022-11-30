@@ -59,18 +59,11 @@ export default function Pricing() {
               $225 ea.
             </TdCenter>
           </tr>
-          <tr className="bb-dotted py-8">
-            <TdLeft>11-15</TdLeft>
-            <TdCenter>$400 ea.</TdCenter>
-            <TdCenter className="border-x-2 sm:border-x-4 border-green-200">
-              $200 ea.
-            </TdCenter>
-          </tr>
           <tr className="py-8">
-            <TdLeft>16+</TdLeft>
-            <TdCenter>$350 ea.</TdCenter>
+            <TdLeft>11+</TdLeft>
+            <TdCenter>$400 ea.</TdCenter>
             <TdCenter className="rounded-b-2xl border-x-2 sm:border-x-4 border-b-2 sm:border-b-4 border-green-200">
-              $175 ea.
+              $200 ea.
             </TdCenter>
           </tr>
         </tbody>
