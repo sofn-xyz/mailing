@@ -2,7 +2,7 @@ import type { SendMailOptions, Transporter } from "nodemailer";
 import open from "open";
 import fs from "fs-extra";
 import { render } from "./mjml";
-import { error, log, debug } from "./util/log";
+import { error, log, debug } from "./util/serverLogger";
 import fetch from "node-fetch";
 import { capture } from "./util/postHog";
 import instrumentHtml from "./util/instrumentHtml";

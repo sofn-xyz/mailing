@@ -10,7 +10,7 @@ import {
   getQuiet,
 } from "..";
 
-jest.mock("../../log");
+jest.mock("../../serverLogger");
 
 describe("writeDefaultConfigFile", () => {
   beforeAll(() => {

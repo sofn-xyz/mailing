@@ -3,7 +3,7 @@ import { log, error } from "../../util/serverLogger";
 import { ExportPreviewsArgs, handler } from "../exportPreviews";
 import { execCli } from "./execCli";
 
-jest.mock("../../util/log");
+jest.mock("../../util/serverLogger");
 
 describe("exportPreviews command", () => {
   beforeEach(() => {

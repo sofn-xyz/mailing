@@ -4,7 +4,7 @@ import send from "../send";
 import * as moduleManifestUtil from "../../../../util/moduleManifestUtil";
 import * as moduleManifest from "../../../../moduleManifest";
 
-jest.mock("../../../../util/log");
+jest.mock("../../../../util/serverLogger");
 
 jest.mock("../../../../moduleManifest", () => ({
   sendMail: jest.fn(),

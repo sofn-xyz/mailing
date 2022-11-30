@@ -5,7 +5,7 @@ import * as postHog from "../postHog";
 import fsExtra from "fs-extra";
 import * as config from "../config";
 
-jest.mock("../log");
+jest.mock("../serverLogger");
 
 describe("buildHandler", () => {
   beforeEach(() => {
