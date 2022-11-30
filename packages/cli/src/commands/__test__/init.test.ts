@@ -75,17 +75,13 @@ emails
 ├── Reservation.jsx
 ├── ResetPassword.jsx
 ├── components
-│   ├── BulletedList.jsx
 │   ├── Button.jsx
-│   ├── ButtonPrimary.jsx
 │   ├── Divider.jsx
 │   ├── Footer.jsx
-│   ├── Head.jsx
 │   ├── Header.jsx
 │   ├── Heading.jsx
 │   ├── List.jsx
-│   ├── Text.jsx
-│   └── theme.js
+│   └── Text.jsx
 ├── index.js
 ├── layouts
 │   └── BaseLayout.jsx
