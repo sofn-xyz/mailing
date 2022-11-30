@@ -46,7 +46,7 @@ emails
 │   └── Text.tsx
 ├── index.ts
 ├── layouts
-│   └── BaseLayout.tsx
+│   └── Base.tsx
 ├── previews
 │   ├── AccountCreated.tsx
 │   ├── NewSignIn.tsx
@@ -84,7 +84,7 @@ emails
 │   └── Text.jsx
 ├── index.js
 ├── layouts
-│   └── BaseLayout.jsx
+│   └── Base.jsx
 ├── previews
 │   ├── AccountCreated.jsx
 │   ├── NewSignIn.jsx

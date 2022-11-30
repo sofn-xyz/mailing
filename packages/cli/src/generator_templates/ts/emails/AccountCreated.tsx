@@ -5,14 +5,14 @@ import Button from "./components/Button";
 import Header from "./components/Header";
 import Heading from "./components/Heading";
 import Footer from "./components/Footer";
-import BaseLayout from "./layouts/BaseLayout";
+import Base from "./layouts/Base";
 import Text from "./components/Text";
 import { spacing, fontSize } from "./theme";
 
 type AccountCreatedProps = { name: string };
 
 const AccountCreated: Template<AccountCreatedProps> = ({ name }) => (
-  <BaseLayout width={600}>
+  <Base width={600}>
     <Header loose />
     <MjmlSection cssClass="lg-gutter" paddingBottom={spacing.s9}>
       <MjmlColumn>
@@ -39,7 +39,7 @@ const AccountCreated: Template<AccountCreatedProps> = ({ name }) => (
       </MjmlColumn>
     </MjmlSection>
     <Footer includeUnsubscribe />
-  </BaseLayout>
+  </Base>
 );
 
 AccountCreated.subject = ({ name }) => `Welcome to BookBook, ${name}!`;

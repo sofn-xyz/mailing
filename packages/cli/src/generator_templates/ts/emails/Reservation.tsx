@@ -7,7 +7,7 @@ import Heading from "./components/Heading";
 import Footer from "./components/Footer";
 import Button from "./components/Button";
 import Text from "./components/Text";
-import BaseLayout from "./layouts/BaseLayout";
+import Base from "./layouts/Base";
 import Divider from "./components/Divider";
 import { spacing } from "./theme";
 
@@ -25,7 +25,7 @@ const Reservation: Template<ReservationProps> = ({
   ctaText,
 }) => {
   return (
-    <BaseLayout width={352}>
+    <Base width={352}>
       <Header />
       <MjmlSection cssClass="gutter">
         <MjmlColumn>
@@ -42,7 +42,7 @@ const Reservation: Template<ReservationProps> = ({
         </MjmlColumn>
       </MjmlSection>
       <Footer />
-    </BaseLayout>
+    </Base>
   );
 };
 Reservation.subject = ({ headline }) => headline || "Your BookBook Reservation";

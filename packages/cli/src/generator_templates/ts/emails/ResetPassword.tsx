@@ -6,7 +6,7 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Button from "./components/Button";
 import Text from "./components/Text";
-import BaseLayout from "./layouts/BaseLayout";
+import Base from "./layouts/Base";
 import Divider from "./components/Divider";
 import { spacing } from "./theme";
 
@@ -22,7 +22,7 @@ const ResetPassword: Template<ResetPasswordProps> = ({
   ctaText,
 }) => {
   return (
-    <BaseLayout width={352}>
+    <Base width={352}>
       <Header />
       <MjmlSection cssClass="gutter">
         <MjmlColumn>
@@ -43,7 +43,7 @@ const ResetPassword: Template<ResetPasswordProps> = ({
         </MjmlColumn>
       </MjmlSection>
       <Footer />
-    </BaseLayout>
+    </Base>
   );
 };
 ResetPassword.subject = "Password Reset";

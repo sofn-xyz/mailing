@@ -5,12 +5,12 @@ import Heading from "./components/Heading";
 import Footer from "./components/Footer";
 import Divider from "./components/Divider";
 import Text from "./components/Text";
-import BaseLayout from "./layouts/BaseLayout";
+import Base from "./layouts/Base";
 import { fontSize, spacing } from "./theme";
 
 const NewSignIn = ({ name, headline, body, bulletedList }) => {
   return (
-    <BaseLayout width={352}>
+    <Base width={352}>
       <Header />
       <MjmlSection cssClass="gutter">
         <MjmlColumn>
@@ -37,7 +37,7 @@ const NewSignIn = ({ name, headline, body, bulletedList }) => {
         </MjmlColumn>
       </MjmlSection>
       <Footer includeUnsubscribe />
-    </BaseLayout>
+    </Base>
   );
 };
 export default NewSignIn;

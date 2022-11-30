@@ -1,8 +1,5 @@
 #!/usr/bin/env bash
 
-# Delete all JS templates to start fresh
-rm -rf packages/cli/src/generator_templates/js/emails
-
 # Generate JS templates from TS Templates
 npx tsc \
 --allowSyntheticDefaultImports true \
