@@ -157,7 +157,7 @@ const WhiteGlove: NextPage = () => {
             We’re doing this to dogfood Mailing and build up an{" "}
             <Link
               href="/docs/templates"
-              className="underline active:translate-y-0.5 hover:text-green-200 inline"
+              className="underline active:translate-y-0.5 hover:text-green-200 inline-block"
             >
               open source template library
             </Link>
