@@ -42,14 +42,14 @@ export function ExampleCard({ name }: ExampleCardProps) {
   if (!example) return null;
   const { title, imageUrl, brandUrl, sourceUrl, demoUrl } = example;
   return (
-    <div className="sm:mx-6 mb-16 w-full sm:w-[342px]">
+    <div className="sm:mx-4 md:mx-6 mb-16 w-full sm:w-[256px] md:w-[342px]">
       <div className="w-full">
         <div className="relative rounded-full">
           <a
             href={demoUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="underline active:translate-y-1 inline-block"
+            className="underline sm:active:translate-y-1 sm:inline-block"
           >
             <Image
               src={imageUrl}

@@ -2,7 +2,7 @@ import cx from "classnames";
 
 function TdLeft(props: { children: React.ReactNode; className?: string }) {
   return (
-    <td className={cx("text-left w-4/12 py-8", props.className)}>
+    <td className={cx("text-left w-2/12 sm:w-4/12 py-8", props.className)}>
       {props.children}
     </td>
   );
@@ -72,7 +72,7 @@ export default function Pricing() {
         <div className="font-bold font-serif mx-6 my-2.5 whitespace-nowrap text-5xl lg:text-6xl xl:text-[84px]">
           * Get a discount
         </div>
-        <div className="text-center pb-1 pt-1 lg:pt-3 text-lg sm:text-xl md:text-2xl w-full max-w-xs md:max-w-sm">
+        <div className="text-center pb-1 pt-1 lg:pt-3 text-lg sm:text-xl md:text-2xl w-full max-w-xs sm:max-w-[256px] md:max-w-md">
           for sharing your templates open source with the Mailing community.
         </div>
       </div>
