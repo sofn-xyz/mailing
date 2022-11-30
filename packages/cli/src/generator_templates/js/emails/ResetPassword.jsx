@@ -34,4 +34,5 @@ const ResetPassword = ({ name, body, ctaText }) => {
     </BaseLayout>
   );
 };
+ResetPassword.subject = "Password Reset";
 export default ResetPassword;

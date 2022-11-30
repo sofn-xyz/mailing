@@ -46,5 +46,5 @@ const ResetPassword: Template<ResetPasswordProps> = ({
     </BaseLayout>
   );
 };
-
+ResetPassword.subject = "Password Reset";
 export default ResetPassword;

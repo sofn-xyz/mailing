@@ -37,18 +37,22 @@ emails
 ├── Reservation.tsx
 ├── ResetPassword.tsx
 ├── components
-│   ├── BulletedList.tsx
-│   ├── ButtonPrimary.tsx
+│   ├── Button.tsx
+│   ├── Divider.tsx
 │   ├── Footer.tsx
-│   ├── Head.tsx
 │   ├── Header.tsx
-│   └── theme.ts
+│   ├── Heading.tsx
+│   ├── List.tsx
+│   └── Text.tsx
 ├── index.ts
-└── previews
-    ├── AccountCreated.tsx
-    ├── NewSignIn.tsx
-    ├── Reservation.tsx
-    └── ResetPassword.tsx`
+├── layouts
+│   └── BaseLayout.tsx
+├── previews
+│   ├── AccountCreated.tsx
+│   ├── NewSignIn.tsx
+│   ├── Reservation.tsx
+│   └── ResetPassword.tsx
+└── theme.ts`
     );
   });
 
@@ -72,17 +76,25 @@ emails
 ├── ResetPassword.jsx
 ├── components
 │   ├── BulletedList.jsx
+│   ├── Button.jsx
 │   ├── ButtonPrimary.jsx
+│   ├── Divider.jsx
 │   ├── Footer.jsx
 │   ├── Head.jsx
 │   ├── Header.jsx
+│   ├── Heading.jsx
+│   ├── List.jsx
+│   ├── Text.jsx
 │   └── theme.js
 ├── index.js
-└── previews
-    ├── AccountCreated.jsx
-    ├── NewSignIn.jsx
-    ├── Reservation.jsx
-    └── ResetPassword.jsx`
+├── layouts
+│   └── BaseLayout.jsx
+├── previews
+│   ├── AccountCreated.jsx
+│   ├── NewSignIn.jsx
+│   ├── Reservation.jsx
+│   └── ResetPassword.jsx
+└── theme.js`
     );
   });
 

@@ -31,4 +31,5 @@ const Reservation = ({ headline, body, bulletedList, ctaText }) => {
     </BaseLayout>
   );
 };
+Reservation.subject = ({ headline }) => headline || "Your BookBook Reservation";
 export default Reservation;
