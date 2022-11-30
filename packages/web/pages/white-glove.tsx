@@ -21,7 +21,7 @@ const WhiteGlove: NextPage = () => {
   return (
     <div className="bg-black">
       <Head>
-        <title>White Glove by Mailing – Beautiful emails made for you</title>
+        <title>White Glove by Mailing – Beautiful emails for you</title>
         <meta property="og:title" content="White Glove" />
         <meta
           name="description"
