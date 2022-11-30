@@ -132,7 +132,7 @@ const WhiteGlove: NextPage = () => {
             White Glove templates are responsive and compatible across major
             email clients.
           </Subheading>
-          <div className="text-left flex flex-wrap justify-center mt-16 md:mt-32">
+          <div className="text-left flex flex-wrap justify-center mt-16 md:mt-24">
             <ExampleCard name="lancey" />
             <ExampleCard name="thoughtfulPost" />
             <ExampleCard name="fynn" />
