@@ -1,6 +1,6 @@
 import { lintEmailsDirectory } from "../lintEmailsDirectory";
 import moduleManifest from "../../../moduleManifest";
-import * as log from "../../../util/log";
+import * as log from "../../../util/serverLogger";
 
 jest.mock("../../../moduleManifest");
 

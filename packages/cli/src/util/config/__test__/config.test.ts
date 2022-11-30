@@ -1,4 +1,4 @@
-import { log } from "../../log";
+import { log } from "../../serverLogger";
 import fsExtra from "fs-extra";
 import crypto from "crypto";
 import {

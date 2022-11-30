@@ -5,7 +5,7 @@ import {
   getPreviewComponent,
   previewTree,
 } from "../../../util/moduleManifestUtil";
-import { error } from "../../../util/log";
+import { error } from "../../../util/serverLogger";
 
 export type PreviewIndexResponseBody = {
   previews: [string, string[]][];

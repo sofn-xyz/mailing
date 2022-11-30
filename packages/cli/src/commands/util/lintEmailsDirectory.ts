@@ -1,6 +1,6 @@
 import { flatten } from "lodash";
 import manifest from "../../moduleManifest";
-import { error, log } from "../../util/log";
+import { error, log } from "../../util/serverLogger";
 
 // The Linter: define linting rules here
 

@@ -1,6 +1,6 @@
 import { existsSync, writeFileSync } from "fs-extra";
 import { readJSONverbose, readPackageJSON } from "../paths";
-import { log, debug, logPlain } from "../log";
+import { log, debug, logPlain } from "../serverLogger";
 import { pick } from "lodash";
 import * as prettier from "prettier";
 import {

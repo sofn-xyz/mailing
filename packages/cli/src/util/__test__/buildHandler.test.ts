@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { buildHandler } from "../buildHandler";
-import { log } from "../log";
+import { log } from "../serverLogger";
 import * as postHog from "../postHog";
 import fsExtra from "fs-extra";
 import * as config from "../config";
