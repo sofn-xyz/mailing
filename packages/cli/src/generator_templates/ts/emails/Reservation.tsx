@@ -1,24 +1,15 @@
-import { ReactElement } from "react";
-import Head from "./components/Head";
-import Header from "./components/Header";
-import Footer from "./components/Footer";
-import ButtonPrimary from "./components/ButtonPrimary";
-import {
-  leadingTight,
-  leadingRelaxed,
-  textBase,
-  textLg,
-} from "./components/theme";
+import React, { ReactElement } from "react";
+import { MjmlSection, MjmlColumn } from "mjml-react";
+import { Template } from "mailing-core";
 
-import {
-  Mjml,
-  MjmlBody,
-  MjmlSection,
-  MjmlColumn,
-  MjmlText,
-  MjmlSpacer,
-  MjmlDivider,
-} from "mjml-react";
+import Header from "./components/Header";
+import Heading from "./components/Heading";
+import Footer from "./components/Footer";
+import Button from "./components/Button";
+import Text from "./components/Text";
+import BaseLayout from "./components/BaseLayout";
+import Divider from "./components/Divider";
+import { spacing } from "./theme";
 
 type ReservationProps = {
   headline: string;
@@ -27,65 +18,32 @@ type ReservationProps = {
   ctaText?: string;
 };
 
-const Reservation: React.FC<ReservationProps> = ({
+const Reservation: Template<ReservationProps> = ({
   headline,
   body,
   bulletedList,
   ctaText,
 }) => {
   return (
-    <Mjml>
-      <Head />
-      <MjmlBody width={400}>
-        <Header />
-        <MjmlSection padding="0 24px" cssClass="smooth">
-          <MjmlColumn>
-            <MjmlDivider
-              borderColor="#666"
-              borderStyle="dotted"
-              borderWidth="1px"
-              padding="8px 0"
-            ></MjmlDivider>
-            <MjmlText
-              padding="24px 0"
-              fontSize={textLg}
-              lineHeight={leadingTight}
-              cssClass="paragraph"
-            >
-              {headline}
-            </MjmlText>
-            {bulletedList}
-            <MjmlSpacer height="16px" />
-            <MjmlText
-              cssClass="paragraph"
-              padding="0"
-              fontSize={textBase}
-              lineHeight={leadingRelaxed}
-            >
-              <>{body}</>
-            </MjmlText>
-            {ctaText && (
-              <>
-                <MjmlSpacer height="24px" />
-                <ButtonPrimary
-                  link="https://www.mailing.run"
-                  uiText={ctaText}
-                />
-                <MjmlSpacer height="8px" />
-              </>
-            )}
-            <MjmlDivider
-              borderColor="#666"
-              borderStyle="dotted"
-              borderWidth="1px"
-              padding="32px 0 0"
-            ></MjmlDivider>
-          </MjmlColumn>
-        </MjmlSection>
-        <Footer />
-      </MjmlBody>
-    </Mjml>
+    <BaseLayout width={352}>
+      <Header />
+      <MjmlSection cssClass="gutter">
+        <MjmlColumn>
+          <Divider paddingTop={spacing.s3} paddingBottom={spacing.s3} />
+          <Heading paddingTop={spacing.s7} paddingBottom={spacing.s7}>
+            {headline}
+          </Heading>
+          {bulletedList}
+          <Text paddingTop={spacing.s5} paddingBottom={spacing.s7}>
+            <>{body}</>
+          </Text>
+          {ctaText && <Button href="https://www.mailing.run">{ctaText}</Button>}
+          <Divider paddingTop={spacing.s9} />
+        </MjmlColumn>
+      </MjmlSection>
+      <Footer />
+    </BaseLayout>
   );
 };
-
+Reservation.subject = ({ headline }) => headline || "Your BookBook Reservation";
 export default Reservation;

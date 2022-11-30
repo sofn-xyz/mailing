@@ -1,3 +1,4 @@
+import React from "react";
 import { MjmlSection, MjmlColumn, MjmlImage } from "mjml-react";
 
 type HeaderProps = {
@@ -14,7 +15,7 @@ const Header: React.FC<HeaderProps> = ({ loose }) => {
           height="54px"
           align="center"
           src="https://s3.amazonaws.com/lab.campsh.com/bb-transparent%402x.png"
-          cssClass="logo"
+          cssClass="invert"
         />
       </MjmlColumn>
     </MjmlSection>

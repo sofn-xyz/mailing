@@ -145,3 +145,5 @@ export default function Newsletter() {
     </Layout>
   );
 }
+
+Newsletter.subject = "Introducing Mailing 0.9 ⚡";

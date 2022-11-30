@@ -1,5 +1,6 @@
+import React from "react";
 import NewSignIn from "../NewSignIn";
-import BulletedList from "../components/BulletedList";
+import List from "../components/List";
 
 export function newSignIn() {
   return (
@@ -14,7 +15,7 @@ export function newSignIn() {
         </>
       }
       bulletedList={
-        <BulletedList
+        <List
           items={[
             "Date: July 14, 2022 4:26 PM PST",
             "Device: Mac",

@@ -10,10 +10,8 @@ type Intercept = {
 
 type SendPreviewRequestBody = {
   to: string;
-  html?: string;
-  previewFunction?: string;
-  previewClass?: string;
-  subject: string;
+  previewFunction: string;
+  previewClass: string;
 };
 
 type SendPreviewResponseBody = {
