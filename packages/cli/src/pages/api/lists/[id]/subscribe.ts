@@ -1,6 +1,6 @@
 import prisma from "../../../../../prisma";
 import { validate } from "email-validator";
-import { error } from "../../../../util/log";
+import { error } from "../../../../util/serverLogger";
 import type { NextApiRequest, NextApiResponse } from "next/types";
 import type { Prisma } from "../../../../../prisma/generated/client";
 

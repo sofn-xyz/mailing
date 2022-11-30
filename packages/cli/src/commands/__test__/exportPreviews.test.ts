@@ -1,5 +1,5 @@
 import fsExtra from "fs-extra";
-import { log, error } from "../../util/log";
+import { log, error } from "../../util/serverLogger";
 import { ExportPreviewsArgs, handler } from "../exportPreviews";
 import { execCli } from "./execCli";
 

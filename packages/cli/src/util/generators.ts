@@ -1,7 +1,7 @@
 import { copy } from "fs-extra";
 import { resolve } from "path";
 import tree from "tree-node-cli";
-import { log } from "./log";
+import { log } from "./serverLogger";
 
 export async function generateEmailsDirectory({
   isTypescript,

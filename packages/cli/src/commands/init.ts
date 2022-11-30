@@ -2,7 +2,7 @@ import prompts from "prompts";
 import fetch from "node-fetch";
 import { existsSync } from "fs-extra";
 import { ArgumentsCamelCase } from "yargs";
-import { error, log } from "../util/log";
+import { error, log } from "../util/serverLogger";
 import { getMailingAPIBaseURL } from "../util/paths";
 import { generateEmailsDirectory } from "../util/generators";
 import { handler as previewHandler, PreviewArgs } from "./preview/preview";
