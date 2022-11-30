@@ -1,5 +1,4 @@
 import { PostHog } from "posthog-node";
-import { debug } from "../log";
 
 export const POSTHOG_API_KEY = process.env.POSTHOG_API_KEY;
 
@@ -10,7 +9,7 @@ export function postHogClient(): PostHog | undefined {
     return;
 
   if (undefined === POSTHOG_API_KEY) {
-    debug("POSTHOG_API_KEY is undefined");
+    console.error("POSTHOG_API_KEY is undefined");
     return;
   }
 
