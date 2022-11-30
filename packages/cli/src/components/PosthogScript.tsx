@@ -1,3 +1,5 @@
+import { POSTHOG_API_KEY } from "../util/postHog/client";
+
 export default function PosthogScript() {
   if (process.env.NODE_ENV !== "production") {
     return null;
@@ -10,7 +12,7 @@ export default function PosthogScript() {
       dangerouslySetInnerHTML={{
         __html: `
               ${loadPosthogScript}
-              posthog.init(process.env.POSTHOG_API_KEY, {api_host: 'https://app.posthog.com'})
+              posthog.init(${POSTHOG_API_KEY}, {api_host: 'https://app.posthog.com'})
               `,
       }}
     ></script>
