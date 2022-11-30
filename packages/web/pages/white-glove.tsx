@@ -79,22 +79,25 @@ const WhiteGlove: NextPage = () => {
           </Link>
         </nav>
       </header>
-      <main className="px-5 sm:px-8 md:px-16 mx-auto container bg-black min-h-screen text-white">
-        <h1 className="text-6xl sm:text-7xl md:text-8xl lg:text-[120px] xl:text-[160px] mt-24 leading-none">
-          No time for
-          <div className="font-serif font-bold text-green-200 leading-none">
-            beautiful emails?
+      <main className="px-5 sm:px-8 mx-auto bg-black min-h-screen text-white">
+        <div className="max-w-[1324px] mx-auto">
+          <h1 className="text-6xl sm:text-7xl md:text-8xl lg:text-[120px] xl:text-[160px] mt-24 leading-none">
+            No time for
+            <div className="font-serif font-bold text-green-200 leading-none">
+              beautiful emails?
+            </div>
+          </h1>
+          <div className="text-3xl md:text-4xl lg:text-5xl mt-8 sm:mt-12">
+            No problem, we’ll make them for you.
           </div>
-        </h1>
-        <div className="text-3xl md:text-4xl lg:text-5xl mt-8 sm:mt-12">
-          No problem, we’ll make them for you.
+          <div className="flex justify-end mt-16">
+            <KeyButton href="https://www.typeform.com">
+              Get Started
+              <Arrow />
+            </KeyButton>
+          </div>
         </div>
-        <div className="flex justify-end mt-16">
-          <KeyButton href="https://www.typeform.com">
-            Get Started
-            <Arrow />
-          </KeyButton>
-        </div>
+
         <div className="mx-auto max-w-6xl">
           <H2>How it works</H2>
           <div className="mt-24"></div>
@@ -120,7 +123,7 @@ const WhiteGlove: NextPage = () => {
             index={3}
           />
         </div>
-        <div className="bg-black flexn flex-col text-center pt-40">
+        <div className="bg-black flexn flex-col text-center container">
           <H2>Examples</H2>
           <Subheading className="mx-auto lg:mt-20">
             White Glove templates are responsive and compatible across major
@@ -133,7 +136,7 @@ const WhiteGlove: NextPage = () => {
             <ExampleCard name="mailing" />
           </div>
         </div>
-        <div className="mx-auto max-w-6xl">
+        <div className="mx-auto -mt-16 max-w-6xl">
           <H2>Pricing</H2>
           <Subheading>
             Pricing includes design and development and is discounted for
@@ -155,7 +158,7 @@ const WhiteGlove: NextPage = () => {
           </KeyButton>
         </div>
       </main>
-      <footer className="bg-black flex justify-center mt-64 pb-40">
+      <footer className="bg-black flex justify-center mt-64 pb-24">
         <Link href="/">
           <Image
             src="/mailing-icon-white.svg"
