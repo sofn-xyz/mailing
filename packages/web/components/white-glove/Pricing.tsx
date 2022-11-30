@@ -62,7 +62,7 @@ export default function Pricing() {
           <tr className="py-8">
             <TdLeft>11+</TdLeft>
             <TdCenter>$400 ea.</TdCenter>
-            <TdCenter className="rounded-b-2xl border-x-2 sm:border-x-4 border-b-2 sm:border-b-4 border-green-200">
+            <TdCenter className="rounded-b-2xl border-x-2 sm:border-x-4 border-b-2 sm:border-b-4 border-green-200 pb-10">
               $200 ea.
             </TdCenter>
           </tr>

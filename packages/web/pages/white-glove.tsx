@@ -79,16 +79,19 @@ const WhiteGlove: NextPage = () => {
           </Link>
         </nav>
       </header>
-      <main className="px-5 sm:px-8 mx-auto bg-black min-h-screen text-white">
-        <div className="max-w-[1324px] mx-auto">
+      <main className="px-5 sm:px-16 xl:px-0 bg-black min-h-screen text-white">
+        <div className="max-w-[1440px] mx-auto xl:px-8">
           <h1 className="text-6xl sm:text-7xl md:text-8xl lg:text-[120px] xl:text-[160px] mt-24 leading-none">
-            No time for
-            <div className="font-serif font-bold text-green-200 leading-none">
-              beautiful emails?
+            No time
+            <br className="inline sm:hidden" /> for{" "}
+            <div className="font-serif font-bold text-green-200 leading-none inline sm:block">
+              beautiful <br className="inline sm:hidden" />
+              emails?
             </div>
           </h1>
-          <div className="text-3xl md:text-4xl lg:text-5xl mt-8 sm:mt-12">
-            No problem, we’ll make them for you.
+          <div className="text-3xl md:text-4xl lg:text-5xl mt-8 sm:mt-8 md:mt-12">
+            No problem, we’ll <br className="inline sm:hidden" />
+            make them for you.
           </div>
           <div className="flex justify-end mt-16">
             <KeyButton href="https://www.typeform.com">
