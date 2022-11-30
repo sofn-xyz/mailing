@@ -1,5 +1,5 @@
 import { PostHog } from "posthog-node";
-import { debug } from "../log";
+import { debug } from "../serverLogger";
 
 const POSTHOG_API_KEY = process.env.POSTHOG_API_KEY;
 

@@ -10,7 +10,7 @@ import {
 import { Mjml, MjmlBody, MjmlRaw } from "mjml-react";
 import fetch from "node-fetch";
 import * as postHog from "../util/postHog";
-import * as log from "../util/log";
+import * as serverLogger from "../util/serverLogger";
 import fsExtra from "fs-extra";
 
 jest.mock("../util/postHog");
@@ -201,7 +201,9 @@ describe("index", () => {
       });
 
       it("logs an error without a valid configPath but still sends", async () => {
-        const debugSpy = jest.spyOn(log, "debug").mockImplementation(jest.fn());
+        const debugSpy = jest
+          .spyOn(serverLogger, "debug")
+          .mockImplementation(jest.fn());
 
         const sendMail = buildSendMail({
           transport,
@@ -369,7 +371,7 @@ describe("index", () => {
             );
 
             const errorSpy = jest
-              .spyOn(log, "error")
+              .spyOn(serverLogger, "error")
               .mockImplementation(jest.fn());
 
             const sendMail = buildSendMail({
