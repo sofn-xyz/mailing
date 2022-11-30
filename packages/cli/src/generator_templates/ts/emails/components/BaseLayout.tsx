@@ -11,7 +11,12 @@ import {
 } from "mjml-react";
 import { colors, screens, themeDefaults, spacing } from "../theme";
 
-export default function Base({ width, children }) {
+type BaseLayoutProps = {
+  width: number;
+  children: React.ReactNode;
+};
+
+export default function BaseLayout({ width, children }: BaseLayoutProps) {
   return (
     <Mjml>
       <MjmlHead>

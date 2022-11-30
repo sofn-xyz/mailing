@@ -6,7 +6,7 @@ import Heading from "./components/Heading";
 import Footer from "./components/Footer";
 import Divider from "./components/Divider";
 import Text from "./components/Text";
-import Base from "./layouts/Base";
+import BaseLayout from "./components/BaseLayout";
 import { fontSize, spacing } from "./theme";
 
 type NewSignInProps = {
@@ -23,7 +23,7 @@ const NewSignIn: Template<NewSignInProps> = ({
   bulletedList,
 }) => {
   return (
-    <Base width={352}>
+    <BaseLayout width={352}>
       <Header />
       <MjmlSection cssClass="gutter">
         <MjmlColumn>
@@ -50,7 +50,7 @@ const NewSignIn: Template<NewSignInProps> = ({
         </MjmlColumn>
       </MjmlSection>
       <Footer includeUnsubscribe />
-    </Base>
+    </BaseLayout>
   );
 };
 

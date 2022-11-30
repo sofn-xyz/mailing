@@ -37,6 +37,7 @@ emails
 ├── Reservation.tsx
 ├── ResetPassword.tsx
 ├── components
+│   ├── BaseLayout.tsx
 │   ├── Button.tsx
 │   ├── Divider.tsx
 │   ├── Footer.tsx
@@ -45,8 +46,6 @@ emails
 │   ├── List.tsx
 │   └── Text.tsx
 ├── index.ts
-├── layouts
-│   └── Base.tsx
 ├── previews
 │   ├── AccountCreated.tsx
 │   ├── NewSignIn.tsx
@@ -75,6 +74,7 @@ emails
 ├── Reservation.jsx
 ├── ResetPassword.jsx
 ├── components
+│   ├── BaseLayout.jsx
 │   ├── Button.jsx
 │   ├── Divider.jsx
 │   ├── Footer.jsx
@@ -83,8 +83,6 @@ emails
 │   ├── List.jsx
 │   └── Text.jsx
 ├── index.js
-├── layouts
-│   └── Base.jsx
 ├── previews
 │   ├── AccountCreated.jsx
 │   ├── NewSignIn.jsx
