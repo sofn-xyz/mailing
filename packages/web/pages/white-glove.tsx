@@ -154,8 +154,11 @@ const WhiteGlove: NextPage = () => {
           <H2>Limited time</H2>
           <Subheading className="mx-auto">
             <span ref={hideHeaderRef}></span>
-            We’re doing this for a limited time to dogfood Mailing as we add
-            features.
+            We’re doing this to dogfood Mailing and build up an{" "}
+            <Link href="/docs/templates" className="underline">
+              open source template library
+            </Link>
+            . Book while supplies last.
           </Subheading>
           <KeyButton href={TYPEFORM_URL} className="mt-20">
             Get Started
