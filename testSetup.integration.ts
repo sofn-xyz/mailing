@@ -1,6 +1,8 @@
 import { disconnectDatabases, truncateDatabases } from "./testUtilIntegration";
 import chalk from "chalk";
 
+process.env.MM_ENV = "test";
+
 if (!process.env.MAILING_INTEGRATION_TEST) {
   throw new Error(
     chalk.red(

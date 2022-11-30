@@ -25,8 +25,8 @@ export async function capture(options: EventMessageV1) {
 
   debug(`calling capture with ${JSON.stringify(captureOpts)}`);
 
-  if (process.env.MM_DEV) {
-    debug("returning early from capture because MM_DEV is set");
+  if (process.env.MM_ENV === "test" || process.env.MM_ENV === "development") {
+    debug(`returning early from capture because MM_ENV=${process.env.MM_ENV}`);
     return;
   }
 

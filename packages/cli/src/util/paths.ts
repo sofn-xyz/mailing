@@ -24,7 +24,7 @@ export function readJSONverbose(filename: string) {
 }
 
 export function getMailingAPIBaseURL() {
-  if (process.env.MM_DEV) {
+  if (process.env.MM_ENV === "test" || process.env.MM_ENV === "development") {
     return `http://localhost:3000`;
   } else {
     return "https://www.mailing.run";

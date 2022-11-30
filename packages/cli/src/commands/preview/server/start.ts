@@ -42,15 +42,15 @@ export default async function startPreviewServer() {
   await linkEmailsDirectory(emailsDir);
 
   const hostname = "localhost";
-
   process.env.NEXT_PUBLIC_MAILING_SKIP_AUTH ||= "true";
   const app = next({
     dev: true, // true will use the app from source, not built .next bundle
     hostname,
     port,
-    dir: process.env.MM_DEV
-      ? resolve(__dirname, "../../../../")
-      : resolve("./.mailing"),
+    dir:
+      process.env.MM_ENV === "test" || process.env.MM_ENV === "development"
+        ? resolve(__dirname, "../../../../")
+        : resolve("./.mailing"),
   });
   const nextHandle = app.getRequestHandler();
   await app.prepare();

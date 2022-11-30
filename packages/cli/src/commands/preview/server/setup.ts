@@ -152,14 +152,16 @@ export async function bootstrapMailingDir() {
 
   // copy node_modules mailing into .mailing
   const nodeMailingPath = resolve(
-    process.env.MM_DEV ? __dirname + "/../../../.." : __dirname + "/.."
+    process.env.MM_ENV === "test" || process.env.MM_ENV === "development"
+      ? __dirname + "/../../../.."
+      : __dirname + "/.."
   );
 
   debug("versions do not match, copying .mailing from", nodeMailingPath);
 
   await rm(mailingPath, { recursive: true, force: true });
 
-  if (process.env.MM_DEV) {
+  if (process.env.MM_ENV === "test" || process.env.MM_ENV === "development") {
     // copy directory contents via a temp directory intermediary
     // so that it works in packages/cli, otherwise there will be an
     // error because .mailing is in the dir being copied

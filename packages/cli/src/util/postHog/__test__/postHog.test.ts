@@ -5,18 +5,18 @@ import * as anonymousId from "../../config/anonymousId";
 import { PostHog } from "posthog-node";
 
 describe("postHog", () => {
-  const MM_DEV_OG = process.env.MM_DEV;
+  const MM_ENV_OG = process.env.MM_ENV;
   const MM_DEV_E2E_OG = process.env.MM_E2E;
   let mockPostHogClient: PostHog;
   beforeEach(() => {
     mockPostHogClient = { capture: jest.fn() } as unknown as PostHog;
     jest.restoreAllMocks();
-    delete process.env.MM_DEV;
+    delete process.env.MM_ENV;
     delete process.env.MM_E2E;
   });
 
   afterEach(() => {
-    process.env.MM_DEV = MM_DEV_OG;
+    process.env.MM_ENV = MM_ENV_OG;
     process.env.MM_E2E = MM_DEV_E2E_OG;
   });
 
@@ -88,8 +88,8 @@ describe("postHog", () => {
     expect(mockPostHogClient.capture).not.toHaveBeenCalled();
   });
 
-  it("should not call capture if MM_DEV", () => {
-    process.env.MM_DEV = "1";
+  it("should not call capture if MM_ENV", () => {
+    process.env.MM_ENV = "test";
 
     jest
       .spyOn(postHogClient, "postHogClient")

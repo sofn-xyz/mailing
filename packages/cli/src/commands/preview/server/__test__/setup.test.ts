@@ -26,15 +26,15 @@ function mockReadJSONSyncToThrowErrno() {
 }
 
 describe("setup", () => {
-  const MM_DEV_OG = process.env.MM_DEV;
+  const MM_ENV_OG = process.env.MM_ENV;
 
   beforeEach(() => {
     jest.restoreAllMocks();
-    delete process.env.MM_DEV;
+    delete process.env.MM_ENV;
   });
 
   afterEach(() => {
-    process.env.MM_DEV = MM_DEV_OG;
+    process.env.MM_ENV = MM_ENV_OG;
   });
 
   describe("packageJsonVersionsMatch", () => {

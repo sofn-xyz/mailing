@@ -32,7 +32,6 @@ export type Template<P> = React.FC<P> & {
   subject?: string | ((args: Partial<P>) => string);
 };
 
-
 export async function getTestMailQueue() {
   try {
     const queue = await fs.readFile(TMP_TEST_FILE);
@@ -43,7 +42,7 @@ export async function getTestMailQueue() {
 }
 
 export async function clearTestMailQueue() {
-  if (!(process.env.TEST || process.env.NODE_ENV === "test")) {
+  if (!(process.env.MM_ENV === "test" || process.env.NODE_ENV === "test")) {
     throw new Error("tried to clear test mail queue not in test mode");
   }
 
@@ -57,9 +56,7 @@ export async function clearTestMailQueue() {
 
 export function buildSendMail<T>(options: BuildSendMailOptions<T>) {
   const testMode =
-    process.env.TEST ||
-    process.env.NODE_ENV === "test" ||
-    process.env.MAILING_INTEGRATION_TEST;
+    process.env.MM_ENV === "test" || process.env.NODE_ENV === "test";
 
   const integrationTestMode = !!process.env.MAILING_INTEGRATION_TEST;
 
