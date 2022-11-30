@@ -127,6 +127,32 @@ describe("index", () => {
       const email = queue[0];
       expect(email.subject).toEqual("Hello world");
     });
+
+    it("should prefer subject from options to subject from component", async () => {
+      const sendMail = buildSendMail({
+        transport,
+        defaultFrom: "replace@me.with.your.com",
+        configPath: "./mailing.config.json",
+      });
+
+      const Component = ({ name }: { name: string }) => <div>{name}</div>;
+      Component.subject = "Hello world";
+
+      await sendMail({
+        component: <Component name="Gerald" />,
+        to: ["ok@ok.com"],
+        from: "ok@ok.com",
+        text: "ok",
+        html: "ok",
+        subject: "precedence",
+      });
+
+      // still hits the queue even with the error
+      const queue = await getTestMailQueue();
+      expect(queue.length).toBe(1);
+      const email = queue[0];
+      expect(email.subject).toEqual("precedence");
+    });
   });
 
   describe("analyticsEnabled: false", () => {

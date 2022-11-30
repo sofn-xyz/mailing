@@ -1,8 +1,9 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { MjmlError } from "mjml-react";
-import { sendMail } from "../../moduleManifest";
-import renderTemplate from "../../util/renderTemplate";
+import { sendMail, templates } from "../../moduleManifest";
 import { validateApiKey } from "../../util/validateApiKey";
+import { createElement } from "react";
+import { getTemplateModule } from "../../util/moduleManifestUtil";
 
 type Data = {
   error?: string; // api error messages
@@ -21,7 +22,8 @@ export default async function handler(
 
   const { templateName, previewName, props, ...mailOptions } = req.body;
 
-  let html = req.body.html;
+  const html = req.body.html;
+  let component;
 
   // validate at least one of to, cc, bcc exists
   if (
@@ -40,20 +42,33 @@ export default async function handler(
         .json({ error: "templateName or html must be specified" });
     }
 
-    // render template if html doesn't exist
-    const {
-      error,
-      mjmlErrors,
-      html: renderedHtml,
-    } = renderTemplate(templateName.replace(/\.[jt]sx?$/, ""), props);
-
-    if (error) {
-      return res.status(422).json({ error, mjmlErrors });
+    const template = getTemplateModule(templateName);
+    if (!template) {
+      return res.status(422).json({
+        error: `Template ${templateName} not found in list of templates: ${Object.keys(
+          templates
+        ).join(", ")}`,
+      });
     }
-    html = renderedHtml;
+
+    component = createElement(template, props);
   }
 
-  const sendMailResult = await sendMail({ previewName, ...mailOptions, html });
-
-  res.status(200).json({ result: sendMailResult });
+  try {
+    const sendMailResult = await sendMail({
+      component,
+      previewName,
+      ...mailOptions,
+      html,
+    });
+    return res.status(200).json({ result: sendMailResult });
+  } catch (e: any) {
+    if ("number" === typeof e.status) {
+      return res.status(e.status).json({ error: e.message });
+    } else {
+      return res
+        .status(500)
+        .json({ error: `sendMail returned an error: ${e.message}` });
+    }
+  }
 }

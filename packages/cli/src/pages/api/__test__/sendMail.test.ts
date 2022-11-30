@@ -7,14 +7,6 @@ jest.mock("../../../util/validateApiKey", () => ({
   validateApiKey: async () => true,
 }));
 
-jest.mock("../../../moduleManifest", () => {
-  const originalModule = jest.requireActual("../../../moduleManifest");
-  return {
-    ...originalModule,
-    sendMail: jest.fn(),
-  };
-});
-
 function mockRequestResponse(method: string) {
   const { req, res } = {
     req: { method } as NextApiRequest,
@@ -28,67 +20,26 @@ function mockRequestResponse(method: string) {
   return { req, res };
 }
 
-describe("sendMail with a valid api key", () => {
-  it("should 422 if no to, cc, or bcc is provided", async () => {
+describe("sendMail with a valid api key and real sendMail -- be careful as this could send email if transport is configured", () => {
+  // this tests both that sendMail throws an error with a "status" attribute and
+  // that api/sendMail takes "status" and relays it to the user as an http status code
+  it("should 422 if no subject is provided and template has no subject function", async () => {
+    const templateName = "ResetPassword";
+    const template = moduleManifest.templates[templateName];
+
+    expect(template).toBeDefined();
+    expect(template.subject).toBeUndefined();
+
     const { req, res } = mockRequestResponse("POST");
     req.body = {
-      templateName: "AccountCreated",
-      props: { name: "Alex" },
+      to: "alex@mailing.run",
+      templateName: templateName,
     };
 
     await handler(req, res);
     expect(res.status).toHaveBeenCalledWith(422);
     expect(res.json).toHaveBeenCalledWith({
-      error: "to, cc, or bcc must be specified",
+      error: "sendMail couldn't find a subject for your email",
     });
-  });
-
-  it("should 422 if no templateName is provided", async () => {
-    const { req, res } = mockRequestResponse("POST");
-    req.body = {
-      to: "alex@mailing.run",
-      props: { name: "Alex" },
-    };
-
-    delete req.body.templateName;
-    await handler(req, res);
-    expect(res.status).toHaveBeenCalledWith(422);
-    expect(res.json).toHaveBeenCalledWith({
-      error: "templateName or html must be specified",
-    });
-  });
-
-  it("should 422 if template does not exist", async () => {
-    const { req, res } = mockRequestResponse("POST");
-    req.body = {
-      to: "alex@mailing.run",
-      templateName: "FAKE",
-      props: { name: "Alex" },
-    };
-
-    await handler(req, res);
-    expect(res.status).toHaveBeenCalledWith(422);
-    expect(res.json).toHaveBeenCalledWith({
-      error:
-        "Template FAKE not found in list of templates: AccountCreated, NewSignIn, Reservation, ResetPassword",
-      mjmlErrors: undefined,
-    });
-  });
-
-  it("should 200 with valid arguments", async () => {
-    const { req, res } = mockRequestResponse("POST");
-    req.body = {
-      to: "alex@mailing.run",
-      templateName: "AccountCreated",
-      props: { name: "Alex" },
-    };
-
-    expect(typeof moduleManifest.templates.AccountCreated.subject).toBe(
-      "function"
-    );
-
-    await handler(req, res);
-    expect(res.status).toHaveBeenCalledWith(200);
-    expect(moduleManifest.sendMail).toHaveBeenCalled();
   });
 });
