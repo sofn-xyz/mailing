@@ -20,7 +20,7 @@ function mockRequestResponse(method: string) {
   return { req, res };
 }
 
-describe("sendMail with a valid api key and real sendMail -- be careful as this could send email if tranpsort is configured", () => {
+describe("sendMail with a valid api key and real sendMail -- be careful as this could send email if transport is configured", () => {
   // this tests both that sendMail throws an error with a "status" attribute and
   // that api/sendMail takes "status" and relays it to the user as an http status code
   it("should 422 if no subject is provided and template has no subject function", async () => {

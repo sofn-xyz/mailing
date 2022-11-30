@@ -90,11 +90,6 @@ describe("sendMail with a valid api key and mockeded sendMail", () => {
     await handler(req, res);
     expect(res.status).toHaveBeenCalledWith(200);
     expect(moduleManifest.sendMail).toHaveBeenCalled();
-
-    // it uses the subject from the function on the template
-    // expect(moduleManifest.sendMail).toHaveBeenCalledWith(
-    //   expect.objectContaining({ subject: "Welcome to BookBook, Alex!" })
-    // );
   });
 
   it("should 200 with valid arguments -- subject is provided", async () => {
