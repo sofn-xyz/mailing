@@ -127,7 +127,7 @@ You can either use /api/sendMail to render and send a template or to send raw ht
 
 - `templateName: string` – Required if you want Mailing to render and send one of your templates.
 - `props: []string` – Required if using a template that expects props.
-- `from, to, subject, etc.` - [Standard nodemailer options](#standard-nodemailer-options)
+- `from, to, subject, etc.` - Standard nodemailer options, see: [Calling sendMail](/docs/sending-email#calling-sendmail)
 - `html: string` – Rather than passing templateName and props, you can instead pass html as a string. This is useful if you're already rendering some HTML emails with another method.
 - `previewName: string` – (optional) gets put on the Message object in the database so you have a category beyond templateName for the type of email being sent. Useful for segmenting analytics if the templateName is more general.
 
@@ -154,7 +154,27 @@ X-API-KEY: your-api-key
 HTTP Status Code 200
 Response body: JSON object with possible attributes
 
-- `result: [SMTPPool.SentMessageInfo](https://github.com/DefinitelyTyped/DefinitelyTyped/blob/6f93d358c4eb1d30bf0da65606c27c58a1a0979a/types/nodemailer/lib/smtp-pool/index.d.ts#L35)` the return value from sendMail
+- `result` the return value from sendMail. The result type may vary based on your transport.
+
+Example response:
+
+```
+{
+  "result": {
+    "accepted": ["to@example.com"],
+    "rejected": [],
+    "envelopeTime": 193,
+    "messageTime": 549,
+    "messageSize": 48249,
+    "response": "250 Ok 0100154cef10a27-de64ec0b-3284-4189-803f-88101a6dc701-000000",
+    "envelope": {
+      "from": "you@example.com",
+      "to": ["to@example.com"]
+    },
+    "messageId": "<50bf8e94-1951-91bf-0140-38342382405f@mailing.run>"
+  }
+}
+```
 
 **Error responses**
 HTTP Status Code: 401 or 422 or 500
@@ -182,9 +202,3 @@ Content-Type: application/json
   "error": "sendMail couldn't find a subject for your email"
 }
 ```
-
-## Standard nodemailer options
-
-The full list of options that nodemailer supports, e.g. to, from, cc, bcc, subject, etc.
-
-See the full list in the [nodemailer typescript interface](https://github.com/DefinitelyTyped/DefinitelyTyped/blob/cf2eda338072c0b685d4e8a2c3dc928eb6ee1070/types/nodemailer/lib/mailer/index.d.ts#L96)
