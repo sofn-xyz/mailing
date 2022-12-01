@@ -51,13 +51,7 @@ export function ExampleCard({ name }: ExampleCardProps) {
             rel="noopener noreferrer"
             className="underline sm:active:translate-y-1 sm:inline-block"
           >
-            <Image
-              src={imageUrl}
-              alt={title}
-              width={1200}
-              height={800}
-              layout="responsive"
-            />
+            <Image src={imageUrl} alt={title} width={1200} height={800} />
           </a>
         </div>
       </div>
