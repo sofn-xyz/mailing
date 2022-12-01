@@ -57,12 +57,12 @@ Authentication is configurable and is not required by default.
 To require authentication, set `process.env.REQUIRE_API_KEY` to `"true"`. Then api/render will return 401 unless a valid [API key](#api-keys)
 is included in the request.
 
-**Request parameters**
+**Request method and parameters**
 
 Method: GET or POST
 
-- templateName: string (required if using template mode, must be the name of one of your templates)
-- props: []string (required if using template mode, must correspond to the props your template expects)
+- `templateName: string` – required if using template mode, must be the name of one of your templates.
+- `props: []string` – required if using template mode, must correspond to the props your template expects.
 
 Example request:
 
@@ -83,8 +83,8 @@ Content-Type: application/json
 HTTP Status Code 200
 Response body: JSON object with attributes:
 
-- html: string - the rendered HTML
-- mjmlErrors: []string - MJML errors thrown during template rendering
+- `html: string` – the rendered HTML
+- `mjmlErrors: []string` – MJML errors thrown during template rendering
 
 **Error responses**
 
@@ -94,11 +94,11 @@ Response body: JSON object with attributes:
 
 Response body: JSON object with possible attributes
 
-- error: string - error message
+- `error: string` – error message
 
 500 indicates an internal server error
 
-- error: string - error message
+- `error: string` – error message
 
 Example error response:
 
@@ -119,17 +119,17 @@ Send an email using your configured sendmail.
 
 Authentication by [API key](#api-keys) is required.
 
-**Request parameters**
+**Request method and parameters**
 
 Method: POST
 
-You can either use /api/sendMail to send raw html or a template.
+You can either use /api/sendMail to render and send a template or to send raw html.
 
-- templateName: string (required if using template mode, must be the name of one of your templates)
-- props: []string (required if using template mode, must correspond to the props your template expects)
-- [Standard nodemailer options](#standard-nodemailer-options)
-- html: string (required if using raw html mode)
-- previewName: string (optional) - used for analytics only, gets put on the Message object in the database so you can tell what preview was used to send the email
+- `templateName: string` – Required if you want Mailing to render and send one of your templates.
+- `props: []string` – Required if using a template that expects props.
+- `from, to, subject, etc.` - [Standard nodemailer options](#standard-nodemailer-options)
+- `html: string` – Rather than passing templateName and props, you can instead pass html as a string. This is useful if you're already rendering some HTML emails with another method.
+- `previewName: string` – (optional) gets put on the Message object in the database so you have a category beyond templateName for the type of email being sent. Useful for segmenting analytics if the templateName is more general.
 
 Example request (template mode):
 
@@ -149,28 +149,12 @@ X-API-KEY: your-api-key
 }
 ```
 
-Example request (raw html mode):
-
-```
-POST /api/sendMail
-Content-Type: application/json
-X-API-KEY: your-api-key
-
-{
-  "to": "to@example.com",
-  "from": "you@example.com",
-  "subject": "Hello world",
-  "html": "<html><body>Hello World</body></html>",
-  "text": "Hello world",
-}
-```
-
 **Success response**
 
 HTTP Status Code 200
 Response body: JSON object with possible attributes
 
-- result: [SMTPPool.SentMessageInfo](https://github.com/DefinitelyTyped/DefinitelyTyped/blob/6f93d358c4eb1d30bf0da65606c27c58a1a0979a/types/nodemailer/lib/smtp-pool/index.d.ts#L35) the return value from sendMail
+- `result: [SMTPPool.SentMessageInfo](https://github.com/DefinitelyTyped/DefinitelyTyped/blob/6f93d358c4eb1d30bf0da65606c27c58a1a0979a/types/nodemailer/lib/smtp-pool/index.d.ts#L35)` the return value from sendMail
 
 **Error responses**
 HTTP Status Code: 401 or 422 or 500
@@ -181,12 +165,12 @@ HTTP Status Code: 401 or 422 or 500
 
 Response body: JSON object with possible attributes
 
-- error: string - error message
-- mjmlErrors: []string - MJML errors thrown during template rendering
+- `error: string` – error message
+- `mjmlErrors: []string` – MJML errors thrown during template rendering
 
 500 indicates an internal server error
 
-- error: string - error message
+- `error: string` – error message
 
 Example error response:
 
