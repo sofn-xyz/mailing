@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { apiKeyFromReq } from "../../../util/validateApiKey";
+import { apiKeyFromReq } from "../../../util/validate/validateApiKey";
 import createMessage from "../../../util/createMessage";
 import prisma from "../../../../prisma";
 import { Prisma } from "../../../../prisma/generated/client";

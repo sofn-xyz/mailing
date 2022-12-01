@@ -1,6 +1,6 @@
 import { NextApiResponse } from "next";
-import { templates } from "../moduleManifest";
-import { getTemplateModule } from "./moduleManifestUtil";
+import { templates } from "../../moduleManifest";
+import { getTemplateModule } from "../moduleManifestUtil";
 
 export function errorTemplateNameMustBeSpecified(res: NextApiResponse) {
   return res.status(422).json({ error: "templateName must be specified" });

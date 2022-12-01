@@ -2,9 +2,9 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { MjmlError } from "mjml-react";
 
 import renderTemplate from "../../util/renderTemplate";
-import { validateApiKey } from "../../util/validateApiKey";
-import { validateMethod } from "../../util/validateMethod";
-import { validateTemplate } from "../../util/validateTemplate";
+import { validateApiKey } from "../../util/validate/validateApiKey";
+import { validateMethod } from "../../util/validate/validateMethod";
+import { validateTemplate } from "../../util/validate/validateTemplate";
 
 type Data = {
   error?: string;

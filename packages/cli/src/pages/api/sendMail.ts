@@ -1,14 +1,14 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { MjmlError } from "mjml-react";
 import { sendMail } from "../../moduleManifest";
-import { validateApiKey } from "../../util/validateApiKey";
+import { validateApiKey } from "../../util/validate/validateApiKey";
 import { createElement } from "react";
 import { getTemplateModule } from "../../util/moduleManifestUtil";
-import { validateMethod } from "../../util/validateMethod";
+import { validateMethod } from "../../util/validate/validateMethod";
 import {
   errorTemplateNameMustBeSpecified,
   errorTemplateNotFoundInListOfTemplates,
-} from "../../util/validateTemplate";
+} from "../../util/validate/validateTemplate";
 
 type Data = {
   error?: string; // api error messages
