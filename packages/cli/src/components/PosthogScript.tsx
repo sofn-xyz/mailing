@@ -12,7 +12,7 @@ export default function PosthogScript() {
       dangerouslySetInnerHTML={{
         __html: `
               ${loadPosthogScript}
-              posthog.init(${POSTHOG_API_KEY}, {api_host: 'https://app.posthog.com'})
+              posthog.init('${POSTHOG_API_KEY}', {api_host: 'https://app.posthog.com'})
               `,
       }}
     ></script>
