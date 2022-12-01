@@ -3,29 +3,10 @@
 exports[`moduleManifestUtil the original module manifest has a tree of preview components 1`] = `
 [
   [
-    "AccountCreated",
+    "Welcome",
     [
-      "accountCreated",
-    ],
-  ],
-  [
-    "NewSignIn",
-    [
-      "newSignIn",
-    ],
-  ],
-  [
-    "Reservation",
-    [
-      "reservationWithError",
-      "reservationConfirmed",
-      "reservationChanged",
-    ],
-  ],
-  [
-    "ResetPassword",
-    [
-      "resetPassword",
+      "preview",
+      "previewNoUnsubscribe",
     ],
   ],
 ]

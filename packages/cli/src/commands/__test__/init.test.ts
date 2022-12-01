@@ -32,25 +32,19 @@ describe("init command", () => {
     expect(log).toHaveBeenCalledWith(
       `generated your emails dir at /tmp/src/emails:
 emails
-├── AccountCreated.tsx
-├── NewSignIn.tsx
-├── Reservation.tsx
-├── ResetPassword.tsx
+├── Welcome.tsx
 ├── components
 │   ├── BaseLayout.tsx
 │   ├── Button.tsx
-│   ├── Divider.tsx
 │   ├── Footer.tsx
 │   ├── Header.tsx
 │   ├── Heading.tsx
-│   ├── List.tsx
+│   ├── Link.tsx
 │   └── Text.tsx
 ├── index.ts
+├── layouts
 ├── previews
-│   ├── AccountCreated.tsx
-│   ├── NewSignIn.tsx
-│   ├── Reservation.tsx
-│   └── ResetPassword.tsx
+│   └── Welcome.tsx
 └── theme.ts`
     );
   });
@@ -69,25 +63,18 @@ emails
     expect(log).toHaveBeenCalledWith(
       `generated your emails dir at /tmp/src/emails:
 emails
-├── AccountCreated.jsx
-├── NewSignIn.jsx
-├── Reservation.jsx
-├── ResetPassword.jsx
+├── Welcome.jsx
 ├── components
 │   ├── BaseLayout.jsx
 │   ├── Button.jsx
-│   ├── Divider.jsx
 │   ├── Footer.jsx
 │   ├── Header.jsx
 │   ├── Heading.jsx
-│   ├── List.jsx
+│   ├── Link.jsx
 │   └── Text.jsx
 ├── index.js
 ├── previews
-│   ├── AccountCreated.jsx
-│   ├── NewSignIn.jsx
-│   ├── Reservation.jsx
-│   └── ResetPassword.jsx
+│   └── Welcome.jsx
 └── theme.js`
     );
   });

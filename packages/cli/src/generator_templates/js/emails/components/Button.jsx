@@ -1,6 +1,13 @@
 import React from "react";
+import cx from "classnames";
 import { MjmlButton } from "mjml-react";
-import { colors, fontSize, borderRadius, lineHeight, spacing } from "../theme";
+import {
+  colors,
+  fontSize,
+  borderRadius,
+  lineHeight,
+  fontWeight,
+} from "../theme";
 
 export default function Button(props) {
   return (
@@ -8,23 +15,13 @@ export default function Button(props) {
       <MjmlButton
         lineHeight={lineHeight.tight}
         fontSize={fontSize.base}
-        height={spacing.s8}
+        fontWeight={fontWeight.bold}
+        innerPadding="16px 24px 18px"
         align="left"
-        backgroundColor={colors.black}
-        color={colors.neutral100}
-        borderRadius={borderRadius.base}
-        cssClass="light-mode"
-        {...props}
-      />
-      <MjmlButton
-        lineHeight={lineHeight.tight}
-        fontSize={fontSize.base}
-        height={spacing.s8}
-        align="left"
-        backgroundColor={colors.gold}
+        backgroundColor={colors.blue}
         color={colors.black}
         borderRadius={borderRadius.base}
-        cssClass="dark-mode"
+        cssClass={cx("button", props.cssClass)}
         {...props}
       />
     </>

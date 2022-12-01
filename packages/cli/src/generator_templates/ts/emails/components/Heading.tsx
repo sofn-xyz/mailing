@@ -8,7 +8,7 @@ const defaultProps = {
   fontFamily: fontFamily.sans,
   fontWeight: fontWeight.normal,
   lineHeight: lineHeight.tight,
-  fontSize: fontSize.lg,
+  fontSize: fontSize.xl,
 };
 
 export default function Heading(props: HeadingProps) {

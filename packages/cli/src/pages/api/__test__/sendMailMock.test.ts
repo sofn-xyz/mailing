@@ -69,8 +69,7 @@ describe("sendMail with a valid api key and mockeded sendMail", () => {
     await handler(req, res);
     expect(res.status).toHaveBeenCalledWith(422);
     expect(res.json).toHaveBeenCalledWith({
-      error:
-        "Template FAKE not found in list of templates: AccountCreated, NewSignIn, Reservation, ResetPassword",
+      error: "Template FAKE not found in list of templates: Welcome",
       mjmlErrors: undefined,
     });
   });
@@ -83,9 +82,7 @@ describe("sendMail with a valid api key and mockeded sendMail", () => {
       props: { name: "Alex" },
     };
 
-    expect(typeof moduleManifest.templates.AccountCreated.subject).toBe(
-      "function"
-    );
+    expect(typeof moduleManifest.templates.Welcome.subject).toBe("function");
 
     await handler(req, res);
     expect(res.status).toHaveBeenCalledWith(200);
