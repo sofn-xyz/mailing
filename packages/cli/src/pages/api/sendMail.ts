@@ -5,10 +5,7 @@ import { validateApiKey } from "../../util/validate/validateApiKey";
 import { createElement } from "react";
 import { getTemplateModule } from "../../util/moduleManifestUtil";
 import { validateMethod } from "../../util/validate/validateMethod";
-import {
-  errorTemplateNameMustBeSpecified,
-  errorTemplateNotFoundInListOfTemplates,
-} from "../../util/validate/validateTemplate";
+import { errorTemplateNotFoundInListOfTemplates } from "../../util/validate/validateTemplate";
 
 type Data = {
   error?: string; // api error messages
@@ -38,9 +35,10 @@ export default async function handler(
   }
 
   if (!html) {
-    // validate template name
     if (typeof templateName !== "string") {
-      return errorTemplateNameMustBeSpecified(res);
+      return res
+        .status(422)
+        .json({ error: "templateName or html must be specified" });
     }
 
     const template = getTemplateModule(templateName);
