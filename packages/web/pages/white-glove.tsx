@@ -105,7 +105,6 @@ const WhiteGlove: NextPage = () => {
 
         <div className="mx-auto max-w-6xl">
           <H2>How it works</H2>
-          <div className="mt-24"></div>
           <Li
             title="Tell us what you need"
             description="Give us a 1-2 sentence description for each template that you need. Copy and design inspiration are helpful but not necessary."
