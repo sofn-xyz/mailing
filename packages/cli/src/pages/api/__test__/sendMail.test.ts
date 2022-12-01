@@ -24,7 +24,8 @@ describe("sendMail with a valid api key and real sendMail -- be careful as this 
   // this tests both that sendMail throws an error with a "status" attribute and
   // that api/sendMail takes "status" and relays it to the user as an http status code
   it("should 422 if no subject is provided and template has no subject function", async () => {
-    const templateName = "ResetPassword";
+    // choose a template where the subject is undefined
+    const templateName = "NewSignIn";
     const template = moduleManifest.templates[templateName];
 
     expect(template).toBeDefined();
@@ -34,12 +35,18 @@ describe("sendMail with a valid api key and real sendMail -- be careful as this 
     req.body = {
       to: "alex@mailing.run",
       templateName: templateName,
+      props: {
+        name: "Alex",
+        headline: "Welcome to Mailing Run!",
+        body: "You are now ready to send emails with Mailing Run.",
+        bulletedList: ["First item", "Second item", "Third item"],
+      },
     };
 
     await handler(req, res);
-    expect(res.status).toHaveBeenCalledWith(422);
     expect(res.json).toHaveBeenCalledWith({
       error: "sendMail couldn't find a subject for your email",
     });
+    expect(res.status).toHaveBeenCalledWith(422);
   });
 });
