@@ -27,7 +27,7 @@
   "exclude": [
     "packages/**/__test__/*",
     "packages/**/__integration__/*",
-    "packages/*/dist/**/*",
+    "packages/*/dist/**/*"
   ],
   "ts-node": {
     "files": true
