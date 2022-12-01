@@ -34,7 +34,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   return (
     <MDXProvider components={MDXComponents}>
-      <span className={`${mono.variable} font-sans`}>
+      <span className={`${mono.variable}`}>
         <Layout>
           <Component {...pageProps} />
           <Analytics />
