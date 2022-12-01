@@ -24,6 +24,7 @@ describe("sendMail with a valid api key and real sendMail -- be careful as this 
   // this tests both that sendMail throws an error with a "status" attribute and
   // that api/sendMail takes "status" and relays it to the user as an http status code
   it("should 422 if no subject is provided and template has no subject function", async () => {
+    // choose a template where the subject is undefined
     const templateName = "NewSignIn";
     const template = moduleManifest.templates[templateName];
 
