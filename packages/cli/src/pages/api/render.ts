@@ -38,7 +38,7 @@ export default async function handler(
         : props;
   } catch {
     return res
-      .status(403)
+      .status(422)
       .json({ error: "props could not be parsed from querystring" });
   }
 
@@ -47,8 +47,7 @@ export default async function handler(
     parsedProps
   );
 
-  if (error) {
-    return res.status(404).json({ error });
-  }
+  if (error) return res.status(422).json({ error });
+
   res.status(200).json({ html, mjmlErrors });
 }
