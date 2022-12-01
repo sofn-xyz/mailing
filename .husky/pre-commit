@@ -1,4 +1,6 @@
 #!/usr/bin/env sh
 . "$(dirname "$0")/_/husky.sh"
 
+yarn lint:unlink
 yarn lint-staged
+yarn lint:link

@@ -34,7 +34,7 @@ describe("index", () => {
   });
 
   describe("subject", () => {
-    it("throws an error if missing subject", () => {
+    it("throws an error if missing subject", async () => {
       const sendMail = buildSendMail({
         transport,
         defaultFrom: "replace@me.with.your.com",
@@ -50,7 +50,7 @@ describe("index", () => {
           html: "ok",
         });
 
-      expect(callSendMail()).rejects.toThrowError(
+      await expect(callSendMail()).rejects.toThrowError(
         "sendMail couldn't find a subject for your email"
       );
     });
@@ -500,7 +500,7 @@ describe("index", () => {
             subject: "hello",
           });
 
-        expect(callSendMail).rejects.toThrowError(
+        await expect(callSendMail).rejects.toThrowError(
           "Templates sent to a list must include an unsubscribe link. Add an unsubscribe link or remove the list parameter from your sendMail call."
         );
       });

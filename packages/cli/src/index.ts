@@ -13,7 +13,7 @@ const config = existsSync(MAILING_CONFIG_FILE)
   : {};
 
 // prettier-ignore
-yargs(process.argv.slice(2))
+void yargs(process.argv.slice(2))
   .config(config)
   .command(init)
   .command(preview)

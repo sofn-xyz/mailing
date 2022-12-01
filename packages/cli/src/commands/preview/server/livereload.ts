@@ -50,7 +50,7 @@ export function startChangeWatcher(server: Server, emailsDir: string) {
         if (WATCH_IGNORE.test(filename)) return;
         log(`detected ${eventType} on ${filename}, reloading`);
         delete require.cache[resolve(changeWatchPath, filename)];
-        reload();
+        void reload();
       }
     );
 

@@ -221,11 +221,11 @@ const Unsubscribe = (props: UnsubscribeProps) => {
 
   // the "Subscribe" or "Unsubscribe" button was clicked on the form with only the default list
   const subscribeUnsubscribeButtonClick = useCallback(
-    (e: React.MouseEvent<HTMLElement>) => {
+    async (e: React.MouseEvent<HTMLElement>) => {
       e.preventDefault();
       setFormSaving(true);
       const newFormState = onChange(defaultList.id, true)();
-      serializeAndSubmitForm(newFormState);
+      await serializeAndSubmitForm(newFormState);
     },
     [defaultList.id, onChange, serializeAndSubmitForm]
   );

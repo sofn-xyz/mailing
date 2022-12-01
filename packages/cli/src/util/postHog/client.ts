@@ -1,6 +1,5 @@
 import { PostHog } from "posthog-node";
-
-export const POSTHOG_API_KEY = process.env.POSTHOG_API_KEY;
+import { POSTHOG_API_KEY } from "./posthogApiKey";
 
 let client: PostHog | undefined;
 

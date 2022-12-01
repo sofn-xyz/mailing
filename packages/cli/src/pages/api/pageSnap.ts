@@ -24,7 +24,7 @@ export default async function PageSnap(
 
     // Create a page with the Open Graph image size best practice
     const page = await context.newPage();
-    page.setViewportSize({ width: 1200, height: 630 });
+    await page.setViewportSize({ width: 1200, height: 630 });
     await page.goto(url, { timeout: 15 * 1000, waitUntil: "networkidle" });
     // Press Command+Period to go full screen
     await page.keyboard.press("Meta+.");

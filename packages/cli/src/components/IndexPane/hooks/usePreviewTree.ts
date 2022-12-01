@@ -13,7 +13,7 @@ export type TreeRoute = {
 
 const safeReplaceState = debounce((router: NextRouter | null, path: string) => {
   try {
-    router?.replace(path, undefined, { shallow: true });
+    void router?.replace(path, undefined, { shallow: true });
   } catch (e) {
     // Debounce should be avoiding this error, but catch just in case:
     // SecurityError: Attempt to use history.replaceState() more than 100 times per 30 seconds

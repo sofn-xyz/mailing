@@ -21,11 +21,9 @@
     "baseUrl": "./"
   },
   "$schema": "https://json.schemastore.org/tsconfig",
-  "include": ["src/**/*.ts", "src/**/*.tsx", "prisma/**/*.ts"],
+  "include": ["./*.ts", "src/**/*.ts", "src/**/*.tsx", "prisma/**/*.ts"],
   "exclude": [
-    "src/emails/**/*",
     "dist/**/*",
-    "src/cli/generator_templates/**/*",
     "node_modules"
   ]
 }

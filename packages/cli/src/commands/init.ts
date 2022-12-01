@@ -86,7 +86,7 @@ export const handler = buildHandler(
           try {
             const url = `${getMailingAPIBaseURL()}/api/newsletterSubscribers`;
 
-            fetch(url, {
+            void fetch(url, {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({ email }),
@@ -109,7 +109,7 @@ export const handler = buildHandler(
       _: argv._,
     };
 
-    previewHandler(previewHandlerArgv);
+    await previewHandler(previewHandlerArgv);
   },
   {
     captureOptions: () => {

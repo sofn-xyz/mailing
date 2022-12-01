@@ -1,4 +1,4 @@
-import { POSTHOG_API_KEY } from "../util/postHog/client";
+import { POSTHOG_API_KEY } from "../util/postHog/posthogApiKey";
 
 export default function PosthogScript() {
   if (process.env.NODE_ENV !== "production") {
