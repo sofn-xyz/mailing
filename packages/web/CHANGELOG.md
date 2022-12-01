@@ -1,5 +1,21 @@
 # web
 
+## 0.4.13
+
+### Patch Changes
+
+- Improves sendMail errors and /api/sendMail. Adds analytics to the dev server.
+- Updated dependencies
+  - mailing-core@0.9.3
+
+## 0.4.12
+
+### Patch Changes
+
+- /api/render now supports api key authentication if REQUIRE_API_KEY is set in your environment
+- Updated dependencies
+  - mailing-core@0.9.2
+
 ## 0.4.11
 
 ### Patch Changes

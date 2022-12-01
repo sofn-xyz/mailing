@@ -1,10 +1,10 @@
 import prompts from "prompts";
 import fsExtra, { removeSync } from "fs-extra";
 import { handler, InitArguments } from "../init";
-import { log } from "../../util/log";
+import { log } from "../../util/serverLogger";
 
 jest.useFakeTimers();
-jest.mock("../../util/log");
+jest.mock("../../util/serverLogger");
 jest.mock("../preview/preview", () => ({ handler: jest.fn() }));
 
 describe("init command", () => {
@@ -37,18 +37,21 @@ emails
 ├── Reservation.tsx
 ├── ResetPassword.tsx
 ├── components
-│   ├── BulletedList.tsx
-│   ├── ButtonPrimary.tsx
+│   ├── BaseLayout.tsx
+│   ├── Button.tsx
+│   ├── Divider.tsx
 │   ├── Footer.tsx
-│   ├── Head.tsx
 │   ├── Header.tsx
-│   └── theme.ts
+│   ├── Heading.tsx
+│   ├── List.tsx
+│   └── Text.tsx
 ├── index.ts
-└── previews
-    ├── AccountCreated.tsx
-    ├── NewSignIn.tsx
-    ├── Reservation.tsx
-    └── ResetPassword.tsx`
+├── previews
+│   ├── AccountCreated.tsx
+│   ├── NewSignIn.tsx
+│   ├── Reservation.tsx
+│   └── ResetPassword.tsx
+└── theme.ts`
     );
   });
 
@@ -71,18 +74,21 @@ emails
 ├── Reservation.jsx
 ├── ResetPassword.jsx
 ├── components
-│   ├── BulletedList.jsx
-│   ├── ButtonPrimary.jsx
+│   ├── BaseLayout.jsx
+│   ├── Button.jsx
+│   ├── Divider.jsx
 │   ├── Footer.jsx
-│   ├── Head.jsx
 │   ├── Header.jsx
-│   └── theme.js
+│   ├── Heading.jsx
+│   ├── List.jsx
+│   └── Text.jsx
 ├── index.js
-└── previews
-    ├── AccountCreated.jsx
-    ├── NewSignIn.jsx
-    ├── Reservation.jsx
-    └── ResetPassword.jsx`
+├── previews
+│   ├── AccountCreated.jsx
+│   ├── NewSignIn.jsx
+│   ├── Reservation.jsx
+│   └── ResetPassword.jsx
+└── theme.js`
     );
   });
 

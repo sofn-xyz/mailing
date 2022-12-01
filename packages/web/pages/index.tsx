@@ -99,12 +99,12 @@ const Home: NextPage = () => {
                   >
                     Discord
                   </a>
-                  <a
+                  <Link
                     className="hover:underline text-base leading-none inline-block"
-                    href="https://demo.mailing.run"
+                    href="/docs/templates"
                   >
-                    Demo
-                  </a>
+                    Demos
+                  </Link>
                   <Link
                     className="hidden sm:inline-flex text-black dark:text-white leading-none ml-4 px-4 h-9 items-center rounded-2xl border-2 border-black dark:border-white hover:underline"
                     href="/docs#getting-started"
@@ -622,7 +622,7 @@ const Home: NextPage = () => {
                     <p className="leading-snug mt-4">
                       Wow, you guys are fast! Thank you{" "}
                       <a
-                        href="https:://github.com/alexfarril"
+                        href="https://github.com/alexfarrill"
                         target="blank"
                         rel="noopener"
                         className="hover:underline inline-block text-blue-600 dark:text-blue-400"

@@ -5,7 +5,7 @@ import { relative, resolve } from "path";
 import { watch } from "chokidar";
 import { Server as SocketServer, Socket } from "socket.io";
 
-import { error, log, debug } from "../../../util/log";
+import { error, log, debug } from "../../../util/serverLogger";
 import { linkEmailsDirectory } from "./setup";
 
 export const WATCH_IGNORE = /^\.|node_modules/;

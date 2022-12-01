@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { useHydrationFriendlyAsPath } from "./hooks/useHydrationFriendlyAsPath";
+import { useHydrationFriendlyAsPath } from "../hooks/useHydrationFriendlyAsPath";
 import cx from "classnames";
 
 type H1Props = {

@@ -1,12 +1,13 @@
+import React from "react";
 import Reservation from "../Reservation";
-import BulletedList from "../components/BulletedList";
+import List from "../components/List";
 
 export async function reservationWithError() {
   return (
     <Reservation
       headline="Reservation Canceled"
       bulletedList={
-        <BulletedList
+        <List
           items={[
             "Salazar in Silver Lake",
             "Sunday, Aug 22 at 1:30pm",
@@ -25,13 +26,12 @@ export async function reservationWithError() {
     />
   );
 }
-
 export function reservationConfirmed() {
   return (
     <Reservation
       headline="Reservation Confirmed"
       bulletedList={
-        <BulletedList
+        <List
           items={[
             "Salazar in Silver Lake",
             "Saturday, Aug 22 at 1:30pm",
@@ -49,13 +49,12 @@ export function reservationConfirmed() {
     />
   );
 }
-
 export function reservationChanged() {
   return (
     <Reservation
       headline="Reservation Changed"
       bulletedList={
-        <BulletedList
+        <List
           items={[
             "Salazar in Silver Lake",
             "Sunday, Aug 22 at 1:30pm",

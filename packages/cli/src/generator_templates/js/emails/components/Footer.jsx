@@ -1,23 +1,32 @@
+import React from "react";
 import { MjmlSection, MjmlColumn, MjmlText } from "mjml-react";
-import { grayDark, textSm } from "./theme";
 import { EMAIL_PREFERENCES_URL } from "mailing-core";
+import { colors, fontSize, spacing } from "../theme";
 
 export default function Footer({ includeUnsubscribe }) {
   return (
-    <MjmlSection cssClass="smooth">
+    <MjmlSection cssClass="gutter">
       <MjmlColumn>
         <MjmlText
-          cssClass="footer"
-          padding="24px 24px 48px"
-          fontSize={textSm}
-          color={grayDark}
+          paddingTop={spacing.s9}
+          paddingBottom={spacing.s10}
+          fontSize={fontSize.sm}
+          color={colors.neutral400}
         >
-          © {new Date().getFullYear()} BookBook&nbsp;&nbsp;·&nbsp;&nbsp;
-          {includeUnsubscribe ? (
-            <a href={EMAIL_PREFERENCES_URL} target="_blank" rel="noreferrer">
-            Unsubscribe
-          </a>
-          ) : null}
+          © {new Date().getFullYear()} BookBook
+          {includeUnsubscribe && (
+            <>
+              &nbsp;&nbsp;·&nbsp;&nbsp;
+              <a
+                href={EMAIL_PREFERENCES_URL}
+                target="_blank"
+                rel="noreferrer"
+                style={{ textDecoration: "none" }}
+              >
+                Unsubscribe
+              </a>
+            </>
+          )}
         </MjmlText>
       </MjmlColumn>
     </MjmlSection>

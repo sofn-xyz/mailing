@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import cx from "classnames";
-import { useHydrationFriendlyAsPath } from "./hooks/useHydrationFriendlyAsPath";
+import { useHydrationFriendlyAsPath } from "../hooks/useHydrationFriendlyAsPath";
 
 function getAnchor(text) {
   return text

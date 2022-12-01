@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import Analytics from "../../../util/analytics";
 import prisma from "../../../../prisma";
-import { debug } from "../../../util/log";
+import { debug } from "../../../util/serverLogger";
 
 export default async function handler(
   req: NextApiRequest,

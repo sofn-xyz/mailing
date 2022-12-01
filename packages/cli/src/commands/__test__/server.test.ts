@@ -1,6 +1,6 @@
 import { execCli } from "./execCli";
 
-jest.mock("../../util/log");
+jest.mock("../../util/serverLogger");
 
 describe("server command", () => {
   describe("cli", () => {

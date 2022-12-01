@@ -1,6 +1,6 @@
 import { lintEmailsDirectory } from "../lintEmailsDirectory";
 import moduleManifest from "../../../moduleManifest";
-import * as log from "../../../util/log";
+import * as serverLogger from "../../../util/serverLogger";
 
 jest.mock("../../../moduleManifest");
 
@@ -8,8 +8,8 @@ describe("lintEmailsDirectory", () => {
   beforeEach(() => {
     jest.restoreAllMocks();
     jest.spyOn(process, "exit").mockImplementation(() => undefined as never);
-    jest.spyOn(log, "error").mockImplementation(() => undefined);
-    jest.spyOn(log, "log").mockImplementation(() => undefined);
+    jest.spyOn(serverLogger, "error").mockImplementation(() => undefined);
+    jest.spyOn(serverLogger, "log").mockImplementation(() => undefined);
   });
 
   afterAll(() => {
@@ -41,7 +41,7 @@ describe("lintEmailsDirectory", () => {
     } as any;
     expect(lintEmailsDirectory).toBeDefined();
     await lintEmailsDirectory("./emails");
-    expect(log.error).toHaveBeenCalledWith(
+    expect(serverLogger.error).toHaveBeenCalledWith(
       expect.stringMatching(/2 lint errors/)
     );
     expect(process.exit).toHaveBeenCalledWith(1);

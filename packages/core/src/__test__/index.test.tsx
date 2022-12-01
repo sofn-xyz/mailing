@@ -10,7 +10,7 @@ import {
 import { Mjml, MjmlBody, MjmlRaw } from "mjml-react";
 import fetch from "node-fetch";
 import * as postHog from "../util/postHog";
-import * as log from "../util/log";
+import * as serverLogger from "../util/serverLogger";
 import fsExtra from "fs-extra";
 
 jest.mock("../util/postHog");
@@ -27,6 +27,132 @@ describe("index", () => {
       user: "username",
       pass: "password",
     },
+  });
+
+  beforeEach(async () => {
+    await clearTestMailQueue();
+  });
+
+  describe("subject", () => {
+    it("throws an error if missing subject", async () => {
+      const sendMail = buildSendMail({
+        transport,
+        defaultFrom: "replace@me.with.your.com",
+        configPath: "./mailing.config.json",
+      });
+
+      const callSendMail = async () =>
+        await sendMail({
+          component: <div></div>,
+          to: ["ok@ok.com"],
+          from: "ok@ok.com",
+          text: "ok",
+          html: "ok",
+        });
+
+      await expect(callSendMail()).rejects.toThrowError(
+        "sendMail couldn't find a subject for your email"
+      );
+    });
+
+    it("should use subject from options", async () => {
+      const sendMail = buildSendMail({
+        transport,
+        defaultFrom: "replace@me.with.your.com",
+        configPath: "./mailing.config.json",
+      });
+
+      await sendMail({
+        component: <div></div>,
+        to: ["ok@ok.com"],
+        from: "ok@ok.com",
+        subject: "hello",
+        text: "ok",
+        html: "ok",
+      });
+
+      // still hits the queue even with the error
+      const queue = await getTestMailQueue();
+      expect(queue.length).toBe(1);
+      const email = queue[0];
+      expect(email.subject).toEqual("hello");
+    });
+
+    it("should use subject from the component - subject is function", async () => {
+      const sendMail = buildSendMail({
+        transport,
+        defaultFrom: "replace@me.with.your.com",
+        configPath: "./mailing.config.json",
+      });
+
+      const Component = ({ name }: { name: string }) => <div>{name}</div>;
+      Component.subject = ({ name }: { name: string }) => `Hello ${name}`;
+
+      await sendMail({
+        component: <Component name="Gerald" />,
+        to: ["ok@ok.com"],
+        from: "ok@ok.com",
+        text: "ok",
+        html: "ok",
+      });
+
+      // still hits the queue even with the error
+      const queue = await getTestMailQueue();
+      expect(queue.length).toBe(1);
+      const email = queue[0];
+      expect(email.subject).toEqual("Hello Gerald");
+    });
+
+    it("should use subject from the component - subject is string", async () => {
+      const sendMail = buildSendMail({
+        transport,
+        defaultFrom: "replace@me.with.your.com",
+        configPath: "./mailing.config.json",
+      });
+
+      const Component = ({ name }: { name: string }) => <div>{name}</div>;
+      Component.subject = "Hello world";
+
+      await sendMail({
+        component: <Component name="Gerald" />,
+        to: ["ok@ok.com"],
+        from: "ok@ok.com",
+        text: "ok",
+        html: "ok",
+      });
+
+      // still hits the queue even with the error
+      const queue = await getTestMailQueue();
+      expect(queue.length).toBe(1);
+      const email = queue[0];
+      expect(email.subject).toEqual("Hello world");
+    });
+
+    it("should prefer subject from options to subject from component", async () => {
+      const sendMail = buildSendMail({
+        transport,
+        defaultFrom: "replace@me.with.your.com",
+        configPath: "./mailing.config.json",
+      });
+
+      const Component = ({ name }: { name: string }) => <div>{name}</div>;
+      Component.subject = "Hello world";
+
+      await sendMail({
+        component: <Component name="Gerald" />,
+        to: ["ok@ok.com"],
+        from: "ok@ok.com",
+        text: "ok",
+        html: "ok",
+        subject: "precedence",
+      });
+
+      // still hits the queue even with the error
+      const queue = await getTestMailQueue();
+      expect(queue.length).toBe(1);
+      const email = queue[0];
+      expect(email.subject).toEqual("precedence");
+    });
   });
 
   describe("analyticsEnabled: false", () => {
@@ -75,8 +201,9 @@ describe("index", () => {
       });
 
       it("logs an error without a valid configPath but still sends", async () => {
-        await clearTestMailQueue();
-        const debugSpy = jest.spyOn(log, "debug").mockImplementation(jest.fn());
+        const debugSpy = jest
+          .spyOn(serverLogger, "debug")
+          .mockImplementation(jest.fn());
 
         const sendMail = buildSendMail({
           transport,
@@ -244,7 +371,7 @@ describe("index", () => {
             );
 
             const errorSpy = jest
-              .spyOn(log, "error")
+              .spyOn(serverLogger, "error")
               .mockImplementation(jest.fn());
 
             const sendMail = buildSendMail({
@@ -291,7 +418,6 @@ describe("index", () => {
     describe("getTestMailQueue", () => {
       let sendMail: (mail: ComponentMail) => Promise<any>;
       beforeEach(async () => {
-        await clearTestMailQueue();
         const transport = nodemailer.createTransport({
           pool: true,
           host: "smtp.example.com",
@@ -371,6 +497,7 @@ describe("index", () => {
             listName: "mylista4290",
             dangerouslyForceDeliver: true,
             html: "No unsubscribe link here",
+            subject: "hello",
           });
 
         await expect(callSendMail).rejects.toThrowError(

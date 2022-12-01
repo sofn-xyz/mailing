@@ -2,10 +2,20 @@ import type { SendMailOptions, Transporter } from "nodemailer";
 import open from "open";
 import fs from "fs-extra";
 import { render } from "./mjml";
-import { error, log, debug } from "./util/log";
+import { error, log, debug } from "./util/serverLogger";
 import fetch from "node-fetch";
 import { capture } from "./util/postHog";
 import instrumentHtml from "./util/instrumentHtml";
+
+class MalformedInputError extends Error {
+  status: number;
+
+  constructor(message: string) {
+    super(message);
+    this.name = "MalformedInputError";
+    this.status = 422;
+  }
+}
 
 // In test, we write the email queue to this file so that it can be read
 // by the test process.
@@ -26,6 +36,10 @@ export type ComponentMail = SendMailOptions & {
   templateName?: string;
   previewName?: string;
   listName?: string;
+};
+
+export type Template<P> = React.FC<P> & {
+  subject?: string | ((args: Partial<P>) => string);
 };
 
 export async function getTestMailQueue() {
@@ -81,7 +95,9 @@ export function buildSendMail<T>(options: BuildSendMailOptions<T>) {
 
   return async function sendMail(mail: ComponentMail) {
     if (!mail.html && typeof mail.component === "undefined")
-      throw new Error("sendMail requires either html or a component");
+      throw new MalformedInputError(
+        "sendMail requires either html or a component"
+      );
 
     const { NODE_ENV, MAILING_API_URL, MAILING_API_KEY } = process.env;
     const {
@@ -107,13 +123,33 @@ export function buildSendMail<T>(options: BuildSendMailOptions<T>) {
       const { html: renderedHtml, errors } = render(component);
       if (errors?.length) {
         error(errors);
-        throw new Error(errors.join(";"));
+        throw new MalformedInputError(
+          `sendMail found errors while rendering your component: ${errors.join(
+            ";"
+          )}`
+        );
       }
       derivedTemplateName = component.type.name;
       mailOptions.html = renderedHtml;
     }
 
-    if (!mailOptions.html) throw new Error("sendMail couldn't find your html");
+    if (!mailOptions.html)
+      throw new MalformedInputError("sendMail couldn't find your html");
+
+    // Get subject from the component if not provided
+    if (component && !mailOptions.subject) {
+      if (typeof component.type.subject === "string") {
+        mailOptions.subject = component.type.subject;
+      } else if (typeof component.type.subject === "function") {
+        mailOptions.subject = component.type.subject(component.props);
+      }
+    }
+
+    if (!mailOptions.subject) {
+      throw new MalformedInputError(
+        "sendMail couldn't find a subject for your email"
+      );
+    }
 
     if (testMode && !dangerouslyForceDeliver) {
       const testMessageQueue = await getTestMailQueue();
@@ -157,7 +193,7 @@ export function buildSendMail<T>(options: BuildSendMailOptions<T>) {
       const htmlIncludesUnsubscribeLink = emailPrefsRegex.test(stringHtml);
       if (listName && !htmlIncludesUnsubscribeLink) {
         // return an error that you must include an unsubscribe link
-        throw new Error(
+        throw new MalformedInputError(
           "Templates sent to a list must include an unsubscribe link. Add an unsubscribe link or remove the list parameter from your sendMail call."
         );
       }

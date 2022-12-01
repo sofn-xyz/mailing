@@ -1,13 +1,11 @@
 import React, { useCallback, useEffect, useState } from "react";
 
 type PreviewSenderProps = {
-  html?: string;
-  previewFunction?: string;
-  previewClass?: string;
+  previewFunction: string;
+  previewClass: string;
 };
 
 const PreviewSender: React.FC<PreviewSenderProps> = ({
-  html,
   previewFunction,
   previewClass,
 }) => {
@@ -34,10 +32,8 @@ const PreviewSender: React.FC<PreviewSenderProps> = ({
         setSending(true);
         const payload: SendPreviewRequestBody = {
           to: email,
-          html,
           previewFunction,
           previewClass,
-          subject: `${previewClass} - ${previewFunction}`,
         };
 
         const response = await fetch("/api/previews/send", {
@@ -76,7 +72,7 @@ const PreviewSender: React.FC<PreviewSenderProps> = ({
         setSending(false);
       }
     },
-    [html, previewClass, previewFunction, email]
+    [previewClass, previewFunction, email]
   );
 
   const onInputChange: React.ChangeEventHandler<HTMLInputElement> = useCallback(

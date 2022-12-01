@@ -1,5 +1,6 @@
 import { Api } from "./index";
 import { assertIntegrationTestEnv } from "./assertIntegrationTestEnv";
+
 assertIntegrationTestEnv();
 
 export async function apiCreateApiKey() {
