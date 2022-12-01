@@ -1,5 +1,11 @@
 # mailing-core
 
+## 0.9.3
+
+### Patch Changes
+
+- Improves sendMail errors and /api/sendMail. Adds analytics to the dev server.
+
 ## 0.9.2
 
 ### Patch Changes
