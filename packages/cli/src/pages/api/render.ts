@@ -3,9 +3,11 @@ import { MjmlError } from "mjml-react";
 
 import renderTemplate from "../../util/renderTemplate";
 import { validateApiKey } from "../../util/validateApiKey";
+import { validateMethod } from "../../util/validateMethod";
+import { validateTemplate } from "../../util/validateTemplate";
 
 type Data = {
-  error?: string; // api error messages
+  error?: string;
   html?: string;
   mjmlErrors?: MjmlError[];
 };
@@ -14,7 +16,7 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  const { templateName, props } = "GET" === req.method ? req.query : req.body;
+  if (!validateMethod(["GET", "POST"], req, res)) return;
 
   if (
     process.env.REQUIRE_API_KEY === "true" &&
@@ -23,10 +25,9 @@ export default async function handler(
     return res.status(401).json({ error: "API key is not valid" });
   }
 
-  // validate template name
-  if (typeof templateName !== "string") {
-    return res.status(403).json({ error: "templateName must be specified" });
-  }
+  const { templateName, props } = "GET" === req.method ? req.query : req.body;
+
+  if (!validateTemplate(templateName, res)) return;
 
   // parse props
   let parsedProps = {};

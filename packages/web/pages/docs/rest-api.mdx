@@ -6,16 +6,10 @@ With the REST API, you can use mailing for email templating even if most of your
 
 ## Send and Render Emails
 
-| Method    | Path          | Description                          |                                                                                                      Example |
-| --------- | ------------- | ------------------------------------ | -----------------------------------------------------------------------------------------------------------: |
-| GET, POST | /api/render   | render a template with props to HTML | [Link](https://demo.mailing.run/api/render?templateName=AccountCreated&props=%7B%22name%22%3A%22peter%22%7D) |
-| POST      | /api/sendMail | send an email                        |                                                                                                              |
-
-<div className="text-sm">
-  Note: /api/render is publicly accessible by default. However, if
-  process.env.REQUIRE_API_KEY is set then api/render will 401 unless a valid API
-  key is included in the request. Read more about [API keys](#api-keys)
-</div>
+| Method    | Path                           | Description                          |                                                                                                      Example |
+| --------- | ------------------------------ | ------------------------------------ | -----------------------------------------------------------------------------------------------------------: |
+| GET, POST | [/api/render](#api-render)     | render a template with props to HTML | [Link](https://demo.mailing.run/api/render?templateName=AccountCreated&props=%7B%22name%22%3A%22peter%22%7D) |
+| POST      | [/api/sendMail](#api-sendmail) | send an email                        |                                                                                                              |
 
 ## Previews
 
@@ -52,21 +46,39 @@ You then pass your API key in each request with one of these methods:
 
 All API endpoints expect the body to be a JSON string and the header Content-Type to be "application/json".
 
-### /api/sendMail
+### /api/render<a id="api-render" />
+
+Render a template with props to HTML.
+
+**Authentication optional**
+
+/api/render is publicly accessible by default. However, if `process.env.REQUIRE_API_KEY` is set, then api/render will return 401 unless a valid [API key](#api-keys)
+is included in the request.
+
+**Request parameters**
+
+- templateName: string (required if using template mode, must be the name of one of your templates)
+- props: []string (required if using template mode, must correspond to the props your template expects)
+
+**Success response**
+
+**Error responses**
+
+### /api/sendMail<a id="api-sendmail" />
 
 Send an email using your configured sendmail.
 
 **Authentication required**
 
-Yes, using an [API key](#api-keys)
+Authentication by [API key](#api-keys) is required.
 
 **Request parameters**
 
 You can either use /api/sendMail to send raw html or a template.
 
-- [Standard nodemailer options](#standard-nodemailer-options)
 - templateName: string (required if using template mode, must be the name of one of your templates)
 - props: []string (required if using template mode, must correspond to the props your template expects)
+- [Standard nodemailer options](#standard-nodemailer-options)
 - html: string (required if using raw html mode)
 - previewName: string (optional) - used for analytics only, gets put on the Message object in the database so you can tell what preview was used to send the email
 

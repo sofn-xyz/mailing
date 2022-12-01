@@ -1,9 +1,14 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { MjmlError } from "mjml-react";
-import { sendMail, templates } from "../../moduleManifest";
+import { sendMail } from "../../moduleManifest";
 import { validateApiKey } from "../../util/validateApiKey";
 import { createElement } from "react";
 import { getTemplateModule } from "../../util/moduleManifestUtil";
+import { validateMethod } from "../../util/validateMethod";
+import {
+  errorTemplateNameMustBeSpecified,
+  errorTemplateNotFoundInListOfTemplates,
+} from "../../util/validateTemplate";
 
 type Data = {
   error?: string; // api error messages
@@ -15,9 +20,7 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  if (req.method !== "POST")
-    return res.status(405).json({ error: "Method not allowed" });
-
+  if (!validateMethod(["POST"], req, res)) return;
   if (!(await validateApiKey(req, res))) return;
 
   const { templateName, previewName, props, ...mailOptions } = req.body;
@@ -37,19 +40,13 @@ export default async function handler(
   if (!html) {
     // validate template name
     if (typeof templateName !== "string") {
-      return res
-        .status(422)
-        .json({ error: "templateName or html must be specified" });
+      return errorTemplateNameMustBeSpecified(res);
     }
 
     const template = getTemplateModule(templateName);
-    if (!template) {
-      return res.status(422).json({
-        error: `Template ${templateName} not found in list of templates: ${Object.keys(
-          templates
-        ).join(", ")}`,
-      });
-    }
+
+    if (!template)
+      return errorTemplateNotFoundInListOfTemplates(templateName, res);
 
     component = createElement(template, props);
   }
