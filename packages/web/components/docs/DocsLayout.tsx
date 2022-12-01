@@ -5,7 +5,7 @@ import cx from "classnames";
 
 import NavLink from "./NavLink";
 import IndexButton from "./IndexButton";
-import { useHydrationFriendlyAsPath } from "../mdx/hooks/useHydrationFriendlyAsPath";
+import { useHydrationFriendlyAsPath } from "../hooks/useHydrationFriendlyAsPath";
 
 function NavCategory({ children }) {
   return (
@@ -188,6 +188,9 @@ export default function DocsLayout({ children }) {
           </NavLink>
           <NavLink href="/docs/discord" active={asPath}>
             Discord
+          </NavLink>
+          <NavLink href="/white-glove" active={asPath}>
+            White Glove
           </NavLink>
         </nav>
         <div className="lg:pl-[10rem]">

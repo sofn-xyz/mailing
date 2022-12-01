@@ -2,7 +2,7 @@ type Intercept = {
   id: string;
   html: string;
   to?: string | string[];
-  from?: string;
+  from?: string | { name: string; address: string };
   subject?: string;
   cc?: string | string[];
   bcc?: string | string[];

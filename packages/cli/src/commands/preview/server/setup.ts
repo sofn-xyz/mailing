@@ -14,7 +14,7 @@ import {
   move,
 } from "fs-extra";
 
-import { debug, log } from "../../../util/log";
+import { debug, log } from "../../../util/serverLogger";
 import { build, BuildOptions } from "esbuild";
 import { template } from "lodash";
 import { getNodeModulesDirsFrom } from "../../util/getNodeModulesDirsFrom";

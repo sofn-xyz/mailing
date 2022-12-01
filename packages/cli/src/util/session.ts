@@ -1,4 +1,4 @@
-import { debug } from "../util/log";
+import { debug } from "./serverLogger";
 
 import { withIronSessionApiRoute, withIronSessionSsr } from "iron-session/next";
 import {

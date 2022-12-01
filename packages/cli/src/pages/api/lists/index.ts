@@ -3,7 +3,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import prisma from "../../../../prisma";
 import { withSessionAPIRoute } from "src/util/session";
 import { validate, validationErrorResponse } from "../../../util/api/validate";
-import { error } from "../../../util/log";
+import { error } from "../../../util/serverLogger";
 
 type CreateListRequestBody = {
   name?: string;

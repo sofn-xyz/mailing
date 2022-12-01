@@ -1,6 +1,6 @@
 import { existsSync, readJSONSync } from "fs-extra";
 import { resolve } from "path";
-import { error } from "./log";
+import { error } from "./serverLogger";
 
 // appends /previews to emailsDir string if that directory exists
 // otherwise, return null

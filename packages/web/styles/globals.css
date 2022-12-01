@@ -1,5 +1,3 @@
-@import url("https://use.typekit.net/qqd8jtb.css");
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -8,9 +6,6 @@ html,
 body {
   padding: 0;
   margin: 0;
-  font-family: neue-haas-unica, -apple-system, BlinkMacSystemFont, Segoe UI,
-    Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
-    sans-serif;
   font-weight: 500;
   font-style: normal;
   color: #000;
@@ -58,4 +53,15 @@ a:active {
 
 .ch-frame-buttons {
   display: none;
+}
+
+.bb-dotted {
+  background-image: linear-gradient(
+    to right,
+    #555 50%,
+    rgba(255, 255, 255, 0) 0%
+  );
+  background-position: bottom;
+  background-size: 2px 1px;
+  background-repeat: repeat-x;
 }

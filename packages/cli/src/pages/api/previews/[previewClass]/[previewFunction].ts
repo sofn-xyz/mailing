@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { error } from "../../../../util/log";
+import { error } from "../../../../util/serverLogger";
 import { render } from "../../../../util/mjml";
 import { getPreviewComponent } from "../../../../util/moduleManifestUtil";
 

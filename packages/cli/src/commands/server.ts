@@ -1,7 +1,7 @@
 import { ArgumentsCamelCase } from "yargs";
 import { defaults } from "../util/config";
 import { execSync } from "child_process";
-import { log } from "../util/log";
+import { log } from "../util/serverLogger";
 import {
   bootstrapMailingDir,
   linkEmailsDirectory,

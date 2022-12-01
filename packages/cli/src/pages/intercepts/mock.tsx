@@ -5,7 +5,7 @@ const ShowIntercept = () => {
     id: "mock",
     html: "<html><body><h1>Title</h1>hope it's not too strict</body></html>",
     to: "peter s. <peter+test@campsh.com>",
-    from: "peter+sendgrid@campsh.com",
+    from: { name: "peter", address: "peter+sendgrid@campsh.com" },
     subject: "A test email",
   };
 
