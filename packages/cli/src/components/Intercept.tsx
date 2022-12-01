@@ -101,7 +101,14 @@ const Intercept: React.FC<InterceptProps> = ({ data }) => {
         <div>
           <div>Subject: {data.subject ? `"${data.subject}"` : "MISSING"}</div>
           {data.to && <div>To: {data.to}</div>}
-          <div>From: {data.from || "MISSING"}</div>
+          <div>
+            From:{' '}
+            {!data.from
+              ? 'MISSING'
+              : typeof data.from === 'string'
+              ? data.from
+              : `${data.from.name} <${data.from.address}>`}
+          </div>
           {data.cc && <div>CC: {data.cc}</div>}
           {data.bcc && <div>BCC: {data.bcc}</div>}
         </div>
