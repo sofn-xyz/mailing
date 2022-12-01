@@ -50,29 +50,78 @@ All API endpoints expect the body to be a JSON string and the header Content-Typ
 
 Render a template with props to HTML.
 
-**Authentication optional**
+**Authentication**
 
-/api/render is publicly accessible by default. However, if `process.env.REQUIRE_API_KEY` is set, then api/render will return 401 unless a valid [API key](#api-keys)
+Authentication is configurable and is not required by default.
+
+To require authentication, set `process.env.REQUIRE_API_KEY` to `"true"`. Then api/render will return 401 unless a valid [API key](#api-keys)
 is included in the request.
 
 **Request parameters**
 
+Method: GET or POST
+
 - templateName: string (required if using template mode, must be the name of one of your templates)
 - props: []string (required if using template mode, must correspond to the props your template expects)
 
+Example request:
+
+```
+POST /api/render
+Content-Type: application/json
+
+{
+  "templateName": "myTemplate",
+  "props": {
+    "name": "Alex"
+  },
+}
+```
+
 **Success response**
 
+HTTP Status Code 200
+Response body: JSON object with attributes:
+
+- html: string - the rendered HTML
+- mjmlErrors: []string - MJML errors thrown during template rendering
+
 **Error responses**
+
+401 indicates an invalid API key (if `process.env.REQUIRE_API_KEY` is set)
+
+422 indicates an invalid request
+
+Response body: JSON object with possible attributes
+
+- error: string - error message
+
+500 indicates an internal server error
+
+- error: string - error message
+
+Example error response:
+
+```
+422 Unprocessable Entity
+Content-Type: application/json
+
+{
+  "error": "props could not be parsed from querystring"
+}
+```
 
 ### /api/sendMail<a id="api-sendmail" />
 
 Send an email using your configured sendmail.
 
-**Authentication required**
+**Authentication is required**
 
 Authentication by [API key](#api-keys) is required.
 
 **Request parameters**
+
+Method: POST
 
 You can either use /api/sendMail to send raw html or a template.
 

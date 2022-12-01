@@ -15,6 +15,7 @@ export async function validateApiKey(
   const apiKey = apiKeyFromReq(req);
   if (process.env.MAILING_INTEGRATION_TEST && "testApiKey" === apiKey)
     return true;
+
   if (typeof apiKey !== "string") {
     res
       .status(422)
@@ -38,7 +39,6 @@ export async function validateApiKey(
     return true;
   } catch {
     res.status(401).json({ error: "API key is not valid" });
+    return false;
   }
-
-  return false;
 }

@@ -21,11 +21,10 @@ export default async function handler(
   if (
     process.env.REQUIRE_API_KEY === "true" &&
     !(await validateApiKey(req, res))
-  ) {
-    return res.status(401).json({ error: "API key is not valid" });
-  }
+  )
+    return;
 
-  const { templateName, props } = "GET" === req.method ? req.query : req.body;
+  const { templateName } = "GET" === req.method ? req.query : req.body;
 
   if (!validateTemplate(templateName, res)) return;
 
@@ -34,12 +33,15 @@ export default async function handler(
   try {
     parsedProps =
       "GET" === req.method
-        ? JSON.parse(decodeURIComponent(props as string))
-        : props;
+        ? JSON.parse(decodeURIComponent(req.query.props as string))
+        : req.body.props;
   } catch {
-    return res
-      .status(422)
-      .json({ error: "props could not be parsed from querystring" });
+    return res.status(422).json({
+      error:
+        "props could not be parsed from " + req.method === "GET"
+          ? "querystring"
+          : "request body",
+    });
   }
 
   const { error, mjmlErrors, html } = renderTemplate(
