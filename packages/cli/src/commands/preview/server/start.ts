@@ -7,7 +7,7 @@ import { parse } from "url";
 import { shutdown as shutdownAnalytics } from "../../../util/postHog";
 
 import { getPreviewsDirectory } from "../../../util/paths";
-import { error, log, debug } from "../../../util/log";
+import { error, log, debug } from "../../../util/serverLogger";
 import {
   createIntercept,
   showIntercept,

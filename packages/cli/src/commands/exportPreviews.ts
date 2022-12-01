@@ -3,7 +3,7 @@ import { resolve } from "path";
 import { outputFile, readdirSync } from "fs-extra";
 import { ArgumentsCamelCase } from "yargs";
 import { getPreviewsDirectory } from "../util/paths";
-import { error, log } from "../util/log";
+import { error, log } from "../util/serverLogger";
 import { render } from "../util/mjml";
 import registerRequireHooks from "./util/registerRequireHooks";
 import { defaults } from "../util/config";

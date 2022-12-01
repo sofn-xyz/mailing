@@ -1,5 +1,5 @@
 import { IncomingMessage, ServerResponse } from "http";
-import { log } from "../../util/log";
+import { log } from "../../util/serverLogger";
 import { renderNotFound } from "./application";
 
 const cache: {

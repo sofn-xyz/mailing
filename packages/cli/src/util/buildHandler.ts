@@ -1,5 +1,5 @@
 import { capture, shutdown as shutdownAnalytics } from "./postHog";
-import { log } from "./log";
+import { log } from "./serverLogger";
 import { existsSync } from "fs-extra";
 import { setConfig, writeDefaultConfigFile } from "./config";
 

@@ -6,7 +6,7 @@ import {
 } from "../setup";
 import childProcess from "child_process";
 
-jest.mock("../../../../util/log");
+jest.mock("../../../../util/serverLogger");
 
 function mockPackageJsonVersionToMatch() {
   // mock the .mailing/package.json version

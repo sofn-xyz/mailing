@@ -28,6 +28,7 @@ describe("sendMail with a valid api key and real sendMail -- be careful as this 
     const templateName = "NewSignIn";
     const template = moduleManifest.templates[templateName];
 
+    // prereq: it needs a template where the subject is undefined
     expect(template).toBeDefined();
     expect(template.subject).toBeUndefined();
 

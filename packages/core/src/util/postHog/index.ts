@@ -1,4 +1,4 @@
-import { debug } from "../log";
+import { debug } from "../serverLogger";
 
 import { postHogClient } from "./client";
 

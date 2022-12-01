@@ -1,4 +1,4 @@
-import { debug } from "../log";
+import { debug } from "../serverLogger";
 import { getConfig } from "../moduleManifestUtil";
 import { getGeneratedAnonymousId } from "../config/anonymousId";
 
