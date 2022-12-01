@@ -61,7 +61,9 @@ export default async function handler(
       ...mailOptions,
       html,
     });
-    return res.status(200).json({ result: sendMailResult });
+
+    const json = sendMailResult ? { result: sendMailResult } : {};
+    return res.status(200).json(json);
   } catch (e: any) {
     if ("number" === typeof e.status) {
       return res.status(e.status).json({ error: e.message });

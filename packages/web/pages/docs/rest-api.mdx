@@ -107,7 +107,9 @@ X-API-KEY: your-api-key
 **Success response**
 
 HTTP Status Code 200
-Response body: JSON string with return value from sendMail (if any)
+Response body: JSON object with possible attributes
+
+- result: [SMTPPool.SentMessageInfo](https://github.com/DefinitelyTyped/DefinitelyTyped/blob/6f93d358c4eb1d30bf0da65606c27c58a1a0979a/types/nodemailer/lib/smtp-pool/index.d.ts#L35) the return value from sendMail
 
 **Error responses**
 HTTP Status Code: 401 or 422 or 500
@@ -116,7 +118,7 @@ HTTP Status Code: 401 or 422 or 500
 
 422 indicates an invalid request
 
-Possible attributes of the returned JSON object
+Response body: JSON object with possible attributes
 
 - error: string - error message
 - mjmlErrors: []string - MJML errors thrown during template rendering
