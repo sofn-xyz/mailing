@@ -1,3 +1,4 @@
+import React from "react";
 import ResetPassword from "../ResetPassword";
 
 export function resetPassword() {

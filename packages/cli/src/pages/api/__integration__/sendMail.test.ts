@@ -243,7 +243,7 @@ describe("sendMail", () => {
           // it should contain an unsubscribe link
           const messageContent = messageContentRecords[0];
           expect(messageContent.html).toContain(
-            `<a href="${EMAIL_PREFERENCES_URL}" target="_blank" rel="noreferrer">Unsubscribe</a>`
+            `<a href="${EMAIL_PREFERENCES_URL}" target="_blank" rel="noreferrer" style="text-decoration:none">Unsubscribe</a>`
           );
 
           // it should have subscribed the member to the default list
@@ -286,7 +286,7 @@ describe("sendMail", () => {
           // it should contain an unsubscribe link
           const messageContent = messageContentRecords[0];
           expect(messageContent.html).toContain(
-            `<a href="${EMAIL_PREFERENCES_URL}" target="_blank" rel="noreferrer">Unsubscribe</a>`
+            `<a href="${EMAIL_PREFERENCES_URL}" target="_blank" rel="noreferrer" style="text-decoration:none">Unsubscribe</a>`
           );
 
           // it should have subscribed the member to the default list
