@@ -33,6 +33,7 @@ export type ComponentMail = SendMailOptions & {
   component?: JSX.Element;
   dangerouslyForceDeliver?: boolean;
   forcePreview?: boolean;
+  previewServerUrl?: string;
   templateName?: string;
   previewName?: string;
   listName?: string;
@@ -105,6 +106,7 @@ export function buildSendMail<T>(options: BuildSendMailOptions<T>) {
       dangerouslyForceDeliver,
       templateName,
       previewName,
+      previewServerUrl,
       forcePreview,
       listName,
       ...mailOptions
@@ -164,7 +166,7 @@ export function buildSendMail<T>(options: BuildSendMailOptions<T>) {
       log("💌 opening sendMail preview", debugMail);
       // create an intercept on the preview server
       // then open it in the browser
-      const PREVIEW_SERVER_URL = "http://localhost:3883/intercepts";
+      const PREVIEW_SERVER_URL = `${previewServerUrl?.trim().replace(/\/+$/, "") || "http://localhost:3883"}/intercepts`;
       try {
         const response = await fetch(PREVIEW_SERVER_URL, {
           method: "POST",
