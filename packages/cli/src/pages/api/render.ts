@@ -2,10 +2,12 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { MjmlError } from "mjml-react";
 
 import renderTemplate from "../../util/renderTemplate";
-import { validateApiKey } from "../../util/validateApiKey";
+import { validateApiKey } from "../../util/validate/validateApiKey";
+import { validateMethod } from "../../util/validate/validateMethod";
+import { validateTemplate } from "../../util/validate/validateTemplate";
 
 type Data = {
-  error?: string; // api error messages
+  error?: string;
   html?: string;
   mjmlErrors?: MjmlError[];
 };
@@ -14,31 +16,32 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  const { templateName, props } = "GET" === req.method ? req.query : req.body;
+  if (!validateMethod(["GET", "POST"], req, res)) return;
 
   if (
     process.env.REQUIRE_API_KEY === "true" &&
     !(await validateApiKey(req, res))
-  ) {
-    return res.status(401).json({ error: "API key is not valid" });
-  }
+  )
+    return;
 
-  // validate template name
-  if (typeof templateName !== "string") {
-    return res.status(403).json({ error: "templateName must be specified" });
-  }
+  const { templateName } = "GET" === req.method ? req.query : req.body;
+
+  if (!validateTemplate(templateName, res)) return;
 
   // parse props
   let parsedProps = {};
   try {
     parsedProps =
       "GET" === req.method
-        ? JSON.parse(decodeURIComponent(props as string))
-        : props;
+        ? JSON.parse(decodeURIComponent(req.query.props as string))
+        : req.body.props;
   } catch {
-    return res
-      .status(403)
-      .json({ error: "props could not be parsed from querystring" });
+    return res.status(422).json({
+      error:
+        "props could not be parsed from " + req.method === "GET"
+          ? "querystring"
+          : "request body",
+    });
   }
 
   const { error, mjmlErrors, html } = renderTemplate(
@@ -46,8 +49,7 @@ export default async function handler(
     parsedProps
   );
 
-  if (error) {
-    return res.status(404).json({ error });
-  }
+  if (error) return res.status(422).json({ error });
+
   res.status(200).json({ html, mjmlErrors });
 }

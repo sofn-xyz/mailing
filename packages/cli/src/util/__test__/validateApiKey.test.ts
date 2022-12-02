@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { validateApiKey } from "../validateApiKey";
+import { validateApiKey } from "../validate/validateApiKey";
 import prisma from "../../../prisma";
 
 function mockRequestResponse() {

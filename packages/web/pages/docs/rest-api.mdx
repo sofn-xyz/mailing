@@ -1,4 +1,6 @@
 import Link from "next/link";
+import CodeBlocks from "../../components/mdx/CodeBlocks";
+import CodeBlock from "../../components/mdx/CodeBlock";
 
 # REST API
 
@@ -6,16 +8,10 @@ With the REST API, you can use mailing for email templating even if most of your
 
 ## Send and Render Emails
 
-| Method    | Path          | Description                          |                                                                                                      Example |
-| --------- | ------------- | ------------------------------------ | -----------------------------------------------------------------------------------------------------------: |
-| GET, POST | /api/render   | render a template with props to HTML | [Link](https://demo.mailing.run/api/render?templateName=AccountCreated&props=%7B%22name%22%3A%22peter%22%7D) |
-| GET       | /api/sendMail | send an email with props             |                                                                                                              |
-
-<div className="text-sm">
-  Note: /api/render is publicly accessible by default. However, if
-  process.env.REQUIRE_API_KEY is set then api/render will 401 unless a valid API
-  key is included in the request. Read more about [API keys](#api-keys)
-</div>
+| Method    | Path                           | Description                          |                                                                                                      Example |
+| --------- | ------------------------------ | ------------------------------------ | -----------------------------------------------------------------------------------------------------------: |
+| GET, POST | [/api/render](#api-render)     | render a template with props to HTML | [Link](https://demo.mailing.run/api/render?templateName=AccountCreated&props=%7B%22name%22%3A%22peter%22%7D) |
+| POST      | [/api/sendMail](#api-sendmail) | send an email                        |                                                                                                              |
 
 ## Previews
 
@@ -39,11 +35,208 @@ With the REST API, you can use mailing for email templating even if most of your
 
 Mailing uses API keys to protect endpoints that consume limited resources (e.g. sending email with your transport).
 
-To get an API key, either [set up a database](https://www.mailing.run/docs/deploy#adding-a-database) and log in (recommended).
+To get an API key, [set up a database](https://www.mailing.run/docs/deploy#adding-a-database) and log in (recommended).
 
-Or, make up your own key and assign it to the `MAILING_API_KEY` environment variable in your deployment environment.
+Or, you can make up your own key and assign it to the `MAILING_API_KEY` environment variable in your deployment environment.
 
 You then pass your API key in each request with one of these methods:
 
 - Include the API key in the request headers: `X-API-KEY=...`
 - Include the API key as a query string parameter: `?apiKey=...`
+
+## API Details
+
+All API endpoints expect the body to be a JSON string and the header Content-Type to be "application/json".
+
+### /api/render
+
+Render a template and props to HTML.
+
+#### Authentication
+
+Authentication is is not required by default because this route does not send email.
+
+To require authentication, set `process.env.REQUIRE_API_KEY` to `"true"`. Then api/render will return 401 unless a valid [API key](#api-keys)
+is included in the request.
+
+#### Request `GET` `POST`
+
+- `templateName: string` – required if using template mode, must be the name of one of your templates.
+- `props: string[]` – required if using template mode, must correspond to the props your template expects.
+
+<CodeBlocks>
+  <CodeBlock language="JavaScript">
+    ```js
+    const response = await fetch("/api/render", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: {
+        "templateName": "myTemplate",
+        "props": {
+          "name": "Alex"
+        },
+      }
+    });
+    ```
+
+  </CodeBlock>
+  <CodeBlock language="Ruby">
+    ```ruby
+    require 'uri'
+    require 'json'
+    require 'net/http'
+
+    uri = URI('https://example.com/api/render')
+    request = Net::HTTP::Post.new(uri, { 'Content-Type' => 'application/json' })
+
+    request.body = {
+      templateName: "myTemplate",
+      props: {
+        name: "Alex"
+      },
+    }.to_json
+
+    response = Net::HTTP.start(uri.hostname, uri.port, use_ssl: true) do |http|
+      http.request(request)
+    end
+    ```
+
+  </CodeBlock>
+
+</CodeBlocks>
+
+#### Success response
+
+| Status | Description | JSON Response Body                                                                                       |
+| ------ | ----------- | -------------------------------------------------------------------------------------------------------- |
+| 200    | Success     | `html: string` – the rendered HTML `mjmlErrors: string[]` – MJML errors thrown during template rendering |
+
+#### Error responses
+
+| Status | Description           | JSON Response Body                     |
+| ------ | --------------------- | -------------------------------------- |
+| 401    | Invalid API key       | `error: string` `mjmlErrors: string[]` |
+| 422    | Invalid request       | `error: string` `mjmlErrors: string[]` |
+| 500    | Internal server error | `error: string`                        |
+
+```ts
+422 Unprocessable Entity
+Content-Type: application/json
+
+{
+  "error": "props could not be parsed from querystring"
+}
+```
+
+### /api/sendMail
+
+Send an email using your configured sendmail.
+
+#### Authentication
+
+An [API key](#api-keys) is required.
+
+#### Request `POST`
+
+You can either use /api/sendMail to render and send a template or to send raw html.
+
+- `templateName: string` – Required if you want Mailing to render and send one of your templates.
+- `props: string[]` – Required if using a template that expects props.
+- `from, to, subject, etc.` – Standard sendMail options, see [_Calling sendMail_](/docs/sending-email#calling-sendmail).
+- `html: string` – Rather than passing templateName and props, you can instead pass html as a string. This is useful if you're already rendering some HTML emails with another method.
+- `previewName: string` – (optional) gets put on the Message object in the database so you have a category beyond templateName for the type of email being sent. Useful for segmenting analytics if the templateName is more general.
+
+<CodeBlocks>
+  <CodeBlock language="JavaScript">
+    ```js
+    const response = await fetch("/api/sendMail", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-API-KEY": "your-api-key"
+      },
+      body: JSON.stringify({
+        "to": "to@example.com",
+        "from": "you@example.com",
+        "subject": "Hello world",
+        "templateName": "myTemplate",
+        "props": {
+          "name": "Alex"
+        }
+      }),
+    });
+    ```
+  </CodeBlock>
+  <CodeBlock language="Ruby">
+    ```ruby
+    require 'uri'
+    require 'json'
+    require 'net/http'
+
+    uri = URI('https://example.com/api/sendMail')
+
+    request = Net::HTTP::Post.new(uri, {
+      'Content-Type' => 'application/json',
+      'X-API-KEY' => api_key
+    })
+
+    request.body = {
+      to: "to@example.com",
+      from: "you@example.com",
+      subject: "Hello world",
+      templateName: "myTemplate",
+      props: {
+        name: "Alex"
+      }
+    }.to_json
+
+    response = Net::HTTP.start(uri.hostname, uri.port, use_ssl: true) do |http|
+      http.request(request)
+    end
+    ```
+
+  </CodeBlock>
+</CodeBlocks>
+
+#### Success response
+
+| Status | Description | JSON Response Body                                                                         |
+| ------ | ----------- | ------------------------------------------------------------------------------------------ |
+| 200    | Success     | `result` the return value from sendMail. The result type may vary based on your transport. |
+
+    ```ts
+    {
+      "result": {
+        "accepted": ["to@example.com"],
+        "rejected": [],
+        "envelopeTime": 193,
+        "messageTime": 549,
+        "messageSize": 48249,
+        "response": "250 Ok 0100154cef10a27-de64ec0b-3284-4189-803f-88101a6dc701-000000",
+        "envelope": {
+          "from": "you@example.com",
+          "to": ["to@example.com"]
+          },
+        "messageId": "<50bf8e94-1951-91bf-0140-38342382405f@mailing.run>"
+      }
+    }
+    ```
+
+#### Error responses
+
+| Status | Description           | JSON Response Body                     |
+| ------ | --------------------- | -------------------------------------- |
+| 401    | Invalid API key       | `error: string` `mjmlErrors: string[]` |
+| 422    | Invalid request       | `error: string` `mjmlErrors: string[]` |
+| 500    | Internal server error | `error: string`                        |
+
+```ts
+422 Unprocessable Entity
+Content-Type: application/json
+
+{
+  "error": "sendMail couldn't find a subject for your email"
+}
+```
