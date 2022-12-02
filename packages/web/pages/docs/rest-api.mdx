@@ -1,4 +1,6 @@
 import Link from "next/link";
+import CodeBlocks from "../../components/docs/CodeBlocks";
+import { Fragment } from "react";
 
 # REST API
 
@@ -66,17 +68,48 @@ Method: GET or POST
 
 Example request:
 
-```
-POST /api/render
-Content-Type: application/json
+<CodeBlocks>
+  <Fragment language="js">
+    ```js
+    fetch("/api/render", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: {
+        "templateName": "myTemplate",
+        "props": {
+          "name": "Alex"
+        },
+      }
+    });
+    ```
 
-{
-  "templateName": "myTemplate",
-  "props": {
-    "name": "Alex"
-  },
-}
-```
+  </Fragment>
+  <Fragment language="ruby">
+    ```ruby
+    require 'uri'
+    require 'json'
+    require 'net/http'
+
+    uri = URI('https://example.com/api/render')
+    request = Net::HTTP::Post.new(uri, { 'Content-Type' => 'application/json' })
+
+    request.body = {
+      templateName: "myTemplate",
+      props: {
+        name: "Alex"
+      },
+    }.to_json
+
+    response = Net::HTTP.start(uri.hostname, uri.port, use_ssl: true) do |http|
+      http.request(request)
+    end
+    ```
+
+  </Fragment>
+
+</CodeBlocks>
 
 **Success response**
 
@@ -102,7 +135,7 @@ Response body: JSON object with possible attributes
 
 Example error response:
 
-```
+```ts
 422 Unprocessable Entity
 Content-Type: application/json
 
@@ -133,21 +166,57 @@ You can either use /api/sendMail to render and send a template or to send raw ht
 
 Example request (template mode):
 
-```
-POST /api/sendMail
-Content-Type: application/json
-X-API-KEY: your-api-key
+<CodeBlocks>
+  <Fragment language="js">
+    ```js
+    fetch("/api/sendMail", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-API-KEY": "your-api-key"
+      },
+      body: JSON.stringify({
+        "to": "to@example.com",
+        "from": "you@example.com",
+        "subject": "Hello world",
+        "templateName": "myTemplate",
+        "props": {
+          "name": "Alex"
+        }
+      }),
+    });
+    ```
+  </Fragment>
+  <Fragment language="ruby">
+    ```ruby
+    require 'uri'
+    require 'json'
+    require 'net/http'
 
-{
-  "to": "to@example.com",
-  "from": "you@example.com",
-  "subject": "Hello world",
-  "templateName": "myTemplate",
-  "props": {
-    "name": "Alex"
-  },
-}
-```
+    uri = URI('https://example.com/api/sendMail')
+
+    request = Net::HTTP::Post.new(uri, {
+      'Content-Type' => 'application/json',
+      'X-API-KEY' => api_key
+    })
+
+    request.body = {
+      to: "to@example.com",
+      from: "you@example.com",
+      subject: "Hello world",
+      templateName: "myTemplate",
+      props: {
+        name: "Alex"
+      }
+    }.to_json
+
+    response = Net::HTTP.start(uri.hostname, uri.port, use_ssl: true) do |http|
+      http.request(request)
+    end
+    ```
+
+  </Fragment>
+</CodeBlocks>
 
 **Success response**
 
@@ -158,23 +227,24 @@ Response body: JSON object with possible attributes
 
 Example response:
 
-```
-{
-  "result": {
-    "accepted": ["to@example.com"],
-    "rejected": [],
-    "envelopeTime": 193,
-    "messageTime": 549,
-    "messageSize": 48249,
-    "response": "250 Ok 0100154cef10a27-de64ec0b-3284-4189-803f-88101a6dc701-000000",
-    "envelope": {
-      "from": "you@example.com",
-      "to": ["to@example.com"]
-    },
-    "messageId": "<50bf8e94-1951-91bf-0140-38342382405f@mailing.run>"
-  }
-}
-```
+    ```ts
+    {
+      "result": {
+        "accepted": ["to@example.com"],
+        "rejected": [],
+        "envelopeTime": 193,
+        "messageTime": 549,
+        "messageSize": 48249,
+        "response": "250 Ok 0100154cef10a27-de64ec0b-3284-4189-803f-88101a6dc701-000000",
+        "envelope": {
+          "from": "you@example.com",
+          "to": ["to@example.com"]
+          },
+        "messageId": "<50bf8e94-1951-91bf-0140-38342382405f@mailing.run>"
+      }
+    }
+
+    ```
 
 **Error responses**
 HTTP Status Code: 401 or 422 or 500
@@ -194,11 +264,13 @@ Response body: JSON object with possible attributes
 
 Example error response:
 
-```
+```ts
+
 422 Unprocessable Entity
 Content-Type: application/json
 
 {
   "error": "sendMail couldn't find a subject for your email"
 }
+
 ```

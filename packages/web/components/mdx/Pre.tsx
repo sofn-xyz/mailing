@@ -2,6 +2,7 @@ import { ReactNode } from "react";
 
 type PreProps = {
   children: ReactNode | ReactNode[];
+  reducePadding: boolean;
 };
 
 export default function Pre({ children }: PreProps) {
