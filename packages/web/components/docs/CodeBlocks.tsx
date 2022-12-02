@@ -9,7 +9,7 @@ export default function CodeBlocks({ children }) {
   const [currentLanguage, setCurrentLanguage] = useState(languages[0]);
 
   return (
-    <div className="not-prose bg-slate-900 rounded-3xl">
+    <div className="not-prose bg-slate-900 rounded-3xl mt-10 mb-12">
       <div className="flex">
         {languages.map((language, i) => (
           <button

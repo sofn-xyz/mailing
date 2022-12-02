@@ -1,11 +1,11 @@
 import { Children, useMemo } from "react";
 import { getAnchor } from "./util/getAnchor";
 
-type H3Props = {
+type H4Props = {
   children: string;
 };
 
-export default function H3({ children }: H3Props) {
+export default function H4({ children }: H4Props) {
   const anchor = useMemo<string>(
     () =>
       getAnchor(
@@ -17,11 +17,11 @@ export default function H3({ children }: H3Props) {
   );
 
   return (
-    <h3
+    <h4
       id={anchor}
-      className="text-xl md:text-2xl lg:text-3xl font-medium pt-20 -mt-10"
+      className="text-sm md:text-sm lg:text-lg uppercase text-gray-400 font-medium pt-20 -mt-16"
     >
       {children}
-    </h3>
+    </h4>
   );
 }

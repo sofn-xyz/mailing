@@ -7,8 +7,8 @@ type PreProps = {
 
 export default function Pre({ children }: PreProps) {
   return (
-    <span className="not-prose">
-      <pre className="px-6 py-5 rounded-3xl hljs overflow-scroll">
+    <span className="not-prose mt-10">
+      <pre className="px-6 py-5 rounded-3xl hljs overflow-scroll mb-10">
         {children}
       </pre>
       <style jsx global>
