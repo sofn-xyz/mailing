@@ -1,6 +1,6 @@
 import Link from "next/link";
-import CodeBlocks from "../../components/docs/CodeBlocks";
-import { Fragment } from "react";
+import CodeBlocks from "../../components/mdx/CodeBlocks";
+import CodeBlock from "../../components/mdx/CodeBlock";
 
 # REST API
 
@@ -35,9 +35,9 @@ With the REST API, you can use mailing for email templating even if most of your
 
 Mailing uses API keys to protect endpoints that consume limited resources (e.g. sending email with your transport).
 
-To get an API key, either [set up a database](https://www.mailing.run/docs/deploy#adding-a-database) and log in (recommended).
+To get an API key, [set up a database](https://www.mailing.run/docs/deploy#adding-a-database) and log in (recommended).
 
-Or, make up your own key and assign it to the `MAILING_API_KEY` environment variable in your deployment environment.
+Or, you can make up your own key and assign it to the `MAILING_API_KEY` environment variable in your deployment environment.
 
 You then pass your API key in each request with one of these methods:
 
@@ -65,7 +65,7 @@ is included in the request.
 - `props: string[]` – required if using template mode, must correspond to the props your template expects.
 
 <CodeBlocks>
-  <Fragment language="JavaScript">
+  <CodeBlock language="JavaScript">
     ```js
     const response = await fetch("/api/render", {
       method: "POST",
@@ -81,8 +81,8 @@ is included in the request.
     });
     ```
 
-  </Fragment>
-  <Fragment language="Ruby">
+  </CodeBlock>
+  <CodeBlock language="Ruby">
     ```ruby
     require 'uri'
     require 'json'
@@ -103,7 +103,7 @@ is included in the request.
     end
     ```
 
-  </Fragment>
+  </CodeBlock>
 
 </CodeBlocks>
 
@@ -149,7 +149,7 @@ You can either use /api/sendMail to render and send a template or to send raw ht
 - `previewName: string` – (optional) gets put on the Message object in the database so you have a category beyond templateName for the type of email being sent. Useful for segmenting analytics if the templateName is more general.
 
 <CodeBlocks>
-  <Fragment language="JavaScript">
+  <CodeBlock language="JavaScript">
     ```js
     const response = await fetch("/api/sendMail", {
       method: "POST",
@@ -168,8 +168,8 @@ You can either use /api/sendMail to render and send a template or to send raw ht
       }),
     });
     ```
-  </Fragment>
-  <Fragment language="Ruby">
+  </CodeBlock>
+  <CodeBlock language="Ruby">
     ```ruby
     require 'uri'
     require 'json'
@@ -197,7 +197,7 @@ You can either use /api/sendMail to render and send a template or to send raw ht
     end
     ```
 
-  </Fragment>
+  </CodeBlock>
 </CodeBlocks>
 
 #### Success response

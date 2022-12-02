@@ -1,7 +1,11 @@
-import { Children, useState } from "react";
+import { Children, ReactElement, useState } from "react";
 import cx from "classnames";
 
-export default function CodeBlocks({ children }) {
+type CodeBlocksProps = {
+  children: ReactElement | ReactElement[];
+};
+
+export default function CodeBlocks({ children }: CodeBlocksProps) {
   const languages: string[] = Children.map(
     children,
     (child) => child.props?.language
