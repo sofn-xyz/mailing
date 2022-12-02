@@ -2,6 +2,7 @@ import Link from "next/link";
 import CodeBlocks from "../../components/docs/CodeBlocks";
 import CodeBlock from "../../components/docs/CodeBlock";
 import exampleCode from "../../components/docs/exampleCode";
+import { Fragment } from "react";
 
 # REST API
 
@@ -137,9 +138,11 @@ You can either use /api/sendMail to render and send a template or to send raw ht
 Example request (template mode):
 
 <CodeBlocks>
-  <CodeBlock language="js">{exampleCode["api/sendMail"]["js"]}</CodeBlock>
-  <CodeBlock language="ruby">Ruby</CodeBlock>
-  <CodeBlock language="http">http</CodeBlock>
+  {Object.keys(exampleCode["api/sendMail"]).map((language) => (
+    <Fragment key={"api/sendMail-" + language} language={language}>
+      {exampleCode["api/sendMail"][language]}
+    </Fragment>
+  ))}
 </CodeBlocks>
 
 **Success response**
