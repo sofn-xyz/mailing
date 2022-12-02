@@ -69,9 +69,9 @@ Method: GET or POST
 Example request:
 
 <CodeBlocks>
-  <Fragment language="js">
+  <Fragment language="JavaScript">
     ```js
-    fetch("/api/render", {
+    const response = await fetch("/api/render", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -86,7 +86,7 @@ Example request:
     ```
 
   </Fragment>
-  <Fragment language="ruby">
+  <Fragment language="Ruby">
     ```ruby
     require 'uri'
     require 'json'
@@ -111,30 +111,21 @@ Example request:
 
 </CodeBlocks>
 
-**Success response**
+#### Success response
 
-HTTP Status Code 200
+| Status | Description | JSON Response Body                                                                                        |
+| ------ | ----------- | --------------------------------------------------------------------------------------------------------- |
+| 200    | Success     | `html: string` – the rendered HTML, `mjmlErrors: []string` – MJML errors thrown during template rendering |
 
-Response body: JSON object with attributes:
+#### Error responses
 
-- `html: string` – the rendered HTML
-- `mjmlErrors: []string` – MJML errors thrown during template rendering
+| Status | Description                                               | JSON Response Body                     |
+| ------ | --------------------------------------------------------- | -------------------------------------- |
+| 401    | Invalid API key (if `process.env.REQUIRE_API_KEY` is set) | `error: string` `mjmlErrors: []string` |
+| 422    | Invalid request                                           | `error: string` `mjmlErrors: []string` |
+| 500    | Internal server error                                     | `error: string`                        |
 
-**Error responses**
-
-401 indicates an invalid API key (if `process.env.REQUIRE_API_KEY` is set)
-
-422 indicates an invalid request
-
-Response body: JSON object with possible attributes
-
-- `error: string` – error message
-
-500 indicates an internal server error
-
-- `error: string` – error message
-
-Example error response:
+Example:
 
 ```ts
 422 Unprocessable Entity
@@ -170,7 +161,7 @@ Example request (template mode):
 <CodeBlocks>
   <Fragment language="JavaScript">
     ```js
-    fetch("/api/sendMail", {
+    const response = await fetch("/api/sendMail", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -219,15 +210,13 @@ Example request (template mode):
   </Fragment>
 </CodeBlocks>
 
-**Success response**
+#### Success response
 
-HTTP Status Code 200
+| Status | Description | JSON Response Body                                                                         |
+| ------ | ----------- | ------------------------------------------------------------------------------------------ |
+| 200    | Success     | `result` the return value from sendMail. The result type may vary based on your transport. |
 
-Response body: JSON object with possible attributes
-
-- `result` the return value from sendMail. The result type may vary based on your transport.
-
-Example response:
+Example:
 
     ```ts
     {
@@ -247,24 +236,15 @@ Example response:
     }
     ```
 
-**Error responses**
+#### Error responses
 
-HTTP Status Code: 401 or 422 or 500
+| Status | Description           | JSON Response Body                     |
+| ------ | --------------------- | -------------------------------------- |
+| 401    | Invalid API key       | `error: string` `mjmlErrors: []string` |
+| 422    | Invalid request       | `error: string` `mjmlErrors: []string` |
+| 500    | Internal server error | `error: string`                        |
 
-401 indicates an invalid API key
-
-422 indicates an invalid request
-
-Response body: JSON object with possible attributes
-
-- `error: string` – error message
-- `mjmlErrors: []string` – MJML errors thrown during template rendering
-
-500 indicates an internal server error
-
-- `error: string` – error message
-
-Example error response:
+Example:
 
 ```ts
 422 Unprocessable Entity
