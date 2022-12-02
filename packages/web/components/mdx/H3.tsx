@@ -19,7 +19,7 @@ export default function H3({ children }: H3Props) {
   return (
     <h3
       id={anchor}
-      className="text-lg md:text-xl lg:text-2xl font-medium pt-20"
+      className="text-xl md:text-2xl lg:text-3xl font-medium pt-20 -mt-20"
     >
       {children}
     </h3>
