@@ -37,7 +37,6 @@ export async function generateEmailsDirectory({
     `);
     log("Prettifying Javascript files...");
     execSync(`npx prettier --write ${emailsDir}`);
-    execSync(`npx eslint --fix --ext .jsx,.js ${emailsDir}`);
   }
 
   const fileTree = tree(emailsDir, {
