@@ -1,7 +1,6 @@
 import Link from "next/link";
 import CodeBlocks from "../../components/docs/CodeBlocks";
 import CodeBlock from "../../components/docs/CodeBlock";
-import exampleCode from "../../components/docs/exampleCode";
 
 # REST API
 
@@ -137,9 +136,59 @@ You can either use /api/sendMail to render and send a template or to send raw ht
 Example request (template mode):
 
 <CodeBlocks>
-  <CodeBlock language="js">{exampleCode["api/sendMail"]["js"]}</CodeBlock>
-  <CodeBlock language="ruby"></CodeBlock>
-  <CodeBlock language="http"></CodeBlock>
+<CodeBlock language="js">
+```js
+  POST /api/sendMail
+  Content-Type: application/json
+  X-API-KEY: your-api-key
+
+{
+  "to": "to@example.com",
+  "from": "you@example.com",
+  "subject": "Hello world",
+  "templateName": "myTemplate",
+  "props": {
+    "name": "Alex"
+  }
+}
+```
+</CodeBlock>
+<CodeBlock language="ruby">
+```ruby
+  RUBY
+  POST /api/sendMail
+  Content-Type: application/json
+  X-API-KEY: your-api-key
+
+{
+  "to": "to@example.com",
+  "from": "you@example.com",
+  "subject": "Hello world",
+  "templateName": "myTemplate",
+  "props": {
+    "name": "Alex"
+  }
+}
+```
+</CodeBlock>
+<CodeBlock language="http">
+```ts
+  http
+  POST /api/sendMail
+  Content-Type: application/json
+  X-API-KEY: your-api-key
+
+{
+  "to": "to@example.com",
+  "from": "you@example.com",
+  "subject": "Hello world",
+  "templateName": "myTemplate",
+  "props": {
+    "name": "Alex"
+  }
+}
+```
+</CodeBlock>
 </CodeBlocks>
 
 **Success response**
@@ -197,21 +246,5 @@ Content-Type: application/json
 {
 "error": "sendMail couldn't find a subject for your email"
 }
-
-```
-
-```
-
-```
-
-```
-
-```
-
-```
-
-```
-
-```
 
 ```

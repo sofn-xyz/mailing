@@ -1,11 +1,11 @@
-import { Children } from "react";
-import Code from "../mdx/Code";
-import Pre from "../mdx/Pre";
+import { Children, useState } from "react";
 
 export default function CodeBlocks({ children }) {
-  const languages: string[] = Children.map(children, (child) => {
-    return child.props?.language;
-  });
+  const languages: string[] = Children.map(
+    children,
+    (child) => child.props?.language
+  );
+  const [currentLanguage, setCurrentLanguage] = useState(languages[0]);
 
   return (
     <div>
@@ -14,14 +14,16 @@ export default function CodeBlocks({ children }) {
           <button
             className="bg-cyan-500 py-2 px-3 mr-2 text-sm uppercase"
             key={`button-key-${language}`}
+            onClick={() => setCurrentLanguage(language)}
           >
             {language}
           </button>
         ))}
       </div>
-      <Pre>
-        <Code>{children}</Code>
-      </Pre>
+      {Children.map(
+        children,
+        (child) => child.props?.language === currentLanguage && child
+      )}
     </div>
   );
 }
