@@ -4,6 +4,7 @@ import { ExportPreviewsArgs, handler } from "../exportPreviews";
 import { execCli } from "./execCli";
 
 jest.mock("../../util/serverLogger");
+jest.mock("../../moduleManifest");
 
 describe("exportPreviews command", () => {
   beforeEach(() => {
@@ -12,8 +13,8 @@ describe("exportPreviews command", () => {
 
     jest.spyOn(fsExtra, "readJSONSync").mockImplementation(() => ({
       typescript: true,
-      emailsDir: "./emails",
-      outDir: "./previews_html",
+      emailsDir: "./packages/cli/src/__mocks__/emails",
+      outDir: "./packages/cli/src/__mocks__/previews_html",
       anonymousId: "TEST_VALUE",
     }));
   });
@@ -21,7 +22,7 @@ describe("exportPreviews command", () => {
   it("outputs html files to outDir", async () => {
     await handler({
       outDir: "./out",
-      emailsDir: "packages/cli/src/emails",
+      emailsDir: "packages/cli/src/__mocks__/emails",
       skipLint: true,
     } as ExportPreviewsArgs);
     expect(error).not.toHaveBeenCalled();

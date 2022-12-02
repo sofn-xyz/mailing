@@ -8,7 +8,7 @@ jest.mock("../../../util/validateApiKey", () => ({
 }));
 
 jest.mock("../../../moduleManifest", () => {
-  const originalModule = jest.requireActual("../../../moduleManifest");
+  const originalModule = jest.requireActual("../../../__mocks__/moduleManifest");
   return {
     ...originalModule,
     sendMail: jest.fn(),

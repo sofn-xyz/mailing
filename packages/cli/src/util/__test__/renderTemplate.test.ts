@@ -1,5 +1,7 @@
 import renderTemplate from "../renderTemplate";
 
+jest.mock("../../moduleManifest");
+
 describe("renderTemplate", () => {
   it("throws an error if template not found", () => {
     const { error, mjmlErrors, html } = renderTemplate("test", {

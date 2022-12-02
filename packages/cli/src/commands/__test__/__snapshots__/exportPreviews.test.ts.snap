@@ -43,6 +43,9 @@ exports[`exportPreviews command outputs html files to outDir 1`] = `
       "  |-- account_created_account_created.html",
     ],
     [
+      "  |-- account_created_account_created_john.html",
+    ],
+    [
       "  |-- new_sign_in_new_sign_in.html",
     ],
     [
@@ -58,11 +61,15 @@ exports[`exportPreviews command outputs html files to outDir 1`] = `
       "  |-- reset_password_reset_password.html",
     ],
     [
-      "✅ Processed 6 previews
+      "✅ Processed 7 previews
 ",
     ],
   ],
   "results": [
+    {
+      "type": "return",
+      "value": undefined,
+    },
     {
       "type": "return",
       "value": undefined,
