@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { Children, useMemo } from "react";
 import { getAnchor } from "./util/getAnchor";
 
 type H3Props = {
@@ -6,7 +6,15 @@ type H3Props = {
 };
 
 export default function H3({ children }: H3Props) {
-  const anchor = useMemo<string>(() => getAnchor(children), [children]);
+  const anchor = useMemo<string>(
+    () =>
+      getAnchor(
+        Children.map(children, (child) =>
+          "string" === typeof child ? child : null
+        ).join("-")
+      ),
+    [children]
+  );
 
   return (
     <h3
