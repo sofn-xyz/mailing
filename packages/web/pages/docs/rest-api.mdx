@@ -1,7 +1,6 @@
 import Link from "next/link";
 import CodeBlocks from "../../components/docs/CodeBlocks";
 import CodeBlock from "../../components/docs/CodeBlock";
-import exampleCode from "../../components/docs/exampleCode";
 import { Fragment } from "react";
 
 # REST API
@@ -138,11 +137,73 @@ You can either use /api/sendMail to render and send a template or to send raw ht
 Example request (template mode):
 
 <CodeBlocks>
-  {Object.keys(exampleCode["api/sendMail"]).map((language) => (
-    <Fragment key={"api/sendMail-" + language} language={language}>
-      {exampleCode["api/sendMail"][language]}
-    </Fragment>
-  ))}
+  <Fragment language="js">
+    ```js
+    fetch("/api/sendMail", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-API-KEY": "your-api-key"
+      },
+      body: JSON.stringify({
+        "to": "to@example.com",
+        "from": "you@example.com",
+        "subject": "Hello world",
+        "templateName": "myTemplate",
+        "props": {
+          "name": "Alex"
+        }
+      }),
+    });
+    ```
+  </Fragment>
+  <Fragment language="ruby">
+    ```ruby
+    require 'uri'
+    require 'json'
+    require 'net/http'
+
+    uri = URI('https://example.com/api/sendMail')
+
+    request = Net::HTTP::Post.new(uri, {
+      'Content-Type' => 'application/json',
+      'X-API-KEY' => api_key
+    })
+
+    request.body = {
+      to: "to@example.com",
+      from: "you@example.com",
+      subject: "Hello world",
+      templateName: "myTemplate",
+      props: {
+        name: "Alex"
+      }
+    }.to_json
+
+    response = Net::HTTP.start(uri.hostname, uri.port, use_ssl: true) do |http|
+      http.request(request)
+    end
+    ```
+
+  </Fragment>
+  <Fragment language="http">
+    ```html
+    POST /api/sendMail
+    Content-Type: application/json 
+    X-API-KEY: your-api-key
+
+    {
+      "to": "to@example.com",
+      "from": "you@example.com",
+      "subject": "Hello world",
+      "templateName": "myTemplate",
+      "props": {
+        "name": "Alex"
+      }
+    }
+    ```
+
+  </Fragment>
 </CodeBlocks>
 
 **Success response**

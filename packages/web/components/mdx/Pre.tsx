@@ -1,13 +1,20 @@
 import { ReactNode } from "react";
+import cx from "classnames";
 
 type PreProps = {
   children: ReactNode | ReactNode[];
+  reducePadding: boolean;
 };
 
-export default function Pre({ children }: PreProps) {
+export default function Pre({ children, reducePadding }: PreProps) {
   return (
     <span className="not-prose">
-      <pre className="px-6 py-5 rounded-3xl hljs overflow-scroll">
+      <pre
+        className={cx(
+          "rounded-3xl hljs overflow-scroll py-5",
+          reducePadding ? "px-0" : "px-6"
+        )}
+      >
         {children}
       </pre>
       <style jsx global>

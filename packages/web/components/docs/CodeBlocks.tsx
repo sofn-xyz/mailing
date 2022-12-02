@@ -13,7 +13,7 @@ export default function CodeBlocks({ children }) {
 
   const [selectedLanguage, setSelectedLanguage] = useState(languages[0]);
 
-  const content = children.find(
+  const selectedChild = children.find(
     (child) => child.props?.language === selectedLanguage
   );
 
@@ -30,8 +30,8 @@ export default function CodeBlocks({ children }) {
           </button>
         ))}
       </div>
-      <Pre>
-        <Code>{content}</Code>
+      <Pre reducePadding>
+        <Code>{selectedChild}</Code>
       </Pre>
     </div>
   );
