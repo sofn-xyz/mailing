@@ -14,6 +14,7 @@
     "dev:init": "cd packages/cli && rm -rf previews_html; rm -rf .mailing mailing.config.json; src/dev.js",
     "dev:export-previews": "cd packages/cli && rm -rf .mailing && src/dev.js export-previews",
     "dev:server:build": "cd packages/cli && rm -rf .mailing && src/dev.js server build",
+    "link:emails": "echo 'noop'",
     "build": "preconstruct build",
     "test": "yarn jest",
     "test:integration": "yarn integration:servers:start \"yarn jest -c jest.integration.config.ts $TEST_FLAGS\"",
