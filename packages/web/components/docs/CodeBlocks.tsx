@@ -1,4 +1,5 @@
 import { Children, useState } from "react";
+import cx from "classnames";
 
 export default function CodeBlocks({ children }) {
   const languages: string[] = Children.map(
@@ -8,11 +9,18 @@ export default function CodeBlocks({ children }) {
   const [currentLanguage, setCurrentLanguage] = useState(languages[0]);
 
   return (
-    <div>
-      <div className="w-full bg-slate-700 p-2">
-        {languages.map((language) => (
+    <div className="not-prose bg-slate-900 rounded-3xl">
+      <div className="flex">
+        {languages.map((language, i) => (
           <button
-            className="bg-green-800 py-2 px-3 mr-2 text-sm uppercase"
+            className={cx(
+              "py-2 px-5 text-sm uppercase hover:bg-gray-700 active:translate-y-px transition-all border-b-2",
+              {
+                "border-green-200": language === currentLanguage,
+                "border-transparent": language !== currentLanguage,
+                "rounded-tl-3xl": i === 0,
+              }
+            )}
             key={`button-key-${language}`}
             onClick={() => setCurrentLanguage(language)}
           >
