@@ -136,7 +136,7 @@ Send an email using your configured sendmail.
 
 #### Authentication
 
-Authentication by [API key](#api-keys) is required.
+An [API key](#api-keys) is required.
 
 #### Request `POST`
 
@@ -144,7 +144,7 @@ You can either use /api/sendMail to render and send a template or to send raw ht
 
 - `templateName: string` – Required if you want Mailing to render and send one of your templates.
 - `props: string[]` – Required if using a template that expects props.
-- `from, to, subject, etc.` - Standard sendMail options, see [Calling sendMail](/docs/sending-email#calling-sendmail)
+- `from, to, subject, etc.` – Standard sendMail options, see [_Calling sendMail_](/docs/sending-email#calling-sendmail).
 - `html: string` – Rather than passing templateName and props, you can instead pass html as a string. This is useful if you're already rendering some HTML emails with another method.
 - `previewName: string` – (optional) gets put on the Message object in the database so you have a category beyond templateName for the type of email being sent. Useful for segmenting analytics if the templateName is more general.
 
