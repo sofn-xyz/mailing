@@ -33,6 +33,7 @@ export async function generateEmailsDirectory({
     --outDir ${emailsDir} \
     --noEmit false \
     ${`${srcEmailsDir}/**/*.tsx`} \
+    ${`${srcEmailsDir}/*.tsx`} \
     ${`${srcEmailsDir}/*.ts`}
     `);
     log("Prettifying Javascript files...");
