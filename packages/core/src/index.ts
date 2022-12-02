@@ -253,7 +253,7 @@ export function buildSendMail<T>(options: BuildSendMailOptions<T>) {
   };
 }
 
-async function openPreview(
+export async function openPreview(
   mail: ComponentMail,
   mailOptions: SendMailOptions,
   previewServerUrl?: string
@@ -278,6 +278,7 @@ async function openPreview(
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(mailOptions),
     });
+
     if (response.status === 201) {
       const { id } = (await response.json()) as { id: string };
       await open(`${PREVIEW_SERVER_URL}/${id}`);

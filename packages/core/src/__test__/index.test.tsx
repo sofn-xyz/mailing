@@ -9,12 +9,15 @@ import {
 } from "..";
 import { Mjml, MjmlBody, MjmlRaw } from "mjml-react";
 import fetch from "node-fetch";
+import open from "open";
 import * as postHog from "../util/postHog";
 import * as serverLogger from "../util/serverLogger";
 import fsExtra from "fs-extra";
 
 jest.mock("../util/postHog");
 jest.mock("node-fetch");
+jest.mock("open");
+
 const { Response } = jest.requireActual("node-fetch");
 
 describe("index", () => {
@@ -31,6 +34,53 @@ describe("index", () => {
 
   beforeEach(async () => {
     await clearTestMailQueue();
+    jest.spyOn(serverLogger, "log").mockImplementation(() => undefined);
+  });
+
+  describe.only("openPreview", () => {
+    it("should open preview", async () => {
+      const previewServerUrl = "http://localhost:12345";
+      const interceptId = "abc-xyz-123";
+      const previewServerUrlIntercepts = `${previewServerUrl}/intercepts`;
+
+      const previewServerUrlInterceptId = `${previewServerUrlIntercepts}/${interceptId}`;
+
+      const res = new Response(JSON.stringify({ id: interceptId }), {
+        status: 201,
+      });
+
+      (fetch as unknown as jest.Mock).mockResolvedValueOnce(
+        Promise.resolve(res)
+      );
+
+      const sendMail = buildSendMail({
+        transport,
+        defaultFrom: "replace@me.with.your.com",
+        configPath: "./mailing.config.json",
+      });
+
+      // call sendMail and force it to use the openPreview function
+      await sendMail({
+        component: <div></div>,
+        subject: "hello world",
+        to: ["ok@ok.com"],
+        from: "ok@ok.com",
+        text: "ok",
+        html: "ok",
+        dangerouslyForceDeliver: true,
+        forcePreview: true,
+        previewServerUrl,
+      });
+
+      expect(fetch).toHaveBeenCalled();
+      expect(fetch).toHaveBeenCalledWith(
+        previewServerUrlIntercepts,
+        expect.anything()
+      );
+
+      expect(open).toHaveBeenCalled();
+      expect(open).toHaveBeenCalledWith(previewServerUrlInterceptId);
+    });
   });
 
   describe("subject", () => {
