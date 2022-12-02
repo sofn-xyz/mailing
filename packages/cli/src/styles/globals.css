@@ -18,3 +18,11 @@ button:active,
 a:active {
   transform: translateY(1px);
 }
+
+/*
+ * This fixes an intermittent bug we were seeing with the header send icon blocking the button click.
+ * I don't quite understand what the bug is so I'm applying this globally in case it happens elsewhere too.
+ */
+ svg {
+  pointer-events: none;
+}
