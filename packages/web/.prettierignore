@@ -1,3 +1,0 @@
-# At the moment, formatting MDX documents can break them
-# https://github.com/prettier/prettier/issues/12209
-*.mdx
