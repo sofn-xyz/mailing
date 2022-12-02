@@ -1,4 +1,7 @@
 import Link from "next/link";
+import CodeBlocks from "../../components/docs/CodeBlocks";
+import CodeBlock from "../../components/docs/CodeBlock";
+import exampleCode from "../../components/docs/exampleCode";
 
 # REST API
 
@@ -133,21 +136,11 @@ You can either use /api/sendMail to render and send a template or to send raw ht
 
 Example request (template mode):
 
-```
-POST /api/sendMail
-Content-Type: application/json
-X-API-KEY: your-api-key
-
-{
-  "to": "to@example.com",
-  "from": "you@example.com",
-  "subject": "Hello world",
-  "templateName": "myTemplate",
-  "props": {
-    "name": "Alex"
-  },
-}
-```
+<CodeBlocks>
+  <CodeBlock language="js">{exampleCode["api/sendMail"]["js"]}</CodeBlock>
+  <CodeBlock language="ruby"></CodeBlock>
+  <CodeBlock language="http"></CodeBlock>
+</CodeBlocks>
 
 **Success response**
 
@@ -159,21 +152,23 @@ Response body: JSON object with possible attributes
 Example response:
 
 ```
+
 {
-  "result": {
-    "accepted": ["to@example.com"],
-    "rejected": [],
-    "envelopeTime": 193,
-    "messageTime": 549,
-    "messageSize": 48249,
-    "response": "250 Ok 0100154cef10a27-de64ec0b-3284-4189-803f-88101a6dc701-000000",
-    "envelope": {
-      "from": "you@example.com",
-      "to": ["to@example.com"]
-    },
-    "messageId": "<50bf8e94-1951-91bf-0140-38342382405f@mailing.run>"
-  }
+"result": {
+"accepted": ["to@example.com"],
+"rejected": [],
+"envelopeTime": 193,
+"messageTime": 549,
+"messageSize": 48249,
+"response": "250 Ok 0100154cef10a27-de64ec0b-3284-4189-803f-88101a6dc701-000000",
+"envelope": {
+"from": "you@example.com",
+"to": ["to@example.com"]
+},
+"messageId": "<50bf8e94-1951-91bf-0140-38342382405f@mailing.run>"
 }
+}
+
 ```
 
 **Error responses**
@@ -195,10 +190,28 @@ Response body: JSON object with possible attributes
 Example error response:
 
 ```
+
 422 Unprocessable Entity
 Content-Type: application/json
 
 {
-  "error": "sendMail couldn't find a subject for your email"
+"error": "sendMail couldn't find a subject for your email"
 }
+
+```
+
+```
+
+```
+
+```
+
+```
+
+```
+
+```
+
+```
+
 ```
