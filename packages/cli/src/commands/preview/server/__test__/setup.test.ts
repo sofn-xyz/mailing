@@ -6,7 +6,6 @@ import {
 } from "../setup";
 import childProcess from "child_process";
 
-jest.mock("../../../../moduleManifest");
 jest.mock("../../../../util/serverLogger");
 
 function mockPackageJsonVersionToMatch() {

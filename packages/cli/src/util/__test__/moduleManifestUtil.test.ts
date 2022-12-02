@@ -1,5 +1,3 @@
-jest.mock("../../moduleManifest");
-
 import moduleManifest from "../../moduleManifest";
 import { previewTree } from "../moduleManifestUtil";
 

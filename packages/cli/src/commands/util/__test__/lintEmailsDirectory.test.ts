@@ -2,8 +2,6 @@ import { lintEmailsDirectory } from "../lintEmailsDirectory";
 import moduleManifest from "../../../moduleManifest";
 import * as serverLogger from "../../../util/serverLogger";
 
-jest.mock("../../../moduleManifest");
-
 describe("lintEmailsDirectory", () => {
   beforeEach(() => {
     jest.spyOn(process, "exit").mockImplementation(() => undefined as never);

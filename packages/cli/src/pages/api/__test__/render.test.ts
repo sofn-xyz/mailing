@@ -1,8 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import handler from "../render";
 
-jest.mock("../../../moduleManifest");
-
 function mockRequestResponse(method: string) {
   const { req, res } = {
     req: { method } as NextApiRequest,

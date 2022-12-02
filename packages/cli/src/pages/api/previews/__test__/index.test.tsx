@@ -2,8 +2,6 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { createMocks } from "node-mocks-http";
 import index from "..";
 
-jest.mock("../../../../moduleManifest");
-
 describe("index", () => {
   it("should return previews", async () => {
     const { req, res } = createMocks({

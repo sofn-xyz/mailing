@@ -4,7 +4,6 @@ import { ExportPreviewsArgs, handler } from "../exportPreviews";
 import { execCli } from "./execCli";
 
 jest.mock("../../util/serverLogger");
-jest.mock("../../moduleManifest");
 
 describe("exportPreviews command", () => {
   beforeEach(() => {
