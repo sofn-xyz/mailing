@@ -62,7 +62,9 @@ export const handler = buildHandler(
     if (undefined === argv.emailsDir)
       throw new Error("emailsDir option not set");
 
-    if (!existsSync(resolve(argv.emailsDir, "previews"))) {
+    if (existsSync(resolve(argv.emailsDir, "previews"))) {
+      log("Using existing emails directory at", argv.emailsDir);
+    } else {
       const options = {
         isTypescript: argv.typescript,
         emailsDir: argv.emailsDir,
