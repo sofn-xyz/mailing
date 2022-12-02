@@ -14,10 +14,11 @@ export default function CodeBlocks({ children }) {
         {languages.map((language, i) => (
           <button
             className={cx(
-              "py-2 px-5 text-sm uppercase hover:bg-gray-700 active:translate-y-px transition-all border-b-2",
+              "pt-3 pb-2 px-8 text-sm border-b-2 hover:bg-gray-700 active:translate-y-px transition-all",
               {
-                "border-green-200": language === currentLanguage,
-                "border-transparent": language !== currentLanguage,
+                "border-green-300": language === currentLanguage,
+                "border-transparent text-gray-400":
+                  language !== currentLanguage,
                 "rounded-tl-3xl": i === 0,
               }
             )}

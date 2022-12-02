@@ -114,6 +114,7 @@ Example request:
 **Success response**
 
 HTTP Status Code 200
+
 Response body: JSON object with attributes:
 
 - `html: string` – the rendered HTML
@@ -167,7 +168,7 @@ You can either use /api/sendMail to render and send a template or to send raw ht
 Example request (template mode):
 
 <CodeBlocks>
-  <Fragment language="js">
+  <Fragment language="JavaScript">
     ```js
     fetch("/api/sendMail", {
       method: "POST",
@@ -187,7 +188,7 @@ Example request (template mode):
     });
     ```
   </Fragment>
-  <Fragment language="ruby">
+  <Fragment language="Ruby">
     ```ruby
     require 'uri'
     require 'json'
@@ -221,6 +222,7 @@ Example request (template mode):
 **Success response**
 
 HTTP Status Code 200
+
 Response body: JSON object with possible attributes
 
 - `result` the return value from sendMail. The result type may vary based on your transport.
@@ -243,10 +245,10 @@ Example response:
         "messageId": "<50bf8e94-1951-91bf-0140-38342382405f@mailing.run>"
       }
     }
-
     ```
 
 **Error responses**
+
 HTTP Status Code: 401 or 422 or 500
 
 401 indicates an invalid API key
@@ -265,12 +267,10 @@ Response body: JSON object with possible attributes
 Example error response:
 
 ```ts
-
 422 Unprocessable Entity
 Content-Type: application/json
 
 {
   "error": "sendMail couldn't find a subject for your email"
 }
-
 ```
