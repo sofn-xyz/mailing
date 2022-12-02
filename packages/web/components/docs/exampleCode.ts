@@ -42,9 +42,13 @@ request = Net::HTTP::Post.new(uri, {
 })
 
 request.body = { 
-  templateName: "myTemplate", 
-  subject: "Hello world", 
-  to: "to@example.com" 
+  to: "to@example.com",
+  from: "you@example.com",
+  subject: "Hello world",
+  templateName: "myTemplate",
+  props: {
+    name: "Alex"
+  }
 }.to_json
 
 response = Net::HTTP.start(uri.hostname, uri.port, use_ssl: true) do |http|
