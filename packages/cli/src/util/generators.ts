@@ -1,4 +1,3 @@
-import { execSync } from "child_process";
 import { copy } from "fs-extra";
 import { resolve } from "path";
 import tree from "tree-node-cli";
@@ -15,29 +14,16 @@ export async function generateEmailsDirectory({
     process.env.MM_DEV || process.env.NODE_ENV === "test"
       ? __dirname + "/.."
       : __dirname + "/../src";
-  const srcEmailsDir = resolve(srcDir, "emails");
 
+  // copy the emails dir template in!
   if (isTypescript) {
-    // copy the emails dir template in!
-    await copy(srcEmailsDir, emailsDir, {
+    await copy(resolve(srcDir, "emails"), emailsDir, {
       overwrite: false,
     });
   } else {
-    log("Generating Javascript files from Typescript Files...");
-    execSync(`
-    npx tsc \
-    --allowSyntheticDefaultImports true \
-    --moduleResolution node \
-    --jsx preserve \
-    --target es2020 \
-    --outDir ${emailsDir} \
-    --noEmit false \
-    ${`${srcEmailsDir}/**/*.tsx`} \
-    ${`${srcEmailsDir}/*.tsx`} \
-    ${`${srcEmailsDir}/*.ts`}
-    `);
-    log("Prettifying Javascript files...");
-    execSync(`npx prettier --write ${emailsDir}`);
+    await copy(resolve(srcDir, "emails-js"), emailsDir, {
+      overwrite: false,
+    });
   }
 
   const fileTree = tree(emailsDir, {
