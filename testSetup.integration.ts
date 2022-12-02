@@ -17,6 +17,8 @@ if (
     `refusing to run against non-test databases process.env.MAILING_DATABASE_URL: ${process.env.MAILING_DATABASE_URL} process.env.WEB_DATABASE_URL: ${process.env.WEB_DATABASE_URL}`
   );
 
+jest.mock("./packages/cli/src/moduleManifest");
+
 beforeAll(async () => {
   await truncateDatabases();
 });
