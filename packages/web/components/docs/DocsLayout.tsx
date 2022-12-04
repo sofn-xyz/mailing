@@ -2,10 +2,14 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import cx from "classnames";
+import { DocSearch } from "@docsearch/react";
+
+import "@docsearch/css";
 
 import NavLink from "./NavLink";
 import IndexButton from "./IndexButton";
 import { useHydrationFriendlyAsPath } from "../hooks/useHydrationFriendlyAsPath";
+import Head from "next/head";
 
 function NavCategory({ children }) {
   return (
@@ -14,6 +18,9 @@ function NavCategory({ children }) {
     </div>
   );
 }
+
+const SEARCH_APP_ID = "CP5PC48V2V";
+const SEARCH_API_KEY = "96b6544a43429d3d06503a77bade784b";
 
 export default function DocsLayout({ children }) {
   const asPath = useHydrationFriendlyAsPath();
@@ -25,6 +32,13 @@ export default function DocsLayout({ children }) {
 
   return (
     <div className="bg-black text-gray-400 min-h-screen">
+      <Head>
+        <link
+          rel="preconnect"
+          href={`https://${SEARCH_APP_ID}-dsn.algolia.net`}
+          crossOrigin="anonymous"
+        />
+      </Head>
       <div className="z-50 bg-black fixed w-full flex justify-between items-middle py-0 text-sm mb-16 px-4 sm:px-6 border-b border-gray-500 text-blue-300 border-dotted">
         <div className="brand flex flex-col justify-center py-4">
           <Link href="/">
@@ -95,9 +109,16 @@ export default function DocsLayout({ children }) {
           )}
         >
           <Link href="/docs">
-            <h3 className="text-white text-2xl pt-7 -mb-2">Docs</h3>
+            <h3 className="text-white text-2xl pt-7 ">Docs</h3>
           </Link>
-          <button className="hidden search border text-sm bg-gray-800 border-gray-800 text-slate-500 hover:text-blue w-full transition-all duration-300 text-left rounded-md px-2 pt-1 pb-[5px]">
+          <div className="mt-6 -mb-2 border-gray-800 text-slate-500 hover:text-blue">
+            <DocSearch
+              appId={SEARCH_APP_ID}
+              indexName="mailing"
+              apiKey={SEARCH_API_KEY}
+            />
+          </div>
+          <button className="search border text-sm bg-gray-800 border-gray-800 text-slate-500 hover:text-blue w-full transition-all duration-300 text-left rounded-md px-2 pt-1 pb-[5px] mt-6 -mb-2">
             <svg
               className="fill-slate-500 transition-all duration-300 inline -mt-[3px] mr-2"
               width="14"
