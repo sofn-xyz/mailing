@@ -27,8 +27,9 @@ export function defaults() {
   }
 
   let emailsDir = existsSync("./src/emails") ? "./src/emails" : "./emails";
+
   if (process.env.NODE_ENV === "test") {
-    emailsDir = "./src/__mocks__/emails";
+    emailsDir = "./src/templates/defaults/emails";
   }
 
   defaultsCache = {

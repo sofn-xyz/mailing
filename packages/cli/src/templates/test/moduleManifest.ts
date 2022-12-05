@@ -22,7 +22,7 @@ const templates = {
   Reservation,
   ResetPassword,
 };
-const config = { anonymousId: null };
+const config = {};
 const moduleManifest = { sendMail, config, templates, previews };
 
 export { sendMail, config, templates, previews };

@@ -1,20 +1,18 @@
-import { ComponentMail } from "mailing-core";
+/*
+ * This file is only directly used in development and tests.
+ * In production is it overwritten by the build process.
+ */
 
-let sendMail = (_mail: ComponentMail) => {};
-let previews: { [key: string]: any } = {};
-let templates: { [key: string]: any } = {};
-let config: { [key: string]: any } = {};
+import { getTemplatePath } from "./templates";
 
-if (process.env.MAILING_INTEGRATION_TEST) {
-  /* eslint-disable-next-line @typescript-eslint/no-var-requires */
-  const moduleManifestMock = require("./__mocks__/moduleManifest");
-  sendMail = moduleManifestMock.sendMail;
-  previews = moduleManifestMock.previews;
-  templates = moduleManifestMock.templates;
-  config = moduleManifestMock.config;
-}
+/* eslint-disable-next-line @typescript-eslint/no-var-requires */
+const moduleManifest = require(`./${getTemplatePath()}/moduleManifest`).default;
 
+const sendMail = moduleManifest.sendMail;
+const previews = moduleManifest.previews;
+const templates = moduleManifest.templates;
+const config = moduleManifest.config;
 
-const moduleManifest = { sendMail, config, templates, previews };
+const manifest = { sendMail, config, templates, previews };
 export { sendMail, config, templates, previews };
-export default moduleManifest;
+export default manifest;
