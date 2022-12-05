@@ -19,20 +19,27 @@ type ConfigDefaults = {
   scaffoldOnly: boolean;
 };
 
-let DEFAULTS: ConfigDefaults | undefined;
-
 // defaults for all options
+let defaultsCache: ConfigDefaults | undefined;
 export function defaults() {
-  if (DEFAULTS === undefined)
-    DEFAULTS = {
-      typescript: looksLikeTypescriptProject(),
-      emailsDir: existsSync("./src/emails") ? "./src/emails" : "./emails",
-      outDir: "./previews_html",
-      port: 3883,
-      quiet: false,
-      scaffoldOnly: false,
-    };
-  return DEFAULTS;
+  if (defaultsCache) {
+    return defaultsCache;
+  }
+
+  let emailsDir = existsSync("./src/emails") ? "./src/emails" : "./emails";
+  if (process.env.NODE_ENV === "test") {
+    emailsDir = "./src/__mocks__/emails";
+  }
+
+  defaultsCache = {
+    typescript: looksLikeTypescriptProject(),
+    emailsDir: emailsDir,
+    outDir: "./previews_html",
+    port: 3883,
+    quiet: false,
+    scaffoldOnly: false,
+  };
+  return defaultsCache;
 }
 
 // options to include in the default config file
