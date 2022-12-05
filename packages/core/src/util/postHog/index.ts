@@ -1,5 +1,5 @@
+import { MAILING_CORE_VERSION } from "../../const/mailingCoreVersion";
 import { debug } from "../serverLogger";
-
 import { postHogClient } from "./client";
 
 // ** modified from posthog-node
@@ -21,6 +21,10 @@ export async function capture(options: EventMessageV1) {
   const captureOpts = {
     ...options,
     distinctId,
+    properties: {
+      mailing_version: MAILING_CORE_VERSION,
+      ...options.properties,
+    },
   };
 
   debug(`calling capture with ${JSON.stringify(captureOpts)}`);

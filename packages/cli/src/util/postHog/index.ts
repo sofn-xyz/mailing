@@ -3,6 +3,7 @@ import { getConfig } from "../moduleManifestUtil";
 import { getGeneratedAnonymousId } from "../config/anonymousId";
 
 import { postHogClient, getPostHogClient } from "./client";
+import { MAILING_VERSION } from "../../const/mailingVersion";
 
 // ** modified from posthog-node
 interface IdentifyMessageV1 {
@@ -35,6 +36,10 @@ export function capture(options: EventMessageV1) {
   const captureOpts = {
     ...options,
     distinctId,
+    properties: {
+      mailing_version: MAILING_VERSION,
+      ...options.properties,
+    },
   };
 
   debug(`calling capture with ${JSON.stringify(captureOpts)}`);
