@@ -37,7 +37,7 @@ const WhiteGlove: NextPage = () => {
           content="https://mailing.run/white-glove/white-glove_og-image.jpg"
         />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Mailing" />
+        <meta name="twitter:title" content="White Glove by Mailing" />
         <meta
           name="twitter:image"
           content="https://mailing.run/white-glove/white-glove_og-twitter.jpg"
