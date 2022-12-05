@@ -5,7 +5,7 @@ let previews: { [key: string]: any } = {};
 let templates: { [key: string]: any } = {};
 let config: { [key: string]: any } = {};
 
-if (process.env.NODE_ENV === "test") {
+if (process.env.MAILING_INTEGRATION_TEST) {
   /* eslint-disable-next-line @typescript-eslint/no-var-requires */
   const moduleManifestMock = require("./__mocks__/moduleManifest");
   sendMail = moduleManifestMock.sendMail;
