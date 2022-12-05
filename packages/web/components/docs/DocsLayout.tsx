@@ -56,18 +56,17 @@ export default function DocsLayout({ children }) {
             >
               Docs
             </Link>
-            <a
+            <Link
               className="hover:underline mr-4 text-sm leading-none inline-block"
-              href="https://discord.gg/fdSzmY46wY"
-              target="blank"
+              href="/docs/discord"
             >
               Discord
-            </a>
+            </Link>
             <a
               className="hover:underline mr-4 text-sm leading-none inline-block"
-              href="https://demo.mailing.run"
+              href="/docs/templates"
             >
-              Demo
+              Demos
             </a>
             <a
               className="text-sm leading-none hover:underline"
