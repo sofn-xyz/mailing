@@ -32,12 +32,15 @@ const WhiteGlove: NextPage = () => {
           content="email, email templates, transactional emails, react, javascript, typescript"
         />
         <meta property="og:url" content="https://mailing.run/white-glove" />
-        <meta property="og:image" content="https://mailing.run/og-image.jpg" />
+        <meta
+          property="og:image"
+          content="https://mailing.run/white-glove/white-glove_og-image.jpg"
+        />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Mailing" />
         <meta
           name="twitter:image"
-          content="https://mailing.run/og-twitter.jpg"
+          content="https://mailing.run/white-glove/white-glove_og-twitter.jpg"
         />
         <meta
           name="twitter:description"
