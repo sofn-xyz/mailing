@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 import cx from "classnames";
@@ -9,7 +10,6 @@ import "@docsearch/css";
 import NavLink from "./NavLink";
 import IndexButton from "./IndexButton";
 import { useHydrationFriendlyAsPath } from "../hooks/useHydrationFriendlyAsPath";
-import Head from "next/head";
 
 function NavCategory({ children }) {
   return (
