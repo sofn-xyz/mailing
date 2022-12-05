@@ -13,9 +13,13 @@ export default function PosthogScript() {
       dangerouslySetInnerHTML={{
         __html: `
               ${loadPosthogScript}
-              posthog.register({ 'mailing_version': '${MAILING_VERSION}' });
-              posthog.init('${POSTHOG_API_KEY}', {api_host: 'https://app.posthog.com'});
-              `,
+              
+              posthog.init('${POSTHOG_API_KEY}', { 
+                api_host: 'https://app.posthog.com',
+                loaded: function(posthog) { 
+                  posthog.register({ 'mailing_version': '${MAILING_VERSION}' });    
+                }
+              });`,
       }}
     ></script>
   );
