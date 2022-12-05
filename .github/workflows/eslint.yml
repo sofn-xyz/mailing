@@ -1,6 +1,7 @@
 name: Eslint
 on:
   push:
+  pull_request:
 jobs:
   eslint:
     runs-on: ubuntu-latest
