@@ -18,6 +18,11 @@ describe("exportPreviews command", () => {
     }));
   });
 
+  afterEach(() => {
+    fsExtra.removeSync("./out");
+    fsExtra.removeSync("./packages/cli/previews_html");
+  });
+
   it("outputs html files to outDir", async () => {
     await handler({
       outDir: "./out",

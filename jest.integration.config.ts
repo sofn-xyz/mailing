@@ -24,7 +24,6 @@ const config: Config = {
   watchPathIgnorePatterns: [
     "<rootDir>/emails/",
     "<rootDir>/packages/cli/src/emails/",
-    "<rootDir>/packages/cli/src/generator_templates/ts/emails/",
     "<rootDir>/.mailing/",
     "tmp-testMailQueue.json",
   ],
