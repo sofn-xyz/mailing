@@ -12,6 +12,10 @@ if [[ -z "$POSTHOG_API_KEY" ]]; then
 fi
 
 # throw an error if there aren't 2 files matching packages/cli/dist/mailing.cjs.*.js
+if [[ $(ls packages/cli/dist/mailing.cjs.*.js | wc -l) -ne 2 ]]; then
+    echo "Expected to find 2 files matching packages/cli/dist/mailing.cjs.*.js" 1>&2
+    exit 1
+fi
 
 # search packages/cli/dist/mailing.cjs.*.js and replace "process.env.POSTHOG_API_KEY" with "\"${process.env.POSTHOG_API_KEY}\""
 find "packages/cli/dist" -type f -name "*.js" -exec sed -i '' "s/process\.env\.POSTHOG_API_KEY/\"$POSTHOG_API_KEY\"/g" {} +
