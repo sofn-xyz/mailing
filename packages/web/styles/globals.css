@@ -2,6 +2,40 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+  .DocSearch.DocSearch-Button {
+    @apply border text-sm bg-gray-800 border-gray-800 text-slate-500 hover:text-blue w-full transition-all duration-300 text-left rounded-md px-2 mx-0 mt-6 -mb-2 active:translate-y-px;
+    height: 31px;
+  }
+  .DocSearch.DocSearch-Button:active, .DocSearch.DocSearch-Button:focus, .DocSearch.DocSearch-Button:hover {
+    box-shadow: none;
+  }
+  .DocSearch.DocSearch-Button .DocSearch-Search-Icon {
+    @apply text-slate-500 transition-colors;
+    scale: 0.73;
+    stroke-width: 2px;
+  }
+  .DocSearch.DocSearch-Button:hover .DocSearch-Search-Icon {
+    @apply text-blue;
+    scale: 0.73;
+    stroke-width: 2px;
+  }
+  .DocSearch.DocSearch-Button .DocSearch-Button-Placeholder {
+    @apply text-sm;
+  }
+  .DocSearch.DocSearch-Button .DocSearch-Button-Keys {
+    min-width: 0;
+  }
+  .DocSearch.DocSearch-Button .DocSearch-Button-Key {
+    @apply text-slate-500 text-sm;
+    background: none;
+    box-shadow: none;
+    width: auto;
+    padding: 0;
+    margin-right: 2px;
+  }
+}
+
 html,
 body {
   padding: 0;

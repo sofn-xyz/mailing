@@ -14,6 +14,7 @@
     "dev-emails:local-assets": "npx mailing server scaffold && ln -sf ../../emails/assets ./.mailing/public && LOCAL_ASSETS=true yarn mailing preview"
   },
   "dependencies": {
+    "@docsearch/react": "^3.3.0",
     "@mdx-js/loader": "^2.1.5",
     "@mdx-js/react": "2.1.2",
     "@next/font": "^13.0.5",
