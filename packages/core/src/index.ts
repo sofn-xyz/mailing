@@ -36,6 +36,7 @@ export type ComponentMail = SendMailOptions & {
   templateName?: string;
   previewName?: string;
   listName?: string;
+  broadcast?: boolean;
 };
 
 export type Template<P> = React.FC<P> & {
@@ -75,6 +76,7 @@ export function buildSendMail<T>(options: BuildSendMailOptions<T>) {
   if (!options?.transport) {
     throw new Error("buildSendMail options are missing transport");
   }
+
   if (!options?.defaultFrom) {
     throw new Error("buildSendMail options are missing defaultFrom");
   }
@@ -107,6 +109,7 @@ export function buildSendMail<T>(options: BuildSendMailOptions<T>) {
       previewName,
       forcePreview,
       listName,
+      broadcast,
       ...mailOptions
     } = mail;
     mailOptions as SendMailOptions;
@@ -115,7 +118,9 @@ export function buildSendMail<T>(options: BuildSendMailOptions<T>) {
     const previewMode =
       forcePreview || (NODE_ENV !== "production" && !dangerouslyForceDeliver);
 
-    const analyticsEnabled = !!(MAILING_API_URL && MAILING_API_KEY);
+    const usingMailingApi = !!(MAILING_API_URL && MAILING_API_KEY);
+
+    validateToCcBccBroadcast(broadcast, listName, mailOptions);
 
     // Get html from the rendered component if not provided
     let derivedTemplateName;
@@ -185,7 +190,7 @@ export function buildSendMail<T>(options: BuildSendMailOptions<T>) {
       return;
     }
 
-    if (analyticsEnabled) {
+    if (usingMailingApi) {
       // unsubscribe link
       const emailPrefsRegex = new RegExp(EMAIL_PREFERENCES_URL, "g");
       let stringHtml = mailOptions.html?.toString();
@@ -253,26 +258,119 @@ export function buildSendMail<T>(options: BuildSendMailOptions<T>) {
       }
     }
 
-    // Send mail via nodemailer unless you are in integration tests.
-    // sendMail is not mocked in integration tests, so don't call it at all, it will just fail
-    // because of the invalid transport setting.
-    const response = integrationTestMode
-      ? "delivered!"
-      : await options.transport.sendMail(mailOptions);
-    await capture({
-      event: "mail sent",
-      distinctId: anonymousId,
-      properties: {
-        recipientCount:
-          Array(mailOptions.to).filter(Boolean).length +
-          Array(mailOptions.cc).filter(Boolean).length +
-          Array(mailOptions.bcc).filter(Boolean).length,
-        analyticsEnabled,
-      },
-    });
+    if (broadcast) {
+      // get the list from the api using the listName
+      const url = new URL("/api/lists", MAILING_API_URL).toString();
 
-    return response;
+      const listResponse = await fetch(url, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "x-api-key": MAILING_API_KEY,
+        },
+      });
+
+      if (listResponse.status === 200) {
+        const { lists } = await listResponse.json();
+
+        const list = lists.find((l) => l.name === listName);
+        if (!list) {
+          throw new MalformedInputError(
+            `Couldn't find list with name ${listName}`
+          );
+        }
+
+        const { members } = list;
+
+        // iterate over members in the list and send emails
+        for (const member of members) {
+          const { email, id: memberId } = member;
+
+          // unsubscribe link
+          const emailPrefsRegex = new RegExp(EMAIL_PREFERENCES_URL, "g");
+          let stringHtml = mailOptions.html?.toString();
+
+          if (stringHtml && memberId) {
+            const emailPrefsUrl = new URL(
+              `unsubscribe/${memberId}`,
+              MAILING_API_URL
+            ).toString();
+
+            stringHtml = stringHtml.replace(emailPrefsRegex, emailPrefsUrl);
+
+            mailOptions.html = instrumentHtml({
+              html: stringHtml,
+              messageId: messageId,
+              apiUrl: MAILING_API_URL,
+            });
+          }
+
+          const mailOptionsWithTo = {
+            ...mailOptions,
+            to: email,
+          };
+
+          await sendMail(mailOptionsWithTo);
+        }
+      } else {
+        const json = await listResponse.json();
+        error("Error calling mailing api hook", {
+          status: listResponse.status,
+          statuSText: listResponse.statusText,
+          json,
+        });
+        throw new Error("Error retrieving list from mailing api");
+      }
+    } else {
+      // Send mail via nodemailer unless you are in integration tests.
+      // sendMail is not mocked in integration tests, so don't call it at all, it will just fail
+      // because of the invalid transport setting.
+      const response = integrationTestMode
+        ? "delivered!"
+        : await options.transport.sendMail(mailOptions);
+      await capture({
+        event: "mail sent",
+        distinctId: anonymousId,
+        properties: {
+          recipientCount:
+            Array(mailOptions.to).filter(Boolean).length +
+            Array(mailOptions.cc).filter(Boolean).length +
+            Array(mailOptions.bcc).filter(Boolean).length,
+          analyticsEnabled: usingMailingApi,
+        },
+      });
+
+      return response;
+    }
   };
+}
+
+// if broadcast is specified then to, cc, bcc should NOT be specified and vice versa.
+function validateToCcBccBroadcast(
+  broadcast: any,
+  listName: any,
+  mailOptions: SendMailOptions
+) {
+  if (broadcast) {
+    if (mailOptions.to || mailOptions.cc || mailOptions.bcc) {
+      throw new MalformedInputError(
+        "sendMail cannot have broadcast and to/cc/bcc specified"
+      );
+    }
+
+    if (!listName) {
+      throw new MalformedInputError(
+        "sendMail must have a listName specified when using broadcast"
+      );
+    }
+  } else if (
+    !broadcast &&
+    !(mailOptions.to || mailOptions.cc || mailOptions.bcc)
+  ) {
+    throw new MalformedInputError(
+      "sendMail to, cc, or bcc to be set (unless in broadcast mode)"
+    );
+  }
 }
 
 export { buildSendMail as default, render };
