@@ -101,7 +101,6 @@
   },
   "scripts": {
     "dev": "rm -rf .mailing && yarn prisma migrate dev && src/dev.js",
-    "dev:no-db": "rm -rf .mailing && src/dev.js",
     "ci:server": "rm -rf .mailing && yarn prisma generate && yarn prisma migrate deploy && NEXT_PUBLIC_MAILING_SKIP_AUTH=false NODE_ENV=test src/dev.js > test.log",
     "ci:server:nohup": "rm -rf .mailing && NEXT_PUBLIC_MAILING_SKIP_AUTH=false NODE_ENV=test nohup src/dev.js --quiet > /dev/null 2>&1 &"
   },
