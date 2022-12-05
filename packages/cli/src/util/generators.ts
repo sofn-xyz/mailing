@@ -16,15 +16,8 @@ export async function generateEmailsDirectory({
       : __dirname + "/../src";
 
   // copy the emails dir template in!
-  if (isTypescript) {
-    await copy(resolve(srcDir, "emails"), emailsDir, {
-      overwrite: false,
-    });
-  } else {
-    await copy(resolve(srcDir, "emails-js"), emailsDir, {
-      overwrite: false,
-    });
-  }
+  const srcEmails = isTypescript ? "emails" : "emails-js";
+  await copy(resolve(srcDir, srcEmails), emailsDir, { overwrite: false });
 
   const fileTree = tree(emailsDir, {
     exclude: [/node_modules|\.mailing|yarn\.lock|yalc\.lock/],
