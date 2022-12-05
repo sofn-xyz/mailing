@@ -184,7 +184,7 @@ export default function DocsLayout({ children }) {
         </nav>
         <div className="lg:pl-[10rem]">
           <a id="0"></a>
-          <main className="lg:pl-[10rem] overflow-scroll prose prose-mailing-dark font-medium text-xl max-w-4xl px-12 pt-12 pb-16 relative">
+          <main className="lg:pl-[10rem] overflow-scroll prose prose-mailing-dark font-medium text-xl max-w-4xl px-2 md:px-12 pt-12 pb-16 relative">
             {children}
           </main>
         </div>
