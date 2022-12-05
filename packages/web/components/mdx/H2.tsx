@@ -1,13 +1,7 @@
 import { useMemo } from "react";
 import cx from "classnames";
 import { useHydrationFriendlyAsPath } from "../hooks/useHydrationFriendlyAsPath";
-
-function getAnchor(text) {
-  return text
-    .toLowerCase()
-    .replace(/[^a-z0-9 ]/g, "")
-    .replace(/[ ]/g, "-");
-}
+import { getAnchor } from "./util/getAnchor";
 
 type H2Props = {
   children: string;

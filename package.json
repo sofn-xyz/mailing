@@ -11,8 +11,9 @@
   "scripts": {
     "lint": "eslint .",
     "dev": "cd packages/cli && yarn dev",
-    "dev:init": "cd packages/cli && rm -rf previews_html; rm -rf .mailing mailing.config.json; src/dev.js",
-    "dev:export-previews": "cd packages/cli && rm -rf .mailing && src/dev.js export-previews",
+    "dev:web": "cd packages/web && yarn dev",
+    "dev:init": "cd packages/cli && rm -rf previews_html; rm -rf .mailing emails mailing.config.json; src/dev.js",
+    "dev:export-previews": "yarn link:emails; cd packages/cli && rm -rf .mailing && src/dev.js export-previews",
     "dev:server:build": "cd packages/cli && rm -rf .mailing && src/dev.js server build",
     "link:emails": "echo 'noop'",
     "build": "preconstruct build",
