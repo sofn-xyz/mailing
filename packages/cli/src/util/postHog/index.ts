@@ -33,13 +33,16 @@ export function capture(options: EventMessageV1) {
     return;
   }
 
+  const properties = {
+    ...options.properties,
+  };
+
+  if (MAILING_VERSION) properties.mailing_version = MAILING_VERSION;
+
   const captureOpts = {
     ...options,
     distinctId,
-    properties: {
-      mailing_version: MAILING_VERSION,
-      ...options.properties,
-    },
+    properties,
   };
 
   debug(`calling capture with ${JSON.stringify(captureOpts)}`);

@@ -7,6 +7,7 @@ import { PostHog } from "posthog-node";
 describe("postHog", () => {
   const MM_DEV_OG = process.env.MM_DEV;
   const MM_DEV_E2E_OG = process.env.MM_E2E;
+
   let mockPostHogClient: PostHog;
   beforeEach(() => {
     mockPostHogClient = { capture: jest.fn() } as unknown as PostHog;
@@ -33,6 +34,7 @@ describe("postHog", () => {
     expect(mockPostHogClient.capture).toHaveBeenCalledWith({
       distinctId: "abc",
       event: "ate pizza",
+      properties: {},
     });
   });
 
@@ -54,6 +56,7 @@ describe("postHog", () => {
     expect(mockPostHogClient.capture).toHaveBeenCalledWith({
       distinctId: "config-xyz",
       event: "ate pizza",
+      properties: {},
     });
   });
 
@@ -73,6 +76,7 @@ describe("postHog", () => {
     expect(mockPostHogClient.capture).toHaveBeenCalledWith({
       distinctId: "generated-xyz",
       event: "ate pizza",
+      properties: {},
     });
   });
 
