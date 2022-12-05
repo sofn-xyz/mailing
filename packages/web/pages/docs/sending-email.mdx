@@ -62,6 +62,7 @@ Sends an email using the configured transport. It extends the `sendMail` functio
 - `component` – The React component to render as the email body. If you pass in a string for `html`, this will be ignored
 - `dangerouslyForceDeliver` – If true, the email will be sent even if the `NODE_ENV` is not `production`. Use with caution.
 - `forcePreview` – If true, the email will be intercepted by the preview server
+- `previewServerUrl` – If you have changed the port of the mailing preview server, you can set it here (default: `http://localhost:3883`)
 - `listName` – The name of the list to send the email to. [Read more about lists](/docs/lists)
 - `from` – The email address of the sender. If not provided, the defaultFrom address configured in `buildSendMail` will be used.
 - `to` – Comma separated list or an array of recipients email addresses that will appear on the To: field

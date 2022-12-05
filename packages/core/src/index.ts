@@ -33,6 +33,7 @@ export type ComponentMail = SendMailOptions & {
   component?: JSX.Element;
   dangerouslyForceDeliver?: boolean;
   forcePreview?: boolean;
+  previewServerUrl?: string;
   templateName?: string;
   previewName?: string;
   listName?: string;
@@ -105,6 +106,7 @@ export function buildSendMail<T>(options: BuildSendMailOptions<T>) {
       dangerouslyForceDeliver,
       templateName,
       previewName,
+      previewServerUrl,
       forcePreview,
       listName,
       ...mailOptions
@@ -157,31 +159,7 @@ export function buildSendMail<T>(options: BuildSendMailOptions<T>) {
       await fs.writeFile(TMP_TEST_FILE, JSON.stringify(testMessageQueue));
       return;
     } else if (previewMode) {
-      const debugMail = {
-        ...mail,
-        html: "omitted",
-      };
-      log("💌 opening sendMail preview", debugMail);
-      // create an intercept on the preview server
-      // then open it in the browser
-      const PREVIEW_SERVER_URL = "http://localhost:3883/intercepts";
-      try {
-        const response = await fetch(PREVIEW_SERVER_URL, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(mailOptions),
-        });
-        if (response.status === 201) {
-          const { id } = (await response.json()) as { id: string };
-          await open(`${PREVIEW_SERVER_URL}/${id}`);
-        } else {
-          error(`Error hitting ${PREVIEW_SERVER_URL}`);
-          error(response);
-        }
-      } catch (e) {
-        error(`Caught error 1 ${e}`);
-        error("Is the mailing preview server running?");
-      }
+      await openPreview(mail, mailOptions, previewServerUrl);
       return;
     }
 
@@ -273,6 +251,45 @@ export function buildSendMail<T>(options: BuildSendMailOptions<T>) {
 
     return response;
   };
+}
+
+export async function openPreview(
+  mail: ComponentMail,
+  mailOptions: SendMailOptions,
+  previewServerUrl?: string
+) {
+  const debugMail = {
+    ...mail,
+    html: "omitted",
+  };
+
+  log("💌 opening sendMail preview", debugMail);
+
+  // create an intercept on the preview server
+  // then open it in the browser
+  const PREVIEW_SERVER_URL =
+    ("string" === typeof previewServerUrl
+      ? previewServerUrl.trim().replace(/\/+$/, "")
+      : "http://localhost:3883") + "/intercepts";
+
+  try {
+    const response = await fetch(PREVIEW_SERVER_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(mailOptions),
+    });
+
+    if (response.status === 201) {
+      const { id } = (await response.json()) as { id: string };
+      await open(`${PREVIEW_SERVER_URL}/${id}`);
+    } else {
+      error(`Error hitting ${PREVIEW_SERVER_URL}`);
+      error(response);
+    }
+  } catch (e) {
+    error(`Caught error 1 ${e}`);
+    error("Is the mailing preview server running?");
+  }
 }
 
 export { buildSendMail as default, render };

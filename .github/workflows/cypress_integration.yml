@@ -2,6 +2,7 @@ name: Cypress Integration Tests
 
 on:
   push:
+  pull_request:
 
 jobs:
   cypress:
