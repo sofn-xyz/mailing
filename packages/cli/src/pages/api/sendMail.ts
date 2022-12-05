@@ -1,9 +1,11 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { MjmlError } from "mjml-react";
-import { sendMail, templates } from "../../moduleManifest";
-import { validateApiKey } from "../../util/validateApiKey";
+import { sendMail } from "../../moduleManifest";
+import { validateApiKey } from "../../util/validate/validateApiKey";
 import { createElement } from "react";
 import { getTemplateModule } from "../../util/moduleManifestUtil";
+import { validateMethod } from "../../util/validate/validateMethod";
+import { errorTemplateNotFoundInListOfTemplates } from "../../util/validate/validateTemplate";
 
 type Data = {
   error?: string; // api error messages
@@ -15,9 +17,7 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  if (req.method !== "POST")
-    return res.status(405).json({ error: "Method not allowed" });
-
+  if (!validateMethod(["POST"], req, res)) return;
   if (!(await validateApiKey(req, res))) return;
 
   const { templateName, previewName, props, ...mailOptions } = req.body;
@@ -35,7 +35,6 @@ export default async function handler(
   }
 
   if (!html) {
-    // validate template name
     if (typeof templateName !== "string") {
       return res
         .status(422)
@@ -43,13 +42,9 @@ export default async function handler(
     }
 
     const template = getTemplateModule(templateName);
-    if (!template) {
-      return res.status(422).json({
-        error: `Template ${templateName} not found in list of templates: ${Object.keys(
-          templates
-        ).join(", ")}`,
-      });
-    }
+
+    if (!template)
+      return errorTemplateNotFoundInListOfTemplates(templateName, res);
 
     component = createElement(template, props);
   }
@@ -61,7 +56,9 @@ export default async function handler(
       ...mailOptions,
       html,
     });
-    return res.status(200).json({ result: sendMailResult });
+
+    const json = sendMailResult ? { result: sendMailResult } : {};
+    return res.status(200).json(json);
   } catch (e: any) {
     if ("number" === typeof e.status) {
       return res.status(e.status).json({ error: e.message });

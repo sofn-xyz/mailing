@@ -9,14 +9,18 @@ type AProps = InferProps<HTMLAnchorElement> & {
 export default function A({ children, ...anchorProps }: AProps) {
   const href: string = anchorProps.href;
 
-  return href.startsWith("/") ? (
-    <Link {...anchorProps} href={href} className="text-blue-500 no-underline">
+  return href.startsWith("/") || href.startsWith("#") ? (
+    <Link
+      {...anchorProps}
+      href={href}
+      className="text-blue-500 no-underline font-normal"
+    >
       {children}
     </Link>
   ) : (
     <a
       {...anchorProps}
-      className="text-blue-500 no-underline"
+      className="text-blue-500 no-underline font-normal"
       target="_blank"
       rel="noopener noreferrer"
     >

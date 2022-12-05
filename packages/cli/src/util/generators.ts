@@ -4,24 +4,23 @@ import tree from "tree-node-cli";
 import { log } from "./serverLogger";
 
 export async function generateEmailsDirectory({
-  isTypescript,
   emailsDir,
+  isTypescript,
 }: {
-  isTypescript: boolean;
   emailsDir: string;
+  isTypescript: boolean;
 }) {
-  // copy the emails dir template in!
-  const path = `generator_templates/${isTypescript ? "ts" : "js"}/emails`;
   const srcDir =
     process.env.MM_DEV || process.env.NODE_ENV === "test"
       ? __dirname + "/.."
       : __dirname + "/../src";
-  await copy(resolve(srcDir, path), emailsDir, {
-    overwrite: false,
+
+  // copy the emails dir template in!
+  const srcEmails = isTypescript ? "emails" : "emails-js";
+  await copy(resolve(srcDir, srcEmails), emailsDir, { overwrite: false });
+
+  const fileTree = tree(emailsDir, {
+    exclude: [/node_modules|\.mailing|yarn\.lock|yalc\.lock/],
   });
-  log(
-    `generated your emails dir at ${emailsDir}:\n${tree(emailsDir, {
-      exclude: [/node_modules|\.mailing|yarn\.lock|yalc\.lock/],
-    })}`
-  );
+  log(`generated your emails dir at ${emailsDir}:\n${fileTree}`);
 }

@@ -3,7 +3,7 @@ import moduleManifest from "../../../moduleManifest";
 import handler from "../sendMail";
 
 // api authentication is tested in __integration__/sendMail.test.ts so don't also test it here
-jest.mock("../../../util/validateApiKey", () => ({
+jest.mock("../../../util/validate/validateApiKey", () => ({
   validateApiKey: async () => true,
 }));
 

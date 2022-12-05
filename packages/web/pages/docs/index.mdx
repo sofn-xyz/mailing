@@ -1,3 +1,6 @@
+import CodeBlocks from "../../components/mdx/CodeBlocks";
+import CodeBlock from "../../components/mdx/CodeBlock";
+
 # Basics
 
 ## What’s Mailing?
@@ -16,13 +19,22 @@ Mailing is a tool for building, testing, and sending emails with React.
 
 1. Install mailing with yarn or npm:
 
-```bash yarn
-yarn add mailing-core next react react-dom
-yarn add --dev mailing
-# or
-npm install --save mailing-core next react react-dom
-npm install --save-dev mailing
-```
+<CodeBlocks>
+  <CodeBlock language="yarn">
+    ```bash
+    yarn add mailing-core next react react-dom
+    yarn add --dev mailing
+    ```
+
+  </CodeBlock>
+  <CodeBlock language="npm">
+    ```bash
+    npm install --save mailing-core next react react-dom
+    npm install --save-dev mailing
+    ```
+
+  </CodeBlock>
+</CodeBlocks>
 
 2. Run `npx mailing` to start the preview server and scaffold your `emails` directory. This will create the following directory for all of your emails:
 
@@ -197,4 +209,4 @@ To understand how people are using mailing so that we can prioritize our effort,
 
 ## Support
 
-Need help getting set up? Hit us up on discord [![](https://dcbadge.vercel.app/api/server/fdSzmY46wY?style=flat)](https://discord.gg/fdSzmY46wY)
+Need help getting set up? Join us on Discord. [![](https://dcbadge.vercel.app/api/server/fdSzmY46wY?style=flat)](https://discord.gg/fdSzmY46wY)

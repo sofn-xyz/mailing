@@ -1,5 +1,12 @@
 # mailing-core
 
+## 0.9.4
+
+### Patch Changes
+
+- 8579d0f6: fix: svgs were sometimes intercepting clicks
+- e155434d: fix: prevent intercept error when from is object
+
 ## 0.9.3
 
 ### Patch Changes

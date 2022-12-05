@@ -3,7 +3,6 @@ import fsExtra, { removeSync } from "fs-extra";
 import { handler, InitArguments } from "../init";
 import { log } from "../../util/serverLogger";
 
-jest.useFakeTimers();
 jest.mock("../../util/serverLogger");
 jest.mock("../preview/preview", () => ({ handler: jest.fn() }));
 
@@ -15,6 +14,9 @@ describe("init command", () => {
       .mockImplementation((path) =>
         /package\.json/.test(path.toString()) ? "{}" : ""
       );
+  });
+
+  afterEach(() => {
     removeSync("/tmp/src/emails");
   });
 

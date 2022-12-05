@@ -38,6 +38,7 @@ module.exports = {
       "slate-300": "#bdc3cf",
       "slate-400": "#a5aab4",
       "slate-500": "#7b7e85",
+      "slate-900": "#1e1e1e",
       "neutral-200": "#eee",
       "neutral-500": "#777",
       "neutral-600": "#666",
