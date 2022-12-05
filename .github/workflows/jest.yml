@@ -5,6 +5,7 @@
 name: Jest Tests
 on:
   push:
+  pull_request:
 jobs:
   jest:
     runs-on: ubuntu-latest

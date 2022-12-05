@@ -1,6 +1,7 @@
 name: Rubocop
 on:
   push:
+  pull_request:
 jobs:
   rubocop:
     runs-on: ubuntu-latest
