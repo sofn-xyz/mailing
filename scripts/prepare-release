@@ -17,12 +17,12 @@ if [[ $(ls packages/cli/dist/mailing.cjs.*.js | wc -l) -ne 2 ]]; then
     exit 1
 fi
 
-# search packages/cli/dist/mailing.cjs.*.js and replace "process.env.POSTHOG_API_KEY" with "\"${process.env.POSTHOG_API_KEY}\""
+# search cli and core dists and replace "process.env.POSTHOG_API_KEY" with "\"${process.env.POSTHOG_API_KEY}\""
 find "packages/cli/dist" -type f -name "*.js" -exec sed -i '' "s/process\.env\.POSTHOG_API_KEY/\"$POSTHOG_API_KEY\"/g" {} +
 find "packages/core/dist" -type f -name "*.js" -exec sed -i '' "s/process\.env\.POSTHOG_API_KEY/\"$POSTHOG_API_KEY\"/g" {} +
 
 # set variable MAILING_VERSION to the return value of npm view mailing version
 MAILING_VERSION=$(npm view mailing version)
 
-# search packages/cli/dist/mailing.cjs.*.js and replace "process.env.MAILING_VERSION" with "\"${process.env.MAILING_VERSION}\""
+# search cli dist and replace "process.env.MAILING_VERSION" with "\"${process.env.MAILING_VERSION}\""
 find "packages/cli/dist" -type f -name "*.js" -exec sed -i '' "s/process\.env\.MAILING_VERSION/\"$MAILING_VERSION\"/g" {} +
