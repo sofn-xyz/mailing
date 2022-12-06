@@ -33,16 +33,13 @@ export function capture(options: EventMessageV1) {
     return;
   }
 
-  const properties = {
-    ...options.properties,
-  };
-
-  if (MAILING_VERSION) properties.mailing_version = MAILING_VERSION;
-
   const captureOpts = {
     ...options,
     distinctId,
-    properties,
+    properties: {
+      mailing_version: MAILING_VERSION,
+      ...options.properties,
+    },
   };
 
   debug(`calling capture with ${JSON.stringify(captureOpts)}`);
@@ -52,25 +49,7 @@ export function capture(options: EventMessageV1) {
     return;
   }
 
-  const client = postHogClient();
-  if (!client) return;
-
-  const capture = client.capture as any;
-
-  switch (process.env.NODE_ENV) {
-    case "production":
-      capture(captureOpts);
-      break;
-    case "test":
-      // call capture if it has been mocked
-      if (capture.mock) capture(captureOpts);
-      break;
-    default:
-      debug(
-        `returning early from capture because NODE_ENV is ${process.env.NODE_ENV}`
-      );
-      break;
-  }
+  return postHogClient()?.capture(captureOpts);
 }
 
 export async function shutdown() {
