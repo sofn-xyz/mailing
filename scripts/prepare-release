@@ -21,9 +21,9 @@ fi
 find "packages/cli/dist" -type f -name "*.js" -exec sed -i '' "s/process\.env\.POSTHOG_API_KEY/\"$POSTHOG_API_KEY\"/g" {} +
 find "packages/core/dist" -type f -name "*.js" -exec sed -i '' "s/process\.env\.POSTHOG_API_KEY/\"$POSTHOG_API_KEY\"/g" {} +
 
-# set variables MAILING_VERSION and MAILING_CORE_VERSION
-MAILING_VERSION=$(npm view mailing version)
-MAILING_CORE_VERSION=$(npm view mailing-core version)
+# set variables MAILING_VERSION and MAILING_CORE_VERSION to the value of the "version" attribute from each package.json
+MAILING_VERSION=$(awk -F'"' '/"version": ".+"/{ print $4; exit; }' packages/cli/package.json)
+MAILING_CORE_VERSION=$(awk -F'"' '/"version": ".+"/{ print $4; exit; }' packages/core/package.json)
 
 # search cli dist and replace "process.env.MAILING_VERSION" with "\"${process.env.MAILING_VERSION}\""
 find "packages/cli/dist" -type f -name "*.js" -exec sed -i '' "s/process\.env\.MAILING_VERSION/\"$MAILING_VERSION\"/g" {} +
