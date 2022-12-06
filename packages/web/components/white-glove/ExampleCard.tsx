@@ -31,6 +31,13 @@ const EXAMPLES = {
       "https://github.com/sofn-xyz/mailing/tree/main/packages/web/emails",
     demoUrl: "https://emails.mailing.run",
   },
+  bbeam: {
+    title: "BBeam",
+    imageUrl: "/white-glove/bbeam.png",
+    brandUrl: "https://www.mailing.run",
+    sourceUrl: "https://github.com/sofn-xyz/mailing-templates/tree/main/bbeam",
+    demoUrl: "https://bbeam.vercel.app",
+  },
 };
 
 type ExampleCardProps = {
