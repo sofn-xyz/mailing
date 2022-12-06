@@ -11,4 +11,4 @@ require("esbuild-register/dist/node").register({
   jsx: "automatic",
   target: "node14",
 });
-require("./index.ts");
+require("./cli.ts");
