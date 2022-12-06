@@ -38,6 +38,7 @@ export default function DocsLayout({ children }) {
           href={`https://${SEARCH_APP_ID}-dsn.algolia.net`}
           crossOrigin="anonymous"
         />
+        <title>Docs – Mailing</title>
       </Head>
       <div className="z-50 bg-black fixed w-full flex justify-between items-middle py-0 text-sm mb-16 px-4 sm:px-6 border-b border-gray-500 text-blue-300 border-dotted">
         <div className="brand flex flex-col justify-center py-4">
