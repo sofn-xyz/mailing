@@ -164,7 +164,7 @@ export default function DocsLayout({ children }) {
             REST API
           </NavLink>
           <NavLink href="/docs/templates" active={asPath}>
-            Starter templates
+            Demo templates
           </NavLink>
           <NavLink href="/docs/turborepo" active={asPath}>
             Turborepo

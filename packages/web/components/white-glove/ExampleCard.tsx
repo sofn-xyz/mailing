@@ -36,7 +36,7 @@ const EXAMPLES = {
     imageUrl: "/white-glove/bbeam.png",
     brandUrl: "https://www.mailing.run",
     sourceUrl: "https://github.com/sofn-xyz/mailing-templates/tree/main/bbeam",
-    demoUrl: "https://bbeam.vercel.app",
+    demoUrl: "https://bbeam-mailing.vercel.app",
   },
 };
 
