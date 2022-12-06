@@ -14,8 +14,6 @@ interface EventMessageV1 extends IdentifyMessageV1 {
   sendFeatureFlags?: boolean;
 }
 export async function capture(options: EventMessageV1) {
-  if (process.env.NODE_ENV !== "production") return;
-
   const distinctId = options.distinctId;
 
   const captureOpts = {
@@ -35,8 +33,27 @@ export async function capture(options: EventMessageV1) {
   }
 
   try {
-    postHogClient()?.capture(captureOpts);
-    await postHogClient()?.shutdownAsync();
+    const client = postHogClient();
+    if (!client) return;
+
+    const capture = client.capture as any;
+
+    switch (process.env.NODE_ENV) {
+      case "production":
+        capture(captureOpts);
+        break;
+      case "test":
+        // call capture if it has been mocked
+        if (capture.mock) capture(captureOpts);
+        break;
+      default:
+        debug(
+          `returning early from capture because NODE_ENV is ${process.env.NODE_ENV}`
+        );
+        break;
+    }
+
+    await client.shutdownAsync();
   } catch (e) {
     debug("posthog capture error", e);
   }

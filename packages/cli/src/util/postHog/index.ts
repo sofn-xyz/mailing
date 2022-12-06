@@ -52,7 +52,25 @@ export function capture(options: EventMessageV1) {
     return;
   }
 
-  return postHogClient()?.capture(captureOpts);
+  const client = postHogClient();
+  if (!client) return;
+
+  const capture = client.capture as any;
+
+  switch (process.env.NODE_ENV) {
+    case "production":
+      capture(captureOpts);
+      break;
+    case "test":
+      // call capture if it has been mocked
+      if (capture.mock) capture(captureOpts);
+      break;
+    default:
+      debug(
+        `returning early from capture because NODE_ENV is ${process.env.NODE_ENV}`
+      );
+      break;
+  }
 }
 
 export async function shutdown() {
