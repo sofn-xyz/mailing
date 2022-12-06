@@ -7,7 +7,9 @@
     @apply border text-sm bg-gray-800 border-gray-800 text-slate-500 hover:text-blue w-full transition-all duration-300 text-left rounded-md px-2 mx-0 mt-6 -mb-2 active:translate-y-px;
     height: 31px;
   }
-  .DocSearch.DocSearch-Button:active, .DocSearch.DocSearch-Button:focus, .DocSearch.DocSearch-Button:hover {
+  .DocSearch.DocSearch-Button:active,
+  .DocSearch.DocSearch-Button:focus,
+  .DocSearch.DocSearch-Button:hover {
     box-shadow: none;
   }
   .DocSearch.DocSearch-Button .DocSearch-Search-Icon {
@@ -59,10 +61,6 @@ body {
 
 #__next {
   height: 100%;
-}
-
-h1 {
-  line-height: 110% !important;
 }
 
 a {
