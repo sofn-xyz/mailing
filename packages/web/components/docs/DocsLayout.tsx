@@ -63,35 +63,39 @@ export default function DocsLayout({ children }) {
             <li className="inline px-2">
               <a
                 href="https://discord.gg/fdSzmY46wY"
-                className="text-slate-300 hover:text-blue-400 transition-colors"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-slate-300 hover:text-blue-400 transition-colors inline-block"
               >
                 <Image
                   src="/discord-icon.png"
                   alt="Discord"
                   width={16}
                   height={12}
-                  className="opacity-70 hover:opacity-100 transition-opacity inline -mt-0.5"
+                  className="opacity-60 hover:opacity-100 transition-opacity inline -mt-0.5"
                 />
               </a>
             </li>
             <li className="inline px-1.5">
               <a
                 href="https://github.com/sofn-xyz/mailing"
-                className="text-slate-300 hover:text-blue-400 transition-colors"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-slate-300 hover:text-blue-400 transition-colors inline-block"
               >
                 <Image
                   src="/gh-icon.png"
                   alt="GitHub"
                   width={14}
                   height={14}
-                  className="opacity-70 hover:opacity-100 transition-opacity inline -mt-0.5"
+                  className="opacity-60 hover:opacity-100 transition-opacity inline -mt-0.5"
                 />
               </a>
             </li>
             <li className="inline px-1.5">
               <Link
                 href="docs"
-                className="text-white underline transition-colors"
+                className="text-white underline transition-all inline-block"
               >
                 Docs
               </Link>
@@ -99,7 +103,7 @@ export default function DocsLayout({ children }) {
             <li className="inline px-1.5">
               <Link
                 href="https://demo.mailing.run"
-                className="text-slate-300 hover:text-blue-400 transition-colors"
+                className="text-slate-300 hover:text-white transition-all inline-block"
               >
                 Demo
               </Link>
@@ -107,7 +111,7 @@ export default function DocsLayout({ children }) {
             <li className="hidden sm:inline px-1.5">
               <Link
                 href="white-glove"
-                className="text-slate-300 hover:text-blue-400 transition-colors"
+                className="text-slate-300 hover:text-white transition-all inline-block"
               >
                 White Glove
               </Link>

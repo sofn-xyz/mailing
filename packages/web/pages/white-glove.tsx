@@ -65,7 +65,7 @@ const WhiteGlove: NextPage = () => {
               height={28}
             />
           </Link>
-          <span className="flex-2 text-2xl sm:text-[44px] font-bold font-serif leading-snug text-amber-200 relative -top-1 text-center">
+          <span className="flex-2 text-2xl sm:text-3xl font-bold font-serif leading-snug text-amber-200 relative -top-1 text-center">
             White Glove
           </span>
           <div className="flex-1 text-right hidden lg:inline-block">
