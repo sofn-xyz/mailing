@@ -40,6 +40,7 @@ export default function DocsLayout({ children }) {
           href={`https://${SEARCH_APP_ID}-dsn.algolia.net`}
           crossOrigin="anonymous"
         />
+        <title>Docs – Mailing</title>
       </Head>
       <div className="z-50 bg-black fixed w-full flex py-0 text-sm mb-16 px-4 sm:px-6 md:px-8 border-b border-gray-500 border-dotted text-blue-300 ">
         <nav className="mx-auto flex items-center justify-between py-3 sm:py-4 w-full">
@@ -210,7 +211,7 @@ export default function DocsLayout({ children }) {
             REST API
           </NavLink>
           <NavLink href="/docs/templates" active={asPath}>
-            Starter templates
+            Demo templates
           </NavLink>
           <NavLink href="/docs/turborepo" active={asPath}>
             Turborepo
