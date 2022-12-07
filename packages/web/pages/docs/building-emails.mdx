@@ -1,0 +1,38 @@
+# Building Emails
+
+## Adding a subject
+
+If you want to add a subject to your email, you can do so by adding a static `subject` property to your component.
+This property should be a string or function that takes the props of your component and returns a string.
+
+```tsx
+type WelcomeProps = {
+  name: string;
+};
+
+const Welcome = ({ name }: WelcomeProps) => (
+  <Mjml>
+    <MjmlBody>
+      <MjmlColumn>
+        <MjmlText>Hi {name},</MjmlText>
+        <MjmlText>Welcome to our service!</MjmlText>
+      </MjmlColumn>
+    </MjmlBody>
+  </Mjml>
+);
+Welcome.subject = ({ name }) => `Welcome ${name}!`;
+
+export default Welcome;
+```
+
+Passing a subject into a `sendMail` call will override the subject defined on the component.
+
+```tsx
+await sendMail({
+  to: "someone@something.com",
+  subject: "This is a custom subjec",
+  component: <Welcome name="Amelita" />,
+});
+```
+
+Will send an email with the subject `This is a custom subject`.
