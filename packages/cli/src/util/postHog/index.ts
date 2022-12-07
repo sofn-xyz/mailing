@@ -51,7 +51,11 @@ export async function shutdown() {
   const client = getPostHogClient();
   if (client) {
     debug("calling postHog shutdown");
-    await client.shutdownAsync();
+    try {
+      await client.shutdownAsync();
+    } catch (e) {
+      debug(`error shutting down postHog client: ${e}`);
+    }
   } else {
     debug("skipping postHog client shutdown because it was never instantiated");
   }

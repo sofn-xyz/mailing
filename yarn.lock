@@ -9036,6 +9036,13 @@ posthog-node@^2.0.2:
   dependencies:
     axios "^0.27.0"
 
+posthog-node@^2.2.3:
+  version "2.2.3"
+  resolved "https://registry.yarnpkg.com/posthog-node/-/posthog-node-2.2.3.tgz#9fda0dfe92dedc0716b87a68a26c05eed95bdd5a"
+  integrity sha512-dYlLZhrDus+uRov/Hh+EiRlMoMhRKchNjNa7mNE2iWmKg/ryOTipf0XYKS9UKdki7aU1NzWFhnLe11HF615XuA==
+  dependencies:
+    axios "^0.27.0"
+
 preferred-pm@^3.0.0:
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/preferred-pm/-/preferred-pm-3.0.3.tgz#1b6338000371e3edbce52ef2e4f65eb2e73586d6"
