@@ -3,6 +3,7 @@
  * In production is it overwritten by the build process.
  */
 
+import { existsSync } from "fs-extra";
 import sendMailFromEmails from "./emails";
 import Welcome from "./emails/Welcome";
 import * as WelcomePreview from "./emails/previews/Welcome";
@@ -16,7 +17,8 @@ let templates = {
 };
 let config = {};
 
-if (process.env.JEST_WORKER_ID) {
+// If we're running in a Jest worker, we want to use the mocked module manifest
+if (process.env.JEST_WORKER_ID && existsSync("./__mocks__/moduleManifest")) {
   /* eslint-disable-next-line @typescript-eslint/no-var-requires */
   const testManifest = require("./__mocks__/moduleManifest");
   sendMail = testManifest.sendMail;

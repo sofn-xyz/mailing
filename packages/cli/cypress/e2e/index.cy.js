@@ -6,10 +6,7 @@ describe("index page tests", () => {
   });
 
   it("should redirect index to previewFunction with tree", () => {
-    cy.location("pathname").should(
-      "eq",
-      "/previews/AccountCreated/accountCreated"
-    );
+    cy.location("pathname").should("eq", "/previews/Welcome/preview");
 
     cy.contains("accountCreated")
       .should("have.attr", "aria-selected", "true")

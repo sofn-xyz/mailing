@@ -19,7 +19,7 @@ exports[`usePreviewTree sets routes and cursor from previews 1`] = `
     "collapsed": false,
     "displayName": "accountCreated",
     "level": 2,
-    "path": "/previews/AccountCreated/accountCreated",
+    "path": "/previews/Welcome/preview",
     "previewClass": "AccountCreated",
     "previewFunction": "accountCreated",
   },

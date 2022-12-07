@@ -3,8 +3,8 @@
 exports[`index should return previews 1`] = `
 {
   "previewText": {
-    "/previews/AccountCreated/accountCreated": "Welcome to BookBook, Amelita!",
-    "/previews/AccountCreated/accountCreatedJohn": "Welcome to BookBook, John!",
+    "/previews/Welcome/preview": "Welcome to BookBook, Amelita!",
+    "/previews/Welcome/previewJohn": "Welcome to BookBook, John!",
     "/previews/NewSignIn/newSignIn": "Security Alert: New Sign-In Hello Amelita, We noticed a new sign-in to your BookBook account on a Mac device. If this was you, you don’t nee",
     "/previews/Reservation/reservationChanged": "Reservation Changed",
     "/previews/Reservation/reservationConfirmed": "Reservation Confirmed",

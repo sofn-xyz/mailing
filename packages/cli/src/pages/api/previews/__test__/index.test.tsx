@@ -30,7 +30,7 @@ describe("index", () => {
 
     expect(res.statusCode).toBe(200);
     const json = res._getJSONData();
-    expect(json["previewText"]["/previews/AccountCreated/accountCreated"]).toBe(
+    expect(json["previewText"]["/previews/Welcome/preview"]).toBe(
       "Welcome to BookBook, Amelita!"
     );
   });
