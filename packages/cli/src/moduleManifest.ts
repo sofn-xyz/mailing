@@ -9,9 +9,9 @@ import { getTemplatePath } from "./templates";
 const moduleManifest = require(`./${getTemplatePath()}/moduleManifest`).default;
 
 const sendMail = moduleManifest.sendMail;
-const previews = moduleManifest.previews;
-const templates = moduleManifest.templates;
-const config = moduleManifest.config;
+const previews: { [key: string]: any } = moduleManifest.previews;
+const templates: { [key: string]: any } = moduleManifest.templates;
+const config: { [key: string]: any } = moduleManifest.config;
 
 const manifest = { sendMail, config, templates, previews };
 export { sendMail, config, templates, previews };

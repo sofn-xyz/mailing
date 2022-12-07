@@ -17,7 +17,7 @@ describe("writeDefaultConfigFile", () => {
     // IMPORTANT: config.defaults uses memoization, so you should expect that
     // for all the tests in this file, the defaults will be what are listed here
     const TEST_DEFAULTS = {
-      emailsDir: "./src/__mocks__/emails",
+      emailsDir: "./src/templates/defaults/emails",
       outDir: "./previews_html",
       port: 3883,
       quiet: false,
@@ -35,7 +35,7 @@ describe("writeDefaultConfigFile", () => {
   it("writes mailing.config.json if it doesn't exist", () => {
     const defaultJsonString = `{
   "typescript": true,
-  "emailsDir": "./src/__mocks__/emails",
+  "emailsDir": "./src/templates/defaults/emails",
   "outDir": "./previews_html",
   "anonymousId": "TEST_VALUE"
 }
@@ -72,7 +72,7 @@ describe("writeDefaultConfigFile", () => {
       .spyOn(fsExtra, "readJSONSync")
       .mockImplementation(() => ({
         typescript: true,
-        emailsDir: "./src/__mocks__/emails",
+        emailsDir: "./src/templates/defaults/emails",
         outDir: "./previews_html",
         anonymousId: "TEST_VALUE",
       }));
@@ -101,7 +101,7 @@ describe("writeDefaultConfigFile", () => {
       .spyOn(fsExtra, "readJSONSync")
       .mockImplementation(() => ({
         typescript: true,
-        emailsDir: "./src/__mocks__/emails",
+        emailsDir: "./src/templates/defaults/emails",
         outDir: "./previews_html",
       }));
 
@@ -127,7 +127,7 @@ describe("writeDefaultConfigFile", () => {
       .spyOn(fsExtra, "readJSONSync")
       .mockImplementation(() => ({
         typescript: true,
-        emailsDir: "./src/__mocks__/emails",
+        emailsDir: "./src/templates/defaults/emails",
         outDir: "./previews_html",
         anonymousId: null,
       }));
@@ -143,7 +143,7 @@ describe("writeDefaultConfigFile", () => {
       .spyOn(fsExtra, "readJSONSync")
       .mockImplementation(() => ({
         typescript: true,
-        emailsDir: "./src/__mocks__/emails",
+        emailsDir: "./src/templates/defaults/emails",
         outDir: "./previews_html",
         anonymousId: "",
       }));

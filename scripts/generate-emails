@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+set -o nounset
+
+# Transpiles typescript email templates to javascript.
+#
+# Usage: ./scripts/generate-emails <typescript-template-name>
+
+IN="packages/cli/src/templates/$1/emails"
+OUT="packages/cli/src/templates/$1/emails-js"
+
+# Generate JS templates from TS Templates
+npx tsc \
+--allowSyntheticDefaultImports true \
+--moduleResolution node \
+--jsx preserve \
+--target es2020 \
+--outDir "$OUT" \
+--noEmit false \
+$IN/**/*.tsx $IN/*.tsx $IN/*.ts
+
+# Format the generated JS templates
+npx prettier --write $OUT/*
+yarn eslint --fix --ext .jsx,.js $OUT/*
+
+# Add the generated JS templates to git
+git add $OUT/*

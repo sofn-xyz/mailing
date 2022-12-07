@@ -12,8 +12,8 @@ describe("exportPreviews command", () => {
 
     jest.spyOn(fsExtra, "readJSONSync").mockImplementation(() => ({
       typescript: true,
-      emailsDir: "./packages/cli/src/__mocks__/emails",
-      outDir: "./packages/cli/src/__mocks__/previews_html",
+      emailsDir: "./packages/cli/src/templates/test/emails",
+      outDir: "./packages/cli/previews_html",
       anonymousId: "TEST_VALUE",
     }));
   });
@@ -26,7 +26,7 @@ describe("exportPreviews command", () => {
   it("outputs html files to outDir", async () => {
     await handler({
       outDir: "./out",
-      emailsDir: "packages/cli/src/__mocks__/emails",
+      emailsDir: "./packages/cli/src/templates/test/emails",
       skipLint: true,
     } as ExportPreviewsArgs);
     expect(error).not.toHaveBeenCalled();
