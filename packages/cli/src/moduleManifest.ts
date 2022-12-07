@@ -16,7 +16,7 @@ let templates = {
 };
 let config = {};
 
-if (process.env.MAILING_INTEGRATION_TEST || process.env.NODE_ENV === "test") {
+if (process.env.JEST_WORKER_ID) {
   /* eslint-disable-next-line @typescript-eslint/no-var-requires */
   const testManifest = require("./__mocks__/moduleManifest");
   sendMail = testManifest.sendMail;

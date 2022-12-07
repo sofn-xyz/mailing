@@ -16,7 +16,7 @@ export async function generateEmailsDirectory({
       : __dirname + "/../src";
   let templateDir = srcDir;
 
-  if (process.env.MAILING_INTEGRATION_TEST || process.env.NODE_ENV === "test") {
+  if (process.env.JEST_WORKER_ID) {
     templateDir += "/__mocks__";
   }
   // copy the emails dir template in!
