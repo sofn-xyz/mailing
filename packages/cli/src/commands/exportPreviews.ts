@@ -76,7 +76,6 @@ export const handler = buildHandler(
       error("please specific an emailsDir like --emailsDir ./emails");
       return;
     }
-
     const previewsPath = getPreviewsDirectory(argv.emailsDir);
     if (!previewsPath) {
       error(
