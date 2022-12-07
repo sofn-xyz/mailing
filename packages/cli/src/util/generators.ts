@@ -2,7 +2,6 @@ import { copy } from "fs-extra";
 import { resolve } from "path";
 import tree from "tree-node-cli";
 import { log } from "./serverLogger";
-import { getTemplatePath } from "../templates";
 
 export async function generateEmailsDirectory({
   emailsDir,
@@ -15,7 +14,11 @@ export async function generateEmailsDirectory({
     process.env.MM_DEV || process.env.NODE_ENV === "test"
       ? __dirname + "/.."
       : __dirname + "/../src";
-  const templateDir = resolve(srcDir, getTemplatePath());
+  let templateDir = srcDir;
+
+  if (process.env.MAILING_INTEGRATION_TEST || process.env.NODE_ENV === "test") {
+    templateDir += "/__mocks__";
+  }
   // copy the emails dir template in!
   const srcEmails = isTypescript ? "emails" : "emails-js";
   await copy(resolve(templateDir, srcEmails), emailsDir, { overwrite: false });

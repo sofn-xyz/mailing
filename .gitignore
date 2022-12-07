@@ -8,7 +8,6 @@ previews_html
 out
 .mailing
 /emails
-/packages/cli/src/emails
 
 # Logs
 logs

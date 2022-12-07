@@ -3,15 +3,27 @@
  * In production is it overwritten by the build process.
  */
 
-import { getTemplatePath } from "./templates";
+import sendMailFromEmails from "./emails";
+import Welcome from "./emails/Welcome";
+import * as WelcomePreview from "./emails/previews/Welcome";
 
-/* eslint-disable-next-line @typescript-eslint/no-var-requires */
-const moduleManifest = require(`./${getTemplatePath()}/moduleManifest`).default;
+let sendMail = sendMailFromEmails;
+let previews = {
+  Welcome: WelcomePreview,
+};
+let templates = {
+  Welcome,
+};
+let config = {};
 
-const sendMail = moduleManifest.sendMail;
-const previews: { [key: string]: any } = moduleManifest.previews;
-const templates: { [key: string]: any } = moduleManifest.templates;
-const config: { [key: string]: any } = moduleManifest.config;
+if (process.env.MAILING_INTEGRATION_TEST || process.env.NODE_ENV === "test") {
+  /* eslint-disable-next-line @typescript-eslint/no-var-requires */
+  const testManifest = require("./__mocks__/moduleManifest");
+  sendMail = testManifest.sendMail;
+  previews = testManifest.previews;
+  templates = testManifest.templates;
+  config = testManifest.config;
+}
 
 const manifest = { sendMail, config, templates, previews };
 export { sendMail, config, templates, previews };

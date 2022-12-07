@@ -6,8 +6,8 @@ set -o nounset
 #
 # Usage: ./scripts/generate-emails <typescript-template-name>
 
-IN="packages/cli/src/templates/$1/emails"
-OUT="packages/cli/src/templates/$1/emails-js"
+IN="packages/cli/src/$1/emails"
+OUT="packages/cli/src/$1/emails-js"
 
 # Generate JS templates from TS Templates
 npx tsc \
