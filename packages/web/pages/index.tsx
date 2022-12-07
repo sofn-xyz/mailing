@@ -147,31 +147,33 @@ const WhiteGlove: NextPage = () => {
         />
         <div className="mx-auto max-w-6xl">
           <H2>How it works</H2>
-          <Li
-            title="Add Mailing to your app"
-            description="Mailing adds an emails directory to your Node app. Email templates go in here and can import shared constants, images, and components. Templates stay under source control with the rest of your code."
-            index={1}
-            prepend={<CircleJar index={0} />}
-          />
-          <Li
-            title="Develop emails in React"
-            description="Built-in MJML-React support means you can make templates compatible across email clients without thinking about table layout. The Mailing preview server gives you hot reload as you develop."
-            index={2}
-            prepend={<CircleJar index={1} />}
-          />
-          <Li
-            title="Send with any transport"
-            description={
-              <>
-                Mailing is transport agnostic. The sendMail function renders
-                React MJML templates to HTML and sends them to your mailing list
-                subscribers. This function is built with Nodemailer, so you can
-                pass in any options that Nodemailer supports.
-              </>
-            }
-            index={3}
-            prepend={<CircleJar index={2} />}
-          />
+          <div className="sm:ml-16 xl:ml-36 2xl:ml-48">
+            <Li
+              title="Add Mailing to your app"
+              description="Mailing adds an emails directory to your Node app. Email templates go in here and can import shared constants, images, and components. Templates stay under source control with the rest of your code."
+              index={1}
+              prepend={<CircleJar index={0} />}
+            />
+            <Li
+              title="Develop emails in React"
+              description="Built-in MJML-React support means you can make templates compatible across email clients without thinking about table layout. The Mailing preview server gives you hot reload as you develop."
+              index={2}
+              prepend={<CircleJar index={1} />}
+            />
+            <Li
+              title="Send with any transport"
+              description={
+                <>
+                  Mailing is transport agnostic. The sendMail function renders
+                  React MJML templates to HTML and sends them to your mailing
+                  list subscribers. This function is built with Nodemailer, so
+                  you can pass in any options that Nodemailer supports.
+                </>
+              }
+              index={3}
+              prepend={<CircleJar index={2} />}
+            />
+          </div>
         </div>
         <div>
           <div className="text-left sm:text-center md:text-right max-w-[230px] sm:max-w-full lg:max-w-sm">
