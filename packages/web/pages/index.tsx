@@ -7,6 +7,7 @@ import KeyButton from "../components/homepage/KeyButton";
 import H2 from "../components/homepage/H2";
 import Li from "../components/homepage/Li";
 import ExampleCard from "../components/homepage/ExampleCard";
+import Social from "../components/homepage/Social";
 import { Arrow } from "../components/homepage/Arrow";
 
 const WhiteGlove: NextPage = () => {
@@ -253,6 +254,17 @@ const WhiteGlove: NextPage = () => {
               <span className="font-serif font-bold">&nbsp;&nbsp;→</span>
             </a>
           </div>
+        </div>
+        <div>
+          <div className="max-w-sm text-left sm:max-w-full sm:text-right lg:max-w-sm lg:text-left">
+            <H2>Kind words</H2>
+          </div>
+          <Social name="cymen" />
+          <Social name="steven" />
+          <Social name="will" />
+          <Social name="guillermo" />
+          <Social name="johan" />
+          <Social name="sidi" />
         </div>
       </main>
       <footer className="bg-black flex justify-end mt-64 pb-24 mr-5 sm:mr-8 md:mr-16 xl:mr-24 2xl:mr-32">
