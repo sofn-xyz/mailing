@@ -9,6 +9,7 @@ import Li from "../components/homepage/Li";
 import ExampleCard from "../components/homepage/ExampleCard";
 import Social from "../components/homepage/Social";
 import { Arrow } from "../components/homepage/Arrow";
+import CircleJar from "../components/homepage/CircleJar";
 
 const WhiteGlove: NextPage = () => {
   return (
@@ -153,11 +154,13 @@ const WhiteGlove: NextPage = () => {
             title="Add Mailing to your app"
             description="Mailing adds an emails directory to your Node app. Email templates go in here and can import shared constants, images, and components. Templates stay under source control with the rest of your code."
             index={1}
+            prepend={<CircleJar index={0} />}
           />
           <Li
             title="Develop emails in React"
             description="Built-in MJML-React support means you can make templates compatible across email clients without thinking about table layout. The Mailing preview server gives you hot reload as you develop."
             index={2}
+            prepend={<CircleJar index={1} />}
           />
           <Li
             title="Send with any transport"
@@ -170,6 +173,7 @@ const WhiteGlove: NextPage = () => {
               </>
             }
             index={3}
+            prepend={<CircleJar index={2} />}
           />
         </div>
         <div>
