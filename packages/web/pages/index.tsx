@@ -179,6 +179,22 @@ const WhiteGlove: NextPage = () => {
           <div className="text-left sm:text-center md:text-right max-w-[230px] sm:max-w-full lg:max-w-sm">
             <H2>Simple dev</H2>
           </div>
+          <div>
+            <Image
+              src="/fynn-screenshot.png"
+              width={480}
+              height={681}
+              alt="Fynn email screenshot"
+              className="rounded-2xl"
+            />
+            <Image
+              src="/fynn-code-sample.png"
+              width={681}
+              height={345}
+              alt="Fynn email screenshot"
+              className="rounded-2xl"
+            />
+          </div>
           <div className="text-left max-w-[442px]">
             <h3 className="font-serif font-bold text-5xl md:text-6xl lg:text-7xl leading-[1.2]">
               Collaborative
