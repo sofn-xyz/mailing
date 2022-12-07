@@ -24,7 +24,7 @@ export default function CircleJar({ index }: CircleJarProps) {
     >
       <div className="text-center relative -left-1/2">
         <Image
-          className="mb-5 h-[108px] mx-auto"
+          className="mb-5 mx-auto"
           src={src}
           width={108}
           height={108}
