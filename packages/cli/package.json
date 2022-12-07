@@ -86,7 +86,7 @@
     "playwright-aws-lambda": "^0.9.0",
     "playwright-core": "^1.28.1",
     "postcss": "^8.4.16",
-    "posthog-node": "^2.0.2",
+    "posthog-node": "^2.2.3",
     "prettier": "^2.7.1",
     "prisma": "^4.4.0",
     "prompts": "^2.4.2",
