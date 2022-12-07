@@ -64,55 +64,51 @@ export default function DocsLayout({ children }) {
             <li className="inline px-2">
               <a
                 href="https://discord.gg/fdSzmY46wY"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-slate-300 hover:text-blue-400 transition-colors inline-block"
+                className="text-slate-300 hover:text-blue-400 transition-colors"
               >
                 <Image
                   src="/discord-icon.png"
                   alt="Discord"
                   width={16}
                   height={12}
-                  className="opacity-60 hover:opacity-100 transition-opacity inline -mt-0.5"
+                  className="opacity-70 hover:opacity-100 transition-opacity inline -mt-0.5"
                 />
               </a>
             </li>
             <li className="inline px-1.5">
               <a
                 href="https://github.com/sofn-xyz/mailing"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-slate-300 hover:text-blue-400 transition-colors inline-block"
+                className="text-slate-300 hover:text-blue-400 transition-colors"
               >
                 <Image
                   src="/gh-icon.png"
                   alt="GitHub"
                   width={14}
                   height={14}
-                  className="opacity-60 hover:opacity-100 transition-opacity inline -mt-0.5"
+                  className="opacity-70 hover:opacity-100 transition-opacity inline -mt-0.5"
                 />
               </a>
             </li>
             <li className="inline px-1.5">
               <Link
                 href="docs"
-                className="text-white underline transition-all inline-block"
+                className="text-white underline transition-colors"
               >
                 Docs
               </Link>
             </li>
             <li className="inline px-1.5">
               <Link
-                href="https://demo.mailing.run"
-                className="text-slate-300 hover:text-white transition-all inline-block"
+                href="/docs/templates"
+                className="text-slate-300 hover:text-blue-400 transition-colors"
               >
-                Demo
+                Demos
               </Link>
             </li>
             <li className="hidden sm:inline px-1.5">
               <Link
                 href="white-glove"
-                className="text-slate-300 hover:text-white transition-all inline-block"
+                className="text-slate-300 hover:text-blue-400 transition-colors"
               >
                 White Glove
               </Link>
