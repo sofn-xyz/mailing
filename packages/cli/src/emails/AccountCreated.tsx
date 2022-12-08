@@ -12,7 +12,7 @@ import { spacing, fontSize } from "./theme";
 type AccountCreatedProps = { name: string };
 
 const AccountCreated: Template<AccountCreatedProps> = ({ name }) => (
-  <BaseLayout width={600} preview="I am preview text">
+  <BaseLayout width={600} preview="Excited to help you enjoy great meals.">
     <Header loose />
     <MjmlSection cssClass="lg-gutter" paddingBottom={spacing.s9}>
       <MjmlColumn>
