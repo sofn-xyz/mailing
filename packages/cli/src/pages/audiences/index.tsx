@@ -114,7 +114,6 @@ const PreviewIndex: NextPage<AudiencesProps> = ({
   sortOrder,
   page,
 }) => {
-  console.log("page", page);
   const headers: (ReactElement | string)[] = [
     "Email",
     <Link
