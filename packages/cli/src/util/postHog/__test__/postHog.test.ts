@@ -8,12 +8,11 @@ describe("postHog", () => {
   const MM_DEV_OG = process.env.MM_DEV;
   const MM_DEV_E2E_OG = process.env.MM_E2E;
   let mockPostHogClient: PostHog;
-  let mockPostHogClient2: PostHog;
+  let mockPostHogClientWithShutdownError: PostHog;
 
   beforeEach(() => {
     mockPostHogClient = { capture: jest.fn() } as unknown as PostHog;
-    mockPostHogClient2 = {
-      capture: jest.fn(),
+    mockPostHogClientWithShutdownError = {
       shutdownAsync: jest.fn().mockRejectedValue(new Error("timeout")),
     } as unknown as PostHog;
     jest.restoreAllMocks();
@@ -29,9 +28,9 @@ describe("postHog", () => {
   it("should not raise an error if posthog shutdown raises an error (e.g. a timeout)", async () => {
     jest
       .spyOn(postHogClient, "getPostHogClient")
-      .mockImplementation(() => mockPostHogClient2);
+      .mockImplementation(() => mockPostHogClientWithShutdownError);
 
-    await expect(async () => {
+    expect(async () => {
       await shutdown();
     }).not.toThrow();
   });
