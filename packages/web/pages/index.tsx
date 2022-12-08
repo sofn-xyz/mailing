@@ -139,7 +139,7 @@ const WhiteGlove: NextPage = () => {
           </div>
         </div>
         <Image
-          src="/previewer-screenshot.png"
+          src="/homepage/previewer-screenshot.png"
           width={1024}
           height={743}
           alt="Mailing previewer screenshot"
@@ -239,14 +239,14 @@ const WhiteGlove: NextPage = () => {
         </div>
         <div className="text-center mt-16 sm:mt-40 md:mt-48 lg:mt-64">
           <Image
-            src="/demo-theme.png"
+            src="/homepage/demo-theme.png"
             width={440}
             height={600}
             alt="Mailing demo theme"
             className="rounded-2xl inline-block lg:hidden xl:inline-block align-middle"
           />
           <Image
-            src="/demo-theme-skinny.png"
+            src="/homepage/demo-theme-skinny.png"
             width={360}
             height={600}
             alt="Mailing demo theme"

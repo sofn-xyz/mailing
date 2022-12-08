@@ -4,7 +4,7 @@ import Link from "next/link";
 
 const DATA = {
   cymen: {
-    imageUrl: "/testimonial-cv@2x.png",
+    imageUrl: "/homepage/testimonial-cv@2x.png",
     fullName: "Cymen Vig",
     sourceUrl:
       "https://github.com/sofn-xyz/mailing/issues/89#issuecomment-1206689044",
@@ -19,7 +19,7 @@ const DATA = {
     ),
   },
   will: {
-    imageUrl: "/testimonial-wv@2x.png",
+    imageUrl: "/homepage/testimonial-wv@2x.png",
     fullName: "Will Viles",
     sourceUrl:
       "https://github.com/sofn-xyz/mailing/issues/163#issuecomment-1241643724",
@@ -46,7 +46,7 @@ const DATA = {
     ),
   },
   johan: {
-    imageUrl: "/testimonial-email@2x.png",
+    imageUrl: "/homepage/testimonial-email@2x.png",
     fullName: "Johan",
     quote: (
       <>
@@ -55,7 +55,7 @@ const DATA = {
     ),
   },
   guillermo: {
-    imageUrl: "/testimonial-gr@2x.jpeg",
+    imageUrl: "/homepage/testimonial-gr@2x.jpeg",
     fullName: "Guillermo Rauch",
     sourceUrl: "https://twitter.com/rauchg/status/1556013344082894848",
     sourceText: "View on Twitter",
@@ -88,7 +88,7 @@ const DATA = {
     ),
   },
   steven: {
-    imageUrl: "/testimonial-st@2x.png",
+    imageUrl: "/homepage/testimonial-st@2x.png",
     fullName: "Steven Tey",
     sourceUrl: "https://twitter.com/steventey/status/1579471673325408257",
     sourceText: "View on Twitter",
@@ -133,7 +133,7 @@ const DATA = {
     ),
   },
   sidi: {
-    imageUrl: "/testimonial-sd@2x.png",
+    imageUrl: "/homepage/testimonial-sd@2x.png",
     fullName: "Sidi Dev",
     sourceUrl: "https://twitter.com/sidi_jeddou_dev/status/1579928272347230208",
     sourceText: "View on Twitter",
