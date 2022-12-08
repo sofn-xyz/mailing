@@ -11,6 +11,7 @@ import Social from "../components/homepage/Social";
 import { Arrow } from "../components/homepage/Arrow";
 import CircleJar from "../components/homepage/CircleJar";
 import Header from "../components/Header";
+import Code from "../components/mdx/Code";
 
 const WhiteGlove: NextPage = () => {
   return (
@@ -107,55 +108,68 @@ const WhiteGlove: NextPage = () => {
             />
           </div>
         </div>
-        <div>
-          <div className="text-left sm:text-center md:text-right max-w-[230px] sm:max-w-full lg:max-w-sm">
-            <H2>Simple dev</H2>
+        <div className="mx-auto lg:max-w-[1121px]">
+          <div className="mx-auto max-w-5xl">
+            <div className="flex justify-end">
+              <div className="text-left sm:text-center md:text-right max-w-[230px] sm:max-w-full lg:max-w-sm lg:mr-36 xl:mr-64">
+                <H2 marginClassName="mt-36 sm:mt-40 md:mt-48 lg:mt-64 mb-12 sm:mb-[72px] md:mb-[84px] lg:mb-0">
+                  Simple dev
+                </H2>
+              </div>
+            </div>
           </div>
-          <div>
+          <div className="relative mx-auto">
             <Image
               src="/homepage/fynn-screenshot.png"
               width={480}
               height={681}
               alt="Fynn email screenshot"
-              className="rounded-2xl"
+              className="rounded-2xl inline-block top-24 right-0 lg:right-auto lg:left-0 lg:top-0 z-10 lg:z-0"
             />
             <Image
               src="/homepage/fynn-code-sample.png"
               width={681}
               height={345}
               alt="Fynn email screenshot"
-              className="rounded-2xl"
+              className="rounded-2xl inline-block lg:right-0 lg:top-24 z-0 lg:z-10"
             />
           </div>
-          <div className="text-left max-w-[442px]">
-            <h3 className="font-serif font-bold text-5xl md:text-6xl lg:text-7xl leading-[1.2]">
-              Collaborative
-            </h3>
-            <div className="text-base md:text-lg lg:text-xl mt-8 sm:mt-4 md:mt-8 max-w-md">
-              Self-hosted previews and analytics help your team stay on the same
-              page. When everyone can easily see the live emails and their
-              analytics, product and design QA are a breeze.
+          <div className="mx-auto max-w-5xl">
+            <div className="flex justify-end">
+              <div className="text-left lg:max-w-[442px]">
+                <h3 className="font-serif font-bold text-5xl md:text-6xl lg:text-7xl leading-[1.2]">
+                  Collaborative
+                </h3>
+                <div className="text-base md:text-xl mt-8 sm:mt-4 md:mt-8">
+                  Self-hosted previews and analytics help your team stay on the
+                  same page. When everyone can easily see the live emails and
+                  their analytics, product and design QA are a breeze.
+                </div>
+              </div>
             </div>
-          </div>
-          <div className="text-left max-w-[442px]">
-            <h3 className="font-serif font-bold text-5xl md:text-6xl lg:text-7xl leading-[1.2]">
-              Open source
-            </h3>
-            <div className="text-base md:text-lg lg:text-xl mt-8 sm:mt-4 md:mt-8 max-w-md">
-              We made Mailing an open source tool because we want to build
-              software that outlasts our company, and because we love to get
-              regular input and contributions from the community.
+            <div className="text-left lg:max-w-[442px]">
+              <h3 className="font-serif font-bold text-5xl md:text-6xl lg:text-7xl leading-[1.2]">
+                Open source
+              </h3>
+              <div className="text-base md:text-xl mt-8 sm:mt-4 md:mt-8">
+                We made Mailing an open source tool because we want to build
+                software that outlasts our company, and because we love to get
+                regular input and contributions from the community.
+              </div>
             </div>
-          </div>
-          <div className="text-left max-w-[442px]">
-            <h3 className="font-serif font-bold text-5xl md:text-6xl lg:text-7xl leading-[1.2]">
-              Zero lock-in
-            </h3>
-            <div className="text-base md:text-lg lg:text-xl mt-8 sm:mt-4 md:mt-8 max-w-md">
-              The Mailing dev environment is free. If you send emails with the
-              sendMail function, you’ll have the option to use paid features
-              like unsubscribe preferences and email analytics. If not, simply
-              export the HTML or use the React templates.
+            <div className="flex justify-end">
+              <div className="text-left lg:max-w-[442px]">
+                <h3 className="font-serif font-bold text-5xl md:text-6xl lg:text-7xl leading-[1.2]">
+                  Zero lock-in
+                </h3>
+                <div className="text-base md:text-xl mt-8 sm:mt-4 md:mt-8">
+                  The Mailing dev environment is free. If you send emails with
+                  the <Code>sendMail</Code> function, you’ll have the option to
+                  use paid features like unsubscribe preferences and email
+                  analytics. If not, simply export the HTML or use the React
+                  templates.
+                </div>
+              </div>
             </div>
           </div>
         </div>

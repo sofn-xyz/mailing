@@ -23,7 +23,7 @@ export default function H2({ children, marginClassName }: H2Props) {
         "font-serif font-bold text-[84px] md:text-[108px] lg:text-[140px] xl:text-[160px] leading-none",
         marginClassName,
         {
-          "mt-36 sm:mt-40 md:mt-48 lg:mt-64  mb-12 sm:mb-[72px] md:mb-[84px] lg:mb-32":
+          "mt-36 sm:mt-40 md:mt-48 lg:mt-64 mb-12 sm:mb-[72px] md:mb-[84px] lg:mb-32":
             typeof marginClassName === "undefined",
         }
       )}
