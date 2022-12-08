@@ -60,7 +60,7 @@ find 'packages/cli/src' -type f \( -name '*.ts' -o -name '*.tsx' \) -exec sed -i
 # search core src and replace "process.env.MAILING_CORE_VERSION" with "\"${process.env.MAILING_CORE_VERSION}\""
 find 'packages/core/src' -type f \( -name '*.ts' -o -name '*.tsx' \) -exec sed -i '' "s/MAILING_CORE_VERSION = process\.env\.MAILING_CORE_VERSION/MAILING_CORE_VERSION = \"$MAILING_CORE_VERSION\"/g" {} +
 
-# yarn changeset publish
+yarn changeset publish
 
 ##
 # Undo search and replace in src directories from above
