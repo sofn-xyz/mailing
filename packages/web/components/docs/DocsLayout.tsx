@@ -42,14 +42,12 @@ export default function DocsLayout({ children }) {
       </Head>
       <Header
         rightButton={
-          <>
-            <div className="lg:hidden flex flex-col justify-center">
-              <IndexButton
-                isOpen={hamburgerOpen}
-                onClick={() => setHamburgerOpen((v) => !v)}
-              />
-            </div>
-          </>
+          <div className="lg:hidden flex flex-col justify-center">
+            <IndexButton
+              isOpen={hamburgerOpen}
+              onClick={() => setHamburgerOpen((v) => !v)}
+            />
+          </div>
         }
       />
       <div className="max-w-8xl mx-auto px-4 sm:px-6 md:px-8 pb-20">
