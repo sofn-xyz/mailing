@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { Arrow } from "./Arrow";
+import Arrow from "../Arrow";
 import Link from "next/link";
 
 const DATA = {

@@ -10,7 +10,7 @@ import H2 from "../components/white-glove/H2";
 import Subheading from "../components/white-glove/Subheading";
 import Li from "../components/white-glove/Li";
 import ExampleCard from "../components/white-glove/ExampleCard";
-import { Arrow } from "../components/Arrow";
+import Arrow from "../components/Arrow";
 import Pricing from "../components/white-glove/Pricing";
 
 const TYPEFORM_URL = "https://gbbspiwghkd.typeform.com/to/w77PsIsC";

@@ -8,7 +8,7 @@ import H2 from "../components/homepage/H2";
 import Li from "../components/homepage/Li";
 import ExampleCard from "../components/homepage/ExampleCard";
 import Social from "../components/homepage/Social";
-import { Arrow } from "../components/Arrow";
+import Arrow from "../components/Arrow";
 import CircleJar from "../components/homepage/CircleJar";
 import Header from "../components/Header";
 import Code from "../components/mdx/Code";
