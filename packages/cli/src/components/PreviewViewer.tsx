@@ -18,7 +18,7 @@ import HTMLLint from "./HtmlLint";
 type Data = {
   preview: ShowPreviewResponseBody;
   previews: PreviewIndexResponseBody["previews"];
-  previewText: PreviewIndexResponseBody["previewText"];
+  previewInfo: PreviewIndexResponseBody["previewInfo"];
 };
 
 export type PreviewViewerProps = {
@@ -87,7 +87,7 @@ const PreviewViewer: React.FC<PreviewViewerProps> = ({ initialData }) => {
           }
         )}
       >
-        <IndexPane previews={previews} previewText={data?.previewText} />
+        <IndexPane previews={previews} previewInfo={data?.previewInfo} />
       </div>
       <div className="right-pane h-full flex flex-col flex-grow">
         {!!preview?.errors?.length && <MjmlErrors errors={preview?.errors} />}
