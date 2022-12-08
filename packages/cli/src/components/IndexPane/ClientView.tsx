@@ -7,14 +7,14 @@ type ClientViewProps = {
   treeRoutes?: TreeRoute[];
   cursor: number;
   navigate: (nextCursor: number | ((current: number) => number)) => void;
-  previewText?: PreviewIndexResponseBody["previewText"];
+  previewInfo?: PreviewIndexResponseBody["previewInfo"];
 };
 
 const ClientView: React.FC<ClientViewProps> = ({
   treeRoutes,
   cursor,
   navigate,
-  previewText,
+  previewInfo,
 }) => {
   return (
     <div className="py-4 px-3 text-sm outline-none" tabIndex={1} role="listbox">
@@ -22,6 +22,11 @@ const ClientView: React.FC<ClientViewProps> = ({
         Emails
       </h2>
       {treeRoutes?.map((route, i) => {
+        if (!previewInfo) return null;
+        const data = previewInfo[route.path];
+        const previewText = data?.previewText;
+        const subject = data?.subject;
+
         const isCursor = i === cursor;
         return route.level !== 2 ? null : (
           <div
@@ -42,15 +47,17 @@ const ClientView: React.FC<ClientViewProps> = ({
                 "border-transparent": isCursor,
               })}
             >
-              <div className="font-bold">{route.previewClass}</div>
-              <div className="pb-px">{route.previewFunction}</div>
+              <div className="font-bold">
+                {route.previewClass} / {route.previewFunction}
+              </div>
+              <div className="pb-px">{subject}</div>
               <div
                 className={cx("line-clamp-2 leading-tight", {
                   "text-gray-300": !isCursor,
                   "text-gray-600": isCursor,
                 })}
               >
-                {previewText && previewText[route.path]}
+                {previewText}
               </div>
             </div>
           </div>
