@@ -1,4 +1,4 @@
-import { capture } from "..";
+import { capture, shutdown } from "..";
 import * as postHogClient from "../client";
 import * as moduleManifestUtil from "../../moduleManifestUtil";
 import * as anonymousId from "../../config/anonymousId";
@@ -8,8 +8,13 @@ describe("postHog", () => {
   const MM_DEV_OG = process.env.MM_DEV;
   const MM_DEV_E2E_OG = process.env.MM_E2E;
   let mockPostHogClient: PostHog;
+  let mockPostHogClientWithShutdownError: PostHog;
+
   beforeEach(() => {
     mockPostHogClient = { capture: jest.fn() } as unknown as PostHog;
+    mockPostHogClientWithShutdownError = {
+      shutdownAsync: jest.fn().mockRejectedValue(new Error("timeout")),
+    } as unknown as PostHog;
     jest.restoreAllMocks();
     delete process.env.MM_DEV;
     delete process.env.MM_E2E;
@@ -18,6 +23,16 @@ describe("postHog", () => {
   afterEach(() => {
     process.env.MM_DEV = MM_DEV_OG;
     process.env.MM_E2E = MM_DEV_E2E_OG;
+  });
+
+  it("should not raise an error if posthog shutdown raises an error (e.g. a timeout)", async () => {
+    jest
+      .spyOn(postHogClient, "getPostHogClient")
+      .mockImplementation(() => mockPostHogClientWithShutdownError);
+
+    expect(async () => {
+      await shutdown();
+    }).not.toThrow();
   });
 
   it("should call capture on the postHog client", () => {
