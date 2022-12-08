@@ -1,5 +1,11 @@
 import React from "react";
-import { MjmlSection, MjmlColumn, MjmlImage} from "mjml-react";
+import {
+  MjmlSection,
+  MjmlColumn,
+  MjmlImage,
+  MjmlPreview,
+  MjmlRaw,
+} from "mjml-react";
 import { Template } from "mailing-core";
 import Button from "./components/Button";
 import Header from "./components/Header";
@@ -12,7 +18,7 @@ import { spacing, fontSize } from "./theme";
 type AccountCreatedProps = { name: string };
 
 const AccountCreated: Template<AccountCreatedProps> = ({ name }) => (
-  <BaseLayout width={600}>
+  <BaseLayout width={600} preview="I am preview text">
     <Header loose />
     <MjmlSection cssClass="lg-gutter" paddingBottom={spacing.s9}>
       <MjmlColumn>
@@ -24,7 +30,7 @@ const AccountCreated: Template<AccountCreatedProps> = ({ name }) => (
     </MjmlSection>
     <MjmlSection cssClass="gutter">
       <MjmlColumn>
-        <Heading fontSize={fontSize.xl}>{name}, your table awaits.</Heading>
+        <Heading fontSize={fontSize.xl}>{name}, your table awats.</Heading>
         <Text paddingTop={spacing.s7} paddingBottom={spacing.s7}>
           Thank you for joining BookBook! We’re excited to help you enjoy great
           meals without any begging, guessing, waiting or phone calls. Just a

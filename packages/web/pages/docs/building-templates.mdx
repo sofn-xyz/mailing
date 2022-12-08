@@ -1,0 +1,80 @@
+# Building Templates
+
+Templates are exported from `.tsx` or `.jsx` files in the `emails` directory.
+They vanilla React components with a few email-specific properties.
+
+## MJML
+
+MJML is a markup language for building responsive emails.
+We use it to build templates because it takes a lot of guesswork
+out of building responsive emails that are compatible across clients.
+
+- [MJML overview](https://documentation.mjml.io)
+- [Body components](https://documentation.mjml.io/#standard-body-components)
+
+To use MJML from react, we use the excellent `mjml-react` package.
+You'll notice that it uses a slightly different syntax than the MJML documentation but
+the props are all available.
+
+## Adding a subject
+
+If you want to add a subject to your email, you can do so by adding a static `subject` property to your component.
+This property should be a string or function that takes the props of your component and returns a string.
+
+```tsx
+type WelcomeProps = {
+  name: string;
+};
+
+const Welcome: Template<WelcomeProps> = ({ name }) => (
+  <Mjml>
+    <MjmlBody>
+      <MjmlColumn>
+        <MjmlText>Hi {name},</MjmlText>
+        <MjmlText>Welcome to our service!</MjmlText>
+      </MjmlColumn>
+    </MjmlBody>
+  </Mjml>
+);
+Welcome.subject = ({ name }) => `Welcome ${name}!`;
+
+export default Welcome;
+```
+
+In this example, the `Welcome ${name}!` will be used as the email subject when this template is
+delivered with `sendMail`. Passing a subject into a `sendMail` call will override the subject defined on the component.
+
+```tsx
+await sendMail({
+  to: "someone@something.com",
+  subject: "This is a custom subjec",
+  component: <Welcome name="Amelita" />,
+});
+```
+
+This will send an email with the subject `"This is a custom subject"`.
+
+## Adding preview text
+
+Often times, email clients will show a preview of the email in the inbox.
+This is called the preview or preheader text.
+By default, most clients will generate this from the first few lines of "visible" text
+in your email (it will skip `display: none` elements).
+
+To specify custom text, use the `MjmlPreview` component. It will generate the appropriate hidden text.
+
+```tsx
+const MyTemplate: Template<{}> = () => (
+  <Mjml>
+    <MjmlHead >
+      <MjmlPreview>
+        <div style="font-size:0px;line-height:1px;mso-line-height-rule:exactly;display:none;max-width:0px;max-height:0px;opacity:0;overflow:hidden;mso-hide:all;">
+          I am the pre-header!
+        </div>
+      </MjmlRaw>
+    </MjmlHead>
+  </Mjml>
+);
+```
+
+A more thorough reference for preheader text in HTML can be found [here](https://responsivehtmlemail.com/html-email-preheader-text/).

@@ -43,7 +43,7 @@ async function getPreviewFunction(
       const body = /<body[^>]*>((.|[\n\r])*)<\/body>/im.exec(html);
       if (body && body[1]) {
         const root = parse(body[1]);
-        text = root.text
+        text = root.innerText
           .replace(/\s+/g, " ")
           .trim()
           .substring(0, MAX_TEXT_CHARS);
