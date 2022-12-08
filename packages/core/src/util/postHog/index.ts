@@ -20,7 +20,7 @@ export async function capture(options: EventMessageV1) {
     ...options,
     distinctId,
     properties: {
-      mailing_version: MAILING_CORE_VERSION,
+      mailing_core_version: MAILING_CORE_VERSION,
       ...options.properties,
     },
   };
