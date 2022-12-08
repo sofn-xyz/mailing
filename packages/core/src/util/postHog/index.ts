@@ -40,7 +40,9 @@ export async function capture(options: EventMessageV1) {
       client.capture(captureOpts);
     } else if (process.env.NODE_ENV === "test") {
       // call capture if it has been mocked
-      const capture = client.capture as any;
+      const capture = client.capture as typeof client.capture & {
+        mock?: any;
+      };
       if (capture.mock) capture(captureOpts);
     } else {
       debug(
