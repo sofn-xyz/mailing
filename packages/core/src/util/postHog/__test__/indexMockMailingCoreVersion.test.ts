@@ -3,7 +3,7 @@ import * as postHogClient from "../client";
 import { PostHog } from "posthog-node";
 
 jest.mock("../../../const/mailingCoreVersion", () => ({
-  MAILING_CORE_VERSION: "mock-mailing-version",
+  MAILING_CORE_VERSION: "mock-mailing-core-version",
 }));
 
 describe("posthog", () => {
@@ -37,7 +37,7 @@ describe("posthog", () => {
       distinctId: "abc",
       event: "ate pizza",
       properties: {
-        mailing_version: "mock-mailing-version",
+        mailing_core_version: "mock-mailing-core-version",
       },
     });
   });
