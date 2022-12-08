@@ -118,20 +118,28 @@ const WhiteGlove: NextPage = () => {
               </div>
             </div>
           </div>
-          <div className="relative mx-auto">
+          <div className="relative mx-auto overflow-hidden">
             <Image
-              src="/homepage/fynn-screenshot.png"
-              width={480}
-              height={681}
-              alt="Fynn email screenshot"
-              className="rounded-2xl inline-block top-24 right-0 lg:right-auto lg:left-0 lg:top-0 z-10 lg:z-0"
+              src="/homepage/fynn-code.png"
+              width={355}
+              height={546}
+              alt="Fynn email screenshot with code"
+              className="mx-auto rounded-l-2xl sm:hidden scale-[1.62] pt-10"
+            />
+
+            <Image
+              src="/homepage/fynn-code-sm.png"
+              width={1280 / 2}
+              height={1474 / 2}
+              alt="Fynn email screenshot with code"
+              className="mx-auto rounded-2xl hidden sm:block lg:hidden"
             />
             <Image
-              src="/homepage/fynn-code-sample.png"
-              width={681}
-              height={345}
-              alt="Fynn email screenshot"
-              className="rounded-2xl inline-block lg:right-0 lg:top-24 z-0 lg:z-10"
+              src="/homepage/fynn-code-lg.png"
+              width={2242 / 2}
+              height={1362 / 2}
+              alt="Fynn email screenshot with code"
+              className="mx-auto rounded-2xl hidden lg:block"
             />
           </div>
           <div className="mx-auto max-w-5xl">
