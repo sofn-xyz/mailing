@@ -10,6 +10,7 @@ import ExampleCard from "../components/homepage/ExampleCard";
 import Social from "../components/homepage/Social";
 import { Arrow } from "../components/homepage/Arrow";
 import CircleJar from "../components/homepage/CircleJar";
+import Header from "../components/Header";
 
 const WhiteGlove: NextPage = () => {
   return (
@@ -39,95 +40,25 @@ const WhiteGlove: NextPage = () => {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <header className="sticky bg-black text-white top-0 z-10 transition-all duration-1000">
-        <nav className="mx-auto flex items-center justify-between px-5 py-3 sm:px-8 sm:py-4 border-b border-gray-500 border-dotted">
-          <Link href="/" className="flex-1">
-            <Image
-              src="/lockup-sans-serif.svg"
-              alt="Mailing"
-              width={128}
-              height={28}
-              className="hidden sm:block"
-            />
-            <Image
-              src="/mailing-icon-white.svg"
-              alt="Mailing"
-              width={21}
-              height={28}
-              className="sm:hidden"
-            />
-          </Link>
-          <ul>
-            <li className="inline px-2">
-              <a href="https://discord.gg/fdSzmY46wY" className="inline-block">
-                <Image
-                  src="/discord-icon.png"
-                  alt="Discord"
-                  width={16}
-                  height={12}
-                  className="opacity-60 hover:opacity-100 transition-opacity inline -mt-0.5"
-                />
-              </a>
-            </li>
-            <li className="inline px-1.5">
-              <a
-                href="https://github.com/sofn-xyz/mailing"
-                className="inline-block"
-              >
-                <Image
-                  src="/gh-icon.png"
-                  alt="GitHub"
-                  width={14}
-                  height={14}
-                  className="opacity-60 hover:opacity-100 transition-opacity inline -mt-0.5"
-                />
-              </a>
-            </li>
-            <li className="inline px-1.5">
-              <Link
-                href="docs"
-                className="text-slate-300 hover:text-white inline-block transition-all"
-              >
-                Docs
-              </Link>
-            </li>
-            <li className="inline px-1.5">
-              <Link
-                href="https://demo.mailing.run"
-                className="text-slate-300 hover:text-white inline-block transition-all"
-              >
-                Demo
-              </Link>
-            </li>
-            <li className="hidden sm:inline px-1.5">
-              <Link
-                href="white-glove"
-                className="text-slate-300 hover:text-white inline-block transition-all"
-              >
-                White Glove
-              </Link>
-            </li>
-          </ul>
-          <div className="flex-1 text-right hidden lg:inline-block">
-            <KeyButton
-              target="_blank"
-              small
-              href="https://github.com/sofn-xyz/mailing"
+      <Header
+        rightButton={
+          <>
+            <div className="flex-1 text-right hidden lg:inline-block">
+              <KeyButton small href="/docs#getting-started">
+                Get Started
+                <Arrow />
+              </KeyButton>
+            </div>
+            <Link
+              href="/docs#getting-started"
+              className="lg:hidden text-green-200 flex-1 text-right"
             >
-              Get Started
+              Start
               <Arrow />
-            </KeyButton>
-          </div>
-          <Link
-            target="_blank"
-            href="https://github.com/sofn-xyz/mailing"
-            className="lg:hidden text-green-200 flex-1 text-right"
-          >
-            Start
-            <Arrow />
-          </Link>
-        </nav>
-      </header>
+            </Link>
+          </>
+        }
+      />
       <main className="px-5 sm:px-16 xl:px-0 bg-black min-h-screen text-white">
         <div className="max-w-[1440px] mx-auto xl:px-8 text-left sm:text-center">
           <h1 className="text-[84px] sm:text-8xl md:text-[108px] lg:text-[140px] font-serif font-bold text-white  mt-24 leading-[0.9] max-w-[840px] mx-auto">
@@ -144,6 +75,7 @@ const WhiteGlove: NextPage = () => {
           height={743}
           alt="Mailing previewer screenshot"
           className="mx-auto rounded-2xl border-2 border-gray-800 mt-12 sm:mt-20 md:mt-24"
+          priority
         />
         <div className="mx-auto max-w-6xl">
           <H2>How it works</H2>

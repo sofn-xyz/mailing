@@ -1,17 +1,15 @@
 import { useEffect, useState } from "react";
 import Head from "next/head";
-import Image from "next/image";
 import Link from "next/link";
 import cx from "classnames";
 import { DocSearch } from "@docsearch/react";
-import KeyButton from "../homepage/KeyButton";
-import { Arrow } from "../homepage/Arrow";
 
 import "@docsearch/css";
 
 import NavLink from "./NavLink";
 import IndexButton from "./IndexButton";
 import { useHydrationFriendlyAsPath } from "../hooks/useHydrationFriendlyAsPath";
+import Header from "../Header";
 
 function NavCategory({ children }) {
   return (
@@ -42,116 +40,30 @@ export default function DocsLayout({ children }) {
         />
         <title>Docs – Mailing</title>
       </Head>
-      <div className="z-50 bg-black fixed w-full flex py-0 text-sm mb-16 px-4 sm:px-6 md:px-8 border-b border-gray-500 border-dotted text-blue-300 ">
-        <nav className="mx-auto flex items-center justify-between py-3 sm:py-4 w-full">
-          <Link href="/" className="flex-1">
-            <Image
-              src="/lockup-sans-serif.svg"
-              alt="Mailing"
-              width={128}
-              height={28}
-              className="hidden sm:block"
-            />
-            <Image
-              src="/mailing-icon-white.svg"
-              alt="Mailing"
-              width={21}
-              height={28}
-              className="sm:hidden"
-            />
-          </Link>
-          <ul className="text-base">
-            <li className="inline px-2">
-              <a
-                href="https://discord.gg/fdSzmY46wY"
-                className="text-slate-300 hover:text-blue-400 transition-colors"
-              >
-                <Image
-                  src="/discord-icon.png"
-                  alt="Discord"
-                  width={16}
-                  height={12}
-                  className="opacity-70 hover:opacity-100 transition-opacity inline -mt-0.5"
-                />
-              </a>
-            </li>
-            <li className="inline px-1.5">
-              <a
-                href="https://github.com/sofn-xyz/mailing"
-                className="text-slate-300 hover:text-blue-400 transition-colors"
-              >
-                <Image
-                  src="/gh-icon.png"
-                  alt="GitHub"
-                  width={14}
-                  height={14}
-                  className="opacity-70 hover:opacity-100 transition-opacity inline -mt-0.5"
-                />
-              </a>
-            </li>
-            <li className="inline px-1.5">
-              <Link
-                href="docs"
-                className="text-white underline transition-colors"
-              >
-                Docs
-              </Link>
-            </li>
-            <li className="inline px-1.5">
-              <Link
-                href="/docs/templates"
-                className="text-slate-300 hover:text-blue-400 transition-colors"
-              >
-                Demos
-              </Link>
-            </li>
-            <li className="hidden sm:inline px-1.5">
-              <Link
-                href="white-glove"
-                className="text-slate-300 hover:text-blue-400 transition-colors"
-              >
-                White Glove
-              </Link>
-            </li>
-          </ul>
-          <div className="flex-1 text-right hidden lg:inline-block">
-            <KeyButton
-              target="_blank"
-              small
-              href="https://github.com/sofn-xyz/mailing"
-            >
-              Get Started
-              <Arrow />
-            </KeyButton>
-          </div>
-          <Link
-            target="_blank"
-            href="https://github.com/sofn-xyz/mailing"
-            className="lg:hidden text-green-200 flex-1 text-right"
-          >
-            Start
-            <Arrow />
-          </Link>
-        </nav>
-
-        <div className="sm:hidden flex flex-col justify-center">
-          <IndexButton
-            isOpen={hamburgerOpen}
-            onClick={() => setHamburgerOpen((v) => !v)}
-          />
-        </div>
-      </div>
+      <Header
+        rightButton={
+          <>
+            <div className="lg:hidden flex flex-col justify-center">
+              <IndexButton
+                isOpen={hamburgerOpen}
+                onClick={() => setHamburgerOpen((v) => !v)}
+              />
+            </div>
+          </>
+        }
+      />
       <div className="max-w-8xl mx-auto px-4 sm:px-6 md:px-8 pb-20">
         <nav
           className={cx(
-            "lg:block fixed bg-black w-full z-20 inset-0 top-12 left-0 right-auto sm:w-72 pb-10 px-7 overflow-y-auto border-r border-gray-500  border-dotted",
+            "lg:block fixed bg-black w-full z-20 inset-0 top-[59px] lg:top-[79px] left-0 right-auto sm:w-72 pb-10 px-7 overflow-y-auto lg:border-r border-gray-500 border-dotted transition-opacity duration-500",
             {
-              hidden: !hamburgerOpen,
+              "opacity-0 lg:opacity-100 pointer-events-none lg:pointer-events-auto":
+                !hamburgerOpen,
             }
           )}
         >
           <Link href="/docs">
-            <h3 className="text-white text-2xl pt-14">Docs</h3>
+            <h3 className="text-white text-2xl pt-8">Docs</h3>
           </Link>
           <div className="mt-6 -mb-2 border-gray-800 text-slate-500 hover:text-blue">
             <DocSearch
