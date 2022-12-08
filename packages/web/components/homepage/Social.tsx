@@ -192,7 +192,9 @@ export function Social({ name }: SocialProps) {
           <span className="underline">{sourceText}</span> <Arrow />
         </a>
       )}
-      <div className="text-lg lg:text-xl mt-6 sm:mt-[30px]">{quote}</div>
+      <div className="text-lg lg:text-xl mt-6 sm:mt-[30px] leading-[1.4]">
+        {quote}
+      </div>
     </div>
   );
 }

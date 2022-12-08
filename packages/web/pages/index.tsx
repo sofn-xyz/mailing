@@ -60,7 +60,7 @@ const WhiteGlove: NextPage = () => {
           </>
         }
       />
-      <main className="px-5 sm:px-16 xl:px-0 bg-black min-h-screen text-white">
+      <main className="px-5 sm:px-16 xl:px-0 bg-black min-h-screen text-white overflow-hidden">
         <div className="max-w-[1440px] mx-auto xl:px-8 text-left sm:text-center">
           <h1 className="text-[84px] sm:text-8xl md:text-[108px] lg:text-[140px] font-serif font-bold text-white  mt-24 leading-[0.9] max-w-[840px] mx-auto">
             Add email to your React app
@@ -83,7 +83,14 @@ const WhiteGlove: NextPage = () => {
           <div className="sm:ml-16 xl:ml-36 2xl:ml-48">
             <Li
               title="Add Mailing to your app"
-              description="Mailing adds an emails directory to your Node app. Email templates go in here and can import shared constants, images, and components. Templates stay under source control with the rest of your code."
+              description={
+                <>
+                  Mailing adds an <Code>emails</Code> directory to your Node
+                  app. Email templates go in here and can import shared
+                  constants, images, and components. Templates stay under source
+                  control with the rest of your code.
+                </>
+              }
               index={1}
               prepend={<CircleJar index={0} />}
             />
@@ -97,10 +104,11 @@ const WhiteGlove: NextPage = () => {
               title="Send with any transport"
               description={
                 <>
-                  Mailing is transport agnostic. The sendMail function renders
-                  React MJML templates to HTML and sends them to your mailing
-                  list subscribers. This function is built with Nodemailer, so
-                  you can pass in any options that Nodemailer supports.
+                  Mailing is transport agnostic. The <Code>sendMail</Code>{" "}
+                  function renders React MJML templates to HTML and sends them
+                  to your mailing list subscribers. This function is built with
+                  Nodemailer, so you can pass in any options that Nodemailer
+                  supports.
                 </>
               }
               index={3}
@@ -149,9 +157,9 @@ const WhiteGlove: NextPage = () => {
                   Collaborative
                 </h3>
                 <div className="text-base md:text-xl mt-8 sm:mt-4 md:mt-8">
-                  Self-hosted previews and analytics help your team stay on the
-                  same page. When everyone can easily see the live emails and
-                  their analytics, product and design QA are a breeze.
+                  Self-hosted previews help your team stay on the same page.
+                  When everyone can easily see live versions of emails, product
+                  folks can stay up-to-date and design QA is a breeze.
                 </div>
               </div>
             </div>
@@ -172,10 +180,9 @@ const WhiteGlove: NextPage = () => {
                 </h3>
                 <div className="text-base md:text-xl mt-8 sm:mt-4 md:mt-8">
                   The Mailing dev environment is free. If you send emails with
-                  the <Code>sendMail</Code> function, you’ll have the option to
-                  use paid features like unsubscribe preferences and email
-                  analytics. If not, simply export the HTML or use the React
-                  templates.
+                  the <Code>sendMail</Code> function, you’ll have access to
+                  drop-in unsubscribe and subscription preferences. If not,
+                  simply export the HTML or use the React templates.
                 </div>
               </div>
             </div>
@@ -226,6 +233,114 @@ const WhiteGlove: NextPage = () => {
               Get Started
               <span className="font-serif font-bold">&nbsp;&nbsp;→</span>
             </a>
+          </div>
+        </div>
+
+        <div className="max-w-[1440px] mx-auto text-right flex justify-end xl:px-16">
+          <div className="max-w-[788px]">
+            <H2>Level up with Platform</H2>
+          </div>
+        </div>
+        <div className="max-w-[1440px] mx-auto flex justify-between items-center gap-16 xl:px-16">
+          <div className="">
+            <h3 className="font-serif font-bold text-5xl md:text-[60px] lg:text-[72px]">
+              Own your <br className="hidden lg:block" />
+              contact list
+            </h3>
+            <Image
+              src="/homepage/list-screenshot.png"
+              width={736}
+              height={460}
+              alt="Mailing list screenshot"
+              className="rounded-lg border-2 border-gray-800 block lg:hidden my-8 w-full"
+            ></Image>
+            <div className="text-lg lg:text-xl mt-8 sm:mt-4 md:mt-8 max-w-full lg:max-w-md leading-[1.4]">
+              The <Code>sendMail</Code> function gives you access to Platform
+              features like list management and drop-in unsubscribe. Mailing
+              servers are self-hosted, so you get sole ownership of your data.
+            </div>
+            <Link
+              href="/docs/lists"
+              className="underline hover:text-blue-400 text-2xl lg:text-3xl mt-6 md:mt-8 inline-block"
+            >
+              Learn More
+              <span className="font-serif font-bold">&nbsp;&nbsp;→</span>
+            </Link>
+          </div>
+          <Image
+            src="/homepage/list-screenshot.png"
+            width={736}
+            height={460}
+            alt="Mailing list screenshot"
+            className="rounded-lg border-2 border-gray-800 hidden lg:flex justify-end lg:max-w-[600px] mr-0 lg:-mr-32 xl:mr-0 mt:0 lg:mt-12 xl:mt-0 xl:max-w-full"
+          ></Image>
+        </div>
+        <div className="max-w-[1440px] mx-auto hidden lg:flex xl:hidden justify-between items-center gap-16 xl:px-16 mt-32">
+          <div className="">
+            <h3 className="font-serif font-bold text-5xl md:text-[60px] lg:text-[72px]">
+              Own your <br className="hidden lg:block" />
+              contact list
+            </h3>
+            <Image
+              src="/homepage/list-screenshot.png"
+              width={736}
+              height={460}
+              alt="Mailing list screenshot"
+              className="rounded-lg border-2 border-gray-800 block lg:hidden my-8 w-full"
+            ></Image>
+            <div className="text-lg lg:text-xl mt-8 sm:mt-4 md:mt-8 max-w-full lg:max-w-md leading-[1.4]">
+              The <Code>sendMail</Code> function gives you access to Platform
+              features like list management and drop-in unsubscribe. Mailing
+              servers are self-hosted, so you get sole ownership of your data.
+            </div>
+            <Link
+              href="/docs/lists"
+              className="underline hover:text-blue-400 text-2xl lg:text-3xl mt-6 md:mt-8 inline-block"
+            >
+              Learn More
+              <span className="font-serif font-bold">&nbsp;&nbsp;→</span>
+            </Link>
+          </div>
+          <Image
+            src="/homepage/prefs-screenshot.png"
+            width={736}
+            height={460}
+            alt="Mailing subscription preferences screenshot"
+            className="rounded-lg border-2 border-gray-800 hidden lg:flex justify-end lg:max-w-[600px] mr-0 lg:-mr-32 xl:mr-0 mt:0 lg:mt-12 xl:mt-0 xl:max-w-full"
+          ></Image>
+        </div>
+        <div className="max-w-[1440px] mx-auto flex lg:hidden xl:flex justify-between items-center gap-16 xl:px-16 mt-16 md:mt-20 lg:mt-32">
+          <Image
+            src="/homepage/prefs-screenshot.png"
+            width={736}
+            height={460}
+            alt="Mailing subscription preferences screenshot"
+            className="rounded-lg border-2 border-gray-800 hidden lg:flex justify-end lg:max-w-[600px] ml-0 lg:-ml-32 xl:ml-0 mt:0 lg:mt-12 xl:mt-0 xl:max-w-full"
+          ></Image>
+          <div className="">
+            <h3 className="font-serif font-bold text-5xl md:text-[60px] lg:text-[72px]">
+              Give users <br className="hidden lg:block" />
+              unsub prefs
+            </h3>
+            <Image
+              src="/homepage/prefs-screenshot.png"
+              width={736}
+              height={460}
+              alt="Mailing subscription preferences screenshot"
+              className="rounded-lg border-2 border-gray-800 block lg:hidden my-8 w-full"
+            ></Image>
+            <div className="text-lg lg:text-xl mt-8 sm:mt-4 md:mt-8 max-w-full lg:max-w-md leading-[1.4]">
+              The <Code>sendMail</Code> function gives you access to Platform
+              features like list management and drop-in unsubscribe. Mailing
+              servers are self-hosted, so you get sole ownership of your data.
+            </div>
+            <Link
+              href="/docs/lists"
+              className="underline hover:text-blue-400 text-2xl lg:text-3xl mt-6 md:mt-8 inline-block"
+            >
+              Learn More
+              <span className="font-serif font-bold">&nbsp;&nbsp;→</span>
+            </Link>
           </div>
         </div>
         <div className="mx-auto lg:max-w-6xl gap-x-[10%] lg:flex lg:flex-col lg:flex-wrap lg:max-h-[1530px] mt-36 sm:mt-40 md:mt-48 lg:mt-64">
