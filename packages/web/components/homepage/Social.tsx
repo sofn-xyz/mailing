@@ -171,7 +171,7 @@ export function Social({ name }: SocialProps) {
   const sourceText = data["sourceText"];
 
   return (
-    <div className="max-w-full lg:max-w-[400px] xl:max-w-[500px] mb-16 sm:mb-[72px] md:mb-[84px] lg:mb-[120px] xl:mb-36 ">
+    <div className="max-w-full lg:max-w-[45%] mt-16 sm:mt-[72px] md:mt-[84px] lg:mt-[120px] xl:mt-36 ">
       <Image
         width="64"
         height="64"

@@ -206,15 +206,15 @@ const WhiteGlove: NextPage = () => {
             </a>
           </div>
         </div>
-        <div>
-          <div className="max-w-sm text-left sm:max-w-full sm:text-right lg:max-w-sm lg:text-left">
-            <H2>Kind words</H2>
+        <div className="mx-auto lg:max-w-6xl gap-x-[10%] lg:flex lg:flex-col lg:flex-wrap lg:max-h-[1530px] mt-36 sm:mt-40 md:mt-48 lg:mt-64">
+          <div className="max-w-sm text-left sm:max-w-full sm:text-right lg:max-w-[45%] lg:text-left">
+            <H2 marginClassName="">Kind words</H2>
           </div>
           <Social name="cymen" />
-          <Social name="steven" />
           <Social name="will" />
-          <Social name="guillermo" />
           <Social name="johan" />
+          <Social name="steven" />
+          <Social name="guillermo" />
           <Social name="sidi" />
         </div>
       </main>
