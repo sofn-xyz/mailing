@@ -8,13 +8,15 @@ import {
   MjmlAttributes,
   MjmlAll,
   MjmlRaw,
+  MjmlPreview,
 } from "mjml-react";
 import { colors, screens, themeDefaults, spacing } from "../theme";
 
-export default function BaseLayout({ width, children }) {
+export default function BaseLayout({ width, children, preview }) {
   return (
     <Mjml>
       <MjmlHead>
+        {preview && <MjmlPreview>{preview}</MjmlPreview>}
         <MjmlRaw>
           <meta name="color-scheme" content="light dark" />
           <meta name="supported-color-schemes" content="light dark" />
