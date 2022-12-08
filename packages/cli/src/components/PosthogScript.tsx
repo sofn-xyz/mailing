@@ -1,4 +1,5 @@
-import { POSTHOG_API_KEY, MAILING_VERSION } from "mailing";
+import { POSTHOG_API_KEY } from "mailing/src/util/postHog/posthogApiKey";
+import { MAILING_VERSION } from "mailing/src/const/mailingVersion";
 
 export default function PosthogScript() {
   if (process.env.NODE_ENV !== "production" || POSTHOG_API_KEY === undefined) {

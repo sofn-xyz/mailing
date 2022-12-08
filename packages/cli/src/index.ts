@@ -12,9 +12,6 @@ const config = existsSync(MAILING_CONFIG_FILE)
   ? readJSONverbose(MAILING_CONFIG_FILE)
   : {};
 
-export const MAILING_VERSION = process.env.MAILING_VERSION;
-export const POSTHOG_API_KEY = process.env.POSTHOG_API_KEY;
-
 // prettier-ignore
 void yargs(process.argv.slice(2))
   .config(config)
