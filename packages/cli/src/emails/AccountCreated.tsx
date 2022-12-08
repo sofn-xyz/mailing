@@ -30,7 +30,7 @@ const AccountCreated: Template<AccountCreatedProps> = ({ name }) => (
     </MjmlSection>
     <MjmlSection cssClass="gutter">
       <MjmlColumn>
-        <Heading fontSize={fontSize.xl}>{name}, your table awats.</Heading>
+        <Heading fontSize={fontSize.xl}>{name}, your table awaits.</Heading>
         <Text paddingTop={spacing.s7} paddingBottom={spacing.s7}>
           Thank you for joining BookBook! We’re excited to help you enjoy great
           meals without any begging, guessing, waiting or phone calls. Just a
