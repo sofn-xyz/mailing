@@ -181,14 +181,14 @@ const WhiteGlove: NextPage = () => {
           </div>
           <div>
             <Image
-              src="/fynn-screenshot.png"
+              src="/homepage/fynn-screenshot.png"
               width={480}
               height={681}
               alt="Fynn email screenshot"
               className="rounded-2xl"
             />
             <Image
-              src="/fynn-code-sample.png"
+              src="/homepage/fynn-code-sample.png"
               width={681}
               height={345}
               alt="Fynn email screenshot"
