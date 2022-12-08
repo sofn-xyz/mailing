@@ -9,7 +9,7 @@ import Text from "./components/Text";
 import { spacing, fontSize } from "./theme";
 
 const AccountCreated = ({ name }) => (
-  <BaseLayout width={600}>
+  <BaseLayout width={600} preview="Excited to help you enjoy great meals.">
     <Header loose />
     <MjmlSection cssClass="lg-gutter" paddingBottom={spacing.s9}>
       <MjmlColumn>
