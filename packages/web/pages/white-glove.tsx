@@ -138,9 +138,10 @@ const WhiteGlove: NextPage = () => {
           </Subheading>
           <div className="text-left flex flex-wrap justify-center mt-16 md:mt-24">
             <ExampleCard name="lancey" />
-            <ExampleCard name="thoughtfulPost" />
-            <ExampleCard name="fynn" />
             <ExampleCard name="mailing" />
+            <ExampleCard name="bbeam" />
+            <ExampleCard name="fynn" />
+            <ExampleCard name="thoughtfulPost" />
           </div>
         </div>
         <div className="mx-auto -mt-16 max-w-6xl">
