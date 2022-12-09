@@ -42,12 +42,22 @@ export default function DocsLayout({ children }) {
       </Head>
       <Header
         rightButton={
-          <div className="lg:hidden flex flex-col justify-center">
-            <IndexButton
-              isOpen={hamburgerOpen}
-              onClick={() => setHamburgerOpen((v) => !v)}
-            />
-          </div>
+          <>
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              href="https://github.com/sofn-xyz/mailing"
+              className="text-xs hidden lg:block text-black text-right border bg-slate-300 hover:underline px-2 pb-1.5 pt-1 rounded-md"
+            >
+              Star on GitHub
+            </a>
+            <div className="lg:hidden flex flex-col justify-center">
+              <IndexButton
+                isOpen={hamburgerOpen}
+                onClick={() => setHamburgerOpen((v) => !v)}
+              />
+            </div>
+          </>
         }
       />
       <div className="max-w-8xl mx-auto px-4 sm:px-6 md:px-8 pb-20">

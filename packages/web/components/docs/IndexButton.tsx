@@ -23,7 +23,7 @@ export default function IndexButton({ isOpen, onClick }: IndexButtonProps) {
   // hamburger button styled with tailwind
   return (
     <button
-      className="w-12 h-[38px] relative focus:outline-none top-0.5"
+      className="mr-1.5 sm:mr-0 w-[24px] h-[38px] relative focus:outline-none top-0.5"
       onClick={onClick}
     >
       <span

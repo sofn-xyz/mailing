@@ -52,7 +52,7 @@ const WhiteGlove: NextPage = () => {
             </div>
             <Link
               href="/docs#getting-started"
-              className="lg:hidden text-green-200 flex-1 text-right"
+              className="lg:hidden text-blue-400 flex-1 text-right"
             >
               Start
               <Arrow />

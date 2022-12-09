@@ -16,7 +16,7 @@ export default function Header({ rightButton }: HeaderProps) {
             width={128}
             height={28}
             priority
-            className="hidden sm:block"
+            className="hidden md:block"
           />
           <Image
             src="/mailing-icon-white.svg"
@@ -24,7 +24,7 @@ export default function Header({ rightButton }: HeaderProps) {
             width={21}
             height={28}
             priority
-            className="sm:hidden"
+            className="md:hidden"
           />
         </Link>
         <ul>
