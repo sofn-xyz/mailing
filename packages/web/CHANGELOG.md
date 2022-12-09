@@ -1,5 +1,15 @@
 # web
 
+## 0.4.15
+
+### Patch Changes
+
+- 164940f: To better help us improve mailing, anonymous analytics now includes the version of mailing and mailing-core that you are using.
+- Updated dependencies [6176419]
+- Updated dependencies [b748ddd]
+- Updated dependencies [164940f]
+  - mailing-core@0.9.6
+
 ## 0.4.14
 
 ### Patch Changes

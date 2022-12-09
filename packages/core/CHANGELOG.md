@@ -1,5 +1,13 @@
 # mailing-core
 
+## 0.9.6
+
+### Patch Changes
+
+- 6176419: show subject and preview text in ClientView
+- b748ddd: add preview prop for preview/preheader text to BaseLayout
+- 164940f: To better help us improve mailing, anonymous analytics now includes the version of mailing and mailing-core that you are using.
+
 ## 0.9.5
 
 ### Patch Changes
