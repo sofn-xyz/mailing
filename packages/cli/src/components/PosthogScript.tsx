@@ -1,5 +1,6 @@
 import { POSTHOG_API_KEY } from "../util/postHog/posthogApiKey";
 import { MAILING_VERSION } from "../const/mailingVersion";
+import { config } from "../feManifest";
 
 export default function PosthogScript() {
   if (process.env.NODE_ENV !== "production" || POSTHOG_API_KEY === undefined) {
@@ -17,7 +18,10 @@ export default function PosthogScript() {
               posthog.init('${POSTHOG_API_KEY}', { 
                 api_host: 'https://app.posthog.com',
                 loaded: function(posthog) { 
-                  posthog.register({ 'mailing_version': '${MAILING_VERSION}' });    
+                  posthog.register({ 'mailing_version': '${MAILING_VERSION}' });
+
+                  const anonymousId = '${config.anonymousId}';
+                  if (anonymousId) posthog.identify(anonymousId);
                 }
               });`,
       }}
