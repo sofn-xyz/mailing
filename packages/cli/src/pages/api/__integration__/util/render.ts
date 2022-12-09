@@ -2,7 +2,7 @@ import { Api } from "./index";
 
 interface RenderFormData {
   templateName: string;
-  props: any;
+  props?: any;
 }
 
 export function apiRender() {
@@ -15,8 +15,8 @@ export class ApiRender extends Api<RenderFormData> {
   method = "POST";
 
   formData = {
-    templateName: "AccountCreated",
-    props: { name: "Alex" },
+    templateName: "Welcome",
+    props: {},
   };
 }
 export class ApiRenderGet extends Api<RenderFormData> {
@@ -24,7 +24,7 @@ export class ApiRenderGet extends Api<RenderFormData> {
   method = "GET";
 
   formData = {
-    templateName: "AccountCreated",
-    props: encodeURI(JSON.stringify({ name: "Alex" })),
+    templateName: "Welcome",
+    props: encodeURI(JSON.stringify({})),
   };
 }
