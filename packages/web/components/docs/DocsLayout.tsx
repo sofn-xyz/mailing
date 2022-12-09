@@ -3,6 +3,7 @@ import Head from "next/head";
 import Link from "next/link";
 import cx from "classnames";
 import { DocSearch } from "@docsearch/react";
+import Image from "next/image";
 
 import "@docsearch/css";
 
@@ -49,6 +50,13 @@ export default function DocsLayout({ children }) {
               href="https://github.com/sofn-xyz/mailing"
               className="text-xs hidden lg:block text-black text-right border bg-slate-300 hover:underline px-2 pb-1.5 pt-1 rounded-md"
             >
+              <Image
+                src="/gh-icon.png"
+                alt="GitHub"
+                width={12}
+                height={12}
+                className="invert inline -mt-0.5 mr-1.5"
+              />
               Star on GitHub
             </a>
             <div className="lg:hidden flex flex-col justify-center">
