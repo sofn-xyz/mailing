@@ -4,6 +4,7 @@ import fs from "fs-extra";
 import { render } from "./mjml";
 import { error, log, debug } from "./util/serverLogger";
 import fetch from "node-fetch";
+import { resolve } from "path";
 import { capture } from "./util/postHog";
 import instrumentHtml from "./util/instrumentHtml";
 
@@ -83,6 +84,8 @@ export function buildSendMail<T>(options: BuildSendMailOptions<T>) {
   let anonymousId = "unknown";
   try {
     const configRaw = fs.readFileSync(options.configPath).toString();
+    console.log("configPath is in ", resolve(options.configPath));
+
     const config = JSON.parse(configRaw);
     anonymousId =
       process.env.NODE_ENV === "production" ? config.anonymousId : null;
