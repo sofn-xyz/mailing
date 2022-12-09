@@ -11,7 +11,6 @@ import IconQuestion from "./icons/IconQuestion";
 import IconSend from "./icons/IconSend";
 
 const white = "#E4EBFA";
-const gray = "#333";
 
 type HeaderProps = {
   previewFunction?: string;
@@ -37,27 +36,27 @@ const Header: React.FC<HeaderProps> = ({
         <div className="segmented-control">
           <button
             className={cx("desktop cursor-pointer hover:bg-gray-700", {
-              active: viewMode === "desktop",
+              "bg-active": viewMode === "desktop",
             })}
             onClick={() => setViewMode("desktop")}
           >
-            <IconDesktop fill={viewMode === "desktop" ? gray : white} />
+            <IconDesktop fill={white} />
           </button>
           <button
             className={cx("mobile cursor-pointer hover:bg-gray-700", {
-              active: viewMode === "mobile",
+              "bg-active": viewMode === "mobile",
             })}
             onClick={() => setViewMode("mobile")}
           >
-            <IconMobile fill={"mobile" === viewMode ? gray : white} />
+            <IconMobile fill={white} />
           </button>
           <button
             className={cx("html cursor-pointer hover:bg-gray-700", {
-              active: viewMode === "html",
+              "bg-active": viewMode === "html",
             })}
             onClick={() => setViewMode("html")}
           >
-            <IconCode fill={"html" === viewMode ? gray : white} />
+            <IconCode fill={white} />
           </button>
         </div>
       </div>
@@ -95,7 +94,6 @@ const Header: React.FC<HeaderProps> = ({
       <style jsx>{`
         .header {
           height: 52px;
-          border-bottom: 1px dotted #333;
           display: flex;
           justify-content: space-between;
           align-items: center;
@@ -126,7 +124,7 @@ const Header: React.FC<HeaderProps> = ({
 
         button {
           height: 36px;
-          border: 1px dotted #333;
+          border: 1px dotted #555;
           transition: background-color, box-shadow 200ms ease-out;
           text-align: center;
         }
@@ -161,10 +159,6 @@ const Header: React.FC<HeaderProps> = ({
           border-left: none;
           border-top-right-radius: 16px;
           border-bottom-right-radius: 16px;
-        }
-        .active {
-          background: #b8ceff;
-          border-color: transparent;
         }
         .help,
         .send {
