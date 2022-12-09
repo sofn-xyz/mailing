@@ -152,33 +152,33 @@ const WhiteGlove: NextPage = () => {
           </div>
           <div className="mx-auto max-w-5xl">
             <div className="flex justify-end">
-              <div className="text-left lg:max-w-[442px]">
+              <div className="text-left lg:max-w-[442px] mt-16">
                 <h3 className="font-serif font-bold text-5xl md:text-6xl lg:text-7xl leading-[1.2]">
                   Collaborative
                 </h3>
-                <div className="text-base md:text-xl mt-8 sm:mt-4 md:mt-8">
+                <div className="text-base md:text-xl mt-4 md:mt-8 leading-[1.4]">
                   Self-hosted previews help your team stay on the same page.
                   When everyone can easily see live versions of emails, product
                   folks can stay up-to-date and design QA is a breeze.
                 </div>
               </div>
             </div>
-            <div className="text-left lg:max-w-[442px]">
+            <div className="text-left lg:max-w-[442px] mt-10 sm:mt-12 md:mt-16 lg:mt-0">
               <h3 className="font-serif font-bold text-5xl md:text-6xl lg:text-7xl leading-[1.2]">
                 Open source
               </h3>
-              <div className="text-base md:text-xl mt-8 sm:mt-4 md:mt-8">
+              <div className="text-base md:text-xl mt-8 sm:mt-4 md:mt-8 leading-[1.4]">
                 We made Mailing an open source tool because we want to build
                 software that outlasts our company, and because we love to get
                 regular input and contributions from the community.
               </div>
             </div>
             <div className="flex justify-end">
-              <div className="text-left lg:max-w-[442px]">
+              <div className="text-left lg:max-w-[442px] mt-16">
                 <h3 className="font-serif font-bold text-5xl md:text-6xl lg:text-7xl leading-[1.2]">
                   Zero lock-in
                 </h3>
-                <div className="text-base md:text-xl mt-8 sm:mt-4 md:mt-8">
+                <div className="text-base md:text-xl mt-8 sm:mt-4 md:mt-8 leading-[1.4]">
                   The Mailing dev environment is free. If you send emails with
                   the <Code>sendMail</Code> function, you’ll have access to
                   drop-in unsubscribe and subscription preferences. If not,
@@ -198,27 +198,34 @@ const WhiteGlove: NextPage = () => {
             <ExampleCard name="thoughtfulPost" />
           </div>
         </div>
-        <div className="text-center mt-16 sm:mt-40 md:mt-48 lg:mt-64">
+        <div className="flex justify-center md:gap-12 xl:gap-16 items-center mt-16 sm:mt-40 md:mt-48 lg:mt-64">
           <Image
             src="/homepage/demo-theme.png"
             width={440}
             height={600}
             alt="Mailing demo theme"
-            className="rounded-2xl inline-block lg:hidden xl:inline-block align-middle"
+            className="rounded-2xl hidden md:block lg:hidden xl:block align-middle"
           />
           <Image
             src="/homepage/demo-theme-skinny.png"
             width={360}
             height={600}
             alt="Mailing demo theme"
-            className="rounded-2xl hidden lg:inline-block xl:hidden  align-middle"
+            className="rounded-2xl hidden sm:block md:hidden lg:block xl:hidden  align-middle"
           />
-          <div className="inline-block align-middle text-left lg:ml-[84px] xl:ml-24 2xl:ml-32 ">
+          <div className="text-left sm:-ml-6 md:-ml-32 lg:ml-[84px] xl:ml-24 2xl:ml-32">
             <h3 className="font-serif font-bold text-5xl md:text-[60px] lg:text-[72px]">
-              Customize a<br />
-              demo template
+              Customize <br className="hidden sm:block md:hidden" /> a
+              <br className="sm:hidden md:block" /> demo template
             </h3>
-            <div className="text-base md:text-lg lg:text-xl mt-8 sm:mt-4 md:mt-8 max-w-md">
+            <Image
+              src="/homepage/demo-theme.png"
+              width={440}
+              height={600}
+              alt="Mailing demo theme"
+              className="rounded-2xl block sm:hidden mt-8"
+            />
+            <div className="text-lg lg:text-xl mt-8 sm:mt-4 md:mt-8 w-full sm:max-w-md leading-[1.4]">
               Change a handful of constants to make any of these starter
               templates your own. If you need design system updates down the
               line, it’ll be easy to collaborate with designers and to keep your
@@ -255,9 +262,9 @@ const WhiteGlove: NextPage = () => {
               className="rounded-lg border-2 border-gray-800 block lg:hidden my-8 w-full"
             ></Image>
             <div className="text-lg lg:text-xl mt-8 sm:mt-4 md:mt-8 max-w-full lg:max-w-md leading-[1.4]">
-              The <Code>sendMail</Code> function gives you access to Platform
-              features like list management and drop-in unsubscribe. Mailing
-              servers are self-hosted, so you get sole ownership of your data.
+              Drop-in unsubscribe comes with subscription preferences so your
+              users can control what email they receive. If you try to email an
+              unsubscribed user, Mailing will block the send.
             </div>
             <Link
               href="/docs/lists"
@@ -289,9 +296,9 @@ const WhiteGlove: NextPage = () => {
               className="rounded-lg border-2 border-gray-800 block lg:hidden my-8 w-full"
             ></Image>
             <div className="text-lg lg:text-xl mt-8 sm:mt-4 md:mt-8 max-w-full lg:max-w-md leading-[1.4]">
-              The <Code>sendMail</Code> function gives you access to Platform
-              features like list management and drop-in unsubscribe. Mailing
-              servers are self-hosted, so you get sole ownership of your data.
+              Drop-in unsubscribe comes with subscription preferences so your
+              users can control what email they receive. If you try to email an
+              unsubscribed user, Mailing will block the send.
             </div>
             <Link
               href="/docs/lists"
