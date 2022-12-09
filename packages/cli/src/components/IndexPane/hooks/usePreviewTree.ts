@@ -50,7 +50,6 @@ export function usePreviewTree(
   const [treeRoutes, setTreeRoutes] = useState<TreeRoute[] | undefined>(
     undefined
   );
-
   const { leavesOnly } = options;
 
   const routes = useMemo(() => {
@@ -181,6 +180,7 @@ export function usePreviewTree(
   }, [treeRoutes, cursor]);
 
   const goToNearestLeaf = useCallback(() => {
+    if (cursor === -1 || !treeRoutes) return;
     if (treeRoutes && treeRoutes[cursor].level !== 2) down();
   }, [treeRoutes, cursor, down]);
 

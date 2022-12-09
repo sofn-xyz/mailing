@@ -1,7 +1,8 @@
 import { POSTHOG_API_KEY } from "../util/postHog/posthogApiKey";
+import { MAILING_VERSION } from "../const/mailingVersion";
 
 export default function PosthogScript() {
-  if (process.env.NODE_ENV !== "production") {
+  if (process.env.NODE_ENV !== "production" || POSTHOG_API_KEY === undefined) {
     return null;
   }
 
@@ -12,8 +13,13 @@ export default function PosthogScript() {
       dangerouslySetInnerHTML={{
         __html: `
               ${loadPosthogScript}
-              posthog.init('${POSTHOG_API_KEY}', {api_host: 'https://app.posthog.com'})
-              `,
+              
+              posthog.init('${POSTHOG_API_KEY}', { 
+                api_host: 'https://app.posthog.com',
+                loaded: function(posthog) { 
+                  posthog.register({ 'mailing_version': '${MAILING_VERSION}' });    
+                }
+              });`,
       }}
     ></script>
   );

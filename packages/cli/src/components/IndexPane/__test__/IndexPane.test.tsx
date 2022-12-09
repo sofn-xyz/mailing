@@ -20,6 +20,8 @@ describe("IndexPane", () => {
     ["ResetPassword", ["resetPassword"]],
   ];
 
+  const previewInfo = {};
+
   describe("CompactView", () => {
     it("navigates down", async () => {
       const { findByRole, user } = setup(<IndexPane previews={previews} />);
@@ -92,7 +94,7 @@ describe("IndexPane", () => {
   describe("ClientView", () => {
     it("navigates down", async () => {
       const { findByRole, user, findByLabelText } = setup(
-        <IndexPane previews={previews} />
+        <IndexPane previews={previews} previewInfo={previewInfo} />
       );
       const toggle = await findByLabelText("Show compact view");
       await user.click(toggle);
@@ -102,14 +104,14 @@ describe("IndexPane", () => {
         name: "AccountCreated - accountCreated",
       });
       expect(selectedInitially.textContent).toBe(
-        "AccountCreatedaccountCreated"
+        "AccountCreated / accountCreated"
       );
       await user.type(list, "{ArrowDown}");
       const selected = await findByRole("option", {
         selected: true,
         name: "NewSignIn - newSignIn",
       });
-      expect(selected.textContent).toBe("NewSignInnewSignIn");
+      expect(selected.textContent).toBe("NewSignIn / newSignIn");
     });
   });
 });

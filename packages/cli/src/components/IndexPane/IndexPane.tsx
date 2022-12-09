@@ -9,10 +9,10 @@ import type { PreviewIndexResponseBody } from "../../pages/api/previews";
 
 type IndexPaneProps = {
   previews?: PreviewIndexResponseBody["previews"];
-  previewText?: PreviewIndexResponseBody["previewText"];
+  previewInfo?: PreviewIndexResponseBody["previewInfo"];
 };
 
-const IndexPane: React.FC<IndexPaneProps> = ({ previews, previewText }) => {
+const IndexPane: React.FC<IndexPaneProps> = ({ previews, previewInfo }) => {
   const [compact, setCompact] = useState(true);
   const { up, down, left, right, treeRoutes, cursor, navigate, setCollapse } =
     usePreviewTree(previews || [], { leavesOnly: !compact });
@@ -52,7 +52,7 @@ const IndexPane: React.FC<IndexPaneProps> = ({ previews, previewText }) => {
       treeRoutes={treeRoutes}
       cursor={cursor}
       navigate={navigate}
-      previewText={previewText}
+      previewInfo={previewInfo}
     />
   );
 

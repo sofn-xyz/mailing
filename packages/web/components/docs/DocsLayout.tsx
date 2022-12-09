@@ -158,12 +158,16 @@ export default function DocsLayout({ children }) {
 
           <NavCategory>Reference</NavCategory>
 
+          <NavLink href="/docs/building-templates" active={asPath}>
+            Building templates
+          </NavLink>
           <NavLink href="/docs/sending-email" active={asPath}>
             Sending email
           </NavLink>
           <NavLink href="/docs/rest-api" active={asPath}>
             REST API
           </NavLink>
+
           <NavLink href="/docs/templates" active={asPath}>
             Demo templates
           </NavLink>
