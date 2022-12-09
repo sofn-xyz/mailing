@@ -126,15 +126,14 @@ const WhiteGlove: NextPage = () => {
               </div>
             </div>
           </div>
+          <Image
+            src="/homepage/fynn-code.png"
+            width={1070 / 2}
+            height={1092 / 2}
+            alt="Fynn email screenshot with code"
+            className="mx-auto rounded-l-2xl sm:hidden -mr-16"
+          />
           <div className="relative mx-auto overflow-hidden">
-            <Image
-              src="/homepage/fynn-code.png"
-              width={355}
-              height={546}
-              alt="Fynn email screenshot with code"
-              className="mx-auto rounded-l-2xl sm:hidden scale-[1.62] pt-10"
-            />
-
             <Image
               src="/homepage/fynn-code-sm.png"
               width={1280 / 2}
