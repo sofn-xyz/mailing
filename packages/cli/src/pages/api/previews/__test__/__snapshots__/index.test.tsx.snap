@@ -4,7 +4,7 @@ exports[`index should return previews 1`] = `
 {
   "previewInfo": {
     "/previews/AccountCreated/accountCreated": {
-      "previewText": "Amelita, your table awaits. Thank you for joining BookBook! We’re excited to help you enjoy great meals without any begging, guessing, waiti",
+      "previewText": "Excited to help you enjoy great meals. Amelita, your table awaits. Thank you for joining BookBook! We’re excited to help you enjoy great mea",
       "subject": "Welcome to BookBook, Amelita!",
     },
     "/previews/NewSignIn/newSignIn": {
@@ -61,7 +61,7 @@ exports[`index should return previews 1`] = `
 
 exports[`index should return template subject if it exists 1`] = `
 {
-  "previewText": "Amelita, your table awaits. Thank you for joining BookBook! We’re excited to help you enjoy great meals without any begging, guessing, waiti",
+  "previewText": "Excited to help you enjoy great meals. Amelita, your table awaits. Thank you for joining BookBook! We’re excited to help you enjoy great mea",
   "subject": "Welcome to BookBook, Amelita!",
 }
 `;
