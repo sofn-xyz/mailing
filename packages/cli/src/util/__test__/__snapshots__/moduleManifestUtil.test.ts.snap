@@ -6,6 +6,7 @@ exports[`moduleManifestUtil the original module manifest has a tree of preview c
     "AccountCreated",
     [
       "accountCreated",
+      "accountCreatedJohn",
     ],
   ],
   [

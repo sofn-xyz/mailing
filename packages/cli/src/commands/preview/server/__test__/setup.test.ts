@@ -92,7 +92,7 @@ describe("setup", () => {
       expect(copyMock).toHaveBeenCalledTimes(1);
       const copyCall: any[] = copyMock.mock.calls[0];
       expect(copyCall[0]).toMatch(
-        new RegExp("/mailing/packages/cli/src/commands/preview")
+        new RegExp("/packages/cli/src/commands/preview")
       );
       expect(copyCall[1]).toBe("./.mailing");
       expect(copyCall[2].recursive).toBe(true);

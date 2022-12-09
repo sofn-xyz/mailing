@@ -6,34 +6,17 @@ describe("index page tests", () => {
   });
 
   it("should redirect index to previewFunction with tree", () => {
-    cy.location("pathname").should(
-      "eq",
-      "/previews/AccountCreated/accountCreated"
-    );
+    cy.location("pathname").should("eq", "/previews/Welcome/preview");
 
-    cy.contains("accountCreated")
+    cy.contains("preview")
       .should("have.attr", "aria-selected", "true")
       .should("have.attr", "role", "treeitem");
     cy.contains("Emails")
       .should("have.attr", "aria-expanded", "true")
       .should("have.attr", "aria-selected", "false")
       .should("have.attr", "role", "treeitem");
-    cy.contains("Reservation")
-      .should("have.attr", "aria-expanded", "true")
-      .should("have.attr", "role", "treeitem")
-      .should("have.attr", "role", "treeitem");
-    cy.contains("ResetPassword")
-      .should("have.attr", "aria-expanded", "true")
-      .should("have.attr", "role", "treeitem");
-
-    cy.contains("reservationChanged").click();
-    cy.location("pathname").should(
-      "eq",
-      "/previews/Reservation/reservationChanged"
-    );
-
     cy.contains("Compact view").click();
 
-    cy.get("[aria-selected=true]").contains("reservationChanged");
+    cy.get("[aria-selected=true]").contains("preview");
   });
 });

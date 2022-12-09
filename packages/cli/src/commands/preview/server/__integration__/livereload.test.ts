@@ -5,7 +5,7 @@ import io from "socket.io-client";
 
 describe("livereload", () => {
   async function touchTemplate() {
-    const template = resolve(__dirname + "/../../../../emails/Reservation.tsx");
+    const template = resolve(__dirname + "/../../../../emails/Welcome.tsx");
     const fileContents = await readFile(template);
     await writeFile(template, fileContents);
   }
