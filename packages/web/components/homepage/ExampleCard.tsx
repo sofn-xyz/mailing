@@ -53,7 +53,9 @@ type ExampleCardProps = {
 export function ExampleCard({ name }: ExampleCardProps) {
   const example = EXAMPLES[name];
   if (!example) return null;
-  const { title, imageUrl, brandUrl, sourceUrl, demoUrl } = example;
+  const { title, imageUrl, sourceUrl, demoUrl } = example;
+  const brandUrl = example["brandUrl"];
+
   return (
     <div className="sm:mx-4 md:mx-6 mb-16 w-full sm:w-[256px] md:w-[342px]">
       <div className="w-full">
