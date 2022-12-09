@@ -1,15 +1,16 @@
 import { useEffect, useState } from "react";
 import Head from "next/head";
-import Image from "next/image";
 import Link from "next/link";
 import cx from "classnames";
 import { DocSearch } from "@docsearch/react";
+import Image from "next/image";
 
 import "@docsearch/css";
 
 import NavLink from "./NavLink";
 import IndexButton from "./IndexButton";
 import { useHydrationFriendlyAsPath } from "../hooks/useHydrationFriendlyAsPath";
+import Header from "../Header";
 
 function NavCategory({ children }) {
   return (
@@ -40,76 +41,45 @@ export default function DocsLayout({ children }) {
         />
         <title>Docs – Mailing</title>
       </Head>
-      <div className="z-50 bg-black fixed w-full flex justify-between items-middle py-0 text-sm mb-16 px-4 sm:px-6 border-b border-gray-500 text-blue-300 border-dotted">
-        <div className="brand flex flex-col justify-center py-4">
-          <Link href="/">
-            <span className="hidden sm:block">
-              <Image
-                width="110"
-                height="24"
-                src="/mailing-logo.svg"
-                alt="Mailing logo"
-                className="invert"
-              />
-            </span>
-            <span className="sm:hidden">
-              <Image
-                width="19"
-                height="24"
-                src="/mailing-icon.svg"
-                alt="Mailing icon"
-                className="invert"
-              />
-            </span>
-          </Link>
-        </div>
-        <div className="hidden sm:flex flex-col justify-center">
-          <div>
-            <Link
-              className="underline mr-4 text-sm leading-none inline-block"
-              href="/docs"
-            >
-              Docs
-            </Link>
-            <Link
-              className="hover:underline mr-4 text-sm leading-none inline-block"
-              href="/docs/discord"
-            >
-              Discord
-            </Link>
+      <Header
+        rightButton={
+          <>
             <a
-              className="hover:underline mr-4 text-sm leading-none inline-block"
-              href="/docs/templates"
-            >
-              Demos
-            </a>
-            <a
-              className="text-sm leading-none hover:underline"
+              target="_blank"
+              rel="noopener noreferrer"
               href="https://github.com/sofn-xyz/mailing"
-              target="blank"
+              className="text-xs hidden lg:block text-black text-right border bg-slate-300 hover:underline px-2 pb-1.5 pt-1 rounded-md"
             >
-              GitHub
+              <Image
+                src="/gh-icon.png"
+                alt="GitHub"
+                width={12}
+                height={12}
+                className="invert inline -mt-0.5 mr-1.5"
+              />
+              Star on GitHub
             </a>
-          </div>
-        </div>
-        <div className="sm:hidden flex flex-col justify-center">
-          <IndexButton
-            isOpen={hamburgerOpen}
-            onClick={() => setHamburgerOpen((v) => !v)}
-          />
-        </div>
-      </div>
+            <div className="lg:hidden flex flex-col justify-center">
+              <IndexButton
+                isOpen={hamburgerOpen}
+                onClick={() => setHamburgerOpen((v) => !v)}
+              />
+            </div>
+          </>
+        }
+      />
       <div className="max-w-8xl mx-auto px-4 sm:px-6 md:px-8 pb-20">
         <nav
           className={cx(
-            "lg:block fixed bg-black w-full z-20 inset-0 top-12 left-0 right-auto sm:w-72 pb-10 px-6 overflow-y-auto border-r border-gray-500  border-dotted",
+            "lg:block fixed bg-black w-full z-20 inset-0 top-[59px] lg:top-[79px] left-0 right-auto sm:w-72 pb-10 px-7 overflow-y-auto lg:border-r border-gray-500 border-dotted transition-opacity duration-500",
             {
-              hidden: !hamburgerOpen,
+              "opacity-0 lg:opacity-100 pointer-events-none lg:pointer-events-auto":
+                !hamburgerOpen,
             }
           )}
         >
           <Link href="/docs">
-            <h3 className="text-white text-2xl pt-7 ">Docs</h3>
+            <h3 className="text-white text-2xl pt-8">Docs</h3>
           </Link>
           <div className="mt-6 -mb-2 border-gray-800 text-slate-500 hover:text-blue">
             <DocSearch
