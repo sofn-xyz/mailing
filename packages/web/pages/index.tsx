@@ -118,22 +118,22 @@ const WhiteGlove: NextPage = () => {
         </div>
         <div className="mx-auto lg:max-w-[1121px]">
           <div className="mx-auto max-w-5xl">
-            <div className="flex justify-end">
+            <div className="flex sm:justify-center md:justify-end">
               <div className="text-left sm:text-center md:text-right max-w-[230px] sm:max-w-full lg:max-w-sm lg:mr-36 xl:mr-64">
-                <H2 marginClassName="mt-36 sm:mt-40 md:mt-48 lg:mt-64 mb-12 sm:mb-[72px] md:mb-[84px] lg:mb-0">
+                <H2 marginClassName="mt-36 sm:mt-40 md:mt-48 lg:mt-64 mb-12 sm:mb-[72px] md:mb-[84px] lg:mb-6">
                   Simple dev
                 </H2>
               </div>
             </div>
           </div>
-          <Image
-            src="/homepage/fynn-code.png"
-            width={1070 / 2}
-            height={1092 / 2}
-            alt="Fynn email screenshot with code"
-            className="mx-auto rounded-l-2xl sm:hidden -mr-16"
-          />
-          <div className="relative mx-auto overflow-hidden">
+          <div className="relative mx-auto">
+            <Image
+              src="/homepage/fynn-code.png"
+              width={1070 / 2}
+              height={1092 / 2}
+              alt="Fynn email screenshot with code"
+              className="mx-auto rounded-l-2xl sm:hidden min-w-[143vw]"
+            />
             <Image
               src="/homepage/fynn-code-sm.png"
               width={1280 / 2}
@@ -151,11 +151,11 @@ const WhiteGlove: NextPage = () => {
           </div>
           <div className="mx-auto max-w-5xl">
             <div className="flex justify-end">
-              <div className="text-left lg:max-w-[442px] mt-16">
+              <div className="text-left lg:max-w-[442px] mt-10 sm:mt-12 md:mt-16 lg:mt-0">
                 <h3 className="font-serif font-bold text-5xl md:text-6xl lg:text-7xl leading-[1.2]">
                   Collaborative
                 </h3>
-                <div className="text-base md:text-xl mt-4 md:mt-8 leading-[1.4]">
+                <div className="text-lg md:text-xl mt-4 leading-[1.4]">
                   Self-hosted previews help your team stay on the same page.
                   When everyone can easily see live versions of emails, product
                   folks can stay up-to-date and design QA is a breeze.
@@ -166,18 +166,18 @@ const WhiteGlove: NextPage = () => {
               <h3 className="font-serif font-bold text-5xl md:text-6xl lg:text-7xl leading-[1.2]">
                 Open source
               </h3>
-              <div className="text-base md:text-xl mt-8 sm:mt-4 md:mt-8 leading-[1.4]">
+              <div className="text-lg md:text-xl mt-4 leading-[1.4]">
                 We made Mailing an open source tool because we want to build
                 software that outlasts our company, and because we love to get
                 regular input and contributions from the community.
               </div>
             </div>
             <div className="flex justify-end">
-              <div className="text-left lg:max-w-[442px] mt-16">
+              <div className="text-left lg:max-w-[442px] mt-10 sm:mt-12 md:mt-16 lg:mt-0">
                 <h3 className="font-serif font-bold text-5xl md:text-6xl lg:text-7xl leading-[1.2]">
                   Zero lock-in
                 </h3>
-                <div className="text-base md:text-xl mt-8 sm:mt-4 md:mt-8 leading-[1.4]">
+                <div className="text-lg md:text-xl mt-4 leading-[1.4]">
                   The Mailing dev environment is free. If you send emails with
                   the <Code>sendMail</Code> function, you’ll have access to
                   drop-in unsubscribe and subscription preferences. If not,
