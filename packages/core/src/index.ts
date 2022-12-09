@@ -83,8 +83,8 @@ export function buildSendMail<T>(options: BuildSendMailOptions<T>) {
 
   let anonymousId = "unknown";
   try {
-    const configRaw = fs.readFileSync(options.configPath).toString();
     console.log("configPath is in ", resolve(options.configPath));
+    const configRaw = fs.readFileSync(options.configPath).toString();
 
     const config = JSON.parse(configRaw);
     anonymousId =
