@@ -25,6 +25,8 @@ We’re longtime users of Action Mailer and wanted something similar for our typ
 
 ## ●&nbsp;&nbsp;Get started
 
+Prerequisites: Mailing requires version 16+ of node and running on Mac or Linux. Windows is not supported at this time, but we'd welcome a pull request to [fix these bugs](https://github.com/sofn-xyz/mailing/issues/187) and add Windows support!
+
 To get started with Mailing, check out the [official docs](https://www.mailing.run/docs).
 
 <br/>

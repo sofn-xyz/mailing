@@ -32,7 +32,7 @@
     "prepublish": "yarn build",
     "postinstall": "husky install && preconstruct dev",
     "watch": "preconstruct watch",
-    "release": "yarn build && ./scripts/prepare-release && yarn changeset publish"
+    "release": "./scripts/release"
   },
   "devDependencies": {
     "@babel/core": "^7.18.5",

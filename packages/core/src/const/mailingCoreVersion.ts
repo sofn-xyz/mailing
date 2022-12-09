@@ -1,0 +1,1 @@
+export const MAILING_CORE_VERSION = process.env.MAILING_CORE_VERSION;
