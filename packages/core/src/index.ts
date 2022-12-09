@@ -2,9 +2,8 @@ import type { SendMailOptions, Transporter } from "nodemailer";
 import open from "open";
 import fs from "fs-extra";
 import { render } from "./mjml";
-import { error, log, debug } from "./util/serverLogger";
+import { error, log } from "./util/serverLogger";
 import fetch from "node-fetch";
-import { resolve } from "path";
 import { capture } from "./util/postHog";
 import instrumentHtml from "./util/instrumentHtml";
 
@@ -81,27 +80,17 @@ export function buildSendMail<T>(options: BuildSendMailOptions<T>) {
     throw new Error("buildSendMail options are missing defaultFrom");
   }
 
-  let anonymousId = "unknown";
-  try {
-    console.log("configPath is in ", resolve(options.configPath));
-    const configRaw = fs.readFileSync(options.configPath).toString();
-
-    const config = JSON.parse(configRaw);
-    anonymousId =
-      process.env.NODE_ENV === "production" ? config.anonymousId : null;
-  } catch (e) {
-    if (!options.configPath) {
-      debug("buildSendMail requires configPath");
-    } else {
-      debug(`error loading config at ${options.configPath}`);
-    }
-  }
-
   return async function sendMail(mail: ComponentMail) {
     if (!mail.html && typeof mail.component === "undefined")
       throw new MalformedInputError(
         "sendMail requires either html or a component"
       );
+
+    let anonymousId = "unknown";
+
+    if ((sendMail as any).config) {
+      anonymousId = (sendMail as any).config.anonymousId;
+    }
 
     const { NODE_ENV, MAILING_API_URL, MAILING_API_KEY } = process.env;
     const {
