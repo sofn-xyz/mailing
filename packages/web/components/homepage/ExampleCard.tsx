@@ -34,9 +34,15 @@ const EXAMPLES = {
   bbeam: {
     title: "BBeam",
     imageUrl: "/white-glove/bbeam.png",
-    brandUrl: "https://www.mailing.run",
     sourceUrl: "https://github.com/sofn-xyz/mailing-templates/tree/main/lancey",
     demoUrl: "https://bbeam-mailing.vercel.app",
+  },
+  bookBook: {
+    title: "BookBook",
+    imageUrl: "/white-glove/bookbook.png",
+    sourceUrl:
+      "https://github.com/sofn-xyz/mailing-templates/tree/main/book-book",
+    demoUrl: "https://book-book-mailing.vercel.app",
   },
 };
 
@@ -81,14 +87,20 @@ export function ExampleCard({ name }: ExampleCardProps) {
           Demo
         </a>
       </div>
-      <a
-        href={brandUrl}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="text-gray-300 hover:text-blue-400 block text-lg md:text-xl lg:text-2xl mt-1"
-      >
-        {title}
-      </a>
+      {brandUrl ? (
+        <a
+          href={brandUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-gray-300 hover:text-blue-400 block text-lg md:text-xl lg:text-2xl mt-1"
+        >
+          {title}
+        </a>
+      ) : (
+        <div className="text-gray-300 text-lg md:text-xl lg:text-2xl mt-1">
+          {title}
+        </div>
+      )}
     </div>
   );
 }

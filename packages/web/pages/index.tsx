@@ -156,9 +156,9 @@ const WhiteGlove: NextPage = () => {
                   Collaborative
                 </h3>
                 <div className="text-lg md:text-xl mt-4 leading-[1.4]">
-                  Self-hosted previews help your team stay on the same page.
-                  When everyone can easily see live versions of emails, product
-                  folks can stay up-to-date and design QA is a breeze.
+                  Self-host previews on Vercel to keep your team on the same
+                  page. Product and design folks can stay up-to-date with live
+                  versions of emails and review PR previews in development.
                 </div>
               </div>
             </div>
@@ -167,9 +167,9 @@ const WhiteGlove: NextPage = () => {
                 Open source
               </h3>
               <div className="text-lg md:text-xl mt-4 leading-[1.4]">
-                We made Mailing an open source tool because we want to build
-                software that outlasts our company, and because we love to get
-                regular input and contributions from the community.
+                Mailing is open source tool because we want to build software
+                that outlasts our company. We love to get regular input and
+                contributions from the community. Need a feature? Open an issue.
               </div>
             </div>
             <div className="flex justify-end">
@@ -178,10 +178,10 @@ const WhiteGlove: NextPage = () => {
                   Zero lock-in
                 </h3>
                 <div className="text-lg md:text-xl mt-4 leading-[1.4]">
-                  The Mailing dev environment is free. If you send emails with
-                  the <Code>sendMail</Code> function, you’ll have access to
-                  drop-in unsubscribe and subscription preferences. If not,
-                  simply export the HTML or use the React templates.
+                  The Mailing dev environment and nodemailer{" "}
+                  <Code>sendMail</Code> proxy are free. If you want to send with
+                  another system, export the preview HTML or use the React
+                  templates with the <Code>render</Code> function.
                 </div>
               </div>
             </div>
@@ -195,9 +195,10 @@ const WhiteGlove: NextPage = () => {
             <ExampleCard name="bbeam" />
             <ExampleCard name="fynn" />
             <ExampleCard name="thoughtfulPost" />
+            <ExampleCard name="bookBook" />
           </div>
         </div>
-        <div className="flex justify-center md:gap-12 xl:gap-16 items-center mt-16 sm:mt-40 md:mt-48 lg:mt-64">
+        <div className="flex justify-center md:gap-12 xl:gap-16 items-center mt-16 sm:mt-24">
           <Image
             src="/homepage/demo-theme.png"
             width={440}
@@ -212,7 +213,7 @@ const WhiteGlove: NextPage = () => {
             alt="Mailing demo theme"
             className="rounded-2xl hidden sm:block md:hidden lg:block xl:hidden  align-middle"
           />
-          <div className="text-left sm:-ml-6 md:-ml-32 lg:ml-[84px] xl:ml-24 2xl:ml-32">
+          <div className="text-left sm:-ml-6 md:-ml-32">
             <h3 className="font-serif font-bold text-5xl md:text-[60px] lg:text-[72px]">
               Customize <br className="hidden sm:block md:hidden" /> a
               <br className="sm:hidden md:block" /> demo template
@@ -250,8 +251,9 @@ const WhiteGlove: NextPage = () => {
         <div className="max-w-[1440px] mx-auto flex justify-between items-center gap-16 xl:px-16">
           <div className="">
             <h3 className="font-serif font-bold text-5xl md:text-[60px] lg:text-[72px]">
-              Own your <br className="hidden lg:block" />
-              contact list
+              Add a DB,
+              <br className="hidden lg:block" />
+              own your list
             </h3>
             <Image
               src="/homepage/list-screenshot.png"
@@ -261,12 +263,12 @@ const WhiteGlove: NextPage = () => {
               className="rounded-lg border-2 border-gray-800 block lg:hidden my-8 w-full"
             ></Image>
             <div className="text-lg lg:text-xl mt-8 sm:mt-4 md:mt-8 max-w-full lg:max-w-md leading-[1.4]">
-              Drop-in unsubscribe comes with subscription preferences so your
-              users can control what email they receive. If you try to email an
-              unsubscribed user, Mailing will block the send.
+              Upgrade to Mailing Platform by adding a database. Every user that
+              you <Code>sendMail</Code> to is saved to your audience. There’s no
+              limit to the size of your audience.
             </div>
             <Link
-              href="/docs/lists"
+              href="/docs/platform"
               className="underline hover:text-blue-400 text-2xl lg:text-3xl mt-6 md:mt-8 inline-block"
             >
               Learn More
@@ -284,8 +286,8 @@ const WhiteGlove: NextPage = () => {
         <div className="max-w-[1440px] mx-auto hidden lg:flex xl:hidden justify-between items-center gap-16 xl:px-16 mt-32">
           <div className="">
             <h3 className="font-serif font-bold text-5xl md:text-[60px] lg:text-[72px]">
-              Own your <br className="hidden lg:block" />
-              contact list
+              Give users <br className="hidden lg:block" />
+              unsub prefs
             </h3>
             <Image
               src="/homepage/list-screenshot.png"
@@ -295,9 +297,10 @@ const WhiteGlove: NextPage = () => {
               className="rounded-lg border-2 border-gray-800 block lg:hidden my-8 w-full"
             ></Image>
             <div className="text-lg lg:text-xl mt-8 sm:mt-4 md:mt-8 max-w-full lg:max-w-md leading-[1.4]">
-              Drop-in unsubscribe comes with subscription preferences so your
-              users can control what email they receive. If you try to email an
-              unsubscribed user, Mailing will block the send.
+              Drop-in unsubscribe links and subscription preferences give your
+              users control of what email they receive. If you try to{" "}
+              <Code>sendMail</Code> to an unsubscribed user, Mailing
+              intelligently blocks the send.
             </div>
             <Link
               href="/docs/lists"
@@ -336,9 +339,10 @@ const WhiteGlove: NextPage = () => {
               className="rounded-lg border-2 border-gray-800 block lg:hidden my-8 w-full"
             ></Image>
             <div className="text-lg lg:text-xl mt-8 sm:mt-4 md:mt-8 max-w-full lg:max-w-md leading-[1.4]">
-              The <Code>sendMail</Code> function gives you access to Platform
-              features like list management and drop-in unsubscribe. Mailing
-              servers are self-hosted, so you get sole ownership of your data.
+              Drop-in unsubscribe links and subscription preferences give your
+              users control of what email they receive. If you try to{" "}
+              <Code>sendMail</Code> to an unsubscribed user, Mailing
+              intelligently blocks the send.
             </div>
             <Link
               href="/docs/lists"
