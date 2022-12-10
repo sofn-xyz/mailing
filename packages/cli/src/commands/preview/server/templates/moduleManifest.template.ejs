@@ -1,5 +1,6 @@
 import config from "../../mailing.config.json";
 import sendMail from "<%= relativePathToEmailsDir %>";
+sendMail.config = config;
 
 // template imports
 <%= templateImports.join("\n") %>
