@@ -1,5 +1,14 @@
 # web
 
+## 0.4.16
+
+### Patch Changes
+
+- c9fafd2: Fix a bug where sendMail did not correctly use anonymousId from mailing config
+- Updated dependencies [c9fafd2]
+- Updated dependencies [7b57ba0]
+  - mailing-core@0.9.7
+
 ## 0.4.15
 
 ### Patch Changes

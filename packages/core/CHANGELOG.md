@@ -1,5 +1,12 @@
 # mailing-core
 
+## 0.9.7
+
+### Patch Changes
+
+- c9fafd2: Fix a bug where sendMail did not correctly use anonymousId from mailing config
+- 7b57ba0: switch to neutral ui active colors that are unlikely to clash with brand colors in emails
+
 ## 0.9.6
 
 ### Patch Changes
