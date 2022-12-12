@@ -40,7 +40,7 @@ const Welcome = ({ includeUnsubscribe }: WelcomeProps) => {
   return (
     <BaseLayout width={600} style={welcomeStyle}>
       <Header />
-      <MjmlWrapper>
+      <MjmlWrapper backgroundColor={colors.black}>
         <MjmlSection paddingBottom={spacing.s11} cssClass="gutter">
           <MjmlColumn>
             <Heading maxWidth={420} cssClass="h1" fontFamily={fontFamily.serif}>
@@ -109,7 +109,7 @@ const Welcome = ({ includeUnsubscribe }: WelcomeProps) => {
               backgroundColor={colors.blue}
               cssClass="sm-hidden"
             >
-              Check out the docs{"  "}
+              Check out the Docs{"  "}
               <span style={{ fontFamily: fontFamily.serif }}>&rarr;</span>
             </Button>
             <MjmlSpacer height={spacing.s3} cssClass="lg-hidden" />
@@ -119,7 +119,7 @@ const Welcome = ({ includeUnsubscribe }: WelcomeProps) => {
               backgroundColor={colors.blue}
               cssClass="lg-hidden"
             >
-              Check out the docs{"  "}
+              Check out the Docs{"  "}
               <span style={{ fontFamily: fontFamily.serif }}>&rarr;</span>
             </Button>
             <MjmlSpacer height={spacing.s9} />

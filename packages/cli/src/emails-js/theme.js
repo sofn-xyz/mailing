@@ -23,6 +23,7 @@ export const colors = {
   blue300: "#dce7ff",
   blue400: "#a1bfff",
   blue600: "#3a70e3",
+  zinc800: "#27272a",
 };
 export const fontSize = {
   xs: 12,
@@ -43,6 +44,7 @@ export const fontWeight = {
   bold: 700,
 };
 export const borderRadius = {
+  sm: 8,
   base: 16,
   full: 9999,
 };

@@ -8,7 +8,15 @@ import {
   MjmlAttributes,
   MjmlAll,
 } from "mjml-react";
-import { screens, themeDefaults, spacing, colors, fontFamily } from "../theme";
+import {
+  screens,
+  themeDefaults,
+  spacing,
+  colors,
+  fontFamily,
+  fontSize,
+  borderRadius,
+} from "../theme";
 
 type BaseLayoutProps = {
   width?: number;
@@ -35,6 +43,7 @@ export default function BaseLayout({
           body {
             -webkit-font-smoothing: antialiased;
             min-width: 320px;
+            background-color: ${colors.black000};
           }
           a {
             color: inherit
@@ -45,8 +54,11 @@ export default function BaseLayout({
           }
           .code {
             font-family: ${fontFamily.mono};
-            color: ${colors.green300};
-            word-break: break-all;
+            color: ${colors.green200};
+            background-color: ${colors.zinc800};
+            font-size: ${fontSize.sm}px;
+            border-radius: ${borderRadius.sm}px;
+            padding: ${spacing.s1}px ${spacing.s3}px;
           }
           .no-wrap {
             white-space: nowrap;
@@ -93,9 +105,7 @@ export default function BaseLayout({
       `}</MjmlStyle>
       </MjmlHead>
 
-      <MjmlBody width={width} backgroundColor={colors.black}>
-        {children}
-      </MjmlBody>
+      <MjmlBody width={width}>{children}</MjmlBody>
     </Mjml>
   );
 }
