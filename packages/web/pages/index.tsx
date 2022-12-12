@@ -353,6 +353,73 @@ const WhiteGlove: NextPage = () => {
             </Link>
           </div>
         </div>
+
+        <div className="text-left sm:text-center">
+          <H2>Pricing</H2>
+        </div>
+        <div className="flex items-center justify-center align-center gap-y-6 sm:gap-y-8 lg:gap-y-0 gap-x-0 flex-col lg:flex-row lg:gap-x-7 xl:gap-x-8 2xl:gap-x-12 mx-auto ">
+          <div className="place-self-center self-stretch border-2 border-t-8 border-gray-600 lg:w-[480px] px-8 xl:px-12">
+            <h4 className="font-serif font-bold text-2xl leading-[1.4] sm:text-center mt-12 sm:mt-8">
+              Starter
+            </h4>
+            <div className="mb-1 text-4xl leading-[1.4] sm:text-center">
+              Free forever
+            </div>
+            <div className="sm:text-center text-slate-400 text-xl leading-[1.4] mb-10">
+              unlimited sends
+            </div>
+            <ul className="text-xl">
+              <li className="-indent-7 ml-7 pb-3">Free demo templates</li>
+              <li className="-indent-7 ml-7 pb-3">
+                Hot reload MJML-React template development environment
+              </li>
+              <li className="-indent-7 ml-7 pb-3">Self-hosted on Vercel</li>
+              <li className="-indent-7 ml-7 pb-3">
+                REST API to render and send from any environment, not just Node
+                apps
+              </li>
+            </ul>
+            <div className="my-12">
+              <KeyButton href="/docs#getting-started" color="gray" full>
+                Get Started
+                <Arrow />
+              </KeyButton>
+            </div>
+          </div>
+          <div className="place-self-center self-stretch border-2 border-t-8 border-green-300 lg:w-[480px] px-8 xl:px-12">
+            <h4 className="font-serif font-bold text-2xl text-green-300 leading-[1.4] sm:text-center mt-12 sm:mt-8">
+              Platform
+            </h4>
+            <div className="mb-1 text-4xl leading-[1.4] sm:text-center">
+              Free in beta
+            </div>
+            <div className="sm:text-center text-slate-400 text-xl leading-[1.4] mb-10">
+              then $10/100k sends/mo
+            </div>
+            <ul className="text-xl platform">
+              <li className="-indent-7 ml-7 pb-3">
+                Everything included in Starter
+              </li>
+              <li className="-indent-7 ml-7 pb-3">
+                Dedicated onboarding and engineering support
+              </li>
+              <li className="-indent-7 ml-7 pb-3">Mailing list management</li>
+              <li className="-indent-7 ml-7 pb-3">
+                Drop-in unsubscribe links and subscription preferences
+              </li>
+            </ul>
+            <div className="my-12">
+              <KeyButton
+                href="mailto:team@mailing.run?subject=Mailing Platform beta access"
+                color="green"
+                full
+              >
+                Get Started
+                <Arrow />
+              </KeyButton>
+            </div>
+          </div>
+        </div>
         <div className="mx-auto lg:max-w-6xl gap-x-[10%] lg:flex lg:flex-col lg:flex-wrap lg:max-h-[1530px] mt-36 sm:mt-40 md:mt-48 lg:mt-64">
           <div className="max-w-sm text-left sm:max-w-full sm:text-right lg:max-w-[45%] lg:text-left">
             <H2 marginClassName="">Kind words</H2>
@@ -375,6 +442,18 @@ const WhiteGlove: NextPage = () => {
           />
         </Link>{" "}
       </footer>
+      <style jsx>
+        {`
+          ul li:before {
+            content: "●";
+            padding-right: 12px;
+            color: #444;
+          }
+          ul.platform li:before {
+            color: #c3f2bc;
+          }
+        `}
+      </style>
     </div>
   );
 };
