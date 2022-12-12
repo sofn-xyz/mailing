@@ -10,7 +10,7 @@ import H2 from "../components/white-glove/H2";
 import Subheading from "../components/white-glove/Subheading";
 import Li from "../components/white-glove/Li";
 import ExampleCard from "../components/white-glove/ExampleCard";
-import { Arrow } from "../components/white-glove/Arrow";
+import Arrow from "../components/Arrow";
 import Pricing from "../components/white-glove/Pricing";
 
 const TYPEFORM_URL = "https://gbbspiwghkd.typeform.com/to/w77PsIsC";
@@ -65,7 +65,7 @@ const WhiteGlove: NextPage = () => {
               height={28}
             />
           </Link>
-          <span className="flex-2 text-2xl sm:text-[44px] font-bold font-serif leading-snug text-amber-200 relative -top-1 text-center">
+          <span className="flex-2 text-2xl sm:text-3xl font-bold font-serif leading-snug text-amber-200 relative -top-1 text-center">
             White Glove
           </span>
           <div className="flex-1 text-right hidden lg:inline-block">

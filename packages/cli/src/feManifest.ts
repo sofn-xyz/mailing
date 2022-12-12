@@ -1,4 +1,4 @@
-const config = {};
+const config = {} as MailingConfig;
 
 const manifest = { config };
 export { config };

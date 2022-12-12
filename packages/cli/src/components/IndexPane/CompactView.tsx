@@ -54,7 +54,7 @@ const CompactView: React.FC<CompactViewProps> = ({
               "pl-2": route.level === 0,
               "pl-6": route.level === 1,
               "pl-[70px] pb-1 pt-1": route.level === 2,
-              "bg-blue text-black rounded-2xl": i === cursor,
+              "bg-active rounded-2xl": i === cursor,
             })}
             onClick={handleClick(i, route.collapsed)}
           >
@@ -71,10 +71,8 @@ const CompactView: React.FC<CompactViewProps> = ({
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
                   className={cx(
-                    "inline origin-center arrow transition-transform",
+                    "stroke-white inline origin-center arrow transition-transform",
                     {
-                      "stroke-black": i === cursor,
-                      "stroke-white": i !== cursor,
                       "collapsed -rotate-90 relative -top-px": route.collapsed,
                     }
                   )}

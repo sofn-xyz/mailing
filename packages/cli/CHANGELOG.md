@@ -1,5 +1,27 @@
 # mailing
 
+## 0.9.7
+
+### Patch Changes
+
+- c9fafd2: Fix a bug where sendMail did not correctly use anonymousId from mailing config
+- 7b57ba0: switch to neutral ui active colors that are unlikely to clash with brand colors in emails
+- Updated dependencies [c9fafd2]
+- Updated dependencies [7b57ba0]
+  - mailing-core@0.9.7
+
+## 0.9.6
+
+### Patch Changes
+
+- 6176419: show subject and preview text in ClientView
+- b748ddd: add preview prop for preview/preheader text to BaseLayout
+- 164940f: To better help us improve mailing, anonymous analytics now includes the version of mailing and mailing-core that you are using.
+- Updated dependencies [6176419]
+- Updated dependencies [b748ddd]
+- Updated dependencies [164940f]
+  - mailing-core@0.9.6
+
 ## 0.9.5
 
 ### Patch Changes

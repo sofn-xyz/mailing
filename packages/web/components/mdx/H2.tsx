@@ -13,7 +13,7 @@ export default function H2({ children }: H2Props) {
   const link = `#${anchor}`;
 
   return (
-    <h2 id={anchor} className="pt-24 text-5xl font-medium -mt-12 mb-8">
+    <h2 id={anchor} className="pt-20 text-5xl font-medium -mt-6 mb-8">
       <div className="relative">
         <a href={link} className={cx("anchor-link no-underline", {})}>
           {children}

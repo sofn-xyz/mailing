@@ -29,6 +29,7 @@ module.exports = {
       ],
     },
     colors: {
+      active: "#444",
       white: "#e4ebfa",
       "gray-300": "#ccc",
       "gray-500": "#555",
