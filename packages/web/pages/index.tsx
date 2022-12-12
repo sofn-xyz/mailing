@@ -363,7 +363,7 @@ const WhiteGlove: NextPage = () => {
               Starter
             </h4>
             <div className="mb-1 text-4xl leading-[1.4] sm:text-center">
-              Free forever
+              Free
             </div>
             <div className="sm:text-center text-slate-400 text-xl leading-[1.4] mb-10">
               unlimited sends
