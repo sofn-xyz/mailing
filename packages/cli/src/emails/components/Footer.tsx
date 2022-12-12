@@ -47,7 +47,7 @@ export default function Footer({ includeUnsubscribe = false }: FooterProps) {
                   <img
                     height={12}
                     width={16}
-                    src={"https://emails.mailing.run/assets/discord.png"}
+                    src={"https://mailing.run/welcome-template/discord.png"}
                     alt=""
                     style={{
                       verticalAlign: "text-bottom",
@@ -79,7 +79,7 @@ export default function Footer({ includeUnsubscribe = false }: FooterProps) {
                   <img
                     height={16}
                     width={16}
-                    src={"https://emails.mailing.run/assets/github.png"}
+                    src={"https://mailing.run/welcome-template/github.png"}
                     alt=""
                     style={{
                       verticalAlign: "text-bottom",
@@ -135,7 +135,7 @@ export default function Footer({ includeUnsubscribe = false }: FooterProps) {
             <MjmlImage
               height={16}
               width={13}
-              src={"https://emails.mailing.run/assets/logo.png"}
+              src={"https://mailing.run/welcome-template/logo.png"}
               href="https://mailing.run"
             />
           </MjmlColumn>

@@ -20,8 +20,8 @@ export default function Header() {
               >
                 <img
                   height={24}
-                  width={20}
-                  src={"https://emails.mailing.run/assets/logo.png"}
+                  width={112}
+                  src={"https://mailing.run/welcome-template/logo-full.png"}
                   alt=""
                   style={{
                     verticalAlign: "text-bottom",
@@ -29,7 +29,6 @@ export default function Header() {
                     paddingBottom: 2,
                   }}
                 />
-                Mailing
               </Link>
             </Text>
           </MjmlColumn>
