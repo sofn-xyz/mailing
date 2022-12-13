@@ -1,0 +1,29 @@
+# Remix integration
+
+Remix is fully supported but currently requires an extra step during setup.
+
+Remix has the concept of server vs client bundles. When in doubt
+it tries to make the code work for both via polyfills.
+However, email can only be sent from the server and there are errors when
+Remix tries to polyfill it for the browser.
+
+One way to tell it that email stuff is purely the server's business is to
+name the file `[name].server.ts`. Remix docs go into more detail [here](https://remix.run/docs/en/v1/pages/gotchas#server-code-in-client-bundles).
+
+After running through the initialization to generate your emails directory:
+
+1. Move `emails/index.ts` to `emails/sendMail.server.ts`.
+
+2. Create a new `emails/index.ts` that just imports `sendMail` from `emails/sendMail.server.ts`:
+
+```tsx
+// app/emails/index.ts
+export { default } from "./sendEmail.server";
+```
+
+With this setup, Remix will know not to polyfill the email sending code and
+will let you use the `sendMail` function in your API routes.
+
+Seeing other issues? Have some helpful tips for getting started with Remix and Mailing?
+Please [open an issue](https://github.com/sofn-xyz/mailing/issues) or PR.
+We're big fans of Remix and will do our best to help.

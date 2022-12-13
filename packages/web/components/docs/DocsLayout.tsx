@@ -137,12 +137,14 @@ export default function DocsLayout({ children }) {
           <NavLink href="/docs/rest-api" active={asPath}>
             REST API
           </NavLink>
-
           <NavLink href="/docs/templates" active={asPath}>
             Demo templates
           </NavLink>
           <NavLink href="/docs/turborepo" active={asPath}>
             Turborepo
+          </NavLink>
+          <NavLink href="/docs/remix" active={asPath}>
+            Remix
           </NavLink>
 
           <NavCategory>Org</NavCategory>
