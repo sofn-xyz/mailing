@@ -12,7 +12,7 @@ describe("exportPreviews command", () => {
 
     jest.spyOn(fsExtra, "readJSONSync").mockImplementation(() => ({
       typescript: true,
-      emailsDir: "./emails",
+      emailsDir: "./packages/cli/src/__mocks__/emails",
       outDir: "./previews_html",
       anonymousId: "TEST_VALUE",
     }));
@@ -20,13 +20,13 @@ describe("exportPreviews command", () => {
 
   afterEach(() => {
     fsExtra.removeSync("./out");
-    fsExtra.removeSync("./packages/cli/previews_html");
+    fsExtra.removeSync("./previews_html");
   });
 
   it("outputs html files to outDir", async () => {
     await handler({
       outDir: "./out",
-      emailsDir: "packages/cli/src/emails",
+      emailsDir: "./packages/cli/src/__mocks__/emails",
       skipLint: true,
     } as ExportPreviewsArgs);
     expect(error).not.toHaveBeenCalled();
@@ -49,21 +49,27 @@ describe("exportPreviews command", () => {
 
   describe("cli", () => {
     it("runs on templates", async () => {
-      const out = await execCli("export-previews --skip-lint");
+      const out = await execCli(
+        "export-previews --skip-lint --emails-dir ./src/__mocks__/emails"
+      );
       expect(out).toMatchSnapshot();
     });
   });
 
   describe("cli --minify", () => {
     it("runs on templates", async () => {
-      const out = await execCli("export-previews --minify --skip-lint");
+      const out = await execCli(
+        "export-previews --minify --skip-lint --emails-dir ./src/__mocks__/emails"
+      );
       expect(out).toMatchSnapshot();
     });
   });
 
   describe("cli halts on lint errors", () => {
     it("runs on templates", async () => {
-      const out = await execCli("export-previews");
+      const out = await execCli(
+        "export-previews --emails-dir ./src/__mocks__/emails"
+      );
       expect(out).toMatchSnapshot();
     });
   });

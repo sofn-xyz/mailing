@@ -7,23 +7,24 @@ import {
   MjmlStyle,
   MjmlAttributes,
   MjmlAll,
-  MjmlRaw,
-  MjmlPreview,
 } from "mjml-react";
-import { colors, screens, themeDefaults, spacing } from "../theme";
+import {
+  screens,
+  themeDefaults,
+  spacing,
+  colors,
+  fontFamily,
+  fontSize,
+  borderRadius,
+} from "../theme";
 
-export default function BaseLayout({ width, children, preview }) {
+export default function BaseLayout({ width, children, style }) {
   return (
     <Mjml>
       <MjmlHead>
-        {preview && <MjmlPreview>{preview}</MjmlPreview>}
-        <MjmlRaw>
-          <meta name="color-scheme" content="light dark" />
-          <meta name="supported-color-schemes" content="light dark" />
-        </MjmlRaw>
         <MjmlFont
-          name="Inter"
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700"
+          name="neue-haas-unica"
+          href="https://use.typekit.net/qqd8jtb.css"
         />
         <MjmlAttributes>
           <MjmlAll {...themeDefaults} />
@@ -31,6 +32,8 @@ export default function BaseLayout({ width, children, preview }) {
         <MjmlStyle>{`
           body {
             -webkit-font-smoothing: antialiased;
+            min-width: 320px;
+            background-color: ${colors.black000};
           }
           a {
             color: inherit
@@ -39,15 +42,16 @@ export default function BaseLayout({ width, children, preview }) {
             padding-left: ${spacing.s7}px;
             padding-right: ${spacing.s7}px;
           }
+          .code {
+            font-family: ${fontFamily.mono};
+            color: ${colors.green200};
+            background-color: ${colors.zinc800};
+            font-size: ${fontSize.sm}px;
+            border-radius: ${borderRadius.sm}px;
+            padding: ${spacing.s1}px ${spacing.s3}px;
+          }
           .no-wrap {
             white-space: nowrap;
-          }
-          .dark-mode {
-            display: none;
-            max-width: 0px;
-            max-height: 0px;
-            overflow: hidden;
-            mso-hide: all;
           }
           .hidden {
             display: none;
@@ -66,9 +70,9 @@ export default function BaseLayout({ width, children, preview }) {
 
           /* Large screens */
           @media (min-width:${screens.xs}) {
-            .lg-gutter {
-              padding-left: ${spacing.s7}px !important;
-              padding-right: ${spacing.s7}px !important;
+            .gutter {
+              padding-left: ${spacing.s9}px;
+              padding-right: ${spacing.s9}px;
             }
             .sm-hidden {
               display: none;
@@ -86,32 +90,8 @@ export default function BaseLayout({ width, children, preview }) {
             }
           }
 
-          /* Dark Mode */
-          @media (prefers-color-scheme: dark) {
-            body {
-              background: ${colors.black};
-            }
-            .invert > * {
-              filter: invert(1) !important;
-            }
-            .text > * {
-              color: #fff !important;
-            }
-            .dark-mode {
-              display: inherit !important;
-              max-width: none !important;
-              max-height: none !important;
-              overflow: visible !important;
-              mso-hide: none !important;
-            }
-            .light-mode {
-              display: none;
-              max-width: 0px;
-              max-height: 0px;
-              overflow: hidden;
-              mso-hide: all;
-            }
-          }
+          /* Email specific Styles */
+          ${style}
       `}</MjmlStyle>
       </MjmlHead>
 

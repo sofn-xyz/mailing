@@ -8,7 +8,9 @@ jest.mock("../../../util/validate/validateApiKey", () => ({
 }));
 
 jest.mock("../../../moduleManifest", () => {
-  const originalModule = jest.requireActual("../../../moduleManifest");
+  const originalModule = jest.requireActual(
+    "../../../__mocks__/moduleManifest"
+  );
   return {
     ...originalModule,
     sendMail: jest.fn(),
@@ -83,9 +85,9 @@ describe("sendMail with a valid api key and mockeded sendMail", () => {
       props: { name: "Alex" },
     };
 
-    expect(typeof moduleManifest.templates.AccountCreated.subject).toBe(
-      "function"
-    );
+    expect(
+      typeof (moduleManifest.templates as any).AccountCreated.subject
+    ).toBe("function");
 
     await handler(req, res);
     expect(res.status).toHaveBeenCalledWith(200);

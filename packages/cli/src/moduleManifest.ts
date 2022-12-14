@@ -1,29 +1,21 @@
-import sendMail from "./emails";
+/*
+ * This file is only directly used in development and tests.
+ * In production is it overwritten by the build process.
+ */
 
-import AccountCreated from "./emails/AccountCreated";
-import NewSignIn from "./emails/NewSignIn";
-import Reservation from "./emails/Reservation";
-import ResetPassword from "./emails/ResetPassword";
+import sendMailFromEmails from "./emails";
+import Welcome from "./emails/Welcome";
+import * as WelcomePreview from "./emails/previews/Welcome";
 
-import * as AccountCreatedPreview from "./emails/previews/AccountCreated";
-import * as NewSignInPreview from "./emails/previews/NewSignIn";
-import * as ReservationPreview from "./emails/previews/Reservation";
-import * as ResetPasswordPreview from "./emails/previews/ResetPassword";
-
+const sendMail = sendMailFromEmails;
 const previews = {
-  AccountCreated: AccountCreatedPreview,
-  NewSignIn: NewSignInPreview,
-  Reservation: ReservationPreview,
-  ResetPassword: ResetPasswordPreview,
+  Welcome: WelcomePreview,
 };
 const templates = {
-  AccountCreated,
-  NewSignIn,
-  Reservation,
-  ResetPassword,
+  Welcome,
 };
 const config = { anonymousId: null };
 
+const manifest = { sendMail, config, templates, previews };
 export { sendMail, config, templates, previews };
-const moduleManifest = { sendMail, config, templates, previews };
-export default moduleManifest;
+export default manifest;

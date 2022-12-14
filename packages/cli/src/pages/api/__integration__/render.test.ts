@@ -8,7 +8,7 @@ describe("render", () => {
     const data = await response.json();
     expect(response.status).toBe(200);
     expect(data.html).toBeDefined;
-    expect(data.html).toMatch(/Alex, your table awaits/);
+    expect(data.html).toMatch(/Thank you/);
   });
 
   it("POST should 200", async () => {
@@ -16,6 +16,6 @@ describe("render", () => {
     const data = await response.json();
     expect(response.status).toBe(200);
     expect(data.html).toBeDefined;
-    expect(data.html).toMatch(/Alex, your table awaits/);
+    expect(data.html).toMatch(/Thank you/);
   });
 });

@@ -1,5 +1,6 @@
 {
   "*.{js,jsx,ts,tsx}": "eslint --fix",
   "*.rb": "rubocop --autocorrect",
-  "packages/cli/src/emails/**/*.{ts,tsx}": "scripts/generate-emails-js"
+  "packages/cli/src/__mocks__/emails/**/*.{ts,tsx}": "scripts/generate-emails __mocks__/emails",
+  "packages/cli/src/emails/**/*.{ts,tsx}": "scripts/generate-emails emails"
 }

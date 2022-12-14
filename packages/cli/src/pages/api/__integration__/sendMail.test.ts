@@ -98,12 +98,8 @@ describe("sendMail", () => {
         const sendMailOpts = {
           ...ApiSendMail.defaultFormData,
           to: email,
-          templateName: "ResetPassword",
-          props: {
-            name: "Alex",
-            body: "Reset your password",
-            ctaText: "Reset Password",
-          },
+          templateName: "Welcome",
+          props: { includeUnsubscribe: false },
           dangerouslyForceDeliver: true,
         };
 
@@ -160,12 +156,8 @@ describe("sendMail", () => {
         const sendMailOpts = {
           ...ApiSendMail.defaultFormData,
           to: email,
-          templateName: "ResetPassword",
-          props: {
-            name: "Alex",
-            body: "Reset your password",
-            ctaText: "Reset Password",
-          },
+          templateName: "Welcome",
+          props: { includeUnsubscribe: false },
           dangerouslyForceDeliver: true,
         };
 
@@ -243,7 +235,7 @@ describe("sendMail", () => {
           // it should contain an unsubscribe link
           const messageContent = messageContentRecords[0];
           expect(messageContent.html).toContain(
-            `<a href="${EMAIL_PREFERENCES_URL}" target="_blank" rel="noreferrer" style="text-decoration:none">Unsubscribe</a>`
+            `<a target="_blank" rel="noopener" href="${EMAIL_PREFERENCES_URL}" style="color:#a5aab4;text-decoration:underline">unsubscribe.</a>`
           );
 
           // it should have subscribed the member to the default list
@@ -286,7 +278,7 @@ describe("sendMail", () => {
           // it should contain an unsubscribe link
           const messageContent = messageContentRecords[0];
           expect(messageContent.html).toContain(
-            `<a href="${EMAIL_PREFERENCES_URL}" target="_blank" rel="noreferrer" style="text-decoration:none">Unsubscribe</a>`
+            `<a target="_blank" rel="noopener" href="${EMAIL_PREFERENCES_URL}" style="color:#a5aab4;text-decoration:underline">unsubscribe.</a>`
           );
 
           // it should have subscribed the member to the default list

@@ -5,7 +5,7 @@ interface SendMailFormData {
   to: string;
   templateName: string;
   props: {
-    name: string;
+    includeUnsubscribe: boolean;
   };
 }
 
@@ -19,8 +19,8 @@ export class ApiSendMail extends Api<SendMailFormData> {
   static defaultFormData: SendMailFormData = {
     subject: "hello",
     to: "alex.farrill@gmail.com",
-    templateName: "AccountCreated",
-    props: { name: "Peter" },
+    templateName: "Welcome",
+    props: { includeUnsubscribe: true },
   };
 
   path = "/api/sendMail";
