@@ -71,7 +71,7 @@ export default function Header({ rightButton }: HeaderProps) {
           </li>
           <li className="hidden sm:inline px-1.5">
             <Link
-              href="white-glove"
+              href="/white-glove"
               className="text-slate-300 hover:text-white inline-block transition-all"
             >
               White Glove
