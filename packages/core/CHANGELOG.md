@@ -1,5 +1,11 @@
 # mailing-core
 
+## 0.9.8
+
+### Patch Changes
+
+- d870690b: Add new Welcome template to emails.
+
 ## 0.9.7
 
 ### Patch Changes

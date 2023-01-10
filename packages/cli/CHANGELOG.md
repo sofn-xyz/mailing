@@ -1,5 +1,13 @@
 # mailing
 
+## 0.9.8
+
+### Patch Changes
+
+- d870690b: Add new Welcome template to emails.
+- Updated dependencies [d870690b]
+  - mailing-core@0.9.8
+
 ## 0.9.7
 
 ### Patch Changes
