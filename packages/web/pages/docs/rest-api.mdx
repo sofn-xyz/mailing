@@ -72,12 +72,12 @@ is included in the request.
       headers: {
         "Content-Type": "application/json",
       },
-      body: {
+      body: JSON.stringify({
         "templateName": "myTemplate",
         "props": {
           "name": "Alex"
         },
-      }
+      }),
     });
     ```
 
