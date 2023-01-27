@@ -131,6 +131,7 @@ describe("setup", () => {
       expect(COMPONENT_FILE_REGEXP.test("file.js")).toBe(false);
       expect(COMPONENT_FILE_REGEXP.test("file.tsx")).toBe(true);
       expect(COMPONENT_FILE_REGEXP.test("file.jsx")).toBe(true);
+      expect(COMPONENT_FILE_REGEXP.test("kebab-file.jsx")).toBe(true);
       expect(COMPONENT_FILE_REGEXP.test("bad file name.jsx")).toBe(false);
       expect(COMPONENT_FILE_REGEXP.test("bad file name.tsx")).toBe(false);
     });
