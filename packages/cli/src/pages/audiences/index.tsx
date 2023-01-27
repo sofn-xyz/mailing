@@ -128,7 +128,7 @@ const PreviewIndex: NextPage<AudiencesProps> = ({
 
   const rows = members.map((m) => [
     m.email,
-    m.createdAt.toUTCString(),
+    "",
     <Link key={m.id} href={`/unsubscribe/${m.id}`} legacyBehavior>
       <a>{memberListCounts[m.email]}</a>
     </Link>,
