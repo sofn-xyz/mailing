@@ -22,7 +22,7 @@
     "test:integration:watch": "yarn integration:servers:start \"yarn jest -c jest.integration.config.ts --watch\"",
     "ci:test": "yarn test:servers:start test",
     "ci:test:integration": "yarn integration:servers:start \"yarn jest -c jest.integration.config.ts\"",
-    "test:integration:cypress": "yarn integration:servers:start \"cd packages/cli && yarn next --version && yarn cypress run -C cypressIntegration.config.ts\"",
+    "test:integration:cypress": "yarn integration:servers:start \"cd packages/cli && yarn cypress run -C cypressIntegration.config.ts\"",
     "test:integration:cypress:open": "yarn integration:servers:start \"cd packages/cli && yarn cypress open -C cypressIntegration.config.ts\"",
     "ci:cli": "cd packages/cli && yarn ci:server",
     "ci:web": "cd packages/web && yarn ci:server",
