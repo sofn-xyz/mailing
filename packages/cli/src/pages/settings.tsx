@@ -105,9 +105,7 @@ function Settings(props: Props) {
                     apiKeys.map((apiKey) => [
                       apiKey.id,
                       JSON.stringify(apiKey.active),
-                      apiKey.createdAt
-                        ? new Date(apiKey.createdAt).toLocaleString()
-                        : "",
+                      apiKey.createdAt ? apiKey.createdAt.toUTCString() : "",
                     ])
                   )}
                 />
