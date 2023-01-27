@@ -1,4 +1,4 @@
-import React, { ReactElement, ReactNode, useEffect, useState } from "react";
+import React, { ReactElement, useEffect, useState } from "react";
 import { NextPage } from "next";
 import { withSessionSsr } from "../../util/session";
 import prisma from "../../../prisma";
@@ -114,7 +114,7 @@ const PreviewIndex: NextPage<AudiencesProps> = ({
   sortOrder,
   page,
 }) => {
-  const [rows, setRows] = useState<ReactNode[][]>([]);
+  const [rows, setRows] = useState<(ReactElement | string)[][]>([]);
   const headers: (ReactElement | string)[] = [
     "Email",
     <Link
