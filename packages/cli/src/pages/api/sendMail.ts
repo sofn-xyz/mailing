@@ -7,6 +7,14 @@ import { getTemplateModule } from "../../util/moduleManifestUtil";
 import { validateMethod } from "../../util/validate/validateMethod";
 import { errorTemplateNotFoundInListOfTemplates } from "../../util/validate/validateTemplate";
 
+export const config = {
+  api: {
+    bodyParser: {
+      sizeLimit: '4mb',
+    },
+  },
+}
+
 type Data = {
   error?: string; // api error messages
   mjmlErrors?: MjmlError[];
