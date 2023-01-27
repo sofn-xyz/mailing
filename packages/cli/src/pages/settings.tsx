@@ -1,5 +1,5 @@
 import { withSessionSsr } from "../util/session";
-import { ReactElement, useCallback, useState } from "react";
+import { ReactElement, useCallback, useEffect, useState } from "react";
 import prisma from "../../prisma";
 import type { ApiKey, List, User } from "../../prisma/generated/client";
 import OutlineButton from "../components/ui/OutlineButton";
@@ -57,6 +57,7 @@ const LIST_TABLE_HEADERS: (ReactElement | string)[] = [
 
 function Settings(props: Props) {
   const [apiKeys, setApiKeys] = useState(props.apiKeys);
+  const [apiKeyRows, setApiKeyRows] = useState<string[][]>([]);
   const { lists } = props;
 
   const createApiKey = useCallback(async () => {
@@ -70,6 +71,16 @@ function Settings(props: Props) {
     const json = await response.json();
 
     setApiKeys(apiKeys.concat(json.apiKey));
+  }, [apiKeys]);
+
+  useEffect(() => {
+    setApiKeyRows(
+      apiKeys.map((apiKey) => [
+        apiKey.id,
+        JSON.stringify(apiKey.active),
+        apiKey.createdAt ? new Date(apiKey.createdAt).toLocaleString() : "",
+      ])
+    );
   }, [apiKeys]);
 
   return (
@@ -100,15 +111,7 @@ function Settings(props: Props) {
                 </div>
               </div>
               <div id="api-keys" className="col-span-3">
-                <Table
-                  rows={[API_TABLE_HEADERS].concat(
-                    apiKeys.map((apiKey) => [
-                      apiKey.id,
-                      JSON.stringify(apiKey.active),
-                      "",
-                    ])
-                  )}
-                />
+                <Table rows={[API_TABLE_HEADERS].concat(apiKeyRows)} />
               </div>
             </div>
             <hr className="my-16 border-dotted border-gray-500 border-top border-bottom-0" />
