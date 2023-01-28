@@ -1,5 +1,16 @@
 # mailing
 
+## 0.9.9
+
+### Patch Changes
+
+- 346fd6bf: Added config object to sendMail route to increase default sizeLimit
+- c8cc1ccd: bugfix: allow filenames with -
+- 2dc47846: fix hydration error from rendering dates on server
+- Updated dependencies [346fd6bf]
+- Updated dependencies [c8cc1ccd]
+  - mailing-core@0.9.9
+
 ## 0.9.8
 
 ### Patch Changes

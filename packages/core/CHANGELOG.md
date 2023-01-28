@@ -1,5 +1,12 @@
 # mailing-core
 
+## 0.9.9
+
+### Patch Changes
+
+- 346fd6bf: Added config object to sendMail route to increase default sizeLimit
+- c8cc1ccd: bugfix: allow filenames with -
+
 ## 0.9.8
 
 ### Patch Changes
