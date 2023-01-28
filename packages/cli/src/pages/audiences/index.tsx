@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import React, { ReactElement, useEffect, useState } from "react";
 import { NextPage } from "next";
 import { withSessionSsr } from "../../util/session";
 import prisma from "../../../prisma";
@@ -114,6 +114,7 @@ const PreviewIndex: NextPage<AudiencesProps> = ({
   sortOrder,
   page,
 }) => {
+  const [rows, setRows] = useState<(ReactElement | string)[][]>([]);
   const headers: (ReactElement | string)[] = [
     "Email",
     <Link
@@ -126,13 +127,17 @@ const PreviewIndex: NextPage<AudiencesProps> = ({
     "Lists",
   ];
 
-  const rows = members.map((m) => [
-    m.email,
-    new Date(m.createdAt).toLocaleString(),
-    <Link key={m.id} href={`/unsubscribe/${m.id}`} legacyBehavior>
-      <a>{memberListCounts[m.email]}</a>
-    </Link>,
-  ]);
+  useEffect(() => {
+    setRows(
+      members.map((m) => [
+        m.email,
+        m.createdAt.toLocaleString(),
+        <Link key={m.id} href={`/unsubscribe/${m.id}`} legacyBehavior>
+          <a>{memberListCounts[m.email]}</a>
+        </Link>,
+      ])
+    );
+  }, [members, memberListCounts]);
 
   return (
     <div className="max-w-2xl mx-auto grid grid-cols-3">
