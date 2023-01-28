@@ -20,7 +20,7 @@ import { template } from "lodash";
 import { getNodeModulesDirsFrom } from "../../util/getNodeModulesDirsFrom";
 import { lintEmailsDirectory } from "../../util/lintEmailsDirectory";
 
-export const COMPONENT_FILE_REGEXP = /^[^\s-]+\.[tj]sx$/; // no spaces, .jsx or .tsx
+export const COMPONENT_FILE_REGEXP = /^[^\s]+\.[tj]sx$/; // no spaces, .jsx or .tsx
 export const DOT_MAILING_IGNORE_REGEXP =
   /__test__|__integration__|generator_templates|yarn-error.log|src\/index\.ts$|src\/dev\.js$|\.mailing$|\.next|node_modules$|^cypress/;
 
