@@ -28,8 +28,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     where: { id: memberId },
   });
 
-  console.log(listMember);
-
   if (!listMember) {
     return {
       notFound: true,
