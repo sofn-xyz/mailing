@@ -2,7 +2,7 @@ import Head from "next/head";
 import prisma from "../../../prisma";
 import { GetServerSideProps } from "next";
 import type { List, Member } from "../../../prisma/generated/client";
-import React, { useCallback, useState } from "react";
+import React, { startTransition, useCallback, useState } from "react";
 import FormSuccess from "../../components/FormSuccess";
 import { remove } from "lodash";
 import Watermark from "../../components/Watermark";
@@ -27,6 +27,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const listMember = await prisma.member.findUnique({
     where: { id: memberId },
   });
+
+  console.log(listMember);
 
   if (!listMember) {
     return {
@@ -213,8 +215,10 @@ const Unsubscribe = (props: UnsubscribeProps) => {
         body: JSON.stringify({ data }),
       });
 
-      setFormSubmitted(true);
-      setFormSaving(false);
+      startTransition(() => {
+        setFormSubmitted(true);
+        setFormSaving(false);
+      });
     },
     [defaultMember.id, listMembers, memberId]
   );
@@ -302,7 +306,13 @@ const Unsubscribe = (props: UnsubscribeProps) => {
             {defaultListOnly ? (
               <Button
                 type="submit"
-                text={subscribedToDefaultList ? "Unsubscribe" : "Re-subscribe"}
+                text={
+                  formSaving
+                    ? "Loading..."
+                    : subscribedToDefaultList
+                    ? "Unsubscribe"
+                    : "Re-subscribe"
+                }
                 white
                 onClick={subscribeUnsubscribeButtonClick}
                 disabled={formSaving}
@@ -311,7 +321,7 @@ const Unsubscribe = (props: UnsubscribeProps) => {
               <Button
                 white
                 full
-                text="Save"
+                text={formSaving ? "Loading..." : "Save"}
                 type="submit"
                 disabled={formSaving}
               />
