@@ -47,23 +47,23 @@ export default function Pricing() {
         <tbody>
           <tr className="bb-dotted py-8">
             <TdLeft>1-5</TdLeft>
-            <TdCenter>$500 ea.</TdCenter>
+            <TdCenter>$1,000 ea.</TdCenter>
             <TdCenter className="border-x-2 sm:border-x-4 border-green-200">
-              $250 ea.
+              $500 ea.
             </TdCenter>
           </tr>
           <tr className="bb-dotted py-8">
             <TdLeft>6-10</TdLeft>
-            <TdCenter>$450 ea.</TdCenter>
+            <TdCenter>$900 ea.</TdCenter>
             <TdCenter className="border-x-2 sm:border-x-4 border-green-200">
-              $225 ea.
+              $450 ea.
             </TdCenter>
           </tr>
           <tr className="py-8">
             <TdLeft>11+</TdLeft>
-            <TdCenter>$400 ea.</TdCenter>
+            <TdCenter>$800 ea.</TdCenter>
             <TdCenter className="rounded-b-2xl border-x-2 sm:border-x-4 border-b-2 sm:border-b-4 border-green-200 pb-10">
-              $200 ea.
+              $400 ea.
             </TdCenter>
           </tr>
         </tbody>
