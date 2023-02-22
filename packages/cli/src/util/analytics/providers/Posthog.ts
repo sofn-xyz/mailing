@@ -1,5 +1,3 @@
-import fetch from "node-fetch";
-
 class Posthog implements IAnalyticsProvider {
   static baseUrl = "https://app.posthog.com";
   apiToken: string;

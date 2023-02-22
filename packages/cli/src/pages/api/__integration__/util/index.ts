@@ -1,7 +1,6 @@
-import nodeFetch from "node-fetch";
-import fetchCookie from "fetch-cookie";
+import makeFetchCookie from "fetch-cookie";
 
-export const fetch: any = fetchCookie(nodeFetch);
+export const fetchCookie: any = makeFetchCookie(fetch);
 
 export function cliUrl(path: string) {
   return "http://localhost:3883" + path;
@@ -44,7 +43,7 @@ export abstract class Api<TFormData = undefined> {
 
     this.setFetchData();
 
-    this.response = await fetch(cliUrl(this.path), this.fetchData);
+    this.response = await fetchCookie(cliUrl(this.path), this.fetchData);
 
     return this;
   }

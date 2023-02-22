@@ -1,5 +1,4 @@
 import prompts from "prompts";
-import fetch from "node-fetch";
 import { existsSync } from "fs-extra";
 import { ArgumentsCamelCase } from "yargs";
 import { error, log } from "../util/serverLogger";

@@ -1,7 +1,8 @@
 import Posthog from "../Posthog";
-import fetch from "node-fetch";
 
-jest.mock("node-fetch");
+global.fetch = jest.fn(() =>
+  Promise.resolve({ json: () => Promise.resolve({}) })
+) as jest.Mock;
 
 describe("Posthog", () => {
   let posthog: Posthog;

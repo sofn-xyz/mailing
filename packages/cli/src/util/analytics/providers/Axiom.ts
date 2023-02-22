@@ -1,5 +1,3 @@
-import fetch from "node-fetch";
-
 class Axiom implements IAnalyticsProvider {
   static baseUrl = "https://cloud.axiom.co";
   apiToken: string;
