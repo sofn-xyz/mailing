@@ -302,7 +302,13 @@ const Unsubscribe = (props: UnsubscribeProps) => {
             {defaultListOnly ? (
               <Button
                 type="submit"
-                text={subscribedToDefaultList ? "Unsubscribe" : "Re-subscribe"}
+                text={
+                  formSaving
+                    ? "Loading..."
+                    : subscribedToDefaultList
+                    ? "Unsubscribe"
+                    : "Re-subscribe"
+                }
                 white
                 onClick={subscribeUnsubscribeButtonClick}
                 disabled={formSaving}
@@ -311,7 +317,7 @@ const Unsubscribe = (props: UnsubscribeProps) => {
               <Button
                 white
                 full
-                text="Save"
+                text={formSaving ? "Loading..." : "Save"}
                 type="submit"
                 disabled={formSaving}
               />
