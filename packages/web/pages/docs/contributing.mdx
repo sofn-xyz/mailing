@@ -31,7 +31,7 @@ yarn dev
 
 ### Develop using a demo next app
 
-For development, you may want to have a demo next app that pulls in your changes. We've had success using yalc[https://github.com/wclr/yalc] and the following flow:
+For development, you may want to have a demo next app that pulls in your changes. We've had success using [yalc](https://github.com/wclr/yalc) and the following flow:
 
 - Register `mailing` as a local package with `yalc`: in the `packages/cli` directory, run `yalc add`.
 - Create a new next app in your projects directory by running `yarn create next-app --typescript` for a typescript app OR `yarn create next-app` for a js app
@@ -39,6 +39,14 @@ For development, you may want to have a demo next app that pulls in your changes
 - Make your changes in `mailing`
 - Run `yarn build` in the `mailing` root directory to create new `dist` files
 - Run `yalc push` in the `mailing` root directory to both publish your changes (`yalc publish`) and pull them in to your next app (`yalc update`)
+
+### Run jest tests
+
+Run `yarn test` to run the jest tests. These tests do not require the preview server to be running.
+
+### Run integration tests
+
+Run `yarn test:integration` to run the integration tests. These tests are written in jest, but interact with a real database. You do not need to start the Mailing server to run these tests -- a server running in test mode will start automatically when you run this command. Some env variables must be set in order for these test to run, see the "Integration tests" section of [.env.example](https://github.com/sofn-xyz/mailing/blob/main/.env.example) for details.
 
 ### Run cypress tests for the preview server
 
