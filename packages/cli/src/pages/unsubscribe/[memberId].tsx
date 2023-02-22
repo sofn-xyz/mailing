@@ -2,7 +2,7 @@ import Head from "next/head";
 import prisma from "../../../prisma";
 import { GetServerSideProps } from "next";
 import type { List, Member } from "../../../prisma/generated/client";
-import React, { startTransition, useCallback, useState } from "react";
+import React, { useCallback, useState } from "react";
 import FormSuccess from "../../components/FormSuccess";
 import { remove } from "lodash";
 import Watermark from "../../components/Watermark";
@@ -213,10 +213,8 @@ const Unsubscribe = (props: UnsubscribeProps) => {
         body: JSON.stringify({ data }),
       });
 
-      startTransition(() => {
-        setFormSubmitted(true);
-        setFormSaving(false);
-      });
+      setFormSubmitted(true);
+      setFormSaving(false);
     },
     [defaultMember.id, listMembers, memberId]
   );
