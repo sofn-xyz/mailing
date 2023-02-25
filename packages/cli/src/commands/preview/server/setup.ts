@@ -52,13 +52,14 @@ export async function linkEmailsDirectory(emailsDir: string) {
   const relativePathToEmailsDir = posix.relative(dotMailingSrcPath, emailsDir);
 
   uniquePreviewCollections.forEach((p) => {
-    const moduleName = p.replace(/\.[jt]sx/g, "");
+    const fileName = p.replace(/\.[jt]sx/g, "");
+    const previewModuleName = `${camelCase(fileName)}Preview`;
     previewImports.push(
-      `import * as ${moduleName}Preview from "${
-        relativePathToEmailsDir + "/previews/" + moduleName
+      `import * as ${previewModuleName} from "${
+        relativePathToEmailsDir + "/previews/" + fileName
       }";`
     );
-    previewConsts.push(`${moduleName}: ${moduleName}Preview`);
+    previewConsts.push(`"${fileName}": ${previewModuleName}`);
   });
 
   let indexFound = false;
@@ -78,11 +79,12 @@ export async function linkEmailsDirectory(emailsDir: string) {
   const templateImports: string[] = [];
   const templateModuleNames: string[] = [];
   uniqueTemplates.forEach((p) => {
-    const moduleName = p.replace(/\.[jt]sx/g, "");
-    templateModuleNames.push(moduleName);
+    const fileName = p.replace(/\.[jt]sx/g, "");
+    const moduleName = camelCase(fileName);
+    templateModuleNames.push(`"${fileName}": ${moduleName}`);
     templateImports.push(
       `import ${moduleName} from "${
-        relativePathToEmailsDir + "/" + moduleName
+        relativePathToEmailsDir + "/" + fileName
       }";`
     );
   });
@@ -251,4 +253,8 @@ async function writeFrontendManifest(toPath: string) {
   ).toString();
   await writeFile(toPath, feManifestContents);
   await buildManifest("browser", toPath);
+}
+
+function camelCase(string: string) {
+	return string.replace(/-./g, match => match[1].toUpperCase());
 }
