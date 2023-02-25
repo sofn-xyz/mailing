@@ -16,7 +16,7 @@ import {
 
 import { debug, log } from "../../../util/serverLogger";
 import { build, BuildOptions } from "esbuild";
-import { template } from "lodash";
+import { camelCase, template } from "lodash";
 import { getNodeModulesDirsFrom } from "../../util/getNodeModulesDirsFrom";
 import { lintEmailsDirectory } from "../../util/lintEmailsDirectory";
 
@@ -253,8 +253,4 @@ async function writeFrontendManifest(toPath: string) {
   ).toString();
   await writeFile(toPath, feManifestContents);
   await buildManifest("browser", toPath);
-}
-
-function camelCase(string: string) {
-	return string.replace(/-./g, match => match[1].toUpperCase());
 }
