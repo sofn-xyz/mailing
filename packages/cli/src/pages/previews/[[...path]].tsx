@@ -37,6 +37,8 @@ export const getStaticPaths = async () => {
 };
 
 export const getStaticProps: GetStaticProps = async (context) => {
+  if (process.env.DISABLE_PREVIEWS) return { notFound: true };
+
   const { path } = context.params as Params;
   const [previewClass, previewFunction] = path || [];
   let preview = null;

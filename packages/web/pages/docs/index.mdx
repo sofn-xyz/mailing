@@ -127,6 +127,10 @@ When your email is nice, send it to yourself or your QA tool of choice for final
   src="https://user-images.githubusercontent.com/609038/188352419-8e1be23a-fa64-4e61-9e36-ecac8d882959.jpg"
 />
 
+### Disabling email previews in production
+
+If you'd like to disable previews in production, set an environment variable `DISABLE_PREVIEWS=1`.
+
 ## Testing emails with jest
 
 When `NODE_ENV === "test"`, calling `sendMail` pushes messages into a queue for later examination. The `mail-core` package exports a couple of functions for testing that emails send with the correct content.
