@@ -1,5 +1,19 @@
 # mailing-core
 
+## 0.9.11
+
+### Patch Changes
+
+- (Bump version to 0.9.11)
+
+## 0.9.10
+
+### Patch Changes
+
+- a95e941: Use Loading... as the button text on the unsubscribe page
+- 4d73bbd: revert page-snap to reduce bundle size
+- 302886a: Disable previews by setting an ENV variable: DISABLE_PREVIEWS=1
+
 ## 0.9.9
 
 ### Patch Changes

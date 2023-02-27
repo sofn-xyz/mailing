@@ -1,5 +1,24 @@
 # web
 
+## 0.4.19
+
+### Patch Changes
+
+- (Bump version to 0.9.11)
+- Updated dependencies
+  - mailing-core@0.9.11
+
+## 0.4.18
+
+### Patch Changes
+
+- a95e941: Use Loading... as the button text on the unsubscribe page
+- 302886a: Disable previews by setting an ENV variable: DISABLE_PREVIEWS=1
+- Updated dependencies [a95e941]
+- Updated dependencies [4d73bbd]
+- Updated dependencies [302886a]
+  - mailing-core@0.9.10
+
 ## 0.4.17
 
 ### Patch Changes
