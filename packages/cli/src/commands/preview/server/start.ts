@@ -105,7 +105,7 @@ export default async function startPreviewServer() {
       try {
         if (req.url === "/intercepts" && req.method === "POST") {
           createIntercept(req, res);
-        } else if (/^\/intercepts\/[a-zA-Z0-9]+\.json/.test(req.url)) {
+        } else if (/^\/intercepts\/[a-f0-9-]+\.json/.test(req.url)) {
           showIntercept(req, res);
         } else if (/^\/_+next/.test(req.url)) {
           noLog = true;
