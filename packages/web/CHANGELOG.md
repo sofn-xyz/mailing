@@ -1,5 +1,13 @@
 # web
 
+## 0.4.20
+
+### Patch Changes
+
+- 79563b0: Use secureUUID instead of Date.now for intercepts
+- Updated dependencies [79563b0]
+  - mailing-core@0.9.12
+
 ## 0.4.19
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # mailing-core
 
+## 0.9.12
+
+### Patch Changes
+
+- 79563b0: Use secureUUID instead of Date.now for intercepts
+
 ## 0.9.11
 
 ### Patch Changes
