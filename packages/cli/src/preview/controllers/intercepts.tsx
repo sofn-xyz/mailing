@@ -1,3 +1,4 @@
+import { randomUUID } from "crypto";
 import { IncomingMessage, ServerResponse } from "http";
 import { log } from "../../util/serverLogger";
 import { renderNotFound } from "./application";
@@ -23,7 +24,7 @@ export function createIntercept(req: IncomingMessage, res: ServerResponse) {
   });
 
   req.on("end", function onEnd() {
-    const id = Date.now();
+    const id = randomUUID();
     cache[id] = { ...JSON.parse(body), id };
     res.writeHead(201);
     res.end(JSON.stringify({ id }));
