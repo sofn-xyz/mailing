@@ -4,7 +4,7 @@ import {
   MjmlImage,
   MjmlSection,
   MjmlWrapper,
-} from "mjml-react";
+} from "@faire/mjml-react";
 import { colors } from "../theme";
 import assetUrl from "../util/assetUrl";
 

@@ -1,5 +1,4 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { MjmlError } from "mjml-react";
 import { sendMail } from "../../moduleManifest";
 import { validateApiKey } from "../../util/validate/validateApiKey";
 import { createElement } from "react";

@@ -7,7 +7,7 @@ import {
   ComponentMail,
   BuildSendMailOptions,
 } from "..";
-import { Mjml, MjmlBody, MjmlRaw } from "mjml-react";
+import { Mjml, MjmlBody, MjmlRaw } from "@faire/mjml-react";
 import fetch from "node-fetch";
 import open from "open";
 import * as postHog from "../util/postHog";

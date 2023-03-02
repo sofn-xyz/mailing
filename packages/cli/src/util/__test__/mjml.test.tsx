@@ -5,7 +5,7 @@ import {
   MjmlColumn,
   MjmlImage,
   MjmlSection,
-} from "mjml-react";
+} from "@faire/mjml-react";
 import { render } from "../mjml";
 
 describe("mjml", () => {

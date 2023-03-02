@@ -9,7 +9,7 @@ import {
   MjmlAll,
   MjmlRaw,
   MjmlPreview,
-} from "mjml-react";
+} from "@faire/mjml-react";
 import { colors, screens, themeDefaults, spacing } from "../theme";
 
 type BaseLayoutProps = {

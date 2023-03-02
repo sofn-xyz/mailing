@@ -1,4 +1,4 @@
-import { MjmlSection, MjmlColumn, MjmlImage, MjmlWrapper } from "mjml-react";
+import { MjmlSection, MjmlColumn, MjmlImage, MjmlWrapper } from "@faire/mjml-react";
 import Layout from "./components/Layout";
 import Footer from "./components/Footer";
 import Heading from "./components/Heading";

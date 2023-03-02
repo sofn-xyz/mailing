@@ -1,5 +1,5 @@
 import React from "react";
-import { MjmlSection, MjmlColumn, MjmlImage } from "mjml-react";
+import { MjmlSection, MjmlColumn, MjmlImage } from "@faire/mjml-react";
 
 type HeaderProps = {
   loose?: boolean;

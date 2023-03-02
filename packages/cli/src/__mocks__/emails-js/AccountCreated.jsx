@@ -1,5 +1,5 @@
 import React from "react";
-import { MjmlSection, MjmlColumn, MjmlImage } from "mjml-react";
+import { MjmlSection, MjmlColumn, MjmlImage } from "@faire/mjml-react";
 import Button from "./components/Button";
 import Header from "./components/Header";
 import Heading from "./components/Heading";

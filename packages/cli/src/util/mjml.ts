@@ -1,5 +1,6 @@
 import { JSXElementConstructor, ReactElement } from "react";
-import { render as mjRender } from "mjml-react";
+import { renderToMjml } from "@faire/mjml-react/utils/renderToMjml";
+import mjml2html from "mjml";
 import { parse } from "node-html-parser";
 
 function lintHtml(html: string) {
@@ -45,7 +46,7 @@ function lintHtml(html: string) {
 export function render(
   component: ReactElement<any, string | JSXElementConstructor<any>>
 ) {
-  const { html, errors } = mjRender(component);
+  const { html, errors } = mjml2html(renderToMjml(component));
   const htmlLint = lintHtml(html);
   return { html, errors, htmlLint };
 }

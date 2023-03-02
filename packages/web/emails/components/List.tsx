@@ -1,4 +1,4 @@
-import { MjmlRaw } from "mjml-react";
+import { MjmlRaw } from "@faire/mjml-react";
 
 import { fontSize, themeDefaults } from "../theme";
 

@@ -1,5 +1,4 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { MjmlError } from "mjml-react";
 
 import renderTemplate from "../../util/renderTemplate";
 import { validateApiKey } from "../../util/validate/validateApiKey";

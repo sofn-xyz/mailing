@@ -6,7 +6,7 @@ import {
   MjmlStyle,
   MjmlAttributes,
   MjmlAll,
-} from "mjml-react";
+} from "@faire/mjml-react";
 import { colors, spacing, screens, themeDefaults } from "../theme";
 import cssHelpers from "../util/cssHelpers";
 

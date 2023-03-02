@@ -1,11 +1,11 @@
 import { JSXElementConstructor, ReactElement } from "react";
-import { render as mjRender } from "mjml-react";
+import { renderToMjml } from "@faire/mjml-react/utils/renderToMjml";
+import mjml2html from "mjml";
 
 export function render(
   component: ReactElement<any, string | JSXElementConstructor<any>>
 ) {
-  return mjRender(component, {
+  return mjml2html(renderToMjml(component), {
     validationLevel: "soft",
-    minify: undefined,
   });
 }
