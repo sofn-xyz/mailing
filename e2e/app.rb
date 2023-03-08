@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
-require_relative 'app/standalone'
+require_relative 'app/standalone_js'
+require_relative 'app/standalone_ts'
 require_relative 'app/turbo'
 require_relative 'app/next_ts'
 require_relative 'app/next_js'
@@ -14,7 +15,8 @@ module App
   attr_reader :typescript
 
   CONFIGS = {
-    standalone: App::Standalone,
+    standalone_js: App::StandaloneJs,
+    standalone_ts: App::StandaloneTs,
     turbo: App::Turbo,
     next_ts: App::NextTs,
     next_js: App::NextJs,
