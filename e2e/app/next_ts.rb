@@ -13,8 +13,11 @@ module App
 
     def yarn_create!
       Dir.chdir(root_dir) do
-        cmd = 'yarn create next-app . --typescript'
-        cmd += "--no-eslint --no-src-dir --no-experimental-app --import-alias='@/*'"
+        cmd = <<-STR.split("\n").map(&:strip).join(' ')
+          yarn create next-app .
+          --typescript
+          --no-eslint --no-src-dir --no-experimental-app --import-alias='@/*'
+        STR
         system_quiet(cmd)
       end
     end
