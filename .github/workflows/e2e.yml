@@ -12,7 +12,8 @@ jobs:
       fail-fast: false
       matrix:
         e2e-config:
-          - standalone
+          - standalone_js
+          - standalone_ts
           # - turbo
           - next_js
           - next_ts
