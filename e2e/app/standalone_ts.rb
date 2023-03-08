@@ -13,7 +13,7 @@ module App
     def yarn_create!
       Dir.chdir(root_dir) do
         system_quiet('yarn init --yes')
-        system_quiet('npx tsc init --yes')
+        system_quiet('yarn tsc --init')
 
         # yarn add peer dependencies
         system_quiet('yarn add next react react-dom')
