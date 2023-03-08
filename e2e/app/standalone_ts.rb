@@ -18,9 +18,6 @@ module App
 
         # yarn add peer dependencies
         system_quiet('yarn add next react react-dom')
-
-        # yarn add types
-        system_quiet('yarn add --dev @types/react')
       end
     end
   end
