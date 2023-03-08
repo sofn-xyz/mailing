@@ -12,7 +12,9 @@ module App
 
     def yarn_create!
       Dir.chdir(root_dir) do
-        system_quiet('yarn create next-app . --javascript --no-eslint')
+        cmd = 'yarn create next-app . --javascript'
+        cmd += "--no-eslint --no-src-dir --no-experimental-app --import-alias='@/*'"
+        system_quiet(cmd)
       end
     end
   end
