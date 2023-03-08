@@ -6,6 +6,7 @@ module App
   class RedwoodTs < Base
     def initialize(root_dir, *args)
       @typescript = true
+      @tsconfig_path = 'web/tsconfig.json'
       super('redwood_ts', root_dir, *args)
     end
 

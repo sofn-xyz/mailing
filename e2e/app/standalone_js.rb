@@ -5,7 +5,7 @@ require_relative 'base'
 module App
   class StandaloneJs < Base
     def initialize(root_dir, *args)
-      super('standalone', root_dir, *args)
+      super('standalone_js', root_dir, *args)
     end
 
     private

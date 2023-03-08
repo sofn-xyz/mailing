@@ -5,7 +5,8 @@ require_relative 'base'
 module App
   class StandaloneTs < Base
     def initialize(root_dir, *args)
-      super('standalone', root_dir, *args)
+      @typescript = true
+      super('standalone_ts', root_dir, *args)
     end
 
     private
@@ -13,7 +14,7 @@ module App
     def yarn_create!
       Dir.chdir(root_dir) do
         system_quiet('yarn init --yes')
-        system_quiet('npx tsc init --yes')
+        system_quiet('yarn add typescript && yarn tsc --init')
 
         # yarn add peer dependencies
         system_quiet('yarn add next react react-dom')
