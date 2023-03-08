@@ -3,7 +3,7 @@
 require_relative 'base'
 
 module App
-  class Standalone < Base
+  class StandaloneJs < Base
     def initialize(root_dir, *args)
       super('standalone', root_dir, *args)
     end
