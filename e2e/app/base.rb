@@ -14,6 +14,7 @@ module App
 
     def initialize(name, root_dir, opts)
       @name = name
+      @tsconfig_path ||= 'tsconfig.json'
       @root_dir = root_dir
       @save_cache = opts[:save_cache]
     end
@@ -92,7 +93,8 @@ module App
     end
 
     def verify_tsconfig_json_exists!
-      raise "missing tsconfig.json in #{root_dir}" if @typescript && !File.exist?(File.join(root_dir, 'tsconfig.json'))
+      raise "missing #{@tsconfig_path} in #{root_dir}" if @typescript && !File.exist?(File.join(root_dir,
+                                                                                                @tsconfig_path))
     end
 
     def verify_typescript_mailing_config!
