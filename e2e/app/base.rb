@@ -14,6 +14,7 @@ module App
 
     def initialize(name, root_dir, opts)
       @name = name
+      @tsconfig_path ||= 'tsconfig.json'
       @root_dir = root_dir
       @save_cache = opts[:save_cache]
     end
@@ -32,6 +33,7 @@ module App
 
         if @save_cache
           verify_package_json_exists!
+          verify_tsconfig_json_exists!
           FileUtils.cp_r(@root_dir, File.join(Config::CACHE_DIR, @name))
         end
       end
@@ -44,6 +46,7 @@ module App
       use_cache do
         yarn_create!
         verify_package_json_exists!
+        verify_tsconfig_json_exists!
         yarn_add_test_dependencies!
         add_yarn_ci_scripts!
       end
@@ -52,7 +55,7 @@ module App
       yarn!
       copy_ci_scripts!
       intialize_mailing!
-      verify_typescript!
+      verify_typescript_mailing_config!
     end
 
     def run_mailing
@@ -89,7 +92,12 @@ module App
       raise "missing package.json in #{root_dir}" unless File.exist?(File.join(root_dir, 'package.json'))
     end
 
-    def verify_typescript!
+    def verify_tsconfig_json_exists!
+      raise "missing #{@tsconfig_path} in #{root_dir}" if @typescript && !File.exist?(File.join(root_dir,
+                                                                                                @tsconfig_path))
+    end
+
+    def verify_typescript_mailing_config!
       return unless @typescript
 
       mailing_config_json = File.join(root_dir, 'mailing.config.json')
