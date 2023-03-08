@@ -14,7 +14,7 @@ module App
     def yarn_create!
       Dir.chdir(root_dir) do
         system_quiet('yarn init --yes')
-        system_quiet('yarn add typescript && yarn tsc --init')
+        system_quiet('yarn add typescript && yarn tsc --init --jsx=preserve')
 
         # yarn add peer dependencies
         system_quiet('yarn add next react react-dom')
