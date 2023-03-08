@@ -2,6 +2,12 @@ import React from "react";
 import { MjmlText } from "@faire/mjml-react";
 import { colors } from "../theme";
 
+type HrefProps = {
+  href?: string | undefined;
+  target?: string | undefined;
+  rel?: string | undefined;
+};
+
 type LinkProps = HrefProps & React.ComponentProps<typeof MjmlText>;
 type StyleProps = Pick<
   LinkProps,

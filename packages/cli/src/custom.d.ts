@@ -43,9 +43,3 @@ type MailingConfig = {
   port?: number;
   quiet?: boolean;
 };
-
-type HrefProps = {
-	href?: string | undefined;
-	target?: string | undefined;
-	rel?: string | undefined;
-}

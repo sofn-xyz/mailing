@@ -1,13 +1,33 @@
 import React from "react";
-import { Mjml, MjmlBody, MjmlHead, MjmlFont, MjmlStyle, MjmlAttributes, MjmlAll, } from "@faire/mjml-react";
-import { screens, themeDefaults, spacing, colors, fontFamily, fontSize, borderRadius, } from "../theme";
+import {
+  Mjml,
+  MjmlBody,
+  MjmlHead,
+  MjmlFont,
+  MjmlStyle,
+  MjmlAttributes,
+  MjmlAll,
+} from "@faire/mjml-react";
+import {
+  screens,
+  themeDefaults,
+  spacing,
+  colors,
+  fontFamily,
+  fontSize,
+  borderRadius,
+} from "../theme";
 
-export default function BaseLayout({ width, children, style, }) {
-    return (<Mjml>
+export default function BaseLayout({ width, children, style }) {
+  return (
+    <Mjml>
       <MjmlHead>
-        <MjmlFont name="neue-haas-unica" href="https://use.typekit.net/qqd8jtb.css"/>
+        <MjmlFont
+          name="neue-haas-unica"
+          href="https://use.typekit.net/qqd8jtb.css"
+        />
         <MjmlAttributes>
-          <MjmlAll {...themeDefaults}/>
+          <MjmlAll {...themeDefaults} />
         </MjmlAttributes>
         <MjmlStyle>{`
           body {
@@ -76,5 +96,6 @@ export default function BaseLayout({ width, children, style, }) {
       </MjmlHead>
 
       <MjmlBody width={width}>{children}</MjmlBody>
-    </Mjml>);
+    </Mjml>
+  );
 }
