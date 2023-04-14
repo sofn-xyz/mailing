@@ -1,5 +1,13 @@
 # mailing
 
+## 0.9.13
+
+### Patch Changes
+
+- 49c9684: Catch errors writing to db in click hook
+- Updated dependencies [49c9684]
+  - mailing-core@0.9.13
+
 ## 0.9.12
 
 ### Patch Changes
