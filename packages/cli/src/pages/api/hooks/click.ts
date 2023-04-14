@@ -26,21 +26,25 @@ export default async function handler(
       properties: { url, messageId },
     });
 
-    await prisma.click.upsert({
-      where: {
-        messageId_url: {
+    try {
+      await prisma.click.upsert({
+        where: {
+          messageId_url: {
+            messageId: messageId,
+            url,
+          },
+        },
+        create: {
           messageId: messageId,
           url,
         },
-      },
-      create: {
-        messageId: messageId,
-        url,
-      },
-      update: {
-        count: { increment: 1 },
-      },
-    });
+        update: {
+          count: { increment: 1 },
+        },
+      });
+    } catch (e) {
+      console.error("Writing click failed", e);
+    }
   }
 
   res.redirect(307, url);
