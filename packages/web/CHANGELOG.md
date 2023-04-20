@@ -1,5 +1,13 @@
 # web
 
+## 0.4.22
+
+### Patch Changes
+
+- 054d2569: add processHtml option for minification etc after mjml is converted to html
+- Updated dependencies [054d2569]
+  - mailing-core@0.9.14
+
 ## 0.4.21
 
 ### Patch Changes
