@@ -33,13 +33,14 @@ const sendMail = buildSendMail({
   defaultFrom: "Steven from Dub <steven@dub.sh>",
   configPath: "./mailing.config.json",
   // optional
-  minifyCb: (html: string) => htmlMinify(html, {
-        caseSensitive: true,
-        collapseWhitespace: true,
-        minifyCSS: true,
-        removeComments: true,
-        removeEmptyAttributes: true,
-      })
+  processHtml: (html: string) =>
+    htmlMinify(html, {
+      caseSensitive: true,
+      collapseWhitespace: true,
+      minifyCSS: true,
+      removeComments: true,
+      removeEmptyAttributes: true,
+    }),
 });
 ```
 

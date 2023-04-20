@@ -27,7 +27,7 @@ export type BuildSendMailOptions<T> = {
   transport: Transporter<T>;
   defaultFrom: string;
   configPath: string;
-  minifyCb?: (html: string) => string;
+  processHtml?: (html: string) => string;
 };
 
 export type ComponentMail = SendMailOptions & {
@@ -117,7 +117,7 @@ export function buildSendMail<T>(options: BuildSendMailOptions<T>) {
     if (component && !mailOptions.html) {
       const { html: renderedHtml, errors } = render(
         component,
-        options.minifyCb
+        options.processHtml
       );
       if (errors?.length) {
         error(errors);
