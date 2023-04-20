@@ -115,10 +115,9 @@ export function buildSendMail<T>(options: BuildSendMailOptions<T>) {
     // Get html from the rendered component if not provided
     let derivedTemplateName;
     if (component && !mailOptions.html) {
-      const { html: renderedHtml, errors } = render(
-        component,
-        options.processHtml
-      );
+      const { html: renderedHtml, errors } = render(component, {
+        processHtml: options.processHtml,
+      });
       if (errors?.length) {
         error(errors);
         throw new MalformedInputError(

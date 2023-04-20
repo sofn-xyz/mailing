@@ -3,9 +3,9 @@ import { render as mjRender } from "mjml-react";
 
 export function render(
   component: ReactElement<any, string | JSXElementConstructor<any>>,
-  options: {
+  options?: {
     processHtml?: (html: string) => string;
-  } = {}
+  }
 ) {
   const { html, errors } = mjRender(component, {
     validationLevel: "soft",
@@ -13,7 +13,7 @@ export function render(
   });
 
   return {
-    html: options.processHtml?.(html) || html,
+    html: options?.processHtml?.(html) || html,
     errors,
   };
 }
