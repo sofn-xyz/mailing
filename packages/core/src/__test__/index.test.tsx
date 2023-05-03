@@ -449,6 +449,9 @@ describe("index", () => {
                 }),
               }
             );
+
+            // it is unsafe to send the email because the user may have unsubscribed, we don't know
+            // also this is the mechanism that adds the unsubscribe link, so we are not able to include that
             expect(mockSendMail).not.toHaveBeenCalled();
             expect(errorSpy).toHaveBeenCalled();
           });
