@@ -223,6 +223,7 @@ export function buildSendMail<T>(options: BuildSendMailOptions<T>) {
           statuSText: hookResponse.statusText,
           json,
         });
+        return;
       }
     }
 
