@@ -6,6 +6,7 @@ import {
   clearTestMailQueue,
   ComponentMail,
   BuildSendMailOptions,
+  EMAIL_PREFERENCES_URL,
 } from "..";
 import { Mjml, MjmlBody, MjmlRaw } from "mjml-react";
 import fetch from "node-fetch";
@@ -429,6 +430,7 @@ describe("index", () => {
               html: "<body>ok</body>",
               dangerouslyForceDeliver: true,
             });
+
             expect(fetch).toHaveBeenCalled();
             expect(fetch).toHaveBeenCalledWith(
               "https://mailing.test/api/messages",
@@ -454,6 +456,66 @@ describe("index", () => {
             // also this is the mechanism that adds the unsubscribe link, so we are not able to include that
             expect(mockSendMail).not.toHaveBeenCalled();
             expect(errorSpy).toHaveBeenCalled();
+          });
+
+          describe("lists", () => {
+            it("should not send an email to a user that is unsubscribed", async () => {
+              const res = new Response(
+                JSON.stringify({
+                  error: "user is not subscribed to either list",
+                }),
+                {
+                  status: 200,
+                }
+              );
+
+              (fetch as unknown as jest.Mock).mockResolvedValueOnce(
+                Promise.resolve(res)
+              );
+
+              const sendMail = buildSendMail({
+                transport,
+                defaultFrom: "replace@me.with.your.com",
+                configPath: "./mailing.config.json",
+              });
+
+              const email = "test@test.com";
+              const html = `See the bottom of this email for an unsubscribe link<br /><a href="${EMAIL_PREFERENCES_URL}">Unsubscribe</a>`;
+              const listName = "mylista4290";
+              await sendMail({
+                to: email,
+                from: "ok@ok.com",
+                subject: "hello",
+                listName,
+                dangerouslyForceDeliver: true,
+                html,
+              });
+
+              expect(fetch).toHaveBeenCalled();
+              expect(fetch).toHaveBeenCalledWith(
+                "https://mailing.test/api/messages",
+                {
+                  headers: {
+                    "Content-Type": "application/json",
+                    "x-api-key": "test_key",
+                  },
+                  method: "POST",
+                  body: JSON.stringify({
+                    skipUnsubscribeChecks: false,
+                    anonymousId: "unknown",
+                    to: email,
+                    from: "ok@ok.com",
+                    subject: "hello",
+                    html,
+                    listName,
+                  }),
+                }
+              );
+
+              // it is unsafe to send the email because the user may have unsubscribed, we don't know
+              // also this is the mechanism that adds the unsubscribe link, so we are not able to include that
+              expect(mockSendMail).not.toHaveBeenCalled();
+            });
           });
         });
       });
