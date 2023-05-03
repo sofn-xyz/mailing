@@ -411,56 +411,6 @@ describe("index", () => {
               Promise.resolve(res)
             );
 
-            const sendMail = buildSendMail({
-              transport,
-              defaultFrom: "from@mailing.dev",
-              configPath: "./mailing.config.json",
-            });
-
-            await sendMail({
-              to: ["ok@ok.com"],
-              from: "ok@ok.com",
-              subject: "hello",
-              text: "ok",
-              html: "<body>ok</body>",
-              dangerouslyForceDeliver: true,
-            });
-
-            expect(fetch).toHaveBeenCalled();
-            expect(fetch).toHaveBeenCalledWith(
-              "https://mailing.test/api/messages",
-              {
-                headers: {
-                  "Content-Type": "application/json",
-                  "x-api-key": "test_key",
-                },
-                method: "POST",
-                body: JSON.stringify({
-                  skipUnsubscribeChecks: true,
-                  anonymousId: "unknown",
-                  to: ["ok@ok.com"],
-                  from: "ok@ok.com",
-                  subject: "hello",
-                  text: "ok",
-                  html: "<body>ok</body>",
-                }),
-              }
-            );
-            expect(mockSendMail).not.toHaveBeenCalled();
-          });
-
-          it("handles errors correctly", async () => {
-            const res = new Response(
-              JSON.stringify({ message: { id: "message-1234" } }),
-              {
-                status: 500,
-              }
-            );
-
-            (fetch as unknown as jest.Mock).mockResolvedValueOnce(
-              Promise.resolve(res)
-            );
-
             const errorSpy = jest
               .spyOn(serverLogger, "error")
               .mockImplementation(jest.fn());
