@@ -217,10 +217,16 @@ export function buildSendMail<T>(options: BuildSendMailOptions<T>) {
           });
         }
       } else {
-        const json = await hookResponse.json();
+        let json;
+        try {
+          json = await hookResponse.json();
+        } catch (e) {
+          json = "could not parse response as json";
+        }
+
         error("Error calling mailing api hook", {
           status: hookResponse.status,
-          statuSText: hookResponse.statusText,
+          statusText: hookResponse.statusText,
           json,
         });
         return;
