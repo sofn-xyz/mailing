@@ -1,5 +1,13 @@
 # mailing
 
+## 0.9.15
+
+### Patch Changes
+
+- c4a29b9: Bugfix: mailing should early return if api returns a non 200 code
+- Updated dependencies [c4a29b9]
+  - mailing-core@0.9.15
+
 ## 0.9.14
 
 ### Patch Changes
