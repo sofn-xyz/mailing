@@ -1,5 +1,16 @@
 # mailing
 
+## 1.0.0-next.0
+
+### Major Changes
+
+- 1eb74ff7: Use @faire/mjml-react react bindings
+
+### Patch Changes
+
+- Updated dependencies [1eb74ff7]
+  - mailing-core@1.0.0-next.0
+
 ## 0.9.15
 
 ### Patch Changes

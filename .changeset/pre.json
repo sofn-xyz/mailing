@@ -1,0 +1,12 @@
+{
+  "mode": "pre",
+  "tag": "next",
+  "initialVersions": {
+    "mailing": "0.9.15",
+    "mailing-core": "0.9.15",
+    "web": "0.4.23"
+  },
+  "changesets": [
+    "plenty-mice-call"
+  ]
+}
