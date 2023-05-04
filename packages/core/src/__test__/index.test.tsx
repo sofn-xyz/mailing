@@ -6,6 +6,7 @@ import {
   clearTestMailQueue,
   ComponentMail,
   BuildSendMailOptions,
+  EMAIL_PREFERENCES_URL,
 } from "..";
 import { Mjml, MjmlBody, MjmlRaw } from "@faire/mjml-react";
 import fetch from "node-fetch";
@@ -37,7 +38,7 @@ describe("index", () => {
     jest.spyOn(serverLogger, "log").mockImplementation(() => undefined);
   });
 
-  describe.only("openPreview", () => {
+  describe("openPreview", () => {
     it("should open preview", async () => {
       const previewServerUrl = "http://localhost:12345";
       const interceptId = "abc-xyz-123";
@@ -250,20 +251,12 @@ describe("index", () => {
         }).rejects.toThrow();
       });
 
-      it("logs an error without a valid configPath but still sends", async () => {
-        const debugSpy = jest
-          .spyOn(serverLogger, "debug")
-          .mockImplementation(jest.fn());
-
+      it("still sends with an invalid configPath", async () => {
         const sendMail = buildSendMail({
           transport,
           defaultFrom: "replace@me.with.your.com",
           configPath: "./garbage_path.json",
         });
-
-        expect(debugSpy).toHaveBeenCalledWith(
-          "error loading config at ./garbage_path.json"
-        );
 
         await sendMail({
           component: <div></div>,
@@ -277,7 +270,6 @@ describe("index", () => {
         // still hits the queue even with the error
         const queue = await getTestMailQueue();
         expect(queue.length).toBe(1);
-        debugSpy.mockRestore();
       });
 
       describe("sendMail", () => {
@@ -343,7 +335,7 @@ describe("index", () => {
           });
           expect(mockCapture).toHaveBeenCalled();
           expect(mockCapture).toHaveBeenCalledWith({
-            distinctId: null,
+            distinctId: "unknown",
             event: "mail sent",
             properties: {
               analyticsEnabled: false,
@@ -396,7 +388,7 @@ describe("index", () => {
                 method: "POST",
                 body: JSON.stringify({
                   skipUnsubscribeChecks: true,
-                  anonymousId: null,
+                  anonymousId: "unknown",
                   to: ["ok@ok.com"],
                   from: "ok@ok.com",
                   subject: "hello",
@@ -408,13 +400,10 @@ describe("index", () => {
             expect(mockSendMail).toHaveBeenCalled();
           });
 
-          it("handles errors correctly", async () => {
-            const res = new Response(
-              JSON.stringify({ message: { id: "message-1234" } }),
-              {
-                status: 500,
-              }
-            );
+          it("does not send an email if message create api returned a non-200 response", async () => {
+            const res = new Response("internal server error", {
+              status: 500,
+            });
 
             (fetch as unknown as jest.Mock).mockResolvedValueOnce(
               Promise.resolve(res)
@@ -438,6 +427,7 @@ describe("index", () => {
               html: "<body>ok</body>",
               dangerouslyForceDeliver: true,
             });
+
             expect(fetch).toHaveBeenCalled();
             expect(fetch).toHaveBeenCalledWith(
               "https://mailing.test/api/messages",
@@ -449,7 +439,7 @@ describe("index", () => {
                 method: "POST",
                 body: JSON.stringify({
                   skipUnsubscribeChecks: true,
-                  anonymousId: null,
+                  anonymousId: "unknown",
                   to: ["ok@ok.com"],
                   from: "ok@ok.com",
                   subject: "hello",
@@ -458,8 +448,127 @@ describe("index", () => {
                 }),
               }
             );
-            expect(mockSendMail).toHaveBeenCalled();
+
+            // it is unsafe to send the email because the user may have unsubscribed, we don't know
+            // also this is the mechanism that adds the unsubscribe link, so we are not able to include that
+            expect(mockSendMail).not.toHaveBeenCalled();
             expect(errorSpy).toHaveBeenCalled();
+          });
+
+          describe("lists", () => {
+            it("should send an email to a user that is subscribed", async () => {
+              const res = new Response(
+                JSON.stringify({ message: { id: "message-1234" } }),
+                {
+                  status: 200,
+                }
+              );
+
+              (fetch as unknown as jest.Mock).mockResolvedValueOnce(
+                Promise.resolve(res)
+              );
+
+              const sendMail = buildSendMail({
+                transport,
+                defaultFrom: "replace@me.with.your.com",
+                configPath: "./mailing.config.json",
+              });
+
+              const email = "test@test.com";
+              const html = `See the bottom of this email for an unsubscribe link<br /><a href="${EMAIL_PREFERENCES_URL}">Unsubscribe</a>`;
+              const listName = "mylista4290";
+              await sendMail({
+                to: email,
+                from: "ok@ok.com",
+                subject: "hello",
+                listName,
+                dangerouslyForceDeliver: true,
+                html,
+              });
+
+              expect(fetch).toHaveBeenCalled();
+              expect(fetch).toHaveBeenCalledWith(
+                "https://mailing.test/api/messages",
+                {
+                  headers: {
+                    "Content-Type": "application/json",
+                    "x-api-key": "test_key",
+                  },
+                  method: "POST",
+                  body: JSON.stringify({
+                    skipUnsubscribeChecks: false,
+                    anonymousId: "unknown",
+                    to: email,
+                    from: "ok@ok.com",
+                    subject: "hello",
+                    html,
+                    listName,
+                  }),
+                }
+              );
+
+              // it is unsafe to send the email because the user may have unsubscribed, we don't know
+              // also this is the mechanism that adds the unsubscribe link, so we are not able to include that
+              expect(mockSendMail).toHaveBeenCalled();
+            });
+
+            it("should not send an email to a user that is unsubscribed", async () => {
+              const res = new Response(
+                JSON.stringify({
+                  error: "user is not subscribed to either list",
+                }),
+                {
+                  status: 200,
+                }
+              );
+
+              (fetch as unknown as jest.Mock).mockResolvedValueOnce(
+                Promise.resolve(res)
+              );
+
+              const sendMail = buildSendMail({
+                transport,
+                defaultFrom: "replace@me.with.your.com",
+                configPath: "./mailing.config.json",
+              });
+
+              const email = "test@test.com";
+              const html = `See the bottom of this email for an unsubscribe link<br /><a href="${EMAIL_PREFERENCES_URL}">Unsubscribe</a>`;
+              const listName = "mylista4290";
+              await sendMail({
+                to: email,
+                from: "ok@ok.com",
+                subject: "hello",
+                listName,
+                dangerouslyForceDeliver: true,
+                html,
+              });
+
+              expect(fetch).toHaveBeenCalled();
+              expect(fetch).toHaveBeenCalledWith(
+                "https://mailing.test/api/messages",
+                {
+                  headers: {
+                    "Content-Type": "application/json",
+                    "x-api-key": "test_key",
+                  },
+                  method: "POST",
+                  body: JSON.stringify({
+                    skipUnsubscribeChecks: false,
+                    anonymousId: "unknown",
+                    to: email,
+                    from: "ok@ok.com",
+                    subject: "hello",
+                    html,
+                    listName,
+                  }),
+                }
+              );
+
+              // it is unsafe to send the email because the user may have unsubscribed, we don't know
+              // also this is the mechanism that adds the unsubscribe link, so we are not able to include that
+              expect(mockSendMail).not.toHaveBeenCalled();
+            });
           });
         });
       });

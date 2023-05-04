@@ -1,5 +1,23 @@
 # mailing-core
 
+## 0.9.15
+
+### Patch Changes
+
+- c4a29b9: Bugfix: mailing should early return if api returns a non 200 code
+
+## 0.9.14
+
+### Patch Changes
+
+- 054d2569: add processHtml option for minification etc after mjml is converted to html
+
+## 0.9.13
+
+### Patch Changes
+
+- 49c9684: Catch errors writing to db in click hook
+
 ## 0.9.12
 
 ### Patch Changes

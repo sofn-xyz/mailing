@@ -3,9 +3,17 @@ import { renderToMjml } from "@faire/mjml-react/utils/renderToMjml";
 import mjml2html from "mjml";
 
 export function render(
-  component: ReactElement<any, string | JSXElementConstructor<any>>
+  component: ReactElement<any, string | JSXElementConstructor<any>>,
+  options?: {
+    processHtml?: (html: string) => string;
+  }
 ) {
-  return mjml2html(renderToMjml(component), {
+  const { html, errors } = mjml2html(renderToMjml(component), {
     validationLevel: "soft",
   });
+
+  return {
+    html: options?.processHtml?.(html) || html,
+    errors,
+  };
 }

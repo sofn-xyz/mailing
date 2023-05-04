@@ -27,6 +27,7 @@ export type BuildSendMailOptions<T> = {
   transport: Transporter<T>;
   defaultFrom: string;
   configPath: string;
+  processHtml?: (html: string) => string;
 };
 
 export type ComponentMail = SendMailOptions & {
@@ -114,7 +115,9 @@ export function buildSendMail<T>(options: BuildSendMailOptions<T>) {
     // Get html from the rendered component if not provided
     let derivedTemplateName;
     if (component && !mailOptions.html) {
-      const { html: renderedHtml, errors } = render(component);
+      const { html: renderedHtml, errors } = render(component, {
+        processHtml: options.processHtml,
+      });
       if (errors?.length) {
         error(errors);
         throw new MalformedInputError(
@@ -214,12 +217,19 @@ export function buildSendMail<T>(options: BuildSendMailOptions<T>) {
           });
         }
       } else {
-        const json = await hookResponse.json();
+        let json;
+        try {
+          json = await hookResponse.json();
+        } catch (e) {
+          json = "could not parse response as json";
+        }
+
         error("Error calling mailing api hook", {
           status: hookResponse.status,
-          statuSText: hookResponse.statusText,
+          statusText: hookResponse.statusText,
           json,
         });
+        return;
       }
     }
 
