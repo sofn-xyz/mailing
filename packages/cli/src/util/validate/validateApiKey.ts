@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import prisma from "../../../prisma";
-import { Prisma } from "prisma/generated/client";
+import { Prisma } from "../../../prisma/generated/client";
+import { error } from "../serverLogger";
 
 export const apiKeyFromReq = (
   req: NextApiRequest
@@ -39,10 +40,10 @@ export async function validateApiKey(
 
     return true;
   } catch (e) {
-    if ((e as Prisma.PrismaClientKnownRequestError).code === "P2025") {
+    if ((e as Prisma.PrismaClientKnownRequestError).name === "NotFoundError") {
       res.status(401).json({ error: "API key is not valid" });
     } else {
-      console.error(`Internal server error in ${__filename}`, e);
+      error(`Internal server error`, e);
       res.status(500).json({ error: "Internal server error" });
     }
 

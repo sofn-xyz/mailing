@@ -56,9 +56,14 @@ describe("validateApiKey", () => {
   describe("using database", () => {
     it("returns false if NODE_ENV is not development and apiKey is not valid", async () => {
       const { req, res } = mockRequestResponse();
+
+      // throw an error that looks like a Prisma not found error
+      const notFoundError = new Error();
+      notFoundError.name = "NotFoundError";
+
       jest
         .spyOn(prisma.apiKey, "findFirstOrThrow")
-        .mockRejectedValueOnce(new Error("NOT FOUND"));
+        .mockRejectedValueOnce(notFoundError);
       req.query = { apiKey: "321" };
       const result = await validateApiKey(req, res);
       expect(result).toBe(false);

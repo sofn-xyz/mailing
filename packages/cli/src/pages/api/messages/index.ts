@@ -3,6 +3,7 @@ import { apiKeyFromReq } from "../../../util/validate/validateApiKey";
 import createMessage from "../../../util/createMessage";
 import prisma from "../../../../prisma";
 import { Prisma } from "../../../../prisma/generated/client";
+import { error } from "src/util/serverLogger";
 
 type Data = {
   error?: string;
@@ -46,10 +47,12 @@ export default async function handler(
 
       organizationId = apiKeyRecord.organizationId;
     } catch (e) {
-      if ((e as Prisma.PrismaClientKnownRequestError).code === "P2025") {
+      if (
+        (e as Prisma.PrismaClientKnownRequestError).name === "NotFoundError"
+      ) {
         res.status(401).json({ error: "API key is not valid" });
       } else {
-        console.error(`Internal server error in ${__filename}`, e);
+        error(`Internal server error in ${__filename}`, e);
         res.status(500).json({ error: "Internal server error" });
       }
       return;
