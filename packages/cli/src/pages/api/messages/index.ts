@@ -3,7 +3,7 @@ import { apiKeyFromReq } from "../../../util/validate/validateApiKey";
 import createMessage from "../../../util/createMessage";
 import prisma from "../../../../prisma";
 import { Prisma } from "../../../../prisma/generated/client";
-import { error } from "src/util/serverLogger";
+import { error } from "../../../util/serverLogger";
 
 type Data = {
   error?: string;
