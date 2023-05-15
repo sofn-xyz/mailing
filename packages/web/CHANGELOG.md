@@ -1,5 +1,23 @@
 # web
 
+## 1.0.0
+
+### Major Changes
+
+- Mailing 1.0.0! Includes @faire/mjml-react as our mjml-react library. IMPORTANT: To upgrade your app you will need to update any references to "mjml-react" to "@faire/mjml-react." If using TypeScript, you will also need to fix any type errors, for example: some properties like "padding," "font-size" and "font-weigtht" no longer accept "number" types and must be converted to "string."
+
+### Minor Changes
+
+- 34d0da4: Use @faire/mjml-react react bindings
+
+### Patch Changes
+
+- a79f937: The auth api should 500 not 401 if there is a database error
+- Updated dependencies
+- Updated dependencies [34d0da4]
+- Updated dependencies [a79f937]
+  - mailing-core@1.0.0
+
 ## 0.4.23
 
 ### Patch Changes
