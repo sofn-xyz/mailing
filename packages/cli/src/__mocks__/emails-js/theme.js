@@ -10,19 +10,19 @@ export const colors = {
   neutral800: "#444",
 };
 export const fontSize = {
-  xs: 12,
-  sm: 14,
-  base: 16,
-  lg: 24,
-  xl: 30,
+  xs: "12px",
+  sm: "14px",
+  base: "16px",
+  lg: "24px",
+  xl: "30px",
 };
 export const lineHeight = {
   tight: "125%",
   relaxed: "160%",
 };
 export const fontWeight = {
-  normal: 400,
-  bold: 700,
+  normal: "400",
+  bold: "700",
 };
 export const borderRadius = {
   base: 100,
@@ -56,5 +56,5 @@ export const themeDefaults = {
   fontWeight: fontWeight.normal,
   fontSize: fontSize.base,
   color: colors.black,
-  padding: 0,
+  padding: "0px",
 };

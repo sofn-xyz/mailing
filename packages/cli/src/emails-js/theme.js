@@ -26,13 +26,13 @@ export const colors = {
   zinc800: "#27272a",
 };
 export const fontSize = {
-  xs: 12,
-  sm: 14,
-  base: 16,
-  md: 18,
-  lg: 20,
-  xl: 24,
-  xxl: 28,
+  xs: "12px",
+  sm: "14px",
+  base: "16px",
+  md: "18px",
+  lg: "20px",
+  xl: "24px",
+  xxl: "28px",
 };
 export const lineHeight = {
   tight: "115%",
@@ -40,8 +40,8 @@ export const lineHeight = {
   relaxed: "185%",
 };
 export const fontWeight = {
-  normal: 400,
-  bold: 700,
+  normal: "400",
+  bold: "700",
 };
 export const borderRadius = {
   sm: 8,
@@ -77,5 +77,5 @@ export const themeDefaults = {
   fontWeight: fontWeight.normal,
   fontSize: fontSize.base,
   color: colors.white,
-  padding: 0,
+  padding: "0px",
 };

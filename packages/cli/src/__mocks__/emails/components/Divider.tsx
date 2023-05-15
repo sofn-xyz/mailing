@@ -1,5 +1,5 @@
 import React from "react";
-import { MjmlDivider } from "mjml-react";
+import { MjmlDivider } from "@faire/mjml-react";
 import { colors } from "../theme";
 
 type DividerProps = React.ComponentProps<typeof MjmlDivider>;

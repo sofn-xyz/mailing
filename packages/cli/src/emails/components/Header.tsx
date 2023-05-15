@@ -1,5 +1,5 @@
 import React from "react";
-import { MjmlColumn, MjmlGroup, MjmlSection, MjmlWrapper } from "mjml-react";
+import { MjmlColumn, MjmlGroup, MjmlSection, MjmlWrapper } from "@faire/mjml-react";
 import Text from "./Text";
 import Link from "./Link";
 import { colors, fontSize, lineHeight, fontWeight } from "../theme";

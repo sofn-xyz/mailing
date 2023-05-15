@@ -1,4 +1,4 @@
-import { MjmlSpacer } from "mjml-react";
+import { MjmlSpacer } from "@faire/mjml-react";
 
 type SpacerProps = {
   sm?: React.ComponentProps<typeof MjmlSpacer>;

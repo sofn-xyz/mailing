@@ -7,7 +7,7 @@ import {
   MjmlStyle,
   MjmlAttributes,
   MjmlAll,
-} from "mjml-react";
+} from "@faire/mjml-react";
 import {
   screens,
   themeDefaults,

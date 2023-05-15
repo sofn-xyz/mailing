@@ -1,5 +1,5 @@
 import React from "react";
-import { MjmlRaw } from "mjml-react";
+import { MjmlRaw } from "@faire/mjml-react";
 
 import { themeDefaults } from "../theme";
 

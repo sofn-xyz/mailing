@@ -1,6 +1,6 @@
 import React from "react";
 import cx from "classnames";
-import { MjmlButton } from "mjml-react";
+import { MjmlButton } from "@faire/mjml-react";
 
 import {
   colors,

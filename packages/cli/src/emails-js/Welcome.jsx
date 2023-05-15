@@ -1,5 +1,10 @@
 import React from "react";
-import { MjmlColumn, MjmlSection, MjmlSpacer, MjmlWrapper } from "mjml-react";
+import {
+  MjmlColumn,
+  MjmlSection,
+  MjmlSpacer,
+  MjmlWrapper,
+} from "@faire/mjml-react";
 import BaseLayout from "./components/BaseLayout";
 import Button from "./components/Button";
 import Footer from "./components/Footer";

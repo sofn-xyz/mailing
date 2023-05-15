@@ -1,5 +1,5 @@
 import React from "react";
-import { MjmlSection, MjmlColumn, MjmlText } from "mjml-react";
+import { MjmlSection, MjmlColumn, MjmlText } from "@faire/mjml-react";
 import { EMAIL_PREFERENCES_URL } from "mailing-core";
 import { colors, fontSize, spacing } from "../theme";
 

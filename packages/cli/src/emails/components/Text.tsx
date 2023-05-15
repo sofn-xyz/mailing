@@ -1,6 +1,6 @@
 import React from "react";
 import cx from "classnames";
-import { MjmlText } from "mjml-react";
+import { MjmlText } from "@faire/mjml-react";
 
 type TextProps = {
   maxWidth?: number;

@@ -1,5 +1,5 @@
 import React from "react";
-import { MjmlButton } from "mjml-react";
+import { MjmlButton } from "@faire/mjml-react";
 
 import { colors, fontSize, borderRadius, lineHeight, spacing } from "../theme";
 

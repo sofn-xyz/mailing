@@ -6,7 +6,7 @@ import {
   MjmlText,
   MjmlImage,
   MjmlGroup,
-} from "mjml-react";
+} from "@faire/mjml-react";
 import Link from "./Link";
 import { colors, fontSize, fontWeight } from "../theme";
 import { EMAIL_PREFERENCES_URL } from "mailing-core";
