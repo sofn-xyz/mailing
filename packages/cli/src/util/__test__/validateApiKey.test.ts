@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { validateApiKey } from "../validate/validateApiKey";
 import prisma from "../../../prisma";
+import { Prisma } from "../../../prisma/generated/client";
 
 function mockRequestResponse() {
   const { req, res } = {
@@ -56,9 +57,16 @@ describe("validateApiKey", () => {
   describe("using database", () => {
     it("returns false if NODE_ENV is not development and apiKey is not valid", async () => {
       const { req, res } = mockRequestResponse();
+
+      // throw an error that looks like a Prisma not found error
+      const notFoundError = new Prisma.PrismaClientKnownRequestError(
+        "NotFoundError",
+        { code: "P2025", clientVersion: Prisma.prismaVersion.client }
+      );
+
       jest
         .spyOn(prisma.apiKey, "findFirstOrThrow")
-        .mockRejectedValueOnce(new Error("NOT FOUND"));
+        .mockRejectedValueOnce(notFoundError);
       req.query = { apiKey: "321" };
       const result = await validateApiKey(req, res);
       expect(result).toBe(false);

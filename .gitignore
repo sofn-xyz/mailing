@@ -122,3 +122,6 @@ e2e/cache
 # Prisma clients
 packages/web/prisma/generated
 packages/cli/prisma/generated
+
+# VSCode
+.vscode
