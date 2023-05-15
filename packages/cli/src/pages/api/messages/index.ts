@@ -47,9 +47,7 @@ export default async function handler(
 
       organizationId = apiKeyRecord.organizationId;
     } catch (e) {
-      if (
-        (e as Prisma.PrismaClientKnownRequestError).name === "NotFoundError"
-      ) {
+      if ((e as Prisma.PrismaClientKnownRequestError).code === "P2025") {
         res.status(401).json({ error: "API key is not valid" });
       } else {
         error(`Internal server error in ${__filename}`, e);

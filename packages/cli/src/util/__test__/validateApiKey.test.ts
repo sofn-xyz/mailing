@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { validateApiKey } from "../validate/validateApiKey";
 import prisma from "../../../prisma";
+import { Prisma } from "../../../prisma/generated/client";
 
 function mockRequestResponse() {
   const { req, res } = {
@@ -58,8 +59,10 @@ describe("validateApiKey", () => {
       const { req, res } = mockRequestResponse();
 
       // throw an error that looks like a Prisma not found error
-      const notFoundError = new Error();
-      notFoundError.name = "NotFoundError";
+      const notFoundError = new Prisma.PrismaClientKnownRequestError(
+        "NotFoundError",
+        { code: "P2025", clientVersion: Prisma.prismaVersion.client }
+      );
 
       jest
         .spyOn(prisma.apiKey, "findFirstOrThrow")

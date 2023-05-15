@@ -40,7 +40,7 @@ export async function validateApiKey(
 
     return true;
   } catch (e) {
-    if ((e as Prisma.PrismaClientKnownRequestError).name === "NotFoundError") {
+    if ((e as Prisma.PrismaClientKnownRequestError).code === "P2025") {
       res.status(401).json({ error: "API key is not valid" });
     } else {
       error(`Internal server error`, e);
