@@ -6,7 +6,7 @@ describe("renderTemplate", () => {
       name: "test",
     });
     expect(html).toBeUndefined();
-    expect(mjmlErrors).toEqual([]);
+    expect(mjmlErrors).toBeUndefined();
     expect(error).toMatch(/Template test not found in list of templates/);
   });
 
