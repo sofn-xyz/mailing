@@ -9,6 +9,7 @@ describe("render", () => {
     expect(response.status).toBe(200);
     expect(data.html).toBeDefined;
     expect(data.html).toMatch(/Thank you/);
+    expect(data.subject).toEqual('Thank you for installing Mailing :)');
   });
 
   it("POST should 200", async () => {
@@ -17,5 +18,6 @@ describe("render", () => {
     expect(response.status).toBe(200);
     expect(data.html).toBeDefined;
     expect(data.html).toMatch(/Thank you/);
+    expect(data.subject).toEqual('Thank you for installing Mailing :)');
   });
 });
