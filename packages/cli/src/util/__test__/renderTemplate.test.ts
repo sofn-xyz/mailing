@@ -14,7 +14,7 @@ describe("renderTemplate", () => {
     const { error, mjmlErrors, html } = renderTemplate("AccountCreated", {
       name: "Test User",
     });
-    expect(mjmlErrors).toBeUndefined();
+    expect(mjmlErrors).toEqual([]);
     expect(error).toBeUndefined();
     expect(html).not.toBeUndefined();
     expect(html).toMatchSnapshot();

@@ -9,6 +9,7 @@ type Data = {
   error?: string;
   html?: string;
   mjmlErrors?: MjmlError[];
+  subject?: string;
 };
 
 export default async function handler(
@@ -43,12 +44,12 @@ export default async function handler(
     });
   }
 
-  const { error, mjmlErrors, html } = renderTemplate(
+  const { error, mjmlErrors, html, subject } = renderTemplate(
     templateName.replace(/\.[jt]sx?$/, ""),
     parsedProps
   );
 
   if (error) return res.status(422).json({ error });
 
-  res.status(200).json({ html, mjmlErrors });
+  res.status(200).json({ html, mjmlErrors, subject });
 }
