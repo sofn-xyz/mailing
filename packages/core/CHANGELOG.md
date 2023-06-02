@@ -1,5 +1,11 @@
 # mailing-core
 
+## 1.0.1
+
+### Patch Changes
+
+- b5249c71: Add subject to /api/render response
+
 ## 1.0.0
 
 ### Major Changes

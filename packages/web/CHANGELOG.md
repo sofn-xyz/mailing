@@ -1,5 +1,13 @@
 # web
 
+## 1.0.1
+
+### Patch Changes
+
+- b5249c71: Add subject to /api/render response
+- Updated dependencies [b5249c71]
+  - mailing-core@1.0.1
+
 ## 1.0.0
 
 ### Major Changes
