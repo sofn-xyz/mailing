@@ -22,7 +22,7 @@ const Intercept: React.FC<InterceptProps> = ({ data }) => {
 
   const handleForceDeliver = useCallback(async () => {
     if (!data) return;
-    const { to, cc, bcc, html, subject } = data;
+    const { to, cc, bcc, html, subject, from } = data;
 
     const numRecipients =
       recipientCount(to) + recipientCount(cc) + recipientCount(bcc);
@@ -41,6 +41,7 @@ const Intercept: React.FC<InterceptProps> = ({ data }) => {
         bcc,
         html,
         subject,
+        from,
         dangerouslyForceDeliver: true,
       }),
     });
