@@ -50,7 +50,7 @@ const CompactView: React.FC<CompactViewProps> = ({
             role="treeitem"
             aria-expanded={!route.collapsed}
             aria-selected={i === cursor}
-            className={cx("mb-1 cursor-pointer hover:underline", {
+            className={cx("mb-1 pr-2 cursor-pointer hover:underline flex items-center", {
               "pl-2": route.level === 0,
               "pl-6": route.level === 1,
               "pl-[70px] pb-1 pt-1": route.level === 2,
@@ -85,7 +85,9 @@ const CompactView: React.FC<CompactViewProps> = ({
                 </svg>
               </button>
             )}
-            {route.displayName}
+            <div className="truncate">
+              {route.displayName}
+            </div>
           </div>
         );
       })}
