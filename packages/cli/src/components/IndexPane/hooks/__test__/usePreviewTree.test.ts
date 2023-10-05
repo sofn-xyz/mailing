@@ -17,7 +17,7 @@ describe("usePreviewTree", () => {
       "Reservation",
       ["reservationCanceled", "reservationChanged", "reservationConfirmed"],
     ],
-    ["ResetPassword", ["resetPassword"]],
+    ["ResetPassword", ["reset Password"]],
   ];
 
   it("sets routes and cursor from previews", () => {
@@ -39,6 +39,13 @@ describe("usePreviewTree", () => {
     const { result } = renderHook(() => usePreviewTree(previews));
     const { cursor } = result.current;
     expect(cursor).toBe(3);
+  });
+
+  it("sets cursor from previews when preview contains uri encoded char", () => {
+    mockRouter.setCurrentUrl("/previews/ResetPassword/reset%20Password");
+    const { result } = renderHook(() => usePreviewTree(previews));
+    const { cursor } = result.current;
+    expect(cursor).toBe(10);
   });
 
   it("navigates up down left right", () => {

@@ -89,7 +89,7 @@ export function usePreviewTree(
 
   useEffect(() => {
     if (cursor !== -1 || !treeRoutes) return;
-    const path = router.asPath.split("?")[0];
+    const path = decodeURIComponent(router.asPath.split("?")[0]);
     const idx = treeRoutes.findIndex((route) => route.path === path);
     if (idx >= 0) setCursor(idx);
   }, [router.asPath, cursor, treeRoutes]);

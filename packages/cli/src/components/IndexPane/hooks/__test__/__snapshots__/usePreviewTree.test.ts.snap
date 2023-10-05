@@ -78,11 +78,11 @@ exports[`usePreviewTree sets routes and cursor from previews 1`] = `
   },
   {
     "collapsed": false,
-    "displayName": "resetPassword",
+    "displayName": "reset Password",
     "level": 2,
-    "path": "/previews/ResetPassword/resetPassword",
+    "path": "/previews/ResetPassword/reset Password",
     "previewClass": "ResetPassword",
-    "previewFunction": "resetPassword",
+    "previewFunction": "reset Password",
   },
 ]
 `;
