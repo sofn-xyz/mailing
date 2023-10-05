@@ -5,6 +5,10 @@ export default function useLiveReload(onShouldReload: () => void) {
   const socketRef = useRef<Socket | null>(null);
 
   useEffect(() => {
+    if (process.env.NODE_ENV === 'production') {
+      return;
+    }
+
     // This is required to make navigating between previews work
     onShouldReload();
 
