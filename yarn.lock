@@ -2062,13 +2062,6 @@
     pirates "^4.0.1"
     source-map-support "^0.5.16"
 
-"@prisma/client@4.11.0":
-  version "4.11.0"
-  resolved "https://registry.npmjs.org/@prisma/client/-/client-4.11.0.tgz#41d5664dea4172c954190a432f70b86d3e2e629b"
-  integrity sha512-0INHYkQIqgAjrt7NzhYpeDQi8x3Nvylc2uDngKyFDDj1tTRQ4uV1HnVmd1sQEraeVAN63SOK0dgCKQHlvjL0KA==
-  dependencies:
-    "@prisma/engines-version" "4.11.0-57.8fde8fef4033376662cad983758335009d522acb"
-
 "@prisma/client@^4.2.0":
   version "4.4.0"
   resolved "https://registry.yarnpkg.com/@prisma/client/-/client-4.4.0.tgz#45f59c172dd3621ecc92d7cf9bc765d85e6c7d56"
@@ -2076,10 +2069,17 @@
   dependencies:
     "@prisma/engines-version" "4.4.0-66.f352a33b70356f46311da8b00d83386dd9f145d6"
 
-"@prisma/engines-version@4.11.0-57.8fde8fef4033376662cad983758335009d522acb":
-  version "4.11.0-57.8fde8fef4033376662cad983758335009d522acb"
-  resolved "https://registry.npmjs.org/@prisma/engines-version/-/engines-version-4.11.0-57.8fde8fef4033376662cad983758335009d522acb.tgz#74af5ff56170c78e93ce46c56510160f58cd3c01"
-  integrity sha512-3Vd8Qq06d5xD8Ch5WauWcUUrsVPdMC6Ge8ILji8RFfyhUpqon6qSyGM0apvr1O8n8qH8cKkEFqRPsYjuz5r83g==
+"@prisma/client@^4.4.0":
+  version "4.16.2"
+  resolved "https://registry.yarnpkg.com/@prisma/client/-/client-4.16.2.tgz#3bb9ebd49b35c8236b3d468d0215192267016e2b"
+  integrity sha512-qCoEyxv1ZrQ4bKy39GnylE8Zq31IRmm8bNhNbZx7bF2cU5aiCCnSa93J2imF88MBjn7J9eUQneNxUQVJdl/rPQ==
+  dependencies:
+    "@prisma/engines-version" "4.16.1-1.4bc8b6e1b66cb932731fb1bdbbc550d1e010de81"
+
+"@prisma/engines-version@4.16.1-1.4bc8b6e1b66cb932731fb1bdbbc550d1e010de81":
+  version "4.16.1-1.4bc8b6e1b66cb932731fb1bdbbc550d1e010de81"
+  resolved "https://registry.yarnpkg.com/@prisma/engines-version/-/engines-version-4.16.1-1.4bc8b6e1b66cb932731fb1bdbbc550d1e010de81.tgz#d3b5dcf95b6d220e258cbf6ae19b06d30a7e9f14"
+  integrity sha512-q617EUWfRIDTriWADZ4YiWRZXCa/WuhNgLTVd+HqWLffjMSPzyM5uOWoauX91wvQClSKZU4pzI4JJLQ9Kl62Qg==
 
 "@prisma/engines-version@4.4.0-66.f352a33b70356f46311da8b00d83386dd9f145d6":
   version "4.4.0-66.f352a33b70356f46311da8b00d83386dd9f145d6"
