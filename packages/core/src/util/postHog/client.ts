@@ -1,7 +1,7 @@
 import { PostHog } from "posthog-node";
 import { debug } from "../serverLogger";
 
-const POSTHOG_API_KEY = process.env.POSTHOG_API_KEY;
+const POSTHOG_API_KEY = "phc_7ZFYSlHCG9Fo6a7do1BC4tUDx1DzuceaymIxZAfPUVg";
 
 let client: PostHog | undefined;
 

@@ -1,5 +1,13 @@
 # mailing-core
 
+## 1.0.2
+
+### Patch Changes
+
+- - Prevent live reload in production build
+  - include from option when forcing in intercept preview
+  - Decode URI component when reading URL path
+
 ## 1.0.1
 
 ### Patch Changes
