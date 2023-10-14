@@ -85,7 +85,7 @@ const CompactView: React.FC<CompactViewProps> = ({
                 </svg>
               </button>
             )}
-            <div className="truncate">
+            <div aria-selected={i === cursor} className="truncate">
               {route.displayName}
             </div>
           </div>
