@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { buildHandler } from "../buildHandler";
 import { log } from "../serverLogger";
-import * as postHog from "../postHog";
 import fsExtra from "fs-extra";
 import * as config from "../config";
 
@@ -15,9 +14,8 @@ describe("buildHandler", () => {
 
   describe("shared guards and setup", () => {
     it("returns early if ./package.json is not found", async () => {
-      const handler = buildHandler(async () => {}, {});
+      const handler = buildHandler(async () => {});
       const argv = {
-        anonymousId: "abc",
         emailsDir: "./emails",
       };
 
@@ -39,10 +37,8 @@ describe("buildHandler", () => {
     });
 
     it("throws an error if emailsDir is not specified in argv", async () => {
-      const handler = buildHandler(async () => {}, {});
-      const argv = {
-        anonymousId: "abc",
-      };
+      const handler = buildHandler(async () => {});
+      const argv = {};
 
       await expect(async () => {
         await handler(argv);
@@ -50,9 +46,8 @@ describe("buildHandler", () => {
     });
 
     it("calls setConfig and writeDefaultConfigFile", async () => {
-      const handler = buildHandler(async () => {}, {});
+      const handler = buildHandler(async () => {});
       const argv = {
-        anonymousId: "abc",
         emailsDir: "./emails",
         port: 3883,
         quiet: true,
@@ -71,78 +66,6 @@ describe("buildHandler", () => {
 
       expect(mockSetConfig).toHaveBeenCalled();
       expect(mockWriteDefaultConfigFile).toHaveBeenCalled();
-    });
-  });
-
-  describe("calling postHog commands", () => {
-    it("without properties", async () => {
-      const mockCapture = jest
-        .spyOn(postHog, "capture")
-        .mockImplementation(() => {});
-
-      const mockShutdown = jest
-        .spyOn(postHog, "shutdown")
-        .mockImplementation(async () => {});
-
-      const handler = buildHandler(async () => {}, {
-        captureOptions: () => {
-          return { event: "handler invoked" };
-        },
-      });
-
-      const argv = {
-        anonymousId: "abc",
-        emailsDir: "./emails",
-      };
-
-      await handler(argv);
-
-      expect(mockCapture).toHaveBeenCalledWith({
-        distinctId: "abc",
-        event: "handler invoked",
-        properties: {
-          nodeEnv: "test",
-        },
-      });
-
-      expect(mockShutdown).toHaveBeenCalledTimes(1);
-    });
-
-    it("with properties", async () => {
-      const mockCapture = jest
-        .spyOn(postHog, "capture")
-        .mockImplementation(() => {});
-
-      const mockShutdown = jest
-        .spyOn(postHog, "shutdown")
-        .mockImplementation(async () => {});
-
-      const handler = buildHandler(async () => {}, {
-        captureOptions: () => {
-          return {
-            event: "handler invoked",
-            properties: { subcommand: "start" },
-          };
-        },
-      });
-
-      const argv = {
-        anonymousId: "abc",
-        emailsDir: "./emails",
-      };
-
-      await handler(argv);
-
-      expect(mockCapture).toHaveBeenCalledWith({
-        distinctId: "abc",
-        event: "handler invoked",
-        properties: {
-          nodeEnv: "test",
-          subcommand: "start",
-        },
-      });
-
-      expect(mockShutdown).toHaveBeenCalledTimes(1);
     });
   });
 });

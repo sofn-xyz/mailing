@@ -1,9 +1,6 @@
-import prompts from "prompts";
-import fetch from "node-fetch";
 import { existsSync } from "fs-extra";
 import { ArgumentsCamelCase } from "yargs";
-import { error, log } from "../util/serverLogger";
-import { getMailingAPIBaseURL } from "../util/paths";
+import { log } from "../util/serverLogger";
 import { generateEmailsDirectory } from "../util/generators";
 import { handler as previewHandler, PreviewArgs } from "./preview/preview";
 import { defaults } from "../util/config";
@@ -15,7 +12,6 @@ export type InitArguments = ArgumentsCamelCase<{
   typescript?: boolean;
   port?: number;
   quiet?: boolean;
-  anonymousId?: string | null;
 }>;
 
 export const command = ["$0", "init"];
@@ -53,69 +49,33 @@ export const builder = {
   },
 };
 
-export const handler = buildHandler(
-  async (argv: InitArguments) => {
-    if (typeof argv.port !== "number")
-      throw new Error("port option is not set");
-    if (typeof argv.typescript !== "boolean")
-      throw new Error("typescript option not set");
-    if (undefined === argv.emailsDir)
-      throw new Error("emailsDir option not set");
+export const handler = buildHandler(async (argv: InitArguments) => {
+  if (typeof argv.port !== "number") throw new Error("port option is not set");
+  if (typeof argv.typescript !== "boolean")
+    throw new Error("typescript option not set");
+  if (undefined === argv.emailsDir) throw new Error("emailsDir option not set");
 
-    if (existsSync(resolve(argv.emailsDir, "previews"))) {
-      log("Using emails directory", argv.emailsDir);
-    } else {
-      const options = {
-        isTypescript: argv.typescript,
-        emailsDir: argv.emailsDir,
-      };
-      await generateEmailsDirectory(options);
-
-      if (argv.scaffoldOnly) {
-        return;
-      }
-
-      if (!argv.quiet) {
-        const emailResponse = await prompts({
-          type: "text",
-          name: "email",
-          message:
-            "enter your email for occasional updates about mailing (optional)",
-        });
-        const { email } = emailResponse;
-        if (email?.length > 0) {
-          log("great, talk soon");
-          try {
-            const url = `${getMailingAPIBaseURL()}/api/newsletterSubscribers`;
-
-            void fetch(url, {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ email }),
-            });
-          } catch (e) {
-            error(e);
-          }
-        } else {
-          log("ok, no problem");
-        }
-      }
-    }
-
-    const previewHandlerArgv: PreviewArgs = {
-      port: argv.port,
-      quiet: argv.quiet,
+  if (existsSync(resolve(argv.emailsDir, "previews"))) {
+    log("Using emails directory", argv.emailsDir);
+  } else {
+    const options = {
+      isTypescript: argv.typescript,
       emailsDir: argv.emailsDir,
-      anonymousId: argv.anonymousId,
-      $0: argv.$0,
-      _: argv._,
     };
+    await generateEmailsDirectory(options);
 
-    await previewHandler(previewHandlerArgv);
-  },
-  {
-    captureOptions: () => {
-      return { event: "init invoked" };
-    },
+    if (argv.scaffoldOnly) {
+      return;
+    }
   }
-);
+
+  const previewHandlerArgv: PreviewArgs = {
+    port: argv.port,
+    quiet: argv.quiet,
+    emailsDir: argv.emailsDir,
+    $0: argv.$0,
+    _: argv._,
+  };
+
+  await previewHandler(previewHandlerArgv);
+});
