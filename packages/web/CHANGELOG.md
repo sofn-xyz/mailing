@@ -1,5 +1,14 @@
 # web
 
+## 1.0.2
+
+### Patch Changes
+
+- dc2d009: bump peer dep to next 14
+- Updated dependencies [dc2d009]
+- Updated dependencies [f6b5140]
+  - mailing-core@1.1.0
+
 ## 1.0.1
 
 ### Patch Changes
