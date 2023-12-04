@@ -14,7 +14,6 @@ describe("exportPreviews command", () => {
       typescript: true,
       emailsDir: "./packages/cli/src/__mocks__/emails",
       outDir: "./previews_html",
-      anonymousId: "TEST_VALUE",
     }));
   });
 

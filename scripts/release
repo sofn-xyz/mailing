@@ -5,12 +5,6 @@ if [[ -f .env ]]; then
     source .env
 fi
 
-# throw an error if $POSTHOG_API_KEY is not set
-if [[ -z "$POSTHOG_API_KEY" ]]; then
-    echo "Must provide POSTHOG_API_KEY in environment" 1>&2
-    exit 1
-fi
-
 # set variables MAILING_VERSION and MAILING_CORE_VERSION to the value of the "version" attribute from each package.json
 MAILING_VERSION=$(awk -F'"' '/"version": ".+"/{ print $4; exit; }' packages/cli/package.json)
 MAILING_CORE_VERSION=$(awk -F'"' '/"version": ".+"/{ print $4; exit; }' packages/core/package.json)
@@ -30,9 +24,6 @@ fi
 ##
 # Search and replace in src directories -- these will be undone in the post-release script
 
-# search cli and core src and replace "process.env.POSTHOG_API_KEY" with "\"${process.env.POSTHOG_API_KEY}\""
-find 'packages/cli/src' 'packages/core/src' -type f \( -name '*.ts' -o -name '*.tsx' \) -exec sed -i '' "s/process\.env\.POSTHOG_API_KEY/\"$POSTHOG_API_KEY\"/g" {} +
-
 # search cli src and replace "process.env.MAILING_VERSION" with "\"${process.env.MAILING_VERSION}\""
 find 'packages/cli/src' -type f \( -name '*.ts' -o -name '*.tsx' \) -exec sed -i '' "s/MAILING_VERSION = process\.env\.MAILING_VERSION/MAILING_VERSION = \"$MAILING_VERSION\"/g" {} +
 
@@ -45,9 +36,6 @@ yarn changeset publish
 
 ##
 # Undo search and replace in src directories from above
-
-# search cli and core src and replace "process.env.POSTHOG_API_KEY" with "\"${process.env.POSTHOG_API_KEY}\""
-find 'packages/cli/src' 'packages/core/src' -type f \( -name '*.ts' -o -name '*.tsx' \) -exec sed -i '' "s/\"$POSTHOG_API_KEY\"/process\.env\.POSTHOG_API_KEY/g" {} +
 
 # search cli src and replace "process.env.MAILING_VERSION" with "\"${process.env.MAILING_VERSION}\""
 find 'packages/cli/src' -type f \( -name '*.ts' -o -name '*.tsx' \) -exec sed -i '' "s/MAILING_VERSION = \"$MAILING_VERSION\"/MAILING_VERSION = process\.env\.MAILING_VERSION/g" {} +

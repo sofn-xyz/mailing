@@ -6,16 +6,13 @@ import {
   clearTestMailQueue,
   ComponentMail,
   BuildSendMailOptions,
-  EMAIL_PREFERENCES_URL,
 } from "..";
 import { Mjml, MjmlBody, MjmlRaw } from "@faire/mjml-react";
 import fetch from "node-fetch";
 import open from "open";
-import * as postHog from "../util/postHog";
 import * as serverLogger from "../util/serverLogger";
 import fsExtra from "fs-extra";
 
-jest.mock("../util/postHog");
 jest.mock("node-fetch");
 jest.mock("open");
 
@@ -274,20 +271,16 @@ describe("index", () => {
 
       describe("sendMail", () => {
         let mockSendMail = jest.fn();
-        let mockCapture = jest.fn();
 
         beforeEach(() => {
           mockSendMail = jest.fn();
-          mockCapture = jest.fn();
           jest.spyOn(transport, "sendMail").mockImplementation(mockSendMail);
-          jest.spyOn(postHog, "capture").mockImplementation(mockCapture);
           jest.spyOn(fsExtra, "readFileSync").mockImplementation((path) => {
             if (/mailing\.config\.json/.test(path.toString())) {
               return JSON.stringify({
                 typescript: true,
                 emailsDir: "./emails",
                 outDir: "./previews_html",
-                anonymousId: "anonymousId",
               });
             } else {
               return "";
@@ -316,259 +309,6 @@ describe("index", () => {
             subject: "hello",
             text: "ok",
             to: ["ok@ok.com"],
-          });
-        });
-
-        it("calls calls capture with correct arguments", async () => {
-          const sendMail = buildSendMail({
-            transport,
-            defaultFrom: "from@mailing.dev",
-            configPath: "./mailing.config.json",
-          });
-          await sendMail({
-            to: ["ok@ok.com"],
-            from: "ok@ok.com",
-            subject: "hello",
-            text: "ok",
-            html: "ok",
-            dangerouslyForceDeliver: true,
-          });
-          expect(mockCapture).toHaveBeenCalled();
-          expect(mockCapture).toHaveBeenCalledWith({
-            distinctId: "unknown",
-            event: "mail sent",
-            properties: {
-              analyticsEnabled: false,
-              recipientCount: 1,
-            },
-          });
-        });
-
-        describe("analyticsEnabled", () => {
-          beforeEach(() => {
-            process.env.MAILING_API_URL = "https://mailing.test";
-            process.env.MAILING_API_KEY = "test_key";
-          });
-
-          it("hits message create api with correct arguments", async () => {
-            const res = new Response(
-              JSON.stringify({ message: { id: "message-1234" } }),
-              {
-                status: 200,
-              }
-            );
-
-            (fetch as unknown as jest.Mock).mockResolvedValueOnce(
-              Promise.resolve(res)
-            );
-
-            const sendMail = buildSendMail({
-              transport,
-              defaultFrom: "from@mailing.dev",
-              configPath: "./mailing.config.json",
-            });
-
-            await sendMail({
-              to: ["ok@ok.com"],
-              from: "ok@ok.com",
-              subject: "hello",
-              text: "ok",
-              html: "<body>ok</body>",
-              dangerouslyForceDeliver: true,
-            });
-
-            expect(fetch).toHaveBeenCalled();
-            expect(fetch).toHaveBeenCalledWith(
-              "https://mailing.test/api/messages",
-              {
-                headers: {
-                  "Content-Type": "application/json",
-                  "x-api-key": "test_key",
-                },
-                method: "POST",
-                body: JSON.stringify({
-                  skipUnsubscribeChecks: true,
-                  anonymousId: "unknown",
-                  to: ["ok@ok.com"],
-                  from: "ok@ok.com",
-                  subject: "hello",
-                  text: "ok",
-                  html: "<body>ok</body>",
-                }),
-              }
-            );
-            expect(mockSendMail).toHaveBeenCalled();
-          });
-
-          it("does not send an email if message create api returned a non-200 response", async () => {
-            const res = new Response("internal server error", {
-              status: 500,
-            });
-
-            (fetch as unknown as jest.Mock).mockResolvedValueOnce(
-              Promise.resolve(res)
-            );
-
-            const errorSpy = jest
-              .spyOn(serverLogger, "error")
-              .mockImplementation(jest.fn());
-
-            const sendMail = buildSendMail({
-              transport,
-              defaultFrom: "from@mailing.dev",
-              configPath: "./mailing.config.json",
-            });
-
-            await sendMail({
-              to: ["ok@ok.com"],
-              from: "ok@ok.com",
-              subject: "hello",
-              text: "ok",
-              html: "<body>ok</body>",
-              dangerouslyForceDeliver: true,
-            });
-
-            expect(fetch).toHaveBeenCalled();
-            expect(fetch).toHaveBeenCalledWith(
-              "https://mailing.test/api/messages",
-              {
-                headers: {
-                  "Content-Type": "application/json",
-                  "x-api-key": "test_key",
-                },
-                method: "POST",
-                body: JSON.stringify({
-                  skipUnsubscribeChecks: true,
-                  anonymousId: "unknown",
-                  to: ["ok@ok.com"],
-                  from: "ok@ok.com",
-                  subject: "hello",
-                  text: "ok",
-                  html: "<body>ok</body>",
-                }),
-              }
-            );
-
-            // it is unsafe to send the email because the user may have unsubscribed, we don't know
-            // also this is the mechanism that adds the unsubscribe link, so we are not able to include that
-            expect(mockSendMail).not.toHaveBeenCalled();
-            expect(errorSpy).toHaveBeenCalled();
-          });
-
-          describe("lists", () => {
-            it("should send an email to a user that is subscribed", async () => {
-              const res = new Response(
-                JSON.stringify({ message: { id: "message-1234" } }),
-                {
-                  status: 200,
-                }
-              );
-
-              (fetch as unknown as jest.Mock).mockResolvedValueOnce(
-                Promise.resolve(res)
-              );
-
-              const sendMail = buildSendMail({
-                transport,
-                defaultFrom: "replace@me.with.your.com",
-                configPath: "./mailing.config.json",
-              });
-
-              const email = "test@test.com";
-              const html = `See the bottom of this email for an unsubscribe link<br /><a href="${EMAIL_PREFERENCES_URL}">Unsubscribe</a>`;
-              const listName = "mylista4290";
-              await sendMail({
-                to: email,
-                from: "ok@ok.com",
-                subject: "hello",
-                listName,
-                dangerouslyForceDeliver: true,
-                html,
-              });
-
-              expect(fetch).toHaveBeenCalled();
-              expect(fetch).toHaveBeenCalledWith(
-                "https://mailing.test/api/messages",
-                {
-                  headers: {
-                    "Content-Type": "application/json",
-                    "x-api-key": "test_key",
-                  },
-                  method: "POST",
-                  body: JSON.stringify({
-                    skipUnsubscribeChecks: false,
-                    anonymousId: "unknown",
-                    to: email,
-                    from: "ok@ok.com",
-                    subject: "hello",
-                    html,
-                    listName,
-                  }),
-                }
-              );
-
-              // it is unsafe to send the email because the user may have unsubscribed, we don't know
-              // also this is the mechanism that adds the unsubscribe link, so we are not able to include that
-              expect(mockSendMail).toHaveBeenCalled();
-            });
-
-            it("should not send an email to a user that is unsubscribed", async () => {
-              const res = new Response(
-                JSON.stringify({
-                  error: "user is not subscribed to either list",
-                }),
-                {
-                  status: 200,
-                }
-              );
-
-              (fetch as unknown as jest.Mock).mockResolvedValueOnce(
-                Promise.resolve(res)
-              );
-
-              const sendMail = buildSendMail({
-                transport,
-                defaultFrom: "replace@me.with.your.com",
-                configPath: "./mailing.config.json",
-              });
-
-              const email = "test@test.com";
-              const html = `See the bottom of this email for an unsubscribe link<br /><a href="${EMAIL_PREFERENCES_URL}">Unsubscribe</a>`;
-              const listName = "mylista4290";
-              await sendMail({
-                to: email,
-                from: "ok@ok.com",
-                subject: "hello",
-                listName,
-                dangerouslyForceDeliver: true,
-                html,
-              });
-
-              expect(fetch).toHaveBeenCalled();
-              expect(fetch).toHaveBeenCalledWith(
-                "https://mailing.test/api/messages",
-                {
-                  headers: {
-                    "Content-Type": "application/json",
-                    "x-api-key": "test_key",
-                  },
-                  method: "POST",
-                  body: JSON.stringify({
-                    skipUnsubscribeChecks: false,
-                    anonymousId: "unknown",
-                    to: email,
-                    from: "ok@ok.com",
-                    subject: "hello",
-                    html,
-                    listName,
-                  }),
-                }
-              );
-
-              // it is unsafe to send the email because the user may have unsubscribed, we don't know
-              // also this is the mechanism that adds the unsubscribe link, so we are not able to include that
-              expect(mockSendMail).not.toHaveBeenCalled();
-            });
           });
         });
       });
@@ -622,46 +362,6 @@ describe("index", () => {
         const queue = await getTestMailQueue();
         expect(queue.length).toBe(2);
         expect(queue[1].html).toMatch("Hello");
-      });
-    });
-  });
-
-  describe("analyticsEnabled: true", () => {
-    describe("with analytics enabled, using magic 'testApiKey'", () => {
-      const OG_MAILING_API_URL = process.env.MAILING_API_URL;
-      const OG_MAILING_API_KEY = process.env.MAILING_API_KEY;
-
-      beforeAll(() => {
-        process.env.MAILING_API_URL = "http://localhost:3883";
-        // testApiKey is a magic string that bypasses the api key check when MAILING_INTEGRATION_TEST is set to true
-        process.env.MAILING_API_KEY = "testApiKey";
-      });
-
-      afterAll(() => {
-        process.env.MAILING_API_URL = OG_MAILING_API_URL;
-        process.env.MAILING_API_KEY = OG_MAILING_API_KEY;
-      });
-
-      it("should throw an error when called with a list using a template that does not have an unsubscribe link", async () => {
-        const sendMail = buildSendMail({
-          transport,
-          defaultFrom: "replace@me.with.your.com",
-          configPath: "./mailing.config.json",
-        });
-
-        const email = "testListSpecifiedButNoUnsub@test.com";
-        const callSendMail = async () =>
-          await sendMail({
-            to: email,
-            listName: "mylista4290",
-            dangerouslyForceDeliver: true,
-            html: "No unsubscribe link here",
-            subject: "hello",
-          });
-
-        await expect(callSendMail).rejects.toThrowError(
-          "Templates sent to a list must include an unsubscribe link. Add an unsubscribe link or remove the list parameter from your sendMail call."
-        );
       });
     });
   });

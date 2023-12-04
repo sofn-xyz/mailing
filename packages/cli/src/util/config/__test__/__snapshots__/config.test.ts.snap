@@ -8,20 +8,12 @@ exports[`writeDefaultConfigFile writes mailing.config.json if it doesn't exist 1
 {
   "typescript": true,
   "emailsDir": "./emails",
-  "outDir": "./previews_html",
-  "anonymousId": "TEST_VALUE"
+  "outDir": "./previews_html"
 }
 ",
     ],
-    [
-      "mailing collects anonymous telemetry data about usage",
-    ],
   ],
   "results": [
-    {
-      "type": "return",
-      "value": undefined,
-    },
     {
       "type": "return",
       "value": undefined,

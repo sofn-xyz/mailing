@@ -4,7 +4,6 @@ import Head from "next/head";
 import { HamburgerProvider } from "../components/HamburgerContext";
 import NavBar from "../components/NavBar/NavBar";
 import "../styles/globals.css";
-import PosthogScript from "../components/PosthogScript";
 
 export default function Mailing({
   Component,
@@ -13,7 +12,6 @@ export default function Mailing({
   return (
     <HamburgerProvider>
       <Head>
-        <PosthogScript />
         <title>Mailing</title>
       </Head>
       {pageProps.user ? (

@@ -14,7 +14,7 @@ const previews = {
 const templates = {
   Welcome,
 };
-const config = { anonymousId: null };
+const config = {};
 
 const manifest = { sendMail, config, templates, previews };
 export { sendMail, config, templates, previews };

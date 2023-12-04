@@ -13,7 +13,6 @@ export type ServerArguments = ArgumentsCamelCase<{
   port?: number;
   quiet?: boolean;
   subcommand?: string;
-  anonymousId?: string | null;
 }>;
 
 export const command = ["server [subcommand]"];

@@ -7,7 +7,6 @@ export type PreviewArgs = ArgumentsCamelCase<{
   port?: number;
   quiet?: boolean;
   emailsDir?: string;
-  anonymousId?: string | null;
 }>;
 
 export const command = "preview";

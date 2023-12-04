@@ -4,7 +4,6 @@ import fs from "fs-extra";
 import { render } from "./mjml";
 import { error, log } from "./util/serverLogger";
 import fetch from "node-fetch";
-import { capture } from "./util/postHog";
 import instrumentHtml from "./util/instrumentHtml";
 
 class MalformedInputError extends Error {
@@ -86,12 +85,6 @@ export function buildSendMail<T>(options: BuildSendMailOptions<T>) {
       throw new MalformedInputError(
         "sendMail requires either html or a component"
       );
-
-    let anonymousId = "unknown";
-
-    if ((sendMail as any).config) {
-      anonymousId = (sendMail as any).config.anonymousId;
-    }
 
     const { NODE_ENV, MAILING_API_URL, MAILING_API_KEY } = process.env;
     const {
@@ -183,7 +176,6 @@ export function buildSendMail<T>(options: BuildSendMailOptions<T>) {
         },
         body: JSON.stringify({
           skipUnsubscribeChecks,
-          anonymousId,
           templateName: templateName || derivedTemplateName,
           previewName,
           ...mailOptions,
@@ -239,17 +231,6 @@ export function buildSendMail<T>(options: BuildSendMailOptions<T>) {
     const response = integrationTestMode
       ? "delivered!"
       : await options.transport.sendMail(mailOptions);
-    await capture({
-      event: "mail sent",
-      distinctId: anonymousId,
-      properties: {
-        recipientCount:
-          Array(mailOptions.to).filter(Boolean).length +
-          Array(mailOptions.cc).filter(Boolean).length +
-          Array(mailOptions.bcc).filter(Boolean).length,
-        analyticsEnabled,
-      },
-    });
 
     return response;
   };

@@ -15,7 +15,6 @@ export type ExportPreviewsArgs = ArgumentsCamelCase<{
   outDir?: string;
   quiet?: boolean;
   minify?: boolean;
-  anonymousId?: string | null;
   skipLint?: boolean;
 }>;
 
