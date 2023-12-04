@@ -29,16 +29,9 @@ export const builder = {
   },
 };
 
-export const handler = buildHandler(
-  async (argv: PreviewArgs) => {
-    if (undefined === argv.port) throw new Error("port option is not set");
-    if (undefined === argv.quiet) throw new Error("quiet option is not set");
+export const handler = buildHandler(async (argv: PreviewArgs) => {
+  if (undefined === argv.port) throw new Error("port option is not set");
+  if (undefined === argv.quiet) throw new Error("quiet option is not set");
 
-    await startPreviewServer();
-  },
-  {
-    captureOptions: () => {
-      return { event: "preview invoked" };
-    },
-  }
-);
+  await startPreviewServer();
+});

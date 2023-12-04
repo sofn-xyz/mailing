@@ -38,50 +38,40 @@ export const builder = {
   },
 };
 
-export const handler = buildHandler(
-  async (argv: ServerArguments) => {
-    if (undefined === argv.port) throw new Error("port option is not set");
-    if (undefined === argv.quiet) throw new Error("quiet option is not set");
-    if (undefined === argv.emailsDir)
-      throw new Error("emailsDir option is not set");
+export const handler = buildHandler(async (argv: ServerArguments) => {
+  if (undefined === argv.port) throw new Error("port option is not set");
+  if (undefined === argv.quiet) throw new Error("quiet option is not set");
+  if (undefined === argv.emailsDir)
+    throw new Error("emailsDir option is not set");
 
-    log("bootstrapping your Mailing server in .mailing...");
-    await bootstrapMailingDir();
-    await linkEmailsDirectory(argv.emailsDir);
+  log("bootstrapping your Mailing server in .mailing...");
+  await bootstrapMailingDir();
+  await linkEmailsDirectory(argv.emailsDir);
 
-    const shouldStart = argv.subcommand === "start" || !argv.subcommand;
-    const shouldBuild = argv.subcommand === "build" || !argv.subcommand;
+  const shouldStart = argv.subcommand === "start" || !argv.subcommand;
+  const shouldBuild = argv.subcommand === "build" || !argv.subcommand;
 
-    // "build" subcommand + default
-    if (shouldBuild) {
-      log("building .mailing...");
+  // "build" subcommand + default
+  if (shouldBuild) {
+    log("building .mailing...");
 
-      execSync("cd .mailing && npx prisma generate", {
+    execSync("cd .mailing && npx prisma generate", {
+      stdio: "inherit",
+    });
+
+    if (process.env.MAILING_DATABASE_URL)
+      execSync("cd .mailing && npx prisma migrate deploy", {
         stdio: "inherit",
       });
 
-      if (process.env.MAILING_DATABASE_URL)
-        execSync("cd .mailing && npx prisma migrate deploy", {
-          stdio: "inherit",
-        });
-
-      execSync("cd .mailing && npx next build", {
-        stdio: "inherit",
-      });
-    }
-
-    // "start" subcommand + default
-    if (shouldStart) {
-      log("starting .mailing...");
-      execSync("npx next start .mailing", { stdio: "inherit" });
-    }
-  },
-  {
-    captureOptions: (argv) => {
-      return {
-        event: "server invoked",
-        properties: { subcommand: argv.subcommand },
-      };
-    },
+    execSync("cd .mailing && npx next build", {
+      stdio: "inherit",
+    });
   }
-);
+
+  // "start" subcommand + default
+  if (shouldStart) {
+    log("starting .mailing...");
+    execSync("npx next start .mailing", { stdio: "inherit" });
+  }
+});

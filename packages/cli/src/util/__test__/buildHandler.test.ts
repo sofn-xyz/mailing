@@ -14,7 +14,7 @@ describe("buildHandler", () => {
 
   describe("shared guards and setup", () => {
     it("returns early if ./package.json is not found", async () => {
-      const handler = buildHandler(async () => {}, {});
+      const handler = buildHandler(async () => {});
       const argv = {
         emailsDir: "./emails",
       };
@@ -37,7 +37,7 @@ describe("buildHandler", () => {
     });
 
     it("throws an error if emailsDir is not specified in argv", async () => {
-      const handler = buildHandler(async () => {}, {});
+      const handler = buildHandler(async () => {});
       const argv = {};
 
       await expect(async () => {
@@ -46,7 +46,7 @@ describe("buildHandler", () => {
     });
 
     it("calls setConfig and writeDefaultConfigFile", async () => {
-      const handler = buildHandler(async () => {}, {});
+      const handler = buildHandler(async () => {});
       const argv = {
         emailsDir: "./emails",
         port: 3883,
