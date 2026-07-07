@@ -16,7 +16,6 @@
     "mjml": "^4.12.0",
     "node-fetch": "^2.6.7",
     "node-html-parser": "^6.1.1",
-    "open": "^8.4.0",
-    "posthog-node": "^2.2.3"
+    "open": "^8.4.0"
   }
 }
