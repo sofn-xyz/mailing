@@ -11,12 +11,19 @@ describe("renderTemplate", () => {
   });
 
   it("returns rendered html", () => {
-    const { error, mjmlErrors, html } = renderTemplate("AccountCreated", {
-      name: "Test User",
-    });
-    expect(mjmlErrors).toEqual([]);
-    expect(error).toBeUndefined();
-    expect(html).not.toBeUndefined();
-    expect(html).toMatchSnapshot();
+    // Freeze the clock so the footer's "© {year}" copyright renders
+    // deterministically — otherwise this snapshot rots every Jan 1.
+    jest.useFakeTimers().setSystemTime(new Date("2023-06-15T00:00:00Z"));
+    try {
+      const { error, mjmlErrors, html } = renderTemplate("AccountCreated", {
+        name: "Test User",
+      });
+      expect(mjmlErrors).toEqual([]);
+      expect(error).toBeUndefined();
+      expect(html).not.toBeUndefined();
+      expect(html).toMatchSnapshot();
+    } finally {
+      jest.useRealTimers();
+    }
   });
 });
