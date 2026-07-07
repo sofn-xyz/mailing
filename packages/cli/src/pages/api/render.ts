@@ -38,9 +38,9 @@ export default async function handler(
   } catch {
     return res.status(422).json({
       error:
-        "props could not be parsed from " + req.method === "GET"
+        "props could not be parsed from " + (req.method === "GET"
           ? "querystring"
-          : "request body",
+          : "request body"),
     });
   }
 
