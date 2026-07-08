@@ -54,5 +54,7 @@ jobs:
           install: false
           start: yarn ci:mailing:nohup
           working-directory: /tmp/mailing_e2e/ci
-          browser: chrome
+          # Cypress's bundled Electron; the runner's Chrome fails to connect
+          # under Cypress 15 ("Still waiting to connect to Chrome"). See gh#504.
+          browser: electron
           project: mailing_tests
