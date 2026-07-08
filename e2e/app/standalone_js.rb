@@ -14,10 +14,8 @@ module App
       Dir.chdir(root_dir) do
         system_quiet('yarn init --yes')
 
-        # yarn add peer dependencies, pinned to mailing's supported range
-        # (next ^12 || ^13 || ^14) so we don't pull an unsupported next@16+.
-        # See gh#504.
-        system_quiet('yarn add next@^14 react@^18 react-dom@^18')
+        # yarn add peer dependencies
+        system_quiet('yarn add next react react-dom')
       end
     end
   end

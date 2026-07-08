@@ -17,7 +17,9 @@ jobs:
           # - turbo
           - next_js
           - next_ts
-          - remix_js
+          # remix_js is dropped: React Router v7 (the successor to the classic
+          # `create-remix` CLI) is TypeScript-first and ships no JavaScript
+          # starter template. remix_ts covers the React Router scaffold.
           - remix_ts
           # redwood_js/ts are disabled: create-redwood-app now scaffolds a
           # `packageManager: "yarn@4.6.0"` (Yarn Berry / corepack) project that the

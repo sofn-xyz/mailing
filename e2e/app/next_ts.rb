@@ -13,12 +13,12 @@ module App
 
     def yarn_create!
       Dir.chdir(root_dir) do
-        # See next_js.rb for why this is pinned to create-next-app@14 via npx and
-        # why the flags changed (gh#504 toolchain drift).
+        # See next_js.rb: unpinned to track the latest create-next-app; flags
+        # updated for the current CLI.
         cmd = <<-STR.split("\n").map(&:strip).join(' ')
-          npx --yes create-next-app@14 .
+          yarn create next-app .
           --typescript
-          --no-eslint --no-tailwind --no-src-dir --no-app --import-alias='@/*' --use-yarn
+          --no-eslint --no-tailwind --no-src-dir --no-app --import-alias='@/*' --use-yarn --yes
         STR
         system_quiet(cmd)
       end

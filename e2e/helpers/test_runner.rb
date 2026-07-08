@@ -12,7 +12,6 @@ require_relative 'app/next_js'
 require_relative 'app/redwood_ts'
 require_relative 'app/redwood_js'
 require_relative 'app/remix_ts'
-require_relative 'app/remix_js'
 require_relative 'app/standalone'
 require_relative 'app/turbo'
 
