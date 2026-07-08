@@ -1,5 +1,15 @@
 # mailing-core
 
+## 1.1.0
+
+### Minor Changes
+
+- f6b5140: remove anonymous telemetry and email collection
+
+### Patch Changes
+
+- dc2d009: bump peer dep to next 14
+
 ## 1.0.2
 
 ### Patch Changes
