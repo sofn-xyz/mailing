@@ -1,5 +1,11 @@
 # mailing-core
 
+## 1.1.1
+
+### Patch Changes
+
+- 642c70a: Remove the unused `posthog-node` dependency. It was never imported (the CLI's analytics provider uses `node-fetch` directly), and dropping it removes the vulnerable transitive `axios@0.27` (CVE-2023-45857) from the tree.
+
 ## 1.1.0
 
 ### Minor Changes
