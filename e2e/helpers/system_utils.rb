@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'English'
 require 'socket'
 require_relative '../config'
 
@@ -8,11 +9,18 @@ module SystemUtils
   NUM_RUNS_TO_KEEP = 5
 
   def system_quiet(cmd)
-    if ENV['VERBOSE']
-      system(cmd)
-    else
-      system("#{cmd} > /dev/null")
-    end
+    success = if ENV['VERBOSE']
+                system(cmd)
+              else
+                system("#{cmd} > /dev/null")
+              end
+
+    # Fail loudly. Previously a failed `yarn add` (e.g. an incompatible-engine
+    # error) was ignored here and only surfaced as a confusing downstream error
+    # many steps later. See gh#504.
+    raise "Command failed (exit #{$CHILD_STATUS&.exitstatus.inspect}): #{cmd}" unless success
+
+    success
   end
 
   def announce!(text, emoji)

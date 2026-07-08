@@ -13,14 +13,17 @@ module App
 
     def yarn_create!
       Dir.chdir(root_dir) do
-        # install with the "remix" template
-        system_quiet('yarn create remix . --template=remix-run/remix/templates/remix --typescript --install')
+        # See remix_js.rb for why create-remix and the template are pinned to the
+        # remix@2.16.8 tag. The TypeScript variant uses the `remix` template
+        # (`--typescript` was removed as a flag in Remix v2). See gh#504.
+        system_quiet(
+          'npx --yes create-remix@2.16.8 . ' \
+          '--template=https://github.com/remix-run/remix/tree/remix@2.16.8/templates/remix ' \
+          '--no-git-init --yes --no-install'
+        )
 
-        ## variation: indie-stack is a different remix template that people use
-        # system_quiet("yarn create remix . --template=remix-run/indie-stack --typescript --install")
-
-        # yarn add peer dependencies
-        system_quiet('yarn add next react react-dom')
+        # yarn add peer dependencies (pinned to mailing's supported range)
+        system_quiet('yarn add next@^14 react@^18 react-dom@^18')
       end
     end
   end

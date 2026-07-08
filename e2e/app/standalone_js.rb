@@ -14,8 +14,9 @@ module App
       Dir.chdir(root_dir) do
         system_quiet('yarn init --yes')
 
-        # yarn add peer dependencies
-        system_quiet('yarn add next react react-dom')
+        # yarn add peer dependencies (pinned to mailing's supported range so we
+        # don't pull next@16, which requires node >= 20.9; see gh#504)
+        system_quiet('yarn add next@^14 react@^18 react-dom@^18')
       end
     end
   end

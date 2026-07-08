@@ -127,7 +127,11 @@ module App
     def yarn_add_test_dependencies!
       puts "yarn add'ing dependencies required for tests"
       Dir.chdir(install_dir) do
-        system_quiet('yarn add --dev @babel/preset-env jest cypress')
+        # Pinned to reproducible, node-20-compatible majors. Unpinned,
+        # @babel/preset-env resolves to 8.x whose plugins require node >= 22.18;
+        # that install failed silently and left `jest` unresolvable ("Command
+        # jest not found") two steps later. See gh#504.
+        system_quiet('yarn add --dev @babel/preset-env@^7 jest@^29 cypress@^13')
       end
     end
 

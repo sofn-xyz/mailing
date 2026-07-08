@@ -7,7 +7,7 @@ env:
 jobs:
   e2e:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 20
     strategy:
       fail-fast: false
       matrix:
@@ -22,14 +22,16 @@ jobs:
           - redwood_js
           # - redwood_ts
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: 3.1.2
           bundler-cache: true
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
-          node-version: 18
+          # Single source of truth for the Node version — kept in sync with
+          # local dev via .tool-versions (see gh#504 toolchain drift).
+          node-version-file: ".tool-versions"
           cache: "yarn"
       - name: Install dependencies
         run: yarn
