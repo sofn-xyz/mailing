@@ -16,8 +16,9 @@ module App
         system_quiet('yarn init --yes')
         system_quiet('yarn add typescript && yarn tsc --init')
 
-        # yarn add peer dependencies (pinned to mailing's supported range so we
-        # don't pull next@16, which requires node >= 20.9; see gh#504)
+        # yarn add peer dependencies, pinned to mailing's supported range
+        # (next ^12 || ^13 || ^14) so we don't pull an unsupported next@16+.
+        # See gh#504.
         system_quiet('yarn add next@^14 react@^18 react-dom@^18')
       end
     end

@@ -19,7 +19,11 @@ jobs:
           - next_ts
           - remix_js
           - remix_ts
-          - redwood_js
+          # redwood_js/ts are disabled: create-redwood-app now scaffolds a
+          # `packageManager: "yarn@4.6.0"` (Yarn Berry / corepack) project that the
+          # yarn-1-based e2e harness can't `yarn add` into, and RedwoodJS is EOL
+          # (pivoted to RedwoodSDK). See gh#504.
+          # - redwood_js
           # - redwood_ts
     steps:
       - uses: actions/checkout@v4

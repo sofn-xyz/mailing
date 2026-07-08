@@ -46,7 +46,13 @@ function lintHtml(html: string) {
 export function render(
   component: ReactElement<any, string | JSXElementConstructor<any>>
 ) {
-  const { html, errors } = mjml2html(renderToMjml(component));
+  // See packages/core/src/mjml.ts: `@types/mjml-core` v5 types `mjml2html` as
+  // async, but we pin `mjml@^4` which is synchronous at runtime. Assert the
+  // awaited (unwrapped) return type; a no-op for synchronous type resolutions.
+  // See gh#504.
+  const { html, errors } = mjml2html(renderToMjml(component)) as unknown as Awaited<
+    ReturnType<typeof mjml2html>
+  >;
   const htmlLint = lintHtml(html);
   return { html, errors, htmlLint };
 }

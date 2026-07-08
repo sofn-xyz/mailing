@@ -16,8 +16,8 @@ class Mailing
     announce! 'Building mailing...', '🔨'
 
     Dir.chdir(Config::PROJECT_ROOT) do
-      res = system_quiet('yarn build')
-      raise 'yarn build failed' unless res
+      # system_quiet raises on a non-zero exit, so no explicit check is needed.
+      system_quiet('yarn build')
     end
 
     Dir.chdir(Config::CLI_ROOT) do
