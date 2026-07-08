@@ -38,6 +38,24 @@ export const builder = {
   },
 };
 
+// Next 16 makes `next build` use Turbopack by default, whose static analysis
+// can't follow the .mailing preview app's dynamic requires (e.g. the generated
+// Prisma client), so the build fails ("Encountered unexpected file in NFT
+// list" / EBADF). Opt back into webpack on Next >= 15, where the `--webpack`
+// flag exists; older Next versions build with webpack by default. See gh#504.
+function nextBuildBundlerFlag(): string {
+  try {
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    const nextPkg = require(require.resolve("next/package.json", {
+      paths: [process.cwd()],
+    }));
+    const major = parseInt(String(nextPkg.version).split(".")[0], 10);
+    return major >= 15 ? " --webpack" : "";
+  } catch {
+    return "";
+  }
+}
+
 export const handler = buildHandler(async (argv: ServerArguments) => {
   if (undefined === argv.port) throw new Error("port option is not set");
   if (undefined === argv.quiet) throw new Error("quiet option is not set");
@@ -64,7 +82,7 @@ export const handler = buildHandler(async (argv: ServerArguments) => {
         stdio: "inherit",
       });
 
-    execSync("cd .mailing && npx next build", {
+    execSync(`cd .mailing && npx next build${nextBuildBundlerFlag()}`, {
       stdio: "inherit",
     });
   }
