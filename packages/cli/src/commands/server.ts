@@ -7,6 +7,7 @@ import {
   linkEmailsDirectory,
 } from "./preview/server/setup";
 import { buildHandler } from "../util/buildHandler";
+import nextMajorVersion from "../util/nextMajorVersion";
 
 export type ServerArguments = ArgumentsCamelCase<{
   emailsDir?: string;
@@ -44,16 +45,7 @@ export const builder = {
 // list" / EBADF). Opt back into webpack on Next >= 15, where the `--webpack`
 // flag exists; older Next versions build with webpack by default. See gh#504.
 function nextBuildBundlerFlag(): string {
-  try {
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const nextPkg = require(require.resolve("next/package.json", {
-      paths: [process.cwd()],
-    }));
-    const major = parseInt(String(nextPkg.version).split(".")[0], 10);
-    return major >= 15 ? " --webpack" : "";
-  } catch {
-    return "";
-  }
+  return nextMajorVersion() >= 15 ? " --webpack" : "";
 }
 
 export const handler = buildHandler(async (argv: ServerArguments) => {

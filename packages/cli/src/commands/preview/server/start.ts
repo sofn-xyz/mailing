@@ -12,6 +12,7 @@ import {
   showIntercept,
 } from "../../../preview/controllers/intercepts";
 import registerRequireHooks from "../../util/registerRequireHooks";
+import nextMajorVersion from "../../../util/nextMajorVersion";
 import { bootstrapMailingDir, linkEmailsDirectory } from "./setup";
 import { getConfig } from "../../../util/config";
 import { startChangeWatcher } from "./livereload";
@@ -43,14 +44,22 @@ export default async function startPreviewServer() {
   const hostname = "localhost";
 
   process.env.NEXT_PUBLIC_MAILING_SKIP_AUTH ||= "true";
-  const app = next({
+  const nextOptions = {
     dev: true, // true will use the app from source, not built .next bundle
     hostname,
     port,
     dir: process.env.MM_DEV
       ? resolve(__dirname, "../../../../")
       : resolve("./.mailing"),
-  });
+  } as Parameters<typeof next>[0] & { webpack?: boolean };
+
+  // Next 16 defaults the dev server to Turbopack, which can't resolve some of
+  // the preview app's dynamic dependencies (e.g. uglify-js) and returns 500s.
+  // Force webpack on Next >= 15, where a custom server may pass this option;
+  // older Next uses webpack by default. See gh#504.
+  if (nextMajorVersion() >= 15) nextOptions.webpack = true;
+
+  const app = next(nextOptions);
   const nextHandle = app.getRequestHandler();
   await app.prepare();
 
