@@ -13,10 +13,12 @@ module App
 
     def yarn_create!
       Dir.chdir(root_dir) do
+        # See next_js.rb: unpinned to track the latest create-next-app; flags
+        # updated for the current CLI.
         cmd = <<-STR.split("\n").map(&:strip).join(' ')
           yarn create next-app .
           --typescript
-          --no-eslint --no-src-dir --no-experimental-app --import-alias='@/*'
+          --no-eslint --no-tailwind --no-src-dir --no-app --import-alias='@/*' --use-yarn --yes
         STR
         system_quiet(cmd)
       end

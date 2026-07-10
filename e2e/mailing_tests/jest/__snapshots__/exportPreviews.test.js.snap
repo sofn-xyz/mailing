@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`exportPreviews command cli --minify runs on templates 1`] = `
 "mailing Exporting minified preview html to

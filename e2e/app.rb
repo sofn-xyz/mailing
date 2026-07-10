@@ -8,7 +8,6 @@ require_relative 'app/next_js'
 require_relative 'app/redwood_ts'
 require_relative 'app/redwood_js'
 require_relative 'app/remix_ts'
-require_relative 'app/remix_js'
 
 module App
   # does this framework use typescript? if so, e2e tests will perform typescript specific checks
@@ -22,8 +21,7 @@ module App
     next_js: App::NextJs,
     redwood_ts: App::RedwoodTs,
     redwood_js: App::RedwoodJs,
-    remix_ts: App::RemixTs,
-    remix_js: App::RemixJs
+    remix_ts: App::RemixTs
   }.freeze
 
   SKIPPED_APPS = %i[turbo].freeze

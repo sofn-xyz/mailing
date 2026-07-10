@@ -7,6 +7,7 @@ import {
   linkEmailsDirectory,
 } from "./preview/server/setup";
 import { buildHandler } from "../util/buildHandler";
+import nextMajorVersion from "../util/nextMajorVersion";
 
 export type ServerArguments = ArgumentsCamelCase<{
   emailsDir?: string;
@@ -38,6 +39,16 @@ export const builder = {
   },
 };
 
+// Next 16 makes `next build` use Turbopack by default, whose static analysis
+// can't follow the .mailing preview app's dynamic requires (e.g. the generated
+// Prisma client), so the build fails ("Encountered unexpected file in NFT
+// list" / EBADF). Opt back into webpack on Next >= 16, where the `--webpack`
+// flag was added; Next <= 15 builds with webpack by default and errors on the
+// unknown flag. See gh#504.
+function nextBuildBundlerFlag(): string {
+  return nextMajorVersion() >= 16 ? " --webpack" : "";
+}
+
 export const handler = buildHandler(async (argv: ServerArguments) => {
   if (undefined === argv.port) throw new Error("port option is not set");
   if (undefined === argv.quiet) throw new Error("quiet option is not set");
@@ -64,7 +75,7 @@ export const handler = buildHandler(async (argv: ServerArguments) => {
         stdio: "inherit",
       });
 
-    execSync("cd .mailing && npx next build", {
+    execSync(`cd .mailing && npx next build${nextBuildBundlerFlag()}`, {
       stdio: "inherit",
     });
   }

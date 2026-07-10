@@ -13,11 +13,11 @@ module App
 
     def yarn_create!
       Dir.chdir(root_dir) do
-        # install with the "remix" template
-        system_quiet('yarn create remix . --template=remix-run/remix/templates/remix --typescript --install')
-
-        ## variation: indie-stack is a different remix template that people use
-        # system_quiet("yarn create remix . --template=remix-run/indie-stack --typescript --install")
+        # Remix v2 was merged into React Router v7; the classic `create-remix`
+        # CLI now refuses to scaffold and forwards here. Unpinned on purpose so
+        # these tests catch breakage against the latest React Router starter
+        # (a TypeScript + ESM app).
+        system_quiet('yarn create react-router . --yes --no-git-init --no-install')
 
         # yarn add peer dependencies
         system_quiet('yarn add next react react-dom')

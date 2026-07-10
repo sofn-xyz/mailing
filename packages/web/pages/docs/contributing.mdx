@@ -67,10 +67,7 @@ The frameworks currently covered by the tests are:
 - turbo (Turbo monorepo)
 - next_ts (Next.js with Typescript)
 - next_js (Next.js without Typescript)
-- redwood_ts (Redwood with Typescript)
-- redwood_js (Redwood without Typescript)
-- remix_ts (Remix with Typescript)
-- remix_js (Remix without Typescript)
+- remix_ts (React Router / Remix with Typescript)
 
 **Initial test setup**
 
@@ -87,7 +84,7 @@ This will instantiate each framework, add mailing with yalc, and then run the cy
 
 The underlying ruby script `bundle exec ruby e2e/cli.rb` supports some options for running:
 
-- `--app=redwood_ts` to run the tests only on the specified framework. See `e2e/app.rb` for the list of supported frameworks
+- `--app=next_ts` to run the tests only on the specified framework. See `e2e/app.rb` for the list of supported frameworks
 - `--skip-build` to skip the yarn build part of the script, useful when debugging something unrelated to the build
 - `--update-snapshot` if you need to update the snapshots in the framework tests. This will run jest with the `-u` option and then copy
 - `--rerun` to skip the framework install part of the script, useful when debugging something in your cypress tests unrelated to the build or the framework install. This will use the framework installs that are present in the runs/latest directory, i.e. the assumption is you've run a test against some framework(s) and you now want to re-running them after adjusting your cypress tests.

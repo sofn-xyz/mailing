@@ -7,7 +7,7 @@ env:
 jobs:
   e2e:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 20
     strategy:
       fail-fast: false
       matrix:
@@ -17,19 +17,27 @@ jobs:
           # - turbo
           - next_js
           - next_ts
-          - remix_js
+          # remix_js is dropped: React Router v7 (the successor to the classic
+          # `create-remix` CLI) is TypeScript-first and ships no JavaScript
+          # starter template. remix_ts covers the React Router scaffold.
           - remix_ts
-          - redwood_js
+          # redwood_js/ts are disabled: create-redwood-app now scaffolds a
+          # `packageManager: "yarn@4.6.0"` (Yarn Berry / corepack) project that the
+          # yarn-1-based e2e harness can't `yarn add` into, and RedwoodJS is EOL
+          # (pivoted to RedwoodSDK). See gh#504.
+          # - redwood_js
           # - redwood_ts
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: 3.1.2
           bundler-cache: true
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
-          node-version: 18
+          # Single source of truth for the Node version — kept in sync with
+          # local dev via .tool-versions (see gh#504 toolchain drift).
+          node-version-file: ".tool-versions"
           cache: "yarn"
       - name: Install dependencies
         run: yarn
@@ -46,5 +54,7 @@ jobs:
           install: false
           start: yarn ci:mailing:nohup
           working-directory: /tmp/mailing_e2e/ci
-          browser: chrome
+          # Cypress's bundled Electron; the runner's Chrome fails to connect
+          # under Cypress 15 ("Still waiting to connect to Chrome"). See gh#504.
+          browser: electron
           project: mailing_tests
