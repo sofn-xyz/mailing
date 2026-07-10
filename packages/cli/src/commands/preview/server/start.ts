@@ -55,9 +55,9 @@ export default async function startPreviewServer() {
 
   // Next 16 defaults the dev server to Turbopack, which can't resolve some of
   // the preview app's dynamic dependencies (e.g. uglify-js) and returns 500s.
-  // Force webpack on Next >= 15, where a custom server may pass this option;
-  // older Next uses webpack by default. See gh#504.
-  if (nextMajorVersion() >= 15) nextOptions.webpack = true;
+  // Force webpack on Next >= 16, where a custom server may pass this option;
+  // Next <= 15 uses webpack by default and ignores the option. See gh#504.
+  if (nextMajorVersion() >= 16) nextOptions.webpack = true;
 
   const app = next(nextOptions);
   const nextHandle = app.getRequestHandler();
